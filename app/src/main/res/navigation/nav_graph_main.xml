@@ -9,19 +9,19 @@
 
     <fragment
             android:id="@+id/navigation_search"
-            android:name="com.gpetuhov.android.hive.MapFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.MapFragment"
             android:label="fragment_map"
             tools:layout="@layout/fragment_map" />
 
     <fragment
             android:id="@+id/navigation_chat"
-            android:name="com.gpetuhov.android.hive.ChatFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.ChatFragment"
             android:label="fragment_chat"
             tools:layout="@layout/fragment_chat" />
 
     <fragment
             android:id="@+id/navigation_profile"
-            android:name="com.gpetuhov.android.hive.ProfileFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.ProfileFragment"
             android:label="fragment_profile"
             tools:layout="@layout/fragment_profile" />
 

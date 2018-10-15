@@ -1,7 +1,8 @@
-package com.gpetuhov.android.hive
+package com.gpetuhov.android.hive.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.pawegio.kandroid.startActivity
 
 // Implementing splash screen by setting
