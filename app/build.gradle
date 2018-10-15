@@ -50,4 +50,7 @@ dependencies {
 
     // Bottom Navigation View
     implementation "com.google.android.material:material:1.0.0"
+
+    // Google Maps
+    implementation "com.google.android.gms:play-services-maps:16.0.0"
 }
