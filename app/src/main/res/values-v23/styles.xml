@@ -1,10 +1,16 @@
 <resources>
 
+    <!--android:statusBarColor is supported since API 21-->
+    <!--android:windowLightStatusBar is supported since API 23-->
+    <!--These are needed for light status bar-->
+
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/md_white_1000</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <!-- Splash screen theme -->
