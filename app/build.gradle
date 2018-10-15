@@ -31,6 +31,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-beta02'
     androidTestImplementation 'androidx.test:rules:1.1.0-beta02'
 
+    // Jetpack Navigation
+    implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
+
     // Anko
     implementation "org.jetbrains.anko:anko-commons:$ankoVersion"
 
@@ -43,4 +47,7 @@ dependencies {
     // Kotlin Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+    // Bottom Navigation View
+    implementation "com.google.android.material:material:1.0.0"
 }

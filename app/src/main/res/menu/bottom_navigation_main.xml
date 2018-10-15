@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--Item ids must be the same as the fragments' ids in the navigation graph-->
+    <!--Use tabs for 2-3 items-->
+    <!--Use bottom navigation for 3-5 items-->
+    <!--For more items use Navigation Drawer-->
+
+    <item
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search"/>
+
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/messages"/>
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_person"
+        android:title="@string/profile"/>
+
+</menu>

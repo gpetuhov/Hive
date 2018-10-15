@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/nav_graph_main"
+            app:startDestination="@id/navigation_search">
+
+    <!--Ids of the fragments must be the same as ids of bottom navigation menu items-->
+
+    <fragment
+            android:id="@+id/navigation_search"
+            android:name="com.gpetuhov.android.hive.MapFragment"
+            android:label="fragment_map"
+            tools:layout="@layout/fragment_map" />
+
+    <fragment
+            android:id="@+id/navigation_chat"
+            android:name="com.gpetuhov.android.hive.ChatFragment"
+            android:label="fragment_chat"
+            tools:layout="@layout/fragment_chat" />
+
+    <fragment
+            android:id="@+id/navigation_profile"
+            android:name="com.gpetuhov.android.hive.ProfileFragment"
+            android:label="fragment_profile"
+            tools:layout="@layout/fragment_profile" />
+
+</navigation>
