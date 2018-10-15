@@ -29,8 +29,11 @@
             </intent-filter>
         </activity>
 
+        <!-- MainActivity doesn't get destroyed on orientation changes -->
+        <!-- This is needed to prevent Google Map reloading -->
         <activity
                 android:name=".ui.activity.MainActivity"
+                android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
                 android:windowSoftInputMode="stateHidden">
         </activity>
 
