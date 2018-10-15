@@ -68,7 +68,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         // For zooming automatically to the location of the marker
         val cameraPosition = CameraPosition.Builder().target(sydney).zoom(12.0F).build()
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
         // When the map is loaded, do something
         googleMap.setOnMapLoadedCallback {
