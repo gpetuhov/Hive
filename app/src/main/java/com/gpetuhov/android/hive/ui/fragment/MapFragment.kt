@@ -16,14 +16,13 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
+import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
+import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_ZOOM
+import com.gpetuhov.android.hive.util.Constants.Map.Companion.NO_ZOOM
 import timber.log.Timber
 
 class MapFragment : Fragment(), OnMapReadyCallback {
-
-    companion object {
-        private const val DEFAULT_COORDINATE = 0.0
-        private const val DEFAULT_ZOOM = 16.0F
-    }
 
     private lateinit var googleMap: GoogleMap
     private lateinit var mapView: MapView
@@ -90,9 +89,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 .addOnSuccessListener { location : Location? ->
                     // Got last known location. In some rare situations this can be null.
 
-                    val target = LatLng(location?.latitude ?: DEFAULT_COORDINATE, location?.longitude ?: DEFAULT_COORDINATE)
+                    val target = LatLng(
+                        location?.latitude ?: DEFAULT_LATITUDE,
+                        location?.longitude ?: DEFAULT_LONGITUDE
+                    )
 
-                    val cameraPosition = CameraPosition.Builder().target(target).zoom(DEFAULT_ZOOM).build()
+                    val zoom = if (location != null) DEFAULT_ZOOM else NO_ZOOM
+
+                    val cameraPosition = CameraPosition.Builder().target(target).zoom(zoom).build()
                     googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                 }
 
