@@ -9,7 +9,7 @@ import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
-import androidx.core.content.ContextCompat
+import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_permissions.*
 import org.jetbrains.anko.toast
@@ -83,8 +83,7 @@ class PermissionsActivity : AppCompatActivity() {
     }
 
     private fun checkHasPermissions(): Boolean {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        return checkPermissions(this)
     }
 
     private fun requestPermissions() {

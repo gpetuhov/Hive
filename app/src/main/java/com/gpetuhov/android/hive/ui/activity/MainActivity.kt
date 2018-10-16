@@ -8,13 +8,15 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.util.checkPermissions
+import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
 
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,15 +33,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        checkPlayServices()
+        if (checkPlayServices()) {
+            if (!checkPermissions(this)) {
+                startActivity<PermissionsActivity>()
+            }
+        }
     }
 
     // Check if Google Play Services installed
-    private fun checkPlayServices() {
+    private fun checkPlayServices(): Boolean {
+        var servicesAvailable = true
         val gApi = GoogleApiAvailability.getInstance()
         val resultCode = gApi.isGooglePlayServicesAvailable(this)
 
         if (resultCode != ConnectionResult.SUCCESS) {
+            servicesAvailable = false
             if (gApi.isUserResolvableError(resultCode)) {
                 gApi.getErrorDialog(this, resultCode, 1).show()
             } else {
@@ -47,5 +55,7 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
+
+        return servicesAvailable
     }
 }
