@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         if (checkPlayServices()) {
             if (!checkPermissions(this)) {
                 startActivity<PermissionsActivity>()
+                finish()
             }
         }
     }
