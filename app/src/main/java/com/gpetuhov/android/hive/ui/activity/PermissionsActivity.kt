@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_permissions.*
 import org.jetbrains.anko.toast
 import timber.log.Timber
 
+// Check if all permissions are granted.
+// If yes, just finish.
 class PermissionsActivity : AppCompatActivity() {
 
     companion object {
@@ -30,7 +32,7 @@ class PermissionsActivity : AppCompatActivity() {
             closePermissionsScreen()
         } else {
             setContentView(R.layout.activity_permissions)
-            grantPermissionsButton.setOnClickListener { requestPermissions() }
+            grant_permissions_button.setOnClickListener { requestPermissions() }
         }
     }
 
@@ -102,7 +104,7 @@ class PermissionsActivity : AppCompatActivity() {
     }
 
     private fun openSystemSettings() {
-        toast(getString(R.string.permissions_warning2))
+        toast(getString(R.string.permissions_toast))
 
         // Open system settings
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null))

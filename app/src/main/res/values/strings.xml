@@ -1,16 +1,22 @@
 <resources>
     <string name="app_name">Hive</string>
+
+    <!-- PermissionsActivity -->
+    <string name="grant_permissions_text">Please, grant permissions</string>
+    <string name="permissions_description">Hive requires several permissions for proper functioning.
+        Without permissions Hive won\'t work.
+    </string>
+    <string name="permissions_toast">Please, grant all the required permissions in system settings! Without
+        permissions Hive won\'t work.
+    </string>
+    <string name="grant_permissions">Grant permissions</string>
+
+    <!-- MainActivity -->
     <string name="search">Search</string>
     <string name="messages">Messages</string>
     <string name="profile">Profile</string>
     <string name="play_services_unavailable">Hive won\'t run without Google Play Services, which are not supported by
         your device
     </string>
-    <string name="permissions_warning">Please, grant all the required permissions! Without permissions Hive won\'t
-        work.
-    </string>
-    <string name="permissions_warning2">Please, grant all the required permissions in system settings! Without
-        permissions Hive won\'t work.
-    </string>
-    <string name="grant_permissions">Grant permissions</string>
+
 </resources>
