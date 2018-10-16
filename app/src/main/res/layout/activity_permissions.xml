@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragment.MapFragment">
+        tools:context=".ui.activity.PermissionsActivity">
 
     <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/permissions_animation_view"

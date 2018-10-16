@@ -9,7 +9,7 @@
 
     <fragment
             android:id="@+id/navigation_search"
-            android:name="com.gpetuhov.android.hive.ui.fragment.MapFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.MapFragment2"
             android:label="fragment_map"
             tools:layout="@layout/fragment_map" />
 
