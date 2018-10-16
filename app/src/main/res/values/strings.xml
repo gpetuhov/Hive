@@ -6,4 +6,11 @@
     <string name="play_services_unavailable">Hive won\'t run without Google Play Services, which are not supported by
         your device
     </string>
+    <string name="permissions_warning">Please, grant all the required permissions! Without permissions Hive won\'t
+        work.
+    </string>
+    <string name="permissions_warning2">Please, grant all the required permissions in system settings! Without
+        permissions Hive won\'t work.
+    </string>
+    <string name="grant_permissions">Grant permissions</string>
 </resources>

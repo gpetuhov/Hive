@@ -29,6 +29,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+                android:name=".ui.activity.PermissionsActivity">
+        </activity>
+
         <!-- MainActivity doesn't get destroyed on orientation changes -->
         <!-- This is needed to prevent Google Map reloading -->
         <activity

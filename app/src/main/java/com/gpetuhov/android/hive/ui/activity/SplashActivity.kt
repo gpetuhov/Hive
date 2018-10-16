@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
         // SplashActivity needs no layout.
         // Just start main activity and finish.
 
-        startActivity<MainActivity>()
+        startActivity<PermissionsActivity>()
         finish()
     }
 }
