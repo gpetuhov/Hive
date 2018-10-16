@@ -31,6 +31,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return view
     }
 
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
     override fun onResume() {
         super.onResume()
         mapView.onResume()
@@ -41,9 +46,19 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         mapView.onPause()
     }
 
+    override fun onStop() {
+        super.onStop()
+        mapView.onStop()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mapView.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 
     override fun onLowMemory() {
