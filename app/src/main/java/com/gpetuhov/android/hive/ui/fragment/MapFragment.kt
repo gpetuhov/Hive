@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.gpetuhov.android.hive.R
+import timber.log.Timber
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
@@ -70,12 +71,18 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         // When the map is ready, get reference to it
         googleMap = map
 
+        // For showing a move to my location button
+        try {
+            googleMap.isMyLocationEnabled = true
+        } catch (e: SecurityException) {
+            Timber.tag("Map").d("Location permission not granted")
+        }
+
+        // Enable compass (will show on map rotate)
+        googleMap.uiSettings.isCompassEnabled = true
+
         // Enable zoom buttons
         googleMap.uiSettings.isZoomControlsEnabled = true
-
-        // For showing a move to my location button
-        // TODO: grant permissions and check if granted
-//        googleMap.setMyLocationEnabled(true)
 
         // For dropping a marker at a point on the Map
         val sydney = LatLng(-34.0, 151.0)
