@@ -22,7 +22,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
-        mapView = view.findViewById(R.id.mapView)
+        mapView = view.findViewById(R.id.map_view)
         mapView.onCreate(savedInstanceState)
 
         // Asynchronously get reference to the map

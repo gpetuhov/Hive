@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.nav_host)
 
         // Tie NavHostFragment to bottom navigation bar
-        navigationView.setupWithNavController(navController)
+        navigation_view.setupWithNavController(navController)
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
