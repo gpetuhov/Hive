@@ -19,12 +19,9 @@ class PermissionsActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "PermissionsActivity"
-        private const val PERMISSION_DIALOG_SHOWING_KEY = "permissionDialogShowing"
         private const val PERM_REQUEST_CODE = 0
         private const val PERM_SYSTEM_SETTINGS_REQUEST_CODE = 1
     }
-
-    private var isPermissionDialogShowing = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +30,6 @@ class PermissionsActivity : AppCompatActivity() {
             closePermissionsScreen()
         } else {
             setContentView(R.layout.activity_permissions)
-
-            if (savedInstanceState != null) {
-                isPermissionDialogShowing = savedInstanceState.getBoolean(PERMISSION_DIALOG_SHOWING_KEY, false)
-            }
-
             grantPermissionsButton.setOnClickListener { requestPermissions() }
         }
     }
@@ -47,8 +39,6 @@ class PermissionsActivity : AppCompatActivity() {
         Timber.tag(TAG).d("onRequestPermissionsResult")
 
         if (requestCode == PERM_REQUEST_CODE) {
-            isPermissionDialogShowing = false
-
             var isAllGranted = true
 
             if (grantResults.isEmpty()) {
@@ -90,29 +80,19 @@ class PermissionsActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        Timber.tag(TAG).d("onSaveInstanceState")
-        super.onSaveInstanceState(outState)
-        outState.putBoolean(PERMISSION_DIALOG_SHOWING_KEY, isPermissionDialogShowing)
-    }
-
     private fun checkHasPermissions(): Boolean {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestPermissions() {
-        if (!isPermissionDialogShowing) {
-            isPermissionDialogShowing = true
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
 
-            val permissions = arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            )
-
-            ActivityCompat.requestPermissions(this, permissions, PERM_REQUEST_CODE)
-            // Result is passed to onRequestPermissionsResult() method
-        }
+        ActivityCompat.requestPermissions(this, permissions, PERM_REQUEST_CODE)
+        // Result is passed to onRequestPermissionsResult() method
     }
 
     private fun shouldShowRationale(): Boolean {
