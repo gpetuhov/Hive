@@ -52,12 +52,17 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
 
     // Google Play Services
-    implementation "com.google.android.gms:play-services-maps:16.0.0"
-    implementation "com.google.android.gms:play-services-location:16.0.0"
+    implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-location:$playServicesVersion"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Lottie
     implementation "com.airbnb.android:lottie:2.8.0"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
 }

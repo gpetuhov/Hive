@@ -14,6 +14,8 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
@@ -21,6 +23,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 import timber.log.Timber
+import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val REQUEST_CHECK_SETTINGS = 101
     }
+
+    @Inject
+    lateinit var locationManager: LocationManager
 
     private lateinit var navController: NavController
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -37,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        HiveApp.appComponent.inject(this)
 
         // Find NavController
         navController = findNavController(R.id.nav_host)

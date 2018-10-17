@@ -2,9 +2,16 @@ package com.gpetuhov.android.hive.application
 
 import android.app.Application
 import com.gpetuhov.android.hive.BuildConfig
+import com.gpetuhov.android.hive.application.dagger.components.AppComponent
+import com.gpetuhov.android.hive.application.dagger.components.DaggerAppComponent
 import timber.log.Timber
 
 class HiveApp : Application() {
+
+    companion object {
+        lateinit var appComponent: AppComponent
+        lateinit var application: HiveApp
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -12,5 +19,8 @@ class HiveApp : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+
+        application = this
+        appComponent = DaggerAppComponent.builder().build()
     }
 }
