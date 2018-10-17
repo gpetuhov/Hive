@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.ui.activity
 
+import android.app.Activity
+import android.content.Intent
 import android.content.IntentSender
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +18,15 @@ import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 import timber.log.Timber
 
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        private const val REQUEST_CHECK_SETTINGS = 101
+    }
 
     private lateinit var navController: NavController
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -52,6 +59,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         createLocationRequest()
+
+        checkLocationSettings()
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -72,6 +81,15 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         stopLocationUpdates()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            if (resultCode != Activity.RESULT_OK) {
+                toast("Please, turn on geolocation")
+                checkLocationSettings()
+            }
+        }
     }
 
     // Check if Google Play Services installed
@@ -99,11 +117,14 @@ class MainActivity : AppCompatActivity() {
             fastestInterval = 5000
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
+    }
 
+    // Check if location is turned on in system settings.
+    // Prompt user to change settings if turned off.
+    private fun checkLocationSettings() {
         val builder = LocationSettingsRequest.Builder()
             .addLocationRequest(locationRequest)
 
-        // TODO: maybe remove this code
         val client: SettingsClient = LocationServices.getSettingsClient(this)
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
 
@@ -116,7 +137,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         task.addOnFailureListener { exception ->
-            if (exception is ResolvableApiException){
+            if (exception is ResolvableApiException) {
                 // TODO: do something here
 
                 // Location settings are not satisfied, but this can be fixed
@@ -124,8 +145,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     // Show the dialog by calling startResolutionForResult(),
                     // and check the result in onActivityResult().
-                    exception.startResolutionForResult(this@MainActivity,
-                        101)
+                    exception.startResolutionForResult(this@MainActivity, REQUEST_CHECK_SETTINGS)
                 } catch (sendEx: IntentSender.SendIntentException) {
                     // Ignore the error.
                 }
