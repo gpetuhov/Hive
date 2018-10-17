@@ -6,6 +6,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
@@ -70,5 +71,11 @@ class MapManager {
         googleMap.setOnMapLoadedCallback {
             // TODO: do something
         }
+    }
+
+    fun updateMarkers(locationList: MutableList<LatLng>) {
+        Timber.tag(TAG).d("Updating markers")
+
+        // TODO: implement this
     }
 }

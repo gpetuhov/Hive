@@ -9,11 +9,13 @@ import com.google.android.gms.maps.MapView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.MapManager
+import com.gpetuhov.android.hive.repository.Repository
 import javax.inject.Inject
 
 class MapFragment : Fragment() {
 
     @Inject lateinit var mapManager: MapManager
+    @Inject lateinit var repo: Repository
 
     private lateinit var mapView: MapView
 
@@ -42,11 +44,13 @@ class MapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
+        repo.startGettingLocationUpdates { locationList -> mapManager.updateMarkers(locationList) }
     }
 
     override fun onPause() {
         super.onPause()
         mapView.onPause()
+        repo.stopGettingLocationUpdates()
     }
 
     override fun onStop() {
