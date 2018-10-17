@@ -31,15 +31,15 @@ class SplashActivity : AppCompatActivity() {
 
         // This is needed to initialize Google Maps during splash screen,
         // so that there is no blank screen while starting main activity.
-        dummyMapView = MapView(this)
-        dummyMapView.onCreate(savedInstanceState)
+        initGoogleMaps(savedInstanceState)
 
         startActivity<PermissionsActivity>()
         finish()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    private fun initGoogleMaps(savedInstanceState: Bundle?) {
+        dummyMapView = MapView(this)
+        dummyMapView.onCreate(savedInstanceState)
         dummyMapView.onDestroy()
     }
 }
