@@ -1,12 +1,12 @@
 package com.gpetuhov.android.hive.application
 
-import android.app.Application
+import androidx.multidex.MultiDexApplication
 import com.gpetuhov.android.hive.BuildConfig
 import com.gpetuhov.android.hive.application.dagger.components.AppComponent
 import com.gpetuhov.android.hive.application.dagger.components.DaggerAppComponent
 import timber.log.Timber
 
-class HiveApp : Application() {
+class HiveApp : MultiDexApplication() {
 
     companion object {
         lateinit var appComponent: AppComponent

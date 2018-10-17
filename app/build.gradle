@@ -9,6 +9,7 @@ android {
         applicationId "com.gpetuhov.android.hive"
         minSdkVersion 16
         targetSdkVersion 28
+        multiDexEnabled true
         versionCode 1000
         versionName "0.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -65,4 +66,16 @@ dependencies {
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-firestore:17.1.1'
+
+    // Multidex (is required by Firebase)
+    implementation 'com.android.support:multidex:1.0.3'
 }
+
+
+// Needed for Firebase
+// Must be at the bottom of the file!
+apply plugin: 'com.google.gms.google-services'
