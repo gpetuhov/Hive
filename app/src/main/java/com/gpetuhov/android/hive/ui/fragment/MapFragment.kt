@@ -93,11 +93,12 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         try {
             googleMap.isMyLocationEnabled = true
 
-            val target = locationManager.currentLocation
-            val zoom = if (target.latitude == DEFAULT_LATITUDE && target.longitude == DEFAULT_LONGITUDE) NO_ZOOM else DEFAULT_ZOOM
+            locationManager.getLastLocation { location ->
+                val zoom = if (location.latitude == DEFAULT_LATITUDE && location.longitude == DEFAULT_LONGITUDE) NO_ZOOM else DEFAULT_ZOOM
 
-            val cameraPosition = CameraPosition.Builder().target(target).zoom(zoom).build()
-            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
+                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            }
 
         } catch (e: SecurityException) {
             Timber.tag(TAG).d("Location permission not granted")

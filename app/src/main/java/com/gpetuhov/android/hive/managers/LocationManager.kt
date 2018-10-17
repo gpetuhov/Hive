@@ -28,7 +28,6 @@ class LocationManager(context: Context) {
     private lateinit var locationRequest: LocationRequest
 
     init {
-        getLastLocation()
         createLocationCallback()
         createLocationRequest()
     }
@@ -77,13 +76,14 @@ class LocationManager(context: Context) {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
-    private fun getLastLocation() {
+    fun getLastLocation(onSuccess: (LatLng) -> (Unit)) {
         try {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location : Location? ->
                     // Got last known location. In some rare situations this can be null.
                     Timber.tag(TAG).d("Received last known location")
                     saveLocation(location)
+                    onSuccess(currentLocation)
                 }
 
         } catch (e: SecurityException) {
