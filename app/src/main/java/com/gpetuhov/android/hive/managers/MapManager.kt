@@ -7,6 +7,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
@@ -63,10 +64,6 @@ class MapManager {
         // Enable zoom buttons
         googleMap.uiSettings.isZoomControlsEnabled = true
 
-        // For dropping a marker at a point on the Map
-//        val sydney = LatLng(-34.0, 151.0)
-//        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"))
-
         // When the map is loaded, do something
         googleMap.setOnMapLoadedCallback {
             // TODO: do something
@@ -76,6 +73,11 @@ class MapManager {
     fun updateMarkers(locationList: MutableList<LatLng>) {
         Timber.tag(TAG).d("Updating markers")
 
-        // TODO: implement this
+        googleMap.clear()
+
+        for (location in locationList) {
+//            googleMap.addMarker(MarkerOptions().position(location).title("Marker Title").snippet("Marker Description"))
+            googleMap.addMarker(MarkerOptions().position(location))
+        }
     }
 }
