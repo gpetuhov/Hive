@@ -19,8 +19,7 @@ class Repository {
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var registration: ListenerRegistration
 
-//    private val userName = UUID.randomUUID().toString()
-    private val userName = "111"
+    private val userName = UUID.randomUUID().toString()
 
     fun writeLocation(location: LatLng) {
         // Create a new user with a first and last name
@@ -40,9 +39,6 @@ class Repository {
     }
 
     fun startGettingLocationUpdates(onSuccess: (MutableList<LatLng>) -> (Unit)) {
-        // TODO: exclude current user location from collection
-        // TODO: maybe it is doc.id ???
-
         registration = firestore.collection(USERS_COLLECTION)
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                 val locationList = mutableListOf<LatLng>()
@@ -52,12 +48,14 @@ class Repository {
                         Timber.tag(TAG).d("Listen success")
 
                         for (doc in querySnapshot) {
-                            val location = LatLng(
-                                doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
-                                doc.getDouble(LON_KEY) ?: Constants.Map.DEFAULT_LONGITUDE
-                            )
+                            if (doc.id != userName) {
+                                val location = LatLng(
+                                    doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
+                                    doc.getDouble(LON_KEY) ?: Constants.Map.DEFAULT_LONGITUDE
+                                )
 
-                            locationList.add(location)
+                                locationList.add(location)
+                            }
                         }
 
                     } else {
@@ -76,7 +74,7 @@ class Repository {
         registration.remove()
     }
 
-    private fun deleteUser() {
+    fun deleteUser() {
         firestore.collection(USERS_COLLECTION).document(userName)
             .delete()
             .addOnSuccessListener {

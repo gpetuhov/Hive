@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.LocationManager
+import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Inject lateinit var locationManager: LocationManager
+    @Inject lateinit var repo: Repository
 
     private lateinit var navController: NavController
 
@@ -43,6 +45,17 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkPlayServicesAndPermissions()
+
+        // TODO: remove this
+        locationManager.startLocationUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        // TODO: remove this
+        locationManager.stopLocationUpdates()
+        repo.deleteUser()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -64,7 +77,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initLocationManager() {
         locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
-        locationManager.startLocationUpdates()
+
+        // TODO: uncomment this
+//        locationManager.startLocationUpdates()
     }
 
     private fun checkPlayServicesAndPermissions() {
