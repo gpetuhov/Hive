@@ -23,8 +23,7 @@ import javax.inject.Inject
 // has already been started and it is time to hide splash screen.
 class SplashActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var mapManager: MapManager
+    @Inject lateinit var mapManager: MapManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

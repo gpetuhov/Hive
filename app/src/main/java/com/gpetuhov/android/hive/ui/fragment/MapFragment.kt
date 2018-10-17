@@ -13,8 +13,7 @@ import javax.inject.Inject
 
 class MapFragment : Fragment() {
 
-    @Inject
-    lateinit var mapManager: MapManager
+    @Inject lateinit var mapManager: MapManager
 
     private lateinit var mapView: MapView
 

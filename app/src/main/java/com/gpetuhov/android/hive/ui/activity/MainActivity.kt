@@ -24,8 +24,7 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_CHECK_SETTINGS = 101
     }
 
-    @Inject
-    lateinit var locationManager: LocationManager
+    @Inject lateinit var locationManager: LocationManager
 
     private lateinit var navController: NavController
 
