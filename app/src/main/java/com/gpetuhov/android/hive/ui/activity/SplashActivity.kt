@@ -2,8 +2,10 @@ package com.gpetuhov.android.hive.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.gms.maps.MapView
+import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.managers.MapManager
 import com.pawegio.kandroid.startActivity
+import javax.inject.Inject
 
 // Implementing splash screen by setting
 // AppTheme.Launcher theme for all application in the manifest and
@@ -21,7 +23,8 @@ import com.pawegio.kandroid.startActivity
 // has already been started and it is time to hide splash screen.
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var dummyMapView: MapView
+    @Inject
+    lateinit var mapManager: MapManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,17 +32,13 @@ class SplashActivity : AppCompatActivity() {
         // SplashActivity needs no layout,
         // because background is set in the theme.
 
+        HiveApp.appComponent.inject(this)
+
         // This is needed to initialize Google Maps during splash screen,
         // so that there is no blank screen while starting main activity.
-        initGoogleMaps(savedInstanceState)
+        mapManager.initGoogleMaps(this, savedInstanceState)
 
         startActivity<PermissionsActivity>()
         finish()
-    }
-
-    private fun initGoogleMaps(savedInstanceState: Bundle?) {
-        dummyMapView = MapView(this)
-        dummyMapView.onCreate(savedInstanceState)
-        dummyMapView.onDestroy()
     }
 }
