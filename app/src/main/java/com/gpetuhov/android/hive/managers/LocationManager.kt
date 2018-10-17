@@ -16,6 +16,9 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
+import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.repository.Repository
+import javax.inject.Inject
 
 
 class LocationManager(context: Context) {
@@ -24,6 +27,8 @@ class LocationManager(context: Context) {
         private const val TAG = "LocationManager"
     }
 
+    @Inject lateinit var repo: Repository
+
     var currentLocation: LatLng = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
 
     private var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
@@ -31,6 +36,7 @@ class LocationManager(context: Context) {
     private lateinit var locationRequest: LocationRequest
 
     init {
+        HiveApp.appComponent.inject(this)
         createLocationCallback()
         createLocationRequest()
     }
@@ -115,6 +121,7 @@ class LocationManager(context: Context) {
     private fun saveLocation(location: Location?) {
         if (location != null) {
             currentLocation = LatLng(location.latitude, location.longitude)
+            repo.writeLocation(currentLocation)
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
         }
     }
