@@ -6,21 +6,28 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_ZOOM
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.NO_ZOOM
 import timber.log.Timber
+import javax.inject.Inject
 
 
-class MapManager(locationManagerInput: LocationManager) {
+class MapManager {
 
     companion object {
         private const val TAG = "MapManager"
     }
 
-    private val locationManager = locationManagerInput
+    @Inject lateinit var locationManager: LocationManager
+
     private lateinit var googleMap: GoogleMap
+
+    init {
+        HiveApp.appComponent.inject(this)
+    }
 
     // Calling this method forces Google Maps (Google Play Services) to load.
     // So afterwards, when the map is really needed, it will load faster.

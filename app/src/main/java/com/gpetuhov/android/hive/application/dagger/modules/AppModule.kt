@@ -6,6 +6,7 @@ import android.preference.PreferenceManager
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
+import com.gpetuhov.android.hive.repository.Repository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -32,7 +33,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesMapManager(locationManager: LocationManager): MapManager {
-        return MapManager(locationManager)
+    fun providesMapManager(): MapManager {
+        return MapManager()
+    }
+
+    @Provides
+    @Singleton
+    fun providesRepository(): Repository {
+        return Repository()
     }
 }

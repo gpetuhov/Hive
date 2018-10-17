@@ -16,7 +16,6 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.FirebaseFirestore
 
 
 class LocationManager(context: Context) {
@@ -30,12 +29,10 @@ class LocationManager(context: Context) {
     private var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
-    private val db = FirebaseFirestore.getInstance()
 
     init {
         createLocationCallback()
         createLocationRequest()
-        writeUser()
     }
 
     // Check if location is turned on in system settings.
@@ -138,23 +135,5 @@ class LocationManager(context: Context) {
             fastestInterval = Constants.Location.UPDATE_FASTEST_INTERVAL
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
-    }
-
-    private fun writeUser() {
-        // Create a new user with a first and last name
-        val user = HashMap<Any, Any>()
-        user["first"] = "Ada"
-        user["last"] = "Lovelace"
-        user["born"] = 1815
-
-        // Add a new document with a generated ID
-        db.collection("users")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Timber.tag(TAG).d("DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { error ->
-                Timber.tag(TAG).d("Error adding document")
-            }
     }
 }

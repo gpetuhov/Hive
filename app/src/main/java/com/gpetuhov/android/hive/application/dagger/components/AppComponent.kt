@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.application.dagger.components
 
 import com.gpetuhov.android.hive.application.dagger.modules.AppModule
+import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
@@ -14,4 +15,6 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(mapFragment: MapFragment)
+
+    fun inject(mapManager: MapManager)
 }
