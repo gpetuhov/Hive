@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         navigation_view.setupWithNavController(navController)
 
         locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
+        locationManager.startLocationUpdates()
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -61,12 +62,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        locationManager.startLocationUpdates()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        locationManager.stopLocationUpdates()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
