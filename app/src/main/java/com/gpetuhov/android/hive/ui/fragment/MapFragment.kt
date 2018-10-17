@@ -1,32 +1,42 @@
 package com.gpetuhov.android.hive.ui.fragment
 
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_ZOOM
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.NO_ZOOM
 import timber.log.Timber
+import javax.inject.Inject
 
 class MapFragment : Fragment(), OnMapReadyCallback {
 
+    companion object {
+        private const val TAG = "MapFragment"
+    }
+
+    @Inject
+    lateinit var locationManager: LocationManager
+
     private lateinit var googleMap: GoogleMap
     private lateinit var mapView: MapView
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        HiveApp.appComponent.inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
@@ -36,8 +46,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
 
         // Asynchronously get reference to the map
         mapView.getMapAsync(this)
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity!!)
 
         return view
     }
@@ -85,23 +93,14 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         try {
             googleMap.isMyLocationEnabled = true
 
-            fusedLocationClient.lastLocation
-                .addOnSuccessListener { location : Location? ->
-                    // Got last known location. In some rare situations this can be null.
+            val target = locationManager.currentLocation
+            val zoom = if (target.latitude == DEFAULT_LATITUDE && target.longitude == DEFAULT_LONGITUDE) NO_ZOOM else DEFAULT_ZOOM
 
-                    val target = LatLng(
-                        location?.latitude ?: DEFAULT_LATITUDE,
-                        location?.longitude ?: DEFAULT_LONGITUDE
-                    )
-
-                    val zoom = if (location != null) DEFAULT_ZOOM else NO_ZOOM
-
-                    val cameraPosition = CameraPosition.Builder().target(target).zoom(zoom).build()
-                    googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                }
+            val cameraPosition = CameraPosition.Builder().target(target).zoom(zoom).build()
+            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
         } catch (e: SecurityException) {
-            Timber.tag("Map").d("Location permission not granted")
+            Timber.tag(TAG).d("Location permission not granted")
         }
 
         // Enable compass (will show on map rotate)

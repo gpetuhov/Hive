@@ -15,7 +15,7 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 
-class LocationManager(val context: Context) {
+class LocationManager(context: Context) {
 
     companion object {
         private const val TAG = "LocationManager"
