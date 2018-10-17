@@ -48,13 +48,8 @@ class MainActivity : AppCompatActivity() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 locationResult ?: return
-                for (location in locationResult.locations) {
-                    // TODO: do something
-                    // TODO: why is there a list of locations???
-                    // Update UI with location data
-                    // ...
-                    Timber.tag("Location").d("${location.latitude}, ${location.longitude}")
-                }
+                val location = locationResult.lastLocation
+                Timber.tag("Location").d("${location.latitude}, ${location.longitude}")
             }
         }
 
@@ -120,25 +115,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Check if location is turned on in system settings.
-    // Prompt user to change settings if turned off.
+    // Prompt the user to change settings if turned off.
     private fun checkLocationSettings() {
-        val builder = LocationSettingsRequest.Builder()
-            .addLocationRequest(locationRequest)
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
 
         val client: SettingsClient = LocationServices.getSettingsClient(this)
         val task: Task<LocationSettingsResponse> = client.checkLocationSettings(builder.build())
 
         task.addOnSuccessListener { locationSettingsResponse ->
-            // All location settings are satisfied. The client can initialize
-            // location requests here.
-            // ...
-
-            // TODO: do something here
+            Timber.tag("Location").d("Geolocation is on")
         }
 
         task.addOnFailureListener { exception ->
+            Timber.tag("Location").d("Geolocation is off")
+
             if (exception is ResolvableApiException) {
-                // TODO: do something here
+                Timber.tag("Location").d("Prompt the user to turn on geolocation")
 
                 // Location settings are not satisfied, but this can be fixed
                 // by showing the user a dialog.
@@ -147,7 +139,7 @@ class MainActivity : AppCompatActivity() {
                     // and check the result in onActivityResult().
                     exception.startResolutionForResult(this@MainActivity, REQUEST_CHECK_SETTINGS)
                 } catch (sendEx: IntentSender.SendIntentException) {
-                    // Ignore the error.
+                    Timber.tag("Location").d("Error showing location settings dialog")
                 }
             }
         }
@@ -155,9 +147,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startLocationUpdates() {
         try {
-            fusedLocationClient.requestLocationUpdates(locationRequest,
-                locationCallback,
-                null /* Looper */)
+            fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
         } catch (e: SecurityException) {
             Timber.tag("Location").d("Location permission not granted")
         }
