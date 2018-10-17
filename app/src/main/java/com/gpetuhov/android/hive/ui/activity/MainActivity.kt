@@ -35,21 +35,40 @@ class MainActivity : AppCompatActivity() {
 
         HiveApp.appComponent.inject(this)
 
-        // Find NavController
-        navController = findNavController(R.id.nav_host)
-
-        // Tie NavHostFragment to bottom navigation bar
-        navigation_view.setupWithNavController(navController)
-
-        locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
-        locationManager.startLocationUpdates()
+        initNavigation()
+        initLocationManager()
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
 
     override fun onResume() {
         super.onResume()
+        checkPlayServicesAndPermissions()
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CHECK_SETTINGS) {
+            if (resultCode != Activity.RESULT_OK) {
+                toast("Please, turn on geolocation")
+                locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
+            }
+        }
+    }
+
+    private fun initNavigation() {
+        // Find NavController
+        navController = findNavController(R.id.nav_host)
+
+        // Tie NavHostFragment to bottom navigation bar
+        navigation_view.setupWithNavController(navController)
+    }
+
+    private fun initLocationManager() {
+        locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
+        locationManager.startLocationUpdates()
+    }
+
+    private fun checkPlayServicesAndPermissions() {
         val playServicesAvailable = locationManager.checkPlayServices(this) {
             longToast(R.string.play_services_unavailable)
             finish()
@@ -59,16 +78,6 @@ class MainActivity : AppCompatActivity() {
             if (!checkPermissions(this)) {
                 startActivity<PermissionsActivity>()
                 finish()
-            }
-        }
-
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CHECK_SETTINGS) {
-            if (resultCode != Activity.RESULT_OK) {
-                toast("Please, turn on geolocation")
-                locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
             }
         }
     }
