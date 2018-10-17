@@ -9,4 +9,11 @@ class Constants {
             const val NO_ZOOM = 0.0F
         }
     }
+
+    class Location {
+        companion object {
+            const val UPDATE_INTERVAL = 10000L
+            const val UPDATE_FASTEST_INTERVAL = 5000L
+        }
+    }
 }

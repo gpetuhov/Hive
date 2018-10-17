@@ -14,6 +14,7 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,6 +48,8 @@ class MainActivity : AppCompatActivity() {
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
+                // TODO: save location here
+
                 locationResult ?: return
                 val location = locationResult.lastLocation
                 Timber.tag("Location").d("${location.latitude}, ${location.longitude}")
@@ -108,8 +111,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun createLocationRequest() {
         locationRequest = LocationRequest().apply {
-            interval = 10000
-            fastestInterval = 5000
+            interval = Constants.Location.UPDATE_INTERVAL
+            fastestInterval = Constants.Location.UPDATE_FASTEST_INTERVAL
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         }
     }
