@@ -11,6 +11,8 @@ import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import android.content.IntentSender
 import android.location.Location
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
@@ -89,6 +91,24 @@ class LocationManager(context: Context) {
         } catch (e: SecurityException) {
             Timber.tag(TAG).d("Location permission not granted")
         }
+    }
+
+    // Check if Google Play Services installed
+    fun checkPlayServices(activity: Activity, onUnrecoverableError: () -> (Unit)): Boolean {
+        var servicesAvailable = true
+        val gApi = GoogleApiAvailability.getInstance()
+        val resultCode = gApi.isGooglePlayServicesAvailable(activity)
+
+        if (resultCode != ConnectionResult.SUCCESS) {
+            servicesAvailable = false
+            if (gApi.isUserResolvableError(resultCode)) {
+                gApi.getErrorDialog(activity, resultCode, 1).show()
+            } else {
+                onUnrecoverableError()
+            }
+        }
+
+        return servicesAvailable
     }
 
     private fun saveLocation(location: Location?) {

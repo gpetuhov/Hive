@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.GoogleApiAvailability
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.LocationManager
@@ -51,7 +49,12 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (checkPlayServices()) {
+        val playServicesAvailable = locationManager.checkPlayServices(this) {
+            longToast(R.string.play_services_unavailable)
+            finish()
+        }
+
+        if (playServicesAvailable) {
             if (!checkPermissions(this)) {
                 startActivity<PermissionsActivity>()
                 finish()
@@ -73,24 +76,5 @@ class MainActivity : AppCompatActivity() {
                 locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
             }
         }
-    }
-
-    // Check if Google Play Services installed
-    private fun checkPlayServices(): Boolean {
-        var servicesAvailable = true
-        val gApi = GoogleApiAvailability.getInstance()
-        val resultCode = gApi.isGooglePlayServicesAvailable(this)
-
-        if (resultCode != ConnectionResult.SUCCESS) {
-            servicesAvailable = false
-            if (gApi.isUserResolvableError(resultCode)) {
-                gApi.getErrorDialog(this, resultCode, 1).show()
-            } else {
-                longToast(R.string.play_services_unavailable)
-                finish()
-            }
-        }
-
-        return servicesAvailable
     }
 }
