@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import android.content.IntentSender
+import android.location.Location
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
@@ -27,6 +28,7 @@ class LocationManager(val context: Context) {
     private lateinit var locationRequest: LocationRequest
 
     init {
+        getLastLocation()
         createLocationCallback()
         createLocationRequest()
     }
@@ -75,13 +77,32 @@ class LocationManager(val context: Context) {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
+    private fun getLastLocation() {
+        try {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location : Location? ->
+                    // Got last known location. In some rare situations this can be null.
+                    Timber.tag(TAG).d("Received last known location")
+                    saveLocation(location)
+                }
+
+        } catch (e: SecurityException) {
+            Timber.tag(TAG).d("Location permission not granted")
+        }
+    }
+
+    private fun saveLocation(location: Location?) {
+        if (location != null) {
+            currentLocation = LatLng(location.latitude, location.longitude)
+            Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
+        }
+    }
+
     private fun createLocationCallback() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult?) {
                 if (locationResult != null) {
-                    val location = locationResult.lastLocation
-                    currentLocation = LatLng(location.latitude, location.longitude)
-                    Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
+                    saveLocation(locationResult.lastLocation)
                 }
             }
         }

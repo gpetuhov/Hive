@@ -23,7 +23,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        private const val REQUEST_CHECK_SETTINGS = 1001001
+        private const val REQUEST_CHECK_SETTINGS = 101
     }
 
     @Inject
