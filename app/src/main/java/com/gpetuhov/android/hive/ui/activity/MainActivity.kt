@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAuthManager() {
-        authManager.init(this, RC_SIGN_IN, this::onSignIn, this::onSignOut)
+        authManager.init(this::onSignIn, this::onSignOut)
     }
 
     private fun checkPlayServicesAndPermissions() {
@@ -114,6 +114,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSignOut() {
-        // TODO: do something
+        // If signed out, just start AuthActivity and finish.
+        // AuthActivity will handle the login process.
+        startActivity<AuthActivity>()
+        finish()
     }
 }

@@ -16,7 +16,7 @@ class AuthManager {
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
-    fun init(activity: Activity, resultCode: Int, onSignIn: (FirebaseUser) -> (Unit), onSignOut: () -> (Unit)) {
+    fun init(onSignIn: (FirebaseUser) -> (Unit), onSignOut: () -> (Unit)) {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
 
@@ -32,26 +32,28 @@ class AuthManager {
             } else {
                 // User is signed out
                 onSignOut()
+            }
+        }
+    }
 
-                val providers = arrayListOf(
-                    AuthUI.IdpConfig.EmailBuilder().build(),
-                    AuthUI.IdpConfig.GoogleBuilder().build()
+    fun showLoginScreen(activity: Activity, resultCode: Int) {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.EmailBuilder().build(),
+            AuthUI.IdpConfig.GoogleBuilder().build()
 //                    AuthUI.IdpConfig.PhoneBuilder().build(),
 //                    AuthUI.IdpConfig.FacebookBuilder().build(),
 //                    AuthUI.IdpConfig.TwitterBuilder().build()
-                )
+        )
 
-                activity.startActivityForResult(
-                    AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setIsSmartLockEnabled(true)
-                        .setAvailableProviders(providers)
-                        .setTheme(R.style.AuthTheme)
-                        .build(),
-                    resultCode
-                )
-            }
-        }
+        activity.startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setIsSmartLockEnabled(true)
+                .setAvailableProviders(providers)
+                .setTheme(R.style.AuthTheme)
+                .build(),
+            resultCode
+        )
     }
 
     fun startListenAuth() {

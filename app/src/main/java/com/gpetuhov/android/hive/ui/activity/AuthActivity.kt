@@ -10,6 +10,9 @@ import javax.inject.Inject
 
 // Just a blank activity to be shown in background behind FirebaseUI during authentication
 // (so that the user won't see a bit of main activity on back button pressed in FirebaseUI)
+
+// Login process (start FirebaseUI) should be initiated only from this activity
+
 class AuthActivity : AppCompatActivity() {
 
     companion object {
@@ -23,7 +26,7 @@ class AuthActivity : AppCompatActivity() {
 
         HiveApp.appComponent.inject(this)
 
-        authManager.init(this, RC_SIGN_IN, this::onSignIn, this::onSignOut)
+        authManager.init(this::onSignIn, this::onSignOut)
     }
 
     override fun onResume() {
@@ -42,6 +45,6 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun onSignOut() {
-        // Do nothing
+        authManager.showLoginScreen(this, RC_SIGN_IN)
     }
 }
