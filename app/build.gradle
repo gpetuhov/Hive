@@ -100,6 +100,12 @@ dependencies {
     // FirebaseUI for Firebase Auth
     implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
 
+    // Facebook (required for FirebaseUI)
+    implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
+
+    // Twitter (required for FirebaseUI)
+    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+
     // Multidex (is required by Firebase)
     implementation 'com.android.support:multidex:1.0.3'
 }

@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.LocationManager
@@ -23,12 +25,16 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_CHECK_SETTINGS = 101
+        private const val RC_SIGN_IN = 102
     }
 
     @Inject lateinit var locationManager: LocationManager
     @Inject lateinit var repo: Repository
 
     private lateinit var navController: NavController
+
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +44,36 @@ class MainActivity : AppCompatActivity() {
 
         initNavigation()
         initLocationManager()
+
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            val user = firebaseAuth.currentUser
+            if (user != null) {
+                // User is signed in
+                onSignedInInitialize(user.displayName)
+            } else {
+                // User is signed out
+                onSignedOutCleanup()
+
+                val providers = arrayListOf(
+                    AuthUI.IdpConfig.EmailBuilder().build()
+//                    AuthUI.IdpConfig.PhoneBuilder().build(),
+//                    AuthUI.IdpConfig.GoogleBuilder().build(),
+//                    AuthUI.IdpConfig.FacebookBuilder().build(),
+//                    AuthUI.IdpConfig.TwitterBuilder().build()
+                )
+
+                startActivityForResult(
+                    AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
+                        .setAvailableProviders(providers)
+                        .build(),
+                    RC_SIGN_IN
+                )
+            }
+        }
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -48,6 +84,8 @@ class MainActivity : AppCompatActivity() {
 
         // TODO: remove this
         locationManager.startLocationUpdates()
+
+        firebaseAuth.addAuthStateListener(authStateListener)
     }
 
     override fun onPause() {
@@ -56,6 +94,8 @@ class MainActivity : AppCompatActivity() {
         // TODO: remove this
         locationManager.stopLocationUpdates()
         repo.deleteUser()
+
+        firebaseAuth.removeAuthStateListener(authStateListener)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -94,5 +134,13 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    private fun onSignedInInitialize(displayName: String?) {
+        // TODO: implement this
+    }
+
+    private fun onSignedOutCleanup() {
+        // TODO: implement this
     }
 }
