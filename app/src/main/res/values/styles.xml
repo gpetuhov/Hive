@@ -12,4 +12,9 @@
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
+    <!-- FirebaseUI for Auth theme -->
+    <!-- Here does nothing. Changes are present only in styles v23 -->
+    <style name="AuthTheme" parent="FirebaseUI">
+    </style>
+
 </resources>

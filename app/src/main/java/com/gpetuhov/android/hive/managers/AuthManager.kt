@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.managers
 import android.app.Activity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 
@@ -44,6 +45,7 @@ class AuthManager {
                         .createSignInIntentBuilder()
                         .setIsSmartLockEnabled(true)
                         .setAvailableProviders(providers)
+                        .setTheme(R.style.AuthTheme)
                         .build(),
                     resultCode
                 )

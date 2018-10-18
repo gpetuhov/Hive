@@ -18,4 +18,10 @@
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 
+    <!-- FirebaseUI for Auth theme -->
+    <!-- Needed to change status bar color back to dark -->
+    <style name="AuthTheme" parent="FirebaseUI">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
 </resources>
