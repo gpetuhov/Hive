@@ -8,7 +8,7 @@
         android:fillViewport="true"
         tools:context=".ui.activity.PermissionsActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -74,6 +74,6 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 android:layout_marginTop="16dp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </ScrollView>

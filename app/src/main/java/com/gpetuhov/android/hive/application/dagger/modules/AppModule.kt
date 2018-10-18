@@ -1,8 +1,6 @@
 package com.gpetuhov.android.hive.application.dagger.modules
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager

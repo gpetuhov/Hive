@@ -1,6 +1,6 @@
 package com.gpetuhov.android.hive.application
 
-import androidx.multidex.MultiDexApplication
+import android.support.multidex.MultiDexApplication
 import com.gpetuhov.android.hive.BuildConfig
 import com.gpetuhov.android.hive.application.dagger.components.AppComponent
 import com.gpetuhov.android.hive.application.dagger.components.DaggerAppComponent

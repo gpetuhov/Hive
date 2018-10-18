@@ -1,7 +1,7 @@
 package com.gpetuhov.android.hive.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.MapManager
 import com.pawegio.kandroid.startActivity

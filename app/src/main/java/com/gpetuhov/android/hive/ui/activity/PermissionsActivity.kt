@@ -2,13 +2,13 @@ package com.gpetuhov.android.hive.ui.activity
 
 import android.Manifest
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import com.gpetuhov.android.hive.R
 import android.content.Intent
-import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
+import android.support.v4.app.ActivityCompat
+import android.support.v7.app.AppCompatActivity
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_permissions.*
