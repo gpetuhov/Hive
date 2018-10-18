@@ -3,8 +3,8 @@ package com.gpetuhov.android.hive.managers
 import android.app.Activity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 
 class AuthManager {
@@ -16,7 +16,7 @@ class AuthManager {
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
-    fun init(activity: Activity, resultCode: Int) {
+    fun init(activity: Activity, resultCode: Int, onSignIn: (FirebaseUser) -> (Unit), onSignOut: () -> (Unit)) {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
 
@@ -26,11 +26,12 @@ class AuthManager {
                 Timber.tag(TAG).d("User id = ${user.uid}")
                 Timber.tag(TAG).d("User name = ${user.displayName}")
                 Timber.tag(TAG).d("User email = ${user.email}")
-                onSignedInInitialize(user.displayName ?: Constants.Auth.DEFAULT_USER_NAME)
+
+                onSignIn(user)
 
             } else {
                 // User is signed out
-                onSignedOutCleanup()
+                onSignOut()
 
                 val providers = arrayListOf(
                     AuthUI.IdpConfig.EmailBuilder().build(),
@@ -59,13 +60,5 @@ class AuthManager {
 
     fun stopListenAuth() {
         firebaseAuth.removeAuthStateListener(authStateListener)
-    }
-
-    private fun onSignedInInitialize(userName: String) {
-        // TODO: implement this
-    }
-
-    private fun onSignedOutCleanup() {
-        // TODO: implement this
     }
 }

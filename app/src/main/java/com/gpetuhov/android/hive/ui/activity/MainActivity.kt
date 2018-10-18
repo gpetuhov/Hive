@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAuthManager() {
-        authManager.init(this, RC_SIGN_IN)
+        authManager.init(this, RC_SIGN_IN, this::onSignIn, this::onSignOut)
     }
 
     private fun checkPlayServicesAndPermissions() {
@@ -106,5 +107,13 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+    private fun onSignIn(firebaseUser: FirebaseUser) {
+        // TODO: do something
+    }
+
+    private fun onSignOut() {
+        // TODO: do something
     }
 }

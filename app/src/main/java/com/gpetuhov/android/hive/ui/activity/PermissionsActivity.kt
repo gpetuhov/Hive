@@ -114,13 +114,13 @@ class PermissionsActivity : AppCompatActivity() {
 
     private fun closePermissionsScreen() {
         // Here we start main activity first, so that previously shown splash screen won't animate
-        startActivity<MainActivity>()
+        startActivity<AuthActivity>()
         finish()
     }
 
     private fun closePermissionsScreenAfterGranted() {
         // This is needed to close permissions screen immediately after permissions have been granted
         finish()
-        startActivity<MainActivity>()
+        startActivity<AuthActivity>()
     }
 }
