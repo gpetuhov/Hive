@@ -42,7 +42,7 @@ class AuthManager {
                 activity.startActivityForResult(
                     AuthUI.getInstance()
                         .createSignInIntentBuilder()
-                        .setIsSmartLockEnabled(false)
+                        .setIsSmartLockEnabled(true)
                         .setAvailableProviders(providers)
                         .build(),
                     resultCode
