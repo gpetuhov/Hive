@@ -21,12 +21,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesPrefs(context: Context): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-    }
-
-    @Provides
-    @Singleton
     fun providesLocationManager(context: Context): LocationManager {
         return LocationManager(context)
     }

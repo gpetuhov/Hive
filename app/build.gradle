@@ -3,21 +3,36 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def appVersionCode = 1000
+def appVersionName = "0.1.0"
+
 android {
     compileSdkVersion 28
+
     defaultConfig {
         applicationId "com.gpetuhov.android.hive"
         minSdkVersion 16
         targetSdkVersion 28
         multiDexEnabled true
-        versionCode 1000
-        versionName "0.1.0"
+        versionCode appVersionCode
+        versionName appVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def SEP = "_"
+            def date = new Date()
+            def formattedDate = date.format('dd.MM.YYYY_HH-mm')
+
+            outputFileName = "hive" + SEP + variant.buildType.name + SEP + appVersionName + SEP + formattedDate + ".apk"
         }
     }
 }
