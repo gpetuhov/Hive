@@ -1,3 +1,5 @@
+import com.google.gms.googleservices.GoogleServicesPlugin
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -24,6 +26,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    // Required by FirebaseUI (without it dex merging fails)
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     android.applicationVariants.all { variant ->
@@ -86,11 +94,20 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.4'
     implementation 'com.google.firebase:firebase-firestore:17.1.1'
 
+    // This must be explicitly set, otherwise the app will crash (used by FirebaseUI)
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
+
+    // FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
+
     // Multidex (is required by Firebase)
     implementation 'com.android.support:multidex:1.0.3'
 }
 
-
 // Needed for Firebase
 // Must be at the bottom of the file!
 apply plugin: 'com.google.gms.google-services'
+
+// Without this line the app won't build due to different versions of google services
+// used in plugin and in FirebaseUI
+GoogleServicesPlugin.config.disableVersionCheck = true
