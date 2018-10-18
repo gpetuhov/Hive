@@ -7,10 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.checkPermissions
@@ -29,12 +28,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Inject lateinit var locationManager: LocationManager
+    @Inject lateinit var authManager: AuthManager
     @Inject lateinit var repo: Repository
 
     private lateinit var navController: NavController
-
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,36 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         initNavigation()
         initLocationManager()
-
-        firebaseAuth = FirebaseAuth.getInstance()
-
-        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val user = firebaseAuth.currentUser
-            if (user != null) {
-                // User is signed in
-                onSignedInInitialize(user.displayName)
-            } else {
-                // User is signed out
-                onSignedOutCleanup()
-
-                val providers = arrayListOf(
-                    AuthUI.IdpConfig.EmailBuilder().build()
-//                    AuthUI.IdpConfig.PhoneBuilder().build(),
-//                    AuthUI.IdpConfig.GoogleBuilder().build(),
-//                    AuthUI.IdpConfig.FacebookBuilder().build(),
-//                    AuthUI.IdpConfig.TwitterBuilder().build()
-                )
-
-                startActivityForResult(
-                    AuthUI.getInstance()
-                        .createSignInIntentBuilder()
-                        .setIsSmartLockEnabled(false)
-                        .setAvailableProviders(providers)
-                        .build(),
-                    RC_SIGN_IN
-                )
-            }
-        }
+        initAuthManager()
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -85,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         // TODO: remove this
         locationManager.startLocationUpdates()
 
-        firebaseAuth.addAuthStateListener(authStateListener)
+        authManager.startListenAuth()
     }
 
     override fun onPause() {
@@ -95,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         locationManager.stopLocationUpdates()
         repo.deleteUser()
 
-        firebaseAuth.removeAuthStateListener(authStateListener)
+        authManager.stopListenAuth()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -122,6 +90,10 @@ class MainActivity : AppCompatActivity() {
 //        locationManager.startLocationUpdates()
     }
 
+    private fun initAuthManager() {
+        authManager.init(this, RC_SIGN_IN)
+    }
+
     private fun checkPlayServicesAndPermissions() {
         val playServicesAvailable = locationManager.checkPlayServices(this) {
             longToast(R.string.play_services_unavailable)
@@ -134,13 +106,5 @@ class MainActivity : AppCompatActivity() {
                 finish()
             }
         }
-    }
-
-    private fun onSignedInInitialize(displayName: String?) {
-        // TODO: implement this
-    }
-
-    private fun onSignedOutCleanup() {
-        // TODO: implement this
     }
 }

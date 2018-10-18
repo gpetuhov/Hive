@@ -16,4 +16,10 @@ class Constants {
             const val UPDATE_FASTEST_INTERVAL = 30000L
         }
     }
+
+    class Auth {
+        companion object {
+            const val DEFAULT_USER_NAME = "Anonymous"
+        }
+    }
 }

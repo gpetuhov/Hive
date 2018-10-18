@@ -1,9 +1,8 @@
 package com.gpetuhov.android.hive.application.dagger.modules
 
 import android.content.Context
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.repository.Repository
@@ -35,5 +34,11 @@ class AppModule {
     @Singleton
     fun providesRepository(): Repository {
         return Repository()
+    }
+
+    @Provides
+    @Singleton
+    fun providesAuthManager(): AuthManager {
+        return AuthManager()
     }
 }
