@@ -4,8 +4,13 @@ import android.app.Activity
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.gpetuhov.android.hive.util.Constants
+import timber.log.Timber
 
 class AuthManager {
+
+    companion object {
+        private const val TAG = "AuthManager"
+    }
 
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -16,6 +21,10 @@ class AuthManager {
 
             if (user != null) {
                 // User is signed in
+                Timber.tag(TAG).d("Login successful")
+                Timber.tag(TAG).d("User id = ${user.uid}")
+                Timber.tag(TAG).d("User name = ${user.displayName}")
+                Timber.tag(TAG).d("User email = ${user.email}")
                 onSignedInInitialize(user.displayName ?: Constants.Auth.DEFAULT_USER_NAME)
 
             } else {
@@ -23,9 +32,9 @@ class AuthManager {
                 onSignedOutCleanup()
 
                 val providers = arrayListOf(
-                    AuthUI.IdpConfig.EmailBuilder().build()
+                    AuthUI.IdpConfig.EmailBuilder().build(),
+                    AuthUI.IdpConfig.GoogleBuilder().build()
 //                    AuthUI.IdpConfig.PhoneBuilder().build(),
-//                    AuthUI.IdpConfig.GoogleBuilder().build(),
 //                    AuthUI.IdpConfig.FacebookBuilder().build(),
 //                    AuthUI.IdpConfig.TwitterBuilder().build()
                 )
