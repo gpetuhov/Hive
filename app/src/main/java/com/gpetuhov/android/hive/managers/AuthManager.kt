@@ -107,6 +107,7 @@ class AuthManager {
             uid = "",
             name = Constants.Auth.DEFAULT_USER_NAME,
             email = Constants.Auth.DEFAULT_USER_MAIL,
+            isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
     }
@@ -116,6 +117,7 @@ class AuthManager {
             uid = firebaseUser.uid,
             name = firebaseUser.displayName ?: Constants.Auth.DEFAULT_USER_NAME,
             email = firebaseUser.email ?: Constants.Auth.DEFAULT_USER_MAIL,
+            isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
     }

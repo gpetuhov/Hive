@@ -1,12 +1,14 @@
 package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.MarkerOptions
+import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
@@ -23,6 +25,7 @@ class MapManager {
         private const val TAG = "MapManager"
     }
 
+    @Inject lateinit var context: Context
     @Inject lateinit var locationManager: LocationManager
 
     private lateinit var googleMap: GoogleMap
@@ -76,7 +79,9 @@ class MapManager {
         googleMap.clear()
 
         for (user in resultList) {
-            val userMarker = googleMap.addMarker(MarkerOptions().position(user.location).title(user.name).snippet(user.email))
+            val statusId = if (user.isOnline) R.string.online else R.string.offline
+            val status = context.getString(statusId)
+            val userMarker = googleMap.addMarker(MarkerOptions().position(user.location).title(user.name).snippet(status))
             userMarker.showInfoWindow()
         }
     }

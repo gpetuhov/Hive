@@ -30,6 +30,10 @@
     <string name="delete_account_success">User account successfully deleted</string>
     <string name="delete_account_error">Error deleting user account. Please, try again</string>
 
+    <!-- MapFragment -->
+    <string name="online">online</string>
+    <string name="offline">offline</string>
+
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>

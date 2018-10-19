@@ -54,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         locationManager.startLocationUpdates()
 
         authManager.startListenAuth()
+
+        updateUserOnlineStatus(true)
     }
 
     override fun onPause() {
@@ -64,6 +66,8 @@ class MainActivity : AppCompatActivity() {
         repo.deleteLocation()
 
         authManager.stopListenAuth()
+
+        updateUserOnlineStatus(false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -117,5 +121,10 @@ class MainActivity : AppCompatActivity() {
         // AuthActivity will handle the login process.
         startActivity<AuthActivity>()
         finish()
+    }
+
+    private fun updateUserOnlineStatus(isOnline: Boolean) {
+        authManager.user.isOnline = isOnline
+        repo.updateUserOnlineStatus()
     }
 }

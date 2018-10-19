@@ -20,6 +20,7 @@ class Repository {
         private const val USERS_COLLECTION = "users"
         private const val NAME_KEY = "name"
         private const val EMAIL_KEY = "email"
+        private const val IS_ONLINE_KEY = "is_online"
         private const val LAT_KEY = "lat"
         private const val LON_KEY = "lon"
     }
@@ -45,6 +46,13 @@ class Repository {
         val data = HashMap<String, Any>()
         data[LAT_KEY] = location.latitude
         data[LON_KEY] = location.longitude
+
+        updateUserData(data)
+    }
+
+    fun updateUserOnlineStatus() {
+        val data = HashMap<String, Any>()
+        data[IS_ONLINE_KEY] = authManager.user.isOnline
 
         updateUserData(data)
     }
@@ -112,6 +120,7 @@ class Repository {
             uid = doc.id,
             name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
+            isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )
     }
