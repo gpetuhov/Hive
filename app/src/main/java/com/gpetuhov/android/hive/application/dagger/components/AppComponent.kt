@@ -7,6 +7,7 @@ import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
+import com.gpetuhov.android.hive.ui.fragment.ProfileFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -18,6 +19,7 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(mapFragment: MapFragment)
+    fun inject(profileFragment: ProfileFragment)
 
     fun inject(locationManager: LocationManager)
     fun inject(mapManager: MapManager)

@@ -8,13 +8,48 @@
         tools:context=".ui.fragment.ProfileFragment">
 
     <TextView
-            android:id="@+id/profile_text"
+            android:id="@+id/user_name_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="20sp"
+            android:visibility="gone"
+            tools:text="User name" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/user_email_textview"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+            android:id="@+id/user_email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:visibility="gone"
+            tools:text="someName@someMail.com"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_name_textview" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/signout_button" android:layout_marginTop="8dp"/>
+
+    <Button
+            android:id="@+id/signout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_out"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/user_email_textview" app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintBottom_toTopOf="@+id/delete_user_button" android:layout_marginTop="8dp"/>
+
+    <Button
+            android:id="@+id/delete_user_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_user"
+            android:textColor="@color/md_red_600"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/signout_button"
+            app:layout_constraintHorizontal_bias="0.5" android:layout_marginTop="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

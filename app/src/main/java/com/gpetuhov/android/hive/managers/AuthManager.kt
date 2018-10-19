@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
+import android.content.Context
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -62,5 +63,25 @@ class AuthManager {
 
     fun stopListenAuth() {
         firebaseAuth.removeAuthStateListener(authStateListener)
+    }
+
+    fun signOut(context: Context?) {
+        if (context != null) {
+            AuthUI.getInstance()
+                .signOut(context)
+                .addOnCompleteListener {
+                    // TODO: do smth
+                }
+        }
+    }
+
+    fun deleteUser(context: Context?) {
+        if (context != null) {
+            AuthUI.getInstance()
+                .delete(context)
+                .addOnCompleteListener {
+                    // TODO: do smth
+                }
+        }
     }
 }

@@ -26,5 +26,7 @@
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
+    <string name="sign_out">Sign out</string>
+    <string name="delete_user">Delete user</string>
 
 </resources>
