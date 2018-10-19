@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         // TODO: remove this
         locationManager.stopLocationUpdates()
-        repo.deleteUser()
+        repo.deleteLocation()
 
         authManager.stopListenAuth()
     }

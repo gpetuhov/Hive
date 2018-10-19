@@ -19,6 +19,11 @@
         your device
     </string>
 
+    <!-- ProfileFragment -->
+    <string name="sign_out">Sign out</string>
+    <string name="delete_user">Delete user</string>
+    <string name="prompt_sign_out">Do you really want to sign out?</string>
+
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
@@ -26,7 +31,5 @@
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
-    <string name="sign_out">Sign out</string>
-    <string name="delete_user">Delete user</string>
 
 </resources>

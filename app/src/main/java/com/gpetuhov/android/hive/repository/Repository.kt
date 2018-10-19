@@ -81,14 +81,14 @@ class Repository {
         registration.remove()
     }
 
-    fun deleteUser() {
-        firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
-            .delete()
-            .addOnSuccessListener {
-                Timber.tag(TAG).d("DocumentSnapshot successfully deleted")
-            }
-            .addOnFailureListener {
-                Timber.tag(TAG).d("Error deleting document")
-            }
+    fun deleteLocation() {
+//        firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
+//            .delete()
+//            .addOnSuccessListener {
+//                Timber.tag(TAG).d("DocumentSnapshot successfully deleted")
+//            }
+//            .addOnFailureListener {
+//                Timber.tag(TAG).d("Error deleting document")
+//            }
     }
 }

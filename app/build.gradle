@@ -108,6 +108,9 @@ dependencies {
 
     // Multidex (is required by Firebase)
     implementation 'com.android.support:multidex:1.0.3'
+
+    // Material dialogs
+    implementation 'com.afollestad.material-dialogs:core:2.0.0-beta4'
 }
 
 // Needed for Firebase
