@@ -58,30 +58,32 @@ class Repository {
     }
 
     fun startGettingResultUpdates(onSuccess: (MutableList<User>) -> (Unit)) {
-        registration = firestore.collection(USERS_COLLECTION)
-            .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                val resultList = mutableListOf<User>()
+        if (authManager.isAuthorized) {
+            registration = firestore.collection(USERS_COLLECTION)
+                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    val resultList = mutableListOf<User>()
 
-                if (firebaseFirestoreException == null) {
-                    if (querySnapshot != null) {
-                        Timber.tag(TAG).d("Listen success")
+                    if (firebaseFirestoreException == null) {
+                        if (querySnapshot != null) {
+                            Timber.tag(TAG).d("Listen success")
 
-                        for (doc in querySnapshot) {
-                            if (doc.id != authManager.user.uid) {
-                                resultList.add(getUserFromDocumentSnapshot(doc))
+                            for (doc in querySnapshot) {
+                                if (doc.id != authManager.user.uid) {
+                                    resultList.add(getUserFromDocumentSnapshot(doc))
+                                }
                             }
+
+                        } else {
+                            Timber.tag(TAG).d("Listen failed")
                         }
 
                     } else {
-                        Timber.tag(TAG).d("Listen failed")
+                        Timber.tag(TAG).d(firebaseFirestoreException)
                     }
 
-                } else {
-                    Timber.tag(TAG).d(firebaseFirestoreException)
+                    onSuccess(resultList)
                 }
-
-                onSuccess(resultList)
-            }
+        }
     }
 
     fun stopGettingResultUpdates() {
@@ -100,14 +102,16 @@ class Repository {
     }
 
     private fun updateUserData(data: HashMap<String, Any>) {
-        firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
-            .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
-            .addOnSuccessListener {
-                Timber.tag(TAG).d("User data successfully written")
-            }
-            .addOnFailureListener { error ->
-                Timber.tag(TAG).d("Error writing user data")
-            }
+        if (authManager.isAuthorized) {
+            firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
+                .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("User data successfully written")
+                }
+                .addOnFailureListener { error ->
+                    Timber.tag(TAG).d("Error writing user data")
+                }
+        }
     }
 
     private fun getUserFromDocumentSnapshot(doc: QueryDocumentSnapshot): User {

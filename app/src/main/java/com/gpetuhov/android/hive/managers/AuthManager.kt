@@ -18,6 +18,7 @@ class AuthManager {
     }
 
     var user = createAnonymousUser()
+    var isAuthorized = false
 
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -28,6 +29,8 @@ class AuthManager {
 
             if (firebaseUser != null) {
                 // User is signed in
+                isAuthorized = true
+
                 Timber.tag(TAG).d("Login successful")
                 Timber.tag(TAG).d("User id = ${firebaseUser.uid}")
                 Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
@@ -38,6 +41,7 @@ class AuthManager {
 
             } else {
                 // User is signed out
+                isAuthorized = false
                 user = createAnonymousUser()
                 onSignOut()
             }
