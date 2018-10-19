@@ -109,7 +109,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSignIn(user: User) {
-        // TODO: do something
+        repo.updateUserName()
     }
 
     private fun onSignOut() {

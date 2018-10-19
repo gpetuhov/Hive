@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.repository
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.SetOptions
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.util.Constants
@@ -15,6 +16,7 @@ class Repository {
     companion object {
         private const val TAG = "Repository"
         private const val USERS_COLLECTION = "users"
+        private const val NAME_KEY = "name"
         private const val LAT_KEY = "lat"
         private const val LON_KEY = "lon"
     }
@@ -28,21 +30,19 @@ class Repository {
         HiveApp.appComponent.inject(this)
     }
 
-    fun writeLocation(location: LatLng) {
-        // Create a new user with a first and last name
-        val user = HashMap<String, Any>()
-        user[LAT_KEY] = location.latitude
-        user[LON_KEY] = location.longitude
+    fun updateUserName() {
+        val data = HashMap<String, Any>()
+        data[NAME_KEY] = authManager.user.name
 
-        // Add a new document with a generated ID
-        firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
-            .set(user)
-            .addOnSuccessListener {
-                Timber.tag(TAG).d("DocumentSnapshot successfully written")
-            }
-            .addOnFailureListener { error ->
-                Timber.tag(TAG).d("Error writing document")
-            }
+        updateUserData(data)
+    }
+
+    fun updateUserLocation(location: LatLng) {
+        val data = HashMap<String, Any>()
+        data[LAT_KEY] = location.latitude
+        data[LON_KEY] = location.longitude
+
+        updateUserData(data)
     }
 
     fun startGettingLocationUpdates(onSuccess: (MutableList<LatLng>) -> (Unit)) {
@@ -90,5 +90,16 @@ class Repository {
 //            .addOnFailureListener {
 //                Timber.tag(TAG).d("Error deleting document")
 //            }
+    }
+
+    private fun updateUserData(data: HashMap<String, Any>) {
+        firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
+            .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
+            .addOnSuccessListener {
+                Timber.tag(TAG).d("User data successfully written")
+            }
+            .addOnFailureListener { error ->
+                Timber.tag(TAG).d("Error writing user data")
+            }
     }
 }

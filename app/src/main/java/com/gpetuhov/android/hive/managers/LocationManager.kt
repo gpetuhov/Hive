@@ -121,7 +121,7 @@ class LocationManager(context: Context) {
     private fun saveLocation(location: Location?) {
         if (location != null) {
             currentLocation = LatLng(location.latitude, location.longitude)
-            repo.writeLocation(currentLocation)
+            repo.updateUserLocation(currentLocation)
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
         }
     }
