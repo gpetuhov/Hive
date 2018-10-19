@@ -12,6 +12,9 @@ import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+
+
 
 class Repository {
 
@@ -32,6 +35,14 @@ class Repository {
 
     init {
         HiveApp.appComponent.inject(this)
+
+        // Offline data caching is enabled by default in Android.
+        // But we enable it explicitly to be sure.
+        val settings = FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(true)
+            .build()
+
+        firestore.firestoreSettings = settings
     }
 
     fun updateUserNameAndEmail(onSuccess: () -> Unit, onError: () -> Unit) {
