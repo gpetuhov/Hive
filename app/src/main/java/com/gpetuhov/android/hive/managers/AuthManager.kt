@@ -19,6 +19,7 @@ class AuthManager {
 
     var user = createAnonymousUser()
     var isAuthorized = false
+    var isOnline = true
 
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -40,6 +41,8 @@ class AuthManager {
 
             } else {
                 // User is signed out
+                Timber.tag(TAG).d("User signed out")
+
                 isAuthorized = false
                 user = createAnonymousUser()
                 onSignOut()
@@ -68,7 +71,9 @@ class AuthManager {
     }
 
     fun startListenAuth() {
-        firebaseAuth.addAuthStateListener(authStateListener)
+        if (isOnline) {
+            firebaseAuth.addAuthStateListener(authStateListener)
+        }
     }
 
     fun stopListenAuth() {
@@ -103,6 +108,11 @@ class AuthManager {
                     onError()
                 }
         }
+    }
+
+    fun onNoNetwork() {
+        isOnline = false
+        stopListenAuth()
     }
 
     private fun createAnonymousUser(): User {
