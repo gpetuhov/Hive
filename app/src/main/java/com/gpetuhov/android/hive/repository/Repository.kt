@@ -17,6 +17,7 @@ class Repository {
         private const val TAG = "Repository"
         private const val USERS_COLLECTION = "users"
         private const val NAME_KEY = "name"
+        private const val EMAIL_KEY = "email"
         private const val LAT_KEY = "lat"
         private const val LON_KEY = "lon"
     }
@@ -30,9 +31,10 @@ class Repository {
         HiveApp.appComponent.inject(this)
     }
 
-    fun updateUserName() {
+    fun updateUserNameAndEmail() {
         val data = HashMap<String, Any>()
         data[NAME_KEY] = authManager.user.name
+        data[EMAIL_KEY] = authManager.user.email
 
         updateUserData(data)
     }
