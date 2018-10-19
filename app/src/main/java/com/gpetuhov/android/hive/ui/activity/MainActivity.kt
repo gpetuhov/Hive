@@ -49,23 +49,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkPlayServicesAndPermissions()
-
-        // TODO: remove this
-        locationManager.startLocationUpdates()
-
         authManager.startListenAuth()
-
         updateUserOnlineStatus(true)
     }
 
     override fun onPause() {
         super.onPause()
-
-        // TODO: remove this
-        locationManager.stopLocationUpdates()
-
         authManager.stopListenAuth()
-
         updateUserOnlineStatus(false)
     }
 
@@ -78,6 +68,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        locationManager.stopLocationUpdates()
+    }
+
     private fun initNavigation() {
         // Find NavController
         navController = findNavController(R.id.nav_host)
@@ -88,9 +83,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initLocationManager() {
         locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
-
-        // TODO: uncomment this
-//        locationManager.startLocationUpdates()
+        locationManager.startLocationUpdates()
     }
 
     private fun initAuthManager() {
