@@ -86,7 +86,7 @@ class LocationManager(context: Context) {
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 
-    fun getLastLocation(onSuccess: (LatLng) -> (Unit)) {
+    fun getLastLocation(onSuccess: (LatLng) -> Unit) {
         try {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location : Location? ->
@@ -102,7 +102,7 @@ class LocationManager(context: Context) {
     }
 
     // Check if Google Play Services installed
-    fun checkPlayServices(activity: Activity, onUnrecoverableError: () -> (Unit)): Boolean {
+    fun checkPlayServices(activity: Activity, onUnrecoverableError: () -> Unit): Boolean {
         var servicesAvailable = true
         val gApi = GoogleApiAvailability.getInstance()
         val resultCode = gApi.isGooglePlayServicesAvailable(activity)
@@ -123,7 +123,7 @@ class LocationManager(context: Context) {
         if (location != null) {
             currentLocation = LatLng(location.latitude, location.longitude)
             authManager.user.location = currentLocation
-            repo.updateUserLocation(currentLocation)
+            repo.updateUserLocation(currentLocation,  { /* Do nothing */ }, { /* Do nothing */ })
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
         }
     }

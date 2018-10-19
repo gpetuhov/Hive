@@ -23,7 +23,7 @@ class AuthManager {
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
-    fun init(onSignIn: (User) -> (Unit), onSignOut: () -> (Unit)) {
+    fun init(onSignIn: (User) -> Unit, onSignOut: () -> Unit) {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val firebaseUser = firebaseAuth.currentUser
 
@@ -76,7 +76,7 @@ class AuthManager {
         firebaseAuth.removeAuthStateListener(authStateListener)
     }
 
-    fun signOut(context: Context?, onSuccess: () -> (Unit), onError: () -> (Unit)) {
+    fun signOut(context: Context?, onSuccess: () -> Unit, onError: () -> Unit) {
         if (context != null) {
             AuthUI.getInstance()
                 .signOut(context)
@@ -91,7 +91,7 @@ class AuthManager {
         }
     }
 
-    fun deleteAccount(context: Context?, onSuccess: () -> (Unit), onError: () -> (Unit)) {
+    fun deleteAccount(context: Context?, onSuccess: () -> Unit, onError: () -> Unit) {
         if (context != null) {
             AuthUI.getInstance()
                 .delete(context)

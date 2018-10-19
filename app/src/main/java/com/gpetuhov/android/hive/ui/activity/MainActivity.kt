@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSignIn(user: User) {
-        repo.updateUserNameAndEmail()
+        repo.updateUserNameAndEmail({ /* Do nothing */ }, { /* Do nothing */ })
     }
 
     private fun onSignOut() {
@@ -125,6 +125,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateUserOnlineStatus(isOnline: Boolean) {
         authManager.user.isOnline = isOnline
-        repo.updateUserOnlineStatus()
+        repo.updateUserOnlineStatus({ /* Do nothing */ }, { /* Do nothing */ })
     }
 }

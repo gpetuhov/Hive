@@ -34,30 +34,30 @@ class Repository {
         HiveApp.appComponent.inject(this)
     }
 
-    fun updateUserNameAndEmail() {
+    fun updateUserNameAndEmail(onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[NAME_KEY] = authManager.user.name
         data[EMAIL_KEY] = authManager.user.email
 
-        updateUserData(data)
+        updateUserData(data, onSuccess, onError)
     }
 
-    fun updateUserLocation(location: LatLng) {
+    fun updateUserLocation(location: LatLng, onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[LAT_KEY] = location.latitude
         data[LON_KEY] = location.longitude
 
-        updateUserData(data)
+        updateUserData(data, onSuccess, onError)
     }
 
-    fun updateUserOnlineStatus() {
+    fun updateUserOnlineStatus(onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[IS_ONLINE_KEY] = authManager.user.isOnline
 
-        updateUserData(data)
+        updateUserData(data, onSuccess, onError)
     }
 
-    fun startGettingResultUpdates(onSuccess: (MutableList<User>) -> (Unit)) {
+    fun startGettingResultUpdates(onSuccess: (MutableList<User>) -> Unit) {
         if (authManager.isAuthorized) {
             registration = firestore.collection(USERS_COLLECTION)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -101,15 +101,17 @@ class Repository {
 //            }
     }
 
-    private fun updateUserData(data: HashMap<String, Any>) {
+    private fun updateUserData(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (authManager.isAuthorized) {
             firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully written")
+                    onSuccess()
                 }
                 .addOnFailureListener { error ->
                     Timber.tag(TAG).d("Error writing user data")
+                    onError()
                 }
         }
     }
