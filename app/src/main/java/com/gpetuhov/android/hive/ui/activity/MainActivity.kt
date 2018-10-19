@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
+import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUEST_CHECK_SETTINGS = 101
-        private const val RC_SIGN_IN = 102
     }
 
     @Inject lateinit var locationManager: LocationManager
@@ -109,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onSignIn(firebaseUser: FirebaseUser) {
+    private fun onSignIn(user: User) {
         // TODO: do something
     }
 

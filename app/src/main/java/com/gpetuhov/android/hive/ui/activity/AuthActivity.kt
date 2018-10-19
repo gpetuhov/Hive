@@ -2,9 +2,9 @@ package com.gpetuhov.android.hive.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
+import com.gpetuhov.android.hive.model.User
 import com.pawegio.kandroid.startActivity
 import javax.inject.Inject
 
@@ -39,7 +39,7 @@ class AuthActivity : AppCompatActivity() {
         authManager.stopListenAuth()
     }
 
-    private fun onSignIn(firebaseUser: FirebaseUser) {
+    private fun onSignIn(user: User) {
         startActivity<MainActivity>()
         finish()
     }

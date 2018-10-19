@@ -6,6 +6,8 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.model.User
+import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 
 class AuthManager {
@@ -14,24 +16,28 @@ class AuthManager {
         private const val TAG = "AuthManager"
     }
 
+    var user = createAnonymousUser()
+
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
 
-    fun init(onSignIn: (FirebaseUser) -> (Unit), onSignOut: () -> (Unit)) {
+    fun init(onSignIn: (User) -> (Unit), onSignOut: () -> (Unit)) {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val user = firebaseAuth.currentUser
+            val firebaseUser = firebaseAuth.currentUser
 
-            if (user != null) {
+            if (firebaseUser != null) {
                 // User is signed in
                 Timber.tag(TAG).d("Login successful")
-                Timber.tag(TAG).d("User id = ${user.uid}")
-                Timber.tag(TAG).d("User name = ${user.displayName}")
-                Timber.tag(TAG).d("User email = ${user.email}")
+                Timber.tag(TAG).d("User id = ${firebaseUser.uid}")
+                Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
+                Timber.tag(TAG).d("User email = ${firebaseUser.email}")
 
+                user = convertFirebaseUser(firebaseUser)
                 onSignIn(user)
 
             } else {
                 // User is signed out
+                user = createAnonymousUser()
                 onSignOut()
             }
         }
@@ -70,7 +76,7 @@ class AuthManager {
             AuthUI.getInstance()
                 .signOut(context)
                 .addOnCompleteListener {
-                    // TODO: do smth
+                    Timber.tag(TAG).d("Sign out successful")
                 }
         }
     }
@@ -80,8 +86,24 @@ class AuthManager {
             AuthUI.getInstance()
                 .delete(context)
                 .addOnCompleteListener {
-                    // TODO: do smth
+                    Timber.tag(TAG).d("User deleted successfully")
                 }
         }
+    }
+
+    private fun createAnonymousUser(): User {
+        return User(
+            "",
+            Constants.Auth.DEFAULT_USER_NAME,
+            Constants.Auth.DEFAULT_USER_MAIL
+        )
+    }
+
+    private fun convertFirebaseUser(firebaseUser: FirebaseUser): User {
+        return User(
+            firebaseUser.uid,
+            firebaseUser.displayName ?: Constants.Auth.DEFAULT_USER_NAME,
+            firebaseUser.email ?: Constants.Auth.DEFAULT_USER_MAIL
+        )
     }
 }

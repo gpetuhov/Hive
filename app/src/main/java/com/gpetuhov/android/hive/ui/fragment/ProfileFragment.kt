@@ -22,6 +22,10 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        user_name_textview.text = authManager.user.name
+        user_email_textview.text = authManager.user.email
+
         signout_button.setOnClickListener { authManager.signOut(context) }
         delete_user_button.setOnClickListener { authManager.deleteUser(context) }
     }

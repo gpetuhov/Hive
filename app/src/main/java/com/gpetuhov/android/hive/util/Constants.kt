@@ -20,6 +20,7 @@ class Constants {
     class Auth {
         companion object {
             const val DEFAULT_USER_NAME = "Anonymous"
+            const val DEFAULT_USER_MAIL = ""
         }
     }
 }
