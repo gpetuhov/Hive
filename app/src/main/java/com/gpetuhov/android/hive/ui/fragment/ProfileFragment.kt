@@ -9,6 +9,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
+import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
 
@@ -49,7 +50,7 @@ class ProfileFragment : Fragment() {
             signOutDialog = MaterialDialog(context!!)
                 .title(R.string.sign_out)
                 .message(R.string.prompt_sign_out)
-                .positiveButton { authManager.signOut(context) }
+                .positiveButton { authManager.signOut(context, this::onSignOutSuccess, this::onSignOurError) }
                 .negativeButton { /* Do nothing */ }
         }
     }
@@ -65,9 +66,9 @@ class ProfileFragment : Fragment() {
     private fun initDeleteUserDialog() {
         if (context != null) {
             deleteUserDialog = MaterialDialog(context!!)
-                .title(R.string.delete_user)
-                .message(R.string.prompt_delete_user)
-                .positiveButton { authManager.deleteUser(context) }
+                .title(R.string.delete_account)
+                .message(R.string.prompt_delete_account)
+                .positiveButton { authManager.deleteAccount(context, this::onDeleteAccountSuccess, this::onDeleteAccountError) }
                 .negativeButton { /* Do nothing */ }
         }
     }
@@ -78,5 +79,21 @@ class ProfileFragment : Fragment() {
 
     private fun dismissDeleteUserDialog() {
         deleteUserDialog?.dismiss()
+    }
+
+    private fun onSignOutSuccess() {
+        // Do nothing
+    }
+
+    private fun onSignOurError() {
+        toast(R.string.sign_out_error)
+    }
+
+    private fun onDeleteAccountSuccess() {
+        toast(R.string.delete_account_success)
+    }
+
+    private fun onDeleteAccountError() {
+        toast(R.string.delete_account_error)
     }
 }

@@ -71,22 +71,32 @@ class AuthManager {
         firebaseAuth.removeAuthStateListener(authStateListener)
     }
 
-    fun signOut(context: Context?) {
+    fun signOut(context: Context?, onSuccess: () -> (Unit), onError: () -> (Unit)) {
         if (context != null) {
             AuthUI.getInstance()
                 .signOut(context)
-                .addOnCompleteListener {
+                .addOnSuccessListener {
                     Timber.tag(TAG).d("Sign out successful")
+                    onSuccess()
+                }
+                .addOnFailureListener {
+                    Timber.tag(TAG).d("Sign out error")
+                    onError()
                 }
         }
     }
 
-    fun deleteUser(context: Context?) {
+    fun deleteAccount(context: Context?, onSuccess: () -> (Unit), onError: () -> (Unit)) {
         if (context != null) {
             AuthUI.getInstance()
                 .delete(context)
-                .addOnCompleteListener {
+                .addOnSuccessListener {
                     Timber.tag(TAG).d("User deleted successfully")
+                    onSuccess()
+                }
+                .addOnFailureListener {
+                    Timber.tag(TAG).d("Error deleting user")
+                    onError()
                 }
         }
     }
