@@ -21,8 +21,11 @@
 
     <!-- ProfileFragment -->
     <string name="sign_out">Sign out</string>
-    <string name="delete_user">Delete user</string>
+    <string name="delete_user">Delete account</string>
     <string name="prompt_sign_out">Do you really want to sign out?</string>
+    <string name="prompt_delete_user">Do you really want to delete your user account? This operation cannot
+        be undone!
+    </string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>

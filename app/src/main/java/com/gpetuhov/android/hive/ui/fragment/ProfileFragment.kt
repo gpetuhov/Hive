@@ -17,11 +17,13 @@ class ProfileFragment : Fragment() {
     @Inject lateinit var authManager: AuthManager
 
     private var signOutDialog: MaterialDialog? = null
+    private var deleteUserDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
 
         initSignOutDialog()
+        initDeleteUserDialog()
 
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
@@ -33,12 +35,13 @@ class ProfileFragment : Fragment() {
         user_email_textview.text = authManager.user.email
 
         signout_button.setOnClickListener { showSignOutDialog() }
-        delete_user_button.setOnClickListener { authManager.deleteUser(context) }
+        delete_user_button.setOnClickListener { showDeleteUserDialog() }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        signOutDialog?.dismiss()
+        dismissSignOutDialog()
+        dismissDeleteUserDialog()
     }
 
     private fun initSignOutDialog() {
@@ -47,11 +50,33 @@ class ProfileFragment : Fragment() {
                 .title(R.string.sign_out)
                 .message(R.string.prompt_sign_out)
                 .positiveButton { authManager.signOut(context) }
-                .negativeButton {  }
+                .negativeButton { /* Do nothing */ }
         }
     }
 
     private fun showSignOutDialog() {
         signOutDialog?.show()
+    }
+
+    private fun dismissSignOutDialog() {
+        signOutDialog?.dismiss()
+    }
+
+    private fun initDeleteUserDialog() {
+        if (context != null) {
+            deleteUserDialog = MaterialDialog(context!!)
+                .title(R.string.delete_user)
+                .message(R.string.prompt_delete_user)
+                .positiveButton { authManager.deleteUser(context) }
+                .negativeButton { /* Do nothing */ }
+        }
+    }
+
+    private fun showDeleteUserDialog() {
+        deleteUserDialog?.show()
+    }
+
+    private fun dismissDeleteUserDialog() {
+        deleteUserDialog?.dismiss()
     }
 }
