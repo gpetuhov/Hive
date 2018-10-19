@@ -76,7 +76,8 @@ class MapManager {
         googleMap.clear()
 
         for (user in resultList) {
-            googleMap.addMarker(MarkerOptions().position(user.location).title(user.name).snippet(user.email))
+            val userMarker = googleMap.addMarker(MarkerOptions().position(user.location).title(user.name).snippet(user.email))
+            userMarker.showInfoWindow()
         }
     }
 }
