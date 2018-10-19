@@ -3,9 +3,11 @@ package com.gpetuhov.android.hive.repository
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.SetOptions
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
+import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import java.util.*
@@ -47,10 +49,10 @@ class Repository {
         updateUserData(data)
     }
 
-    fun startGettingLocationUpdates(onSuccess: (MutableList<LatLng>) -> (Unit)) {
+    fun startGettingResultUpdates(onSuccess: (MutableList<User>) -> (Unit)) {
         registration = firestore.collection(USERS_COLLECTION)
             .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                val locationList = mutableListOf<LatLng>()
+                val resultList = mutableListOf<User>()
 
                 if (firebaseFirestoreException == null) {
                     if (querySnapshot != null) {
@@ -58,12 +60,7 @@ class Repository {
 
                         for (doc in querySnapshot) {
                             if (doc.id != authManager.user.uid) {
-                                val location = LatLng(
-                                    doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
-                                    doc.getDouble(LON_KEY) ?: Constants.Map.DEFAULT_LONGITUDE
-                                )
-
-                                locationList.add(location)
+                                resultList.add(getUserFromDocumentSnapshot(doc))
                             }
                         }
 
@@ -75,11 +72,11 @@ class Repository {
                     Timber.tag(TAG).d(firebaseFirestoreException)
                 }
 
-                onSuccess(locationList)
+                onSuccess(resultList)
             }
     }
 
-    fun stopGettingLocationUpdates() {
+    fun stopGettingResultUpdates() {
         registration.remove()
     }
 
@@ -103,5 +100,19 @@ class Repository {
             .addOnFailureListener { error ->
                 Timber.tag(TAG).d("Error writing user data")
             }
+    }
+
+    private fun getUserFromDocumentSnapshot(doc: QueryDocumentSnapshot): User {
+        val location = LatLng(
+            doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
+            doc.getDouble(LON_KEY) ?: Constants.Map.DEFAULT_LONGITUDE
+        )
+
+        return User(
+            uid = doc.id,
+            name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
+            email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
+            location = location
+        )
     }
 }

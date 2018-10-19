@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.managers
 import android.app.Activity
 import android.content.Context
 import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
@@ -103,17 +104,19 @@ class AuthManager {
 
     private fun createAnonymousUser(): User {
         return User(
-            "",
-            Constants.Auth.DEFAULT_USER_NAME,
-            Constants.Auth.DEFAULT_USER_MAIL
+            uid = "",
+            name = Constants.Auth.DEFAULT_USER_NAME,
+            email = Constants.Auth.DEFAULT_USER_MAIL,
+            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
     }
 
     private fun convertFirebaseUser(firebaseUser: FirebaseUser): User {
         return User(
-            firebaseUser.uid,
-            firebaseUser.displayName ?: Constants.Auth.DEFAULT_USER_NAME,
-            firebaseUser.email ?: Constants.Auth.DEFAULT_USER_MAIL
+            uid = firebaseUser.uid,
+            name = firebaseUser.displayName ?: Constants.Auth.DEFAULT_USER_NAME,
+            email = firebaseUser.email ?: Constants.Auth.DEFAULT_USER_MAIL,
+            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
     }
 }

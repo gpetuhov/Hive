@@ -28,6 +28,7 @@ class LocationManager(context: Context) {
     }
 
     @Inject lateinit var repo: Repository
+    @Inject lateinit var authManager: AuthManager
 
     var currentLocation: LatLng = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
 
@@ -121,6 +122,7 @@ class LocationManager(context: Context) {
     private fun saveLocation(location: Location?) {
         if (location != null) {
             currentLocation = LatLng(location.latitude, location.longitude)
+            authManager.user.location = currentLocation
             repo.updateUserLocation(currentLocation)
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
         }

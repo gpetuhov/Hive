@@ -6,9 +6,9 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_ZOOM
@@ -70,14 +70,13 @@ class MapManager {
         }
     }
 
-    fun updateMarkers(locationList: MutableList<LatLng>) {
+    fun updateMarkers(resultList: MutableList<User>) {
         Timber.tag(TAG).d("Updating markers")
 
         googleMap.clear()
 
-        for (location in locationList) {
-//            googleMap.addMarker(MarkerOptions().position(location).title("Marker Title").snippet("Marker Description"))
-            googleMap.addMarker(MarkerOptions().position(location))
+        for (user in resultList) {
+            googleMap.addMarker(MarkerOptions().position(user.location).title(user.name).snippet(user.email))
         }
     }
 }
