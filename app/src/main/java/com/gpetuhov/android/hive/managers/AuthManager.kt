@@ -29,14 +29,13 @@ class AuthManager {
 
             if (firebaseUser != null) {
                 // User is signed in
-                isAuthorized = true
-
                 Timber.tag(TAG).d("Login successful")
                 Timber.tag(TAG).d("User id = ${firebaseUser.uid}")
                 Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
                 Timber.tag(TAG).d("User email = ${firebaseUser.email}")
 
                 user = convertFirebaseUser(firebaseUser)
+                isAuthorized = true
                 onSignIn(user)
 
             } else {

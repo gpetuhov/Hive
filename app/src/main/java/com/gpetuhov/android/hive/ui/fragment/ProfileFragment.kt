@@ -70,7 +70,7 @@ class ProfileFragment : Fragment() {
             deleteUserDialog = MaterialDialog(context!!)
                 .title(R.string.delete_account)
                 .message(R.string.prompt_delete_account)
-                .positiveButton { authManager.deleteAccount(context, this::onDeleteAccountSuccess, this::onDeleteAccountError) }
+                .positiveButton { startDeleteAccount() }
                 .negativeButton { /* Do nothing */ }
         }
     }
@@ -103,6 +103,19 @@ class ProfileFragment : Fragment() {
 
     private fun onSignOurError() {
         toast(R.string.sign_out_error)
+    }
+
+    private fun startDeleteAccount() {
+        // When deleting account, delete user data from backend first
+        // (because after deleting account, the user will be unauthorized,
+        // and updating backend will be impossible)
+
+        // Proceed with account deletion, only if user data has been successfully deleted
+        repo.deleteUserData(this::deleteAccount, this::onDeleteAccountError)
+    }
+
+    private fun deleteAccount() {
+        authManager.deleteAccount(context, this::onDeleteAccountSuccess, this::onDeleteAccountError)
     }
 
     private fun onDeleteAccountSuccess() {

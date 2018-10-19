@@ -90,15 +90,20 @@ class Repository {
         registration.remove()
     }
 
-    fun deleteLocation() {
-//        firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
-//            .delete()
-//            .addOnSuccessListener {
-//                Timber.tag(TAG).d("DocumentSnapshot successfully deleted")
-//            }
-//            .addOnFailureListener {
-//                Timber.tag(TAG).d("Error deleting document")
-//            }
+    fun deleteUserData(onSuccess: () -> Unit, onError: () -> Unit) {
+        if (authManager.isAuthorized) {
+            firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
+                .delete()
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("User data successfully deleted")
+                    onSuccess()
+
+                }
+                .addOnFailureListener {
+                    Timber.tag(TAG).d("Error deleting user data")
+                    onError()
+                }
+        }
     }
 
     private fun updateUserData(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {

@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
 
         // TODO: remove this
         locationManager.stopLocationUpdates()
-        repo.deleteLocation()
 
         authManager.stopListenAuth()
 
