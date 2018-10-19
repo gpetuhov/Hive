@@ -3,9 +3,12 @@ package com.gpetuhov.android.hive.repository
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
+import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import java.util.*
+import javax.inject.Inject
 
 class Repository {
 
@@ -16,10 +19,14 @@ class Repository {
         private const val LON_KEY = "lon"
     }
 
+    @Inject lateinit var authManager: AuthManager
+
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var registration: ListenerRegistration
 
-    private val userName = UUID.randomUUID().toString()
+    init {
+        HiveApp.appComponent.inject(this)
+    }
 
     fun writeLocation(location: LatLng) {
         // Create a new user with a first and last name
@@ -28,7 +35,7 @@ class Repository {
         user[LON_KEY] = location.longitude
 
         // Add a new document with a generated ID
-        firestore.collection(USERS_COLLECTION).document(userName)
+        firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
             .set(user)
             .addOnSuccessListener {
                 Timber.tag(TAG).d("DocumentSnapshot successfully written")
@@ -48,7 +55,7 @@ class Repository {
                         Timber.tag(TAG).d("Listen success")
 
                         for (doc in querySnapshot) {
-                            if (doc.id != userName) {
+                            if (doc.id != authManager.user.uid) {
                                 val location = LatLng(
                                     doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
                                     doc.getDouble(LON_KEY) ?: Constants.Map.DEFAULT_LONGITUDE
@@ -75,7 +82,7 @@ class Repository {
     }
 
     fun deleteUser() {
-        firestore.collection(USERS_COLLECTION).document(userName)
+        firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
             .delete()
             .addOnSuccessListener {
                 Timber.tag(TAG).d("DocumentSnapshot successfully deleted")

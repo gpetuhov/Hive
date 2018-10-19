@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.application.dagger.components
 import com.gpetuhov.android.hive.application.dagger.modules.AppModule
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
+import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
@@ -23,4 +24,5 @@ interface AppComponent {
 
     fun inject(locationManager: LocationManager)
     fun inject(mapManager: MapManager)
+    fun inject(repository: Repository)
 }
