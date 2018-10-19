@@ -111,6 +111,9 @@ dependencies {
 
     // Material dialogs
     implementation 'com.afollestad.material-dialogs:core:2.0.0-beta4'
+
+    // Google Maps Utility
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 }
 
 // Needed for Firebase

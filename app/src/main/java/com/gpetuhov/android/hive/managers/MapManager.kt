@@ -6,8 +6,10 @@ import android.os.Bundle
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.ui.IconGenerator
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.model.User
@@ -73,16 +75,26 @@ class MapManager {
         }
     }
 
-    fun updateMarkers(resultList: MutableList<User>) {
-        Timber.tag(TAG).d("Updating markers")
+    fun updateMarkers(context: Context?, resultList: MutableList<User>) {
+        if (context != null) {
+            Timber.tag(TAG).d("Updating markers")
 
-        googleMap.clear()
+            googleMap.clear()
 
-        for (user in resultList) {
-            val statusId = if (user.isOnline) R.string.online else R.string.offline
-            val status = context.getString(statusId)
-            val userMarker = googleMap.addMarker(MarkerOptions().position(user.location).title(user.name).snippet(status))
-            userMarker.showInfoWindow()
+            val iconGenerator = IconGenerator(context)
+
+            for (user in resultList) {
+                val statusId = if (user.isOnline) R.string.online else R.string.offline
+                val status = context.getString(statusId)
+
+                val iconBitmap = iconGenerator.makeIcon("${user.name} \n$status")
+
+                googleMap.addMarker(
+                    MarkerOptions()
+                        .position(user.location)
+                        .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
+                )
+            }
         }
     }
 }

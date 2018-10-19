@@ -44,7 +44,7 @@ class MapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        repo.startGettingResultUpdates { resultList -> mapManager.updateMarkers(resultList) }
+        repo.startGettingResultUpdates { resultList -> mapManager.updateMarkers(context, resultList) }
     }
 
     override fun onPause() {
