@@ -17,4 +17,9 @@
     <style name="AuthTheme" parent="FirebaseUI">
     </style>
 
+    <!-- Map marker text style for online users -->
+    <style name="greenTextStyle">
+        <item name="android:textColor">@color/md_green_600</item>
+    </style>
+
 </resources>
