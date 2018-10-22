@@ -19,11 +19,25 @@
                 android:layout_height="wrap_content"
                 android:text="@{user.name}"
                 android:textSize="20sp"
-                tools:text="User name" app:layout_constraintStart_toStartOf="parent"
+                tools:text="User name"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/user_email_textview"
+                app:layout_constraintBottom_toTopOf="@+id/nickname_edittext"
                 app:layout_constraintVertical_chainStyle="packed"/>
+
+        <EditText
+                android:id="@+id/nickname_edittext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@{user.nickname}"
+                android:hint="@string/enter_nickname"
+                tools:text="nickname"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_name_textview" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintBottom_toTopOf="@+id/user_email_textview" android:layout_marginTop="8dp"/>
 
         <TextView
                 android:id="@+id/user_email_textview"
@@ -34,7 +48,7 @@
                 tools:text="someName@someMail.com"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_name_textview" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/nickname_edittext" app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintBottom_toTopOf="@+id/signout_button" android:layout_marginTop="8dp"/>
 
         <Button
@@ -45,7 +59,8 @@
                 android:onClick="@{handler::onSignOutButtonClick}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_email_textview" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/user_email_textview"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintBottom_toTopOf="@+id/delete_user_button" android:layout_marginTop="8dp"/>
 
         <Button
@@ -57,8 +72,9 @@
                 android:onClick="@{handler::onDeleteAccountButtonClick}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/signout_button"
-                app:layout_constraintHorizontal_bias="0.5" android:layout_marginTop="8dp"/>
+                app:layout_constraintTop_toBottomOf="@+id/signout_button"
+                app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.5"
+                android:layout_marginTop="8dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
