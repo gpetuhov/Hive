@@ -11,6 +11,10 @@
     </string>
     <string name="grant_permissions">Grant permissions</string>
 
+    <!-- AuthManager -->
+    <string name="sign_in_error">Sign in error</string>
+    <string name="sign_in_no_network">No Internet connection. Please, enable network connection and try again!</string>
+
     <!-- MainActivity -->
     <string name="search">Search</string>
     <string name="messages">Messages</string>

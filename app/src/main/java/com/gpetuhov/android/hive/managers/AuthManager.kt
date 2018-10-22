@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
+import com.afollestad.materialdialogs.MaterialDialog
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
@@ -11,7 +12,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.util.Constants
-import org.jetbrains.anko.toast
 import timber.log.Timber
 
 class AuthManager {
@@ -22,10 +22,10 @@ class AuthManager {
 
     var user = createAnonymousUser()
     var isAuthorized = false
-    var isOnline = true
 
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
+    private var noNetworkDialog: MaterialDialog? = null
 
     fun init(onSignIn: (User) -> Unit, onSignOut: () -> Unit) {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
@@ -74,14 +74,12 @@ class AuthManager {
             )
 
         } else {
-            activity.toast("Can't login in offline")
+            showNoNetworkDialog(activity, resultCode)
         }
     }
 
     fun startListenAuth() {
-        if (isOnline) {
-            firebaseAuth.addAuthStateListener(authStateListener)
-        }
+        firebaseAuth.addAuthStateListener(authStateListener)
     }
 
     fun stopListenAuth() {
@@ -118,9 +116,8 @@ class AuthManager {
         }
     }
 
-    fun onNoNetwork() {
-        isOnline = false
-        stopListenAuth()
+    fun dismissDialogs() {
+        dismissNoNetworkDialog()
     }
 
     private fun createAnonymousUser(): User {
@@ -147,5 +144,28 @@ class AuthManager {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
         return activeNetwork?.isConnected == true
+    }
+
+    private fun initNoNetworkDialog(activity: Activity, resultCode: Int) {
+        noNetworkDialog = MaterialDialog(activity)
+            .title(R.string.sign_in_error)
+            .message(R.string.sign_in_no_network)
+            .cancelable(false)
+            .positiveButton { showLoginScreen(activity, resultCode) }
+            .negativeButton { closeApp() }
+    }
+
+    private fun showNoNetworkDialog(activity: Activity, resultCode: Int) {
+        dismissNoNetworkDialog()
+        initNoNetworkDialog(activity, resultCode)
+        noNetworkDialog?.show()
+    }
+
+    private fun dismissNoNetworkDialog() {
+        noNetworkDialog?.dismiss()
+    }
+
+    private fun closeApp() {
+        System.exit(0)
     }
 }

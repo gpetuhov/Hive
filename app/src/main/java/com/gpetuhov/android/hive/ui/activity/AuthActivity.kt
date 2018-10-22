@@ -1,9 +1,7 @@
 package com.gpetuhov.android.hive.ui.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.firebase.ui.auth.ErrorCodes
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.model.User
@@ -41,11 +39,9 @@ class AuthActivity : AppCompatActivity() {
         authManager.stopListenAuth()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == RC_SIGN_IN && resultCode == ErrorCodes.NO_NETWORK) {
-            // TODO: this doesn't work, because result code is 0
-            authManager.onNoNetwork()
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        authManager.dismissDialogs()
     }
 
     private fun onSignIn(user: User) {
