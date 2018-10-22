@@ -4,15 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.isOnline
 import com.pawegio.kandroid.toast
-import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
 
 class ProfileFragment : Fragment() {
@@ -29,23 +30,33 @@ class ProfileFragment : Fragment() {
         initSignOutDialog()
         initDeleteUserDialog()
 
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
+        val binding: FragmentProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+        binding.user = authManager.user
+        binding.handler = this
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        user_name_textview.text = authManager.user.name
-        user_email_textview.text = authManager.user.email
-
-        signout_button.setOnClickListener { onSignOutButtonClick() }
-        delete_user_button.setOnClickListener { onDeleteAccountButtonClick() }
+        return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
+    }
+
+    fun onSignOutButtonClick(view: View) {
+        if (isOnline(context)) {
+            showSignOutDialog()
+        } else {
+            toast(R.string.sign_out_no_network)
+        }
+    }
+
+    fun onDeleteAccountButtonClick(view: View) {
+        if (isOnline(context)) {
+            showDeleteUserDialog()
+        } else {
+            toast(R.string.delete_account_no_network)
+        }
     }
 
     private fun initSignOutDialog() {
@@ -82,22 +93,6 @@ class ProfileFragment : Fragment() {
 
     private fun dismissDeleteUserDialog() {
         deleteUserDialog?.dismiss()
-    }
-
-    private fun onSignOutButtonClick() {
-        if (isOnline(context)) {
-            showSignOutDialog()
-        } else {
-            toast(R.string.sign_out_no_network)
-        }
-    }
-
-    private fun onDeleteAccountButtonClick() {
-        if (isOnline(context)) {
-            showDeleteUserDialog()
-        } else {
-            toast(R.string.delete_account_no_network)
-        }
     }
 
     private fun startSignOut() {
