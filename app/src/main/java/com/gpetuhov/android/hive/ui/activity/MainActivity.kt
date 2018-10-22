@@ -41,10 +41,13 @@ class MainActivity : AppCompatActivity() {
         HiveApp.appComponent.inject(this)
 
         initNavigation()
-        initLocationManager()
         initAuthManager()
+        checkLocationSettings()
 
+        // TODO: this should be done when user shares location only
         startService(getLocationServiceIntent())
+
+        // TODO: stop location service when user stops sharing location
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -66,15 +69,9 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CHECK_SETTINGS) {
             if (resultCode != Activity.RESULT_OK) {
                 toast("Please, turn on geolocation")
-                locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
+                checkLocationSettings()
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        locationManager.stopLocationUpdates()
-        stopService(getLocationServiceIntent())
     }
 
     private fun initNavigation() {
@@ -85,9 +82,8 @@ class MainActivity : AppCompatActivity() {
         navigation_view.setupWithNavController(navController)
     }
 
-    private fun initLocationManager() {
+    private fun checkLocationSettings() {
         locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
-        locationManager.startLocationUpdates()
     }
 
     private fun initAuthManager() {
