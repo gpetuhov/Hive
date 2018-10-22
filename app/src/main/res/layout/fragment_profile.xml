@@ -32,6 +32,8 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@{user.hasUsername ? user.username : @string/enter_username}"
+                android:drawableRight="@drawable/ic_edit"
+                android:drawableEnd="@drawable/ic_edit"
                 tools:text="nickname"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
