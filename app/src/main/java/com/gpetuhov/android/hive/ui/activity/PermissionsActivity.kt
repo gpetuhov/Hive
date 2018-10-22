@@ -9,9 +9,11 @@ import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
+import android.view.View
+import androidx.databinding.DataBindingUtil
+import com.gpetuhov.android.hive.databinding.ActivityPermissionsBinding
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
-import kotlinx.android.synthetic.main.activity_permissions.*
 import org.jetbrains.anko.toast
 import timber.log.Timber
 
@@ -31,8 +33,8 @@ class PermissionsActivity : AppCompatActivity() {
         if (checkHasPermissions()) {
             closePermissionsScreen()
         } else {
-            setContentView(R.layout.activity_permissions)
-            grant_permissions_button.setOnClickListener { requestPermissions() }
+            val binding: ActivityPermissionsBinding = DataBindingUtil.setContentView(this, R.layout.activity_permissions)
+            binding.handler = this
         }
     }
 
@@ -80,6 +82,10 @@ class PermissionsActivity : AppCompatActivity() {
                 closePermissionsScreenAfterGranted()
             }
         }
+    }
+
+    fun onRequestButtonClick(view: View) {
+        requestPermissions()
     }
 
     private fun checkHasPermissions(): Boolean {

@@ -43,6 +43,11 @@ android {
             outputFileName = "hive" + SEP + variant.buildType.name + SEP + appVersionName + SEP + formattedDate + ".apk"
         }
     }
+
+    // Required to use data binding
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -117,6 +122,9 @@ dependencies {
 
     // Google Maps Utility
     implementation 'com.google.maps.android:android-maps-utils:0.5'
+
+    // Data Binding
+    kapt 'androidx.databinding:databinding-compiler:3.4.0-alpha01'
 }
 
 // Needed for Firebase
