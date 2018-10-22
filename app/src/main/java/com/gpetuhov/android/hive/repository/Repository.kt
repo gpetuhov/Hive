@@ -141,7 +141,7 @@ class Repository {
         return User(
             uid = doc.id,
             name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
-            nickname = "",
+            username = "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location

@@ -24,7 +24,7 @@
     </string>
 
     <!-- ProfileFragment -->
-    <string name="enter_nickname">Enter nickname</string>
+    <string name="enter_username">Enter username</string>
     <string name="sign_out">Sign out</string>
     <string name="delete_account">Delete account</string>
     <string name="prompt_sign_out">Do you really want to sign out?</string>

@@ -5,8 +5,10 @@ import com.google.android.gms.maps.model.LatLng
 data class User(
     var uid: String,
     var name: String,
-    var nickname: String,
+    var username: String,
     var email: String,
     var isOnline: Boolean,
     var location: LatLng
-)
+) {
+    val hasUsername get() = username != ""
+}
