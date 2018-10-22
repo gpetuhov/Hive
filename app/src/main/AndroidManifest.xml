@@ -47,6 +47,8 @@
                 android:windowSoftInputMode="stateHidden">
         </activity>
 
+        <service android:name=".service.LocationService"/>
+
     </application>
 
 </manifest>

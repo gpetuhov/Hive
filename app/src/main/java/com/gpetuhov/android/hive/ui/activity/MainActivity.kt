@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.repository.Repository
+import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         initNavigation()
         initLocationManager()
         initAuthManager()
+
+        startService(getLocationServiceIntent())
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -71,6 +74,7 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         locationManager.stopLocationUpdates()
+        stopService(getLocationServiceIntent())
     }
 
     private fun initNavigation() {
@@ -118,5 +122,9 @@ class MainActivity : AppCompatActivity() {
     private fun updateUserOnlineStatus(isOnline: Boolean) {
         authManager.user.isOnline = isOnline
         repo.updateUserOnlineStatus({ /* Do nothing */ }, { /* Do nothing */ })
+    }
+
+    private fun getLocationServiceIntent(): Intent {
+        return Intent(this, LocationService::class.java)
     }
 }
