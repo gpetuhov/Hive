@@ -2,6 +2,8 @@ package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
@@ -9,6 +11,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.util.Constants
+import org.jetbrains.anko.toast
 import timber.log.Timber
 
 class AuthManager {
@@ -51,23 +54,28 @@ class AuthManager {
     }
 
     fun showLoginScreen(activity: Activity, resultCode: Int) {
-        val providers = arrayListOf(
-            AuthUI.IdpConfig.EmailBuilder().build(),
-            AuthUI.IdpConfig.GoogleBuilder().build()
+        if (isOnline(activity)) {
+            val providers = arrayListOf(
+                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build()
 //                    AuthUI.IdpConfig.PhoneBuilder().build(),
 //                    AuthUI.IdpConfig.FacebookBuilder().build(),
 //                    AuthUI.IdpConfig.TwitterBuilder().build()
-        )
+            )
 
-        activity.startActivityForResult(
-            AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setIsSmartLockEnabled(true)
-                .setAvailableProviders(providers)
-                .setTheme(R.style.AuthTheme)
-                .build(),
-            resultCode
-        )
+            activity.startActivityForResult(
+                AuthUI.getInstance()
+                    .createSignInIntentBuilder()
+                    .setIsSmartLockEnabled(true)
+                    .setAvailableProviders(providers)
+                    .setTheme(R.style.AuthTheme)
+                    .build(),
+                resultCode
+            )
+
+        } else {
+            activity.toast("Can't login in offline")
+        }
     }
 
     fun startListenAuth() {
@@ -133,5 +141,11 @@ class AuthManager {
             isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
+    }
+
+    private fun isOnline(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
+        return activeNetwork?.isConnected == true
     }
 }
