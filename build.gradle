@@ -16,6 +16,9 @@ buildscript {
 
         // This is needed for Kotlin 1.3
         maven { url 'http://dl.bintray.com/kotlin/kotlin-eap' }
+
+        // Firebase Crashlytics
+        maven { url 'https://maven.fabric.io/public' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0-alpha13'
@@ -24,6 +27,9 @@ buildscript {
         // Needed for Firebase
         // Do NOT upgrade to newer version!
         classpath 'com.google.gms:google-services:4.0.1'
+
+        // Firebase Crashlytics
+        classpath 'io.fabric.tools:gradle:1.25.4'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
