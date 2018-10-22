@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.repository.Repository
+import com.gpetuhov.android.hive.util.isOnline
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_profile.*
 import javax.inject.Inject
@@ -37,8 +38,8 @@ class ProfileFragment : Fragment() {
         user_name_textview.text = authManager.user.name
         user_email_textview.text = authManager.user.email
 
-        signout_button.setOnClickListener { showSignOutDialog() }
-        delete_user_button.setOnClickListener { showDeleteUserDialog() }
+        signout_button.setOnClickListener { onSignOutButtonClick() }
+        delete_user_button.setOnClickListener { onDeleteAccountButtonClick() }
     }
 
     override fun onDestroyView() {
@@ -81,6 +82,22 @@ class ProfileFragment : Fragment() {
 
     private fun dismissDeleteUserDialog() {
         deleteUserDialog?.dismiss()
+    }
+
+    private fun onSignOutButtonClick() {
+        if (isOnline(context)) {
+            showSignOutDialog()
+        } else {
+            toast(R.string.sign_out_no_network)
+        }
+    }
+
+    private fun onDeleteAccountButtonClick() {
+        if (isOnline(context)) {
+            showDeleteUserDialog()
+        } else {
+            toast(R.string.delete_account_no_network)
+        }
     }
 
     private fun startSignOut() {

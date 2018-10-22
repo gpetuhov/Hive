@@ -2,8 +2,6 @@ package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import com.afollestad.materialdialogs.MaterialDialog
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.maps.model.LatLng
@@ -12,6 +10,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.isOnline
 import timber.log.Timber
 
 class AuthManager {
@@ -138,12 +137,6 @@ class AuthManager {
             isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
-    }
-
-    private fun isOnline(context: Context): Boolean {
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork: NetworkInfo? = cm.activeNetworkInfo
-        return activeNetwork?.isConnected == true
     }
 
     private fun initNoNetworkDialog(activity: Activity, resultCode: Int) {
