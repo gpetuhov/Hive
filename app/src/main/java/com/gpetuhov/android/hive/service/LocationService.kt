@@ -7,6 +7,10 @@ import android.app.Service
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.LocationManager
 import javax.inject.Inject
+import android.app.PendingIntent
+import androidx.core.app.NotificationCompat
+import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.ui.activity.MainActivity
 
 
 // Shares current location.
@@ -25,6 +29,8 @@ class LocationService : Service() {
         super.onCreate()
         HiveApp.appComponent.inject(this)
         locationManager.startLocationUpdates()
+
+        startForegroundService()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -42,5 +48,23 @@ class LocationService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? {
         return null
+    }
+
+    private fun startForegroundService() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+
+        val builder = NotificationCompat.Builder(this, "Default")
+
+        builder.setContentTitle(getString(R.string.app_name))
+        builder.setContentText(getString(R.string.location_sharing_enabled))
+        builder.setSmallIcon(R.drawable.android_round)
+        builder.setContentIntent(pendingIntent)
+
+        val notification = builder.build()
+
+        // This is needed to prevent service from being killed by the OS
+        startForeground(1, notification)
     }
 }
