@@ -7,10 +7,7 @@ import android.app.Service
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.LocationManager
 import javax.inject.Inject
-import android.app.PendingIntent
-import androidx.core.app.NotificationCompat
-import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.ui.activity.MainActivity
+import com.gpetuhov.android.hive.managers.NotificationManager
 
 
 // Shares current location.
@@ -18,11 +15,12 @@ import com.gpetuhov.android.hive.ui.activity.MainActivity
 
 class LocationService : Service() {
 
-    @Inject lateinit var locationManager: LocationManager
-
     companion object {
         private const val TAG = "LocationService"
     }
+
+    @Inject lateinit var locationManager: LocationManager
+    @Inject lateinit var notificationManager: NotificationManager
 
     override fun onCreate() {
         Timber.tag(TAG).d("onCreate")
@@ -51,20 +49,10 @@ class LocationService : Service() {
     }
 
     private fun startForegroundService() {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-
-        val builder = NotificationCompat.Builder(this, "Default")
-
-        builder.setContentTitle(getString(R.string.app_name))
-        builder.setContentText(getString(R.string.location_sharing_enabled))
-        builder.setSmallIcon(R.drawable.android_round)
-        builder.setContentIntent(pendingIntent)
-
-        val notification = builder.build()
-
         // This is needed to prevent service from being killed by the OS
-        startForeground(1, notification)
+        startForeground(
+            NotificationManager.LOCATION_SHARING_NOTIFICATION_ID,
+            notificationManager.getLocationSharingNotification()
+        )
     }
 }

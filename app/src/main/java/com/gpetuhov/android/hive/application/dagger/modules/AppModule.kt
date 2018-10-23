@@ -5,6 +5,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
+import com.gpetuhov.android.hive.managers.NotificationManager
 import com.gpetuhov.android.hive.repository.Repository
 import dagger.Module
 import dagger.Provides
@@ -40,5 +41,11 @@ class AppModule {
     @Singleton
     fun providesAuthManager(): AuthManager {
         return AuthManager()
+    }
+
+    @Provides
+    @Singleton
+    fun providesNotificationManager(): NotificationManager {
+        return NotificationManager()
     }
 }

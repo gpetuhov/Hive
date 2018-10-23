@@ -41,7 +41,7 @@
     <string name="online">online</string>
     <string name="offline">offline</string>
 
-    <!-- LocationService -->
+    <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
