@@ -29,9 +29,8 @@ class Repository {
         private const val LON_KEY = "lon"
     }
 
-    @Inject lateinit var authManager: AuthManager
-
     val currentUser = MutableLiveData<User>()
+    var isAuthorized = false
 
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var registration: ListenerRegistration
@@ -84,7 +83,7 @@ class Repository {
     }
 
     fun getUserDataRemote(userUid: String, onSuccess: (User) -> Unit, onError: () -> Unit) {
-        if (authManager.isAuthorized) {
+        if (isAuthorized) {
             firestore.collection(USERS_COLLECTION).document(userUid).get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -128,7 +127,7 @@ class Repository {
     }
 
     fun startGettingRemoteResultUpdates(onSuccess: (MutableList<User>) -> Unit) {
-        if (authManager.isAuthorized) {
+        if (isAuthorized) {
             registration = firestore.collection(USERS_COLLECTION)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     val resultList = mutableListOf<User>()
@@ -161,7 +160,7 @@ class Repository {
     }
 
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
-        if (authManager.isAuthorized) {
+        if (isAuthorized) {
             firestore.collection(USERS_COLLECTION).document(currentUser.value?.uid ?: "")
                 .delete()
                 .addOnSuccessListener {
@@ -188,7 +187,7 @@ class Repository {
     }
 
     private fun updateUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
-        if (authManager.isAuthorized) {
+        if (isAuthorized) {
             firestore.collection(USERS_COLLECTION).document(currentUser.value?.uid ?: "")
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {

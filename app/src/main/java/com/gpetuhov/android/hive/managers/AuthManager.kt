@@ -24,8 +24,6 @@ class AuthManager {
 
     @Inject lateinit var repo: Repository
 
-    var isAuthorized = false
-
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private var noNetworkDialog: MaterialDialog? = null
@@ -47,14 +45,14 @@ class AuthManager {
 
                 val user = convertFirebaseUser(firebaseUser)
                 repo.saveUser(user)
-                isAuthorized = true
+                repo.isAuthorized = true
                 onSignIn(user)
 
             } else {
                 // User is signed out
                 Timber.tag(TAG).d("User signed out")
 
-                isAuthorized = false
+                repo.isAuthorized = false
                 repo.setUserAsAnonymous()
                 onSignOut()
             }
