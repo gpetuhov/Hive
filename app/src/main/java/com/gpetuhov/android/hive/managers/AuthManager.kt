@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
 import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import com.afollestad.materialdialogs.MaterialDialog
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.maps.model.LatLng
@@ -19,12 +20,16 @@ class AuthManager {
         private const val TAG = "AuthManager"
     }
 
-    var user = createAnonymousUser()
+    val currentUser = MutableLiveData<User>()
     var isAuthorized = false
 
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private var noNetworkDialog: MaterialDialog? = null
+
+    init {
+        currentUser.value = createAnonymousUser()
+    }
 
     fun init(onSignIn: (User) -> Unit, onSignOut: () -> Unit) {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
@@ -37,7 +42,8 @@ class AuthManager {
                 Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
                 Timber.tag(TAG).d("User email = ${firebaseUser.email}")
 
-                user = convertFirebaseUser(firebaseUser)
+                val user = convertFirebaseUser(firebaseUser)
+                currentUser.value = user
                 isAuthorized = true
                 onSignIn(user)
 
@@ -46,7 +52,7 @@ class AuthManager {
                 Timber.tag(TAG).d("User signed out")
 
                 isAuthorized = false
-                user = createAnonymousUser()
+                currentUser.value = createAnonymousUser()
                 onSignOut()
             }
         }

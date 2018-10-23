@@ -47,15 +47,15 @@ class Repository {
 
     fun updateUserNameAndEmail(onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
-        data[NAME_KEY] = authManager.user.name
-        data[EMAIL_KEY] = authManager.user.email
+        data[NAME_KEY] = authManager.currentUser.value?.name ?: ""
+        data[EMAIL_KEY] = authManager.currentUser.value?.email ?: ""
 
         updateUserData(data, onSuccess, onError)
     }
 
     fun updateUserUsername(onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
-        data[USERNAME_KEY] = authManager.user.username
+        data[USERNAME_KEY] = authManager.currentUser.value?.username ?: ""
 
         updateUserData(data, onSuccess, onError)
     }
@@ -95,7 +95,7 @@ class Repository {
 
     fun updateUserOnlineStatus(onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
-        data[IS_ONLINE_KEY] = authManager.user.isOnline
+        data[IS_ONLINE_KEY] = authManager.currentUser.value?.isOnline ?: ""
 
         updateUserData(data, onSuccess, onError)
     }
@@ -111,7 +111,7 @@ class Repository {
                             Timber.tag(TAG).d("Listen success")
 
                             for (doc in querySnapshot) {
-                                if (doc.id != authManager.user.uid) {
+                                if (doc.id != authManager.currentUser.value?.uid) {
                                     resultList.add(getUserFromDocumentSnapshot(doc))
                                 }
                             }
@@ -135,7 +135,7 @@ class Repository {
 
     fun deleteUserData(onSuccess: () -> Unit, onError: () -> Unit) {
         if (authManager.isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
+            firestore.collection(USERS_COLLECTION).document(authManager.currentUser.value?.uid ?: "")
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully deleted")
@@ -154,7 +154,7 @@ class Repository {
 
     private fun updateUserData(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (authManager.isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(authManager.user.uid)
+            firestore.collection(USERS_COLLECTION).document(authManager.currentUser.value?.uid ?: "")
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully written")

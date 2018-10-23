@@ -112,11 +112,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getUserData() {
-        repo.getUserData(authManager.user.uid, { user -> onUserDataReceived(user) }, { /* Do nothing */ })
+        repo.getUserData(authManager.currentUser.value?.uid ?: "", { user -> onUserDataReceived(user) }, { /* Do nothing */ })
     }
 
     private fun onUserDataReceived(user: User) {
-        authManager.user.username = user.username
+        val currentUser = authManager.currentUser.value
+        currentUser?.username = user.username
+        authManager.currentUser.value = currentUser
 
         // TODO: tell ProfileFragment to update
     }
@@ -129,7 +131,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUserOnlineStatus(isOnline: Boolean) {
-        authManager.user.isOnline = isOnline
+        val currentUser = authManager.currentUser.value
+        currentUser?.isOnline = isOnline
+        authManager.currentUser.value = currentUser
         repo.updateUserOnlineStatus({ /* Do nothing */ }, { /* Do nothing */ })
     }
 
