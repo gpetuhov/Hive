@@ -106,7 +106,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onSignIn(user: User) {
-        repo.updateUserNameAndEmail({ /* Do nothing */ }, { /* Do nothing */ })
+        // After successful sign in we must write to Firestore
+        // user name and email received from Firebase Auth.
+        repo.updateUserNameAndEmail(this::getUserData, this::getUserData)
+    }
+
+    private fun getUserData() {
+        repo.getUserData(authManager.user.uid, { user -> onUserDataReceived(user) }, { /* Do nothing */ })
+    }
+
+    private fun onUserDataReceived(user: User) {
+        authManager.user.username = user.username
+
+        // TODO: tell ProfileFragment to update
     }
 
     private fun onSignOut() {
