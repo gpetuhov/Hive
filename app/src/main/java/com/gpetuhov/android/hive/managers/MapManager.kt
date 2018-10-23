@@ -84,17 +84,18 @@ class MapManager {
             for (user in resultList) {
                 val statusId = if (user.isOnline) R.string.online else R.string.offline
                 val status = context.getString(statusId)
+                val name = if (user.username != "") user.username else user.name
 
                 val iconGenerator = IconGenerator(context)
 
+                // TODO: restore these lines, when online status is properly detected
                 // If user is online, set marker text color to green
-                if (user.isOnline) {
-                    iconGenerator.setTextAppearance(R.style.greenTextStyle)
-                }
+//                if (user.isOnline) {
+//                    iconGenerator.setTextAppearance(R.style.greenTextStyle)
+//                }
 
-                // TODO: restore this line, when online status is properly detected
-//                val iconBitmap = iconGenerator.makeIcon("${user.name} \n$status")
-                val iconBitmap = iconGenerator.makeIcon(user.name)
+//                val iconBitmap = iconGenerator.makeIcon("${name} \n$status")
+                val iconBitmap = iconGenerator.makeIcon(name)
 
                 googleMap.addMarker(
                     MarkerOptions()
