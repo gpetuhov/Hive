@@ -1,10 +1,15 @@
 package com.gpetuhov.android.hive.managers
 
 import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
+import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.ui.activity.MainActivity
@@ -21,6 +26,7 @@ class NotificationManager {
 
     init {
         HiveApp.appComponent.inject(this)
+        createDefaultNotificationChannel()
     }
 
     fun getLocationSharingNotification(): Notification? {
@@ -35,5 +41,20 @@ class NotificationManager {
             .setContentIntent(pendingIntent)
 
         return builder.build()
+    }
+
+    private fun createDefaultNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create the NotificationChannel
+            val name = "Default"
+            val descriptionText = "Default channel"
+            val importance = android.app.NotificationManager.IMPORTANCE_DEFAULT
+            val mChannel = NotificationChannel(DEFAULT_CHANNEL, name, importance)
+            mChannel.description = descriptionText
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            val notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java) as NotificationManager
+            notificationManager.createNotificationChannel(mChannel)
+        }
     }
 }
