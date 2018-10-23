@@ -23,17 +23,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/nickname_textview"
+                app:layout_constraintBottom_toTopOf="@+id/username_textview"
                 app:layout_constraintVertical_chainStyle="packed"/>
 
         <TextView
-                android:id="@+id/nickname_textview"
+                android:id="@+id/username_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="@{user.hasUsername ? user.username : @string/enter_username}"
                 android:drawableRight="@drawable/ic_edit"
                 android:drawableEnd="@drawable/ic_edit"
+                android:onClick="@{handler::onUsernameClick}"
                 tools:text="nickname"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +50,7 @@
                 tools:text="someName@someMail.com"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nickname_textview" app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintTop_toBottomOf="@+id/username_textview" app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintBottom_toTopOf="@+id/signout_button" android:layout_marginTop="8dp"/>
 
         <Button

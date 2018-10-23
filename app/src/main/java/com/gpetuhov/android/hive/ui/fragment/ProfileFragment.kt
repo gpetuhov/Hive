@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.input
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
@@ -14,19 +15,26 @@ import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.isOnline
 import com.pawegio.kandroid.toast
+import timber.log.Timber
 import javax.inject.Inject
 
 class ProfileFragment : Fragment() {
 
+    companion object {
+        private const val TAG = "ProfileFragment"
+    }
+
     @Inject lateinit var authManager: AuthManager
     @Inject lateinit var repo: Repository
 
+    private var usernameDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
 
+        initUsernameDialog()
         initSignOutDialog()
         initDeleteUserDialog()
 
@@ -39,6 +47,7 @@ class ProfileFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        dismissUsernameDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
     }
@@ -57,6 +66,34 @@ class ProfileFragment : Fragment() {
         } else {
             toast(R.string.delete_account_no_network)
         }
+    }
+
+    fun onUsernameClick(view: View) {
+        // We need to reinitialize username dialog every time,
+        // so that it will be prefilled with current username.
+        initUsernameDialog()
+        showUsernameDialog()
+    }
+
+    private fun initUsernameDialog() {
+        if (context != null) {
+            usernameDialog = MaterialDialog(context!!)
+                .title(R.string.username)
+                .input(hintRes = R.string.enter_username, prefill = authManager.user.username) { dialog, text ->
+                    Timber.tag(TAG).d("Username = $text")
+                    // TODO: update username locally and in Firebase
+                }
+                .positiveButton { /* Do nothing */ }
+                .negativeButton { /* Do nothing */ }
+        }
+    }
+
+    private fun showUsernameDialog() {
+        usernameDialog?.show()
+    }
+
+    private fun dismissUsernameDialog() {
+        usernameDialog?.dismiss()
     }
 
     private fun initSignOutDialog() {

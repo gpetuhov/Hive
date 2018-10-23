@@ -118,7 +118,8 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
 
     // Material dialogs
-    implementation 'com.afollestad.material-dialogs:core:2.0.0-beta4'
+    implementation "com.afollestad.material-dialogs:core:$materialDialogsVersion"
+    implementation "com.afollestad.material-dialogs:input:$materialDialogsVersion"
 
     // Google Maps Utility
     implementation 'com.google.maps.android:android-maps-utils:0.5'
