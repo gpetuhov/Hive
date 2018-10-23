@@ -92,7 +92,9 @@ class MapManager {
                     iconGenerator.setTextAppearance(R.style.greenTextStyle)
                 }
 
-                val iconBitmap = iconGenerator.makeIcon("${user.name} \n$status")
+                // TODO: restore this line, when online status is properly detected
+//                val iconBitmap = iconGenerator.makeIcon("${user.name} \n$status")
+                val iconBitmap = iconGenerator.makeIcon(user.name)
 
                 googleMap.addMarker(
                     MarkerOptions()
