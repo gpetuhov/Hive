@@ -122,9 +122,6 @@ class LocationManager(context: Context) {
     private fun saveLocation(location: Location?) {
         if (location != null) {
             currentLocation = LatLng(location.latitude, location.longitude)
-            val user = authManager.currentUser.value
-            user?.location = currentLocation
-            authManager.currentUser.value = user
             repo.updateUserLocation(currentLocation, { /* Do nothing */ }, { /* Do nothing */ })
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
         }

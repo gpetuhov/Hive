@@ -44,13 +44,13 @@ class MapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        repo.startGettingResultUpdates { resultList -> mapManager.updateMarkers(context, resultList) }
+        repo.startGettingRemoteResultUpdates { resultList -> mapManager.updateMarkers(context, resultList) }
     }
 
     override fun onPause() {
         super.onPause()
         mapView.onPause()
-        repo.stopGettingResultUpdates()
+        repo.stopGettingRemoteResultUpdates()
     }
 
     override fun onStop() {

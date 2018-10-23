@@ -108,19 +108,11 @@ class MainActivity : AppCompatActivity() {
     private fun onSignIn(user: User) {
         // After successful sign in we must write to Firestore
         // user name and email received from Firebase Auth.
-        repo.updateUserNameAndEmail(this::getUserData, this::getUserData)
+        repo.updateUserNameAndEmail(user, this::getUserData, this::getUserData)
     }
 
     private fun getUserData() {
-        repo.getUserData(authManager.currentUser.value?.uid ?: "", { user -> onUserDataReceived(user) }, { /* Do nothing */ })
-    }
-
-    private fun onUserDataReceived(user: User) {
-        val currentUser = authManager.currentUser.value
-        currentUser?.username = user.username
-        authManager.currentUser.value = currentUser
-
-        // TODO: tell ProfileFragment to update
+        repo.getUsernameRemote()
     }
 
     private fun onSignOut() {
@@ -131,10 +123,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUserOnlineStatus(isOnline: Boolean) {
-        val currentUser = authManager.currentUser.value
-        currentUser?.isOnline = isOnline
-        authManager.currentUser.value = currentUser
-        repo.updateUserOnlineStatus({ /* Do nothing */ }, { /* Do nothing */ })
+        repo.updateUserOnlineStatus(isOnline, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
     private fun startLocationService() {

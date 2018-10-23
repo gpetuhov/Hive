@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.repository
 
+import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
@@ -30,6 +31,8 @@ class Repository {
 
     @Inject lateinit var authManager: AuthManager
 
+    val currentUser = MutableLiveData<User>()
+
     private val firestore = FirebaseFirestore.getInstance()
     private lateinit var registration: ListenerRegistration
 
@@ -43,24 +46,44 @@ class Repository {
             .build()
 
         firestore.firestoreSettings = settings
+
+        setUserAsAnonymous()
     }
 
-    fun updateUserNameAndEmail(onSuccess: () -> Unit, onError: () -> Unit) {
+    fun saveUser(user: User) {
+        currentUser.value = user
+    }
+
+    fun setUserAsAnonymous() {
+        saveUser(createAnonymousUser())
+    }
+
+    fun updateUserNameAndEmail(user: User, onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
-        data[NAME_KEY] = authManager.currentUser.value?.name ?: ""
-        data[EMAIL_KEY] = authManager.currentUser.value?.email ?: ""
+        data[NAME_KEY] = user.name
+        data[EMAIL_KEY] = user.email
 
-        updateUserData(data, onSuccess, onError)
+        updateUserDataRemote(data, onSuccess, onError)
     }
 
-    fun updateUserUsername(onSuccess: () -> Unit, onError: () -> Unit) {
+    fun updateUserUsername(newUsername: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        val oldUsername = currentUser.value?.username ?: ""
+        updateUser { username = newUsername }
+
         val data = HashMap<String, Any>()
-        data[USERNAME_KEY] = authManager.currentUser.value?.username ?: ""
+        data[USERNAME_KEY] = newUsername
 
-        updateUserData(data, onSuccess, onError)
+        updateUserDataRemote(data, onSuccess, {
+            updateUser { username = oldUsername }
+            onError()
+        })
     }
 
-    fun getUserData(userUid: String, onSuccess: (User) -> Unit, onError: () -> Unit) {
+    fun getUsernameRemote() {
+        getUserDataRemote(currentUser.value?.uid ?: "", { user -> saveUsername(user.username) }, { /* Do nothing */ })
+    }
+
+    fun getUserDataRemote(userUid: String, onSuccess: (User) -> Unit, onError: () -> Unit) {
         if (authManager.isAuthorized) {
             firestore.collection(USERS_COLLECTION).document(userUid).get()
                 .addOnCompleteListener { task ->
@@ -85,22 +108,26 @@ class Repository {
         }
     }
 
-    fun updateUserLocation(location: LatLng, onSuccess: () -> Unit, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[LAT_KEY] = location.latitude
-        data[LON_KEY] = location.longitude
+    fun updateUserLocation(newLocation: LatLng, onSuccess: () -> Unit, onError: () -> Unit) {
+        updateUser { location = newLocation }
 
-        updateUserData(data, onSuccess, onError)
+        val data = HashMap<String, Any>()
+        data[LAT_KEY] = newLocation.latitude
+        data[LON_KEY] = newLocation.longitude
+
+        updateUserDataRemote(data, onSuccess, onError)
     }
 
-    fun updateUserOnlineStatus(onSuccess: () -> Unit, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[IS_ONLINE_KEY] = authManager.currentUser.value?.isOnline ?: ""
+    fun updateUserOnlineStatus(newIsOnline: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
+        updateUser { isOnline = newIsOnline }
 
-        updateUserData(data, onSuccess, onError)
+        val data = HashMap<String, Any>()
+        data[IS_ONLINE_KEY] = newIsOnline
+
+        updateUserDataRemote(data, onSuccess, onError)
     }
 
-    fun startGettingResultUpdates(onSuccess: (MutableList<User>) -> Unit) {
+    fun startGettingRemoteResultUpdates(onSuccess: (MutableList<User>) -> Unit) {
         if (authManager.isAuthorized) {
             registration = firestore.collection(USERS_COLLECTION)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -111,7 +138,7 @@ class Repository {
                             Timber.tag(TAG).d("Listen success")
 
                             for (doc in querySnapshot) {
-                                if (doc.id != authManager.currentUser.value?.uid) {
+                                if (doc.id != currentUser.value?.uid) {
                                     resultList.add(getUserFromDocumentSnapshot(doc))
                                 }
                             }
@@ -129,13 +156,13 @@ class Repository {
         }
     }
 
-    fun stopGettingResultUpdates() {
+    fun stopGettingRemoteResultUpdates() {
         registration.remove()
     }
 
-    fun deleteUserData(onSuccess: () -> Unit, onError: () -> Unit) {
+    fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
         if (authManager.isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(authManager.currentUser.value?.uid ?: "")
+            firestore.collection(USERS_COLLECTION).document(currentUser.value?.uid ?: "")
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully deleted")
@@ -152,9 +179,17 @@ class Repository {
         }
     }
 
-    private fun updateUserData(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
+    private fun saveUsername(newUsername: String) {
+        updateUser { username = newUsername }
+    }
+
+    private fun updateUser(update: User.() -> Unit) {
+        currentUser.value = currentUser.value?.apply { update() }
+    }
+
+    private fun updateUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (authManager.isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(authManager.currentUser.value?.uid ?: "")
+            firestore.collection(USERS_COLLECTION).document(currentUser.value?.uid ?: "")
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully written")
@@ -183,6 +218,17 @@ class Repository {
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
+        )
+    }
+
+    private fun createAnonymousUser(): User {
+        return User(
+            uid = "",
+            name = Constants.Auth.DEFAULT_USER_NAME,
+            username = "",
+            email = Constants.Auth.DEFAULT_USER_MAIL,
+            isOnline = false,
+            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
     }
 }

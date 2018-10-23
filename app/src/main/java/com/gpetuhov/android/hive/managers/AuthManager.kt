@@ -2,17 +2,19 @@ package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import com.afollestad.materialdialogs.MaterialDialog
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.model.User
+import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.isOnline
 import timber.log.Timber
+import javax.inject.Inject
 
 class AuthManager {
 
@@ -20,7 +22,8 @@ class AuthManager {
         private const val TAG = "AuthManager"
     }
 
-    val currentUser = MutableLiveData<User>()
+    @Inject lateinit var repo: Repository
+
     var isAuthorized = false
 
     private var firebaseAuth = FirebaseAuth.getInstance()
@@ -28,7 +31,7 @@ class AuthManager {
     private var noNetworkDialog: MaterialDialog? = null
 
     init {
-        currentUser.value = createAnonymousUser()
+        HiveApp.appComponent.inject(this)
     }
 
     fun init(onSignIn: (User) -> Unit, onSignOut: () -> Unit) {
@@ -43,7 +46,7 @@ class AuthManager {
                 Timber.tag(TAG).d("User email = ${firebaseUser.email}")
 
                 val user = convertFirebaseUser(firebaseUser)
-                currentUser.value = user
+                repo.saveUser(user)
                 isAuthorized = true
                 onSignIn(user)
 
@@ -52,7 +55,7 @@ class AuthManager {
                 Timber.tag(TAG).d("User signed out")
 
                 isAuthorized = false
-                currentUser.value = createAnonymousUser()
+                repo.setUserAsAnonymous()
                 onSignOut()
             }
         }
@@ -123,17 +126,6 @@ class AuthManager {
 
     fun dismissDialogs() {
         dismissNoNetworkDialog()
-    }
-
-    private fun createAnonymousUser(): User {
-        return User(
-            uid = "",
-            name = Constants.Auth.DEFAULT_USER_NAME,
-            username = "",
-            email = Constants.Auth.DEFAULT_USER_MAIL,
-            isOnline = false,
-            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
-        )
     }
 
     private fun convertFirebaseUser(firebaseUser: FirebaseUser): User {

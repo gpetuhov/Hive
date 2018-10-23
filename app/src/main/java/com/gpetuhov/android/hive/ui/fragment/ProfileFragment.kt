@@ -40,7 +40,7 @@ class ProfileFragment : Fragment() {
         initDeleteUserDialog()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        binding.user = authManager.currentUser.value
+        binding.user = repo.currentUser.value
         binding.handler = this
 
         return binding.root
@@ -80,7 +80,7 @@ class ProfileFragment : Fragment() {
         if (context != null) {
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
-                .input(hintRes = R.string.enter_username, prefill = authManager.currentUser.value?.username) { dialog, text ->
+                .input(hintRes = R.string.enter_username, prefill = repo.currentUser.value?.username) { dialog, text ->
                     saveUsername(text.toString())
                 }
                 .positiveButton { /* Do nothing */ }
@@ -90,24 +90,17 @@ class ProfileFragment : Fragment() {
 
     private fun saveUsername(username: String) {
         Timber.tag(TAG).d("Username = $username")
-        val oldUsername = authManager.currentUser.value?.username ?: ""
-        val currentUser = authManager.currentUser.value
-        currentUser?.username = username
-        authManager.currentUser.value = currentUser
-        repo.updateUserUsername({ /* Do nothing */ }, { onUsernameUpdateError(oldUsername) })
+        repo.updateUserUsername(username, { /* Do nothing */ }, { onUsernameUpdateError() })
         updateUI()
     }
 
-    private fun onUsernameUpdateError(oldUsername: String) {
-        val currentUser = authManager.currentUser.value
-        currentUser?.username = oldUsername
-        authManager.currentUser.value = currentUser
+    private fun onUsernameUpdateError() {
         toast(R.string.username_save_error)
         updateUI()
     }
 
     private fun updateUI() {
-        binding.user = authManager.currentUser.value
+        binding.user = repo.currentUser.value
     }
 
     private fun showUsernameDialog() {
@@ -158,12 +151,8 @@ class ProfileFragment : Fragment() {
         // When signing out, first set status to offline,
         // and only after that sign out (because after signing out,
         // updating backend will be impossible)
-        val currentUser = authManager.currentUser.value
-        currentUser?.isOnline = false
-        authManager.currentUser.value = currentUser
-
         // We are signing out regardless of online status update success
-        repo.updateUserOnlineStatus(this::signOut, this::signOut)
+        repo.updateUserOnlineStatus(false, this::signOut, this::signOut)
     }
 
     private fun signOut() {
@@ -184,7 +173,7 @@ class ProfileFragment : Fragment() {
         // and updating backend will be impossible)
 
         // Proceed with account deletion, only if user data has been successfully deleted
-        repo.deleteUserData(this::deleteAccount, this::onDeleteAccountError)
+        repo.deleteUserDataRemote(this::deleteAccount, this::onDeleteAccountError)
     }
 
     private fun deleteAccount() {
