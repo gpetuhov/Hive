@@ -3,7 +3,6 @@ package com.gpetuhov.android.hive.repository
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.SetOptions
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
@@ -13,7 +12,7 @@ import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-
+import com.google.firebase.firestore.DocumentSnapshot
 
 
 class Repository {
@@ -22,6 +21,7 @@ class Repository {
         private const val TAG = "Repository"
         private const val USERS_COLLECTION = "users"
         private const val NAME_KEY = "name"
+        private const val USERNAME_KEY = "username"
         private const val EMAIL_KEY = "email"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LAT_KEY = "lat"
@@ -51,6 +51,38 @@ class Repository {
         data[EMAIL_KEY] = authManager.user.email
 
         updateUserData(data, onSuccess, onError)
+    }
+
+    fun updateUserUsername(onSuccess: () -> Unit, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[USERNAME_KEY] = authManager.user.username
+
+        updateUserData(data, onSuccess, onError)
+    }
+
+    fun getUserData(userUid: String, onSuccess: (User) -> Unit, onError: () -> Unit) {
+        if (authManager.isAuthorized) {
+            firestore.collection(USERS_COLLECTION).document(userUid).get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        if (document?.exists() == true) {
+                            Timber.tag(TAG).d("User successfully retrieved")
+                            onSuccess(getUserFromDocumentSnapshot(document))
+                        } else {
+                            Timber.tag(TAG).d("No such user")
+                            onError()
+                        }
+                    } else {
+                        Timber.tag(TAG).d("Error retrieving user")
+                        Timber.tag(TAG).d(task.exception)
+                        onError()
+                    }
+                }
+
+        } else {
+            onError()
+        }
     }
 
     fun updateUserLocation(location: LatLng, onSuccess: () -> Unit, onError: () -> Unit) {
@@ -114,6 +146,9 @@ class Repository {
                     Timber.tag(TAG).d("Error deleting user data")
                     onError()
                 }
+
+        } else {
+            onError()
         }
     }
 
@@ -129,10 +164,13 @@ class Repository {
                     Timber.tag(TAG).d("Error writing user data")
                     onError()
                 }
+
+        } else {
+            onError()
         }
     }
 
-    private fun getUserFromDocumentSnapshot(doc: QueryDocumentSnapshot): User {
+    private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot): User {
         val location = LatLng(
             doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
             doc.getDouble(LON_KEY) ?: Constants.Map.DEFAULT_LONGITUDE
@@ -141,7 +179,7 @@ class Repository {
         return User(
             uid = doc.id,
             name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
-            username = "",
+            username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location

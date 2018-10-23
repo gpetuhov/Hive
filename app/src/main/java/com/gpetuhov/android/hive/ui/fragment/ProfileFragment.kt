@@ -30,6 +30,7 @@ class ProfileFragment : Fragment() {
     private var usernameDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
+    private lateinit var binding: FragmentProfileBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
@@ -38,7 +39,7 @@ class ProfileFragment : Fragment() {
         initSignOutDialog()
         initDeleteUserDialog()
 
-        val binding: FragmentProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding.user = authManager.user
         binding.handler = this
 
@@ -80,12 +81,29 @@ class ProfileFragment : Fragment() {
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
                 .input(hintRes = R.string.enter_username, prefill = authManager.user.username) { dialog, text ->
-                    Timber.tag(TAG).d("Username = $text")
-                    // TODO: update username locally and in Firebase
+                    saveUsername(text.toString())
                 }
                 .positiveButton { /* Do nothing */ }
                 .negativeButton { /* Do nothing */ }
         }
+    }
+
+    private fun saveUsername(username: String) {
+        Timber.tag(TAG).d("Username = $username")
+        val oldUsername = authManager.user.username
+        authManager.user.username = username
+        repo.updateUserUsername({ /* Do nothing */ }, { onUsernameUpdateError(oldUsername) })
+        updateUI()
+    }
+
+    private fun onUsernameUpdateError(oldUsername: String) {
+        authManager.user.username = oldUsername
+        toast(R.string.username_save_error)
+        updateUI()
+    }
+
+    private fun updateUI() {
+        binding.user = authManager.user
     }
 
     private fun showUsernameDialog() {
