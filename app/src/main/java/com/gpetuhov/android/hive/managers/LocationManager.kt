@@ -71,6 +71,24 @@ class LocationManager(context: Context) {
         }
     }
 
+    // Check if Google Play Services installed
+    fun checkPlayServices(activity: Activity, onUnrecoverableError: () -> Unit): Boolean {
+        var servicesAvailable = true
+        val gApi = GoogleApiAvailability.getInstance()
+        val resultCode = gApi.isGooglePlayServicesAvailable(activity)
+
+        if (resultCode != ConnectionResult.SUCCESS) {
+            servicesAvailable = false
+            if (gApi.isUserResolvableError(resultCode)) {
+                gApi.getErrorDialog(activity, resultCode, 1).show()
+            } else {
+                onUnrecoverableError()
+            }
+        }
+
+        return servicesAvailable
+    }
+
     fun startLocationUpdates() {
         try {
             fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, null)
@@ -96,24 +114,6 @@ class LocationManager(context: Context) {
         } catch (e: SecurityException) {
             Timber.tag(TAG).d("Location permission not granted")
         }
-    }
-
-    // Check if Google Play Services installed
-    fun checkPlayServices(activity: Activity, onUnrecoverableError: () -> Unit): Boolean {
-        var servicesAvailable = true
-        val gApi = GoogleApiAvailability.getInstance()
-        val resultCode = gApi.isGooglePlayServicesAvailable(activity)
-
-        if (resultCode != ConnectionResult.SUCCESS) {
-            servicesAvailable = false
-            if (gApi.isUserResolvableError(resultCode)) {
-                gApi.getErrorDialog(activity, resultCode, 1).show()
-            } else {
-                onUnrecoverableError()
-            }
-        }
-
-        return servicesAvailable
     }
 
     private fun saveLocation(location: Location?) {
