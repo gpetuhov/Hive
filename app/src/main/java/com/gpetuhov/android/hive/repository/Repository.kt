@@ -78,12 +78,12 @@ class Repository {
         updateUserDataRemote(data, onSuccess, onError)
     }
 
-    fun updateUserLocation(newLocation: LatLng, onSuccess: () -> Unit, onError: () -> Unit) {
+    fun updateUserLocation(newLocation: LatLng) {
         val data = HashMap<String, Any>()
         data[LAT_KEY] = newLocation.latitude
         data[LON_KEY] = newLocation.longitude
 
-        updateUserDataRemote(data, onSuccess, onError)
+        updateUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
     fun updateUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {

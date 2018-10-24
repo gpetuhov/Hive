@@ -28,9 +28,6 @@ class LocationManager(context: Context) {
     }
 
     @Inject lateinit var repo: Repository
-    @Inject lateinit var authManager: AuthManager
-
-    var currentLocation: LatLng = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
 
     private var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
     private lateinit var locationCallback: LocationCallback
@@ -93,7 +90,7 @@ class LocationManager(context: Context) {
                     // Got last known location. In some rare situations this can be null.
                     Timber.tag(TAG).d("Received last known location")
                     saveLocation(location)
-                    onSuccess(currentLocation)
+                    onSuccess(getCoordinatesFromLocation(location))
                 }
 
         } catch (e: SecurityException) {
@@ -121,9 +118,16 @@ class LocationManager(context: Context) {
 
     private fun saveLocation(location: Location?) {
         if (location != null) {
-            currentLocation = LatLng(location.latitude, location.longitude)
-            repo.updateUserLocation(currentLocation, { /* Do nothing */ }, { /* Do nothing */ })
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
+            repo.updateUserLocation(getCoordinatesFromLocation(location))
+        }
+    }
+
+    private fun getCoordinatesFromLocation(location: Location?): LatLng {
+        return if (location != null) {
+            LatLng(location.latitude, location.longitude)
+        } else {
+            LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         }
     }
 
