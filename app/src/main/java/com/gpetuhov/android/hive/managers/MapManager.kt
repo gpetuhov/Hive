@@ -21,6 +21,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 
+// Show search results on map
 class MapManager {
 
     companion object {

@@ -13,7 +13,7 @@ import java.util.*
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.DocumentSnapshot
 
-
+// Read and write data to remote storage (Firestore)
 class Repository {
 
     companion object {
@@ -27,7 +27,15 @@ class Repository {
         private const val LON_KEY = "lon"
     }
 
-    // Current user is LiveData so that the UI can easily observe changes and update itself
+    // Firestore is the single source of truth for the currentUser property.
+    // currentUser is updated every time we write data to the corresponding
+    // Firestore document (with the uid of the current user).
+    // Current user is wrapped inside LiveData
+    // so that the UI can easily observe changes and update itself.
+    // So the sequence of updates is:
+    // 1. Write data to Firestore
+    // 2. currentUser is updated
+    // 3. UI that observes currentUser (through ViewModel) is updated
     val currentUser = MutableLiveData<User>()
 
     private var isAuthorized = false
@@ -53,11 +61,15 @@ class Repository {
     fun onSignIn(user: User) {
         if (!isAuthorized) {
             isAuthorized = true
+
+            // Current user's uid initially comes from Firebase Auth,
+            // so we must save it to start getting updates
+            // for the corresponding documents in Firestore.
             currentUserUid = user.uid
             startGettingCurrentUserRemoteUpdates()
 
-            // After successful sign in we must write to Firestore
-            // user name and email received from Firebase Auth.
+            // Current user's name and email initially come from Firebase Auth,
+            // so after successful sign in we must write them to Firestore.
             updateUserNameAndEmail(user)
         }
     }

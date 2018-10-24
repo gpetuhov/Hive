@@ -16,6 +16,7 @@ import com.gpetuhov.android.hive.util.isOnline
 import timber.log.Timber
 import javax.inject.Inject
 
+// Manages authentication with Firebase Auth
 class AuthManager {
 
     companion object {

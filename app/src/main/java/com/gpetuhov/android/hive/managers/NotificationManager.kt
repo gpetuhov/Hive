@@ -14,6 +14,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import javax.inject.Inject
 
+// Show notifications
 class NotificationManager {
 
     companion object {

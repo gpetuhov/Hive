@@ -21,6 +21,7 @@ import com.gpetuhov.android.hive.repository.Repository
 import javax.inject.Inject
 
 
+// Get current user location updates from the device
 class LocationManager(context: Context) {
 
     companion object {
