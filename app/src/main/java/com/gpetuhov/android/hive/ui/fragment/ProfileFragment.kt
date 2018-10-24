@@ -101,16 +101,10 @@ class ProfileFragment : Fragment() {
     private fun saveUsername(username: String) {
         Timber.tag(TAG).d("Username = $username")
         repo.updateUserUsername(username, { /* Do nothing */ }, { onUsernameUpdateError() })
-        updateUI()
     }
 
     private fun onUsernameUpdateError() {
         toast(R.string.username_save_error)
-        updateUI()
-    }
-
-    private fun updateUI() {
-        binding.user = repo.currentUser.value
     }
 
     private fun showUsernameDialog() {
