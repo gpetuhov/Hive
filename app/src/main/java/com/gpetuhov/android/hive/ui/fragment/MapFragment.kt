@@ -22,7 +22,7 @@ class MapFragment : Fragment() {
     @Inject lateinit var mapManager: MapManager
     @Inject lateinit var repo: Repository
 
-    private lateinit var mapView: MapView
+    private var mapView: MapView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,49 +33,49 @@ class MapFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_map, container, false)
 
         mapView = view.findViewById(R.id.map_view)
-        mapView.onCreate(savedInstanceState)
+        mapView?.onCreate(savedInstanceState)
 
         // Asynchronously get reference to the map
-        mapView.getMapAsync(this::onMapReady)
+        mapView?.getMapAsync(this::onMapReady)
 
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        mapView.onStart()
+        mapView?.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        mapView.onResume()
+        mapView?.onResume()
         repo.startGettingRemoteResultUpdates()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView.onPause()
+        mapView?.onPause()
         repo.stopGettingRemoteResultUpdates()
     }
 
     override fun onStop() {
         super.onStop()
-        mapView.onStop()
+        mapView?.onStop()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mapView.onDestroy()
+        mapView?.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapView.onSaveInstanceState(outState)
+        mapView?.onSaveInstanceState(outState)
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
-        mapView.onLowMemory()
+        mapView?.onLowMemory()
     }
 
     private fun onMapReady(map: GoogleMap) {

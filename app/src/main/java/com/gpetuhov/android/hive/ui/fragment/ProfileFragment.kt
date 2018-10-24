@@ -34,7 +34,7 @@ class ProfileFragment : Fragment() {
     private var usernameDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
-    private lateinit var binding: FragmentProfileBinding
+    private var binding: FragmentProfileBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
@@ -43,16 +43,16 @@ class ProfileFragment : Fragment() {
         initDeleteUserDialog()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        binding.handler = this
+        binding?.handler = this
 
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
 
         // Every time current user data changes, update binding object with new data
         viewModel.currentUser.observe(this, Observer<User> { user ->
-            binding.user = user
+            binding?.user = user
         })
 
-        return binding.root
+        return binding?.root
     }
 
     override fun onDestroyView() {
@@ -89,7 +89,7 @@ class ProfileFragment : Fragment() {
         if (context != null) {
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
-                .input(hintRes = R.string.enter_username, prefill = binding.user?.username) { dialog, text ->
+                .input(hintRes = R.string.enter_username, prefill = binding?.user?.username) { dialog, text ->
                     saveUsername(text.toString())
                 }
                 .positiveButton { /* Do nothing */ }

@@ -32,18 +32,17 @@
         </activity>
 
         <activity
-                android:name=".ui.activity.PermissionsActivity">
+                android:name=".ui.activity.PermissionsActivity"
+                android:windowSoftInputMode="stateHidden">
         </activity>
 
         <activity
-                android:name=".ui.activity.AuthActivity">
+                android:name=".ui.activity.AuthActivity"
+                android:windowSoftInputMode="stateHidden">
         </activity>
 
-        <!-- MainActivity doesn't get destroyed on orientation changes -->
-        <!-- This is needed to prevent Google Map reloading -->
         <activity
                 android:name=".ui.activity.MainActivity"
-                android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"
                 android:windowSoftInputMode="stateHidden">
         </activity>
 
