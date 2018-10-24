@@ -120,16 +120,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startLocationService() {
-        val intent = getLocationServiceIntent()
+        val intent = Intent(this, LocationService::class.java)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent)
         } else {
             startService(intent)
         }
-    }
-
-    private fun getLocationServiceIntent(): Intent {
-        return Intent(this, LocationService::class.java)
     }
 }
