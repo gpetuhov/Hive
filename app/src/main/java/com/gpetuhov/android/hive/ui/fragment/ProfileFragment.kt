@@ -26,6 +26,9 @@ class ProfileFragment : Fragment() {
 
     companion object {
         private const val TAG = "ProfileFragment"
+        private const val USERNAME_DIALOG_SHOWING_KEY = "isUsernameDialogShowing"
+        private const val SIGNOUT_DIALOG_SHOWING_KEY = "isSignOutDialogShowing"
+        private const val DELETE_USER_DIALOG_SHOWING_KEY = "isDeleteUserDialogShowing"
     }
 
     @Inject lateinit var authManager: AuthManager
@@ -35,6 +38,10 @@ class ProfileFragment : Fragment() {
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
     private var binding: FragmentProfileBinding? = null
+
+    private var isUsernameDialogShowing = false
+    private var isSignOutDialogShowing = false
+    private var isDeleteUserDialogShowing = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
@@ -53,6 +60,27 @@ class ProfileFragment : Fragment() {
         })
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if (savedInstanceState != null) {
+            isUsernameDialogShowing = savedInstanceState.getBoolean(USERNAME_DIALOG_SHOWING_KEY, false)
+            isSignOutDialogShowing = savedInstanceState.getBoolean(SIGNOUT_DIALOG_SHOWING_KEY, false)
+            isDeleteUserDialogShowing = savedInstanceState.getBoolean(DELETE_USER_DIALOG_SHOWING_KEY, false)
+
+            if (isUsernameDialogShowing) onUsernameClick()
+            if (isSignOutDialogShowing) showSignOutDialog()
+            if (isDeleteUserDialogShowing) showDeleteUserDialog()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBoolean(USERNAME_DIALOG_SHOWING_KEY, isUsernameDialogShowing)
+        outState.putBoolean(SIGNOUT_DIALOG_SHOWING_KEY, isSignOutDialogShowing)
+        outState.putBoolean(DELETE_USER_DIALOG_SHOWING_KEY, isDeleteUserDialogShowing)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
@@ -92,8 +120,8 @@ class ProfileFragment : Fragment() {
                 .input(hintRes = R.string.enter_username, prefill = binding?.user?.username) { dialog, text ->
                     saveUsername(text.toString())
                 }
-                .positiveButton { /* Do nothing */ }
-                .negativeButton { /* Do nothing */ }
+                .positiveButton { isUsernameDialogShowing = false }
+                .negativeButton { isUsernameDialogShowing = false }
         }
     }
 
@@ -104,10 +132,12 @@ class ProfileFragment : Fragment() {
 
     private fun showUsernameDialog() {
         usernameDialog?.show()
+        isUsernameDialogShowing = true
     }
 
     private fun dismissUsernameDialog() {
         usernameDialog?.dismiss()
+        isUsernameDialogShowing = false
     }
 
     private fun initSignOutDialog() {
@@ -115,17 +145,22 @@ class ProfileFragment : Fragment() {
             signOutDialog = MaterialDialog(context!!)
                 .title(R.string.sign_out)
                 .message(R.string.prompt_sign_out)
-                .positiveButton { signOut() }
-                .negativeButton { /* Do nothing */ }
+                .positiveButton {
+                    isSignOutDialogShowing = false
+                    signOut()
+                }
+                .negativeButton { isSignOutDialogShowing = false }
         }
     }
 
     private fun showSignOutDialog() {
         signOutDialog?.show()
+        isSignOutDialogShowing = true
     }
 
     private fun dismissSignOutDialog() {
         signOutDialog?.dismiss()
+        isSignOutDialogShowing = false
     }
 
     private fun initDeleteUserDialog() {
@@ -133,17 +168,22 @@ class ProfileFragment : Fragment() {
             deleteUserDialog = MaterialDialog(context!!)
                 .title(R.string.delete_account)
                 .message(R.string.prompt_delete_account)
-                .positiveButton { deleteAccount() }
-                .negativeButton { /* Do nothing */ }
+                .positiveButton {
+                    isDeleteUserDialogShowing = false
+                    deleteAccount()
+                }
+                .negativeButton { isDeleteUserDialogShowing = false }
         }
     }
 
     private fun showDeleteUserDialog() {
         deleteUserDialog?.show()
+        isDeleteUserDialogShowing = true
     }
 
     private fun dismissDeleteUserDialog() {
         deleteUserDialog?.dismiss()
+        isDeleteUserDialogShowing = false
     }
 
     private fun signOut() {
