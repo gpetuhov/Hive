@@ -39,7 +39,6 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
 
-        initUsernameDialog()
         initSignOutDialog()
         initDeleteUserDialog()
 
@@ -90,7 +89,7 @@ class ProfileFragment : Fragment() {
         if (context != null) {
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
-                .input(hintRes = R.string.enter_username, prefill = repo.currentUser.value?.username) { dialog, text ->
+                .input(hintRes = R.string.enter_username, prefill = binding.user?.username) { dialog, text ->
                     saveUsername(text.toString())
                 }
                 .positiveButton { /* Do nothing */ }
@@ -100,11 +99,7 @@ class ProfileFragment : Fragment() {
 
     private fun saveUsername(username: String) {
         Timber.tag(TAG).d("Username = $username")
-        repo.updateUserUsername(username, { /* Do nothing */ }, { onUsernameUpdateError() })
-    }
-
-    private fun onUsernameUpdateError() {
-        toast(R.string.username_save_error)
+        repo.updateUserUsername(username, { /* Do nothing */ }, { toast(R.string.username_save_error) })
     }
 
     private fun showUsernameDialog() {
@@ -138,7 +133,7 @@ class ProfileFragment : Fragment() {
             deleteUserDialog = MaterialDialog(context!!)
                 .title(R.string.delete_account)
                 .message(R.string.prompt_delete_account)
-                .positiveButton { startDeleteAccount() }
+                .positiveButton { deleteAccount() }
                 .negativeButton { /* Do nothing */ }
         }
     }
@@ -155,24 +150,11 @@ class ProfileFragment : Fragment() {
         authManager.signOut(context) { toast(R.string.sign_out_error) }
     }
 
-    private fun startDeleteAccount() {
-        // When deleting account, delete user data from backend first
-        // (because after deleting account, the user will be unauthorized,
-        // and updating backend will be impossible)
-
-        // Proceed with account deletion, only if user data has been successfully deleted
-        repo.deleteUserDataRemote(this::deleteAccount, this::onDeleteAccountError)
-    }
-
     private fun deleteAccount() {
-        authManager.deleteAccount(context, this::onDeleteAccountSuccess, this::onDeleteAccountError)
-    }
-
-    private fun onDeleteAccountSuccess() {
-        toast(R.string.delete_account_success)
-    }
-
-    private fun onDeleteAccountError() {
-        toast(R.string.delete_account_error)
+        authManager.deleteAccount(
+            context,
+            { toast(R.string.delete_account_success) },
+            { toast(R.string.delete_account_error) }
+        )
     }
 }

@@ -110,18 +110,27 @@ class AuthManager {
     }
 
     fun deleteAccount(context: Context?, onSuccess: () -> Unit, onError: () -> Unit) {
-        if (context != null) {
-            AuthUI.getInstance()
-                .delete(context)
-                .addOnSuccessListener {
-                    Timber.tag(TAG).d("User deleted successfully")
-                    onSuccess()
-                }
-                .addOnFailureListener {
-                    Timber.tag(TAG).d("Error deleting user")
-                    onError()
-                }
-        }
+        // When deleting account, delete user data from backend first
+        // (because after deleting account, the user will be unauthorized,
+        // and updating backend will be impossible)
+
+        repo.deleteUserDataRemote({
+            // Proceed with account deletion, only if user data has been successfully deleted
+            if (context != null) {
+                AuthUI.getInstance()
+                    .delete(context)
+                    .addOnSuccessListener {
+                        Timber.tag(TAG).d("User deleted successfully")
+                        onSuccess()
+                    }
+                    .addOnFailureListener {
+                        Timber.tag(TAG).d("Error deleting user")
+                        onError()
+                    }
+            }
+        },
+            onError
+        )
     }
 
     fun dismissDialogs() {
