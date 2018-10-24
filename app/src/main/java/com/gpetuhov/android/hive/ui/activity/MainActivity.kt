@@ -12,7 +12,6 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
-import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.util.checkPermissions
@@ -105,11 +104,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onSignIn(user: User) {
-        // After successful sign in we must write to Firestore
-        // user name and email received from Firebase Auth.
-        repo.updateUserNameAndEmail(user, { /* Do nothing */ }, { /* Do nothing */ })
-        repo.startGettingCurrentUserRemoteUpdates()
+    private fun onSignIn() {
+        // Do nothing
     }
 
     private fun onSignOut() {

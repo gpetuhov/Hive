@@ -27,11 +27,14 @@ class Repository {
         private const val LON_KEY = "lon"
     }
 
+    // Current user is LiveData so that the UI can easily observe changes and update itself
     val currentUser = MutableLiveData<User>()
-    var isAuthorized = false
 
+    private var isAuthorized = false
+    private var currentUserUid: String = ""
     private val firestore = FirebaseFirestore.getInstance()
-    private lateinit var registration: ListenerRegistration
+    private lateinit var searchResultListenerRegistration: ListenerRegistration
+    private lateinit var currentUserListenerRegistration: ListenerRegistration
 
     init {
         HiveApp.appComponent.inject(this)
@@ -44,23 +47,27 @@ class Repository {
 
         firestore.firestoreSettings = settings
 
-        setUserAsAnonymous()
+        resetCurrentUser()
     }
 
-    fun saveUser(user: User) {
-        currentUser.value = user
+    fun onSignIn(user: User) {
+        if (!isAuthorized) {
+            isAuthorized = true
+            currentUserUid = user.uid
+            startGettingCurrentUserRemoteUpdates()
+
+            // After successful sign in we must write to Firestore
+            // user name and email received from Firebase Auth.
+            updateUserNameAndEmail(user)
+        }
     }
 
-    fun setUserAsAnonymous() {
-        saveUser(createAnonymousUser())
-    }
-
-    fun updateUserNameAndEmail(user: User, onSuccess: () -> Unit, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[NAME_KEY] = user.name
-        data[EMAIL_KEY] = user.email
-
-        updateUserDataRemote(data, onSuccess, onError)
+    fun onSignOut() {
+        if (isAuthorized) {
+            isAuthorized = false
+            stopGettingCurrentUserRemoteUpdates()
+            resetCurrentUser()
+        }
     }
 
     fun updateUserUsername(newUsername: String, onSuccess: () -> Unit, onError: () -> Unit) {
@@ -85,29 +92,9 @@ class Repository {
         updateUserDataRemote(data, onSuccess, onError)
     }
 
-    fun startGettingCurrentUserRemoteUpdates() {
-        if (isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(currentUser.value?.uid ?: "")
-                .addSnapshotListener { snapshot, firebaseFirestoreException ->
-                    if (firebaseFirestoreException == null) {
-                        if (snapshot != null && snapshot.exists()) {
-                            Timber.tag(TAG).d("Listen success")
-                            currentUser.value = getUserFromDocumentSnapshot(snapshot)
-
-                        } else {
-                            Timber.tag(TAG).d("Listen failed")
-                        }
-
-                    } else {
-                        Timber.tag(TAG).d(firebaseFirestoreException)
-                    }
-                }
-        }
-    }
-
     fun startGettingRemoteResultUpdates(onSuccess: (MutableList<User>) -> Unit) {
         if (isAuthorized) {
-            registration = firestore.collection(USERS_COLLECTION)
+            searchResultListenerRegistration = firestore.collection(USERS_COLLECTION)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     val resultList = mutableListOf<User>()
 
@@ -135,12 +122,12 @@ class Repository {
     }
 
     fun stopGettingRemoteResultUpdates() {
-        registration.remove()
+        searchResultListenerRegistration.remove()
     }
 
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(currentUser.value?.uid ?: "")
+            firestore.collection(USERS_COLLECTION).document(currentUserUid)
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully deleted")
@@ -157,9 +144,32 @@ class Repository {
         }
     }
 
+    private fun resetCurrentUser() {
+        currentUser.value = createAnonymousUser()
+    }
+
+    private fun createAnonymousUser(): User {
+        return User(
+            uid = "",
+            name = Constants.Auth.DEFAULT_USER_NAME,
+            username = "",
+            email = Constants.Auth.DEFAULT_USER_MAIL,
+            isOnline = false,
+            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+        )
+    }
+
+    private fun updateUserNameAndEmail(user: User) {
+        val data = HashMap<String, Any>()
+        data[NAME_KEY] = user.name
+        data[EMAIL_KEY] = user.email
+
+        updateUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+    }
+
     private fun updateUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(currentUser.value?.uid ?: "")
+            firestore.collection(USERS_COLLECTION).document(currentUserUid)
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully written")
@@ -175,6 +185,30 @@ class Repository {
         }
     }
 
+    private fun startGettingCurrentUserRemoteUpdates() {
+        if (isAuthorized) {
+            currentUserListenerRegistration = firestore.collection(USERS_COLLECTION).document(currentUserUid)
+                .addSnapshotListener { snapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        if (snapshot != null && snapshot.exists()) {
+                            Timber.tag(TAG).d("Listen success")
+                            currentUser.value = getUserFromDocumentSnapshot(snapshot)
+
+                        } else {
+                            Timber.tag(TAG).d("Listen failed")
+                        }
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+        }
+    }
+
+    private fun stopGettingCurrentUserRemoteUpdates() {
+        currentUserListenerRegistration.remove()
+    }
+
     private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot): User {
         val location = LatLng(
             doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
@@ -188,17 +222,6 @@ class Repository {
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
-        )
-    }
-
-    private fun createAnonymousUser(): User {
-        return User(
-            uid = "",
-            name = Constants.Auth.DEFAULT_USER_NAME,
-            username = "",
-            email = Constants.Auth.DEFAULT_USER_MAIL,
-            isOnline = false,
-            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
     }
 }

@@ -32,7 +32,7 @@ class AuthManager {
         HiveApp.appComponent.inject(this)
     }
 
-    fun init(onSignIn: (User) -> Unit, onSignOut: () -> Unit) {
+    fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val firebaseUser = firebaseAuth.currentUser
 
@@ -43,17 +43,14 @@ class AuthManager {
                 Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
                 Timber.tag(TAG).d("User email = ${firebaseUser.email}")
 
-                val user = convertFirebaseUser(firebaseUser)
-                repo.saveUser(user)
-                repo.isAuthorized = true
-                onSignIn(user)
+                repo.onSignIn(convertFirebaseUser(firebaseUser))
+                onSignIn()
 
             } else {
                 // User is signed out
                 Timber.tag(TAG).d("User signed out")
 
-                repo.isAuthorized = false
-                repo.setUserAsAnonymous()
+                repo.onSignOut()
                 onSignOut()
             }
         }
