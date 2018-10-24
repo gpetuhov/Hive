@@ -117,7 +117,7 @@ class ProfileFragment : Fragment() {
         if (context != null) {
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
-                .input(hintRes = R.string.enter_username, prefill = binding?.user?.username) { dialog, text ->
+                .input(hintRes = R.string.enter_username, prefill = repo.currentUser.value?.username) { dialog, text ->
                     saveUsername(text.toString())
                 }
                 .positiveButton { isUsernameDialogShowing = false }
