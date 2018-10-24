@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
 import com.gpetuhov.android.hive.ui.fragment.ProfileFragment
+import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -35,4 +36,5 @@ interface AppComponent {
     fun inject(repository: Repository)
 
     fun inject(userViewModel: CurrentUserViewModel)
+    fun inject(searchResultViewModel: SearchResultViewModel)
 }

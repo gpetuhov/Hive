@@ -5,11 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.MapManager
+import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.repository.Repository
+import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import javax.inject.Inject
 
 class MapFragment : Fragment() {
@@ -31,7 +36,7 @@ class MapFragment : Fragment() {
         mapView.onCreate(savedInstanceState)
 
         // Asynchronously get reference to the map
-        mapView.getMapAsync { map -> mapManager.initMap(map) }
+        mapView.getMapAsync(this::onMapReady)
 
         return view
     }
@@ -44,7 +49,7 @@ class MapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        repo.startGettingRemoteResultUpdates { resultList -> mapManager.updateMarkers(context, resultList) }
+        repo.startGettingRemoteResultUpdates()
     }
 
     override fun onPause() {
@@ -71,5 +76,15 @@ class MapFragment : Fragment() {
     override fun onLowMemory() {
         super.onLowMemory()
         mapView.onLowMemory()
+    }
+
+    private fun onMapReady(map: GoogleMap) {
+        mapManager.initMap(map)
+
+        // Start observing result list ViewModel only after map is ready
+        val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
+        viewModel.resultList.observe(this, Observer<MutableList<User>> { resultList ->
+            mapManager.updateMarkers(context, resultList)
+        })
     }
 }

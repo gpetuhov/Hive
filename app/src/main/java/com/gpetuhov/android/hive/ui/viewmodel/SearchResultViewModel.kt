@@ -7,15 +7,15 @@ import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.repository.Repository
 import javax.inject.Inject
 
-// Provides current user data to the UI
-class CurrentUserViewModel : ViewModel() {
+// Provides result list to the UI
+class SearchResultViewModel : ViewModel() {
 
     @Inject lateinit var repo: Repository
 
-    val currentUser: LiveData<User>
+    val resultList: LiveData<MutableList<User>>
 
     init {
         HiveApp.appComponent.inject(this)
-        currentUser = repo.currentUser
+        resultList = repo.resultList
     }
 }

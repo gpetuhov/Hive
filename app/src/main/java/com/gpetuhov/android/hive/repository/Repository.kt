@@ -38,6 +38,13 @@ class Repository {
     // 3. UI that observes currentUser (through ViewModel) is updated
     val currentUser = MutableLiveData<User>()
 
+    // For resultList the single source of truth is also Firestore.
+    // Sequence of updates:
+    // 1. Data in Firestore is updated
+    // 2. resultList is updated
+    // 3. UI the observes resultList is updated
+    val resultList = MutableLiveData<MutableList<User>>()
+
     private var isAuthorized = false
     private var currentUserUid: String = ""
     private val firestore = FirebaseFirestore.getInstance()
@@ -56,6 +63,7 @@ class Repository {
         firestore.firestoreSettings = settings
 
         resetCurrentUser()
+        clearResultList()
     }
 
     fun onSignIn(user: User) {
@@ -105,11 +113,11 @@ class Repository {
         updateUserDataRemote(data, onComplete, onComplete)
     }
 
-    fun startGettingRemoteResultUpdates(onSuccess: (MutableList<User>) -> Unit) {
+    fun startGettingRemoteResultUpdates() {
         if (isAuthorized) {
             searchResultListenerRegistration = firestore.collection(USERS_COLLECTION)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                    val resultList = mutableListOf<User>()
+                    val newResultList = mutableListOf<User>()
 
                     if (firebaseFirestoreException == null) {
                         if (querySnapshot != null) {
@@ -117,7 +125,7 @@ class Repository {
 
                             for (doc in querySnapshot) {
                                 if (doc.id != currentUser.value?.uid) {
-                                    resultList.add(getUserFromDocumentSnapshot(doc))
+                                    newResultList.add(getUserFromDocumentSnapshot(doc))
                                 }
                             }
 
@@ -129,7 +137,7 @@ class Repository {
                         Timber.tag(TAG).d(firebaseFirestoreException)
                     }
 
-                    onSuccess(resultList)
+                    resultList.value = newResultList
                 }
         }
     }
@@ -160,6 +168,10 @@ class Repository {
     private fun resetCurrentUser() {
         currentUser.value = createAnonymousUser()
         currentUserUid = ""
+    }
+
+    private fun clearResultList() {
+        resultList.value = mutableListOf()
     }
 
     private fun createAnonymousUser(): User {
