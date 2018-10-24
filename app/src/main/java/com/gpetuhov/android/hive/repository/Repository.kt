@@ -48,8 +48,8 @@ class Repository {
     private var isAuthorized = false
     private var currentUserUid: String = ""
     private val firestore = FirebaseFirestore.getInstance()
-    private lateinit var searchResultListenerRegistration: ListenerRegistration
-    private lateinit var currentUserListenerRegistration: ListenerRegistration
+    private var searchResultListenerRegistration: ListenerRegistration? = null
+    private var currentUserListenerRegistration: ListenerRegistration? = null
 
     init {
         HiveApp.appComponent.inject(this)
@@ -143,7 +143,7 @@ class Repository {
     }
 
     fun stopGettingRemoteResultUpdates() {
-        searchResultListenerRegistration.remove()
+        searchResultListenerRegistration?.remove()
     }
 
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
@@ -232,7 +232,7 @@ class Repository {
     }
 
     private fun stopGettingCurrentUserRemoteUpdates() {
-        currentUserListenerRegistration.remove()
+        currentUserListenerRegistration?.remove()
     }
 
     private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot): User {
