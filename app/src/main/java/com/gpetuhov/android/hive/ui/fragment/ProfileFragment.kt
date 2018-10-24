@@ -29,6 +29,7 @@ class ProfileFragment : Fragment() {
         private const val USERNAME_DIALOG_SHOWING_KEY = "isUsernameDialogShowing"
         private const val SIGNOUT_DIALOG_SHOWING_KEY = "isSignOutDialogShowing"
         private const val DELETE_USER_DIALOG_SHOWING_KEY = "isDeleteUserDialogShowing"
+        private const val TEMP_USERNAME_KEY = "tempUsername"
     }
 
     @Inject lateinit var authManager: AuthManager
@@ -42,6 +43,9 @@ class ProfileFragment : Fragment() {
     private var isUsernameDialogShowing = false
     private var isSignOutDialogShowing = false
     private var isDeleteUserDialogShowing = false
+
+    // Keeps current text entered in username dialog
+    private var tempUsername = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
@@ -69,6 +73,7 @@ class ProfileFragment : Fragment() {
             isUsernameDialogShowing = savedInstanceState.getBoolean(USERNAME_DIALOG_SHOWING_KEY, false)
             isSignOutDialogShowing = savedInstanceState.getBoolean(SIGNOUT_DIALOG_SHOWING_KEY, false)
             isDeleteUserDialogShowing = savedInstanceState.getBoolean(DELETE_USER_DIALOG_SHOWING_KEY, false)
+            tempUsername = savedInstanceState.getString(TEMP_USERNAME_KEY, "")
 
             if (isUsernameDialogShowing) onUsernameClick()
             if (isSignOutDialogShowing) showSignOutDialog()
@@ -80,6 +85,7 @@ class ProfileFragment : Fragment() {
         outState.putBoolean(USERNAME_DIALOG_SHOWING_KEY, isUsernameDialogShowing)
         outState.putBoolean(SIGNOUT_DIALOG_SHOWING_KEY, isSignOutDialogShowing)
         outState.putBoolean(DELETE_USER_DIALOG_SHOWING_KEY, isDeleteUserDialogShowing)
+        outState.putString(TEMP_USERNAME_KEY, tempUsername)
         super.onSaveInstanceState(outState)
     }
 
@@ -115,13 +121,22 @@ class ProfileFragment : Fragment() {
 
     private fun initUsernameDialog() {
         if (context != null) {
+            val prefill = if (tempUsername != "") tempUsername else repo.currentUser.value?.username
+
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
-                .input(hintRes = R.string.enter_username, prefill = repo.currentUser.value?.username) { dialog, text ->
-                    saveUsername(text.toString())
+                .input(hintRes = R.string.enter_username, prefill = prefill, waitForPositiveButton = false) { dialog, text ->
+                    tempUsername = text.toString()
                 }
-                .positiveButton { isUsernameDialogShowing = false }
-                .negativeButton { isUsernameDialogShowing = false }
+                .positiveButton {
+                    saveUsername(tempUsername)
+                    tempUsername = ""
+                    isUsernameDialogShowing = false
+                }
+                .negativeButton {
+                    tempUsername = ""
+                    isUsernameDialogShowing = false
+                }
         }
     }
 
