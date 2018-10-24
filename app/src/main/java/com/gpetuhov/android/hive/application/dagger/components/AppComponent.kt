@@ -5,6 +5,7 @@ import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.managers.NotificationManager
+import com.gpetuhov.android.hive.model.CurrentUserViewModel
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
@@ -32,4 +33,6 @@ interface AppComponent {
     fun inject(mapManager: MapManager)
     fun inject(notificationManager: NotificationManager)
     fun inject(repository: Repository)
+
+    fun inject(userViewModel: CurrentUserViewModel)
 }

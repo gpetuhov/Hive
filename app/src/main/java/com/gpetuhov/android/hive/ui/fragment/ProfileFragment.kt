@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
 import com.gpetuhov.android.hive.managers.AuthManager
+import com.gpetuhov.android.hive.model.CurrentUserViewModel
+import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.isOnline
 import com.pawegio.kandroid.toast
@@ -40,8 +44,14 @@ class ProfileFragment : Fragment() {
         initDeleteUserDialog()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        binding.user = repo.currentUser.value
         binding.handler = this
+
+        val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
+
+        // TODO: bind viewmodel directly inside layout with Data Binding
+        viewModel.currentUser.observe(this, Observer<User> { user ->
+            binding.user = user
+        })
 
         return binding.root
     }
