@@ -66,6 +66,7 @@ class Repository {
         if (isAuthorized) {
             isAuthorized = false
             stopGettingCurrentUserRemoteUpdates()
+            stopGettingRemoteResultUpdates()
             resetCurrentUser()
         }
     }
@@ -85,11 +86,11 @@ class Repository {
         updateUserDataRemote(data, onSuccess, onError)
     }
 
-    fun updateUserOnlineStatus(newIsOnline: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
+    fun updateUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
         val data = HashMap<String, Any>()
         data[IS_ONLINE_KEY] = newIsOnline
 
-        updateUserDataRemote(data, onSuccess, onError)
+        updateUserDataRemote(data, onComplete, onComplete)
     }
 
     fun startGettingRemoteResultUpdates(onSuccess: (MutableList<User>) -> Unit) {
@@ -146,6 +147,7 @@ class Repository {
 
     private fun resetCurrentUser() {
         currentUser.value = createAnonymousUser()
+        currentUserUid = ""
     }
 
     private fun createAnonymousUser(): User {

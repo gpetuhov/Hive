@@ -120,7 +120,7 @@ class ProfileFragment : Fragment() {
             signOutDialog = MaterialDialog(context!!)
                 .title(R.string.sign_out)
                 .message(R.string.prompt_sign_out)
-                .positiveButton { startSignOut() }
+                .positiveButton { signOut() }
                 .negativeButton { /* Do nothing */ }
         }
     }
@@ -151,24 +151,8 @@ class ProfileFragment : Fragment() {
         deleteUserDialog?.dismiss()
     }
 
-    private fun startSignOut() {
-        // When signing out, first set status to offline,
-        // and only after that sign out (because after signing out,
-        // updating backend will be impossible)
-        // We are signing out regardless of online status update success
-        repo.updateUserOnlineStatus(false, this::signOut, this::signOut)
-    }
-
     private fun signOut() {
-        authManager.signOut(context, this::onSignOutSuccess, this::onSignOurError)
-    }
-
-    private fun onSignOutSuccess() {
-        // Do nothing
-    }
-
-    private fun onSignOurError() {
-        toast(R.string.sign_out_error)
+        authManager.signOut(context) { toast(R.string.sign_out_error) }
     }
 
     private fun startDeleteAccount() {

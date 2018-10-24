@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUserOnlineStatus(isOnline: Boolean) {
-        repo.updateUserOnlineStatus(isOnline, { /* Do nothing */ }, { /* Do nothing */ })
+        repo.updateUserOnlineStatus(isOnline) { /* Do nothing */ }
     }
 
     private fun startLocationService() {
