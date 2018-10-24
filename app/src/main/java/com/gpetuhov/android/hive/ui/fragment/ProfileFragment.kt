@@ -62,7 +62,7 @@ class ProfileFragment : Fragment() {
         dismissDeleteUserDialog()
     }
 
-    fun onSignOutButtonClick(view: View) {
+    fun onSignOutButtonClick() {
         if (isOnline(context)) {
             showSignOutDialog()
         } else {
@@ -70,7 +70,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun onDeleteAccountButtonClick(view: View) {
+    fun onDeleteAccountButtonClick() {
         if (isOnline(context)) {
             showDeleteUserDialog()
         } else {
@@ -78,7 +78,7 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    fun onUsernameClick(view: View) {
+    fun onUsernameClick() {
         // We need to reinitialize username dialog every time,
         // so that it will be prefilled with current username.
         initUsernameDialog()
