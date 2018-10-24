@@ -6,12 +6,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import java.util.*
-import javax.inject.Inject
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.DocumentSnapshot
 
@@ -66,50 +64,13 @@ class Repository {
     }
 
     fun updateUserUsername(newUsername: String, onSuccess: () -> Unit, onError: () -> Unit) {
-        val oldUsername = currentUser.value?.username ?: ""
-        updateUser { username = newUsername }
-
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
 
-        updateUserDataRemote(data, onSuccess, {
-            updateUser { username = oldUsername }
-            onError()
-        })
-    }
-
-    fun getUsernameRemote() {
-        getUserDataRemote(currentUser.value?.uid ?: "", { user -> saveUsername(user.username) }, { /* Do nothing */ })
-    }
-
-    fun getUserDataRemote(userUid: String, onSuccess: (User) -> Unit, onError: () -> Unit) {
-        if (isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(userUid).get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val document = task.result
-                        if (document?.exists() == true) {
-                            Timber.tag(TAG).d("User successfully retrieved")
-                            onSuccess(getUserFromDocumentSnapshot(document))
-                        } else {
-                            Timber.tag(TAG).d("No such user")
-                            onError()
-                        }
-                    } else {
-                        Timber.tag(TAG).d("Error retrieving user")
-                        Timber.tag(TAG).d(task.exception)
-                        onError()
-                    }
-                }
-
-        } else {
-            onError()
-        }
+        updateUserDataRemote(data, onSuccess, onError)
     }
 
     fun updateUserLocation(newLocation: LatLng, onSuccess: () -> Unit, onError: () -> Unit) {
-        updateUser { location = newLocation }
-
         val data = HashMap<String, Any>()
         data[LAT_KEY] = newLocation.latitude
         data[LON_KEY] = newLocation.longitude
@@ -118,12 +79,30 @@ class Repository {
     }
 
     fun updateUserOnlineStatus(newIsOnline: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
-        updateUser { isOnline = newIsOnline }
-
         val data = HashMap<String, Any>()
         data[IS_ONLINE_KEY] = newIsOnline
 
         updateUserDataRemote(data, onSuccess, onError)
+    }
+
+    fun startGettingCurrentUserRemoteUpdates() {
+        if (isAuthorized) {
+            firestore.collection(USERS_COLLECTION).document(currentUser.value?.uid ?: "")
+                .addSnapshotListener { snapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        if (snapshot != null && snapshot.exists()) {
+                            Timber.tag(TAG).d("Listen success")
+                            currentUser.value = getUserFromDocumentSnapshot(snapshot)
+
+                        } else {
+                            Timber.tag(TAG).d("Listen failed")
+                        }
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+        }
     }
 
     fun startGettingRemoteResultUpdates(onSuccess: (MutableList<User>) -> Unit) {
@@ -176,14 +155,6 @@ class Repository {
         } else {
             onError()
         }
-    }
-
-    private fun saveUsername(newUsername: String) {
-        updateUser { username = newUsername }
-    }
-
-    private fun updateUser(update: User.() -> Unit) {
-        currentUser.value = currentUser.value?.apply { update() }
     }
 
     private fun updateUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {

@@ -48,7 +48,7 @@ class ProfileFragment : Fragment() {
 
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
 
-        // TODO: bind viewmodel directly inside layout with Data Binding
+        // Every time current user data changes, update binding object with new data
         viewModel.currentUser.observe(this, Observer<User> { user ->
             binding.user = user
         })

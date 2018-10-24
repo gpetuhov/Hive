@@ -108,11 +108,8 @@ class MainActivity : AppCompatActivity() {
     private fun onSignIn(user: User) {
         // After successful sign in we must write to Firestore
         // user name and email received from Firebase Auth.
-        repo.updateUserNameAndEmail(user, this::getUserData, this::getUserData)
-    }
-
-    private fun getUserData() {
-        repo.getUsernameRemote()
+        repo.updateUserNameAndEmail(user, { /* Do nothing */ }, { /* Do nothing */ })
+        repo.startGettingCurrentUserRemoteUpdates()
     }
 
     private fun onSignOut() {
