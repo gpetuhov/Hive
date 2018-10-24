@@ -5,7 +5,7 @@ import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.managers.NotificationManager
-import com.gpetuhov.android.hive.model.CurrentUserViewModel
+import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity

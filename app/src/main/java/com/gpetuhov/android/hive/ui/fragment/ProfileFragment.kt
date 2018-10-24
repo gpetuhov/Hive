@@ -14,7 +14,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
 import com.gpetuhov.android.hive.managers.AuthManager
-import com.gpetuhov.android.hive.model.CurrentUserViewModel
+import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.isOnline
