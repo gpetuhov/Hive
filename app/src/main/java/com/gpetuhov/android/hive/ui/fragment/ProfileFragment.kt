@@ -70,6 +70,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         signOutDialog?.show()
     }
 
+    override fun onSignOutError() {
+        toast(R.string.sign_out_error)
+    }
+
     override fun dismissSignOutDialog() {
         signOutDialog?.dismiss()
     }
@@ -140,13 +144,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 .message(R.string.prompt_sign_out)
                 .noAutoDismiss()
                 .cancelable(false)
-                .positiveButton {
-                    presenter.dismissSignOutDialog()
-                    signOut()
-                }
-                .negativeButton {
-                    presenter.dismissSignOutDialog()
-                }
+                .positiveButton { presenter.signOut(context) }
+                .negativeButton { presenter.dismissSignOutDialog() }
         }
     }
 
@@ -165,10 +164,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                     presenter.dismissDeleteUserDialog()
                 }
         }
-    }
-
-    private fun signOut() {
-        authManager.signOut(context) { toast(R.string.sign_out_error) }
     }
 
     private fun deleteAccount() {

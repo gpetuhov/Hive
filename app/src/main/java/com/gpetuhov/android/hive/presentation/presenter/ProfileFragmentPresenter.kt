@@ -1,10 +1,14 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.repository.Repository
+import com.pawegio.kandroid.toast
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -18,6 +22,7 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
     }
 
     @Inject lateinit var repo: Repository
+    @Inject lateinit var authManager: AuthManager
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -31,6 +36,11 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
         // This way Moxy will remember current state of the view and will restore it,
         // when the view is recreated.
         viewState.showSignOutDialog()
+    }
+
+    fun signOut(context: Context?) {
+        dismissSignOutDialog()
+        authManager.signOut(context) { viewState.onSignOutError() }
     }
 
     fun dismissSignOutDialog() = viewState.dismissSignOutDialog()
