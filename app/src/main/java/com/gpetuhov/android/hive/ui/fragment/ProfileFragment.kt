@@ -91,7 +91,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        // This is needed to prevent memory leaks
         dismissUsernameDialog()
+        dismissSignOutDialog()
         dismissDeleteUserDialog()
     }
 
@@ -173,10 +176,13 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
             signOutDialog = MaterialDialog(context!!)
                 .title(R.string.sign_out)
                 .message(R.string.prompt_sign_out)
+                .noAutoDismiss()
+                .cancelable(false)
                 .positiveButton {
+                    presenter.dismissSignOutDialog()
                     signOut()
                 }
-                .negativeButton {  }
+                .negativeButton { presenter.dismissSignOutDialog() }
         }
     }
 
