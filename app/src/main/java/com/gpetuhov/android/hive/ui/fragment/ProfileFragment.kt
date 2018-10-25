@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -106,6 +107,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     }
 
     override fun showUsernameDialog() {
+        // Prefill dialog with currently entered text or current username
+        val prefill = if (tempUsername != "") tempUsername else repo.currentUser.value?.username
+        val editText = usernameDialog?.getInputField()
+        editText?.setText(prefill)
+        editText?.setSelection(editText.text.length)
         usernameDialog?.show()
     }
 
@@ -132,9 +138,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     }
 
     fun onUsernameClick() {
-        // We need to reinitialize username dialog every time,
-        // so that it will be prefilled with current username.
-//        initUsernameDialog()
         presenter.showUsernameDialog()
     }
 
@@ -142,13 +145,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun initUsernameDialog() {
         if (context != null) {
-            val prefill = if (tempUsername != "") tempUsername else repo.currentUser.value?.username
-
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
                 .noAutoDismiss()
                 .cancelable(false)
-                .input(hintRes = R.string.enter_username, prefill = prefill, waitForPositiveButton = false) { dialog, text ->
+                .input(hintRes = R.string.enter_username, waitForPositiveButton = false) { dialog, text ->
                     tempUsername = text.toString()
                 }
                 .positiveButton {
