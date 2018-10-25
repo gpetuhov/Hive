@@ -20,21 +20,13 @@ import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
-import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.isOnline
 import com.pawegio.kandroid.toast
-import timber.log.Timber
 import javax.inject.Inject
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
-    companion object {
-        private const val TAG = "ProfileFragment"
-        private const val TEMP_USERNAME_KEY = "tempUsername"
-    }
-
     @Inject lateinit var authManager: AuthManager
-    @Inject lateinit var repo: Repository
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
 
@@ -42,9 +34,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
     private var binding: FragmentProfileBinding? = null
-
-    // Keeps current text entered in username dialog
-    private var tempUsername = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
@@ -64,19 +53,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         })
 
         return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        if (savedInstanceState != null) {
-            tempUsername = savedInstanceState.getString(TEMP_USERNAME_KEY, "")
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString(TEMP_USERNAME_KEY, tempUsername)
-        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
@@ -107,16 +83,18 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     }
 
     override fun showUsernameDialog() {
-        // Prefill dialog with currently entered text or current username
-        val prefill = if (tempUsername != "") tempUsername else repo.currentUser.value?.username
         val editText = usernameDialog?.getInputField()
-        editText?.setText(prefill)
+        editText?.setText(presenter.getPrefill())
         editText?.setSelection(editText.text.length)
         usernameDialog?.show()
     }
 
     override fun dismissUsernameDialog() {
         usernameDialog?.dismiss()
+    }
+
+    override fun onSaveUsernameError() {
+        toast(R.string.username_save_error)
     }
 
     // === Public methods ===
@@ -137,9 +115,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         }
     }
 
-    fun onUsernameClick() {
-        presenter.showUsernameDialog()
-    }
+    fun onUsernameClick() = presenter.showUsernameDialog()
 
     // === Private methods ===
 
@@ -150,23 +126,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 .noAutoDismiss()
                 .cancelable(false)
                 .input(hintRes = R.string.enter_username, waitForPositiveButton = false) { dialog, text ->
-                    tempUsername = text.toString()
+                    presenter.updateTempUsername(text.toString())
                 }
-                .positiveButton {
-                    presenter.dismissUsernameDialog()
-                    saveUsername(tempUsername)
-                    tempUsername = ""
-                }
-                .negativeButton {
-                    presenter.dismissUsernameDialog()
-                    tempUsername = ""
-                }
+                .positiveButton { presenter.saveUsername() }
+                .negativeButton { presenter.dismissUsernameDialog() }
         }
-    }
-
-    private fun saveUsername(username: String) {
-        Timber.tag(TAG).d("Username = $username")
-        repo.updateUserUsername(username, { /* Do nothing */ }, { toast(R.string.username_save_error) })
     }
 
     private fun initSignOutDialog() {

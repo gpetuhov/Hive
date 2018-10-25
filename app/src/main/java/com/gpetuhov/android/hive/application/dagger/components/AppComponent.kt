@@ -5,6 +5,7 @@ import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.managers.NotificationManager
+import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.service.LocationService
@@ -37,4 +38,6 @@ interface AppComponent {
 
     fun inject(userViewModel: CurrentUserViewModel)
     fun inject(searchResultViewModel: SearchResultViewModel)
+
+    fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
 }
