@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
@@ -16,13 +15,14 @@ import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.model.User
+import com.gpetuhov.android.hive.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.isOnline
 import com.pawegio.kandroid.toast
 import timber.log.Timber
 import javax.inject.Inject
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : MvpAppCompatFragment() {
 
     companion object {
         private const val TAG = "ProfileFragment"

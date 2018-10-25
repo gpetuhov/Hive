@@ -126,6 +126,12 @@ dependencies {
 
     // Data Binding
     kapt 'androidx.databinding:databinding-compiler:3.4.0-alpha02'
+
+    // Moxy
+    implementation "com.arello-mobile:moxy:$moxyVersion"
+    implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
+    implementation "com.arello-mobile:moxy-android:$moxyVersion"
+    kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
 }
 
 // Needed for Firebase
