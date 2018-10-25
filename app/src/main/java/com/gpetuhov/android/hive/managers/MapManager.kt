@@ -125,29 +125,34 @@ class MapManager {
         }
     }
 
-    fun saveMapState(outState: Bundle) {
-        val position = googleMap.cameraPosition
-        val mapType = googleMap.mapType
-
-        // Save map state into savedInstanceState bundle instead of MapManager itself,
-        // because Android keeps savedInstanceState bundle if app gets killed by the OS.
-        outState.putDouble(LAT, position.target.latitude)
-        outState.putDouble(LON, position.target.longitude)
-        outState.putFloat(ZOOM, position.zoom)
-        outState.putFloat(TILT, position.tilt)
-        outState.putFloat(BEARING, position.bearing)
-        outState.putInt(MAPTYPE, mapType)
+    // Save map state into MapManager
+    // (MapManager is alive during the whole app lifecycle)
+    fun saveMapState() {
+        mapState = MapState(googleMap.cameraPosition, googleMap.mapType)
     }
 
-    fun restoreMapState(savedInstanceState: Bundle?) {
-        mapState = null
+    // Save map state into savedInstanceState
+    fun saveOutState(outState: Bundle) {
+        // Save map state not only in MapManger itself,
+        // but also into savedInstanceState bundle,
+        // because Android keeps savedInstanceState bundle on orientation change
+        // and if the app gets killed by the OS.
+        outState.putDouble(LAT, mapState?.cameraPosition?.target?.latitude ?: Constants.Map.DEFAULT_LATITUDE)
+        outState.putDouble(LON, mapState?.cameraPosition?.target?.longitude ?: Constants.Map.DEFAULT_LONGITUDE)
+        outState.putFloat(ZOOM, mapState?.cameraPosition?.zoom ?: Constants.Map.NO_ZOOM)
+        outState.putFloat(TILT, mapState?.cameraPosition?.tilt ?: Constants.Map.DEFAULT_TILT)
+        outState.putFloat(BEARING, mapState?.cameraPosition?.bearing ?: Constants.Map.DEFAULT_BEARING)
+        outState.putInt(MAPTYPE, mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL)
+    }
 
+    // Restore map state from savedInstanceState, if exists and contains saved map state
+    fun restoreMapState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             val latitude = savedInstanceState.getDouble(LAT, Constants.Map.DEFAULT_LATITUDE)
             val longitude = savedInstanceState.getDouble(LON, Constants.Map.DEFAULT_LONGITUDE)
 
-            // If there are no latitute and longitude in the saved state,
-            // then there is no saved map state, so mapState must be null.
+            // If there are no latitude and longitude in the saved state,
+            // then there is no saved map state in the bundle, so do not update mapState property.
             if (latitude != Constants.Map.DEFAULT_LATITUDE
                 && longitude != Constants.Map.DEFAULT_LONGITUDE) {
 

@@ -56,6 +56,10 @@ class MapFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
+
+        // Save map state here, because onPause() is guaranteed to be called
+        mapManager.saveMapState()
+
         mapView?.onPause()
         repo.stopGettingRemoteResultUpdates()
     }
@@ -72,7 +76,7 @@ class MapFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapManager.saveMapState(outState)
+        mapManager.saveOutState(outState)
         mapView?.onSaveInstanceState(outState)
     }
 
