@@ -7,6 +7,8 @@ class Constants {
             const val DEFAULT_LONGITUDE = 0.0
             const val DEFAULT_ZOOM = 16.0F
             const val NO_ZOOM = 0.0F
+            const val DEFAULT_BEARING = 0.0F
+            const val DEFAULT_TILT = 0.0F
         }
     }
 

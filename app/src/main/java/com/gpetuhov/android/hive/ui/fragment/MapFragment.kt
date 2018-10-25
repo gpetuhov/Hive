@@ -35,6 +35,8 @@ class MapFragment : Fragment() {
         mapView = view.findViewById(R.id.map_view)
         mapView?.onCreate(savedInstanceState)
 
+        mapManager.restoreMapState(savedInstanceState)
+
         // Asynchronously get reference to the map
         mapView?.getMapAsync(this::onMapReady)
 
@@ -70,6 +72,7 @@ class MapFragment : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
+        mapManager.saveMapState(outState)
         mapView?.onSaveInstanceState(outState)
     }
 
