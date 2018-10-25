@@ -7,4 +7,6 @@ import com.arellomobile.mvp.MvpView
 interface ProfileFragmentView : MvpView {
     fun showSignOutDialog()
     fun dismissSignOutDialog()
+    fun showDeleteUserDialog()
+    fun dismissDeleteUserDialog()
 }

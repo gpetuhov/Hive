@@ -30,7 +30,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     companion object {
         private const val TAG = "ProfileFragment"
         private const val USERNAME_DIALOG_SHOWING_KEY = "isUsernameDialogShowing"
-        private const val DELETE_USER_DIALOG_SHOWING_KEY = "isDeleteUserDialogShowing"
         private const val TEMP_USERNAME_KEY = "tempUsername"
     }
 
@@ -45,7 +44,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private var binding: FragmentProfileBinding? = null
 
     private var isUsernameDialogShowing = false
-    private var isDeleteUserDialogShowing = false
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -74,17 +72,14 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
         if (savedInstanceState != null) {
             isUsernameDialogShowing = savedInstanceState.getBoolean(USERNAME_DIALOG_SHOWING_KEY, false)
-            isDeleteUserDialogShowing = savedInstanceState.getBoolean(DELETE_USER_DIALOG_SHOWING_KEY, false)
             tempUsername = savedInstanceState.getString(TEMP_USERNAME_KEY, "")
 
             if (isUsernameDialogShowing) onUsernameClick()
-            if (isDeleteUserDialogShowing) showDeleteUserDialog()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putBoolean(USERNAME_DIALOG_SHOWING_KEY, isUsernameDialogShowing)
-        outState.putBoolean(DELETE_USER_DIALOG_SHOWING_KEY, isDeleteUserDialogShowing)
         outState.putString(TEMP_USERNAME_KEY, tempUsername)
         super.onSaveInstanceState(outState)
     }
@@ -108,6 +103,14 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         signOutDialog?.dismiss()
     }
 
+    override fun showDeleteUserDialog() {
+        deleteUserDialog?.show()
+    }
+
+    override fun dismissDeleteUserDialog() {
+        deleteUserDialog?.dismiss()
+    }
+
     // === Public methods ===
 
     fun onSignOutButtonClick() {
@@ -120,7 +123,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     fun onDeleteAccountButtonClick() {
         if (isOnline(context)) {
-            showDeleteUserDialog()
+            presenter.showDeleteUserDialog()
         } else {
             toast(R.string.delete_account_no_network)
         }
@@ -182,7 +185,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                     presenter.dismissSignOutDialog()
                     signOut()
                 }
-                .negativeButton { presenter.dismissSignOutDialog() }
+                .negativeButton {
+                    presenter.dismissSignOutDialog()
+                }
         }
     }
 
@@ -191,22 +196,16 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
             deleteUserDialog = MaterialDialog(context!!)
                 .title(R.string.delete_account)
                 .message(R.string.prompt_delete_account)
+                .noAutoDismiss()
+                .cancelable(false)
                 .positiveButton {
-                    isDeleteUserDialogShowing = false
+                    presenter.dismissDeleteUserDialog()
                     deleteAccount()
                 }
-                .negativeButton { isDeleteUserDialogShowing = false }
+                .negativeButton {
+                    presenter.dismissDeleteUserDialog()
+                }
         }
-    }
-
-    private fun showDeleteUserDialog() {
-        deleteUserDialog?.show()
-        isDeleteUserDialogShowing = true
-    }
-
-    private fun dismissDeleteUserDialog() {
-        deleteUserDialog?.dismiss()
-        isDeleteUserDialogShowing = false
     }
 
     private fun signOut() {
