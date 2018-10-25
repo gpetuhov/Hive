@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.moxy;
+package com.gpetuhov.android.hive.util.moxy;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
