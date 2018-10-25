@@ -29,7 +29,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     companion object {
         private const val TAG = "ProfileFragment"
-        private const val USERNAME_DIALOG_SHOWING_KEY = "isUsernameDialogShowing"
         private const val TEMP_USERNAME_KEY = "tempUsername"
     }
 
@@ -43,14 +42,13 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private var deleteUserDialog: MaterialDialog? = null
     private var binding: FragmentProfileBinding? = null
 
-    private var isUsernameDialogShowing = false
-
     // Keeps current text entered in username dialog
     private var tempUsername = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         HiveApp.appComponent.inject(this)
 
+        initUsernameDialog()
         initSignOutDialog()
         initDeleteUserDialog()
 
@@ -71,15 +69,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         super.onViewCreated(view, savedInstanceState)
 
         if (savedInstanceState != null) {
-            isUsernameDialogShowing = savedInstanceState.getBoolean(USERNAME_DIALOG_SHOWING_KEY, false)
             tempUsername = savedInstanceState.getString(TEMP_USERNAME_KEY, "")
-
-            if (isUsernameDialogShowing) onUsernameClick()
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(USERNAME_DIALOG_SHOWING_KEY, isUsernameDialogShowing)
         outState.putString(TEMP_USERNAME_KEY, tempUsername)
         super.onSaveInstanceState(outState)
     }
@@ -111,6 +105,14 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         deleteUserDialog?.dismiss()
     }
 
+    override fun showUsernameDialog() {
+        usernameDialog?.show()
+    }
+
+    override fun dismissUsernameDialog() {
+        usernameDialog?.dismiss()
+    }
+
     // === Public methods ===
 
     fun onSignOutButtonClick() {
@@ -132,8 +134,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     fun onUsernameClick() {
         // We need to reinitialize username dialog every time,
         // so that it will be prefilled with current username.
-        initUsernameDialog()
-        showUsernameDialog()
+//        initUsernameDialog()
+        presenter.showUsernameDialog()
     }
 
     // === Private methods ===
@@ -144,17 +146,19 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
+                .noAutoDismiss()
+                .cancelable(false)
                 .input(hintRes = R.string.enter_username, prefill = prefill, waitForPositiveButton = false) { dialog, text ->
                     tempUsername = text.toString()
                 }
                 .positiveButton {
+                    presenter.dismissUsernameDialog()
                     saveUsername(tempUsername)
                     tempUsername = ""
-                    isUsernameDialogShowing = false
                 }
                 .negativeButton {
+                    presenter.dismissUsernameDialog()
                     tempUsername = ""
-                    isUsernameDialogShowing = false
                 }
         }
     }
@@ -162,16 +166,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private fun saveUsername(username: String) {
         Timber.tag(TAG).d("Username = $username")
         repo.updateUserUsername(username, { /* Do nothing */ }, { toast(R.string.username_save_error) })
-    }
-
-    private fun showUsernameDialog() {
-        usernameDialog?.show()
-        isUsernameDialogShowing = true
-    }
-
-    private fun dismissUsernameDialog() {
-        usernameDialog?.dismiss()
-        isUsernameDialogShowing = false
     }
 
     private fun initSignOutDialog() {

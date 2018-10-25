@@ -27,4 +27,12 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
     fun dismissDeleteUserDialog() {
         viewState.dismissDeleteUserDialog()
     }
+
+    fun showUsernameDialog() {
+        viewState.showUsernameDialog()
+    }
+
+    fun dismissUsernameDialog() {
+        viewState.dismissUsernameDialog()
+    }
 }

@@ -9,4 +9,6 @@ interface ProfileFragmentView : MvpView {
     fun dismissSignOutDialog()
     fun showDeleteUserDialog()
     fun dismissDeleteUserDialog()
+    fun showUsernameDialog()
+    fun dismissUsernameDialog()
 }
