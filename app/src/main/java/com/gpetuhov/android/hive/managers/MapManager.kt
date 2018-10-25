@@ -169,6 +169,10 @@ class MapManager {
         }
     }
 
+    fun resetMapState() {
+        mapState = null
+    }
+
     // === Inner classes ===
 
     data class MapState(
