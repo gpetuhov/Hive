@@ -3,12 +3,10 @@ package com.gpetuhov.android.hive.presentation.presenter
 import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.repository.Repository
-import com.pawegio.kandroid.toast
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -47,6 +45,15 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
 
     fun showDeleteUserDialog() = viewState.showDeleteUserDialog()
 
+    fun deleteUser(context: Context?) {
+        dismissDeleteUserDialog()
+        authManager.deleteAccount(
+            context,
+            { viewState.onDeleteUserSuccess() },
+            { viewState.onDeleteUserError() }
+        )
+    }
+
     fun dismissDeleteUserDialog() = viewState.dismissDeleteUserDialog()
 
     fun showUsernameDialog() = viewState.showUsernameDialog()
@@ -57,7 +64,6 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
         return if (tempUsername != "") tempUsername else username
     }
 
-    // TODO: set strategy to not remember this
     fun updateTempUsername(newTempUsername: String) {
         Timber.tag(TAG).d("TempUsername = $newTempUsername")
         tempUsername = newTempUsername

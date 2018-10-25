@@ -12,9 +12,7 @@ import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
-import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
@@ -22,11 +20,8 @@ import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.isOnline
 import com.pawegio.kandroid.toast
-import javax.inject.Inject
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
-
-    @Inject lateinit var authManager: AuthManager
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
 
@@ -36,8 +31,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private var binding: FragmentProfileBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        HiveApp.appComponent.inject(this)
-
         initUsernameDialog()
         initSignOutDialog()
         initDeleteUserDialog()
@@ -58,7 +51,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     override fun onDestroyView() {
         super.onDestroyView()
 
-        // This is needed to prevent memory leaks
+        // This is needed to prevent memory leaks.
+        // Here we intentially dismiss dialogs directly, not via the presenter,
+        // so that the command queue doesn't change.
         dismissUsernameDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
@@ -82,6 +77,14 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         deleteUserDialog?.show()
     }
 
+    override fun onDeleteUserSuccess() {
+        toast(R.string.delete_account_success)
+    }
+
+    override fun onDeleteUserError() {
+        toast(R.string.delete_account_error)
+    }
+
     override fun dismissDeleteUserDialog() {
         deleteUserDialog?.dismiss()
     }
@@ -101,7 +104,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         toast(R.string.username_save_error)
     }
 
-    // === Public methods ===
+    // === Click handlers ===
 
     fun onSignOutButtonClick() {
         if (isOnline(context)) {
@@ -156,21 +159,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 .message(R.string.prompt_delete_account)
                 .noAutoDismiss()
                 .cancelable(false)
-                .positiveButton {
-                    presenter.dismissDeleteUserDialog()
-                    deleteAccount()
-                }
-                .negativeButton {
-                    presenter.dismissDeleteUserDialog()
-                }
+                .positiveButton { presenter.deleteUser(context) }
+                .negativeButton { presenter.dismissDeleteUserDialog() }
         }
-    }
-
-    private fun deleteAccount() {
-        authManager.deleteAccount(
-            context,
-            { toast(R.string.delete_account_success) },
-            { toast(R.string.delete_account_error) }
-        )
     }
 }
