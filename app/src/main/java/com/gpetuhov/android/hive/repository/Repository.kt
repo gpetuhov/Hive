@@ -37,14 +37,14 @@ class Repository : Repo {
     // 1. Write data to Firestore
     // 2. currentUser is updated
     // 3. UI that observes currentUser (through ViewModel) is updated
-    val currentUser = MutableLiveData<User>()
+    private val currentUser = MutableLiveData<User>()
 
     // For resultList the single source of truth is also Firestore.
     // Sequence of updates:
     // 1. Data in Firestore is updated
     // 2. resultList is updated
     // 3. UI the observes resultList is updated
-    val resultList = MutableLiveData<MutableList<User>>()
+    private val resultList = MutableLiveData<MutableList<User>>()
 
     private var isAuthorized = false
     private var currentUserUid: String = ""
@@ -73,6 +73,12 @@ class Repository : Repo {
 
         updateUserDataRemote(data, { /* Do nothing */ }, onError)
     }
+
+    fun currentUser() = currentUser
+
+    fun currentUserUsername() = currentUser.value?.username ?: ""
+
+    fun resultList() = resultList
 
     fun onSignIn(user: User) {
         if (!isAuthorized) {
@@ -163,6 +169,8 @@ class Repository : Repo {
             onError()
         }
     }
+
+    // === Private methods ===
 
     private fun resetCurrentUser() {
         currentUser.value = createAnonymousUser()

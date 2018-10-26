@@ -19,6 +19,6 @@ class CurrentUserViewModel : ViewModel() {
     init {
         HiveApp.appComponent.inject(this)
         repository = repo as Repository
-        currentUser = repository.currentUser
+        currentUser = repository.currentUser()
     }
 }

@@ -96,11 +96,8 @@ class ProfileFragmentPresenter :
 
     fun showUsernameDialog() = viewState.showUsernameDialog()
 
-    fun getPrefill(): String {
-        // Prefill dialog with currently entered text or current username
-        val username = repository.currentUser.value?.username ?: ""
-        return if (tempUsername != "") tempUsername else username
-    }
+    // Prefill dialog with currently entered text or current username
+    fun getPrefill() = if (tempUsername != "") tempUsername else repository.currentUserUsername()
 
     fun updateTempUsername(newTempUsername: String) {
         tempUsername = newTempUsername
