@@ -14,7 +14,6 @@ import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
-import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
@@ -35,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var repo: Repo
     @Inject lateinit var mapManager: MapManager
 
-    private lateinit var repository: Repository
     private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         HiveApp.appComponent.inject(this)
-        repository = repo as Repository
 
         initNavigation()
         initAuthManager()
@@ -121,7 +118,7 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun updateUserOnlineStatus(isOnline: Boolean) = repository.updateUserOnlineStatus(isOnline) { /* Do nothing */ }
+    private fun updateUserOnlineStatus(isOnline: Boolean) = repo.saveUserOnlineStatus(isOnline) { /* Do nothing */ }
 
     private fun startLocationService() {
         val intent = Intent(this, LocationService::class.java)

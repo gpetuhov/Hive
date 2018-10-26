@@ -7,13 +7,11 @@ import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
-import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
-import com.gpetuhov.android.hive.ui.fragment.ProfileFragment
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.util.MessagesProvider
 import dagger.Component
@@ -35,7 +33,6 @@ interface AppComponent {
     fun inject(mapManager: MapManager)
     fun inject(networkManager: NetworkManager)
     fun inject(notificationManager: NotificationManager)
-    fun inject(repository: Repository)
 
     fun inject(userViewModel: CurrentUserViewModel)
     fun inject(searchResultViewModel: SearchResultViewModel)

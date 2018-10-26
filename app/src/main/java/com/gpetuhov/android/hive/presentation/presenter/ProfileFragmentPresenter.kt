@@ -8,7 +8,6 @@ import com.gpetuhov.android.hive.domain.interactor.SaveUsernameInteractor
 import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
-import com.gpetuhov.android.hive.repository.Repository
 import javax.inject.Inject
 
 // This is the presenter for ProfileFragment
@@ -26,7 +25,6 @@ class ProfileFragmentPresenter :
 
     @Inject lateinit var repo: Repo
 
-    private var repository: Repository
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
@@ -36,7 +34,6 @@ class ProfileFragmentPresenter :
 
     init {
         HiveApp.appComponent.inject(this)
-        repository = repo as Repository
     }
 
     // === SignOutInteractor.Callback ===
@@ -97,7 +94,7 @@ class ProfileFragmentPresenter :
     fun showUsernameDialog() = viewState.showUsernameDialog()
 
     // Prefill dialog with currently entered text or current username
-    fun getPrefill() = if (tempUsername != "") tempUsername else repository.currentUserUsername()
+    fun getPrefill() = if (tempUsername != "") tempUsername else repo.currentUserUsername()
 
     fun updateTempUsername(newTempUsername: String) {
         tempUsername = newTempUsername

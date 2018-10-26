@@ -13,7 +13,6 @@ import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import javax.inject.Inject
@@ -29,14 +28,12 @@ class AuthManager : Auth {
     @Inject lateinit var repo: Repo
     @Inject lateinit var network: Network
 
-    private var repository: Repository
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private var noNetworkDialog: MaterialDialog? = null
 
     init {
         HiveApp.appComponent.inject(this)
-        repository = repo as Repository
     }
 
     override fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {
@@ -50,14 +47,14 @@ class AuthManager : Auth {
                 Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
                 Timber.tag(TAG).d("User email = ${firebaseUser.email}")
 
-                repository.onSignIn(convertFirebaseUser(firebaseUser))
+                repo.onSignIn(convertFirebaseUser(firebaseUser))
                 onSignIn()
 
             } else {
                 // User is signed out
                 Timber.tag(TAG).d("User signed out")
 
-                repository.onSignOut()
+                repo.onSignOut()
                 onSignOut()
             }
         }
@@ -99,7 +96,7 @@ class AuthManager : Auth {
         // and only after that sign out (because after signing out,
         // updating backend will be impossible)
         // We are signing out regardless of online status update success
-        repository.updateUserOnlineStatus(false) {
+        repo.saveUserOnlineStatus(false) {
             AuthUI.getInstance()
                 .signOut(context)
                 .addOnSuccessListener {
@@ -118,7 +115,7 @@ class AuthManager : Auth {
         // (because after deleting account, the user will be unauthorized,
         // and updating backend will be impossible)
 
-        repository.deleteUserDataRemote({
+        repo.deleteUserDataRemote({
             // Proceed with account deletion, only if user data has been successfully deleted
             AuthUI.getInstance()
                 .delete(context)

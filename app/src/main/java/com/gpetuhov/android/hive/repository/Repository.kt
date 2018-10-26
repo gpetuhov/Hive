@@ -53,8 +53,6 @@ class Repository : Repo {
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
     init {
-        HiveApp.appComponent.inject(this)
-
         // Offline data caching is enabled by default in Android.
         // But we enable it explicitly to be sure.
         val settings = FirebaseFirestoreSettings.Builder()
@@ -67,20 +65,7 @@ class Repository : Repo {
         clearResultList()
     }
 
-    override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[USERNAME_KEY] = newUsername
-
-        updateUserDataRemote(data, { /* Do nothing */ }, onError)
-    }
-
-    fun currentUser() = currentUser
-
-    fun currentUserUsername() = currentUser.value?.username ?: ""
-
-    fun resultList() = resultList
-
-    fun onSignIn(user: User) {
+    override fun onSignIn(user: User) {
         if (!isAuthorized) {
             isAuthorized = true
 
@@ -92,11 +77,11 @@ class Repository : Repo {
 
             // Current user's name and email initially come from Firebase Auth,
             // so after successful sign in we must write them to Firestore.
-            updateUserNameAndEmail(user)
+            saveUserNameAndEmail(user)
         }
     }
 
-    fun onSignOut() {
+    override fun onSignOut() {
         if (isAuthorized) {
             isAuthorized = false
             stopGettingCurrentUserRemoteUpdates()
@@ -105,22 +90,54 @@ class Repository : Repo {
         }
     }
 
-    fun updateUserLocation(newLocation: LatLng) {
+    override fun currentUser() = currentUser
+
+    override fun currentUserUsername() = currentUser.value?.username ?: ""
+
+    override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[USERNAME_KEY] = newUsername
+
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserLocation(newLocation: LatLng) {
         val data = HashMap<String, Any>()
         data[LAT_KEY] = newLocation.latitude
         data[LON_KEY] = newLocation.longitude
 
-        updateUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
-    fun updateUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
+    override fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
         val data = HashMap<String, Any>()
         data[IS_ONLINE_KEY] = newIsOnline
 
-        updateUserDataRemote(data, onComplete, onComplete)
+        saveUserDataRemote(data, onComplete, onComplete)
     }
 
-    fun startGettingRemoteResultUpdates() {
+    override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isAuthorized) {
+            firestore.collection(USERS_COLLECTION).document(currentUserUid)
+                .delete()
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("User data successfully deleted")
+                    onSuccess()
+
+                }
+                .addOnFailureListener {
+                    Timber.tag(TAG).d("Error deleting user data")
+                    onError()
+                }
+
+        } else {
+            onError()
+        }
+    }
+
+    override fun resultList() = resultList
+
+    override fun startGettingRemoteResultUpdates() {
         if (isAuthorized) {
             searchResultListenerRegistration = firestore.collection(USERS_COLLECTION)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -149,26 +166,7 @@ class Repository : Repo {
         }
     }
 
-    fun stopGettingRemoteResultUpdates() = searchResultListenerRegistration?.remove()
-
-    fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
-        if (isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(currentUserUid)
-                .delete()
-                .addOnSuccessListener {
-                    Timber.tag(TAG).d("User data successfully deleted")
-                    onSuccess()
-
-                }
-                .addOnFailureListener {
-                    Timber.tag(TAG).d("Error deleting user data")
-                    onError()
-                }
-
-        } else {
-            onError()
-        }
-    }
+    override fun stopGettingRemoteResultUpdates() = searchResultListenerRegistration?.remove() ?: Unit
 
     // === Private methods ===
 
@@ -192,15 +190,15 @@ class Repository : Repo {
         )
     }
 
-    private fun updateUserNameAndEmail(user: User) {
+    private fun saveUserNameAndEmail(user: User) {
         val data = HashMap<String, Any>()
         data[NAME_KEY] = user.name
         data[EMAIL_KEY] = user.email
 
-        updateUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
-    private fun updateUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
+    private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
             firestore.collection(USERS_COLLECTION).document(currentUserUid)
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists

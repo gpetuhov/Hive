@@ -18,7 +18,6 @@ import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.repository.Repository
 import javax.inject.Inject
 
 
@@ -31,14 +30,12 @@ class LocationManager(context: Context) {
 
     @Inject lateinit var repo: Repo
 
-    private var repository: Repository
     private var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
 
     init {
         HiveApp.appComponent.inject(this)
-        repository = repo as Repository
         createLocationCallback()
         createLocationRequest()
     }
@@ -123,7 +120,7 @@ class LocationManager(context: Context) {
     private fun saveLocation(location: Location?) {
         if (location != null) {
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
-            repository.updateUserLocation(getCoordinatesFromLocation(location))
+            repo.saveUserLocation(getCoordinatesFromLocation(location))
         }
     }
 
