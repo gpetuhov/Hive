@@ -8,7 +8,7 @@ import javax.inject.Inject
 class SignOutInteractor(val callback: Callback) : Interactor {
 
     interface Callback {
-        fun onSignOutSuccess(message: String)
+        fun onSignOutSuccess()
         fun onSignOutError(errorMessage: String)
     }
 
@@ -23,7 +23,7 @@ class SignOutInteractor(val callback: Callback) : Interactor {
         // Try to sign out if online only
         if (network.isOnline()) {
             auth.signOut(
-                { callback.onSignOutSuccess("success") },
+                { callback.onSignOutSuccess() },
                 { callback.onSignOutError("error") }
             )
         } else {

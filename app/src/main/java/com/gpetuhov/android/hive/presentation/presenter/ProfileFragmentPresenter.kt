@@ -41,9 +41,12 @@ class ProfileFragmentPresenter :
 
     // === SignOutInteractor.Callback ===
 
-    override fun onSignOutSuccess(message: String) = finishSignOut(message)
+    override fun onSignOutSuccess() = viewState.enableSignOutButton()
 
-    override fun onSignOutError(errorMessage: String) = finishSignOut(errorMessage)
+    override fun onSignOutError(errorMessage: String) {
+        viewState.showToast(errorMessage)
+        viewState.enableSignOutButton()
+    }
 
     // === Public methods ===
 
@@ -118,10 +121,5 @@ class ProfileFragmentPresenter :
     fun dismissUsernameDialog() {
         tempUsername = ""
         viewState.dismissUsernameDialog()
-    }
-
-    private fun finishSignOut(message: String) {
-        viewState.showToast(message)
-        viewState.enableSignOutButton()
     }
 }
