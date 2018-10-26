@@ -11,9 +11,9 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.Constants
-import com.gpetuhov.android.hive.util.isOnline
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,6 +26,7 @@ class AuthManager : Auth {
 
     @Inject lateinit var context: Context
     @Inject lateinit var repo: Repository
+    @Inject lateinit var network: Network
 
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -79,7 +80,7 @@ class AuthManager : Auth {
     }
 
     fun showLoginScreen(activity: Activity, resultCode: Int) {
-        if (isOnline(activity)) {
+        if (network.isOnline()) {
             val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build(),
                 AuthUI.IdpConfig.GoogleBuilder().build()

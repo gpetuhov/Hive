@@ -5,10 +5,10 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
+import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.repository.Repository
-import com.gpetuhov.android.hive.util.isOnline
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,6 +29,7 @@ class ProfileFragmentPresenter :
 
     @Inject lateinit var repo: Repository
     @Inject lateinit var authManager: AuthManager
+    @Inject lateinit var network: Network
 
     private val signOutInteractor = SignOutInteractor(this)
 
@@ -77,7 +78,7 @@ class ProfileFragmentPresenter :
         viewState.dismissDeleteUserDialog()
 
         // Try to delete account if online only
-        if (isOnline(context)) {
+        if (network.isOnline()) {
             authManager.deleteAccount(context,
                 {
                     viewState.onDeleteUserSuccess()
