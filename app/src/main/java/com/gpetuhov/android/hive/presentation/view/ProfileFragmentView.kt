@@ -29,15 +29,6 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showDeleteUserDialog()
 
-    @StateStrategyType(SkipStrategy::class)
-    fun onDeleteUserSuccess()
-
-    @StateStrategyType(SkipStrategy::class)
-    fun onDeleteUserError()
-
-    @StateStrategyType(SkipStrategy::class)
-    fun onDeleteUserNetworkError()
-
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissDeleteUserDialog()
 

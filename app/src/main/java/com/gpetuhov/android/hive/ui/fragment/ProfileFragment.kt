@@ -67,18 +67,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun showDeleteUserDialog() = deleteUserDialog?.show() ?: Unit
 
-    override fun onDeleteUserSuccess() {
-        toast(R.string.delete_account_success)
-    }
-
-    override fun onDeleteUserError() {
-        toast(R.string.delete_account_error)
-    }
-
-    override fun onDeleteUserNetworkError() {
-        toast(R.string.delete_account_no_network)
-    }
-
     override fun dismissDeleteUserDialog() = deleteUserDialog?.dismiss() ?: Unit
 
     override fun enableDeleteUserButton() = deleteUserButtonEnabled(true)
