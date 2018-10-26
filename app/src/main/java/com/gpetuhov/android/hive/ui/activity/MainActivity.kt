@@ -12,7 +12,6 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.repository.Repository
@@ -38,14 +37,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var repository: Repository
     private lateinit var navController: NavController
-    private lateinit var authManager: AuthManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         HiveApp.appComponent.inject(this)
-        authManager = auth as AuthManager
         repository = repo as Repository
 
         initNavigation()
@@ -63,13 +60,13 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkPlayServicesAndPermissions()
-        authManager.startListenAuth()
+        auth.startListenAuth()
         updateUserOnlineStatus(true)
     }
 
     override fun onPause() {
         super.onPause()
-        authManager.stopListenAuth()
+        auth.stopListenAuth()
         updateUserOnlineStatus(false)
     }
 
@@ -99,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkLocationSettings() = locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
 
-    private fun initAuthManager() = authManager.init(this::onSignIn, this::onSignOut)
+    private fun initAuthManager() = auth.init(this::onSignIn, this::onSignOut)
 
     private fun checkPlayServicesAndPermissions() {
         val playServicesAvailable = locationManager.checkPlayServices(this) {

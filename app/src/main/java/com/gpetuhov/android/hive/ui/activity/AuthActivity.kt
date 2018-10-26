@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
-import com.gpetuhov.android.hive.managers.AuthManager
 import com.pawegio.kandroid.startActivity
 import javax.inject.Inject
 
@@ -21,30 +20,27 @@ class AuthActivity : AppCompatActivity() {
 
     @Inject lateinit var auth: Auth
 
-    private lateinit var authManager: AuthManager
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         HiveApp.appComponent.inject(this)
-        authManager = auth as AuthManager
 
-        authManager.init(this::onSignIn, this::onSignOut)
+        auth.init(this::onSignIn, this::onSignOut)
     }
 
     override fun onResume() {
         super.onResume()
-        authManager.startListenAuth()
+        auth.startListenAuth()
     }
 
     override fun onPause() {
         super.onPause()
-        authManager.stopListenAuth()
+        auth.stopListenAuth()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        authManager.dismissDialogs()
+        auth.dismissDialogs()
     }
 
     private fun onSignIn() {
@@ -52,5 +48,5 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun onSignOut() = authManager.showLoginScreen(this, RC_SIGN_IN)
+    private fun onSignOut() = auth.showLoginScreen(this, RC_SIGN_IN)
 }

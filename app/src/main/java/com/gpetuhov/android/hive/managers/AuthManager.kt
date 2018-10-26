@@ -39,6 +39,61 @@ class AuthManager : Auth {
         repository = repo as Repository
     }
 
+    override fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {
+        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            val firebaseUser = firebaseAuth.currentUser
+
+            if (firebaseUser != null) {
+                // User is signed in
+                Timber.tag(TAG).d("Login successful")
+                Timber.tag(TAG).d("User id = ${firebaseUser.uid}")
+                Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
+                Timber.tag(TAG).d("User email = ${firebaseUser.email}")
+
+                repository.onSignIn(convertFirebaseUser(firebaseUser))
+                onSignIn()
+
+            } else {
+                // User is signed out
+                Timber.tag(TAG).d("User signed out")
+
+                repository.onSignOut()
+                onSignOut()
+            }
+        }
+    }
+
+    override fun showLoginScreen(activity: Activity, resultCode: Int) {
+        if (network.isOnline()) {
+            val providers = arrayListOf(
+                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.GoogleBuilder().build()
+//                    AuthUI.IdpConfig.PhoneBuilder().build(),
+//                    AuthUI.IdpConfig.FacebookBuilder().build(),
+//                    AuthUI.IdpConfig.TwitterBuilder().build()
+            )
+
+            activity.startActivityForResult(
+                AuthUI.getInstance()
+                    .createSignInIntentBuilder()
+                    .setIsSmartLockEnabled(true)
+                    .setAvailableProviders(providers)
+                    .setTheme(R.style.AuthTheme)
+                    .build(),
+                resultCode
+            )
+
+        } else {
+            showNoNetworkDialog(activity, resultCode)
+        }
+    }
+
+    override fun startListenAuth() = firebaseAuth.addAuthStateListener(authStateListener)
+
+    override fun stopListenAuth() = firebaseAuth.removeAuthStateListener(authStateListener)
+
+    override fun dismissDialogs() = dismissNoNetworkDialog() ?: Unit
+
     override fun signOut(onSuccess: () -> Unit, onError: () -> Unit) {
         // When signing out, first set status to offline,
         // and only after that sign out (because after signing out,
@@ -80,60 +135,7 @@ class AuthManager : Auth {
         )
     }
 
-    fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {
-        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val firebaseUser = firebaseAuth.currentUser
-
-            if (firebaseUser != null) {
-                // User is signed in
-                Timber.tag(TAG).d("Login successful")
-                Timber.tag(TAG).d("User id = ${firebaseUser.uid}")
-                Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
-                Timber.tag(TAG).d("User email = ${firebaseUser.email}")
-
-                repository.onSignIn(convertFirebaseUser(firebaseUser))
-                onSignIn()
-
-            } else {
-                // User is signed out
-                Timber.tag(TAG).d("User signed out")
-
-                repository.onSignOut()
-                onSignOut()
-            }
-        }
-    }
-
-    fun showLoginScreen(activity: Activity, resultCode: Int) {
-        if (network.isOnline()) {
-            val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build()
-//                    AuthUI.IdpConfig.PhoneBuilder().build(),
-//                    AuthUI.IdpConfig.FacebookBuilder().build(),
-//                    AuthUI.IdpConfig.TwitterBuilder().build()
-            )
-
-            activity.startActivityForResult(
-                AuthUI.getInstance()
-                    .createSignInIntentBuilder()
-                    .setIsSmartLockEnabled(true)
-                    .setAvailableProviders(providers)
-                    .setTheme(R.style.AuthTheme)
-                    .build(),
-                resultCode
-            )
-
-        } else {
-            showNoNetworkDialog(activity, resultCode)
-        }
-    }
-
-    fun startListenAuth() = firebaseAuth.addAuthStateListener(authStateListener)
-
-    fun stopListenAuth() = firebaseAuth.removeAuthStateListener(authStateListener)
-
-    fun dismissDialogs() = dismissNoNetworkDialog()
+    // === Private methods ===
 
     private fun convertFirebaseUser(firebaseUser: FirebaseUser): User {
         return User(

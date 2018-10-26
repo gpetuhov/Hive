@@ -68,7 +68,10 @@ class Repository : Repo {
     }
 
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
-        updateUserUsername(newUsername, { /* Do nothing */ }, onError)
+        val data = HashMap<String, Any>()
+        data[USERNAME_KEY] = newUsername
+
+        updateUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     fun onSignIn(user: User) {
@@ -94,13 +97,6 @@ class Repository : Repo {
             stopGettingRemoteResultUpdates()
             resetCurrentUser()
         }
-    }
-
-    fun updateUserUsername(newUsername: String, onSuccess: () -> Unit, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[USERNAME_KEY] = newUsername
-
-        updateUserDataRemote(data, onSuccess, onError)
     }
 
     fun updateUserLocation(newLocation: LatLng) {
