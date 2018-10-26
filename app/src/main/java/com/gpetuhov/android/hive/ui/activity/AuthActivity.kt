@@ -48,7 +48,5 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun onSignOut() {
-        authManager.showLoginScreen(this, RC_SIGN_IN)
-    }
+    private fun onSignOut() = authManager.showLoginScreen(this, RC_SIGN_IN)
 }
