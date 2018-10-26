@@ -82,13 +82,9 @@ class AuthManager {
         }
     }
 
-    fun startListenAuth() {
-        firebaseAuth.addAuthStateListener(authStateListener)
-    }
+    fun startListenAuth() = firebaseAuth.addAuthStateListener(authStateListener)
 
-    fun stopListenAuth() {
-        firebaseAuth.removeAuthStateListener(authStateListener)
-    }
+    fun stopListenAuth() = firebaseAuth.removeAuthStateListener(authStateListener)
 
     fun signOut(context: Context?, onSuccess: () -> Unit, onError: () -> Unit) {
         // When signing out, first set status to offline,
@@ -135,9 +131,7 @@ class AuthManager {
         )
     }
 
-    fun dismissDialogs() {
-        dismissNoNetworkDialog()
-    }
+    fun dismissDialogs() = dismissNoNetworkDialog()
 
     private fun convertFirebaseUser(firebaseUser: FirebaseUser): User {
         return User(
@@ -165,11 +159,7 @@ class AuthManager {
         noNetworkDialog?.show()
     }
 
-    private fun dismissNoNetworkDialog() {
-        noNetworkDialog?.dismiss()
-    }
+    private fun dismissNoNetworkDialog() = noNetworkDialog?.dismiss()
 
-    private fun closeApp() {
-        System.exit(0)
-    }
+    private fun closeApp() = System.exit(0)
 }
