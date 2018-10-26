@@ -35,7 +35,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         initDeleteUserDialog()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
-        binding?.handler = this
+        binding?.presenter = presenter
 
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
 
@@ -111,14 +111,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     override fun onSaveUsernameError() {
         toast(R.string.username_save_error)
     }
-
-    // === Click handlers ===
-
-    fun onSignOutButtonClick() = presenter.showSignOutDialog()
-
-    fun onDeleteAccountButtonClick() = presenter.showDeleteUserDialog()
-
-    fun onUsernameClick() = presenter.showUsernameDialog()
 
     // === Private methods ===
 

@@ -6,7 +6,7 @@
 
     <data>
         <variable name="user" type="com.gpetuhov.android.hive.model.User"/>
-        <variable name="handler" type="com.gpetuhov.android.hive.ui.fragment.ProfileFragment"/>
+        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,7 +34,7 @@
                 android:text="@{user.hasUsername ? user.username : @string/enter_username}"
                 android:drawableRight="@drawable/ic_edit"
                 android:drawableEnd="@drawable/ic_edit"
-                android:onClick="@{view -> handler.onUsernameClick()}"
+                android:onClick="@{view -> presenter.showUsernameDialog()}"
                 tools:text="nickname"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_out"
-                android:onClick="@{view -> handler.onSignOutButtonClick()}"
+                android:onClick="@{view -> presenter.showSignOutDialog()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_email_textview"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/delete_account"
                 android:textColor="@color/md_red_600"
-                android:onClick="@{view -> handler.onDeleteAccountButtonClick()}"
+                android:onClick="@{view -> presenter.showDeleteUserDialog()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signout_button"
