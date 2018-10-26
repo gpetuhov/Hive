@@ -144,7 +144,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 .message(R.string.prompt_delete_account)
                 .noAutoDismiss()
                 .cancelable(false)
-                .positiveButton { presenter.deleteUser(context) }
+                .positiveButton { presenter.deleteUser() }
                 .negativeButton { presenter.deleteUserCancel() }
         }
     }

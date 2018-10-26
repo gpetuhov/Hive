@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.application.dagger.components
 
 import com.gpetuhov.android.hive.application.dagger.modules.AppModule
+import com.gpetuhov.android.hive.domain.interactor.DeleteUserInteractor
 import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
@@ -40,6 +41,7 @@ interface AppComponent {
 
     fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
 
+    fun inject(deleteUserInteractor: DeleteUserInteractor)
     fun inject(signOutInteractor: SignOutInteractor)
 
     fun inject(messagesProvider: MessagesProvider)

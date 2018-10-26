@@ -18,5 +18,11 @@ class MessagesProvider : Messages {
 
     override fun getSignOutNetworkErrorMessage(): String = getString(R.string.sign_out_no_network)
 
+    override fun getDeleteUserSuccessMessage(): String = getString(R.string.delete_account_success)
+
+    override fun getDeleteUserErrorMessage(): String = getString(R.string.delete_account_error)
+
+    override fun getDeleteUserNetworkErrorMessage(): String = getString(R.string.delete_account_no_network)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

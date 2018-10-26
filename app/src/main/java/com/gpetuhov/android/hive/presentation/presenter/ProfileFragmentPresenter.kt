@@ -1,12 +1,10 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
-import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.DeleteUserInteractor
 import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
-import com.gpetuhov.android.hive.domain.network.Network
-import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.repository.Repository
 import timber.log.Timber
@@ -21,17 +19,17 @@ import javax.inject.Inject
 @InjectViewState
 class ProfileFragmentPresenter :
     MvpPresenter<ProfileFragmentView>(),
-    SignOutInteractor.Callback {
+    SignOutInteractor.Callback,
+    DeleteUserInteractor.Callback {
 
     companion object {
         private const val TAG = "ProfileFragPresenter"
     }
 
     @Inject lateinit var repo: Repository
-    @Inject lateinit var authManager: AuthManager
-    @Inject lateinit var network: Network
 
     private val signOutInteractor = SignOutInteractor(this)
+    private val deleteUserInteractor = DeleteUserInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -48,6 +46,11 @@ class ProfileFragmentPresenter :
         viewState.showToast(errorMessage)
         viewState.enableSignOutButton()
     }
+
+    // === DeleteUserInteractor.Callback ===
+    override fun onDeleteUserSuccess(message: String) = finishDeleteUser(message)
+
+    override fun onDeleteUserError(errorMessage: String) = finishDeleteUser(errorMessage)
 
     // === Public methods ===
 
@@ -74,25 +77,9 @@ class ProfileFragmentPresenter :
         viewState.showDeleteUserDialog()
     }
 
-    fun deleteUser(context: Context?) {
+    fun deleteUser() {
         viewState.dismissDeleteUserDialog()
-
-        // Try to delete account if online only
-        if (network.isOnline()) {
-            authManager.deleteAccount(context,
-                {
-                    viewState.onDeleteUserSuccess()
-                    viewState.enableDeleteUserButton()
-                },
-                {
-                    viewState.onDeleteUserError()
-                    viewState.enableDeleteUserButton()
-                }
-            )
-        } else {
-            viewState.onDeleteUserNetworkError()
-            viewState.enableDeleteUserButton()
-        }
+        deleteUserInteractor.execute()
     }
 
     fun deleteUserCancel() {
@@ -122,5 +109,12 @@ class ProfileFragmentPresenter :
     fun dismissUsernameDialog() {
         tempUsername = ""
         viewState.dismissUsernameDialog()
+    }
+
+    // === Private methods ===
+
+    private fun finishDeleteUser(message: String) {
+        viewState.showToast(message)
+        viewState.enableDeleteUserButton()
     }
 }

@@ -55,6 +55,10 @@ class AuthManager : Auth {
         }
     }
 
+    override fun deleteAccount(onSuccess: () -> Unit, onError: () -> Unit) {
+        deleteAccount(context, onSuccess, onError)
+    }
+
     fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {
         authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val firebaseUser = firebaseAuth.currentUser
