@@ -142,9 +142,7 @@ class Repository {
         }
     }
 
-    fun stopGettingRemoteResultUpdates() {
-        searchResultListenerRegistration?.remove()
-    }
+    fun stopGettingRemoteResultUpdates() = searchResultListenerRegistration?.remove()
 
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
@@ -231,9 +229,7 @@ class Repository {
         }
     }
 
-    private fun stopGettingCurrentUserRemoteUpdates() {
-        currentUserListenerRegistration?.remove()
-    }
+    private fun stopGettingCurrentUserRemoteUpdates() = currentUserListenerRegistration?.remove()
 
     private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot): User {
         val location = LatLng(
