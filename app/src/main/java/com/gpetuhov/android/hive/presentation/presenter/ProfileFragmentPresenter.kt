@@ -43,9 +43,10 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
 
         // Try to sign out if online only
         if (isOnline(context)) {
-            authManager.signOut(
-                context,
-                { viewState.enableSignOutButton() },
+            authManager.signOut(context,
+                {
+                    viewState.enableSignOutButton()
+                },
                 {
                     viewState.onSignOutError()
                     viewState.enableSignOutButton()
@@ -62,24 +63,36 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
         viewState.enableSignOutButton()
     }
 
-    fun showDeleteUserDialog() = viewState.showDeleteUserDialog()
+    fun showDeleteUserDialog() {
+        viewState.disableDeleteUserButton()
+        viewState.showDeleteUserDialog()
+    }
 
     fun deleteUser(context: Context?) {
-        dismissDeleteUserDialog()
+        viewState.dismissDeleteUserDialog()
 
         // Try to delete account if online only
         if (isOnline(context)) {
-            authManager.deleteAccount(
-                context,
-                { viewState.onDeleteUserSuccess() },
-                { viewState.onDeleteUserError() }
+            authManager.deleteAccount(context,
+                {
+                    viewState.onDeleteUserSuccess()
+                    viewState.enableDeleteUserButton()
+                },
+                {
+                    viewState.onDeleteUserError()
+                    viewState.enableDeleteUserButton()
+                }
             )
         } else {
             viewState.onDeleteUserNetworkError()
+            viewState.enableDeleteUserButton()
         }
     }
 
-    fun dismissDeleteUserDialog() = viewState.dismissDeleteUserDialog()
+    fun deleteUserCancel() {
+        viewState.dismissDeleteUserDialog()
+        viewState.enableDeleteUserButton()
+    }
 
     fun showUsernameDialog() = viewState.showUsernameDialog()
 

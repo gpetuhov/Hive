@@ -49,6 +49,12 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissDeleteUserDialog()
 
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun enableDeleteUserButton()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun disableDeleteUserButton()
+
     // == Change username ===
 
     @StateStrategyType(AddToEndSingleStrategy::class)

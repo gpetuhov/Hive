@@ -89,6 +89,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun dismissDeleteUserDialog() = deleteUserDialog?.dismiss() ?: Unit
 
+    override fun enableDeleteUserButton() = deleteUserButtonEnabled(true)
+
+    override fun disableDeleteUserButton() = deleteUserButtonEnabled(false)
+
     override fun showUsernameDialog() {
         // Prefill dialog with text provided by presenter
         val editText = usernameDialog?.getInputField()
@@ -145,7 +149,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 .noAutoDismiss()
                 .cancelable(false)
                 .positiveButton { presenter.deleteUser(context) }
-                .negativeButton { presenter.dismissDeleteUserDialog() }
+                .negativeButton { presenter.deleteUserCancel() }
         }
     }
 
@@ -157,5 +161,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun signOutButtonEnabled(isEnabled: Boolean) {
         signout_button.isEnabled = isEnabled
+    }
+
+    private fun deleteUserButtonEnabled(isEnabled: Boolean) {
+        delete_user_button.isEnabled = isEnabled
     }
 }
