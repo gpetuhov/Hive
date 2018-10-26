@@ -56,7 +56,25 @@ class AuthManager : Auth {
     }
 
     override fun deleteAccount(onSuccess: () -> Unit, onError: () -> Unit) {
-        deleteAccount(context, onSuccess, onError)
+        // When deleting account, delete user data from backend first
+        // (because after deleting account, the user will be unauthorized,
+        // and updating backend will be impossible)
+
+        repo.deleteUserDataRemote({
+            // Proceed with account deletion, only if user data has been successfully deleted
+            AuthUI.getInstance()
+                .delete(context)
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("User deleted successfully")
+                    onSuccess()
+                }
+                .addOnFailureListener {
+                    Timber.tag(TAG).d("Error deleting user")
+                    onError()
+                }
+        },
+            onError
+        )
     }
 
     fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {
@@ -111,30 +129,6 @@ class AuthManager : Auth {
     fun startListenAuth() = firebaseAuth.addAuthStateListener(authStateListener)
 
     fun stopListenAuth() = firebaseAuth.removeAuthStateListener(authStateListener)
-
-    fun deleteAccount(context: Context?, onSuccess: () -> Unit, onError: () -> Unit) {
-        // When deleting account, delete user data from backend first
-        // (because after deleting account, the user will be unauthorized,
-        // and updating backend will be impossible)
-
-        repo.deleteUserDataRemote({
-            // Proceed with account deletion, only if user data has been successfully deleted
-            if (context != null) {
-                AuthUI.getInstance()
-                    .delete(context)
-                    .addOnSuccessListener {
-                        Timber.tag(TAG).d("User deleted successfully")
-                        onSuccess()
-                    }
-                    .addOnFailureListener {
-                        Timber.tag(TAG).d("Error deleting user")
-                        onError()
-                    }
-            }
-        },
-            onError
-        )
-    }
 
     fun dismissDialogs() = dismissNoNetworkDialog()
 
