@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.ui.IconGenerator
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.model.User
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE

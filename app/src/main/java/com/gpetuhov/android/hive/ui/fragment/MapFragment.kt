@@ -12,7 +12,7 @@ import com.google.android.gms.maps.MapView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.MapManager
-import com.gpetuhov.android.hive.model.User
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import javax.inject.Inject

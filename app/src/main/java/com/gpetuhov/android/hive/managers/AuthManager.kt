@@ -9,7 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.model.User
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.isOnline

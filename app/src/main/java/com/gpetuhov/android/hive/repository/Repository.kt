@@ -6,7 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.model.User
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import java.util.*
