@@ -30,9 +30,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private var binding: FragmentProfileBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        initUsernameDialog()
-        initSignOutDialog()
-        initDeleteUserDialog()
+        initDialogs()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding?.presenter = presenter
@@ -52,17 +50,13 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
         // This is needed to prevent memory leaks.
         // Here we intentially dismiss dialogs directly, not via the presenter,
-        // so that the command queue doesn't change.
-        dismissUsernameDialog()
-        dismissSignOutDialog()
-        dismissDeleteUserDialog()
+        // so that Moxy command queue doesn't change.
+        dismissDialogs()
     }
 
     // === ProfileFragmentView ===
 
-    override fun showSignOutDialog() {
-        signOutDialog?.show()
-    }
+    override fun showSignOutDialog() = signOutDialog?.show() ?: Unit
 
     override fun onSignOutError() {
         toast(R.string.sign_out_error)
@@ -72,13 +66,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         toast(R.string.sign_out_no_network)
     }
 
-    override fun dismissSignOutDialog() {
-        signOutDialog?.dismiss()
-    }
+    override fun dismissSignOutDialog() = signOutDialog?.dismiss() ?: Unit
 
-    override fun showDeleteUserDialog() {
-        deleteUserDialog?.show()
-    }
+    override fun showDeleteUserDialog() = deleteUserDialog?.show() ?: Unit
 
     override fun onDeleteUserSuccess() {
         toast(R.string.delete_account_success)
@@ -92,9 +82,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         toast(R.string.delete_account_no_network)
     }
 
-    override fun dismissDeleteUserDialog() {
-        deleteUserDialog?.dismiss()
-    }
+    override fun dismissDeleteUserDialog() = deleteUserDialog?.dismiss() ?: Unit
 
     override fun showUsernameDialog() {
         // Prefill dialog with text provided by presenter
@@ -104,15 +92,19 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         usernameDialog?.show()
     }
 
-    override fun dismissUsernameDialog() {
-        usernameDialog?.dismiss()
-    }
+    override fun dismissUsernameDialog() = usernameDialog?.dismiss() ?: Unit
 
     override fun onSaveUsernameError() {
         toast(R.string.username_save_error)
     }
 
     // === Private methods ===
+
+    private fun initDialogs() {
+        initUsernameDialog()
+        initSignOutDialog()
+        initDeleteUserDialog()
+    }
 
     private fun initUsernameDialog() {
         if (context != null) {
@@ -150,5 +142,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 .positiveButton { presenter.deleteUser(context) }
                 .negativeButton { presenter.dismissDeleteUserDialog() }
         }
+    }
+
+    private fun dismissDialogs() {
+        dismissUsernameDialog()
+        dismissSignOutDialog()
+        dismissDeleteUserDialog()
     }
 }
