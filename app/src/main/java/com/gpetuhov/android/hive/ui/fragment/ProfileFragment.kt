@@ -107,6 +107,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         toast(R.string.username_save_error)
     }
 
+    override fun showToast(message: String) {
+        toast(message)
+    }
+
     // === Private methods ===
 
     private fun initDialogs() {
@@ -136,7 +140,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 .message(R.string.prompt_sign_out)
                 .noAutoDismiss()
                 .cancelable(false)
-                .positiveButton { presenter.signOut(context) }
+                .positiveButton { presenter.signOut() }
                 .negativeButton { presenter.signOutCancel() }
         }
     }

@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.Constants
@@ -17,12 +18,13 @@ import timber.log.Timber
 import javax.inject.Inject
 
 // Manages authentication with Firebase Auth
-class AuthManager {
+class AuthManager : Auth {
 
     companion object {
         private const val TAG = "AuthManager"
     }
 
+    @Inject lateinit var context: Context
     @Inject lateinit var repo: Repository
 
     private var firebaseAuth = FirebaseAuth.getInstance()
@@ -31,6 +33,10 @@ class AuthManager {
 
     init {
         HiveApp.appComponent.inject(this)
+    }
+
+    override fun signOut(onSuccess: () -> Unit, onError: () -> Unit) {
+        signOut(context, onSuccess, onError)
     }
 
     fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {

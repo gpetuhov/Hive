@@ -4,6 +4,7 @@ import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.repository.Repository
@@ -13,8 +14,14 @@ import javax.inject.Inject
 
 // This is the presenter for ProfileFragment
 // ALL (!!!) user interactions must be performed through this presenter ONLY!
+// Presenters only control views (in our case ProfileFragment).
+// All business logic is implemented in the corresponding interactors at domain layer.
+// Presenters invoke this logic by calling interactors' execute() methods.
+
 @InjectViewState
-class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
+class ProfileFragmentPresenter :
+    MvpPresenter<ProfileFragmentView>(),
+    SignOutInteractor.Callback {
 
     companion object {
         private const val TAG = "ProfileFragPresenter"
@@ -23,12 +30,22 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
     @Inject lateinit var repo: Repository
     @Inject lateinit var authManager: AuthManager
 
+    private val signOutInteractor = SignOutInteractor(this)
+
     // Keeps current text entered in username dialog
     private var tempUsername = ""
 
     init {
         HiveApp.appComponent.inject(this)
     }
+
+    // === SignOutInteractor.Callback ===
+
+    override fun onSignOutSuccess(message: String) = finishSignOut(message)
+
+    override fun onSignOutError(errorMessage: String) = finishSignOut(errorMessage)
+
+    // === Public methods ===
 
     // We must call ProfileFragmentView's methods not directly, but through ViewState only.
     // This way Moxy will remember current state of the view and will restore it,
@@ -38,24 +55,9 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
         viewState.showSignOutDialog()
     }
 
-    fun signOut(context: Context?) {
+    fun signOut() {
         viewState.dismissSignOutDialog()
-
-        // Try to sign out if online only
-        if (isOnline(context)) {
-            authManager.signOut(context,
-                {
-                    viewState.enableSignOutButton()
-                },
-                {
-                    viewState.onSignOutError()
-                    viewState.enableSignOutButton()
-                }
-            )
-        } else {
-            viewState.onSignOutNetworkError()
-            viewState.enableSignOutButton()
-        }
+        signOutInteractor.execute()
     }
 
     fun signOutCancel() {
@@ -116,5 +118,10 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
     fun dismissUsernameDialog() {
         tempUsername = ""
         viewState.dismissUsernameDialog()
+    }
+
+    private fun finishSignOut(message: String) {
+        viewState.showToast(message)
+        viewState.enableSignOutButton()
     }
 }

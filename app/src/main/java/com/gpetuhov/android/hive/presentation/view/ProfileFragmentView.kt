@@ -65,4 +65,9 @@ interface ProfileFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun onSaveUsernameError()
+
+    // === Common ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showToast(message: String)
 }
