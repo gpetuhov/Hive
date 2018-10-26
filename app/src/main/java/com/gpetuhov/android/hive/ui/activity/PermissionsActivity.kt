@@ -9,7 +9,6 @@ import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
-import android.view.View
 import androidx.databinding.DataBindingUtil
 import com.gpetuhov.android.hive.databinding.ActivityPermissionsBinding
 import com.gpetuhov.android.hive.util.checkPermissions
@@ -84,15 +83,7 @@ class PermissionsActivity : AppCompatActivity() {
         }
     }
 
-    fun onRequestButtonClick(view: View) {
-        requestPermissions()
-    }
-
-    private fun checkHasPermissions(): Boolean {
-        return checkPermissions(this)
-    }
-
-    private fun requestPermissions() {
+    fun requestPermissions() {
         val permissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
@@ -101,6 +92,8 @@ class PermissionsActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, permissions, PERM_REQUEST_CODE)
         // Result is passed to onRequestPermissionsResult() method
     }
+
+    private fun checkHasPermissions() = checkPermissions(this)
 
     private fun shouldShowRationale(): Boolean {
         // False if the app runs for the first time or the user denied permissions and opted Don't show again
