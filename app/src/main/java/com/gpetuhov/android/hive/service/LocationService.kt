@@ -44,9 +44,7 @@ class LocationService : Service() {
         locationManager.stopLocationUpdates()
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 
     private fun startForegroundService() {
         // This is needed to prevent service from being killed by the OS
