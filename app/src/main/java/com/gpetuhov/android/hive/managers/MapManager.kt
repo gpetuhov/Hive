@@ -36,7 +36,6 @@ class MapManager {
         private const val MAPTYPE = "maptype"
     }
 
-    @Inject lateinit var context: Context
     @Inject lateinit var locationManager: LocationManager
 
     private lateinit var googleMap: GoogleMap
