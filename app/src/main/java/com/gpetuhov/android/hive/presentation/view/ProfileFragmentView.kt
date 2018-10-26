@@ -15,14 +15,6 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showSignOutDialog()
 
-    // We don't need to keep this command in the queue,
-    // just run this once on error and don't repeat on view being recreated.
-    @StateStrategyType(SkipStrategy::class)
-    fun onSignOutError()
-
-    @StateStrategyType(SkipStrategy::class)
-    fun onSignOutNetworkError()
-
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissSignOutDialog()
 
@@ -68,6 +60,8 @@ interface ProfileFragmentView : MvpView {
 
     // === Common ===
 
+    // We don't need to keep this command in the queue,
+    // just run this once on error and don't repeat on view being recreated.
     @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 }

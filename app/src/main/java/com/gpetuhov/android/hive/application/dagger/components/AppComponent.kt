@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.ui.activity.SplashActivity
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
 import com.gpetuhov.android.hive.ui.fragment.ProfileFragment
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
+import com.gpetuhov.android.hive.util.MessagesProvider
 import dagger.Component
 import javax.inject.Singleton
 
@@ -40,4 +41,6 @@ interface AppComponent {
     fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
 
     fun inject(signOutInteractor: SignOutInteractor)
+
+    fun inject(messagesProvider: MessagesProvider)
 }

@@ -4,8 +4,10 @@ import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.network.Network
+import com.gpetuhov.android.hive.domain.util.Messages
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.repository.Repository
+import com.gpetuhov.android.hive.util.MessagesProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -43,4 +45,8 @@ class AppModule {
     @Provides
     @Singleton
     fun providesNetwork(): Network = NetworkManager()
+
+    @Provides
+    @Singleton
+    fun providesMessages(): Messages = MessagesProvider()
 }

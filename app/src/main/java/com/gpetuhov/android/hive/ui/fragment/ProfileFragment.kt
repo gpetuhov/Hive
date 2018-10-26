@@ -59,14 +59,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun showSignOutDialog() = signOutDialog?.show() ?: Unit
 
-    override fun onSignOutError() {
-        toast(R.string.sign_out_error)
-    }
-
-    override fun onSignOutNetworkError() {
-        toast(R.string.sign_out_no_network)
-    }
-
     override fun dismissSignOutDialog() = signOutDialog?.dismiss() ?: Unit
 
     override fun enableSignOutButton() = signOutButtonEnabled(true)
