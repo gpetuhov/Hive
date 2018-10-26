@@ -10,6 +10,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.auth.Auth
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
@@ -30,17 +32,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Inject lateinit var locationManager: LocationManager
-    @Inject lateinit var authManager: AuthManager
-    @Inject lateinit var repo: Repository
+    @Inject lateinit var auth: Auth
+    @Inject lateinit var repo: Repo
     @Inject lateinit var mapManager: MapManager
 
+    private lateinit var repository: Repository
     private lateinit var navController: NavController
+    private lateinit var authManager: AuthManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         HiveApp.appComponent.inject(this)
+        authManager = auth as AuthManager
+        repository = repo as Repository
 
         initNavigation()
         initAuthManager()
@@ -118,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun updateUserOnlineStatus(isOnline: Boolean) = repo.updateUserOnlineStatus(isOnline) { /* Do nothing */ }
+    private fun updateUserOnlineStatus(isOnline: Boolean) = repository.updateUserOnlineStatus(isOnline) { /* Do nothing */ }
 
     private fun startLocationService() {
         val intent = Intent(this, LocationService::class.java)

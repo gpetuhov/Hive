@@ -83,10 +83,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun dismissUsernameDialog() = usernameDialog?.dismiss() ?: Unit
 
-    override fun onSaveUsernameError() {
-        toast(R.string.username_save_error)
-    }
-
     override fun showToast(message: String) {
         toast(message)
     }

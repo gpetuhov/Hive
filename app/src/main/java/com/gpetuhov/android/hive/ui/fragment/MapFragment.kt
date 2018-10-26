@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import javax.inject.Inject
@@ -20,13 +21,15 @@ import javax.inject.Inject
 class MapFragment : Fragment() {
 
     @Inject lateinit var mapManager: MapManager
-    @Inject lateinit var repo: Repository
+    @Inject lateinit var repo: Repo
 
+    private lateinit var repository: Repository
     private var mapView: MapView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         HiveApp.appComponent.inject(this)
+        repository = repo as Repository
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -51,7 +54,7 @@ class MapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
-        repo.startGettingRemoteResultUpdates()
+        repository.startGettingRemoteResultUpdates()
     }
 
     override fun onPause() {
@@ -61,7 +64,7 @@ class MapFragment : Fragment() {
         mapManager.saveMapState()
 
         mapView?.onPause()
-        repo.stopGettingRemoteResultUpdates()
+        repository.stopGettingRemoteResultUpdates()
     }
 
     override fun onStop() {

@@ -4,6 +4,7 @@ import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.network.Network
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.Messages
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.repository.Repository
@@ -28,19 +29,11 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesRepository() = Repository()
-
-    @Provides
-    @Singleton
-    fun providesAuthManager() = AuthManager()
-
-    @Provides
-    @Singleton
     fun providesNotificationManager() = NotificationManager()
 
     @Provides
     @Singleton
-    fun providesAuth(authManager: AuthManager): Auth = authManager
+    fun providesAuth(): Auth = AuthManager()
 
     @Provides
     @Singleton
@@ -49,4 +42,8 @@ class AppModule {
     @Provides
     @Singleton
     fun providesMessages(): Messages = MessagesProvider()
+
+    @Provides
+    @Singleton
+    fun providesRepo(): Repo = Repository()
 }

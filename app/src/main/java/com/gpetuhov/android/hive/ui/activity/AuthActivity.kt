@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.pawegio.kandroid.startActivity
 import javax.inject.Inject
@@ -18,12 +19,15 @@ class AuthActivity : AppCompatActivity() {
         private const val RC_SIGN_IN = 102
     }
 
-    @Inject lateinit var authManager: AuthManager
+    @Inject lateinit var auth: Auth
+
+    private lateinit var authManager: AuthManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         HiveApp.appComponent.inject(this)
+        authManager = auth as AuthManager
 
         authManager.init(this::onSignIn, this::onSignOut)
     }

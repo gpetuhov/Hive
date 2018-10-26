@@ -12,6 +12,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.network.Network
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
@@ -25,15 +26,17 @@ class AuthManager : Auth {
     }
 
     @Inject lateinit var context: Context
-    @Inject lateinit var repo: Repository
+    @Inject lateinit var repo: Repo
     @Inject lateinit var network: Network
 
+    private var repository: Repository
     private var firebaseAuth = FirebaseAuth.getInstance()
     private lateinit var authStateListener: FirebaseAuth.AuthStateListener
     private var noNetworkDialog: MaterialDialog? = null
 
     init {
         HiveApp.appComponent.inject(this)
+        repository = repo as Repository
     }
 
     override fun signOut(onSuccess: () -> Unit, onError: () -> Unit) {
@@ -41,7 +44,7 @@ class AuthManager : Auth {
         // and only after that sign out (because after signing out,
         // updating backend will be impossible)
         // We are signing out regardless of online status update success
-        repo.updateUserOnlineStatus(false) {
+        repository.updateUserOnlineStatus(false) {
             AuthUI.getInstance()
                 .signOut(context)
                 .addOnSuccessListener {
@@ -60,7 +63,7 @@ class AuthManager : Auth {
         // (because after deleting account, the user will be unauthorized,
         // and updating backend will be impossible)
 
-        repo.deleteUserDataRemote({
+        repository.deleteUserDataRemote({
             // Proceed with account deletion, only if user data has been successfully deleted
             AuthUI.getInstance()
                 .delete(context)
@@ -88,14 +91,14 @@ class AuthManager : Auth {
                 Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
                 Timber.tag(TAG).d("User email = ${firebaseUser.email}")
 
-                repo.onSignIn(convertFirebaseUser(firebaseUser))
+                repository.onSignIn(convertFirebaseUser(firebaseUser))
                 onSignIn()
 
             } else {
                 // User is signed out
                 Timber.tag(TAG).d("User signed out")
 
-                repo.onSignOut()
+                repository.onSignOut()
                 onSignOut()
             }
         }

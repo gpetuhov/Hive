@@ -12,12 +12,13 @@ import timber.log.Timber
 import java.util.*
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.DocumentSnapshot
+import com.gpetuhov.android.hive.domain.repository.Repo
 
 // Read and write data to remote storage (Firestore)
-class Repository {
+class Repository : Repo {
 
     companion object {
-        private const val TAG = "Repository"
+        private const val TAG = "Repo"
         private const val USERS_COLLECTION = "users"
         private const val NAME_KEY = "name"
         private const val USERNAME_KEY = "username"
@@ -64,6 +65,10 @@ class Repository {
 
         resetCurrentUser()
         clearResultList()
+    }
+
+    override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
+        updateUserUsername(newUsername, { /* Do nothing */ }, onError)
     }
 
     fun onSignIn(user: User) {

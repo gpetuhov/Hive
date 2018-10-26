@@ -4,10 +4,11 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.DeleteUserInteractor
+import com.gpetuhov.android.hive.domain.interactor.SaveUsernameInteractor
 import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.repository.Repository
-import timber.log.Timber
 import javax.inject.Inject
 
 // This is the presenter for ProfileFragment
@@ -20,22 +21,22 @@ import javax.inject.Inject
 class ProfileFragmentPresenter :
     MvpPresenter<ProfileFragmentView>(),
     SignOutInteractor.Callback,
-    DeleteUserInteractor.Callback {
+    DeleteUserInteractor.Callback,
+    SaveUsernameInteractor.Callback {
 
-    companion object {
-        private const val TAG = "ProfileFragPresenter"
-    }
+    @Inject lateinit var repo: Repo
 
-    @Inject lateinit var repo: Repository
-
+    private var repository: Repository
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
+    private val saveUsernameInteractor = SaveUsernameInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
 
     init {
         HiveApp.appComponent.inject(this)
+        repository = repo as Repository
     }
 
     // === SignOutInteractor.Callback ===
@@ -48,10 +49,15 @@ class ProfileFragmentPresenter :
     }
 
     // === DeleteUserInteractor.Callback ===
+
     override fun onDeleteUserComplete(message: String) {
         viewState.showToast(message)
         viewState.enableDeleteUserButton()
     }
+
+    // === SaveUsernameInteractor.Callback ===
+
+    override fun onSaveUsernameError(errorMessage: String) = viewState.showToast(errorMessage)
 
     // === Public methods ===
 
@@ -92,18 +98,16 @@ class ProfileFragmentPresenter :
 
     fun getPrefill(): String {
         // Prefill dialog with currently entered text or current username
-        val username = repo.currentUser.value?.username ?: ""
+        val username = repository.currentUser.value?.username ?: ""
         return if (tempUsername != "") tempUsername else username
     }
 
     fun updateTempUsername(newTempUsername: String) {
-        Timber.tag(TAG).d("TempUsername = $newTempUsername")
         tempUsername = newTempUsername
     }
 
     fun saveUsername() {
-        Timber.tag(TAG).d("Username = $tempUsername")
-        repo.updateUserUsername(tempUsername, { /* Do nothing */ }, { viewState.onSaveUsernameError() })
+        saveUsernameInteractor.saveUsername(tempUsername)
         dismissUsernameDialog()
     }
 

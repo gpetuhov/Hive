@@ -46,9 +46,6 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissUsernameDialog()
 
-    @StateStrategyType(SkipStrategy::class)
-    fun onSaveUsernameError()
-
     // === Common ===
 
     // We don't need to keep this command in the queue,

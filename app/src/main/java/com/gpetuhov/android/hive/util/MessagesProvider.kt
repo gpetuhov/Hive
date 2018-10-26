@@ -24,5 +24,7 @@ class MessagesProvider : Messages {
 
     override fun getDeleteUserNetworkErrorMessage(): String = getString(R.string.delete_account_no_network)
 
+    override fun getSaveUsernameErrorMessage(): String = getString(R.string.username_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }
