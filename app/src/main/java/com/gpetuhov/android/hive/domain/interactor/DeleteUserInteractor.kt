@@ -9,8 +9,7 @@ import javax.inject.Inject
 class DeleteUserInteractor(private val callback: Callback) : Interactor {
 
     interface Callback {
-        fun onDeleteUserSuccess(message: String)
-        fun onDeleteUserError(errorMessage: String)
+        fun onDeleteUserComplete(message: String)
     }
 
     @Inject lateinit var network: Network
@@ -25,11 +24,11 @@ class DeleteUserInteractor(private val callback: Callback) : Interactor {
         // Try to delete account if online only
         if (network.isOnline()) {
             auth.deleteAccount(
-                { callback.onDeleteUserSuccess(messages.getDeleteUserSuccessMessage()) },
-                { callback.onDeleteUserError(messages.getDeleteUserErrorMessage()) }
+                { callback.onDeleteUserComplete(messages.getDeleteUserSuccessMessage()) },
+                { callback.onDeleteUserComplete(messages.getDeleteUserErrorMessage()) }
             )
         } else {
-            callback.onDeleteUserError(messages.getDeleteUserNetworkErrorMessage())
+            callback.onDeleteUserComplete(messages.getDeleteUserNetworkErrorMessage())
         }
     }
 }

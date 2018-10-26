@@ -48,9 +48,10 @@ class ProfileFragmentPresenter :
     }
 
     // === DeleteUserInteractor.Callback ===
-    override fun onDeleteUserSuccess(message: String) = finishDeleteUser(message)
-
-    override fun onDeleteUserError(errorMessage: String) = finishDeleteUser(errorMessage)
+    override fun onDeleteUserComplete(message: String) {
+        viewState.showToast(message)
+        viewState.enableDeleteUserButton()
+    }
 
     // === Public methods ===
 
@@ -109,12 +110,5 @@ class ProfileFragmentPresenter :
     fun dismissUsernameDialog() {
         tempUsername = ""
         viewState.dismissUsernameDialog()
-    }
-
-    // === Private methods ===
-
-    private fun finishDeleteUser(message: String) {
-        viewState.showToast(message)
-        viewState.enableDeleteUserButton()
     }
 }
