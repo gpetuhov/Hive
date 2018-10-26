@@ -3,10 +3,13 @@ package com.gpetuhov.android.hive.presentation.presenter
 import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.repository.Repository
+import com.gpetuhov.android.hive.util.isOnline
+import com.pawegio.kandroid.toast
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -29,16 +32,20 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
         HiveApp.appComponent.inject(this)
     }
 
-    fun showSignOutDialog() {
-        // We must call ProfileFragmentView's methods not directly, but through ViewState only.
-        // This way Moxy will remember current state of the view and will restore it,
-        // when the view is recreated.
-        viewState.showSignOutDialog()
-    }
+    // We must call ProfileFragmentView's methods not directly, but through ViewState only.
+    // This way Moxy will remember current state of the view and will restore it,
+    // when the view is recreated.
+    fun showSignOutDialog() = viewState.showSignOutDialog()
 
     fun signOut(context: Context?) {
         dismissSignOutDialog()
-        authManager.signOut(context) { viewState.onSignOutError() }
+
+        // Try to sign out if online only
+        if (isOnline(context)) {
+            authManager.signOut(context) { viewState.onSignOutError() }
+        } else {
+            viewState.onSignOutNetworkError()
+        }
     }
 
     fun dismissSignOutDialog() = viewState.dismissSignOutDialog()

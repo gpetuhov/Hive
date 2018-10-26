@@ -15,6 +15,9 @@ interface ProfileFragmentView : MvpView {
     // We don't need to keep this command in the queue,
     // just run this once on error and don't repeat on view being recreated.
     @StateStrategyType(SkipStrategy::class)
+    fun onSignOutNetworkError()
+
+    @StateStrategyType(SkipStrategy::class)
     fun onSignOutError()
 
     @StateStrategyType(AddToEndSingleStrategy::class)

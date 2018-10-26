@@ -65,6 +65,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         signOutDialog?.show()
     }
 
+    override fun onSignOutNetworkError() {
+        toast(R.string.sign_out_no_network)
+    }
+
     override fun onSignOutError() {
         toast(R.string.sign_out_error)
     }
@@ -106,13 +110,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     // === Click handlers ===
 
-    fun onSignOutButtonClick() {
-        if (isOnline(context)) {
-            presenter.showSignOutDialog()
-        } else {
-            toast(R.string.sign_out_no_network)
-        }
-    }
+    fun onSignOutButtonClick() = presenter.showSignOutDialog()
 
     fun onDeleteAccountButtonClick() {
         if (isOnline(context)) {
