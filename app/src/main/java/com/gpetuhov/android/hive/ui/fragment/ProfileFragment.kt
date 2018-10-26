@@ -18,7 +18,6 @@ import com.gpetuhov.android.hive.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
-import com.gpetuhov.android.hive.util.isOnline
 import com.pawegio.kandroid.toast
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
@@ -65,12 +64,12 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         signOutDialog?.show()
     }
 
-    override fun onSignOutNetworkError() {
-        toast(R.string.sign_out_no_network)
-    }
-
     override fun onSignOutError() {
         toast(R.string.sign_out_error)
+    }
+
+    override fun onSignOutNetworkError() {
+        toast(R.string.sign_out_no_network)
     }
 
     override fun dismissSignOutDialog() {
@@ -89,11 +88,16 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         toast(R.string.delete_account_error)
     }
 
+    override fun onDeleteUserNetworkError() {
+        toast(R.string.delete_account_no_network)
+    }
+
     override fun dismissDeleteUserDialog() {
         deleteUserDialog?.dismiss()
     }
 
     override fun showUsernameDialog() {
+        // Prefill dialog with text provided by presenter
         val editText = usernameDialog?.getInputField()
         editText?.setText(presenter.getPrefill())
         editText?.setSelection(editText.text.length)
@@ -112,13 +116,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     fun onSignOutButtonClick() = presenter.showSignOutDialog()
 
-    fun onDeleteAccountButtonClick() {
-        if (isOnline(context)) {
-            presenter.showDeleteUserDialog()
-        } else {
-            toast(R.string.delete_account_no_network)
-        }
-    }
+    fun onDeleteAccountButtonClick() = presenter.showDeleteUserDialog()
 
     fun onUsernameClick() = presenter.showUsernameDialog()
 

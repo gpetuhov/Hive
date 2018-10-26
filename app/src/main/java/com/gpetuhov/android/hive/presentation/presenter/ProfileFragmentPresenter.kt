@@ -3,13 +3,11 @@ package com.gpetuhov.android.hive.presentation.presenter
 import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.AuthManager
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.isOnline
-import com.pawegio.kandroid.toast
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -54,11 +52,17 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
 
     fun deleteUser(context: Context?) {
         dismissDeleteUserDialog()
-        authManager.deleteAccount(
-            context,
-            { viewState.onDeleteUserSuccess() },
-            { viewState.onDeleteUserError() }
-        )
+
+        // Try to delete account if online only
+        if (isOnline(context)) {
+            authManager.deleteAccount(
+                context,
+                { viewState.onDeleteUserSuccess() },
+                { viewState.onDeleteUserError() }
+            )
+        } else {
+            viewState.onDeleteUserNetworkError()
+        }
     }
 
     fun dismissDeleteUserDialog() = viewState.dismissDeleteUserDialog()
