@@ -36,7 +36,22 @@ class AuthManager : Auth {
     }
 
     override fun signOut(onSuccess: () -> Unit, onError: () -> Unit) {
-        signOut(context, onSuccess, onError)
+        // When signing out, first set status to offline,
+        // and only after that sign out (because after signing out,
+        // updating backend will be impossible)
+        // We are signing out regardless of online status update success
+        repo.updateUserOnlineStatus(false) {
+            AuthUI.getInstance()
+                .signOut(context)
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("Sign out successful")
+                    onSuccess()
+                }
+                .addOnFailureListener {
+                    Timber.tag(TAG).d("Sign out error")
+                    onError()
+                }
+        }
     }
 
     fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {
@@ -91,27 +106,6 @@ class AuthManager : Auth {
     fun startListenAuth() = firebaseAuth.addAuthStateListener(authStateListener)
 
     fun stopListenAuth() = firebaseAuth.removeAuthStateListener(authStateListener)
-
-    fun signOut(context: Context?, onSuccess: () -> Unit, onError: () -> Unit) {
-        // When signing out, first set status to offline,
-        // and only after that sign out (because after signing out,
-        // updating backend will be impossible)
-        // We are signing out regardless of online status update success
-        repo.updateUserOnlineStatus(false) {
-            if (context != null) {
-                AuthUI.getInstance()
-                    .signOut(context)
-                    .addOnSuccessListener {
-                        Timber.tag(TAG).d("Sign out successful")
-                        onSuccess()
-                    }
-                    .addOnFailureListener {
-                        Timber.tag(TAG).d("Sign out error")
-                        onError()
-                    }
-            }
-        }
-    }
 
     fun deleteAccount(context: Context?, onSuccess: () -> Unit, onError: () -> Unit) {
         // When deleting account, delete user data from backend first
