@@ -91,13 +91,9 @@ class MainActivity : AppCompatActivity() {
         navigation_view.setupWithNavController(navController)
     }
 
-    private fun checkLocationSettings() {
-        locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
-    }
+    private fun checkLocationSettings() = locationManager.checkLocationSettings(this, REQUEST_CHECK_SETTINGS)
 
-    private fun initAuthManager() {
-        authManager.init(this::onSignIn, this::onSignOut)
-    }
+    private fun initAuthManager() = authManager.init(this::onSignIn, this::onSignOut)
 
     private fun checkPlayServicesAndPermissions() {
         val playServicesAvailable = locationManager.checkPlayServices(this) {
@@ -113,9 +109,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun onSignIn() {
-        // Do nothing
-    }
+    private fun onSignIn() { /* Do nothing */ }
 
     private fun onSignOut() {
         // If signed out, just start AuthActivity and finish.
@@ -124,9 +118,7 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun updateUserOnlineStatus(isOnline: Boolean) {
-        repo.updateUserOnlineStatus(isOnline) { /* Do nothing */ }
-    }
+    private fun updateUserOnlineStatus(isOnline: Boolean) = repo.updateUserOnlineStatus(isOnline) { /* Do nothing */ }
 
     private fun startLocationService() {
         val intent = Intent(this, LocationService::class.java)
