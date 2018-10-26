@@ -8,6 +8,9 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 // This is the interface, that ProfileFragment must implement.
 // Presenter calls methods of this interface.
 interface ProfileFragmentView : MvpView {
+
+    // === Sign out ===
+
     // We don't need to keep all commands in the queue, just the last one
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showSignOutDialog()
@@ -24,6 +27,14 @@ interface ProfileFragmentView : MvpView {
     fun dismissSignOutDialog()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
+    fun enableSignOutButton()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun disableSignOutButton()
+
+    // === Delete user ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
     fun showDeleteUserDialog()
 
     @StateStrategyType(SkipStrategy::class)
@@ -37,6 +48,8 @@ interface ProfileFragmentView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissDeleteUserDialog()
+
+    // == Change username ===
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showUsernameDialog()

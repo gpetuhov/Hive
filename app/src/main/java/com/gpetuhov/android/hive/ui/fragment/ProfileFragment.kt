@@ -19,6 +19,7 @@ import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
@@ -67,6 +68,10 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     }
 
     override fun dismissSignOutDialog() = signOutDialog?.dismiss() ?: Unit
+
+    override fun enableSignOutButton() = signOutButtonEnabled(true)
+
+    override fun disableSignOutButton() = signOutButtonEnabled(false)
 
     override fun showDeleteUserDialog() = deleteUserDialog?.show() ?: Unit
 
@@ -128,7 +133,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 .noAutoDismiss()
                 .cancelable(false)
                 .positiveButton { presenter.signOut(context) }
-                .negativeButton { presenter.dismissSignOutDialog() }
+                .negativeButton { presenter.signOutCancel() }
         }
     }
 
@@ -148,5 +153,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         dismissUsernameDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
+    }
+
+    private fun signOutButtonEnabled(isEnabled: Boolean) {
+        signout_button.isEnabled = isEnabled
     }
 }

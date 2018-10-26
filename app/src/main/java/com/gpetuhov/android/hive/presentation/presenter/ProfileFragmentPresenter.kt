@@ -33,20 +33,34 @@ class ProfileFragmentPresenter : MvpPresenter<ProfileFragmentView>() {
     // We must call ProfileFragmentView's methods not directly, but through ViewState only.
     // This way Moxy will remember current state of the view and will restore it,
     // when the view is recreated.
-    fun showSignOutDialog() = viewState.showSignOutDialog()
+    fun showSignOutDialog() {
+        viewState.disableSignOutButton()
+        viewState.showSignOutDialog()
+    }
 
     fun signOut(context: Context?) {
-        dismissSignOutDialog()
+        viewState.dismissSignOutDialog()
 
         // Try to sign out if online only
         if (isOnline(context)) {
-            authManager.signOut(context) { viewState.onSignOutError() }
+            authManager.signOut(
+                context,
+                { viewState.enableSignOutButton() },
+                {
+                    viewState.onSignOutError()
+                    viewState.enableSignOutButton()
+                }
+            )
         } else {
             viewState.onSignOutNetworkError()
+            viewState.enableSignOutButton()
         }
     }
 
-    fun dismissSignOutDialog() = viewState.dismissSignOutDialog()
+    fun signOutCancel() {
+        viewState.dismissSignOutDialog()
+        viewState.enableSignOutButton()
+    }
 
     fun showDeleteUserDialog() = viewState.showDeleteUserDialog()
 

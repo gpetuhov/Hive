@@ -90,7 +90,7 @@ class AuthManager {
         firebaseAuth.removeAuthStateListener(authStateListener)
     }
 
-    fun signOut(context: Context?, onError: () -> Unit) {
+    fun signOut(context: Context?, onSuccess: () -> Unit, onError: () -> Unit) {
         // When signing out, first set status to offline,
         // and only after that sign out (because after signing out,
         // updating backend will be impossible)
@@ -101,6 +101,7 @@ class AuthManager {
                     .signOut(context)
                     .addOnSuccessListener {
                         Timber.tag(TAG).d("Sign out successful")
+                        onSuccess()
                     }
                     .addOnFailureListener {
                         Timber.tag(TAG).d("Sign out error")
