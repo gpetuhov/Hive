@@ -15,37 +15,25 @@ import javax.inject.Singleton
 class AppModule {
     @Provides
     @Singleton
-    fun providesContext(): Context {
-        return HiveApp.application.applicationContext
-    }
+    fun providesContext(): Context = HiveApp.application.applicationContext
 
     @Provides
     @Singleton
-    fun providesLocationManager(context: Context): LocationManager {
-        return LocationManager(context)
-    }
+    fun providesLocationManager(context: Context) = LocationManager(context)
 
     @Provides
     @Singleton
-    fun providesMapManager(): MapManager {
-        return MapManager()
-    }
+    fun providesMapManager() = MapManager()
 
     @Provides
     @Singleton
-    fun providesRepository(): Repository {
-        return Repository()
-    }
+    fun providesRepository() = Repository()
 
     @Provides
     @Singleton
-    fun providesAuthManager(): AuthManager {
-        return AuthManager()
-    }
+    fun providesAuthManager() = AuthManager()
 
     @Provides
     @Singleton
-    fun providesNotificationManager(): NotificationManager {
-        return NotificationManager()
-    }
+    fun providesNotificationManager() = NotificationManager()
 }
