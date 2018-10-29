@@ -4,7 +4,7 @@ import android.app.Activity
 import com.gpetuhov.android.hive.domain.auth.Auth
 
 class TestAuthManager : Auth {
-    var deleteUserSuccess = false
+    var actionSuccess = false
 
     override fun init(onSignIn: () -> Unit, onSignOut: () -> Unit) {
     }
@@ -22,9 +22,14 @@ class TestAuthManager : Auth {
     }
 
     override fun signOut(onSuccess: () -> Unit, onError: () -> Unit) {
+        mockedAction(onSuccess, onError)
     }
 
     override fun deleteAccount(onSuccess: () -> Unit, onError: () -> Unit) {
-        if (deleteUserSuccess) onSuccess() else onError()
+        mockedAction(onSuccess, onError)
+    }
+
+    private fun mockedAction(onSuccess: () -> Unit, onError: () -> Unit) {
+        if (actionSuccess) onSuccess() else onError()
     }
 }

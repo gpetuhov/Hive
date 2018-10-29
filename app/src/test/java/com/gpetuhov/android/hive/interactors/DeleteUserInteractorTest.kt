@@ -49,7 +49,7 @@ class DeleteUserInteractorTest {
         (network as TestNetworkManager).onlineResult = isOnline
 
         // Set test auth manager success
-        (auth as TestAuthManager).deleteUserSuccess = isSuccess
+        (auth as TestAuthManager).actionSuccess = isSuccess
 
         // DeleteUserInteractor will return result into this callback
         val callback = object : DeleteUserInteractor.Callback {
