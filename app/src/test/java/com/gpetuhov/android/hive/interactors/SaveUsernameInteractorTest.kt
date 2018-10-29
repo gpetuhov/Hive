@@ -8,7 +8,6 @@ import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
 import com.gpetuhov.android.hive.utils.dagger.components.DaggerTestAppComponent
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
@@ -29,26 +28,16 @@ class SaveUsernameInteractorTest {
 
     @Test
     fun saveUsernameSuccess() {
-        (repo as TestRepository).isSuccess = true
-
-        var errorCounter = 0
-
-        val callback = object : SaveUsernameInteractor.Callback {
-            override fun onSaveUsernameError(errorMessage: String) {
-                errorCounter++
-            }
-        }
-
-        val interactor = SaveUsernameInteractor(callback)
-        interactor.saveUsername(Constants.DUMMY_USERNAME)
-
-        assertEquals(Constants.DUMMY_USERNAME, (repo as TestRepository).username)
-        assertEquals(errorCounter, 0)
+        testSaveUsernameInteractor(true)
     }
 
     @Test
     fun saveUsernameError() {
-        (repo as TestRepository).isSuccess = false
+        testSaveUsernameInteractor(false)
+    }
+
+    private fun testSaveUsernameInteractor(isSuccess: Boolean) {
+        (repo as TestRepository).isSuccess = isSuccess
 
         var errorCounter = 0
 
@@ -62,7 +51,7 @@ class SaveUsernameInteractorTest {
         val interactor = SaveUsernameInteractor(callback)
         interactor.saveUsername(Constants.DUMMY_USERNAME)
 
-        assertNotEquals(Constants.DUMMY_USERNAME, (repo as TestRepository).username)
-        assertEquals(errorCounter, 1)
+        assertEquals(if (isSuccess) Constants.DUMMY_USERNAME else "", (repo as TestRepository).username)
+        assertEquals(if (isSuccess) 0 else 1, errorCounter)
     }
 }
