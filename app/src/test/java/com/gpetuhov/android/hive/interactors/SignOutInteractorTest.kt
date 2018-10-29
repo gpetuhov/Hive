@@ -78,4 +78,27 @@ class SignOutInteractorTest {
         assertEquals(successCounter, 1)
         assertEquals(errorCounter, 0)
     }
+
+    @Test
+    fun signOutError() {
+        (network as TestNetworkManager).onlineResult = true
+        (auth as TestAuthManager).actionSuccess = false
+
+        val callback = object : SignOutInteractor.Callback {
+            override fun onSignOutSuccess() {
+                successCounter++
+            }
+
+            override fun onSignOutError(errorMessage: String) {
+                errorCounter++
+                assertEquals(Constants.SIGN_OUT_ERROR, errorMessage)
+            }
+        }
+
+        val interactor = SignOutInteractor(callback)
+        interactor.execute()
+
+        assertEquals(successCounter, 0)
+        assertEquals(errorCounter, 1)
+    }
 }
