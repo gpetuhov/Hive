@@ -7,8 +7,6 @@ import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.Messages
 import com.gpetuhov.android.hive.managers.*
-import com.gpetuhov.android.hive.repository.Repository
-import com.gpetuhov.android.hive.util.MessagesProvider
 import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestNetworkManager
 import com.nhaarman.mockitokotlin2.whenever
@@ -17,32 +15,29 @@ import dagger.Provides
 import org.mockito.Mockito
 import javax.inject.Singleton
 
+// This Dagger module is used in tests instead of AppModule
+
 @Module
 class TestAppModule {
 
     @Provides
     @Singleton
-    // TODO: mock this
     fun providesContext(): Context = Mockito.mock(HiveApp::class.java)
 
     @Provides
     @Singleton
-    // TODO: mock this
-    fun providesLocationManager(context: Context) = LocationManager(context)
+    fun providesLocationManager(context: Context): LocationManager = Mockito.mock(LocationManager::class.java)
 
     @Provides
     @Singleton
-    // TODO: mock this
-    fun providesMapManager() = MapManager()
+    fun providesMapManager(): MapManager = Mockito.mock(MapManager::class.java)
 
     @Provides
     @Singleton
-    // TODO: mock this
-    fun providesNotificationManager() = NotificationManager()
+    fun providesNotificationManager(): NotificationManager = Mockito.mock(NotificationManager::class.java)
 
     @Provides
     @Singleton
-    // TODO: mock this
     fun providesAuth(): Auth = Mockito.mock(Auth::class.java)
 
     @Provides
@@ -51,7 +46,6 @@ class TestAppModule {
 
     @Provides
     @Singleton
-    // TODO: mock this
     fun providesMessages(): Messages {
         val testMessagesProvider = Mockito.mock(Messages::class.java)
         whenever(testMessagesProvider.getDeleteUserNetworkErrorMessage()).thenReturn(Constants.DELETE_USER_NETWORK_ERROR)
@@ -60,6 +54,5 @@ class TestAppModule {
 
     @Provides
     @Singleton
-    // TODO: mock this
-    fun providesRepo(): Repo = Repository()
+    fun providesRepo(): Repo = Mockito.mock(Repo::class.java)
 }

@@ -6,7 +6,7 @@ import com.gpetuhov.android.hive.utils.dagger.modules.TestAppModule
 import dagger.Component
 import javax.inject.Singleton
 
-// This Dagger's component is used in tests instead of DataComponent
+// This Dagger's component is used in tests instead of AppComponent
 
 @Component(modules = [TestAppModule::class])
 @Singleton
