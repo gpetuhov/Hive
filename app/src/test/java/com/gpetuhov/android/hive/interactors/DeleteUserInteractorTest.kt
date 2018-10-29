@@ -30,46 +30,39 @@ class DeleteUserInteractorTest {
     }
 
     @Test
-    fun deleteUserNetworkError() {
-        // Make test network manager "offline"
-        (network as TestNetworkManager).onlineResult = false
-
-        // DeleteUserInteractor will return result into this callback
-        val callback = object : DeleteUserInteractor.Callback {
-            override fun onDeleteUserComplete(message: String) {
-                // We know what message will be in "offline",
-                // because we mock Messages provider in TestAppModule.
-                assertEquals(Constants.DELETE_USER_NETWORK_ERROR, message)
-            }
-        }
-
-        val interactor = DeleteUserInteractor(callback)
-        interactor.execute()
-    }
-
-    @Test
     fun deleteUserSuccess() {
-        (network as TestNetworkManager).onlineResult = true
-        (auth as TestAuthManager).deleteUserSuccess = true
-
-        val callback = object : DeleteUserInteractor.Callback {
-            override fun onDeleteUserComplete(message: String) {
-                assertEquals(Constants.DELETE_USER_SUCCESS, message)
-            }
-        }
-
-        val interactor = DeleteUserInteractor(callback)
-        interactor.execute()
+        testDeleteUserInteractor(true, true)
     }
 
     @Test
     fun deleteUserError() {
-        (network as TestNetworkManager).onlineResult = true
-        (auth as TestAuthManager).deleteUserSuccess = false
+        testDeleteUserInteractor(false, true)
+    }
 
+    @Test
+    fun deleteUserNetworkError() {
+        testDeleteUserInteractor(false, false)
+    }
+
+    private fun testDeleteUserInteractor(isSuccess: Boolean, isOnline: Boolean) {
+        // Set test network manager online / offline
+        (network as TestNetworkManager).onlineResult = isOnline
+
+        // Set test auth manager success
+        (auth as TestAuthManager).deleteUserSuccess = isSuccess
+
+        // DeleteUserInteractor will return result into this callback
         val callback = object : DeleteUserInteractor.Callback {
             override fun onDeleteUserComplete(message: String) {
-                assertEquals(Constants.DELETE_USER_ERROR, message)
+                // We know what message should be,
+                // because we mock Messages provider in tests.
+                val resultMessage = when {
+                    isSuccess -> Constants.DELETE_USER_SUCCESS
+                    isOnline -> Constants.DELETE_USER_ERROR
+                    else -> Constants.DELETE_USER_NETWORK_ERROR
+                }
+
+                assertEquals(resultMessage, message)
             }
         }
 
