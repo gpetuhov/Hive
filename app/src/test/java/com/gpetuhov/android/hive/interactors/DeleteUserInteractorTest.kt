@@ -56,13 +56,13 @@ class DeleteUserInteractorTest {
             override fun onDeleteUserComplete(message: String) {
                 // We know what message should be,
                 // because we mock Messages provider in tests.
-                val resultMessage = when {
+                val expectedMessage = when {
                     isSuccess -> Constants.DELETE_USER_SUCCESS
                     isOnline -> Constants.DELETE_USER_ERROR
                     else -> Constants.DELETE_USER_NETWORK_ERROR
                 }
 
-                assertEquals(resultMessage, message)
+                assertEquals(expectedMessage, message)
             }
         }
 

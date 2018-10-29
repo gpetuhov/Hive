@@ -9,7 +9,7 @@ import com.gpetuhov.android.hive.domain.util.Messages
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.utils.TestAuthManager
 import com.gpetuhov.android.hive.utils.TestNetworkManager
-import com.gpetuhov.android.hive.utils.dagger.TestMessagesProvider
+import com.gpetuhov.android.hive.utils.TestMessagesProvider
 import dagger.Module
 import dagger.Provides
 import org.mockito.Mockito

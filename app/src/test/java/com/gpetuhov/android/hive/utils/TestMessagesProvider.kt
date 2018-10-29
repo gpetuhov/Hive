@@ -1,12 +1,11 @@
-package com.gpetuhov.android.hive.utils.dagger
+package com.gpetuhov.android.hive.utils
 
 import com.gpetuhov.android.hive.domain.util.Messages
-import com.gpetuhov.android.hive.utils.Constants
 
 class TestMessagesProvider : Messages {
-    override fun getSignOutErrorMessage() = ""
+    override fun getSignOutErrorMessage() = Constants.SIGN_OUT_ERROR
 
-    override fun getSignOutNetworkErrorMessage() = ""
+    override fun getSignOutNetworkErrorMessage() = Constants.SIGN_OUT_NETWORK_ERROR
 
     override fun getDeleteUserSuccessMessage() = Constants.DELETE_USER_SUCCESS
 

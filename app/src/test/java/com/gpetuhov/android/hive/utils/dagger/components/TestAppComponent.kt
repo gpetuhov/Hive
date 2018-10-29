@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.utils.dagger.components
 
 import com.gpetuhov.android.hive.application.dagger.components.AppComponent
 import com.gpetuhov.android.hive.interactors.DeleteUserInteractorTest
+import com.gpetuhov.android.hive.interactors.SignOutInteractorTest
 import com.gpetuhov.android.hive.utils.dagger.modules.TestAppModule
 import dagger.Component
 import javax.inject.Singleton
@@ -12,4 +13,5 @@ import javax.inject.Singleton
 @Singleton
 interface TestAppComponent : AppComponent {
     fun inject(deleteUserInteractorTest: DeleteUserInteractorTest)
+    fun inject(signOutInteractorTest: SignOutInteractorTest)
 }
