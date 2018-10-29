@@ -8,6 +8,7 @@ import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
 import com.gpetuhov.android.hive.utils.dagger.components.DaggerTestAppComponent
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotEquals
 import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
@@ -43,5 +44,25 @@ class SaveUsernameInteractorTest {
 
         assertEquals(Constants.DUMMY_USERNAME, (repo as TestRepository).username)
         assertEquals(errorCounter, 0)
+    }
+
+    @Test
+    fun saveUsernameError() {
+        (repo as TestRepository).isSuccess = false
+
+        var errorCounter = 0
+
+        val callback = object : SaveUsernameInteractor.Callback {
+            override fun onSaveUsernameError(errorMessage: String) {
+                errorCounter++
+                assertEquals(Constants.SAVE_USERNAME_ERROR, errorMessage)
+            }
+        }
+
+        val interactor = SaveUsernameInteractor(callback)
+        interactor.saveUsername(Constants.DUMMY_USERNAME)
+
+        assertNotEquals(Constants.DUMMY_USERNAME, (repo as TestRepository).username)
+        assertEquals(errorCounter, 1)
     }
 }

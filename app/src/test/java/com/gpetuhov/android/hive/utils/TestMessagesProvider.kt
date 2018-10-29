@@ -13,5 +13,5 @@ class TestMessagesProvider : Messages {
 
     override fun getDeleteUserNetworkErrorMessage() = Constants.DELETE_USER_NETWORK_ERROR
 
-    override fun getSaveUsernameErrorMessage() = ""
+    override fun getSaveUsernameErrorMessage() = Constants.SAVE_USERNAME_ERROR
 }

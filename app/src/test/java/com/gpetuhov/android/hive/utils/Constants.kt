@@ -10,5 +10,6 @@ class Constants {
         const val SIGN_OUT_NETWORK_ERROR = "Sign out network error"
 
         const val DUMMY_USERNAME = "DummyUsername"
+        const val SAVE_USERNAME_ERROR = "Save username error"
     }
 }
