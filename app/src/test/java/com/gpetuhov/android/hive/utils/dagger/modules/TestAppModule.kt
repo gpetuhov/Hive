@@ -7,9 +7,9 @@ import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.Messages
 import com.gpetuhov.android.hive.managers.*
-import com.gpetuhov.android.hive.utils.Constants
+import com.gpetuhov.android.hive.utils.TestAuthManager
 import com.gpetuhov.android.hive.utils.TestNetworkManager
-import com.nhaarman.mockitokotlin2.whenever
+import com.gpetuhov.android.hive.utils.dagger.TestMessagesProvider
 import dagger.Module
 import dagger.Provides
 import org.mockito.Mockito
@@ -38,7 +38,7 @@ class TestAppModule {
 
     @Provides
     @Singleton
-    fun providesAuth(): Auth = Mockito.mock(Auth::class.java)
+    fun providesAuth(): Auth = TestAuthManager()
 
     @Provides
     @Singleton
@@ -46,11 +46,7 @@ class TestAppModule {
 
     @Provides
     @Singleton
-    fun providesMessages(): Messages {
-        val testMessagesProvider = Mockito.mock(Messages::class.java)
-        whenever(testMessagesProvider.getDeleteUserNetworkErrorMessage()).thenReturn(Constants.DELETE_USER_NETWORK_ERROR)
-        return testMessagesProvider
-    }
+    fun providesMessages(): Messages = TestMessagesProvider()
 
     @Provides
     @Singleton
