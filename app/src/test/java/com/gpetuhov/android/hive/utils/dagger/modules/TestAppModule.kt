@@ -10,8 +10,10 @@ import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.MessagesProvider
 import com.gpetuhov.android.hive.utils.TestNetworkManager
+import com.nhaarman.mockitokotlin2.whenever
 import dagger.Module
 import dagger.Provides
+import org.mockito.Mockito
 import javax.inject.Singleton
 
 @Module
@@ -20,7 +22,7 @@ class TestAppModule {
     @Provides
     @Singleton
     // TODO: mock this
-    fun providesContext(): Context = HiveApp.application.applicationContext
+    fun providesContext(): Context = Mockito.mock(HiveApp::class.java)
 
     @Provides
     @Singleton
@@ -40,7 +42,7 @@ class TestAppModule {
     @Provides
     @Singleton
     // TODO: mock this
-    fun providesAuth(): Auth = AuthManager()
+    fun providesAuth(): Auth = Mockito.mock(Auth::class.java)
 
     @Provides
     @Singleton
@@ -49,7 +51,11 @@ class TestAppModule {
     @Provides
     @Singleton
     // TODO: mock this
-    fun providesMessages(): Messages = MessagesProvider()
+    fun providesMessages(): Messages {
+        val testMessagesProvider = Mockito.mock(Messages::class.java)
+        whenever(testMessagesProvider.getDeleteUserNetworkErrorMessage()).thenReturn("network error")
+        return testMessagesProvider
+    }
 
     @Provides
     @Singleton

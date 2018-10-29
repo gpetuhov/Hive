@@ -18,7 +18,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 // Manages authentication with Firebase Auth
-class AuthManager : Auth {
+open class AuthManager : Auth {
 
     companion object {
         private const val TAG = "AuthManager"

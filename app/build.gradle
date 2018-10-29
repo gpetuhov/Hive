@@ -132,6 +132,16 @@ dependencies {
     implementation "com.arello-mobile:moxy-app-compat:$moxyVersion"
     implementation "com.arello-mobile:moxy-android:$moxyVersion"
     kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
+
+    // Mockito
+    testImplementation "org.mockito:mockito-core:2.23.0"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
+
+    // Powermock
+    testImplementation 'org.powermock:powermock-api-mockito2:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-module-junit4-rule-agent:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-module-junit4-rule:2.0.0-beta.5'
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.0-beta.5'
 }
 
 // Needed for Firebase

@@ -6,7 +6,7 @@ import com.gpetuhov.android.hive.application.dagger.components.DaggerAppComponen
 import com.gpetuhov.android.hive.util.CrashlyticsTree
 import timber.log.Timber
 
-class HiveApp : MultiDexApplication() {
+open class HiveApp : MultiDexApplication() {
 
     companion object {
         lateinit var appComponent: AppComponent
