@@ -18,6 +18,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 // Manages authentication with Firebase Auth
+// Class is open so that it can be mocked in tests by Mockito
 open class AuthManager : Auth {
 
     companion object {

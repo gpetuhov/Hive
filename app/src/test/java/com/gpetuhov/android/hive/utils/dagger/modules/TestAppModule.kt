@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.domain.util.Messages
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.MessagesProvider
+import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestNetworkManager
 import com.nhaarman.mockitokotlin2.whenever
 import dagger.Module
@@ -53,7 +54,7 @@ class TestAppModule {
     // TODO: mock this
     fun providesMessages(): Messages {
         val testMessagesProvider = Mockito.mock(Messages::class.java)
-        whenever(testMessagesProvider.getDeleteUserNetworkErrorMessage()).thenReturn("network error")
+        whenever(testMessagesProvider.getDeleteUserNetworkErrorMessage()).thenReturn(Constants.DELETE_USER_NETWORK_ERROR)
         return testMessagesProvider
     }
 
