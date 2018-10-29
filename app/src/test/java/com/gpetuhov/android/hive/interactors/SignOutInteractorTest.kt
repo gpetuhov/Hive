@@ -67,7 +67,7 @@ class SignOutInteractorTest {
         val interactor = SignOutInteractor(callback)
         interactor.execute()
 
-        assertEquals(successCounter, if (isSuccess) 1 else 0)
-        assertEquals(errorCounter, if (isSuccess) 0 else 1)
+        assertEquals(if (isSuccess) 1 else 0, successCounter)
+        assertEquals(if (isSuccess) 0 else 1, errorCounter)
     }
 }

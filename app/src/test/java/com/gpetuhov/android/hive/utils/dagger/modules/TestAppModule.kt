@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.utils.TestAuthManager
 import com.gpetuhov.android.hive.utils.TestNetworkManager
 import com.gpetuhov.android.hive.utils.TestMessagesProvider
+import com.gpetuhov.android.hive.utils.TestRepository
 import dagger.Module
 import dagger.Provides
 import org.mockito.Mockito
@@ -50,5 +51,5 @@ class TestAppModule {
 
     @Provides
     @Singleton
-    fun providesRepo(): Repo = Mockito.mock(Repo::class.java)
+    fun providesRepo(): Repo = TestRepository()
 }
