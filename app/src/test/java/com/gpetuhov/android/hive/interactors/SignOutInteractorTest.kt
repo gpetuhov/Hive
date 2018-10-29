@@ -20,9 +20,6 @@ class SignOutInteractorTest {
     @Inject lateinit var network: Network
     @Inject lateinit var auth: Auth
 
-    private var successCounter = 0
-    private var errorCounter = 0
-
     @Before
     fun init() {
         val testAppComponent = DaggerTestAppComponent.builder().build()
@@ -30,59 +27,29 @@ class SignOutInteractorTest {
 
         HiveApp.application = context as HiveApp
         HiveApp.appComponent = testAppComponent
-
-        successCounter = 0
-        errorCounter = 0
-    }
-
-    @Test
-    fun signOutNetworkError() {
-        (network as TestNetworkManager).onlineResult = false
-
-        val callback = object : SignOutInteractor.Callback {
-            override fun onSignOutSuccess() {
-                successCounter++
-            }
-
-            override fun onSignOutError(errorMessage: String) {
-                errorCounter++
-                assertEquals(Constants.SIGN_OUT_NETWORK_ERROR, errorMessage)
-            }
-        }
-
-        val interactor = SignOutInteractor(callback)
-        interactor.execute()
-
-        assertEquals(successCounter, 0)
-        assertEquals(errorCounter, 1)
     }
 
     @Test
     fun signOutSuccess() {
-        (network as TestNetworkManager).onlineResult = true
-        (auth as TestAuthManager).actionSuccess = true
-
-        val callback = object : SignOutInteractor.Callback {
-            override fun onSignOutSuccess() {
-                successCounter++
-            }
-
-            override fun onSignOutError(errorMessage: String) {
-                errorCounter++
-            }
-        }
-
-        val interactor = SignOutInteractor(callback)
-        interactor.execute()
-
-        assertEquals(successCounter, 1)
-        assertEquals(errorCounter, 0)
+        testSignOutInteractor(true, true)
     }
 
     @Test
     fun signOutError() {
-        (network as TestNetworkManager).onlineResult = true
-        (auth as TestAuthManager).actionSuccess = false
+        testSignOutInteractor(false, true)
+    }
+
+    @Test
+    fun signOutNetworkError() {
+        testSignOutInteractor(false, false)
+    }
+
+    private fun testSignOutInteractor(isSuccess: Boolean, isOnline: Boolean) {
+        (network as TestNetworkManager).onlineResult = isOnline
+        (auth as TestAuthManager).actionSuccess = isSuccess
+
+        var successCounter = 0
+        var errorCounter = 0
 
         val callback = object : SignOutInteractor.Callback {
             override fun onSignOutSuccess() {
@@ -91,14 +58,16 @@ class SignOutInteractorTest {
 
             override fun onSignOutError(errorMessage: String) {
                 errorCounter++
-                assertEquals(Constants.SIGN_OUT_ERROR, errorMessage)
+
+                val expectedMessage = if (isOnline) Constants.SIGN_OUT_ERROR else Constants.SIGN_OUT_NETWORK_ERROR
+                assertEquals(expectedMessage, errorMessage)
             }
         }
 
         val interactor = SignOutInteractor(callback)
         interactor.execute()
 
-        assertEquals(successCounter, 0)
-        assertEquals(errorCounter, 1)
+        assertEquals(successCounter, if (isSuccess) 1 else 0)
+        assertEquals(errorCounter, if (isSuccess) 0 else 1)
     }
 }
