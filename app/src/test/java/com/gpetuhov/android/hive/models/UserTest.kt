@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive
+package com.gpetuhov.android.hive.models
 
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.User
