@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -102,7 +103,7 @@ class MapManager {
             for (user in resultList) {
                 val statusId = if (user.isOnline) R.string.online else R.string.offline
                 val status = context.getString(statusId)
-                val name = if (user.username != "") user.username else user.name
+                val name = if (user.hasUsername) user.username else user.name
 
                 val iconGenerator = IconGenerator(context)
 
@@ -113,7 +114,12 @@ class MapManager {
 //                }
 
 //                val iconBitmap = iconGenerator.makeIcon("${name} \n$status")
-                val iconBitmap = iconGenerator.makeIcon(name)
+
+                val iconBitmap = if (user.hasService) {
+                    iconGenerator.makeIcon("$name \n${user.service}")
+                } else {
+                    iconGenerator.makeIcon(name)
+                }
 
                 googleMap.addMarker(
                     MarkerOptions()
