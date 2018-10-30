@@ -10,6 +10,7 @@ class TestRepository : Repo {
     var username = ""
     var service = ""
     var isVisible = false
+    var isOnline = false
 
     override fun onSignIn(user: User) {
     }
@@ -59,6 +60,8 @@ class TestRepository : Repo {
     }
 
     override fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
+        if (isSuccess) isOnline = newIsOnline
+        onComplete()
     }
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
