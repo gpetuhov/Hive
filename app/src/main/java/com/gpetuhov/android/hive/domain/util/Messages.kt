@@ -7,4 +7,5 @@ interface Messages {
     fun getDeleteUserErrorMessage(): String
     fun getDeleteUserNetworkErrorMessage(): String
     fun getSaveUsernameErrorMessage(): String
+    fun getSaveServiceErrorMessage(): String
 }

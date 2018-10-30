@@ -13,6 +13,7 @@ interface Repo {
     fun currentUser(): MutableLiveData<User>
     fun currentUserUsername(): String
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
+    fun saveUserService(newService: String, onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)
     fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)

@@ -26,5 +26,7 @@ class MessagesProvider : Messages {
 
     override fun getSaveUsernameErrorMessage(): String = getString(R.string.username_save_error)
 
+    override fun getSaveServiceErrorMessage(): String = getString(R.string.service_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

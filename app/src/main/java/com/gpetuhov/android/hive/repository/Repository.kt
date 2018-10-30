@@ -5,7 +5,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
@@ -23,6 +22,8 @@ class Repository : Repo {
         private const val NAME_KEY = "name"
         private const val USERNAME_KEY = "username"
         private const val EMAIL_KEY = "email"
+        private const val SERVICE_KEY = "service"
+        private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LAT_KEY = "lat"
         private const val LON_KEY = "lon"
@@ -97,6 +98,13 @@ class Repository : Repo {
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
+
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserService(newService: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[SERVICE_KEY] = newService
 
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
