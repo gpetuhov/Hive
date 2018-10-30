@@ -9,6 +9,7 @@ class TestRepository : Repo {
     var isSuccess = false
     var username = ""
     var service = ""
+    var isVisible = false
 
     override fun onSignIn(user: User) {
     }
@@ -33,6 +34,14 @@ class TestRepository : Repo {
     override fun saveUserService(newService: String, onError: () -> Unit) {
         if (isSuccess) {
             service = newService
+        } else {
+            onError()
+        }
+    }
+
+    override fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit) {
+        if (isSuccess) {
+            isVisible = newIsVisible
         } else {
             onError()
         }

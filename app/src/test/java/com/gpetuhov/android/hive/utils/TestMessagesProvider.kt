@@ -16,4 +16,6 @@ class TestMessagesProvider : Messages {
     override fun getSaveUsernameErrorMessage() = Constants.SAVE_USERNAME_ERROR
 
     override fun getSaveServiceErrorMessage() = Constants.SAVE_SERVICE_ERROR
+
+    override fun getSaveVisibilityErrorMessage(): String = Constants.SAVE_VISIBILITY_ERROR
 }

@@ -1,10 +1,7 @@
 package com.gpetuhov.android.hive.utils.dagger.components
 
 import com.gpetuhov.android.hive.application.dagger.components.AppComponent
-import com.gpetuhov.android.hive.interactors.DeleteUserInteractorTest
-import com.gpetuhov.android.hive.interactors.SaveServiceInteractorTest
-import com.gpetuhov.android.hive.interactors.SaveUsernameInteractorTest
-import com.gpetuhov.android.hive.interactors.SignOutInteractorTest
+import com.gpetuhov.android.hive.interactors.*
 import com.gpetuhov.android.hive.utils.dagger.modules.TestAppModule
 import dagger.Component
 import javax.inject.Singleton
@@ -18,4 +15,5 @@ interface TestAppComponent : AppComponent {
     fun inject(signOutInteractorTest: SignOutInteractorTest)
     fun inject(saveUsernameInteractorTest: SaveUsernameInteractorTest)
     fun inject(saveServiceInteractorTest: SaveServiceInteractorTest)
+    fun inject(saveVisibilityInteractorTest: SaveVisibilityInteractorTest)
 }
