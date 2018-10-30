@@ -1,8 +1,6 @@
 package com.gpetuhov.android.hive.repository
 
 import android.content.Context
-import android.content.Intent
-import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.DocumentSnapshot
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.service.LocationService
+import com.gpetuhov.android.hive.managers.LocationManager
 import javax.inject.Inject
 
 // Read and write data to remote storage (Firestore)
@@ -254,7 +252,11 @@ class Repository : Repo {
                         if (snapshot != null && snapshot.exists()) {
                             Timber.tag(TAG).d("Listen success")
                             val user = getUserFromDocumentSnapshot(snapshot)
-                            shareLocation(user.isVisible)
+
+                            // If current user is visible, start sharing location,
+                            // otherwise stop sharing.
+                            LocationManager.shareLocation(context, user.isVisible)
+
                             currentUser.value = user
 
                         } else {
@@ -287,24 +289,4 @@ class Repository : Repo {
             location = location
         )
     }
-
-    private fun shareLocation(isEnabled: Boolean) {
-        if (isEnabled) {
-            startLocationService()
-        } else {
-            stopLocationService()
-        }
-    }
-
-    private fun startLocationService() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            context.startForegroundService(getLocationServiceIntent())
-        } else {
-            context.startService(getLocationServiceIntent())
-        }
-    }
-
-    private fun stopLocationService() = context.stopService(getLocationServiceIntent())
-
-    private fun getLocationServiceIntent() = Intent(context, LocationService::class.java)
 }

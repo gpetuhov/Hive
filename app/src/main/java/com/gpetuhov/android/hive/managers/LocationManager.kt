@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -11,6 +12,7 @@ import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import android.content.IntentSender
 import android.location.Location
+import android.os.Build
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.api.ResolvableApiException
@@ -18,6 +20,7 @@ import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.service.LocationService
 import javax.inject.Inject
 
 
@@ -26,6 +29,26 @@ class LocationManager(context: Context) {
 
     companion object {
         private const val TAG = "LocationManager"
+
+        fun shareLocation(context: Context, isEnabled: Boolean) {
+            if (isEnabled) {
+                startLocationService(context)
+            } else {
+                stopLocationService(context)
+            }
+        }
+
+        private fun startLocationService(context: Context) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                context.startForegroundService(getLocationServiceIntent(context))
+            } else {
+                context.startService(getLocationServiceIntent(context))
+            }
+        }
+
+        private fun stopLocationService(context: Context) = context.stopService(getLocationServiceIntent(context))
+
+        private fun getLocationServiceIntent(context: Context) = Intent(context, LocationService::class.java)
     }
 
     @Inject lateinit var repo: Repo
