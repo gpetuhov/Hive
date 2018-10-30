@@ -28,5 +28,7 @@ class MessagesProvider : Messages {
 
     override fun getSaveServiceErrorMessage(): String = getString(R.string.service_save_error)
 
+    override fun getSaveVisibilityErrorMessage(): String = getString(R.string.visibility_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

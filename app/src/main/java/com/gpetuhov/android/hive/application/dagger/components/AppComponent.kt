@@ -1,10 +1,7 @@
 package com.gpetuhov.android.hive.application.dagger.components
 
 import com.gpetuhov.android.hive.application.dagger.modules.AppModule
-import com.gpetuhov.android.hive.domain.interactor.DeleteUserInteractor
-import com.gpetuhov.android.hive.domain.interactor.SaveServiceInteractor
-import com.gpetuhov.android.hive.domain.interactor.SaveUsernameInteractor
-import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
+import com.gpetuhov.android.hive.domain.interactor.*
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
@@ -44,6 +41,7 @@ interface AppComponent {
     fun inject(signOutInteractor: SignOutInteractor)
     fun inject(saveUsernameInteractor: SaveUsernameInteractor)
     fun inject(saveServiceInteractor: SaveServiceInteractor)
+    fun inject(saveVisibilityInteractor: SaveVisibilityInteractor)
 
     fun inject(messagesProvider: MessagesProvider)
 }

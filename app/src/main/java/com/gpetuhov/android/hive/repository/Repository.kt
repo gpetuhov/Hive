@@ -111,6 +111,13 @@ class Repository : Repo {
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
+    override fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[IS_VISIBLE_KEY] = newIsVisible
+
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
     override fun saveUserLocation(newLocation: LatLng) {
         val data = HashMap<String, Any>()
         data[LAT_KEY] = newLocation.latitude
@@ -262,7 +269,7 @@ class Repository : Repo {
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             service = doc.getString(SERVICE_KEY) ?: "",
-            isVisible = false,
+            isVisible = doc.getBoolean(IS_VISIBLE_KEY) ?: false,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )
