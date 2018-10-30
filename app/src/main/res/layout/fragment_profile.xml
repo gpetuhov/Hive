@@ -43,7 +43,8 @@
                     tools:text="nickname"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/user_name_textview" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintTop_toBottomOf="@+id/user_name_textview"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintBottom_toTopOf="@+id/user_email_textview" android:layout_marginTop="8dp"/>
 
             <TextView
@@ -55,7 +56,8 @@
                     tools:text="someName@someMail.com"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/username_textview" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintTop_toBottomOf="@+id/username_textview"
+                    app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintBottom_toTopOf="@+id/user_service_textview" android:layout_marginTop="8dp"/>
 
             <TextView
@@ -72,7 +74,21 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/user_email_textview"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintBottom_toTopOf="@+id/user_visible_checkbox" android:layout_marginTop="8dp"/>
+                    app:layout_constraintBottom_toTopOf="@+id/user_visible_checkbox" android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/delete_service_button"
+                    app:layout_constraintHorizontal_chainStyle="packed"/>
+
+            <ImageButton
+                    android:id="@+id/delete_service_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete"
+                    android:background="?android:selectableItemBackground"
+                    app:layout_constraintStart_toEndOf="@+id/user_service_textview" android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/user_service_textview"
+                    app:layout_constraintBottom_toBottomOf="@+id/user_service_textview"/>
 
             <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/user_visible_checkbox"
