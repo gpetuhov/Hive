@@ -74,6 +74,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/user_visible"
+                android:checked="@{user.visible}"
+                android:onClick="@{view -> presenter.saveVisibility(((android.widget.CheckBox) view).isChecked())}"
                 style="@style/basicTextStyle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

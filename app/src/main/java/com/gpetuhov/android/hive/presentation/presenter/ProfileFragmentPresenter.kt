@@ -3,10 +3,7 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.interactor.DeleteUserInteractor
-import com.gpetuhov.android.hive.domain.interactor.SaveServiceInteractor
-import com.gpetuhov.android.hive.domain.interactor.SaveUsernameInteractor
-import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
+import com.gpetuhov.android.hive.domain.interactor.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import javax.inject.Inject
@@ -23,7 +20,8 @@ class ProfileFragmentPresenter :
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
     SaveUsernameInteractor.Callback,
-    SaveServiceInteractor.Callback {
+    SaveServiceInteractor.Callback,
+    SaveVisibilityInteractor.Callback {
 
     @Inject lateinit var repo: Repo
 
@@ -31,6 +29,7 @@ class ProfileFragmentPresenter :
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
     private val saveServiceInteractor = SaveServiceInteractor(this)
+    private val saveVisibilityInteractor = SaveVisibilityInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -65,6 +64,10 @@ class ProfileFragmentPresenter :
     // === SaveServiceInteractor.Callback ===
 
     override fun onSaveServiceError(errorMessage: String) = showToast(errorMessage)
+
+    // === SaveVisibilityInteractor.Callback ===
+
+    override fun onSaveVisibilityError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -145,6 +148,10 @@ class ProfileFragmentPresenter :
         tempService = ""
         viewState.dismissServiceDialog()
     }
+
+    // --- Change visibility ---
+
+    fun saveVisibility(newIsVisible: Boolean) = saveVisibilityInteractor.saveVisibility(newIsVisible)
 
     // === Private methods ===
 
