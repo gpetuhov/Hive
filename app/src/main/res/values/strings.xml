@@ -25,6 +25,7 @@
 
     <!-- ProfileFragment -->
     <string name="enter_username">Enter username</string>
+    <string name="enter_service">Enter service</string>
     <string name="username">Username</string>
     <string name="username_save_error">Error updating username</string>
     <string name="sign_out">Sign out</string>
@@ -55,5 +56,6 @@
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
+    <string name="user_visible">Visible on map</string>
 
 </resources>
