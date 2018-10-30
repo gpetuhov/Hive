@@ -261,7 +261,7 @@ class Repository : Repo {
             name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
-            service = "",
+            service = doc.getString(SERVICE_KEY) ?: "",
             isVisible = false,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
