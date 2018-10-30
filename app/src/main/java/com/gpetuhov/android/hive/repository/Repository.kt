@@ -113,6 +113,14 @@ class Repository : Repo {
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
+    override fun deleteUserService(onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[SERVICE_KEY] = ""
+        data[IS_VISIBLE_KEY] = false
+
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
     override fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[IS_VISIBLE_KEY] = newIsVisible
@@ -248,6 +256,7 @@ class Repository : Repo {
                             val user = getUserFromDocumentSnapshot(snapshot)
 
                             // Turn off visibility if user is visible and has no services
+                            // (this is needed in case service has been cleared on the backend)
                             if (!user.hasService && user.isVisible) saveUserVisibility(false) { /* Do nothing */ }
 
                             // If current user is visible, start sharing location,

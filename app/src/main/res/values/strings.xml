@@ -31,6 +31,7 @@
     <string name="service">Service</string>
     <string name="service_save_error">Error updating service</string>
     <string name="delete_service">Delete service</string>
+    <string name="service_delete_error">Error deleting service</string>
     <string name="user_visible">Visible on map</string>
     <string name="visibility_save_error">Error updating visibility</string>
     <string name="sign_out">Sign out</string>

@@ -16,6 +16,7 @@ interface Repo {
     fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit)
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
     fun saveUserService(newService: String, onError: () -> Unit)
+    fun deleteUserService(onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)
     fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)

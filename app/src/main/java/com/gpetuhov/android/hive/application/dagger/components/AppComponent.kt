@@ -41,6 +41,7 @@ interface AppComponent {
     fun inject(signOutInteractor: SignOutInteractor)
     fun inject(saveUsernameInteractor: SaveUsernameInteractor)
     fun inject(saveServiceInteractor: SaveServiceInteractor)
+    fun inject(deleteServiceInteractor: DeleteServiceInteractor)
     fun inject(saveVisibilityInteractor: SaveVisibilityInteractor)
 
     fun inject(messagesProvider: MessagesProvider)
