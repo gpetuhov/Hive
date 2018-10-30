@@ -39,6 +39,14 @@ class TestRepository : Repo {
         }
     }
 
+    override fun deleteUserService(onError: () -> Unit) {
+        if (isSuccess) {
+            service = ""
+        } else {
+            onError()
+        }
+    }
+
     override fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit) {
         if (isSuccess) {
             isVisible = newIsVisible

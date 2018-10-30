@@ -15,6 +15,8 @@ class Constants {
         const val DUMMY_SERVICE = "Dummy service"
         const val SAVE_SERVICE_ERROR = "Save service error"
 
+        const val DELETE_SERVICE_ERROR = "Delete service error"
+
         const val SAVE_VISIBILITY_ERROR = "Save visibility error"
     }
 }
