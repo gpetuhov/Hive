@@ -157,6 +157,7 @@ class Repository : Repo {
     override fun startGettingRemoteResultUpdates() {
         if (isAuthorized) {
             searchResultListenerRegistration = firestore.collection(USERS_COLLECTION)
+                .whereEqualTo(IS_VISIBLE_KEY, true)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     val newResultList = mutableListOf<User>()
 
