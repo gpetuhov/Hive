@@ -14,4 +14,5 @@ data class User(
     var location: LatLng
 ) {
     val hasUsername get() = username != ""
+    val hasService get() = service != ""
 }

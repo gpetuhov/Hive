@@ -18,7 +18,7 @@ class UserTest {
             "John",
             "",
             "mail@mail.com",
-            "free car",
+            "",
             false,
             LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
@@ -29,5 +29,12 @@ class UserTest {
         assertEquals(false, user.hasUsername)
         user.username = "john7"
         assertEquals(true, user.hasUsername)
+    }
+
+    @Test
+    fun emptyService() {
+        assertEquals(false, user.hasService)
+        user.service = "free car"
+        assertEquals(true, user.hasService)
     }
 }
