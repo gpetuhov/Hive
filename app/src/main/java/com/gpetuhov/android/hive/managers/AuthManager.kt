@@ -141,6 +141,7 @@ open class AuthManager : Auth {
             name = firebaseUser.displayName ?: Constants.Auth.DEFAULT_USER_NAME,
             username = "",
             email = firebaseUser.email ?: Constants.Auth.DEFAULT_USER_MAIL,
+            service = "",
             isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )

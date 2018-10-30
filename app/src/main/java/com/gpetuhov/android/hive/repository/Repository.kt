@@ -185,6 +185,7 @@ class Repository : Repo {
             name = Constants.Auth.DEFAULT_USER_NAME,
             username = "",
             email = Constants.Auth.DEFAULT_USER_MAIL,
+            service = "",
             isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
@@ -249,6 +250,7 @@ class Repository : Repo {
             name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
+            service = "",
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )

@@ -18,6 +18,7 @@ class UserTest {
             "John",
             "",
             "mail@mail.com",
+            "free car",
             false,
             LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
