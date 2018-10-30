@@ -247,6 +247,9 @@ class Repository : Repo {
                             Timber.tag(TAG).d("Listen success")
                             val user = getUserFromDocumentSnapshot(snapshot)
 
+                            // Turn off visibility if user has no services
+                            if (!user.hasService) user.isVisible = false
+
                             // If current user is visible, start sharing location,
                             // otherwise stop sharing.
                             LocationManager.shareLocation(user.isVisible)
