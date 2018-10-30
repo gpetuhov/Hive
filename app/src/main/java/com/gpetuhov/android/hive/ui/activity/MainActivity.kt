@@ -10,7 +10,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
-import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.domain.interactor.SaveOnlineInteractor
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.util.checkPermissions
@@ -29,10 +29,15 @@ class MainActivity : AppCompatActivity() {
 
     @Inject lateinit var locationManager: LocationManager
     @Inject lateinit var auth: Auth
-    @Inject lateinit var repo: Repo
     @Inject lateinit var mapManager: MapManager
 
     private lateinit var navController: NavController
+
+    private val saveOnlineInteractor = SaveOnlineInteractor(object : SaveOnlineInteractor.Callback {
+        override fun onSaveOnlineComplete() {
+            // Do nothing
+        }
+    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,5 +116,5 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun updateUserOnlineStatus(isOnline: Boolean) = repo.saveUserOnlineStatus(isOnline) { /* Do nothing */ }
+    private fun updateUserOnlineStatus(isOnline: Boolean) = saveOnlineInteractor.saveOnline(isOnline)
 }

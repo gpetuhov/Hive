@@ -47,7 +47,7 @@ class SaveOnlineInteractorTest {
         }
 
         val interactor = SaveOnlineInteractor(callback)
-        interactor.saveVisibility(true)
+        interactor.saveOnline(true)
 
         assertEquals(isSuccess, (repo as TestRepository).isOnline)
         assertEquals(1, completeCounter)

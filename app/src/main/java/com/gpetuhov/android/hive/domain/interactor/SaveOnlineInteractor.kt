@@ -26,7 +26,7 @@ class SaveOnlineInteractor(private val callback: Callback) : Interactor {
     }
 
     // Call this method to save new online status
-    fun saveVisibility(newIsOnline: Boolean) {
+    fun saveOnline(newIsOnline: Boolean) {
         this.newIsOnline = newIsOnline
         execute()
     }
