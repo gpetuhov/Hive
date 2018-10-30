@@ -9,104 +9,111 @@
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-        <TextView
-                android:id="@+id/user_name_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{user.name}"
-                style="@style/basicTextStyle"
-                tools:text="User name"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/username_textview"
-                app:layout_constraintVertical_chainStyle="packed"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-                android:id="@+id/username_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{user.hasUsername ? user.username : @string/enter_username}"
-                android:drawableRight="@drawable/ic_edit"
-                android:drawableEnd="@drawable/ic_edit"
-                android:onClick="@{view -> presenter.showUsernameDialog()}"
-                style="@style/basicTextStyle"
-                tools:text="nickname"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_name_textview" app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/user_email_textview" android:layout_marginTop="8dp"/>
+            <TextView
+                    android:id="@+id/user_name_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.name}"
+                    style="@style/basicTextStyle"
+                    tools:text="User name"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintBottom_toTopOf="@+id/username_textview"
+                    app:layout_constraintVertical_chainStyle="packed"/>
 
-        <TextView
-                android:id="@+id/user_email_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{user.email}"
-                style="@style/basicTextStyle"
-                tools:text="someName@someMail.com"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/username_textview" app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/user_service_textview" android:layout_marginTop="8dp"/>
+            <TextView
+                    android:id="@+id/username_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.hasUsername ? user.username : @string/enter_username}"
+                    android:drawableRight="@drawable/ic_edit"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:onClick="@{view -> presenter.showUsernameDialog()}"
+                    style="@style/basicTextStyle"
+                    tools:text="nickname"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/user_name_textview" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintBottom_toTopOf="@+id/user_email_textview" android:layout_marginTop="8dp"/>
 
-        <TextView
-                android:id="@+id/user_service_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{user.hasService ? user.service : @string/enter_service}"
-                android:drawableRight="@drawable/ic_edit"
-                android:drawableEnd="@drawable/ic_edit"
-                android:onClick="@{view -> presenter.showServiceDialog()}"
-                style="@style/basicTextStyle"
-                tools:text="service"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_email_textview"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/user_visible_checkbox" android:layout_marginTop="8dp"/>
+            <TextView
+                    android:id="@+id/user_email_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.email}"
+                    style="@style/basicTextStyle"
+                    tools:text="someName@someMail.com"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/username_textview" app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintBottom_toTopOf="@+id/user_service_textview" android:layout_marginTop="8dp"/>
 
-        <CheckBox
-                android:id="@+id/user_visible_checkbox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/user_visible"
-                android:checked="@{user.visible}"
-                android:onClick="@{view -> presenter.saveVisibility(((android.widget.CheckBox) view).isChecked())}"
-                style="@style/basicTextStyle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_service_textview"
-                app:layout_constraintHorizontal_bias="0.5" app:layout_constraintBottom_toTopOf="@+id/signout_button"
-                android:layout_marginTop="8dp"/>
+            <TextView
+                    android:id="@+id/user_service_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{user.hasService ? user.service : @string/enter_service}"
+                    android:drawableRight="@drawable/ic_edit"
+                    android:drawableEnd="@drawable/ic_edit"
+                    android:onClick="@{view -> presenter.showServiceDialog()}"
+                    style="@style/basicTextStyle"
+                    tools:text="service"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/user_email_textview"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintBottom_toTopOf="@+id/user_visible_checkbox" android:layout_marginTop="8dp"/>
 
-        <Button
-                android:id="@+id/signout_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_out"
-                android:onClick="@{view -> presenter.showSignOutDialog()}"
-                app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_visible_checkbox"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/delete_user_button" android:layout_marginTop="8dp"/>
+            <CheckBox
+                    android:id="@+id/user_visible_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/user_visible"
+                    android:checked="@{user.visible}"
+                    android:onClick="@{view -> presenter.saveVisibility(((android.widget.CheckBox) view).isChecked())}"
+                    style="@style/basicTextStyle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/user_service_textview"
+                    app:layout_constraintHorizontal_bias="0.5" app:layout_constraintBottom_toTopOf="@+id/signout_button"
+                    android:layout_marginTop="8dp"/>
 
-        <Button
-                android:id="@+id/delete_user_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/delete_account"
-                android:textColor="@color/md_red_600"
-                android:onClick="@{view -> presenter.showDeleteUserDialog()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signout_button" app:layout_constraintHorizontal_bias="0.5"
-                android:layout_marginTop="8dp"/>
+            <Button
+                    android:id="@+id/signout_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sign_out"
+                    android:onClick="@{view -> presenter.showSignOutDialog()}"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/user_visible_checkbox"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintBottom_toTopOf="@+id/delete_user_button" android:layout_marginTop="8dp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <Button
+                    android:id="@+id/delete_user_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/delete_account"
+                    android:textColor="@color/md_red_600"
+                    android:onClick="@{view -> presenter.showDeleteUserDialog()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/signout_button" app:layout_constraintHorizontal_bias="0.5"
+                    android:layout_marginTop="8dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </layout>
