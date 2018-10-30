@@ -2,7 +2,6 @@ package com.gpetuhov.android.hive.ui.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -14,7 +13,6 @@ import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
-import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,11 +43,6 @@ class MainActivity : AppCompatActivity() {
         initNavigation()
         initAuthManager()
         checkLocationSettings()
-
-        // TODO: this should be done when user shares location only
-        startLocationService()
-
-        // TODO: stop location service when user stops sharing location
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -119,14 +112,4 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUserOnlineStatus(isOnline: Boolean) = repo.saveUserOnlineStatus(isOnline) { /* Do nothing */ }
-
-    private fun startLocationService() {
-        val intent = Intent(this, LocationService::class.java)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(intent)
-        } else {
-            startService(intent)
-        }
-    }
 }

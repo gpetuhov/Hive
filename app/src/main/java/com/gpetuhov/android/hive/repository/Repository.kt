@@ -1,5 +1,8 @@
 package com.gpetuhov.android.hive.repository
 
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
@@ -11,7 +14,10 @@ import timber.log.Timber
 import java.util.*
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.DocumentSnapshot
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.service.LocationService
+import javax.inject.Inject
 
 // Read and write data to remote storage (Firestore)
 class Repository : Repo {
@@ -28,6 +34,8 @@ class Repository : Repo {
         private const val LAT_KEY = "lat"
         private const val LON_KEY = "lon"
     }
+
+    @Inject lateinit var context: Context
 
     // Firestore is the single source of truth for the currentUser property.
     // currentUser is updated every time we write data to the corresponding
@@ -54,6 +62,8 @@ class Repository : Repo {
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
     init {
+        HiveApp.appComponent.inject(this)
+
         // Offline data caching is enabled by default in Android.
         // But we enable it explicitly to be sure.
         val settings = FirebaseFirestoreSettings.Builder()
@@ -243,7 +253,9 @@ class Repository : Repo {
                     if (firebaseFirestoreException == null) {
                         if (snapshot != null && snapshot.exists()) {
                             Timber.tag(TAG).d("Listen success")
-                            currentUser.value = getUserFromDocumentSnapshot(snapshot)
+                            val user = getUserFromDocumentSnapshot(snapshot)
+                            shareLocation(user.isVisible)
+                            currentUser.value = user
 
                         } else {
                             Timber.tag(TAG).d("Listen failed")
@@ -275,4 +287,24 @@ class Repository : Repo {
             location = location
         )
     }
+
+    private fun shareLocation(isEnabled: Boolean) {
+        if (isEnabled) {
+            startLocationService()
+        } else {
+            stopLocationService()
+        }
+    }
+
+    private fun startLocationService() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            context.startForegroundService(getLocationServiceIntent())
+        } else {
+            context.startService(getLocationServiceIntent())
+        }
+    }
+
+    private fun stopLocationService() = context.stopService(getLocationServiceIntent())
+
+    private fun getLocationServiceIntent() = Intent(context, LocationService::class.java)
 }
