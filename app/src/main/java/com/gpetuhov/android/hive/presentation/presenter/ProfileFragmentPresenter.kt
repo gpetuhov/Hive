@@ -149,6 +149,10 @@ class ProfileFragmentPresenter :
         viewState.dismissServiceDialog()
     }
 
+    // --- Delete service ---
+
+    fun deleteService() = saveServiceInteractor.saveService("")
+
     // --- Change visibility ---
 
     fun saveVisibility(newIsVisible: Boolean) = saveVisibilityInteractor.saveVisibility(newIsVisible)

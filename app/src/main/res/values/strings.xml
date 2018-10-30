@@ -30,6 +30,8 @@
     <string name="username_save_error">Error updating username</string>
     <string name="service">Service</string>
     <string name="service_save_error">Error updating service</string>
+    <string name="delete_service">Delete service</string>
+    <string name="user_visible">Visible on map</string>
     <string name="visibility_save_error">Error updating visibility</string>
     <string name="sign_out">Sign out</string>
     <string name="delete_account">Delete account</string>
@@ -59,6 +61,5 @@
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
-    <string name="user_visible">Visible on map</string>
 
 </resources>
