@@ -10,6 +10,7 @@ data class User(
     var username: String,
     var email: String,
     var service: String,
+    var isVisible: Boolean,
     var isOnline: Boolean,
     var location: LatLng
 ) {

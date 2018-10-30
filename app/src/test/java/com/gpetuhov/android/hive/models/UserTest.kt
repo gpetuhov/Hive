@@ -14,13 +14,14 @@ class UserTest {
     @Before
     fun initUser() {
         user = User(
-            "342gg34g2",
-            "John",
-            "",
-            "mail@mail.com",
-            "",
-            false,
-            LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+            uid = "342gg34g2",
+            name = "John",
+            username = "",
+            email = "mail@mail.com",
+            service = "",
+            isVisible = false,
+            isOnline = false,
+            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )
     }
 
