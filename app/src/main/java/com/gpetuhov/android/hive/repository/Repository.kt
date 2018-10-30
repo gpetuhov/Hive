@@ -1,6 +1,5 @@
 package com.gpetuhov.android.hive.repository
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,7 +14,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
-import javax.inject.Inject
 
 // Read and write data to remote storage (Firestore)
 class Repository : Repo {
@@ -32,8 +30,6 @@ class Repository : Repo {
         private const val LAT_KEY = "lat"
         private const val LON_KEY = "lon"
     }
-
-    @Inject lateinit var context: Context
 
     // Firestore is the single source of truth for the currentUser property.
     // currentUser is updated every time we write data to the corresponding
@@ -60,8 +56,6 @@ class Repository : Repo {
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
     init {
-        HiveApp.appComponent.inject(this)
-
         // Offline data caching is enabled by default in Android.
         // But we enable it explicitly to be sure.
         val settings = FirebaseFirestoreSettings.Builder()
@@ -255,7 +249,7 @@ class Repository : Repo {
 
                             // If current user is visible, start sharing location,
                             // otherwise stop sharing.
-                            LocationManager.shareLocation(context, user.isVisible)
+                            LocationManager.shareLocation(user.isVisible)
 
                             currentUser.value = user
 

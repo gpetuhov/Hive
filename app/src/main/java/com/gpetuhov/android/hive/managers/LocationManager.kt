@@ -30,25 +30,25 @@ class LocationManager(context: Context) {
     companion object {
         private const val TAG = "LocationManager"
 
-        fun shareLocation(context: Context, isEnabled: Boolean) {
+        fun shareLocation(isEnabled: Boolean) {
             if (isEnabled) {
-                startLocationService(context)
+                startLocationService()
             } else {
-                stopLocationService(context)
+                stopLocationService()
             }
         }
 
-        private fun startLocationService(context: Context) {
+        private fun startLocationService() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(getLocationServiceIntent(context))
+                HiveApp.application.startForegroundService(getLocationServiceIntent())
             } else {
-                context.startService(getLocationServiceIntent(context))
+                HiveApp.application.startService(getLocationServiceIntent())
             }
         }
 
-        private fun stopLocationService(context: Context) = context.stopService(getLocationServiceIntent(context))
+        private fun stopLocationService() = HiveApp.application.stopService(getLocationServiceIntent())
 
-        private fun getLocationServiceIntent(context: Context) = Intent(context, LocationService::class.java)
+        private fun getLocationServiceIntent() = Intent(HiveApp.application, LocationService::class.java)
     }
 
     @Inject lateinit var repo: Repo

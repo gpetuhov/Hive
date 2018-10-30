@@ -4,7 +4,6 @@ import com.gpetuhov.android.hive.application.dagger.modules.AppModule
 import com.gpetuhov.android.hive.domain.interactor.*
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
-import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
@@ -32,7 +31,6 @@ interface AppComponent {
     fun inject(mapManager: MapManager)
     fun inject(networkManager: NetworkManager)
     fun inject(notificationManager: NotificationManager)
-    fun inject(repository: Repository)
 
     fun inject(userViewModel: CurrentUserViewModel)
     fun inject(searchResultViewModel: SearchResultViewModel)
