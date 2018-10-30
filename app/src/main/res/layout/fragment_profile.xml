@@ -60,6 +60,7 @@
                 android:text="@{user.hasService ? user.service : @string/enter_service}"
                 android:drawableRight="@drawable/ic_edit"
                 android:drawableEnd="@drawable/ic_edit"
+                android:onClick="@{view -> presenter.showServiceDialog()}"
                 style="@style/basicTextStyle"
                 tools:text="service"
                 app:layout_constraintStart_toStartOf="parent"

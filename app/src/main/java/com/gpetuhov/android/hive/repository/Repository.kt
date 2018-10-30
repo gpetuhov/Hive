@@ -95,6 +95,8 @@ class Repository : Repo {
 
     override fun currentUserUsername() = currentUser.value?.username ?: ""
 
+    override fun currentUserService() = currentUser.value?.service ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername

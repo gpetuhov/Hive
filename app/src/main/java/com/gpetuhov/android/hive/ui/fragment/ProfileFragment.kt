@@ -26,6 +26,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
 
     private var usernameDialog: MaterialDialog? = null
+    private var serviceDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
     private var binding: FragmentProfileBinding? = null
@@ -76,12 +77,22 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     override fun showUsernameDialog() {
         // Prefill dialog with text provided by presenter
         val editText = usernameDialog?.getInputField()
-        editText?.setText(presenter.getPrefill())
+        editText?.setText(presenter.getUsernamePrefill())
         editText?.setSelection(editText.text.length)
         usernameDialog?.show()
     }
 
     override fun dismissUsernameDialog() = usernameDialog?.dismiss() ?: Unit
+
+    override fun showServiceDialog() {
+        // Prefill dialog with text provided by presenter
+        val editText = serviceDialog?.getInputField()
+        editText?.setText(presenter.getServicePrefill())
+        editText?.setSelection(editText.text.length)
+        serviceDialog?.show()
+    }
+
+    override fun dismissServiceDialog() = serviceDialog?.dismiss() ?: Unit
 
     override fun showToast(message: String) {
         toast(message)
@@ -91,6 +102,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun initDialogs() {
         initUsernameDialog()
+        initServiceDialog()
         initSignOutDialog()
         initDeleteUserDialog()
     }
@@ -106,6 +118,20 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 }
                 .positiveButton { presenter.saveUsername() }
                 .negativeButton { presenter.dismissUsernameDialog() }
+        }
+    }
+
+    private fun initServiceDialog() {
+        if (context != null) {
+            serviceDialog = MaterialDialog(context!!)
+                .title(R.string.service)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(hintRes = R.string.enter_service, waitForPositiveButton = false) { dialog, text ->
+                    presenter.updateTempService(text.toString())
+                }
+                .positiveButton { presenter.saveService() }
+                .negativeButton { presenter.dismissServiceDialog() }
         }
     }
 
@@ -135,6 +161,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun dismissDialogs() {
         dismissUsernameDialog()
+        dismissServiceDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
     }

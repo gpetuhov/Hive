@@ -12,6 +12,7 @@ interface Repo {
     fun onSignOut()
     fun currentUser(): MutableLiveData<User>
     fun currentUserUsername(): String
+    fun currentUserService(): String
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
     fun saveUserService(newService: String, onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)

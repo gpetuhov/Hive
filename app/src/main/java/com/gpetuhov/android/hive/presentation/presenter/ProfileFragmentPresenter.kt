@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.DeleteUserInteractor
+import com.gpetuhov.android.hive.domain.interactor.SaveServiceInteractor
 import com.gpetuhov.android.hive.domain.interactor.SaveUsernameInteractor
 import com.gpetuhov.android.hive.domain.interactor.SignOutInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
@@ -21,16 +22,21 @@ class ProfileFragmentPresenter :
     MvpPresenter<ProfileFragmentView>(),
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
-    SaveUsernameInteractor.Callback {
+    SaveUsernameInteractor.Callback,
+    SaveServiceInteractor.Callback {
 
     @Inject lateinit var repo: Repo
 
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
+    private val saveServiceInteractor = SaveServiceInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
+
+    // Keeps current text entered in service dialog
+    private var tempService = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -41,22 +47,27 @@ class ProfileFragmentPresenter :
     override fun onSignOutSuccess() = viewState.enableSignOutButton()
 
     override fun onSignOutError(errorMessage: String) {
-        viewState.showToast(errorMessage)
+        showToast(errorMessage)
         viewState.enableSignOutButton()
     }
 
     // === DeleteUserInteractor.Callback ===
 
     override fun onDeleteUserComplete(message: String) {
-        viewState.showToast(message)
+        showToast(message)
         viewState.enableDeleteUserButton()
     }
 
     // === SaveUsernameInteractor.Callback ===
 
-    override fun onSaveUsernameError(errorMessage: String) = viewState.showToast(errorMessage)
+    override fun onSaveUsernameError(errorMessage: String) = showToast(errorMessage)
+
+    // === SaveServiceInteractor.Callback ===
+
+    override fun onSaveServiceError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
+    // --- Sign out ---
 
     // We must call ProfileFragmentView's methods not directly, but through ViewState only.
     // This way Moxy will remember current state of the view and will restore it,
@@ -76,6 +87,8 @@ class ProfileFragmentPresenter :
         viewState.enableSignOutButton()
     }
 
+    // --- Delete user ---
+
     fun showDeleteUserDialog() {
         viewState.disableDeleteUserButton()
         viewState.showDeleteUserDialog()
@@ -91,10 +104,12 @@ class ProfileFragmentPresenter :
         viewState.enableDeleteUserButton()
     }
 
+    // --- Change username ---
+
     fun showUsernameDialog() = viewState.showUsernameDialog()
 
-    // Prefill dialog with currently entered text or current username
-    fun getPrefill() = if (tempUsername != "") tempUsername else repo.currentUserUsername()
+    // Prefill username dialog with currently entered text or current username
+    fun getUsernamePrefill() = if (tempUsername != "") tempUsername else repo.currentUserUsername()
 
     fun updateTempUsername(newTempUsername: String) {
         tempUsername = newTempUsername
@@ -108,5 +123,32 @@ class ProfileFragmentPresenter :
     fun dismissUsernameDialog() {
         tempUsername = ""
         viewState.dismissUsernameDialog()
+    }
+
+    // --- Change service ---
+
+    fun showServiceDialog() = viewState.showServiceDialog()
+
+    // Prefill service dialog with currently entered text or current service
+    fun getServicePrefill() = if (tempService != "") tempService else repo.currentUserService()
+
+    fun updateTempService(newTempService: String) {
+        tempService = newTempService
+    }
+
+    fun saveService() {
+        saveServiceInteractor.saveService(tempService)
+        dismissServiceDialog()
+    }
+
+    fun dismissServiceDialog() {
+        tempService = ""
+        viewState.dismissServiceDialog()
+    }
+
+    // === Private methods ===
+
+    private fun showToast(message: String) {
+        viewState.showToast(message)
     }
 }

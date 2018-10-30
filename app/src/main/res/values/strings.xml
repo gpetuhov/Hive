@@ -28,6 +28,7 @@
     <string name="enter_service">Enter service</string>
     <string name="username">Username</string>
     <string name="username_save_error">Error updating username</string>
+    <string name="service">Service</string>
     <string name="service_save_error">Error updating service</string>
     <string name="sign_out">Sign out</string>
     <string name="delete_account">Delete account</string>
