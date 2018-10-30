@@ -17,6 +17,12 @@
     <style name="AuthTheme" parent="FirebaseUI">
     </style>
 
+    <!-- Basic text style -->
+    <style name="basicTextStyle">
+        <item name="android:textColor">@color/md_grey_600</item>
+        <item name="android:textSize">@dimen/basic_text_size</item>
+    </style>
+
     <!-- Map marker text style for online users -->
     <style name="greenTextStyle">
         <item name="android:textColor">@color/md_green_600</item>
