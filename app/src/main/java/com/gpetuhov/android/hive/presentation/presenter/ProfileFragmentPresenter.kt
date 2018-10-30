@@ -21,6 +21,7 @@ class ProfileFragmentPresenter :
     DeleteUserInteractor.Callback,
     SaveUsernameInteractor.Callback,
     SaveServiceInteractor.Callback,
+    DeleteServiceInteractor.Callback,
     SaveVisibilityInteractor.Callback {
 
     @Inject lateinit var repo: Repo
@@ -29,6 +30,7 @@ class ProfileFragmentPresenter :
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
     private val saveServiceInteractor = SaveServiceInteractor(this)
+    private val deleteServiceInteractor = DeleteServiceInteractor(this)
     private val saveVisibilityInteractor = SaveVisibilityInteractor(this)
 
     // Keeps current text entered in username dialog
@@ -64,6 +66,10 @@ class ProfileFragmentPresenter :
     // === SaveServiceInteractor.Callback ===
 
     override fun onSaveServiceError(errorMessage: String) = showToast(errorMessage)
+
+    // === DeleteServiceInteractor.Callback ===
+
+    override fun onDeleteServiceError(errorMessage: String) = showToast(errorMessage)
 
     // === SaveVisibilityInteractor.Callback ===
 
@@ -151,7 +157,7 @@ class ProfileFragmentPresenter :
 
     // --- Delete service ---
 
-    fun deleteService() = saveServiceInteractor.saveService("")
+    fun deleteService() = deleteServiceInteractor.execute()
 
     // --- Change visibility ---
 
