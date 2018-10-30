@@ -11,5 +11,8 @@ class Constants {
 
         const val DUMMY_USERNAME = "DummyUsername"
         const val SAVE_USERNAME_ERROR = "Save username error"
+
+        const val DUMMY_SERVICE = "Dummy service"
+        const val SAVE_SERVICE_ERROR = "Save service error"
     }
 }

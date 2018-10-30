@@ -8,6 +8,7 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 class TestRepository : Repo {
     var isSuccess = false
     var username = ""
+    var service = ""
 
     override fun onSignIn(user: User) {
     }
@@ -22,6 +23,14 @@ class TestRepository : Repo {
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         if (isSuccess) {
             username = newUsername
+        } else {
+            onError()
+        }
+    }
+
+    override fun saveUserService(newService: String, onError: () -> Unit) {
+        if (isSuccess) {
+            service = newService
         } else {
             onError()
         }
