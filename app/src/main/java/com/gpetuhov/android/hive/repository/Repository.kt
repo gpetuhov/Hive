@@ -167,10 +167,10 @@ class Repository : Repo {
         if (isAuthorized) {
             stopGettingSearchResultUpdates()
 
-            val query = firestore.collection(USERS_COLLECTION)
+            var query = firestore.collection(USERS_COLLECTION)
                 .whereEqualTo(IS_VISIBLE_KEY, true)
 
-            if (queryText != "") query.whereEqualTo(SERVICE_KEY, queryText)
+            if (queryText != "") query = query.whereEqualTo(SERVICE_KEY, queryText)
 
             searchResultListenerRegistration = query
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->

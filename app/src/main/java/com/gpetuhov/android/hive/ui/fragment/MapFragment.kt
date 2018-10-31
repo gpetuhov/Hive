@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,10 +12,12 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.databinding.FragmentMapBinding
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
+import kotlinx.android.synthetic.main.fragment_map.*
 import javax.inject.Inject
 
 class MapFragment : Fragment() {
@@ -23,6 +26,7 @@ class MapFragment : Fragment() {
     @Inject lateinit var repo: Repo
 
     private var mapView: MapView? = null
+    private var binding: FragmentMapBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +34,12 @@ class MapFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_map, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
+        binding?.handler = this
 
-        mapView = view.findViewById(R.id.map_view)
+        val view = binding?.root
+
+        mapView = view?.findViewById(R.id.map_view)
         mapView?.onCreate(savedInstanceState)
 
         mapManager.restoreMapState(savedInstanceState)
@@ -51,7 +58,7 @@ class MapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
-        repo.search("")
+        search()
     }
 
     override fun onPause() {
@@ -83,6 +90,11 @@ class MapFragment : Fragment() {
     override fun onLowMemory() {
         super.onLowMemory()
         mapView?.onLowMemory()
+    }
+
+    // TODO: refactor this into presenter
+    fun search() {
+        repo.search(query_text.text.toString())
     }
 
     private fun onMapReady(map: GoogleMap) {
