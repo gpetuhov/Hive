@@ -97,6 +97,11 @@ class MapFragment : Fragment() {
         repo.search(query_text.text.toString())
     }
 
+    fun cancelSearch() {
+        query_text.setText("")
+        search()
+    }
+
     private fun onMapReady(map: GoogleMap) {
         mapManager.initMap(map)
 

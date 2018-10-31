@@ -50,6 +50,7 @@
                 android:src="@drawable/ic_clear"
                 android:background="?android:selectableItemBackground"
                 android:contentDescription="@string/cancel_search"
+                android:onClick="@{view -> handler.cancelSearch()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/search_users_button"
                 app:layout_constraintBottom_toBottomOf="@+id/search_users_button"
