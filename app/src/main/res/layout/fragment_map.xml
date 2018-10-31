@@ -69,8 +69,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/search_users_button"
                 app:layout_constraintBottom_toBottomOf="@+id/search_users_button"
-                android:layout_marginEnd="100dp"
-                android:layout_marginRight="100dp"/>
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"/>
 
         <ProgressBar
                 android:id="@+id/search_progress"

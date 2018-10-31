@@ -85,8 +85,10 @@ class MapManager {
         // Enable compass (will show on map rotate)
         googleMap.uiSettings.isCompassEnabled = true
 
-        // Enable zoom buttons
-        googleMap.uiSettings.isZoomControlsEnabled = true
+        // Disable zoom buttons
+        googleMap.uiSettings.isZoomControlsEnabled = false
+
+        googleMap.setPadding(0, 100, 0, 0)
 
         // When the map is loaded, do something
         googleMap.setOnMapLoadedCallback {
