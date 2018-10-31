@@ -61,7 +61,7 @@ class MapManager {
         googleMap = map
 
         try {
-            // Show my location
+            // Show my location (blue point)
             googleMap.isMyLocationEnabled = true
 
         } catch (e: SecurityException) {
@@ -71,7 +71,7 @@ class MapManager {
         // If there is saved map state, move camera to saved camera position,
         // and set saved map type.
         if (mapState != null) {
-            googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(mapState?.cameraPosition))
+            moveCamera(mapState?.cameraPosition)
             googleMap.mapType = mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL
 
         } else {
@@ -80,7 +80,7 @@ class MapManager {
                 val zoom = if (location.latitude == DEFAULT_LATITUDE && location.longitude == DEFAULT_LONGITUDE) MIN_ZOOM else DEFAULT_ZOOM
 
                 val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
-                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                moveCamera(cameraPosition)
             }
         }
 
@@ -209,7 +209,7 @@ class MapManager {
         mapState = null
     }
 
-    fun myLocation() {
+    fun moveToCurrentLocation() {
         val location = repo.currentUser().value?.location
 
         if (location != null
@@ -217,27 +217,30 @@ class MapManager {
             && location.longitude != Constants.Map.DEFAULT_LONGITUDE) {
 
             val cameraPosition = CameraPosition.Builder(googleMap.cameraPosition).target(location).build()
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            animateCamera(cameraPosition)
         }
     }
 
     fun zoomIn() {
         val zoom = googleMap.cameraPosition.zoom
-
-        if (zoom < Constants.Map.MAX_ZOOM) {
-            val cameraPosition = CameraPosition.Builder(googleMap.cameraPosition).zoom(zoom + 1).build()
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-        }
+        if (zoom < Constants.Map.MAX_ZOOM) zoom(zoom + 1)
     }
 
     fun zoomOut() {
         val zoom = googleMap.cameraPosition.zoom
-
-        if (zoom > Constants.Map.MIN_ZOOM) {
-            val cameraPosition = CameraPosition.Builder(googleMap.cameraPosition).zoom(zoom - 1).build()
-            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-        }
+        if (zoom > Constants.Map.MIN_ZOOM) zoom(zoom - 1)
     }
+
+    // === Private methods ===
+
+    private fun moveCamera(cameraPosition: CameraPosition?) =
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+
+    private fun animateCamera(cameraPosition: CameraPosition?) =
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+
+    private fun zoom(zoom: Float) =
+        animateCamera(CameraPosition.Builder(googleMap.cameraPosition).zoom(zoom).build())
 
     // === Inner classes ===
 

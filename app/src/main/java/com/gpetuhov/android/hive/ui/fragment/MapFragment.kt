@@ -131,7 +131,7 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     }
 
     fun myLocation() {
-        mapManager.myLocation()
+        mapManager.moveToCurrentLocation()
     }
 
     fun zoomIn() {
