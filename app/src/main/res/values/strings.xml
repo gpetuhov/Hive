@@ -48,6 +48,9 @@
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
+    <string name="my_location">My location</string>
+    <string name="zoom_in">Zoom in</string>
+    <string name="zoom_out">Zoom out</string>
     <string name="online">online</string>
     <string name="offline">offline</string>
 
