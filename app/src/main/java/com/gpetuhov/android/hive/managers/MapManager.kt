@@ -19,7 +19,7 @@ import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_ZOOM
-import com.gpetuhov.android.hive.util.Constants.Map.Companion.NO_ZOOM
+import com.gpetuhov.android.hive.util.Constants.Map.Companion.MIN_ZOOM
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -56,7 +56,7 @@ class MapManager {
         dummyMapView.onDestroy()
     }
 
-    fun initMap(map: GoogleMap) {
+    fun initMap(map: GoogleMap, zoomInEnabled: (Boolean) -> Unit, zoomOutEnabled: (Boolean) -> Unit) {
         // When the map is ready, get reference to it
         googleMap = map
 
@@ -77,7 +77,7 @@ class MapManager {
         } else {
             // Otherwise move camera to current location
             locationManager.getLastLocation { location ->
-                val zoom = if (location.latitude == DEFAULT_LATITUDE && location.longitude == DEFAULT_LONGITUDE) NO_ZOOM else DEFAULT_ZOOM
+                val zoom = if (location.latitude == DEFAULT_LATITUDE && location.longitude == DEFAULT_LONGITUDE) MIN_ZOOM else DEFAULT_ZOOM
 
                 val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
                 googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
@@ -93,8 +93,31 @@ class MapManager {
         // Disable zoom buttons
         googleMap.uiSettings.isZoomControlsEnabled = false
 
+        // Set minimum and maximum zoom
+        googleMap.setMinZoomPreference(Constants.Map.MIN_ZOOM)
+        googleMap.setMaxZoomPreference(Constants.Map.MAX_ZOOM)
+
         val topPaddingInPixels = context.resources.getDimensionPixelOffset(R.dimen.map_top_padding)
         googleMap.setPadding(0, topPaddingInPixels, 0, 0)
+
+        googleMap.setOnCameraIdleListener {
+            val zoom = googleMap.cameraPosition.zoom
+
+            when {
+                zoom <= Constants.Map.MIN_ZOOM -> {
+                    zoomInEnabled(true)
+                    zoomOutEnabled(false)
+                }
+                zoom >= Constants.Map.MAX_ZOOM -> {
+                    zoomInEnabled(false)
+                    zoomOutEnabled(true)
+                }
+                else -> {
+                    zoomInEnabled(true)
+                    zoomOutEnabled(true)
+                }
+            }
+        }
 
         // When the map is loaded, do something
         googleMap.setOnMapLoadedCallback {
@@ -152,7 +175,7 @@ class MapManager {
         // and if the app gets killed by the OS.
         outState.putDouble(LAT, mapState?.cameraPosition?.target?.latitude ?: Constants.Map.DEFAULT_LATITUDE)
         outState.putDouble(LON, mapState?.cameraPosition?.target?.longitude ?: Constants.Map.DEFAULT_LONGITUDE)
-        outState.putFloat(ZOOM, mapState?.cameraPosition?.zoom ?: Constants.Map.NO_ZOOM)
+        outState.putFloat(ZOOM, mapState?.cameraPosition?.zoom ?: Constants.Map.MIN_ZOOM)
         outState.putFloat(TILT, mapState?.cameraPosition?.tilt ?: Constants.Map.DEFAULT_TILT)
         outState.putFloat(BEARING, mapState?.cameraPosition?.bearing ?: Constants.Map.DEFAULT_BEARING)
         outState.putInt(MAPTYPE, mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL)
@@ -170,7 +193,7 @@ class MapManager {
                 && longitude != Constants.Map.DEFAULT_LONGITUDE) {
 
                 val target = LatLng(latitude, longitude)
-                val zoom = savedInstanceState.getFloat(ZOOM, Constants.Map.NO_ZOOM)
+                val zoom = savedInstanceState.getFloat(ZOOM, Constants.Map.MIN_ZOOM)
                 val bearing = savedInstanceState.getFloat(BEARING, Constants.Map.DEFAULT_BEARING)
                 val tilt = savedInstanceState.getFloat(TILT, Constants.Map.DEFAULT_TILT)
                 val position = CameraPosition.Builder().target(target).zoom(zoom).tilt(tilt).bearing(bearing).build()

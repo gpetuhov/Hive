@@ -137,7 +137,7 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     // === Private methods ===
 
     private fun onMapReady(map: GoogleMap) {
-        mapManager.initMap(map)
+        mapManager.initMap(map, this::zoomInEnabled, this::zoomOutEnabled)
 
         mapControlsVisible()
 
@@ -161,5 +161,13 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
         my_location_button.visibility = View.VISIBLE
         zoom_in_button.visibility = View.VISIBLE
         zoom_out_button.visibility = View.VISIBLE
+    }
+
+    private fun zoomInEnabled(isEnabled: Boolean) {
+        zoom_in_button.isEnabled = isEnabled
+    }
+
+    private fun zoomOutEnabled(isEnabled: Boolean) {
+        zoom_out_button.isEnabled = isEnabled
     }
 }
