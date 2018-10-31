@@ -2,7 +2,6 @@ package com.gpetuhov.android.hive.managers
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Bitmap
 import android.os.Bundle
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
@@ -37,6 +36,7 @@ class MapManager {
         private const val MAPTYPE = "maptype"
     }
 
+    @Inject lateinit var context: Context
     @Inject lateinit var locationManager: LocationManager
 
     private lateinit var googleMap: GoogleMap
@@ -58,8 +58,8 @@ class MapManager {
         // When the map is ready, get reference to it
         googleMap = map
 
-        // For showing a move to my location button
         try {
+            // Show my location
             googleMap.isMyLocationEnabled = true
 
         } catch (e: SecurityException) {
@@ -85,10 +85,14 @@ class MapManager {
         // Enable compass (will show on map rotate)
         googleMap.uiSettings.isCompassEnabled = true
 
+        // Disable my location button
+        googleMap.uiSettings.isMyLocationButtonEnabled = false
+
         // Disable zoom buttons
         googleMap.uiSettings.isZoomControlsEnabled = false
 
-        googleMap.setPadding(0, 100, 0, 0)
+        val topPaddingInPixels = context.resources.getDimensionPixelOffset(R.dimen.map_top_padding)
+        googleMap.setPadding(0, topPaddingInPixels, 0, 0)
 
         // When the map is loaded, do something
         googleMap.setOnMapLoadedCallback {
