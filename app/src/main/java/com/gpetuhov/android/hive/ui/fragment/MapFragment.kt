@@ -130,6 +130,10 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
         search()
     }
 
+    fun myLocation() {
+        mapManager.myLocation()
+    }
+
     // === Private methods ===
 
     private fun onMapReady(map: GoogleMap) {

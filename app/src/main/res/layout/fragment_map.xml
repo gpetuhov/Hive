@@ -84,6 +84,7 @@
                 android:background="@drawable/search_background"
                 android:contentDescription="@string/my_location"
                 android:visibility="gone"
+                android:onClick="@{view -> handler.myLocation()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"

@@ -14,6 +14,7 @@ import com.google.maps.android.ui.IconGenerator
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
@@ -38,6 +39,7 @@ class MapManager {
 
     @Inject lateinit var context: Context
     @Inject lateinit var locationManager: LocationManager
+    @Inject lateinit var repo: Repo
 
     private lateinit var googleMap: GoogleMap
     private var mapState: MapState? = null
@@ -182,6 +184,18 @@ class MapManager {
 
     fun resetMapState() {
         mapState = null
+    }
+
+    fun myLocation() {
+        val location = repo.currentUser().value?.location
+
+        if (location != null
+            && location.latitude != Constants.Map.DEFAULT_LATITUDE
+            && location.longitude != Constants.Map.DEFAULT_LONGITUDE) {
+
+            val cameraPosition = CameraPosition.Builder(googleMap.cameraPosition).target(location).build()
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
     }
 
     // === Inner classes ===
