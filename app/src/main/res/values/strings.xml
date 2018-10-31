@@ -47,6 +47,7 @@
     <string name="delete_account_error">Error deleting user account. Please, try again</string>
 
     <!-- MapFragment -->
+    <string name="cancel_search">Cancel search</string>
     <string name="online">online</string>
     <string name="offline">offline</string>
 
