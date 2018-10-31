@@ -17,6 +17,7 @@
             android:inputType="text"
             android:layout_width="0dp"
             android:layout_height="48dp"
+            android:background="@android:color/transparent"
             style="@style/basicTextStyle"
             android:importantForAutofill="no"
             app:layout_constraintStart_toStartOf="parent"
