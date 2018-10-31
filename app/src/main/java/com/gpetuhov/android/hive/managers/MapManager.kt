@@ -221,6 +221,24 @@ class MapManager {
         }
     }
 
+    fun zoomIn() {
+        val zoom = googleMap.cameraPosition.zoom
+
+        if (zoom < Constants.Map.MAX_ZOOM) {
+            val cameraPosition = CameraPosition.Builder(googleMap.cameraPosition).zoom(zoom + 1).build()
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
+    }
+
+    fun zoomOut() {
+        val zoom = googleMap.cameraPosition.zoom
+
+        if (zoom > Constants.Map.MIN_ZOOM) {
+            val cameraPosition = CameraPosition.Builder(googleMap.cameraPosition).zoom(zoom - 1).build()
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
+    }
+
     // === Inner classes ===
 
     data class MapState(

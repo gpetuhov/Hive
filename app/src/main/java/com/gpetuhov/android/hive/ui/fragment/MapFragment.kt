@@ -134,6 +134,14 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
         mapManager.myLocation()
     }
 
+    fun zoomIn() {
+        mapManager.zoomIn()
+    }
+
+    fun zoomOut() {
+        mapManager.zoomOut()
+    }
+
     // === Private methods ===
 
     private fun onMapReady(map: GoogleMap) {
