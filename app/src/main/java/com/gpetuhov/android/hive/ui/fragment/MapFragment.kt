@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -136,6 +135,8 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     private fun onMapReady(map: GoogleMap) {
         mapManager.initMap(map)
 
+        mapControlsVisible()
+
         // Start observing result list ViewModel only after map is ready
         val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
         viewModel.resultList.observe(this, Observer<MutableList<User>> { resultList ->
@@ -150,5 +151,11 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
 
     private fun progressVisible(isVisible: Boolean) {
         search_progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
+
+    private fun mapControlsVisible() {
+        my_location_button.visibility = View.VISIBLE
+        zoom_in_button.visibility = View.VISIBLE
+        zoom_out_button.visibility = View.VISIBLE
     }
 }
