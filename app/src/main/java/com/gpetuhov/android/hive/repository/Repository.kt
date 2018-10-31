@@ -11,7 +11,6 @@ import timber.log.Timber
 import java.util.*
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.DocumentSnapshot
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 
@@ -42,12 +41,12 @@ class Repository : Repo {
     // 3. UI that observes currentUser (through ViewModel) is updated
     private val currentUser = MutableLiveData<User>()
 
-    // For resultList the single source of truth is also Firestore.
+    // For searchResultList the single source of truth is also Firestore.
     // Sequence of updates:
     // 1. Data in Firestore is updated
-    // 2. resultList is updated
-    // 3. UI the observes resultList is updated
-    private val resultList = MutableLiveData<MutableList<User>>()
+    // 2. searchResultList is updated
+    // 3. UI the observes searchResultList is updated
+    private val searchResultList = MutableLiveData<MutableList<User>>()
 
     private var isAuthorized = false
     private var currentUserUid: String = ""
@@ -88,7 +87,7 @@ class Repository : Repo {
         if (isAuthorized) {
             isAuthorized = false
             stopGettingCurrentUserRemoteUpdates()
-            stopGettingRemoteResultUpdates()
+            stopGettingSearchResultUpdates()
             resetCurrentUser()
         }
     }
@@ -162,12 +161,18 @@ class Repository : Repo {
         }
     }
 
-    override fun resultList() = resultList
+    override fun searchResultList() = searchResultList
 
-    override fun startGettingRemoteResultUpdates() {
+    override fun search(queryText: String) {
         if (isAuthorized) {
-            searchResultListenerRegistration = firestore.collection(USERS_COLLECTION)
+            stopGettingSearchResultUpdates()
+
+            val query = firestore.collection(USERS_COLLECTION)
                 .whereEqualTo(IS_VISIBLE_KEY, true)
+
+            if (queryText != "") query.whereEqualTo(SERVICE_KEY, queryText)
+
+            searchResultListenerRegistration = query
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     val newResultList = mutableListOf<User>()
 
@@ -189,12 +194,12 @@ class Repository : Repo {
                         Timber.tag(TAG).d(firebaseFirestoreException)
                     }
 
-                    resultList.value = newResultList
+                    searchResultList.value = newResultList
                 }
         }
     }
 
-    override fun stopGettingRemoteResultUpdates() = searchResultListenerRegistration?.remove() ?: Unit
+    override fun stopGettingSearchResultUpdates() = searchResultListenerRegistration?.remove() ?: Unit
 
     // === Private methods ===
 
@@ -204,7 +209,7 @@ class Repository : Repo {
     }
 
     private fun clearResultList() {
-        resultList.value = mutableListOf()
+        searchResultList.value = mutableListOf()
     }
 
     private fun createAnonymousUser(): User {

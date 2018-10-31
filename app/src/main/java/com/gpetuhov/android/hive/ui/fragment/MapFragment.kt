@@ -51,7 +51,7 @@ class MapFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
-        repo.startGettingRemoteResultUpdates()
+        repo.search("")
     }
 
     override fun onPause() {
@@ -61,7 +61,7 @@ class MapFragment : Fragment() {
         mapManager.saveMapState()
 
         mapView?.onPause()
-        repo.stopGettingRemoteResultUpdates()
+        repo.stopGettingSearchResultUpdates()
     }
 
     override fun onStop() {

@@ -20,7 +20,7 @@ interface Repo {
     fun saveUserLocation(newLocation: LatLng)
     fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
-    fun resultList(): MutableLiveData<MutableList<User>>
-    fun startGettingRemoteResultUpdates()
-    fun stopGettingRemoteResultUpdates()
+    fun searchResultList(): MutableLiveData<MutableList<User>>
+    fun search(queryText: String)
+    fun stopGettingSearchResultUpdates()
 }

@@ -67,11 +67,11 @@ class TestRepository : Repo {
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
     }
 
-    override fun resultList(): MutableLiveData<MutableList<User>> = MutableLiveData()
+    override fun searchResultList(): MutableLiveData<MutableList<User>> = MutableLiveData()
 
-    override fun startGettingRemoteResultUpdates() {
+    override fun search(queryText: String) {
     }
 
-    override fun stopGettingRemoteResultUpdates() {
+    override fun stopGettingSearchResultUpdates() {
     }
 }

@@ -16,6 +16,6 @@ class SearchResultViewModel : ViewModel() {
 
     init {
         HiveApp.appComponent.inject(this)
-        resultList = repo.resultList()
+        resultList = repo.searchResultList()
     }
 }
