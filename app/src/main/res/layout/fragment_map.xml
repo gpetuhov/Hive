@@ -5,7 +5,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         tools:context=".ui.fragment.MapFragment">
+
+    <!-- Focusable and FocusableInTouchMode in parent view is needed to remove focus from EditText on start -->
 
     <EditText
             android:id="@+id/search_users_edittext"
