@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.gpetuhov.android.hive.R
@@ -16,11 +17,16 @@ import com.gpetuhov.android.hive.databinding.FragmentMapBinding
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter
+import com.gpetuhov.android.hive.presentation.view.MapFragmentView
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
+import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_map.*
 import javax.inject.Inject
 
-class MapFragment : Fragment() {
+class MapFragment : MvpAppCompatFragment(), MapFragmentView {
+
+    @InjectPresenter lateinit var presenter: MapFragmentPresenter
 
     @Inject lateinit var mapManager: MapManager
     @Inject lateinit var repo: Repo
@@ -92,6 +98,26 @@ class MapFragment : Fragment() {
         mapView?.onLowMemory()
     }
 
+    // === MapFragmentView ===
+
+    override fun onSearchStart() {
+        // TODO: show progress
+
+        buttonsEnabled(false)
+    }
+
+    override fun onSearchComplete() {
+        // TODO: hide progress
+
+        buttonsEnabled(true)
+    }
+
+    override fun showToast(message: String) {
+        // TODO
+    }
+
+    // === Public methods ===
+
     // TODO: refactor this into presenter
     fun search() {
         repo.search(query_text.text.toString())
@@ -102,6 +128,8 @@ class MapFragment : Fragment() {
         search()
     }
 
+    // === Private methods ===
+
     private fun onMapReady(map: GoogleMap) {
         mapManager.initMap(map)
 
@@ -110,5 +138,10 @@ class MapFragment : Fragment() {
         viewModel.resultList.observe(this, Observer<MutableList<User>> { resultList ->
             mapManager.updateMarkers(context, resultList)
         })
+    }
+
+    private fun buttonsEnabled(isEnabled: Boolean) {
+        search_users_button.isEnabled = isEnabled
+        cancel_search_users_button.isEnabled = isEnabled
     }
 }

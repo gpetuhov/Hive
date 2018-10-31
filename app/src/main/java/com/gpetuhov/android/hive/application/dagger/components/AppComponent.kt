@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.application.dagger.components
 import com.gpetuhov.android.hive.application.dagger.modules.AppModule
 import com.gpetuhov.android.hive.domain.interactor.*
 import com.gpetuhov.android.hive.managers.*
+import com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.service.LocationService
@@ -36,6 +37,7 @@ interface AppComponent {
     fun inject(searchResultViewModel: SearchResultViewModel)
 
     fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
+    fun inject(mapFragmentPresenter: MapFragmentPresenter)
 
     fun inject(deleteUserInteractor: DeleteUserInteractor)
     fun inject(signOutInteractor: SignOutInteractor)
