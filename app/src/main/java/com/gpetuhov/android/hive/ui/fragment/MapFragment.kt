@@ -24,7 +24,10 @@ import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_map.*
 import javax.inject.Inject
 
-class MapFragment : MvpAppCompatFragment(), MapFragmentView {
+class MapFragment :
+    MvpAppCompatFragment(),
+    MapFragmentView,
+    MapManager.Callback {
 
     @InjectPresenter lateinit var presenter: MapFragmentPresenter
 
@@ -118,6 +121,22 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
         toast(message)
     }
 
+    // === MapManager.Callback ===
+    override fun onMinZoom() {
+        zoomInEnabled(true)
+        zoomOutEnabled(false)
+    }
+
+    override fun onMaxZoom() {
+        zoomInEnabled(false)
+        zoomOutEnabled(true)
+    }
+
+    override fun onNormalZoom() {
+        zoomInEnabled(true)
+        zoomOutEnabled(true)
+    }
+
     // === Public methods ===
 
     // TODO: refactor this into presenter
@@ -145,7 +164,7 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     // === Private methods ===
 
     private fun onMapReady(map: GoogleMap) {
-        mapManager.initMap(map, this::zoomInEnabled, this::zoomOutEnabled)
+        mapManager.initMap(this, map)
 
         mapControlsVisible()
 

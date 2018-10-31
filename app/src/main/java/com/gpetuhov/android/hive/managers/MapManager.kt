@@ -27,6 +27,12 @@ import javax.inject.Inject
 // Show search results on map
 class MapManager {
 
+    interface Callback {
+        fun onMinZoom()
+        fun onMaxZoom()
+        fun onNormalZoom()
+    }
+
     companion object {
         private const val TAG = "MapManager"
         private const val LAT = "lat"
@@ -41,6 +47,7 @@ class MapManager {
     @Inject lateinit var locationManager: LocationManager
     @Inject lateinit var repo: Repo
 
+    private lateinit var callback: Callback
     private lateinit var googleMap: GoogleMap
     private var mapState: MapState? = null
 
@@ -56,7 +63,9 @@ class MapManager {
         dummyMapView.onDestroy()
     }
 
-    fun initMap(map: GoogleMap, zoomInEnabled: (Boolean) -> Unit, zoomOutEnabled: (Boolean) -> Unit) {
+    fun initMap(callback: Callback, map: GoogleMap) {
+        this.callback = callback
+
         // When the map is ready, get reference to it
         googleMap = map
 
@@ -68,21 +77,7 @@ class MapManager {
             Timber.tag(TAG).d("Location permission not granted")
         }
 
-        // If there is saved map state, move camera to saved camera position,
-        // and set saved map type.
-        if (mapState != null) {
-            moveCamera(mapState?.cameraPosition)
-            googleMap.mapType = mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL
-
-        } else {
-            // Otherwise move camera to current location
-            locationManager.getLastLocation { location ->
-                val zoom = if (location.latitude == DEFAULT_LATITUDE && location.longitude == DEFAULT_LONGITUDE) MIN_ZOOM else DEFAULT_ZOOM
-
-                val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
-                moveCamera(cameraPosition)
-            }
-        }
+        initCameraPosition()
 
         // Enable compass (will show on map rotate)
         googleMap.uiSettings.isCompassEnabled = true
@@ -100,29 +95,7 @@ class MapManager {
         val topPaddingInPixels = context.resources.getDimensionPixelOffset(R.dimen.map_top_padding)
         googleMap.setPadding(0, topPaddingInPixels, 0, 0)
 
-        googleMap.setOnCameraIdleListener {
-            val zoom = googleMap.cameraPosition.zoom
-
-            when {
-                zoom <= Constants.Map.MIN_ZOOM -> {
-                    zoomInEnabled(true)
-                    zoomOutEnabled(false)
-                }
-                zoom >= Constants.Map.MAX_ZOOM -> {
-                    zoomInEnabled(false)
-                    zoomOutEnabled(true)
-                }
-                else -> {
-                    zoomInEnabled(true)
-                    zoomOutEnabled(true)
-                }
-            }
-        }
-
-        // When the map is loaded, do something
-        googleMap.setOnMapLoadedCallback {
-            // TODO: do something
-        }
+        googleMap.setOnCameraIdleListener { checkZoom() }
     }
 
     fun updateMarkers(context: Context?, resultList: MutableList<User>) {
@@ -232,6 +205,35 @@ class MapManager {
     }
 
     // === Private methods ===
+
+    private fun initCameraPosition() {
+        // If there is saved map state, move camera to saved camera position,
+        // and set saved map type.
+        if (mapState != null) {
+            moveCamera(mapState?.cameraPosition)
+            googleMap.mapType = mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL
+
+        } else {
+            // Otherwise move camera to current location
+            locationManager.getLastLocation { location ->
+                val zoom =
+                    if (location.latitude == DEFAULT_LATITUDE && location.longitude == DEFAULT_LONGITUDE) MIN_ZOOM else DEFAULT_ZOOM
+
+                val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
+                moveCamera(cameraPosition)
+            }
+        }
+    }
+
+    private fun checkZoom() {
+        val zoom = googleMap.cameraPosition.zoom
+
+        when {
+            zoom <= Constants.Map.MIN_ZOOM -> this.callback.onMinZoom()
+            zoom >= Constants.Map.MAX_ZOOM -> this.callback.onMaxZoom()
+            else -> this.callback.onNormalZoom()
+        }
+    }
 
     private fun moveCamera(cameraPosition: CameraPosition?) =
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
