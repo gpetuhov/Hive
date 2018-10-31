@@ -21,7 +21,7 @@
                 android:hint="@string/search"
                 android:inputType="text"
                 android:layout_width="0dp"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/basic_view_size"
                 android:background="@android:color/transparent"
                 style="@style/basicTextStyle"
                 android:importantForAutofill="no"
@@ -33,8 +33,8 @@
 
         <ImageButton
                 android:id="@+id/search_users_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/basic_view_size"
+                android:layout_height="@dimen/basic_view_size"
                 android:src="@drawable/ic_search2"
                 android:background="?android:selectableItemBackground"
                 android:contentDescription="@string/search"
@@ -45,8 +45,8 @@
 
         <ImageButton
                 android:id="@+id/cancel_search_users_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/basic_view_size"
+                android:layout_height="@dimen/basic_view_size"
                 android:src="@drawable/ic_clear"
                 android:background="?android:selectableItemBackground"
                 android:contentDescription="@string/cancel_search"
