@@ -21,6 +21,7 @@ import com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.MapFragmentView
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
+import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_map.*
 import javax.inject.Inject
 
@@ -101,19 +102,21 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     // === MapFragmentView ===
 
     override fun onSearchStart() {
-        // TODO: show progress
-
+        progressVisible(true)
         buttonsEnabled(false)
+
+        // TODO: hide keyboard
     }
 
     override fun onSearchComplete() {
-        // TODO: hide progress
-
+        progressVisible(false)
         buttonsEnabled(true)
+
+        // TODO: hide keyboard
     }
 
     override fun showToast(message: String) {
-        // TODO
+        toast(message)
     }
 
     // === Public methods ===
@@ -143,5 +146,9 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     private fun buttonsEnabled(isEnabled: Boolean) {
         search_users_button.isEnabled = isEnabled
         cancel_search_users_button.isEnabled = isEnabled
+    }
+
+    private fun progressVisible(isVisible: Boolean) {
+        search_progress.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 }
