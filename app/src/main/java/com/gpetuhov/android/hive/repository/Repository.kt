@@ -2,17 +2,14 @@ package com.gpetuhov.android.hive.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.*
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import java.util.*
-import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.firestore.DocumentSnapshot
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
+import org.imperiumlabs.geofirestore.GeoFirestore
 
 // Read and write data to remote storage (Firestore)
 class Repository : Repo {
@@ -26,8 +23,7 @@ class Repository : Repo {
         private const val SERVICE_KEY = "service"
         private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
-        private const val LAT_KEY = "lat"
-        private const val LON_KEY = "lon"
+        private const val LOCATION_KEY = "l"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -128,11 +124,8 @@ class Repository : Repo {
     }
 
     override fun saveUserLocation(newLocation: LatLng) {
-        val data = HashMap<String, Any>()
-        data[LAT_KEY] = newLocation.latitude
-        data[LON_KEY] = newLocation.longitude
-
-        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        val geoFirestore = GeoFirestore(firestore.collection(USERS_COLLECTION))
+        geoFirestore.setLocation(currentUserUid, GeoPoint(newLocation.latitude, newLocation.longitude))
     }
 
     override fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
@@ -288,10 +281,13 @@ class Repository : Repo {
     private fun stopGettingCurrentUserRemoteUpdates() = currentUserListenerRegistration?.remove()
 
     private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot): User {
-        val location = LatLng(
-            doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
-            doc.getDouble(LON_KEY) ?: Constants.Map.DEFAULT_LONGITUDE
-        )
+        val coordinatesList = doc.get(LOCATION_KEY) as List<Double>?
+
+        val location = if (coordinatesList != null && !coordinatesList.isEmpty() && coordinatesList.size == 2) {
+            LatLng( coordinatesList[0], coordinatesList[1] )
+        } else {
+            LatLng( Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE )
+        }
 
         return User(
             uid = doc.id,
