@@ -6,6 +6,7 @@
 
     <data>
         <variable name="handler" type="com.gpetuhov.android.hive.ui.fragment.MapFragment"/>
+        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,7 +85,7 @@
                 android:background="@drawable/search_background"
                 android:contentDescription="@string/my_location"
                 android:visibility="gone"
-                android:onClick="@{view -> handler.myLocation()}"
+                android:onClick="@{view -> presenter.moveToCurrentLocation()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
@@ -100,7 +101,7 @@
                 android:background="@drawable/search_background"
                 android:contentDescription="@string/zoom_in"
                 android:visibility="gone"
-                android:onClick="@{view -> handler.zoomIn()}"
+                android:onClick="@{view -> presenter.zoomIn()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
@@ -116,7 +117,7 @@
                 android:background="@drawable/search_background"
                 android:contentDescription="@string/zoom_out"
                 android:visibility="gone"
-                android:onClick="@{view -> handler.zoomOut()}"
+                android:onClick="@{view -> presenter.zoomOut()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"

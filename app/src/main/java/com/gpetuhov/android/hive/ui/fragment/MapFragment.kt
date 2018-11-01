@@ -45,6 +45,7 @@ class MapFragment :
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
         binding?.handler = this
+        binding?.presenter = presenter
 
         val view = binding?.root
 
@@ -147,18 +148,6 @@ class MapFragment :
     fun cancelSearch() {
         query_text.setText("")
         search()
-    }
-
-    fun myLocation() {
-        mapManager.moveToCurrentLocation()
-    }
-
-    fun zoomIn() {
-        mapManager.zoomIn()
-    }
-
-    fun zoomOut() {
-        mapManager.zoomOut()
     }
 
     // === Private methods ===
