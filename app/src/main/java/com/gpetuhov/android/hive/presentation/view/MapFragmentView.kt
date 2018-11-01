@@ -14,5 +14,8 @@ interface MapFragmentView : MvpView {
     fun onSearchComplete()
 
     @StateStrategyType(SkipStrategy::class)
+    fun clearSearch()
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 }

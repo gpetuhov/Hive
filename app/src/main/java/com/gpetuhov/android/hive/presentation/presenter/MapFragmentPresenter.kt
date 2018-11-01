@@ -14,8 +14,19 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>() {
     @Inject lateinit var mapManager: MapManager
     @Inject lateinit var repo: Repo
 
+    // Current query text from search EditText
+    // (binded to view with two-way data binding).
+    var queryText = ""
+
     init {
         HiveApp.appComponent.inject(this)
+    }
+
+    fun search() = repo.search(queryText)
+
+    fun cancelSearch() {
+        viewState.clearSearch()
+        search()
     }
 
     fun moveToCurrentLocation() = mapManager.moveToCurrentLocation()

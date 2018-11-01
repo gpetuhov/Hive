@@ -44,7 +44,6 @@ class MapFragment :
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
-        binding?.handler = this
         binding?.presenter = presenter
 
         val view = binding?.root
@@ -68,7 +67,7 @@ class MapFragment :
     override fun onResume() {
         super.onResume()
         mapView?.onResume()
-        search()
+        presenter.search()
     }
 
     override fun onPause() {
@@ -109,6 +108,7 @@ class MapFragment :
         buttonsEnabled(false)
 
         // TODO: hide keyboard
+        // TODO: (or hide keyboard with a separate command, and don't put this command in the queue ???)
     }
 
     override fun onSearchComplete() {
@@ -117,6 +117,8 @@ class MapFragment :
 
         // TODO: hide keyboard
     }
+
+    override fun clearSearch() = query_text.setText("")
 
     override fun showToast(message: String) {
         toast(message)
@@ -136,18 +138,6 @@ class MapFragment :
     override fun onNormalZoom() {
         zoomInEnabled(true)
         zoomOutEnabled(true)
-    }
-
-    // === Public methods ===
-
-    // TODO: refactor this into presenter
-    fun search() {
-        repo.search(query_text.text.toString())
-    }
-
-    fun cancelSearch() {
-        query_text.setText("")
-        search()
     }
 
     // === Private methods ===
