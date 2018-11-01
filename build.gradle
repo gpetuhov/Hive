@@ -48,6 +48,9 @@ allprojects {
 
         // Material Dialogs
         maven { url "https://dl.bintray.com/drummer-aidan/maven/" }
+
+        // Required by GeoFirestore
+        maven { url 'https://jitpack.io' }
     }
 }
 

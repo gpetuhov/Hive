@@ -96,7 +96,20 @@ class MapManager {
         val topPaddingInPixels = context.resources.getDimensionPixelOffset(R.dimen.map_top_padding)
         googleMap.setPadding(0, topPaddingInPixels, 0, 0)
 
-        googleMap.setOnCameraIdleListener { checkZoom() }
+        googleMap.setOnCameraIdleListener {
+            checkZoom()
+
+            val visibleRegion = googleMap.projection.visibleRegion
+            val farLeft = visibleRegion.farLeft
+            val farRight = visibleRegion.farRight
+            val nearLeft = visibleRegion.nearLeft
+            val nearRight = visibleRegion.nearRight
+
+//            Timber.tag(TAG).d("farLeft = $farLeft")
+//            Timber.tag(TAG).d("farRight = $farRight")
+//            Timber.tag(TAG).d("nearLeft = $nearLeft")
+//            Timber.tag(TAG).d("nearRight = $nearRight")
+        }
     }
 
     fun updateMarkers(resultList: MutableList<User>) {
