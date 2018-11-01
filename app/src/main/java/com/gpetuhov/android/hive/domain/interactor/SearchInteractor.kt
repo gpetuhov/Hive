@@ -19,7 +19,7 @@ class SearchInteractor(private val callback: Callback) : Interactor {
     }
 
     // Do not call this directly!
-    override fun execute() = repo.search(queryText)
+    override fun execute() = repo.search(queryText) { callback.onSearchComplete() }
 
     // Call this method to perform search
     fun search(queryText: String) {

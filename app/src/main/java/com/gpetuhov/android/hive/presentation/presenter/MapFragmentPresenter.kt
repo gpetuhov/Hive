@@ -41,9 +41,7 @@ class MapFragmentPresenter :
 
     // === SearchInteractor.Callback ===
 
-    override fun onSearchComplete() {
-        // TODO: implement
-    }
+    override fun onSearchComplete() = viewState.onSearchComplete()
 
     // === Public methods ===
 
@@ -52,6 +50,7 @@ class MapFragmentPresenter :
     fun updateMarkers(resultList: MutableList<User>) = mapManager.updateMarkers(resultList)
 
     fun search() {
+        viewState.onSearchStart()
         viewState.hideKeyboard()
         searchInteractor.search(queryText)
     }

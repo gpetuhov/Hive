@@ -163,7 +163,7 @@ class Repository : Repo {
 
     override fun searchResultList() = searchResultList
 
-    override fun search(queryText: String) {
+    override fun search(queryText: String, onComplete: () -> Unit) {
         if (isAuthorized) {
             stopGettingSearchResultUpdates()
 
@@ -195,7 +195,11 @@ class Repository : Repo {
                     }
 
                     searchResultList.value = newResultList
+                    onComplete()
                 }
+
+        } else {
+            onComplete()
         }
     }
 
