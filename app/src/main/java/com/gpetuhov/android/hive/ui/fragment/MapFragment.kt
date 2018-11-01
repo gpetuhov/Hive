@@ -20,6 +20,8 @@ import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_map.*
 import android.view.inputmethod.EditorInfo
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 
 
 class MapFragment : MvpAppCompatFragment(), MapFragmentView {
@@ -104,22 +106,22 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     override fun onSearchStart() {
         progressVisible(true)
         buttonsEnabled(false)
-
-        // TODO: hide keyboard
-        // TODO: (or hide keyboard with a separate command, and don't put this command in the queue ???)
     }
 
     override fun onSearchComplete() {
         progressVisible(false)
         buttonsEnabled(true)
-
-        // TODO: hide keyboard
     }
 
     override fun clearSearch() = query_text.setText("")
 
     override fun showToast(message: String) {
         toast(message)
+    }
+
+    override fun hideKeyboard() {
+        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 
     override fun onMinZoom() {

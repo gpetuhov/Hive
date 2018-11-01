@@ -39,7 +39,10 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>(), MapManager.Callbac
 
     fun updateMarkers(resultList: MutableList<User>) = mapManager.updateMarkers(resultList)
 
-    fun search() = repo.search(queryText)
+    fun search() {
+        viewState.hideKeyboard()
+        repo.search(queryText)
+    }
 
     fun cancelSearch() {
         viewState.clearSearch()

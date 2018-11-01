@@ -20,6 +20,9 @@ interface MapFragmentView : MvpView {
     fun showToast(message: String)
 
     @StateStrategyType(SkipStrategy::class)
+    fun hideKeyboard()
+
+    @StateStrategyType(SkipStrategy::class)
     fun onMinZoom()
 
     @StateStrategyType(SkipStrategy::class)
