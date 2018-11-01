@@ -15,7 +15,6 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentMapBinding
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.domain.model.User
-import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.MapFragmentView
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
@@ -32,7 +31,6 @@ class MapFragment :
     @InjectPresenter lateinit var presenter: MapFragmentPresenter
 
     @Inject lateinit var mapManager: MapManager
-    @Inject lateinit var repo: Repo
 
     private var mapView: MapView? = null
     private var binding: FragmentMapBinding? = null
@@ -72,12 +70,8 @@ class MapFragment :
 
     override fun onPause() {
         super.onPause()
-
-        // Save map state here, because onPause() is guaranteed to be called
-        mapManager.saveMapState()
-
         mapView?.onPause()
-        repo.stopGettingSearchResultUpdates()
+        presenter.onPause()
     }
 
     override fun onStop() {

@@ -34,4 +34,12 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>() {
     fun zoomIn() = mapManager.zoomIn()
 
     fun zoomOut() = mapManager.zoomOut()
+
+    // === Lifecycle calls ===
+
+    fun onPause() {
+        // Save map state here, because onPause() is guaranteed to be called
+        mapManager.saveMapState()
+        repo.stopGettingSearchResultUpdates()
+    }
 }
