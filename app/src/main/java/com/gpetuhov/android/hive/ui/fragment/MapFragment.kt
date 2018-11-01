@@ -120,6 +120,10 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     }
 
     override fun hideKeyboard() {
+        // Remove cursor from EditText
+        query_text.clearFocus()
+
+        // Hide keyboard
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
