@@ -69,8 +69,7 @@ class TestRepository : Repo {
 
     override fun searchResultList(): MutableLiveData<MutableList<User>> = MutableLiveData()
 
-    override fun search(queryText: String, onComplete: () -> Unit) {
-    }
+    override fun search(queryText: String, onComplete: () -> Unit) = onComplete()
 
     override fun stopGettingSearchResultUpdates() {
     }
