@@ -281,12 +281,12 @@ class Repository : Repo {
     private fun stopGettingCurrentUserRemoteUpdates() = currentUserListenerRegistration?.remove()
 
     private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot): User {
-        val coordinatesList = doc.get(LOCATION_KEY) as List<Double>?
+        val coordinatesList = doc.get(LOCATION_KEY) as List<*>?
 
-        val location = if (coordinatesList != null && !coordinatesList.isEmpty() && coordinatesList.size == 2) {
-            LatLng( coordinatesList[0], coordinatesList[1] )
+        val location = if (coordinatesList != null && coordinatesList.size == 2) {
+            LatLng(coordinatesList[0] as Double, coordinatesList[1] as Double)
         } else {
-            LatLng( Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE )
+            LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         }
 
         return User(
