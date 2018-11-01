@@ -27,10 +27,12 @@
 
         <!-- Here currently entered text is saved directly into presenter's field with two-way data binding -->
         <!-- Note using "@={}" instead of "@{}" -->
+        <!-- android:imeOptions="actionSearch" is needed to show search button on keyboard -->
         <EditText
                 android:id="@+id/query_text"
                 android:text="@={presenter.queryText}"
                 android:hint="@string/search"
+                android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/basic_view_size"

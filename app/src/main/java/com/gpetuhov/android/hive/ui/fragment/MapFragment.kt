@@ -19,6 +19,8 @@ import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_map.*
+import android.view.inputmethod.EditorInfo
+
 
 class MapFragment : MvpAppCompatFragment(), MapFragmentView {
 
@@ -41,6 +43,22 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
         mapView?.getMapAsync(this::onMapReady)
 
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // This is needed to perform search on keyboard search button click.
+        // Don't forget to set android:imeOptions="actionSearch" and android:inputType="text"
+        // for the corresponding EditText!
+        query_text.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                presenter.search()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     override fun onStart() {
