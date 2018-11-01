@@ -21,9 +21,8 @@ class SaveVisibilityInteractor(private val callback: Callback) : Interactor {
     }
 
     // Do not call this directly!
-    override fun execute() {
+    override fun execute() =
         repo.saveUserVisibility(newIsVisible) { callback.onSaveVisibilityError(messages.getSaveVisibilityErrorMessage()) }
-    }
 
     // Call this method to save new visibility
     fun saveVisibility(newIsVisible: Boolean) {

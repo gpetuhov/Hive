@@ -21,9 +21,8 @@ class SaveServiceInteractor(private val callback: Callback) : Interactor {
     }
 
     // Do not call this directly!
-    override fun execute() {
+    override fun execute() =
         repo.saveUserService(newService) { callback.onSaveServiceError(messages.getSaveServiceErrorMessage()) }
-    }
 
     // Call this method to save new service
     fun saveService(newService: String) {

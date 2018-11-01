@@ -21,9 +21,7 @@ class SaveOnlineInteractor(private val callback: Callback) : Interactor {
     }
 
     // Do not call this directly!
-    override fun execute() {
-        repo.saveUserOnlineStatus(newIsOnline) { callback.onSaveOnlineComplete() }
-    }
+    override fun execute() = repo.saveUserOnlineStatus(newIsOnline) { callback.onSaveOnlineComplete() }
 
     // Call this method to save new online status
     fun saveOnline(newIsOnline: Boolean) {

@@ -18,7 +18,6 @@ class DeleteServiceInteractor(private val callback: Callback) : Interactor {
         HiveApp.appComponent.inject(this)
     }
 
-    override fun execute() {
+    override fun execute() =
         repo.deleteUserService { callback.onDeleteServiceError(messages.getDeleteServiceErrorMessage()) }
-    }
 }
