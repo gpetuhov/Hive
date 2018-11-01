@@ -1,15 +1,18 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import android.os.Bundle
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import com.google.android.gms.maps.GoogleMap
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.presentation.view.MapFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class MapFragmentPresenter : MvpPresenter<MapFragmentView>() {
+class MapFragmentPresenter : MvpPresenter<MapFragmentView>(), MapManager.Callback {
 
     @Inject lateinit var mapManager: MapManager
     @Inject lateinit var repo: Repo
@@ -21,6 +24,20 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>() {
     init {
         HiveApp.appComponent.inject(this)
     }
+
+    // === MapManager.Callback ===
+
+    override fun onMinZoom() = viewState.onMinZoom()
+
+    override fun onMaxZoom() = viewState.onMaxZoom()
+
+    override fun onNormalZoom() = viewState.onNormalZoom()
+
+    // === Public methods ===
+
+    fun initMap(map: GoogleMap) = mapManager.initMap(this, map)
+
+    fun updateMarkers(resultList: MutableList<User>) = mapManager.updateMarkers(resultList)
 
     fun search() = repo.search(queryText)
 
@@ -37,9 +54,13 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>() {
 
     // === Lifecycle calls ===
 
+    fun onCreateView(savedInstanceState: Bundle?) = mapManager.restoreMapState(savedInstanceState)
+
     fun onPause() {
         // Save map state here, because onPause() is guaranteed to be called
         mapManager.saveMapState()
         repo.stopGettingSearchResultUpdates()
     }
+
+    fun onSaveInstanceState(outState: Bundle) = mapManager.saveOutState(outState)
 }

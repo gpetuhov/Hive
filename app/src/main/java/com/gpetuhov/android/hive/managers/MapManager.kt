@@ -98,39 +98,37 @@ class MapManager {
         googleMap.setOnCameraIdleListener { checkZoom() }
     }
 
-    fun updateMarkers(context: Context?, resultList: MutableList<User>) {
-        if (context != null) {
-            Timber.tag(TAG).d("Updating markers")
+    fun updateMarkers(resultList: MutableList<User>) {
+        Timber.tag(TAG).d("Updating markers")
 
-            googleMap.clear()
+        googleMap.clear()
 
-            for (user in resultList) {
-                val statusId = if (user.isOnline) R.string.online else R.string.offline
-                val status = context.getString(statusId)
-                val name = if (user.hasUsername) user.username else user.name
+        for (user in resultList) {
+            val statusId = if (user.isOnline) R.string.online else R.string.offline
+            val status = context.getString(statusId)
+            val name = if (user.hasUsername) user.username else user.name
 
-                val iconGenerator = IconGenerator(context)
+            val iconGenerator = IconGenerator(context)
 
-                // TODO: restore these lines, when online status is properly detected
-                // If user is online, set marker text color to green
-//                if (user.isOnline) {
-//                    iconGenerator.setTextAppearance(R.style.greenTextStyle)
-//                }
+            // TODO: restore these lines, when online status is properly detected
+            // If user is online, set marker text color to green
+//            if (user.isOnline) {
+//                iconGenerator.setTextAppearance(R.style.greenTextStyle)
+//            }
+//
+//            val iconBitmap = iconGenerator.makeIcon("${name} \n$status")
 
-//                val iconBitmap = iconGenerator.makeIcon("${name} \n$status")
-
-                val iconBitmap = if (user.hasService) {
-                    iconGenerator.makeIcon("$name \n${user.service}")
-                } else {
-                    iconGenerator.makeIcon(name)
-                }
-
-                googleMap.addMarker(
-                    MarkerOptions()
-                        .position(user.location)
-                        .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
-                )
+            val iconBitmap = if (user.hasService) {
+                iconGenerator.makeIcon("$name \n${user.service}")
+            } else {
+                iconGenerator.makeIcon(name)
             }
+
+            googleMap.addMarker(
+                MarkerOptions()
+                    .position(user.location)
+                    .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
+            )
         }
     }
 

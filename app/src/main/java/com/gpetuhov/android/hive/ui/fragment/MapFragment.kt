@@ -11,9 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentMapBinding
-import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.MapFragmentView
@@ -21,35 +19,23 @@ import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_map.*
-import javax.inject.Inject
 
-class MapFragment :
-    MvpAppCompatFragment(),
-    MapFragmentView,
-    MapManager.Callback {
+class MapFragment : MvpAppCompatFragment(), MapFragmentView {
 
     @InjectPresenter lateinit var presenter: MapFragmentPresenter
 
-    @Inject lateinit var mapManager: MapManager
-
     private var mapView: MapView? = null
     private var binding: FragmentMapBinding? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        HiveApp.appComponent.inject(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
         binding?.presenter = presenter
 
         val view = binding?.root
-
         mapView = view?.findViewById(R.id.map_view)
         mapView?.onCreate(savedInstanceState)
 
-        mapManager.restoreMapState(savedInstanceState)
+        presenter.onCreateView(savedInstanceState)
 
         // Asynchronously get reference to the map
         mapView?.getMapAsync(this::onMapReady)
@@ -86,7 +72,7 @@ class MapFragment :
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        mapManager.saveOutState(outState)
+        presenter.onSaveInstanceState(outState)
         mapView?.onSaveInstanceState(outState)
     }
 
@@ -118,7 +104,6 @@ class MapFragment :
         toast(message)
     }
 
-    // === MapManager.Callback ===
     override fun onMinZoom() {
         zoomInEnabled(true)
         zoomOutEnabled(false)
@@ -137,14 +122,14 @@ class MapFragment :
     // === Private methods ===
 
     private fun onMapReady(map: GoogleMap) {
-        mapManager.initMap(this, map)
+        presenter.initMap(map)
 
         mapControlsVisible()
 
         // Start observing result list ViewModel only after map is ready
         val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
         viewModel.resultList.observe(this, Observer<MutableList<User>> { resultList ->
-            mapManager.updateMarkers(context, resultList)
+            presenter.updateMarkers(resultList)
         })
     }
 

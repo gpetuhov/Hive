@@ -18,4 +18,13 @@ interface MapFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun onMinZoom()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun onMaxZoom()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun onNormalZoom()
 }
