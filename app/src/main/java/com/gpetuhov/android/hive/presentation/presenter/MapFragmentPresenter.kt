@@ -58,8 +58,8 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>(), MapManager.Callbac
     // === Lifecycle calls ===
 
     fun onCreateView(savedInstanceState: Bundle?) {
-        mapManager.restoreMapState(savedInstanceState)
-        queryText = mapManager.queryText()
+        // Restore map state and restore saved query text
+        queryText = mapManager.restoreMapState(savedInstanceState)
     }
 
     fun onPause() {

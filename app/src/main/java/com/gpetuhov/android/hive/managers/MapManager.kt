@@ -154,8 +154,9 @@ class MapManager {
         outState.putString(QUERY_TEXT, mapState?.queryText ?: "")
     }
 
-    // Restore map state from savedInstanceState, if exists and contains saved map state
-    fun restoreMapState(savedInstanceState: Bundle?) {
+    // Restore map state from savedInstanceState, if exists and contains saved map state.
+    // Return saved query text or empty string.
+    fun restoreMapState(savedInstanceState: Bundle?): String {
         if (savedInstanceState != null) {
             val latitude = savedInstanceState.getDouble(LAT, Constants.Map.DEFAULT_LATITUDE)
             val longitude = savedInstanceState.getDouble(LON, Constants.Map.DEFAULT_LONGITUDE)
@@ -178,13 +179,13 @@ class MapManager {
                 mapState = MapState(position, mapType, queryText)
             }
         }
+
+        return mapState?.queryText ?: ""
     }
 
     fun resetMapState() {
         mapState = null
     }
-
-    fun queryText() = mapState?.queryText ?: ""
 
     fun moveToCurrentLocation() {
         val location = repo.currentUser().value?.location
