@@ -10,6 +10,8 @@ import java.util.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import org.imperiumlabs.geofirestore.GeoFirestore
+import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
+import java.lang.Exception
 
 // Read and write data to remote storage (Firestore)
 class Repository : Repo {
@@ -47,6 +49,7 @@ class Repository : Repo {
     private var isAuthorized = false
     private var currentUserUid: String = ""
     private val firestore = FirebaseFirestore.getInstance()
+    private var geoFirestore: GeoFirestore
     private var searchResultListenerRegistration: ListenerRegistration? = null
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
@@ -58,6 +61,8 @@ class Repository : Repo {
             .build()
 
         firestore.firestoreSettings = settings
+
+        geoFirestore = GeoFirestore(firestore.collection(USERS_COLLECTION))
 
         resetCurrentUser()
         clearResultList()
@@ -123,10 +128,8 @@ class Repository : Repo {
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
-    override fun saveUserLocation(newLocation: LatLng) {
-        val geoFirestore = GeoFirestore(firestore.collection(USERS_COLLECTION))
+    override fun saveUserLocation(newLocation: LatLng) =
         geoFirestore.setLocation(currentUserUid, GeoPoint(newLocation.latitude, newLocation.longitude))
-    }
 
     override fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
         val data = HashMap<String, Any>()
@@ -160,36 +163,77 @@ class Repository : Repo {
         if (isAuthorized) {
             stopGettingSearchResultUpdates()
 
-            var query = firestore.collection(USERS_COLLECTION)
-                .whereEqualTo(IS_VISIBLE_KEY, true)
+            val currentLocation = GeoPoint(
+                currentUser.value?.location?.latitude ?: Constants.Map.DEFAULT_LATITUDE,
+                currentUser.value?.location?.longitude ?: Constants.Map.DEFAULT_LONGITUDE
+            )
 
-            if (queryText != "") query = query.whereEqualTo(SERVICE_KEY, queryText)
+            val radius = 1.0  // km
 
-            searchResultListenerRegistration = query
-                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                    val newResultList = mutableListOf<User>()
+            val geoQuery = geoFirestore.queryAtLocation(currentLocation, radius)
 
-                    if (firebaseFirestoreException == null) {
-                        if (querySnapshot != null) {
-                            Timber.tag(TAG).d("Listen success")
-
-                            for (doc in querySnapshot) {
-                                if (doc.id != currentUser.value?.uid) {
-                                    newResultList.add(getUserFromDocumentSnapshot(doc))
-                                }
-                            }
-
-                        } else {
-                            Timber.tag(TAG).d("Listen failed")
-                        }
-
-                    } else {
-                        Timber.tag(TAG).d(firebaseFirestoreException)
-                    }
-
-                    searchResultList.value = newResultList
+            geoQuery.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
+                override fun onGeoQueryReady() {
+                    Timber.tag(TAG).d("onGeoQueryReady")
                     onComplete()
                 }
+
+                override fun onDocumentExited(doc: DocumentSnapshot?) {
+                    Timber.tag(TAG).d("onDocumentExited")
+                    Timber.tag(TAG).d(doc.toString())
+                }
+
+                override fun onDocumentChanged(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentChanged")
+                    Timber.tag(TAG).d(doc.toString())
+                }
+
+                override fun onDocumentEntered(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentEntered")
+                    Timber.tag(TAG).d(doc.toString())
+                }
+
+                override fun onDocumentMoved(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentMoved")
+                    Timber.tag(TAG).d(doc.toString())
+                }
+
+                override fun onGeoQueryError(exception: Exception?) {
+                    Timber.tag(TAG).d(exception)
+                    onComplete()
+                }
+            })
+
+//            var query = firestore.collection(USERS_COLLECTION)
+//                .whereEqualTo(IS_VISIBLE_KEY, true)
+//
+//            if (queryText != "") query = query.whereEqualTo(SERVICE_KEY, queryText)
+//
+//            searchResultListenerRegistration = query
+//                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+//                    val newResultList = mutableListOf<User>()
+//
+//                    if (firebaseFirestoreException == null) {
+//                        if (querySnapshot != null) {
+//                            Timber.tag(TAG).d("Listen success")
+//
+//                            for (doc in querySnapshot) {
+//                                if (doc.id != currentUser.value?.uid) {
+//                                    newResultList.add(getUserFromDocumentSnapshot(doc))
+//                                }
+//                            }
+//
+//                        } else {
+//                            Timber.tag(TAG).d("Listen failed")
+//                        }
+//
+//                    } else {
+//                        Timber.tag(TAG).d(firebaseFirestoreException)
+//                    }
+//
+//                    searchResultList.value = newResultList
+//                    onComplete()
+//                }
 
         } else {
             onComplete()
