@@ -121,7 +121,7 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
 
     override fun hideKeyboard() {
         val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 
     override fun onMinZoom() {
