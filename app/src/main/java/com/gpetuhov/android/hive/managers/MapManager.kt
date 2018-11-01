@@ -41,6 +41,7 @@ class MapManager {
         private const val TILT = "tilt"
         private const val BEARING = "bearing"
         private const val MAPTYPE = "maptype"
+        private const val QUERY_TEXT = "queryText"
     }
 
     @Inject lateinit var context: Context
@@ -134,8 +135,8 @@ class MapManager {
 
     // Save map state into MapManager
     // (MapManager is alive during the whole app lifecycle)
-    fun saveMapState() {
-        mapState = MapState(googleMap.cameraPosition, googleMap.mapType)
+    fun saveMapState(queryText: String) {
+        mapState = MapState(googleMap.cameraPosition, googleMap.mapType, queryText)
     }
 
     // Save map state into savedInstanceState
@@ -150,6 +151,7 @@ class MapManager {
         outState.putFloat(TILT, mapState?.cameraPosition?.tilt ?: Constants.Map.DEFAULT_TILT)
         outState.putFloat(BEARING, mapState?.cameraPosition?.bearing ?: Constants.Map.DEFAULT_BEARING)
         outState.putInt(MAPTYPE, mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL)
+        outState.putString(QUERY_TEXT, mapState?.queryText ?: "")
     }
 
     // Restore map state from savedInstanceState, if exists and contains saved map state
@@ -171,7 +173,9 @@ class MapManager {
 
                 val mapType = savedInstanceState.getInt(MAPTYPE, GoogleMap.MAP_TYPE_NORMAL)
 
-                mapState = MapState(position, mapType)
+                val queryText = savedInstanceState.getString(QUERY_TEXT, "")
+
+                mapState = MapState(position, mapType, queryText)
             }
         }
     }
@@ -179,6 +183,8 @@ class MapManager {
     fun resetMapState() {
         mapState = null
     }
+
+    fun queryText() = mapState?.queryText ?: ""
 
     fun moveToCurrentLocation() {
         val location = repo.currentUser().value?.location
@@ -246,6 +252,7 @@ class MapManager {
 
     data class MapState(
         var cameraPosition: CameraPosition,
-        var mapType: Int
+        var mapType: Int,
+        var queryText: String
     )
 }
