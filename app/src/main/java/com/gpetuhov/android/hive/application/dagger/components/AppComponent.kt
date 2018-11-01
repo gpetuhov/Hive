@@ -46,6 +46,7 @@ interface AppComponent {
     fun inject(deleteServiceInteractor: DeleteServiceInteractor)
     fun inject(saveVisibilityInteractor: SaveVisibilityInteractor)
     fun inject(saveOnlineInteractor: SaveOnlineInteractor)
+    fun inject(searchInteractor: SearchInteractor)
 
     fun inject(messagesProvider: MessagesProvider)
 }

@@ -5,6 +5,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.google.android.gms.maps.GoogleMap
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.SearchInteractor
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.MapManager
@@ -12,7 +13,10 @@ import com.gpetuhov.android.hive.presentation.view.MapFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class MapFragmentPresenter : MvpPresenter<MapFragmentView>(), MapManager.Callback {
+class MapFragmentPresenter :
+    MvpPresenter<MapFragmentView>(),
+    MapManager.Callback,
+    SearchInteractor.Callback {
 
     @Inject lateinit var mapManager: MapManager
     @Inject lateinit var repo: Repo
@@ -20,6 +24,8 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>(), MapManager.Callbac
     // Current query text from search EditText
     // (binded to view with two-way data binding).
     var queryText = ""
+
+    private val searchInteractor = SearchInteractor(this)
 
     init {
         HiveApp.appComponent.inject(this)
@@ -33,6 +39,12 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>(), MapManager.Callbac
 
     override fun onNormalZoom() = viewState.onNormalZoom()
 
+    // === SearchInteractor.Callback ===
+
+    override fun onSearchComplete() {
+        // TODO: implement
+    }
+
     // === Public methods ===
 
     fun initMap(map: GoogleMap) = mapManager.initMap(this, map)
@@ -41,7 +53,7 @@ class MapFragmentPresenter : MvpPresenter<MapFragmentView>(), MapManager.Callbac
 
     fun search() {
         viewState.hideKeyboard()
-        repo.search(queryText)
+        searchInteractor.search(queryText)
     }
 
     fun cancelSearch() {
