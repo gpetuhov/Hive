@@ -98,6 +98,7 @@ class MapManager {
         val topPaddingInPixels = context.resources.getDimensionPixelOffset(R.dimen.map_top_padding)
         googleMap.setPadding(0, topPaddingInPixels, 0, 0)
 
+        // This is called when camera becomes idle after moving
         googleMap.setOnCameraIdleListener {
             checkZoom()
 
@@ -108,6 +109,11 @@ class MapManager {
             val radius = SphericalUtil.computeDistanceBetween(target, farLeft) / 1000
 
             callback.onCameraIdle(target.latitude, target.longitude, radius)
+        }
+
+        googleMap.setOnMarkerClickListener { marker ->
+            Timber.tag(TAG).d("Clicked on uid = ${marker.title}")
+            true
         }
     }
 
@@ -141,6 +147,7 @@ class MapManager {
             googleMap.addMarker(
                 MarkerOptions()
                     .position(user.location)
+                    .title(user.uid)
                     .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
             )
         }
