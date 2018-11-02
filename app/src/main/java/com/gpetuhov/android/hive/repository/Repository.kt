@@ -75,6 +75,8 @@ class Repository : Repo {
         resetSearchUserDetails()
     }
 
+    // === Repo ===
+
     override fun onSignIn(user: User) {
         if (!isAuthorized) {
             isAuthorized = true
@@ -345,6 +347,8 @@ class Repository : Repo {
         }
     }
 
+    private fun stopGettingCurrentUserUpdates() = currentUserListenerRegistration?.remove()
+
     private fun startGettingUserUpdates(uid: String, onSuccess: (User) -> Unit): ListenerRegistration? {
         var listenerRegistration: ListenerRegistration? = null
 
@@ -368,8 +372,6 @@ class Repository : Repo {
 
         return listenerRegistration
     }
-
-    private fun stopGettingCurrentUserUpdates() = currentUserListenerRegistration?.remove()
 
     private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot) = getUserFromDocumentSnapshot(doc, null)
 

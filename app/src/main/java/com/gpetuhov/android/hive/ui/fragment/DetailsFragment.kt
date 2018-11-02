@@ -17,6 +17,7 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
 import javax.inject.Inject
 
+// Shows user details on map marker click
 class DetailsFragment : Fragment() {
 
     @Inject lateinit var repo: Repo
@@ -36,6 +37,8 @@ class DetailsFragment : Fragment() {
         val viewModel = ViewModelProviders.of(this).get(SearchUserDetailsViewModel::class.java)
 
         uid = DetailsFragmentArgs.fromBundle(arguments).uid
+
+        // This is needed to get user details immediately from the already available search results
         viewModel.getFirstUpdate(uid)
 
         viewModel.searchUserDetails.observe(this, Observer<User> { user ->
@@ -47,6 +50,7 @@ class DetailsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        // This is needed to change user details in the UI if changed on the backend
         repo.startGettingSearchUserDetailsUpdates(uid)
     }
 
