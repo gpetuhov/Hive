@@ -49,6 +49,7 @@ class Repository : Repo {
 
     private var isAuthorized = false
     private var currentUserUid: String = ""
+    private var queryText = ""
     private val firestore = FirebaseFirestore.getInstance()
     private var geoFirestore: GeoFirestore      // GeoFirestore is used to query users by location
     private var searchResultListenerRegistration: ListenerRegistration? = null
@@ -161,6 +162,8 @@ class Repository : Repo {
     override fun searchResult() = searchResult
 
     override fun search(queryText: String, onComplete: () -> Unit) {
+        this.queryText = queryText
+
         clearResult()
 
         if (isAuthorized) {
@@ -213,37 +216,6 @@ class Repository : Repo {
                 }
             })
 
-//            var query = firestore.collection(USERS_COLLECTION)
-//                .whereEqualTo(IS_VISIBLE_KEY, true)
-//
-//            if (queryText != "") query = query.whereEqualTo(SERVICE_KEY, queryText)
-//
-//            searchResultListenerRegistration = query
-//                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-//                    val newResultList = mutableListOf<User>()
-//
-//                    if (firebaseFirestoreException == null) {
-//                        if (querySnapshot != null) {
-//                            Timber.tag(TAG).d("Listen success")
-//
-//                            for (doc in querySnapshot) {
-//                                if (doc.id != currentUser.value?.uid) {
-//                                    newResultList.add(getUserFromDocumentSnapshot(doc))
-//                                }
-//                            }
-//
-//                        } else {
-//                            Timber.tag(TAG).d("Listen failed")
-//                        }
-//
-//                    } else {
-//                        Timber.tag(TAG).d(firebaseFirestoreException)
-//                    }
-//
-//                    searchResult.value = newResultList
-//                    onComplete()
-//                }
-
         } else {
             onComplete()
         }
@@ -274,8 +246,12 @@ class Repository : Repo {
         }
     }
 
-    private fun checkConditions(user: User): Boolean {
-        return user.isVisible
+    private fun checkConditions(user: User): Boolean = user.isVisible && checkQueryText(user)
+
+    private fun checkQueryText(user: User): Boolean {
+        return user.service.contains(queryText, true)
+                || user.name.contains(queryText, true)
+                || user.username.contains(queryText, true)
     }
 
     private fun removeUserFromSearchResults(doc: DocumentSnapshot?) {
