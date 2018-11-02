@@ -47,7 +47,7 @@ class MapFragmentPresenter :
 
     fun initMap(map: GoogleMap) = mapManager.initMap(this, map)
 
-    fun updateMarkers(resultList: MutableList<User>) = mapManager.updateMarkers(resultList)
+    fun updateMarkers(searchResult: MutableMap<String, User>) = mapManager.updateMarkers(searchResult)
 
     fun search() {
         viewState.onSearchStart()

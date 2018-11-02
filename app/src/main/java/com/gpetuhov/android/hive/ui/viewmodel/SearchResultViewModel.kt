@@ -12,10 +12,10 @@ class SearchResultViewModel : ViewModel() {
 
     @Inject lateinit var repo: Repo
 
-    val resultList: LiveData<MutableList<User>>
+    val searchResult: LiveData<MutableMap<String, User>>
 
     init {
         HiveApp.appComponent.inject(this)
-        resultList = repo.searchResultList()
+        searchResult = repo.searchResult()
     }
 }

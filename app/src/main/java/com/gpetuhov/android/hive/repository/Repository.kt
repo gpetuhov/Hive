@@ -39,17 +39,18 @@ class Repository : Repo {
     // 3. UI that observes currentUser (through ViewModel) is updated
     private val currentUser = MutableLiveData<User>()
 
-    // For searchResultList the single source of truth is also Firestore.
+    // For searchResult the single source of truth is also Firestore.
     // Sequence of updates:
     // 1. Data in Firestore is updated
-    // 2. searchResultList is updated
-    // 3. UI the observes searchResultList is updated
-    private val searchResultList = MutableLiveData<MutableList<User>>()
+    // 2. searchResult is updated
+    // 3. UI the observes searchResult is updated
+    private val searchResult = MutableLiveData<MutableMap<String, User>>()
+    private val tempSearchResult = mutableMapOf<String, User>()
 
     private var isAuthorized = false
     private var currentUserUid: String = ""
     private val firestore = FirebaseFirestore.getInstance()
-    private var geoFirestore: GeoFirestore
+    private var geoFirestore: GeoFirestore      // GeoFirestore is used to query users by location
     private var searchResultListenerRegistration: ListenerRegistration? = null
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
@@ -65,7 +66,7 @@ class Repository : Repo {
         geoFirestore = GeoFirestore(firestore.collection(USERS_COLLECTION))
 
         resetCurrentUser()
-        clearResultList()
+        clearResult()
     }
 
     override fun onSignIn(user: User) {
@@ -157,9 +158,11 @@ class Repository : Repo {
         }
     }
 
-    override fun searchResultList() = searchResultList
+    override fun searchResult() = searchResult
 
     override fun search(queryText: String, onComplete: () -> Unit) {
+        clearResult()
+
         if (isAuthorized) {
             stopGettingSearchResultUpdates()
 
@@ -169,6 +172,8 @@ class Repository : Repo {
             )
 
             val radius = 1.0  // km
+
+            Timber.tag(TAG).d("Start search: lat = ${currentLocation.latitude}, lon = ${currentLocation.longitude}, radius = $radius")
 
             val geoQuery = geoFirestore.queryAtLocation(currentLocation, radius)
 
@@ -181,21 +186,25 @@ class Repository : Repo {
                 override fun onDocumentExited(doc: DocumentSnapshot?) {
                     Timber.tag(TAG).d("onDocumentExited")
                     Timber.tag(TAG).d(doc.toString())
+                    removeUserFromSearchResults(doc)
                 }
 
                 override fun onDocumentChanged(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
                     Timber.tag(TAG).d("onDocumentChanged")
                     Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc)
                 }
 
                 override fun onDocumentEntered(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
                     Timber.tag(TAG).d("onDocumentEntered")
                     Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc)
                 }
 
                 override fun onDocumentMoved(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
                     Timber.tag(TAG).d("onDocumentMoved")
                     Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc)
                 }
 
                 override fun onGeoQueryError(exception: Exception?) {
@@ -231,7 +240,7 @@ class Repository : Repo {
 //                        Timber.tag(TAG).d(firebaseFirestoreException)
 //                    }
 //
-//                    searchResultList.value = newResultList
+//                    searchResult.value = newResultList
 //                    onComplete()
 //                }
 
@@ -249,8 +258,35 @@ class Repository : Repo {
         currentUserUid = ""
     }
 
-    private fun clearResultList() {
-        searchResultList.value = mutableListOf()
+    private fun clearResult() {
+        tempSearchResult.clear()
+        updateSearchResult()
+    }
+
+    private fun updateUserInSearchResult(doc: DocumentSnapshot?) {
+        if (doc != null && doc.id != currentUser.value?.uid) {
+            val user = getUserFromDocumentSnapshot(doc)
+
+            if (checkConditions(user)) {
+                tempSearchResult[user.uid] = user
+                updateSearchResult()
+            }
+        }
+    }
+
+    private fun checkConditions(user: User): Boolean {
+        return user.isVisible
+    }
+
+    private fun removeUserFromSearchResults(doc: DocumentSnapshot?) {
+        if (doc != null) {
+            tempSearchResult.remove(doc.id)
+            updateSearchResult()
+        }
+    }
+
+    private fun updateSearchResult() {
+        searchResult.value = tempSearchResult
     }
 
     private fun createAnonymousUser(): User {

@@ -152,8 +152,8 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
 
         // Start observing result list ViewModel only after map is ready
         val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
-        viewModel.resultList.observe(this, Observer<MutableList<User>> { resultList ->
-            presenter.updateMarkers(resultList)
+        viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
+            presenter.updateMarkers(searchResult)
         })
     }
 

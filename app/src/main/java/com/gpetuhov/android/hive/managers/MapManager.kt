@@ -112,12 +112,13 @@ class MapManager {
         }
     }
 
-    fun updateMarkers(resultList: MutableList<User>) {
+    fun updateMarkers(searchResult: MutableMap<String, User>) {
         Timber.tag(TAG).d("Updating markers")
 
         googleMap.clear()
 
-        for (user in resultList) {
+        searchResult.forEach { entry ->
+            val user = entry.value
             val statusId = if (user.isOnline) R.string.online else R.string.offline
             val status = context.getString(statusId)
             val name = if (user.hasUsername) user.username else user.name
