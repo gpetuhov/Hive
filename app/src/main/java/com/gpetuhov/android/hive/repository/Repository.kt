@@ -2,17 +2,17 @@ package com.gpetuhov.android.hive.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.SetOptions
+import com.google.firebase.firestore.*
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import java.util.*
-import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.google.firebase.firestore.DocumentSnapshot
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
+import org.imperiumlabs.geofirestore.GeoFirestore
+import org.imperiumlabs.geofirestore.GeoQuery
+import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
+import java.lang.Exception
 
 // Read and write data to remote storage (Firestore)
 class Repository : Repo {
@@ -26,8 +26,7 @@ class Repository : Repo {
         private const val SERVICE_KEY = "service"
         private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
-        private const val LAT_KEY = "lat"
-        private const val LON_KEY = "lon"
+        private const val LOCATION_KEY = "l"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -41,17 +40,20 @@ class Repository : Repo {
     // 3. UI that observes currentUser (through ViewModel) is updated
     private val currentUser = MutableLiveData<User>()
 
-    // For searchResultList the single source of truth is also Firestore.
+    // For searchResult the single source of truth is also Firestore.
     // Sequence of updates:
     // 1. Data in Firestore is updated
-    // 2. searchResultList is updated
-    // 3. UI the observes searchResultList is updated
-    private val searchResultList = MutableLiveData<MutableList<User>>()
+    // 2. searchResult is updated
+    // 3. UI the observes searchResult is updated
+    private val searchResult = MutableLiveData<MutableMap<String, User>>()
+    private val tempSearchResult = mutableMapOf<String, User>()
 
     private var isAuthorized = false
     private var currentUserUid: String = ""
+    private var queryText = ""
     private val firestore = FirebaseFirestore.getInstance()
-    private var searchResultListenerRegistration: ListenerRegistration? = null
+    private var geoFirestore: GeoFirestore      // GeoFirestore is used to query users by location
+    private var geoQuery: GeoQuery? = null
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
     init {
@@ -63,8 +65,10 @@ class Repository : Repo {
 
         firestore.firestoreSettings = settings
 
+        geoFirestore = GeoFirestore(firestore.collection(USERS_COLLECTION))
+
         resetCurrentUser()
-        clearResultList()
+        clearResult()
     }
 
     override fun onSignIn(user: User) {
@@ -127,13 +131,8 @@ class Repository : Repo {
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
-    override fun saveUserLocation(newLocation: LatLng) {
-        val data = HashMap<String, Any>()
-        data[LAT_KEY] = newLocation.latitude
-        data[LON_KEY] = newLocation.longitude
-
-        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
-    }
+    override fun saveUserLocation(newLocation: LatLng) =
+        geoFirestore.setLocation(currentUserUid, GeoPoint(newLocation.latitude, newLocation.longitude))
 
     override fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
         val data = HashMap<String, Any>()
@@ -161,49 +160,69 @@ class Repository : Repo {
         }
     }
 
-    override fun searchResultList() = searchResultList
+    override fun searchResult() = searchResult
 
-    override fun search(queryText: String, onComplete: () -> Unit) {
-        if (isAuthorized) {
+    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) {
+        this.queryText = queryText
+
+        if (isAuthorized
+            && queryLatitude != Constants.Map.DEFAULT_LATITUDE
+            && queryLongitude != Constants.Map.DEFAULT_LONGITUDE
+            && queryRadius != Constants.Map.DEFAULT_RADIUS) {
+
+            clearTempResult()
             stopGettingSearchResultUpdates()
 
-            var query = firestore.collection(USERS_COLLECTION)
-                .whereEqualTo(IS_VISIBLE_KEY, true)
+            Timber.tag(TAG).d("Start search: lat = $queryLatitude, lon = $queryLongitude, radius = $queryRadius")
 
-            if (queryText != "") query = query.whereEqualTo(SERVICE_KEY, queryText)
+            val queryLocation = GeoPoint(queryLatitude, queryLongitude)
 
-            searchResultListenerRegistration = query
-                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                    val newResultList = mutableListOf<User>()
+            geoQuery = geoFirestore.queryAtLocation(queryLocation, queryRadius)
 
-                    if (firebaseFirestoreException == null) {
-                        if (querySnapshot != null) {
-                            Timber.tag(TAG).d("Listen success")
-
-                            for (doc in querySnapshot) {
-                                if (doc.id != currentUser.value?.uid) {
-                                    newResultList.add(getUserFromDocumentSnapshot(doc))
-                                }
-                            }
-
-                        } else {
-                            Timber.tag(TAG).d("Listen failed")
-                        }
-
-                    } else {
-                        Timber.tag(TAG).d(firebaseFirestoreException)
-                    }
-
-                    searchResultList.value = newResultList
+            geoQuery?.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
+                override fun onGeoQueryReady() {
+                    Timber.tag(TAG).d("onGeoQueryReady")
+                    updateSearchResult()
                     onComplete()
                 }
+
+                override fun onDocumentExited(doc: DocumentSnapshot?) {
+                    Timber.tag(TAG).d("onDocumentExited")
+                    Timber.tag(TAG).d(doc.toString())
+                    removeUserFromSearchResults(doc?.id)
+                }
+
+                override fun onDocumentChanged(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentChanged")
+                    Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc, geoPoint)
+                }
+
+                override fun onDocumentEntered(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentEntered")
+                    Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc, geoPoint)
+                }
+
+                override fun onDocumentMoved(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentMoved")
+                    Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc, geoPoint)
+                }
+
+                override fun onGeoQueryError(exception: Exception?) {
+                    Timber.tag(TAG).d(exception)
+                    updateSearchResult()
+                    onComplete()
+                }
+            })
 
         } else {
             onComplete()
         }
     }
 
-    override fun stopGettingSearchResultUpdates() = searchResultListenerRegistration?.remove() ?: Unit
+    override fun stopGettingSearchResultUpdates() = geoQuery?.removeAllListeners() ?: Unit
 
     // === Private methods ===
 
@@ -212,8 +231,45 @@ class Repository : Repo {
         currentUserUid = ""
     }
 
-    private fun clearResultList() {
-        searchResultList.value = mutableListOf()
+    private fun clearResult() {
+        clearTempResult()
+        updateSearchResult()
+    }
+
+    private fun clearTempResult() {
+        tempSearchResult.clear()
+    }
+
+    private fun updateUserInSearchResult(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+        if (doc != null && doc.id != currentUser.value?.uid) {
+            val user = getUserFromDocumentSnapshot(doc, geoPoint)
+
+            if (checkConditions(user)) {
+                tempSearchResult[user.uid] = user
+                updateSearchResult()
+            } else {
+                removeUserFromSearchResults(user.uid)
+            }
+        }
+    }
+
+    private fun checkConditions(user: User): Boolean = user.isVisible && checkQueryText(user)
+
+    private fun checkQueryText(user: User): Boolean {
+        return user.service.contains(queryText, true)
+                || user.name.contains(queryText, true)
+                || user.username.contains(queryText, true)
+    }
+
+    private fun removeUserFromSearchResults(uid: String?) {
+        if (uid != null) {
+            tempSearchResult.remove(uid)
+            updateSearchResult()
+        }
+    }
+
+    private fun updateSearchResult() {
+        searchResult.value = tempSearchResult
     }
 
     private fun createAnonymousUser(): User {
@@ -225,7 +281,7 @@ class Repository : Repo {
             service = "",
             isVisible = false,
             isOnline = false,
-            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+            location = Constants.Map.DEFAULT_LOCATION
         )
     }
 
@@ -287,11 +343,14 @@ class Repository : Repo {
 
     private fun stopGettingCurrentUserRemoteUpdates() = currentUserListenerRegistration?.remove()
 
-    private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot): User {
-        val location = LatLng(
-            doc.getDouble(LAT_KEY) ?: Constants.Map.DEFAULT_LATITUDE,
-            doc.getDouble(LON_KEY) ?: Constants.Map.DEFAULT_LONGITUDE
-        )
+    private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot) = getUserFromDocumentSnapshot(doc, null)
+
+    private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot, geoPoint: GeoPoint?): User {
+        val location = if (geoPoint != null) {
+            getUserLocationFromGeoPoint(geoPoint)
+        } else {
+            getUserLocationFromDocumentSnapshot(doc)
+        }
 
         return User(
             uid = doc.id,
@@ -303,5 +362,17 @@ class Repository : Repo {
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )
+    }
+
+    private fun getUserLocationFromGeoPoint(geoPoint: GeoPoint) = LatLng(geoPoint.latitude, geoPoint.longitude)
+
+    private fun getUserLocationFromDocumentSnapshot(doc: DocumentSnapshot): LatLng {
+        val coordinatesList = doc.get(LOCATION_KEY) as List<*>?
+
+        return if (coordinatesList != null && coordinatesList.size == 2) {
+            LatLng(coordinatesList[0] as Double, coordinatesList[1] as Double)
+        } else {
+            Constants.Map.DEFAULT_LOCATION
+        }
     }
 }

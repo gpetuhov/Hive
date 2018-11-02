@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.presentation.view.MapFragmentView
+import com.gpetuhov.android.hive.util.Constants
 import javax.inject.Inject
 
 @InjectViewState
@@ -25,6 +26,10 @@ class MapFragmentPresenter :
     // (binded to view with two-way data binding).
     var queryText = ""
 
+    private var queryLatitude = Constants.Map.DEFAULT_LATITUDE
+    private var queryLongitude = Constants.Map.DEFAULT_LONGITUDE
+    private var queryRadius = Constants.Map.DEFAULT_RADIUS
+
     private val searchInteractor = SearchInteractor(this)
 
     init {
@@ -39,7 +44,14 @@ class MapFragmentPresenter :
 
     override fun onNormalZoom() = viewState.onNormalZoom()
 
-    // === SearchInteractor.Callback ===
+    override fun onCameraIdle(latitude: Double, longitude: Double, radius: Double) {
+        queryLatitude = latitude
+        queryLongitude = longitude
+        queryRadius = radius
+        search()
+    }
+
+// === SearchInteractor.Callback ===
 
     override fun onSearchComplete() = viewState.onSearchComplete()
 
@@ -47,12 +59,12 @@ class MapFragmentPresenter :
 
     fun initMap(map: GoogleMap) = mapManager.initMap(this, map)
 
-    fun updateMarkers(resultList: MutableList<User>) = mapManager.updateMarkers(resultList)
+    fun updateMarkers(searchResult: MutableMap<String, User>) = mapManager.updateMarkers(searchResult)
 
     fun search() {
         viewState.onSearchStart()
         viewState.hideKeyboard()
-        searchInteractor.search(queryText)
+        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
     }
 
     fun cancelSearch() {

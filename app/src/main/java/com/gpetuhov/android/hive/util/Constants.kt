@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.util
 
+import com.google.android.gms.maps.model.LatLng
+
 class Constants {
     class Map {
         companion object {
@@ -10,6 +12,8 @@ class Constants {
             const val MAX_ZOOM = 21.0F
             const val DEFAULT_BEARING = 0.0F
             const val DEFAULT_TILT = 0.0F
+            const val DEFAULT_RADIUS = 1.0
+            val DEFAULT_LOCATION = LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
         }
     }
 

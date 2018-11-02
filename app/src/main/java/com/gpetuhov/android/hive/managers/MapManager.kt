@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ui.IconGenerator
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
@@ -31,6 +32,7 @@ class MapManager {
         fun onMinZoom()
         fun onMaxZoom()
         fun onNormalZoom()
+        fun onCameraIdle(latitude: Double, longitude: Double, radius: Double)
     }
 
     companion object {
@@ -96,15 +98,26 @@ class MapManager {
         val topPaddingInPixels = context.resources.getDimensionPixelOffset(R.dimen.map_top_padding)
         googleMap.setPadding(0, topPaddingInPixels, 0, 0)
 
-        googleMap.setOnCameraIdleListener { checkZoom() }
+        googleMap.setOnCameraIdleListener {
+            checkZoom()
+
+            val visibleRegion = googleMap.projection.visibleRegion
+            val farLeft = visibleRegion.farLeft
+
+            val target = googleMap.cameraPosition.target
+            val radius = SphericalUtil.computeDistanceBetween(target, farLeft) / 1000
+
+            callback.onCameraIdle(target.latitude, target.longitude, radius)
+        }
     }
 
-    fun updateMarkers(resultList: MutableList<User>) {
+    fun updateMarkers(searchResult: MutableMap<String, User>) {
         Timber.tag(TAG).d("Updating markers")
 
         googleMap.clear()
 
-        for (user in resultList) {
+        searchResult.forEach { entry ->
+            val user = entry.value
             val statusId = if (user.isOnline) R.string.online else R.string.offline
             val status = context.getString(statusId)
             val name = if (user.hasUsername) user.username else user.name
