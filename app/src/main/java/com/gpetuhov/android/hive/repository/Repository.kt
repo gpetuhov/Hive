@@ -165,7 +165,11 @@ class Repository : Repo {
     override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) {
         this.queryText = queryText
 
-        if (isAuthorized) {
+        if (isAuthorized
+            && queryLatitude != Constants.Map.DEFAULT_LATITUDE
+            && queryLongitude != Constants.Map.DEFAULT_LONGITUDE
+            && queryRadius != Constants.Map.DEFAULT_RADIUS) {
+
             clearTempResult()
             stopGettingSearchResultUpdates()
 
