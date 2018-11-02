@@ -166,7 +166,7 @@ class Repository : Repo {
         this.queryText = queryText
 
         if (isAuthorized) {
-            clearResult()
+            clearTempResult()
             stopGettingSearchResultUpdates()
 
             Timber.tag(TAG).d("Start search: lat = $queryLatitude, lon = $queryLongitude, radius = $queryRadius")
@@ -178,6 +178,7 @@ class Repository : Repo {
             geoQuery?.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
                 override fun onGeoQueryReady() {
                     Timber.tag(TAG).d("onGeoQueryReady")
+                    updateSearchResult()
                     onComplete()
                 }
 
@@ -207,6 +208,7 @@ class Repository : Repo {
 
                 override fun onGeoQueryError(exception: Exception?) {
                     Timber.tag(TAG).d(exception)
+                    updateSearchResult()
                     onComplete()
                 }
             })
@@ -226,8 +228,12 @@ class Repository : Repo {
     }
 
     private fun clearResult() {
-        tempSearchResult.clear()
+        clearTempResult()
         updateSearchResult()
+    }
+
+    private fun clearTempResult() {
+        tempSearchResult.clear()
     }
 
     private fun updateUserInSearchResult(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
