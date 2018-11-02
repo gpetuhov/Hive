@@ -11,7 +11,11 @@
             android:id="@+id/navigation_search"
             android:name="com.gpetuhov.android.hive.ui.fragment.MapFragment"
             android:label="fragment_map"
-            tools:layout="@layout/fragment_map" />
+            tools:layout="@layout/fragment_map" >
+        <action
+                android:id="@+id/action_navigation_search_to_details_fragment"
+                app:destination="@id/details_fragment"/>
+    </fragment>
 
     <fragment
             android:id="@+id/navigation_chat"
@@ -24,5 +28,15 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.ProfileFragment"
             android:label="fragment_profile"
             tools:layout="@layout/fragment_profile" />
+
+    <fragment
+            android:id="@+id/details_fragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.DetailsFragment"
+            android:label="DetailsFragment"
+            tools:layout="@layout/fragment_details">
+        <argument
+                android:name="uid"
+                app:argType="string"/>
+    </fragment>
 
 </navigation>

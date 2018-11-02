@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import android.view.inputmethod.EditorInfo
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import androidx.navigation.fragment.findNavController
 
 
 class MapFragment : MvpAppCompatFragment(), MapFragmentView {
@@ -141,6 +142,11 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     override fun onNormalZoom() {
         zoomInEnabled(true)
         zoomOutEnabled(true)
+    }
+
+    override fun showDetails(uid: String) {
+        val action = MapFragmentDirections.actionNavigationSearchToDetailsFragment(uid)
+        findNavController().navigate(action)
     }
 
     // === Private methods ===

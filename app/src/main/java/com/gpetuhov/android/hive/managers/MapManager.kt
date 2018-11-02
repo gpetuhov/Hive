@@ -33,6 +33,7 @@ class MapManager {
         fun onMaxZoom()
         fun onNormalZoom()
         fun onCameraIdle(latitude: Double, longitude: Double, radius: Double)
+        fun showDetails(uid: String)
     }
 
     companion object {
@@ -113,6 +114,7 @@ class MapManager {
 
         googleMap.setOnMarkerClickListener { marker ->
             Timber.tag(TAG).d("Clicked on uid = ${marker.title}")
+            callback.showDetails(marker.title)
             true
         }
     }

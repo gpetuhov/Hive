@@ -5,6 +5,9 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+// This is needed for the navigation safe-args
+apply plugin: 'androidx.navigation.safeargs'
+
 def appVersionCode = 1004
 def appVersionName = "0.1.4"
 

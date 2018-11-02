@@ -51,7 +51,9 @@ class MapFragmentPresenter :
         search()
     }
 
-// === SearchInteractor.Callback ===
+    override fun showDetails(uid: String) = viewState.showDetails(uid)
+
+    // === SearchInteractor.Callback ===
 
     override fun onSearchComplete() = viewState.onSearchComplete()
 
