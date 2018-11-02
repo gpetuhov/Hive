@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.interactors
 import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SearchInteractor
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.utils.dagger.components.DaggerTestAppComponent
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -33,7 +34,12 @@ class SearchInteractorTest {
         }
 
         val interactor = SearchInteractor(callback)
-        interactor.search("something")
+        interactor.search(
+            Constants.Map.DEFAULT_LATITUDE,
+            Constants.Map.DEFAULT_LONGITUDE,
+            Constants.Map.DEFAULT_RADIUS,
+            "something"
+        )
 
         assertEquals(1, completeCounter)
     }
