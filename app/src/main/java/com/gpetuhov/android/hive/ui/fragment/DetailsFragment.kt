@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentDetailsBinding
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
 import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
@@ -18,6 +22,7 @@ class DetailsFragment : Fragment() {
     @Inject lateinit var repo: Repo
 
     private var binding: FragmentDetailsBinding? = null
+    private var uid = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,11 +33,26 @@ class DetailsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding?.handler = this
 
-        val uid = DetailsFragmentArgs.fromBundle(arguments).uid
-        val user = repo.searchResult().value?.get(uid)
-        if (user != null) binding?.user = user
+        val viewModel = ViewModelProviders.of(this).get(SearchUserDetailsViewModel::class.java)
+
+        uid = DetailsFragmentArgs.fromBundle(arguments).uid
+        viewModel.getFirstUpdate(uid)
+
+        viewModel.searchUserDetails.observe(this, Observer<User> { user ->
+            binding?.user = user
+        })
 
         return binding?.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        repo.startGettingSearchUserDetailsUpdates(uid)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        repo.stopGettingSearchUserDetailsUpdates()
     }
 
     fun closeDetails() = findNavController().navigateUp()

@@ -73,4 +73,15 @@ class TestRepository : Repo {
 
     override fun stopGettingSearchResultUpdates() {
     }
+
+    override fun searchUserDetails(): MutableLiveData<User> = MutableLiveData()
+
+    override fun initSearchUserDetails(uid: String) {
+    }
+
+    override fun startGettingSearchUserDetailsUpdates(uid: String) {
+    }
+
+    override fun stopGettingSearchUserDetailsUpdates() {
+    }
 }

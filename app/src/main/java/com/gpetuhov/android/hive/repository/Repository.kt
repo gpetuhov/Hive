@@ -9,6 +9,7 @@ import timber.log.Timber
 import java.util.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
+import com.pawegio.kandroid.v
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
@@ -48,6 +49,8 @@ class Repository : Repo {
     private val searchResult = MutableLiveData<MutableMap<String, User>>()
     private val tempSearchResult = mutableMapOf<String, User>()
 
+    private val searchUserDetails = MutableLiveData<User>()
+
     private var isAuthorized = false
     private var currentUserUid: String = ""
     private var queryText = ""
@@ -69,6 +72,7 @@ class Repository : Repo {
 
         resetCurrentUser()
         clearResult()
+        resetSearchUserDetails()
     }
 
     override fun onSignIn(user: User) {
@@ -79,7 +83,7 @@ class Repository : Repo {
             // so we must save it to start getting updates
             // for the corresponding documents in Firestore.
             currentUserUid = user.uid
-            startGettingCurrentUserRemoteUpdates()
+            startGettingCurrentUserUpdates()
 
             // Current user's name and email initially come from Firebase Auth,
             // so after successful sign in we must write them to Firestore.
@@ -90,7 +94,7 @@ class Repository : Repo {
     override fun onSignOut() {
         if (isAuthorized) {
             isAuthorized = false
-            stopGettingCurrentUserRemoteUpdates()
+            stopGettingCurrentUserUpdates()
             stopGettingSearchResultUpdates()
             resetCurrentUser()
         }
@@ -224,6 +228,21 @@ class Repository : Repo {
 
     override fun stopGettingSearchResultUpdates() = geoQuery?.removeAllListeners() ?: Unit
 
+    override fun searchUserDetails() = searchUserDetails
+
+    override fun initSearchUserDetails(uid: String) {
+        val user = searchResult.value?.get(uid)
+        if (user != null) searchUserDetails.value = user
+    }
+
+    override fun startGettingSearchUserDetailsUpdates(uid: String) {
+        // TODO: implement
+    }
+
+    override fun stopGettingSearchUserDetailsUpdates() {
+        // TODO: implement and don't forget to call on DetailsFragment close
+    }
+
     // === Private methods ===
 
     private fun resetCurrentUser() {
@@ -236,8 +255,10 @@ class Repository : Repo {
         updateSearchResult()
     }
 
-    private fun clearTempResult() {
-        tempSearchResult.clear()
+    private fun clearTempResult() = tempSearchResult.clear()
+
+    private fun resetSearchUserDetails() {
+        searchUserDetails.value = createAnonymousUser()
     }
 
     private fun updateUserInSearchResult(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
@@ -311,7 +332,7 @@ class Repository : Repo {
         }
     }
 
-    private fun startGettingCurrentUserRemoteUpdates() {
+    private fun startGettingCurrentUserUpdates() {
         if (isAuthorized) {
             currentUserListenerRegistration = firestore.collection(USERS_COLLECTION).document(currentUserUid)
                 .addSnapshotListener { snapshot, firebaseFirestoreException ->
@@ -341,7 +362,7 @@ class Repository : Repo {
         }
     }
 
-    private fun stopGettingCurrentUserRemoteUpdates() = currentUserListenerRegistration?.remove()
+    private fun stopGettingCurrentUserUpdates() = currentUserListenerRegistration?.remove()
 
     private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot) = getUserFromDocumentSnapshot(doc, null)
 
