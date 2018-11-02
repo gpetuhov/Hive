@@ -5,20 +5,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentDetailsBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.presentation.presenter.DetailsFragmentPresenter
+import com.gpetuhov.android.hive.presentation.view.DetailsFragmentView
 import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
+import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import javax.inject.Inject
 
 // Shows user details on map marker click
-class DetailsFragment : Fragment() {
+class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
+
+    @InjectPresenter lateinit var presenter: DetailsFragmentPresenter
 
     @Inject lateinit var repo: Repo
 
