@@ -237,24 +237,7 @@ class Repository : Repo {
     }
 
     override fun startGettingSearchUserDetailsUpdates(uid: String) {
-        if (isAuthorized) {
-            searchUserDetailsListenerRegistration = firestore.collection(USERS_COLLECTION).document(uid)
-                .addSnapshotListener { snapshot, firebaseFirestoreException ->
-                    if (firebaseFirestoreException == null) {
-                        if (snapshot != null && snapshot.exists()) {
-                            Timber.tag(TAG).d("Listen success")
-                            val user = getUserFromDocumentSnapshot(snapshot)
-                            searchUserDetails.value = user
-
-                        } else {
-                            Timber.tag(TAG).d("Listen failed")
-                        }
-
-                    } else {
-                        Timber.tag(TAG).d(firebaseFirestoreException)
-                    }
-                }
-        }
+        searchUserDetailsListenerRegistration = startGettingUserUpdates(uid) { user -> searchUserDetails.value = user }
     }
 
     override fun stopGettingSearchUserDetailsUpdates() = searchUserDetailsListenerRegistration?.remove() ?: Unit
@@ -349,23 +332,29 @@ class Repository : Repo {
     }
 
     private fun startGettingCurrentUserUpdates() {
+        currentUserListenerRegistration = startGettingUserUpdates(currentUserUid) { user ->
+            // Turn off visibility if user is visible and has no services
+            // (this is needed in case service has been cleared on the backend)
+            if (!user.hasService && user.isVisible) saveUserVisibility(false) { /* Do nothing */ }
+
+            // If current user is visible, start sharing location,
+            // otherwise stop sharing.
+            LocationManager.shareLocation(user.isVisible)
+
+            currentUser.value = user
+        }
+    }
+
+    private fun startGettingUserUpdates(uid: String, onSuccess: (User) -> Unit): ListenerRegistration? {
+        var listenerRegistration: ListenerRegistration? = null
+
         if (isAuthorized) {
-            currentUserListenerRegistration = firestore.collection(USERS_COLLECTION).document(currentUserUid)
+            listenerRegistration = firestore.collection(USERS_COLLECTION).document(uid)
                 .addSnapshotListener { snapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
                         if (snapshot != null && snapshot.exists()) {
                             Timber.tag(TAG).d("Listen success")
-                            val user = getUserFromDocumentSnapshot(snapshot)
-
-                            // Turn off visibility if user is visible and has no services
-                            // (this is needed in case service has been cleared on the backend)
-                            if (!user.hasService && user.isVisible) saveUserVisibility(false) { /* Do nothing */ }
-
-                            // If current user is visible, start sharing location,
-                            // otherwise stop sharing.
-                            LocationManager.shareLocation(user.isVisible)
-
-                            currentUser.value = user
+                            onSuccess(getUserFromDocumentSnapshot(snapshot))
 
                         } else {
                             Timber.tag(TAG).d("Listen failed")
@@ -376,6 +365,8 @@ class Repository : Repo {
                     }
                 }
         }
+
+        return listenerRegistration
     }
 
     private fun stopGettingCurrentUserUpdates() = currentUserListenerRegistration?.remove()
