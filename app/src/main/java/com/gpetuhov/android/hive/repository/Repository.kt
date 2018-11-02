@@ -189,7 +189,7 @@ class Repository : Repo {
                 override fun onDocumentExited(doc: DocumentSnapshot?) {
                     Timber.tag(TAG).d("onDocumentExited")
                     Timber.tag(TAG).d(doc.toString())
-                    removeUserFromSearchResults(doc)
+                    removeUserFromSearchResults(doc?.id)
                 }
 
                 override fun onDocumentChanged(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
@@ -242,6 +242,8 @@ class Repository : Repo {
             if (checkConditions(user)) {
                 tempSearchResult[user.uid] = user
                 updateSearchResult()
+            } else {
+                removeUserFromSearchResults(user.uid)
             }
         }
     }
@@ -254,9 +256,9 @@ class Repository : Repo {
                 || user.username.contains(queryText, true)
     }
 
-    private fun removeUserFromSearchResults(doc: DocumentSnapshot?) {
-        if (doc != null) {
-            tempSearchResult.remove(doc.id)
+    private fun removeUserFromSearchResults(uid: String?) {
+        if (uid != null) {
+            tempSearchResult.remove(uid)
             updateSearchResult()
         }
     }
