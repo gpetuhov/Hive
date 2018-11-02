@@ -195,19 +195,19 @@ class Repository : Repo {
                 override fun onDocumentChanged(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
                     Timber.tag(TAG).d("onDocumentChanged")
                     Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc)
+                    updateUserInSearchResult(doc, geoPoint)
                 }
 
                 override fun onDocumentEntered(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
                     Timber.tag(TAG).d("onDocumentEntered")
                     Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc)
+                    updateUserInSearchResult(doc, geoPoint)
                 }
 
                 override fun onDocumentMoved(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
                     Timber.tag(TAG).d("onDocumentMoved")
                     Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc)
+                    updateUserInSearchResult(doc, geoPoint)
                 }
 
                 override fun onGeoQueryError(exception: Exception?) {
@@ -235,9 +235,9 @@ class Repository : Repo {
         updateSearchResult()
     }
 
-    private fun updateUserInSearchResult(doc: DocumentSnapshot?) {
+    private fun updateUserInSearchResult(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
         if (doc != null && doc.id != currentUser.value?.uid) {
-            val user = getUserFromDocumentSnapshot(doc)
+            val user = getUserFromDocumentSnapshot(doc, geoPoint)
 
             if (checkConditions(user)) {
                 tempSearchResult[user.uid] = user
@@ -338,13 +338,13 @@ class Repository : Repo {
 
     private fun stopGettingCurrentUserRemoteUpdates() = currentUserListenerRegistration?.remove()
 
-    private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot): User {
-        val coordinatesList = doc.get(LOCATION_KEY) as List<*>?
+    private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot) = getUserFromDocumentSnapshot(doc, null)
 
-        val location = if (coordinatesList != null && coordinatesList.size == 2) {
-            LatLng(coordinatesList[0] as Double, coordinatesList[1] as Double)
+    private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot, geoPoint: GeoPoint?): User {
+        val location = if (geoPoint != null) {
+            getUserLocationFromGeoPoint(geoPoint)
         } else {
-            LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+            getUserLocationFromDocumentSnapshot(doc)
         }
 
         return User(
@@ -357,5 +357,17 @@ class Repository : Repo {
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )
+    }
+
+    private fun getUserLocationFromGeoPoint(geoPoint: GeoPoint) = LatLng(geoPoint.latitude, geoPoint.longitude)
+
+    private fun getUserLocationFromDocumentSnapshot(doc: DocumentSnapshot): LatLng {
+        val coordinatesList = doc.get(LOCATION_KEY) as List<*>?
+
+        return if (coordinatesList != null && coordinatesList.size == 2) {
+            LatLng(coordinatesList[0] as Double, coordinatesList[1] as Double)
+        } else {
+            LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+        }
     }
 }
