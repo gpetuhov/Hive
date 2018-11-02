@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ui.IconGenerator
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
@@ -102,21 +103,11 @@ class MapManager {
 
             val visibleRegion = googleMap.projection.visibleRegion
             val farLeft = visibleRegion.farLeft
-            val farRight = visibleRegion.farRight
-            val nearLeft = visibleRegion.nearLeft
-            val nearRight = visibleRegion.nearRight
 
             val target = googleMap.cameraPosition.target
-
-            // TODO: calculate radius depending on visible region
-            val radius = 1.0
+            val radius = SphericalUtil.computeDistanceBetween(target, farLeft) / 1000
 
             callback.onCameraIdle(target.latitude, target.longitude, radius)
-
-//            Timber.tag(TAG).d("farLeft = $farLeft")
-//            Timber.tag(TAG).d("farRight = $farRight")
-//            Timber.tag(TAG).d("nearLeft = $nearLeft")
-//            Timber.tag(TAG).d("nearRight = $nearRight")
         }
     }
 
