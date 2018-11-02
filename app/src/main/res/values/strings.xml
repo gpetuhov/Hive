@@ -54,6 +54,10 @@
     <string name="online">online</string>
     <string name="offline">offline</string>
 
+    <!-- DetailsFragment -->
+    <string name="close_details">Close details</string>
+    <string name="chat">Chat</string>
+
     <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>
     <string name="location_sharing_channel_name">Location sharing channel</string>
