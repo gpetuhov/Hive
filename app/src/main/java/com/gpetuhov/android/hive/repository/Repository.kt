@@ -9,7 +9,6 @@ import timber.log.Timber
 import java.util.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
-import com.pawegio.kandroid.v
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
@@ -58,6 +57,7 @@ class Repository : Repo {
     private var geoFirestore: GeoFirestore      // GeoFirestore is used to query users by location
     private var geoQuery: GeoQuery? = null
     private var currentUserListenerRegistration: ListenerRegistration? = null
+    private var searchUserDetailsListenerRegistration: ListenerRegistration? = null
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -231,17 +231,33 @@ class Repository : Repo {
     override fun searchUserDetails() = searchUserDetails
 
     override fun initSearchUserDetails(uid: String) {
+        // Get first update of user details from the search results, which are already available
         val user = searchResult.value?.get(uid)
         if (user != null) searchUserDetails.value = user
     }
 
     override fun startGettingSearchUserDetailsUpdates(uid: String) {
-        // TODO: implement
+        if (isAuthorized) {
+            searchUserDetailsListenerRegistration = firestore.collection(USERS_COLLECTION).document(uid)
+                .addSnapshotListener { snapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        if (snapshot != null && snapshot.exists()) {
+                            Timber.tag(TAG).d("Listen success")
+                            val user = getUserFromDocumentSnapshot(snapshot)
+                            searchUserDetails.value = user
+
+                        } else {
+                            Timber.tag(TAG).d("Listen failed")
+                        }
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+        }
     }
 
-    override fun stopGettingSearchUserDetailsUpdates() {
-        // TODO: implement and don't forget to call on DetailsFragment close
-    }
+    override fun stopGettingSearchUserDetailsUpdates() = searchUserDetailsListenerRegistration?.remove() ?: Unit
 
     // === Private methods ===
 
