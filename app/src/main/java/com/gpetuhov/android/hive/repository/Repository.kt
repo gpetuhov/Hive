@@ -276,7 +276,7 @@ class Repository : Repo {
             service = "",
             isVisible = false,
             isOnline = false,
-            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+            location = Constants.Map.DEFAULT_LOCATION
         )
     }
 
@@ -367,7 +367,7 @@ class Repository : Repo {
         return if (coordinatesList != null && coordinatesList.size == 2) {
             LatLng(coordinatesList[0] as Double, coordinatesList[1] as Double)
         } else {
-            LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+            Constants.Map.DEFAULT_LOCATION
         }
     }
 }
