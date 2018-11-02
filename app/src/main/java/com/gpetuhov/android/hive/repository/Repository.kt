@@ -162,23 +162,18 @@ class Repository : Repo {
 
     override fun searchResult() = searchResult
 
-    override fun search(queryText: String, onComplete: () -> Unit) {
+    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) {
         this.queryText = queryText
 
         if (isAuthorized) {
             clearResult()
             stopGettingSearchResultUpdates()
 
-            val currentLocation = GeoPoint(
-                currentUser.value?.location?.latitude ?: Constants.Map.DEFAULT_LATITUDE,
-                currentUser.value?.location?.longitude ?: Constants.Map.DEFAULT_LONGITUDE
-            )
+            Timber.tag(TAG).d("Start search: lat = $queryLatitude, lon = $queryLongitude, radius = $queryRadius")
 
-            val radius = 1.0  // km
+            val queryLocation = GeoPoint(queryLatitude, queryLongitude)
 
-            Timber.tag(TAG).d("Start search: lat = ${currentLocation.latitude}, lon = ${currentLocation.longitude}, radius = $radius")
-
-            geoQuery = geoFirestore.queryAtLocation(currentLocation, radius)
+            geoQuery = geoFirestore.queryAtLocation(queryLocation, queryRadius)
 
             geoQuery?.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
                 override fun onGeoQueryReady() {

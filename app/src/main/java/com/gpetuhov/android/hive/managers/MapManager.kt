@@ -31,6 +31,7 @@ class MapManager {
         fun onMinZoom()
         fun onMaxZoom()
         fun onNormalZoom()
+        fun onCameraIdle(latitude: Double, longitude: Double, radius: Double)
     }
 
     companion object {
@@ -104,6 +105,13 @@ class MapManager {
             val farRight = visibleRegion.farRight
             val nearLeft = visibleRegion.nearLeft
             val nearRight = visibleRegion.nearRight
+
+            val target = googleMap.cameraPosition.target
+
+            // TODO: calculate radius depending on visible region
+            val radius = 1.0
+
+            callback.onCameraIdle(target.latitude, target.longitude, radius)
 
 //            Timber.tag(TAG).d("farLeft = $farLeft")
 //            Timber.tag(TAG).d("farRight = $farRight")
