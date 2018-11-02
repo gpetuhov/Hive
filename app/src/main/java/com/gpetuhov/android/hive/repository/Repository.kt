@@ -10,6 +10,7 @@ import java.util.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import org.imperiumlabs.geofirestore.GeoFirestore
+import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
 import java.lang.Exception
 
@@ -52,7 +53,7 @@ class Repository : Repo {
     private var queryText = ""
     private val firestore = FirebaseFirestore.getInstance()
     private var geoFirestore: GeoFirestore      // GeoFirestore is used to query users by location
-    private var searchResultListenerRegistration: ListenerRegistration? = null
+    private var geoQuery: GeoQuery? = null
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
     init {
@@ -164,9 +165,8 @@ class Repository : Repo {
     override fun search(queryText: String, onComplete: () -> Unit) {
         this.queryText = queryText
 
-        clearResult()
-
         if (isAuthorized) {
+            clearResult()
             stopGettingSearchResultUpdates()
 
             val currentLocation = GeoPoint(
@@ -178,9 +178,9 @@ class Repository : Repo {
 
             Timber.tag(TAG).d("Start search: lat = ${currentLocation.latitude}, lon = ${currentLocation.longitude}, radius = $radius")
 
-            val geoQuery = geoFirestore.queryAtLocation(currentLocation, radius)
+            geoQuery = geoFirestore.queryAtLocation(currentLocation, radius)
 
-            geoQuery.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
+            geoQuery?.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
                 override fun onGeoQueryReady() {
                     Timber.tag(TAG).d("onGeoQueryReady")
                     onComplete()
@@ -221,7 +221,7 @@ class Repository : Repo {
         }
     }
 
-    override fun stopGettingSearchResultUpdates() = searchResultListenerRegistration?.remove() ?: Unit
+    override fun stopGettingSearchResultUpdates() = geoQuery?.removeAllListeners() ?: Unit
 
     // === Private methods ===
 
