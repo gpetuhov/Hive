@@ -19,6 +19,7 @@
                 android:src="@drawable/ic_arrow_back"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/close_details"
+                android:onClick="@{view -> handler.navigateUp()}"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
