@@ -30,6 +30,7 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = MessagesAdapter()
+        messages.scrollToPosition(0)
     }
 
     override fun onResume() {
