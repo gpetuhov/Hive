@@ -5,7 +5,8 @@
             android:id="@+id/nav_graph_main"
             app:startDestination="@id/navigation_search">
 
-    <!--Ids of the fragments must be the same as ids of bottom navigation menu items-->
+    <!-- Root fragments. Controlled by bottom navigation view -->
+    <!--Ids of these fragments must be the same as ids of bottom navigation menu items-->
 
     <fragment
             android:id="@+id/navigation_search"
@@ -31,6 +32,8 @@
             android:label="fragment_profile"
             tools:layout="@layout/fragment_profile" />
 
+    <!-- Secondary fragments -->
+
     <fragment
             android:id="@+id/details_fragment"
             android:name="com.gpetuhov.android.hive.ui.fragment.DetailsFragment"
@@ -39,6 +42,17 @@
         <argument
                 android:name="uid"
                 app:argType="string"/>
+        <action
+                android:id="@+id/action_details_fragment_to_chat_fragment"
+                app:destination="@id/chat_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
+
+    <fragment
+            android:id="@+id/chat_fragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.ChatFragment"
+            android:label="ChatFragment"
+            tools:layout="@layout/fragment_chat" />
 
 </navigation>

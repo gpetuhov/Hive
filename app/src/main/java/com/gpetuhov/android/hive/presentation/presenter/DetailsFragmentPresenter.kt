@@ -20,6 +20,8 @@ class DetailsFragmentPresenter : MvpPresenter<DetailsFragmentView>() {
 
     fun navigateUp() = viewState.navigateUp()
 
+    fun openChat() = viewState.openChat()
+
     // This is needed to change user details in the UI if changed on the backend
     fun onResume(uid: String) = repo.startGettingSearchUserDetailsUpdates(uid)
 
