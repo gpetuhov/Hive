@@ -1,9 +1,11 @@
 package com.gpetuhov.android.hive.ui.adapter
 
 import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
@@ -23,7 +25,8 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
         HiveApp.appComponent.inject(this)
 
         for (i in 0..100) {
-            messageList.add(Message(i.toString(), System.currentTimeMillis(), "Message text $i"))
+            val text = "Message text message text message text message text message text message text message text message text message text $i"
+            messageList.add(Message(i.toString(), System.currentTimeMillis(), text))
         }
     }
 
@@ -41,10 +44,12 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        @Inject lateinit var context: Context
         @Inject lateinit var repo: Repo
 
         private lateinit var message: Message
+        private var rootLayout: LinearLayout = itemView.findViewById(R.id.message_root_layout)
+        private var leftSpace: View = itemView.findViewById(R.id.message_left_space)
+        private var rightSpace: View = itemView.findViewById(R.id.message_right_space)
         private var messageTextView: TextView = itemView.findViewById(R.id.item_message_text)
 
         init {
@@ -55,24 +60,20 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
             this.message = message
             messageTextView.text = message.text
 
-            val startEndMargin = context.resources.getDimensionPixelOffset(R.dimen.message_margin_start_end)
-            val topBottomMargin = context.resources.getDimensionPixelOffset(R.dimen.message_margin_top_bottom)
-            val bigMargin = context.resources.getDimensionPixelOffset(R.dimen.message_margin_big)
-
-            val params = ConstraintLayout.LayoutParams(messageTextView.layoutParams)
-
             // TODO: restore this line
 //            if (message.isFromUser(repo.currentUserUid())) {
             if (message.senderUid.toInt() % 2 == 0) {
+                rootLayout.gravity = Gravity.END
+                leftSpace.visibility = View.VISIBLE
+                rightSpace.visibility = View.GONE
                 messageTextView.setBackgroundResource(R.drawable.message_background_current_user)
-                params.setMargins(bigMargin, topBottomMargin, startEndMargin, topBottomMargin)
 
             } else {
+                rootLayout.gravity = Gravity.START
+                leftSpace.visibility = View.GONE
+                rightSpace.visibility = View.VISIBLE
                 messageTextView.setBackgroundResource(R.drawable.message_background)
-                params.setMargins(startEndMargin, topBottomMargin, bigMargin, topBottomMargin)
             }
-
-            messageTextView.layoutParams = params
         }
     }
 }
