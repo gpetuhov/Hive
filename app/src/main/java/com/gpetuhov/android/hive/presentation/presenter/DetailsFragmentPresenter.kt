@@ -1,11 +1,13 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.DetailsFragmentView
 import javax.inject.Inject
 
+@InjectViewState
 class DetailsFragmentPresenter : MvpPresenter<DetailsFragmentView>() {
 
     @Inject lateinit var repo: Repo
@@ -16,4 +18,10 @@ class DetailsFragmentPresenter : MvpPresenter<DetailsFragmentView>() {
 
     // === Public methods ===
 
+    fun navigateUp() = viewState.navigateUp()
+
+    // This is needed to change user details in the UI if changed on the backend
+    fun onResume(uid: String) = repo.startGettingSearchUserDetailsUpdates(uid)
+
+    fun onPause() = repo.stopGettingSearchUserDetailsUpdates()
 }

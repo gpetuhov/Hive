@@ -27,7 +27,6 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(mapFragment: MapFragment)
-    fun inject(detailsFragment: DetailsFragment)
 
     fun inject(locationService: LocationService)
 

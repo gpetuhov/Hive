@@ -10,34 +10,24 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentDetailsBinding
 import com.gpetuhov.android.hive.domain.model.User
-import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.presenter.DetailsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.DetailsFragmentView
 import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
-import javax.inject.Inject
 
 // Shows user details on map marker click
 class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
 
     @InjectPresenter lateinit var presenter: DetailsFragmentPresenter
 
-    @Inject lateinit var repo: Repo
-
     private var binding: FragmentDetailsBinding? = null
     private var uid = ""
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        HiveApp.appComponent.inject(this)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
-        binding?.handler = this
+        binding?.presenter = presenter
 
         val viewModel = ViewModelProviders.of(this).get(SearchUserDetailsViewModel::class.java)
 
@@ -55,14 +45,17 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
 
     override fun onResume() {
         super.onResume()
-        // This is needed to change user details in the UI if changed on the backend
-        repo.startGettingSearchUserDetailsUpdates(uid)
+        presenter.onResume(uid)
     }
 
     override fun onPause() {
         super.onPause()
-        repo.stopGettingSearchUserDetailsUpdates()
+        presenter.onPause()
     }
 
-    fun closeDetails() = findNavController().navigateUp()
+    // === DetailsFragmentView ===
+
+    override fun navigateUp() {
+        findNavController().navigateUp()
+    }
 }
