@@ -58,6 +58,10 @@
     <string name="close_details">Close details</string>
     <string name="chat">Chat</string>
 
+    <!-- ChatFragment -->
+    <string name="send">Send</string>
+    <string name="enter_message">Enter message</string>
+
     <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>
     <string name="location_sharing_channel_name">Location sharing channel</string>
@@ -70,7 +74,5 @@
     <!-- Twitter consumer key and secret -->
     <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
     <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
-    <string name="send">Send</string>
-    <string name="enter_message">Enter message</string>
 
 </resources>
