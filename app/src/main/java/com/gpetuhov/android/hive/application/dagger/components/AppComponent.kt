@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
+import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.fragment.DetailsFragment
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
@@ -54,4 +55,6 @@ interface AppComponent {
     fun inject(searchInteractor: SearchInteractor)
 
     fun inject(messagesProvider: MessagesProvider)
+
+    fun inject(messagesAdapter: MessagesAdapter)
 }

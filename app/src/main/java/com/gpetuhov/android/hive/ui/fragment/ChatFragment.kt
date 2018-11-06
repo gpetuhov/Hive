@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentChatBinding
+import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import kotlinx.android.synthetic.main.fragment_chat.*
 
 class ChatFragment : Fragment() {
@@ -21,6 +24,12 @@ class ChatFragment : Fragment() {
         binding?.handler = this
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+        messages.adapter = MessagesAdapter()
     }
 
     override fun onResume() {
