@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.repository
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.*
+import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
@@ -20,6 +21,8 @@ class Repository : Repo {
     companion object {
         private const val TAG = "Repo"
         private const val USERS_COLLECTION = "users"
+        private const val CHATROOMS_COLLECTION = "chatrooms"
+        private const val MESSAGES_COLLECTION = "messages"
         private const val NAME_KEY = "name"
         private const val USERNAME_KEY = "username"
         private const val EMAIL_KEY = "email"
@@ -27,6 +30,9 @@ class Repository : Repo {
         private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
+        private const val SENDER_UID_KEY = "sender_uid"
+        private const val TIMESTAMP_KEY = "timestamp"
+        private const val MESSAGE_TEXT_KEY = "message_text"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -50,6 +56,8 @@ class Repository : Repo {
 
     private val searchUserDetails = MutableLiveData<User>()
 
+    private val messages = MutableLiveData<MutableList<Message>>()
+
     private var isAuthorized = false
     private var currentUserUid: String = ""
     private var queryText = ""
@@ -58,6 +66,7 @@ class Repository : Repo {
     private var geoQuery: GeoQuery? = null
     private var currentUserListenerRegistration: ListenerRegistration? = null
     private var searchUserDetailsListenerRegistration: ListenerRegistration? = null
+    private var messagesListenerRegistration: ListenerRegistration? = null
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -246,7 +255,48 @@ class Repository : Repo {
 
     override fun stopGettingSearchUserDetailsUpdates() = searchUserDetailsListenerRegistration?.remove() ?: Unit
 
-    // === Private methods ===
+    override fun messages(): MutableLiveData<MutableList<Message>> = messages
+
+    override fun startGettingMessagesUpdates(userUid1: String, userUid2: String) {
+        if (isAuthorized) {
+            // Chatroom collection consists of chatroom documents with chatroom uids.
+            // Chatroom uid is calculated as userUid1_userUid2
+            // Each chatroom document contains subcollection, which contains chatroom messages.
+
+            // This is needed for the chat room to have the same name,
+            // despite of the uid of the user, who started the conversation.
+            val chatRoomUid = if (userUid1 < userUid2) "{$userUid1}_{$userUid2}" else "{$userUid2}_{$userUid1}"
+
+            messagesListenerRegistration = firestore
+                .collection(CHATROOMS_COLLECTION).document(chatRoomUid)
+                .collection(MESSAGES_COLLECTION)
+                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        Timber.tag(TAG).d("Listen success")
+
+                        val messagesList = mutableListOf<Message>()
+
+                        if (querySnapshot != null) {
+                            for (doc in querySnapshot.documents) {
+                                messagesList.add(getMessageFromDocumentSnapshot(doc))
+                            }
+
+                        } else {
+                            Timber.tag(TAG).d("Listen failed")
+                        }
+
+                        messages.value = messagesList
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+        }
+    }
+
+    override fun stopGettingMessagesUpdates() = messagesListenerRegistration?.remove() ?: Unit
+
+// === Private methods ===
 
     private fun resetCurrentUser() {
         currentUser.value = createAnonymousUser()
@@ -406,5 +456,13 @@ class Repository : Repo {
         } else {
             Constants.Map.DEFAULT_LOCATION
         }
+    }
+
+    private fun getMessageFromDocumentSnapshot(doc: DocumentSnapshot): Message {
+        return Message(
+            senderUid = doc.getString(SENDER_UID_KEY) ?: "",
+            timestamp = doc.getLong(TIMESTAMP_KEY) ?: 0,
+            text = doc.getString(MESSAGE_TEXT_KEY) ?: ""
+        )
     }
 }

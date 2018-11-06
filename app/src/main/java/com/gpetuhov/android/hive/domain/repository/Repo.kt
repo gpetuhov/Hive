@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.domain.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
+import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
 
 // At domain layer (business logic layer) we have only interface of the repo.
@@ -28,4 +29,7 @@ interface Repo {
     fun initSearchUserDetails(uid: String)
     fun startGettingSearchUserDetailsUpdates(uid: String)
     fun stopGettingSearchUserDetailsUpdates()
+    fun messages(): MutableLiveData<MutableList<Message>>
+    fun startGettingMessagesUpdates(userUid1: String, userUid2: String)
+    fun stopGettingMessagesUpdates()
 }
