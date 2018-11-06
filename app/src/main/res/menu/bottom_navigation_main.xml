@@ -12,7 +12,7 @@
         android:title="@string/search"/>
 
     <item
-        android:id="@+id/navigation_chat"
+        android:id="@+id/navigation_messages"
         android:icon="@drawable/ic_chat"
         android:title="@string/messages"/>
 

@@ -20,10 +20,10 @@
     </fragment>
 
     <fragment
-            android:id="@+id/navigation_chat"
-            android:name="com.gpetuhov.android.hive.ui.fragment.ChatFragment"
-            android:label="fragment_chat"
-            tools:layout="@layout/fragment_chat" />
+            android:id="@+id/navigation_messages"
+            android:name="com.gpetuhov.android.hive.ui.fragment.MessagesFragment"
+            android:label="fragment_messages"
+            tools:layout="@layout/fragment_messages" />
 
     <fragment
             android:id="@+id/navigation_profile"
