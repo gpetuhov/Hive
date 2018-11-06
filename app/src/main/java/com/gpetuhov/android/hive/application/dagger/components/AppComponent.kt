@@ -57,4 +57,5 @@ interface AppComponent {
     fun inject(messagesProvider: MessagesProvider)
 
     fun inject(messagesAdapter: MessagesAdapter)
+    fun inject(messageViewHolder: MessagesAdapter.MessageViewHolder)
 }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.marginLeft
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
@@ -15,7 +16,6 @@ import javax.inject.Inject
 class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
 
     @Inject lateinit var context: Context
-    @Inject lateinit var repo: Repo
 
     private var messageList = mutableListOf<Message>()
 
@@ -41,12 +41,26 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        @Inject lateinit var repo: Repo
+
         private lateinit var message: Message
         private var messageTextView: TextView = itemView.findViewById(R.id.item_message_text)
+
+        init {
+            HiveApp.appComponent.inject(this)
+        }
 
         fun bindMessage(message: Message) {
             this.message = message
             messageTextView.text = message.text
+
+            // TODO: restore this line
+//            if (message.isFromUser(repo.currentUserUid())) {
+            if (message.senderUid.toInt() % 2 == 0) {
+                messageTextView.setBackgroundResource(R.drawable.message_background_current_user)
+            } else {
+                messageTextView.setBackgroundResource(R.drawable.message_background)
+            }
         }
     }
 }

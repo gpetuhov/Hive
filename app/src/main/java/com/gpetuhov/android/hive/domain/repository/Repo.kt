@@ -11,6 +11,7 @@ interface Repo {
     fun onSignIn(user: User)
     fun onSignOut()
     fun currentUser(): MutableLiveData<User>
+    fun currentUserUid(): String
     fun currentUserUsername(): String
     fun currentUserService(): String
     fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit)

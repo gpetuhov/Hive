@@ -20,6 +20,8 @@ class TestRepository : Repo {
 
     override fun currentUser(): MutableLiveData<User> = MutableLiveData()
 
+    override fun currentUserUid() = ""
+
     override fun currentUserUsername() = username
 
     override fun currentUserService() = service

@@ -104,6 +104,8 @@ class Repository : Repo {
 
     override fun currentUser() = currentUser
 
+    override fun currentUserUid() = currentUser.value?.uid ?: ""
+
     override fun currentUserUsername() = currentUser.value?.username ?: ""
 
     override fun currentUserService() = currentUser.value?.service ?: ""
