@@ -9,6 +9,10 @@ import org.junit.Test
 
 class UserTest {
 
+    companion object {
+        const val DUMMY_USERNAME = "dummy_username"
+    }
+
     private lateinit var user: User
 
     @Before
@@ -28,7 +32,7 @@ class UserTest {
     @Test
     fun emptyUsername() {
         assertEquals(false, user.hasUsername)
-        user.username = "john7"
+        user.username = DUMMY_USERNAME
         assertEquals(true, user.hasUsername)
     }
 
@@ -37,5 +41,12 @@ class UserTest {
         assertEquals(false, user.hasService)
         user.service = "free car"
         assertEquals(true, user.hasService)
+    }
+
+    @Test
+    fun usernameOrName() {
+        assertEquals(user.name, user.getUsernameOrName())
+        user.username = DUMMY_USERNAME
+        assertEquals(DUMMY_USERNAME, user.getUsernameOrName())
     }
 }
