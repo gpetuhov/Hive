@@ -5,13 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.marginLeft
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.repository.Repo
 import javax.inject.Inject
+import androidx.constraintlayout.widget.ConstraintLayout
 
 class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
 
@@ -41,6 +41,7 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        @Inject lateinit var context: Context
         @Inject lateinit var repo: Repo
 
         private lateinit var message: Message
@@ -54,13 +55,24 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
             this.message = message
             messageTextView.text = message.text
 
+            val startEndMargin = context.resources.getDimensionPixelOffset(R.dimen.message_margin_start_end)
+            val topBottomMargin = context.resources.getDimensionPixelOffset(R.dimen.message_margin_top_bottom)
+            val bigMargin = context.resources.getDimensionPixelOffset(R.dimen.message_margin_big)
+
+            val params = ConstraintLayout.LayoutParams(messageTextView.layoutParams)
+
             // TODO: restore this line
 //            if (message.isFromUser(repo.currentUserUid())) {
             if (message.senderUid.toInt() % 2 == 0) {
                 messageTextView.setBackgroundResource(R.drawable.message_background_current_user)
+                params.setMargins(bigMargin, topBottomMargin, startEndMargin, topBottomMargin)
+
             } else {
                 messageTextView.setBackgroundResource(R.drawable.message_background)
+                params.setMargins(startEndMargin, topBottomMargin, bigMargin, topBottomMargin)
             }
+
+            messageTextView.layoutParams = params
         }
     }
 }
