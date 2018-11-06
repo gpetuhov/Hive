@@ -20,6 +20,6 @@ class ChatFragment : Fragment() {
         super.onResume()
         uid = ChatFragmentArgs.fromBundle(arguments).uid
         val name = ChatFragmentArgs.fromBundle(arguments).name
-        chat_text.text = name
+        chat_user_name_text.text = name
     }
 }

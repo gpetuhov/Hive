@@ -63,6 +63,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     androidTestImplementation 'androidx.test:rules:1.1.0'
 
+    // RecyclerView
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
+
     // Jetpack Navigation
     implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
