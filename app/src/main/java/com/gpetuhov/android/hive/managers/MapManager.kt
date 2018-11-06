@@ -128,7 +128,7 @@ class MapManager {
             val user = entry.value
             val statusId = if (user.isOnline) R.string.online else R.string.offline
             val status = context.getString(statusId)
-            val name = if (user.hasUsername) user.username else user.name
+            val name = user.getUsernameOrName()
 
             val iconGenerator = IconGenerator(context)
 

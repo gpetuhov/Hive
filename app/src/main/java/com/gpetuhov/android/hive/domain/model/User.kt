@@ -16,4 +16,5 @@ data class User(
 ) {
     val hasUsername get() = username != ""
     val hasService get() = service != ""
+    fun getUsernameOrName() = if (hasUsername) username else name
 }

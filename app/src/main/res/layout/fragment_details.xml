@@ -36,7 +36,7 @@
                     android:id="@+id/details_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.hasUsername ? user.username : user.name}"
+                    android:text="@{user.getUsernameOrName()}"
                     style="@style/basicTextStyle"
                     tools:text="Name or username"
                     app:layout_constraintStart_toStartOf="parent"

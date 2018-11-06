@@ -39,7 +39,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
 
         viewModel.searchUserDetails.observe(this, Observer<User> { user ->
             binding?.user = user
-            name = if (user.hasUsername) user.username else user.name
+            name = user.getUsernameOrName()
         })
 
         return binding?.root
