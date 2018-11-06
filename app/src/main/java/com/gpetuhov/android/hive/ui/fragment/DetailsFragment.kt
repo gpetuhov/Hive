@@ -60,7 +60,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
     }
 
     override fun openChat() {
-        val action = DetailsFragmentDirections.actionDetailsFragmentToChatFragment()
+        val action = DetailsFragmentDirections.actionDetailsFragmentToChatFragment(uid)
         findNavController().navigate(action)
     }
 }

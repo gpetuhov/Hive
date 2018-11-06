@@ -53,6 +53,10 @@
             android:id="@+id/chat_fragment"
             android:name="com.gpetuhov.android.hive.ui.fragment.ChatFragment"
             android:label="ChatFragment"
-            tools:layout="@layout/fragment_chat" />
+            tools:layout="@layout/fragment_chat">
+        <argument
+                android:name="uid"
+                app:argType="string"/>
+    </fragment>
 
 </navigation>
