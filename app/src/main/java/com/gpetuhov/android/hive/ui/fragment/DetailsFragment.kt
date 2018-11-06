@@ -24,6 +24,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
 
     private var binding: FragmentDetailsBinding? = null
     private var uid = ""
+    private var name = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
@@ -38,6 +39,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
 
         viewModel.searchUserDetails.observe(this, Observer<User> { user ->
             binding?.user = user
+            name = if (user.hasUsername) user.username else user.name
         })
 
         return binding?.root
@@ -60,7 +62,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
     }
 
     override fun openChat() {
-        val action = DetailsFragmentDirections.actionDetailsFragmentToChatFragment(uid)
+        val action = DetailsFragmentDirections.actionDetailsFragmentToChatFragment(uid, name)
         findNavController().navigate(action)
     }
 }

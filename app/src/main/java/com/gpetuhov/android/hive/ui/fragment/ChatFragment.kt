@@ -19,6 +19,7 @@ class ChatFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         uid = ChatFragmentArgs.fromBundle(arguments).uid
-        chat_text.text = uid
+        val name = ChatFragmentArgs.fromBundle(arguments).name
+        chat_text.text = name
     }
 }
