@@ -22,7 +22,7 @@
                 android:onClick="@{view -> handler.navigateUp()}"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 app:layout_constraintBottom_toBottomOf="@+id/chat_user_name_text"
                 app:layout_constraintTop_toTopOf="@+id/chat_user_name_text"/>
 
@@ -50,12 +50,13 @@
                 android:id="@+id/messages"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                tools:layout_editor_absoluteX="24dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/user_name_separator"
                 android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/messages_separator"
-        />
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" android:layout_marginRight="8dp"/>
 
         <View
                 android:id="@+id/messages_separator"
@@ -68,12 +69,13 @@
         <EditText
                 android:id="@+id/message_text"
                 android:hint="@string/enter_message"
-                android:imeOptions="actionSearch"
+                android:imeOptions="actionSend"
                 android:inputType="text"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/basic_view_size"
                 style="@style/basicTextStyle"
                 android:importantForAutofill="no"
+                android:background="@android:color/transparent"
                 tools:text="Message text"
                 android:layout_marginStart="8dp"
                 app:layout_constraintStart_toStartOf="parent"
