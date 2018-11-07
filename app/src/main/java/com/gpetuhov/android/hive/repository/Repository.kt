@@ -488,7 +488,7 @@ class Repository : Repo {
 
         return Message(
             senderUid = senderUid,
-            timestamp = doc.getTimestamp(TIMESTAMP_KEY)?.seconds ?: 0,
+            timestamp = doc.getTimestamp(TIMESTAMP_KEY)?.seconds ?: (System.currentTimeMillis() / 1000),
             text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
             isFromCurrentUser = senderUid == currentUserUid
         )
