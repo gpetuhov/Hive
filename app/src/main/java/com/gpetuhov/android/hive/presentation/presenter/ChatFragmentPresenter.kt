@@ -3,32 +3,37 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.SendMessageInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
+class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInteractor.Callback {
 
     @Inject lateinit var repo: Repo
-    @Inject lateinit var resultMessages: ResultMessages
 
     // Two-way data binding is used for this property
     var messageText = ""
 
     var userUid = ""
 
+    private val sendMessageInteractor = SendMessageInteractor(this)
+
     init {
         HiveApp.appComponent.inject(this)
     }
+
+    // === SendMessageInteractor.Callback ===
+
+    override fun onSendMessageError(errorMessage: String) = viewState.showToast(errorMessage)
 
     // === Public methods ===
 
     fun navigateUp() = viewState.navigateUp()
 
     fun sendMessage() {
-        repo.sendMessage(messageText) { viewState.showToast(resultMessages.getSendMessageErrorMessage()) }
+        sendMessageInteractor.sendMessage(messageText)
         viewState.clearMessageText()
     }
 
@@ -36,7 +41,6 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
 
     fun onPause() = repo.stopGettingMessagesUpdates()
 
-    fun onTextChanged(s: CharSequence?) {
+    fun onTextChanged(s: CharSequence?) =
         viewState.sendButtonEnabled(s?.toString()?.trim { it <= ' ' }?.isNotEmpty() ?: false)
-    }
 }
