@@ -50,11 +50,11 @@ class ChatFragment : Fragment() {
 
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
-        messages.scrollToPosition(0)
 
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter.setMessages(messageList)
+            messages.scrollToPosition(0)
         })
     }
 
