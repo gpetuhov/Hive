@@ -273,6 +273,7 @@ class Repository : Repo {
             messagesListenerRegistration = firestore
                 .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
                 .collection(MESSAGES_COLLECTION)
+                .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
                         Timber.tag(TAG).d("Listen success")
@@ -307,9 +308,7 @@ class Repository : Repo {
             val data = HashMap<String, Any>()
             data[SENDER_UID_KEY] = currentUserUid
             data[MESSAGE_TEXT_KEY] = messageText
-
-            // TODO: get timestamp on the server, not here
-            data[TIMESTAMP_KEY] = System.currentTimeMillis()
+            data[TIMESTAMP_KEY] = FieldValue.serverTimestamp()  // Get timestamp on the server, not on the device
 
             firestore
                 .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
@@ -493,7 +492,7 @@ class Repository : Repo {
     private fun getMessageFromDocumentSnapshot(doc: DocumentSnapshot): Message {
         return Message(
             senderUid = doc.getString(SENDER_UID_KEY) ?: "",
-            timestamp = doc.getLong(TIMESTAMP_KEY) ?: 0,
+            timestamp = doc.getTimestamp(TIMESTAMP_KEY)?.seconds ?: 0,
             text = doc.getString(MESSAGE_TEXT_KEY) ?: ""
         )
     }
