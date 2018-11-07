@@ -30,17 +30,19 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
 
     // === Public methods ===
 
-    fun navigateUp() = viewState.navigateUp()
+    fun onTextChanged(s: CharSequence?) =
+        viewState.sendButtonEnabled(s?.toString()?.trim { it <= ' ' }?.isNotEmpty() ?: false)
 
     fun sendMessage() {
         sendMessageInteractor.sendMessage(messageText)
         viewState.clearMessageText()
     }
 
+    fun navigateUp() = viewState.navigateUp()
+
+    // === Lifecycle methods ===
+
     fun onResume() = repo.startGettingMessagesUpdates(userUid)
 
     fun onPause() = repo.stopGettingMessagesUpdates()
-
-    fun onTextChanged(s: CharSequence?) =
-        viewState.sendButtonEnabled(s?.toString()?.trim { it <= ' ' }?.isNotEmpty() ?: false)
 }

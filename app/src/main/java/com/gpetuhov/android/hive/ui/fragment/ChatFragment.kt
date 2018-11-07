@@ -68,17 +68,17 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     // === ChatFragmentView
 
-    override fun navigateUp() {
-        findNavController().navigateUp()
-    }
-
-    override fun clearMessageText() = message_text.setText("")
-
     override fun sendButtonEnabled(isEnabled: Boolean) {
         message_send_button.isEnabled = isEnabled
     }
 
+    override fun clearMessageText() = message_text.setText("")
+
     override fun showToast(message: String) {
         toast(message)
+    }
+
+    override fun navigateUp() {
+        findNavController().navigateUp()
     }
 }
