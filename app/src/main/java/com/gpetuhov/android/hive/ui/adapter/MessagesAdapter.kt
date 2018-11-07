@@ -20,7 +20,9 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     override fun getItemCount() = messageList.size
 
-    override fun onBindViewHolder(holder: MessageViewHolder, position: Int) = holder.bindMessage(messageList[position])
+    override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
+        holder.binding.message = messageList[position]
+    }
 
     // === Public methods ===
 
@@ -33,11 +35,6 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
     // === Inner classes ===
 
     class MessageViewHolder(itemBinding: ItemMessageBinding) : RecyclerView.ViewHolder(itemBinding.root) {
-
-        private var binding: ItemMessageBinding = itemBinding
-
-        fun bindMessage(message: Message) {
-            binding.message = message
-        }
+        var binding: ItemMessageBinding = itemBinding
     }
 }
