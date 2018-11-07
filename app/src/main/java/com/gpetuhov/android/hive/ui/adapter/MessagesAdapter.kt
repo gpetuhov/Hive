@@ -50,20 +50,18 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
         private var view = itemView
 
         fun bindMessage(message: Message, currentUserUid: String) {
-            view.item_message_text.text = message.text
-            view.item_message_time.text = message.getMessageTime()
+            val isCurrent = message.isFromUser(currentUserUid)
 
-            if (message.isFromUser(currentUserUid)) {
-                view.message_root_layout.gravity = Gravity.END
-                view.message_left_space.visibility = View.VISIBLE
-                view.message_right_space.visibility = View.GONE
-                view.item_message_wrapper.setBackgroundResource(R.drawable.message_background_current_user)
+            view.apply {
+                item_message_text.text = message.text
+                item_message_time.text = message.getMessageTime()
 
-            } else {
-                view.message_root_layout.gravity = Gravity.START
-                view.message_left_space.visibility = View.GONE
-                view.message_right_space.visibility = View.VISIBLE
-                view.item_message_wrapper.setBackgroundResource(R.drawable.message_background)
+                message_root_layout.gravity = if (isCurrent) Gravity.END else Gravity.START
+                message_left_space.visibility = if (isCurrent) View.VISIBLE else View.GONE
+                message_right_space.visibility = if (isCurrent) View.GONE else View.VISIBLE
+                item_message_wrapper.setBackgroundResource(
+                    if (isCurrent) R.drawable.message_background_current_user else R.drawable.message_background
+                )
             }
         }
     }
