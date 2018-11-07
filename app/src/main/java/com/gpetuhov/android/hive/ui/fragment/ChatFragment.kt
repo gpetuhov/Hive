@@ -73,4 +73,6 @@ class ChatFragment : Fragment() {
     fun navigateUp() {
         findNavController().navigateUp()
     }
+
+    fun sendMessage() = repo.sendMessage(message_text.text.toString()) { /* Do nothing */ }
 }

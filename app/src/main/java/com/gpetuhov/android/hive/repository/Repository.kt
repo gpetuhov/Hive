@@ -64,6 +64,7 @@ class Repository : Repo {
     private val firestore = FirebaseFirestore.getInstance()
     private var geoFirestore: GeoFirestore      // GeoFirestore is used to query users by location
     private var geoQuery: GeoQuery? = null
+    private var currentChatRoomUid = ""
     private var currentUserListenerRegistration: ListenerRegistration? = null
     private var searchUserDetailsListenerRegistration: ListenerRegistration? = null
     private var messagesListenerRegistration: ListenerRegistration? = null
@@ -267,10 +268,10 @@ class Repository : Repo {
 
             // This is needed for the chat room to have the same name,
             // despite of the uid of the user, who started the conversation.
-            val chatRoomUid = if (userUid1 < userUid2) "{$userUid1}_{$userUid2}" else "{$userUid2}_{$userUid1}"
+            currentChatRoomUid = if (userUid1 < userUid2) "${userUid1}_$userUid2" else "${userUid2}_$userUid1"
 
             messagesListenerRegistration = firestore
-                .collection(CHATROOMS_COLLECTION).document(chatRoomUid)
+                .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
                 .collection(MESSAGES_COLLECTION)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
@@ -296,9 +297,38 @@ class Repository : Repo {
         }
     }
 
-    override fun stopGettingMessagesUpdates() = messagesListenerRegistration?.remove() ?: Unit
+    override fun stopGettingMessagesUpdates() {
+        messagesListenerRegistration?.remove()
+        currentChatRoomUid = ""
+    }
 
-// === Private methods ===
+    override fun sendMessage(messageText: String, onError: () -> Unit) {
+        if (isAuthorized && currentChatRoomUid != "") {
+            val data = HashMap<String, Any>()
+            data[SENDER_UID_KEY] = currentUserUid
+            data[MESSAGE_TEXT_KEY] = messageText
+
+            // TODO: get timestamp on the server, not here
+            data[TIMESTAMP_KEY] = System.currentTimeMillis()
+
+            firestore
+                .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
+                .collection(MESSAGES_COLLECTION)
+                .add(data)
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("Message successfully sent")
+                }
+                .addOnFailureListener { error ->
+                    Timber.tag(TAG).d("Error sending message")
+                    onError()
+                }
+
+        } else {
+            onError()
+        }
+    }
+
+    // === Private methods ===
 
     private fun resetCurrentUser() {
         currentUser.value = createAnonymousUser()

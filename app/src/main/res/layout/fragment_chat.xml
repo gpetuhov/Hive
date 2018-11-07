@@ -93,6 +93,7 @@
                 android:src="@drawable/ic_send"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:background="@android:color/transparent"
+                android:onClick="@{view -> handler.sendMessage()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
