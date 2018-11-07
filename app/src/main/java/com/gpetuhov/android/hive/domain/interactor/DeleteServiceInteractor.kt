@@ -2,7 +2,7 @@ package com.gpetuhov.android.hive.domain.interactor
 
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.domain.util.Messages
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import javax.inject.Inject
 
 class DeleteServiceInteractor(private val callback: Callback) : Interactor {
@@ -12,12 +12,12 @@ class DeleteServiceInteractor(private val callback: Callback) : Interactor {
     }
 
     @Inject lateinit var repo: Repo
-    @Inject lateinit var messages: Messages
+    @Inject lateinit var resultMessages: ResultMessages
 
     init {
         HiveApp.appComponent.inject(this)
     }
 
     override fun execute() =
-        repo.deleteUserService { callback.onDeleteServiceError(messages.getDeleteServiceErrorMessage()) }
+        repo.deleteUserService { callback.onDeleteServiceError(resultMessages.getDeleteServiceErrorMessage()) }
 }

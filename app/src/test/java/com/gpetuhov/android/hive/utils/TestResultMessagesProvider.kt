@@ -1,8 +1,8 @@
 package com.gpetuhov.android.hive.utils
 
-import com.gpetuhov.android.hive.domain.util.Messages
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 
-class TestMessagesProvider : Messages {
+class TestResultMessagesProvider : ResultMessages {
     override fun getSignOutErrorMessage() = Constants.SIGN_OUT_ERROR
 
     override fun getSignOutNetworkErrorMessage() = Constants.SIGN_OUT_NETWORK_ERROR

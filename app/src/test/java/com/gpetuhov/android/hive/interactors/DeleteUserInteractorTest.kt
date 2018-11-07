@@ -55,7 +55,7 @@ class DeleteUserInteractorTest {
         val callback = object : DeleteUserInteractor.Callback {
             override fun onDeleteUserComplete(message: String) {
                 // We know what message should be,
-                // because we mock Messages provider in tests.
+                // because we mock ResultMessages provider in tests.
                 val expectedMessage = when {
                     isSuccess -> Constants.DELETE_USER_SUCCESS
                     isOnline -> Constants.DELETE_USER_ERROR

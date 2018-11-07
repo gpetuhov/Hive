@@ -3,7 +3,7 @@ package com.gpetuhov.android.hive.domain.interactor
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.network.Network
-import com.gpetuhov.android.hive.domain.util.Messages
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import javax.inject.Inject
 
 class DeleteUserInteractor(private val callback: Callback) : Interactor {
@@ -14,7 +14,7 @@ class DeleteUserInteractor(private val callback: Callback) : Interactor {
 
     @Inject lateinit var network: Network
     @Inject lateinit var auth: Auth
-    @Inject lateinit var messages: Messages
+    @Inject lateinit var resultMessages: ResultMessages
 
     init {
         HiveApp.appComponent.inject(this)
@@ -24,11 +24,11 @@ class DeleteUserInteractor(private val callback: Callback) : Interactor {
         // Try to delete account if online only
         if (network.isOnline()) {
             auth.deleteAccount(
-                { callback.onDeleteUserComplete(messages.getDeleteUserSuccessMessage()) },
-                { callback.onDeleteUserComplete(messages.getDeleteUserErrorMessage()) }
+                { callback.onDeleteUserComplete(resultMessages.getDeleteUserSuccessMessage()) },
+                { callback.onDeleteUserComplete(resultMessages.getDeleteUserErrorMessage()) }
             )
         } else {
-            callback.onDeleteUserComplete(messages.getDeleteUserNetworkErrorMessage())
+            callback.onDeleteUserComplete(resultMessages.getDeleteUserNetworkErrorMessage())
         }
     }
 }

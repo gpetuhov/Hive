@@ -12,14 +12,11 @@ import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
-import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
-import com.gpetuhov.android.hive.ui.fragment.ChatFragment
-import com.gpetuhov.android.hive.ui.fragment.DetailsFragment
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
-import com.gpetuhov.android.hive.util.MessagesProvider
+import com.gpetuhov.android.hive.util.ResultMessagesProvider
 import dagger.Component
 import javax.inject.Singleton
 
@@ -59,5 +56,5 @@ interface AppComponent {
     fun inject(saveOnlineInteractor: SaveOnlineInteractor)
     fun inject(searchInteractor: SearchInteractor)
 
-    fun inject(messagesProvider: MessagesProvider)
+    fun inject(messagesProvider: ResultMessagesProvider)
 }

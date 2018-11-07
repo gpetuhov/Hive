@@ -3,7 +3,7 @@ package com.gpetuhov.android.hive.domain.interactor
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.network.Network
-import com.gpetuhov.android.hive.domain.util.Messages
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import javax.inject.Inject
 
 class SignOutInteractor(private val callback: Callback) : Interactor {
@@ -15,7 +15,7 @@ class SignOutInteractor(private val callback: Callback) : Interactor {
 
     @Inject lateinit var network: Network
     @Inject lateinit var auth: Auth
-    @Inject lateinit var messages: Messages
+    @Inject lateinit var resultMessages: ResultMessages
 
     init {
         HiveApp.appComponent.inject(this)
@@ -26,10 +26,10 @@ class SignOutInteractor(private val callback: Callback) : Interactor {
         if (network.isOnline()) {
             auth.signOut(
                 { callback.onSignOutSuccess() },
-                { callback.onSignOutError(messages.getSignOutErrorMessage()) }
+                { callback.onSignOutError(resultMessages.getSignOutErrorMessage()) }
             )
         } else {
-            callback.onSignOutError(messages.getSignOutNetworkErrorMessage())
+            callback.onSignOutError(resultMessages.getSignOutNetworkErrorMessage())
         }
     }
 }

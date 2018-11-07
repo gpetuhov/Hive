@@ -5,10 +5,10 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.domain.util.Messages
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.repository.Repository
-import com.gpetuhov.android.hive.util.MessagesProvider
+import com.gpetuhov.android.hive.util.ResultMessagesProvider
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -41,7 +41,7 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesMessages(): Messages = MessagesProvider()
+    fun providesResultMessages(): ResultMessages = ResultMessagesProvider()
 
     @Provides
     @Singleton

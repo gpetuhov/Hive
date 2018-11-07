@@ -1,6 +1,6 @@
 package com.gpetuhov.android.hive.domain.util
 
-interface Messages {
+interface ResultMessages {
     fun getSignOutErrorMessage(): String
     fun getSignOutNetworkErrorMessage(): String
     fun getDeleteUserSuccessMessage(): String

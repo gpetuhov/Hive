@@ -2,7 +2,7 @@ package com.gpetuhov.android.hive.domain.interactor
 
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.domain.util.Messages
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import javax.inject.Inject
 
 class SaveOnlineInteractor(private val callback: Callback) : Interactor {
@@ -12,7 +12,7 @@ class SaveOnlineInteractor(private val callback: Callback) : Interactor {
     }
 
     @Inject lateinit var repo: Repo
-    @Inject lateinit var messages: Messages
+    @Inject lateinit var resultMessages: ResultMessages
 
     private var newIsOnline = false
 

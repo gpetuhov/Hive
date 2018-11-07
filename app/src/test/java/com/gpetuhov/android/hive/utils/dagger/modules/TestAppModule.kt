@@ -5,11 +5,11 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.domain.util.Messages
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.utils.TestAuthManager
 import com.gpetuhov.android.hive.utils.TestNetworkManager
-import com.gpetuhov.android.hive.utils.TestMessagesProvider
+import com.gpetuhov.android.hive.utils.TestResultMessagesProvider
 import com.gpetuhov.android.hive.utils.TestRepository
 import dagger.Module
 import dagger.Provides
@@ -47,7 +47,7 @@ class TestAppModule {
 
     @Provides
     @Singleton
-    fun providesMessages(): Messages = TestMessagesProvider()
+    fun providesResultMessages(): ResultMessages = TestResultMessagesProvider()
 
     @Provides
     @Singleton

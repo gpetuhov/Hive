@@ -3,10 +3,10 @@ package com.gpetuhov.android.hive.util
 import android.content.Context
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.util.Messages
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import javax.inject.Inject
 
-class MessagesProvider : Messages {
+class ResultMessagesProvider : ResultMessages {
 
     @Inject lateinit var context: Context
 
