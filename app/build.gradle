@@ -8,8 +8,8 @@ apply plugin: 'kotlin-kapt'
 // This is needed for the navigation safe-args
 apply plugin: 'androidx.navigation.safeargs'
 
-def appVersionCode = 1006
-def appVersionName = "0.1.6"
+def appVersionCode = 1007
+def appVersionName = "0.1.7"
 
 android {
     compileSdkVersion 28
