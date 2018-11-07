@@ -268,9 +268,7 @@ class Repository : Repo {
             // despite of the uid of the user, who started the conversation.
             currentChatRoomUid = if (currentUserUid < userUid) "${currentUserUid}_$userUid" else "${userUid}_$currentUserUid"
 
-            messagesListenerRegistration = firestore
-                .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
-                .collection(MESSAGES_COLLECTION)
+            messagesListenerRegistration = getMessagesCollectionReference()
                 .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
@@ -308,9 +306,7 @@ class Repository : Repo {
             data[MESSAGE_TEXT_KEY] = messageText
             data[TIMESTAMP_KEY] = FieldValue.serverTimestamp()  // Get timestamp on the server, not on the device
 
-            firestore
-                .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
-                .collection(MESSAGES_COLLECTION)
+            getMessagesCollectionReference()
                 .add(data)
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Message successfully sent")
@@ -496,5 +492,11 @@ class Repository : Repo {
             text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
             isFromCurrentUser = senderUid == currentUserUid
         )
+    }
+
+    private fun getMessagesCollectionReference(): CollectionReference {
+        return firestore
+            .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
+            .collection(MESSAGES_COLLECTION)
     }
 }
