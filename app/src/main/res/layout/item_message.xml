@@ -37,9 +37,8 @@
 
         <TextView
                 android:id="@+id/item_message_time"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 style="@style/smallTextStyle"
                 tools:text="2018-11-7 12:29"/>
 
