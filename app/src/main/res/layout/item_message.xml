@@ -11,20 +11,17 @@
     </data>
 
     <LinearLayout
-            android:id="@+id/message_root_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="@{message.isFromCurrentUser ? Gravity.END : Gravity.START}">
 
         <View
-                android:id="@+id/message_left_space"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:visibility="@{message.isFromCurrentUser ? View.VISIBLE : View.GONE}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/item_message_wrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@{message.isFromCurrentUser ? @drawable/message_background_current_user : @drawable/message_background}"
@@ -48,7 +45,6 @@
                     app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
-                    android:id="@+id/item_message_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{message.getMessageTime()}"
@@ -61,7 +57,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
-                android:id="@+id/message_right_space"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:visibility="@{message.isFromCurrentUser ? View.GONE : View.VISIBLE}"/>
