@@ -32,8 +32,10 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     override fun getItemCount() = messageList.size
 
-    override fun onBindViewHolder(holder: MessageViewHolder, position: Int) =
-        holder.bindMessage(messageList[position], repo.currentUserUid())
+    override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
+        val message = messageList[position]
+        holder.bindMessage(message.text, message.getMessageTime(), message.isFromUser(repo.currentUserUid()))
+    }
 
     // === Public methods ===
 
@@ -49,18 +51,17 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
         private var view = itemView
 
-        fun bindMessage(message: Message, currentUserUid: String) {
-            val isCurrent = message.isFromUser(currentUserUid)
-
+        fun bindMessage(text: String, time: String, isFromCurrentUser: Boolean) {
             view.apply {
-                item_message_text.text = message.text
-                item_message_time.text = message.getMessageTime()
+                item_message_text.text = text
+                item_message_time.text = time
 
-                message_root_layout.gravity = if (isCurrent) Gravity.END else Gravity.START
-                message_left_space.visibility = if (isCurrent) View.VISIBLE else View.GONE
-                message_right_space.visibility = if (isCurrent) View.GONE else View.VISIBLE
+                // Set message layout depending on message sender (current user or not)
+                message_root_layout.gravity = if (isFromCurrentUser) Gravity.END else Gravity.START
+                message_left_space.visibility = if (isFromCurrentUser) View.VISIBLE else View.GONE
+                message_right_space.visibility = if (isFromCurrentUser) View.GONE else View.VISIBLE
                 item_message_wrapper.setBackgroundResource(
-                    if (isCurrent) R.drawable.message_background_current_user else R.drawable.message_background
+                    if (isFromCurrentUser) R.drawable.message_background_current_user else R.drawable.message_background
                 )
             }
         }
