@@ -34,4 +34,8 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
     fun onResume() = repo.startGettingMessagesUpdates(userUid)
 
     fun onPause() = repo.stopGettingMessagesUpdates()
+
+    fun onTextChanged(s: CharSequence?) {
+        viewState.sendButtonEnabled(s?.toString()?.trim { it <= ' ' }?.isNotEmpty() ?: false)
+    }
 }

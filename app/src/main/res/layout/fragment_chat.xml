@@ -78,6 +78,7 @@
                 style="@style/basicTextStyle"
                 android:importantForAutofill="no"
                 android:background="@android:color/transparent"
+                android:onTextChanged="@{(s, start, before, count) -> presenter.onTextChanged(s)}"
                 tools:text="Message text"
                 android:layout_marginStart="8dp"
                 app:layout_constraintStart_toStartOf="parent"

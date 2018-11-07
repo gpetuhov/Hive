@@ -11,4 +11,7 @@ interface ChatFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun clearMessageText()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun sendButtonEnabled(isEnabled: Boolean)
 }

@@ -44,22 +44,10 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sendButtonEnabled(false)
+
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
-
-        message_send_button.isEnabled = false
-
-        message_text.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                message_send_button.isEnabled = s.toString().trim { it <= ' ' }.isNotEmpty()
-            }
-        })
 
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
@@ -85,4 +73,8 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     }
 
     override fun clearMessageText() = message_text.setText("")
+
+    override fun sendButtonEnabled(isEnabled: Boolean) {
+        message_send_button.isEnabled = isEnabled
+    }
 }
