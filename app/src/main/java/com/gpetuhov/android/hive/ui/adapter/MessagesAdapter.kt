@@ -22,6 +22,7 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         holder.binding.message = messageList[position]
+        holder.binding.executePendingBindings() // This line is important, it will force to load the variable in a custom view
     }
 
     // === Public methods ===
@@ -34,7 +35,5 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     // === Inner classes ===
 
-    class MessageViewHolder(itemBinding: ItemMessageBinding) : RecyclerView.ViewHolder(itemBinding.root) {
-        var binding: ItemMessageBinding = itemBinding
-    }
+    class MessageViewHolder(var binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root)
 }
