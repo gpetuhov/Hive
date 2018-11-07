@@ -6,6 +6,7 @@
 
     <data>
         <variable name="handler" type="com.gpetuhov.android.hive.ui.fragment.ChatFragment"/>
+        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,7 +20,7 @@
                 android:src="@drawable/ic_arrow_back"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/close_details"
-                android:onClick="@{view -> handler.navigateUp()}"
+                android:onClick="@{view -> presenter.navigateUp()}"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="16dp"

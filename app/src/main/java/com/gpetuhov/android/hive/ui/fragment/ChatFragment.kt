@@ -7,23 +7,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentChatBinding
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
+import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
+import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_chat.*
 import javax.inject.Inject
 
-class ChatFragment : Fragment() {
+class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
+
+    @InjectPresenter lateinit var presenter: ChatFragmentPresenter
 
     @Inject lateinit var repo: Repo
 
@@ -39,6 +44,7 @@ class ChatFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.handler = this
+        binding?.presenter = presenter
 
         return binding?.root
     }
@@ -84,11 +90,13 @@ class ChatFragment : Fragment() {
         repo.stopGettingMessagesUpdates()
     }
 
-    // === Public methods ===
+    // === ChatFragmentView
 
-    fun navigateUp() {
+    override fun navigateUp() {
         findNavController().navigateUp()
     }
+
+    // === Public methods ===
 
     fun sendMessage() {
         repo.sendMessage(message_text.text.toString()) { /* Do nothing */ }

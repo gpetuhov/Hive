@@ -18,7 +18,7 @@ import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 
 // Shows user details on map marker click
-class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView  {
+class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: DetailsFragmentPresenter
 
