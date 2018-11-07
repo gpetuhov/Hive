@@ -5,6 +5,8 @@
         tools:context=".ui.fragment.ProfileFragment">
 
     <data>
+        <import type="android.view.View"/>
+        <import type="android.view.Gravity"/>
         <variable name="message" type="com.gpetuhov.android.hive.domain.model.Message"/>
     </data>
 
@@ -12,18 +14,20 @@
             android:id="@+id/message_root_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="@{message.isFromCurrentUser ? Gravity.END : Gravity.START}">
 
         <View
                 android:id="@+id/message_left_space"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="@{message.isFromCurrentUser ? View.VISIBLE : View.GONE}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/item_message_wrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/message_background"
+                android:background="@{message.isFromCurrentUser ? @drawable/message_background_current_user : @drawable/message_background}"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingTop="4dp"
@@ -59,7 +63,8 @@
         <View
                 android:id="@+id/message_right_space"
                 android:layout_width="50dp"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="@{message.isFromCurrentUser ? View.GONE : View.VISIBLE}"/>
 
     </LinearLayout>
 
