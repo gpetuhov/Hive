@@ -12,6 +12,7 @@ class TestRepository : Repo {
     var service = ""
     var isVisible = false
     var isOnline = false
+    var messageText = ""
 
     override fun onSignIn(user: User) {
     }
@@ -95,5 +96,10 @@ class TestRepository : Repo {
     }
 
     override fun sendMessage(messageText: String, onError: () -> Unit) {
+        if (isSuccess) {
+            this.messageText = messageText
+        } else {
+            onError()
+        }
     }
 }

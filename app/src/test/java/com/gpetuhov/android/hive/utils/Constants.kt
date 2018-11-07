@@ -19,6 +19,7 @@ class Constants {
 
         const val SAVE_VISIBILITY_ERROR = "Save visibility error"
 
+        const val DUMMY_MESSAGE_TEXT = "Dummy message text"
         const val SEND_MESSAGE_ERROR = "Send message error"
     }
 }
