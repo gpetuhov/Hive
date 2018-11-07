@@ -13,7 +13,6 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.repository.Repo
 import javax.inject.Inject
-import androidx.constraintlayout.widget.ConstraintLayout
 
 class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
 
@@ -23,11 +22,6 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     init {
         HiveApp.appComponent.inject(this)
-
-        for (i in 0..100) {
-            val text = "Message text message text message text message text message text message text message text message text message text $i"
-            messageList.add(Message(i.toString(), System.currentTimeMillis(), text))
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
@@ -39,6 +33,14 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
     override fun getItemCount() = messageList.size
 
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) = holder.bindMessage(messageList[position])
+
+    // === Public methods ===
+
+    fun setMessages(messages: MutableList<Message>) {
+        messageList.clear()
+        messageList.addAll(messages)
+        notifyDataSetChanged()
+    }
 
     // === Inner classes ===
 
@@ -60,9 +62,7 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
             this.message = message
             messageTextView.text = message.text
 
-            // TODO: restore this line
-//            if (message.isFromUser(repo.currentUserUid())) {
-            if (message.senderUid.toInt() % 2 == 0) {
+            if (message.isFromUser(repo.currentUserUid())) {
                 rootLayout.gravity = Gravity.END
                 leftSpace.visibility = View.VISIBLE
                 rightSpace.visibility = View.GONE

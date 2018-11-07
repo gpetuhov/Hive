@@ -12,8 +12,10 @@ import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
+import com.gpetuhov.android.hive.ui.fragment.ChatFragment
 import com.gpetuhov.android.hive.ui.fragment.DetailsFragment
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
+import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
 import com.gpetuhov.android.hive.util.MessagesProvider
@@ -28,6 +30,7 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(mapFragment: MapFragment)
+    fun inject(chatFragment: ChatFragment)
 
     fun inject(locationService: LocationService)
 
@@ -40,6 +43,7 @@ interface AppComponent {
     fun inject(userViewModel: CurrentUserViewModel)
     fun inject(searchResultViewModel: SearchResultViewModel)
     fun inject(searchUserDetailsViewModel: SearchUserDetailsViewModel)
+    fun inject(chatMessagesViewModel: ChatMessagesViewModel)
 
     fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
     fun inject(mapFragmentPresenter: MapFragmentPresenter)
