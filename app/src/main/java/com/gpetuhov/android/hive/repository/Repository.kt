@@ -302,6 +302,9 @@ class Repository : Repo {
     }
 
     override fun sendMessage(messageText: String, onError: () -> Unit) {
+        // TODO: remove this
+        isAuthorized = false
+
         if (isAuthorized && currentChatRoomUid != "") {
             val data = HashMap<String, Any>()
             data[SENDER_UID_KEY] = currentUserUid

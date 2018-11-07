@@ -26,8 +26,8 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
     fun navigateUp() = viewState.navigateUp()
 
     fun sendMessage() {
-        // TODO: handle onError here
-        repo.sendMessage(messageText) { /* Do nothing */ }
+        // TODO: refactor error message into message provider
+        repo.sendMessage(messageText) { viewState.showToast("Error sending message") }
         viewState.clearMessageText()
     }
 

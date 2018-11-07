@@ -1,8 +1,6 @@
 package com.gpetuhov.android.hive.ui.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +19,7 @@ import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
+import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
 
 class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
@@ -34,6 +33,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.presenter = presenter
 
+        // Set name and uid of the user, with whom current user is chatting
         val args = ChatFragmentArgs.fromBundle(arguments)
         binding?.userName = args.name
         presenter.userUid = args.uid
@@ -76,5 +76,9 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun sendButtonEnabled(isEnabled: Boolean) {
         message_send_button.isEnabled = isEnabled
+    }
+
+    override fun showToast(message: String) {
+        toast(message)
     }
 }

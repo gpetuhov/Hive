@@ -14,4 +14,7 @@ interface ChatFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun sendButtonEnabled(isEnabled: Boolean)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showToast(message: String)
 }
