@@ -4,8 +4,10 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.databinding.ItemMessageBinding
 import com.gpetuhov.android.hive.domain.model.Message
 import kotlinx.android.synthetic.main.item_message.view.*
 
@@ -15,8 +17,8 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.item_message, parent, false)
-        return MessageViewHolder(view)
+        val binding: ItemMessageBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_message, parent, false)
+        return MessageViewHolder(binding)
     }
 
     override fun getItemCount() = messageList.size
@@ -33,15 +35,15 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
     // === Inner classes ===
 
-    class MessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class MessageViewHolder(itemBinding: ItemMessageBinding) : RecyclerView.ViewHolder(itemBinding.root) {
 
-        private var view = itemView
+        private var view = itemBinding.root
+        private var binding: ItemMessageBinding = itemBinding
 
         fun bindMessage(message: Message) {
-            view.apply {
-                item_message_text.text = message.text
-                item_message_time.text = message.getMessageTime()
+            binding.message = message
 
+            view.apply {
                 // Set message layout depending on message sender (current user or not)
                 message_root_layout.gravity = if (message.isFromCurrentUser) Gravity.END else Gravity.START
                 message_left_space.visibility = if (message.isFromCurrentUser) View.VISIBLE else View.GONE
