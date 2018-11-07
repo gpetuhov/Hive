@@ -21,8 +21,6 @@ class TestRepository : Repo {
 
     override fun currentUser(): MutableLiveData<User> = MutableLiveData()
 
-    override fun currentUserUid() = ""
-
     override fun currentUserUsername() = username
 
     override fun currentUserService() = service
@@ -90,7 +88,7 @@ class TestRepository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = MutableLiveData()
 
-    override fun startGettingMessagesUpdates(userUid1: String, userUid2: String) {
+    override fun startGettingMessagesUpdates(userUid: String) {
     }
 
     override fun stopGettingMessagesUpdates() {

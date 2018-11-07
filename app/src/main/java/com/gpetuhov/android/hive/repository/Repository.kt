@@ -114,8 +114,6 @@ class Repository : Repo {
 
     override fun currentUser() = currentUser
 
-    override fun currentUserUid() = currentUser.value?.uid ?: ""
-
     override fun currentUserUsername() = currentUser.value?.username ?: ""
 
     override fun currentUserService() = currentUser.value?.service ?: ""
@@ -258,7 +256,7 @@ class Repository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates(userUid1: String, userUid2: String) {
+    override fun startGettingMessagesUpdates(userUid: String) {
         if (isAuthorized) {
             // Chatroom collection consists of chatroom documents with chatroom uids.
             // Chatroom uid is calculated as userUid1_userUid2
@@ -268,7 +266,7 @@ class Repository : Repo {
 
             // This is needed for the chat room to have the same name,
             // despite of the uid of the user, who started the conversation.
-            currentChatRoomUid = if (userUid1 < userUid2) "${userUid1}_$userUid2" else "${userUid2}_$userUid1"
+            currentChatRoomUid = if (currentUserUid < userUid) "${currentUserUid}_$userUid" else "${userUid}_$currentUserUid"
 
             messagesListenerRegistration = firestore
                 .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)

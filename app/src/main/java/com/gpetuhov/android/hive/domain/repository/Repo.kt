@@ -12,7 +12,6 @@ interface Repo {
     fun onSignIn(user: User)
     fun onSignOut()
     fun currentUser(): MutableLiveData<User>
-    fun currentUserUid(): String
     fun currentUserUsername(): String
     fun currentUserService(): String
     fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit)
@@ -30,7 +29,7 @@ interface Repo {
     fun startGettingSearchUserDetailsUpdates(uid: String)
     fun stopGettingSearchUserDetailsUpdates()
     fun messages(): MutableLiveData<MutableList<Message>>
-    fun startGettingMessagesUpdates(userUid1: String, userUid2: String)
+    fun startGettingMessagesUpdates(userUid: String)
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
 }

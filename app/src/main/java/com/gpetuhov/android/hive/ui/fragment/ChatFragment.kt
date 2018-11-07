@@ -76,7 +76,7 @@ class ChatFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        repo.startGettingMessagesUpdates(repo.currentUserUid(), userUid)
+        repo.startGettingMessagesUpdates(userUid)
     }
 
     override fun onPause() {
