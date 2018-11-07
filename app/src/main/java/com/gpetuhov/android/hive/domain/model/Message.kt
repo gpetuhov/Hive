@@ -6,7 +6,8 @@ import java.util.*
 data class Message(
     var senderUid: String,
     var timestamp: Long,
-    var text: String
+    var text: String,
+    var isFromCurrentUser: Boolean
 ) {
 
     fun isFromUser(userUid: String) = senderUid == userUid

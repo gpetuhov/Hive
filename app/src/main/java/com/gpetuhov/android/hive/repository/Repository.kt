@@ -490,10 +490,13 @@ class Repository : Repo {
     }
 
     private fun getMessageFromDocumentSnapshot(doc: DocumentSnapshot): Message {
+        val senderUid = doc.getString(SENDER_UID_KEY) ?: ""
+
         return Message(
-            senderUid = doc.getString(SENDER_UID_KEY) ?: "",
+            senderUid = senderUid,
             timestamp = doc.getTimestamp(TIMESTAMP_KEY)?.seconds ?: 0,
-            text = doc.getString(MESSAGE_TEXT_KEY) ?: ""
+            text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
+            isFromCurrentUser = senderUid == currentUserUid
         )
     }
 }
