@@ -1,6 +1,6 @@
 package com.gpetuhov.android.hive.domain.model
 
-import java.text.SimpleDateFormat
+import java.text.DateFormat
 import java.util.*
 
 data class Message(
@@ -13,9 +13,9 @@ data class Message(
 
     fun getMessageTime(): String {
         return try {
-            val format = SimpleDateFormat("yyyy.MM.dd HH:mm:ss")
-            val netDate = Date(timestamp * 1000)
-            format.format(netDate)
+            val format = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
+            val date = Date(timestamp * 1000)
+            format.format(date)
         } catch (ex: Exception) {
             ""
         }
