@@ -8,4 +8,7 @@ interface ChatFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun navigateUp()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun clearMessageText()
 }

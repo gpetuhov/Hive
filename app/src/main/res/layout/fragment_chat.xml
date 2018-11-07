@@ -5,7 +5,6 @@
         tools:context=".ui.fragment.ChatFragment">
 
     <data>
-        <variable name="handler" type="com.gpetuhov.android.hive.ui.fragment.ChatFragment"/>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter"/>
     </data>
 
@@ -73,6 +72,7 @@
                 android:inputType="textMultiLine"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/basic_view_size"
+                android:text="@={presenter.messageText}"
                 style="@style/basicTextStyle"
                 android:importantForAutofill="no"
                 android:background="@android:color/transparent"
@@ -94,7 +94,7 @@
                 android:src="@drawable/ic_send"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:background="@android:color/transparent"
-                android:onClick="@{view -> handler.sendMessage()}"
+                android:onClick="@{view -> presenter.sendMessage()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"

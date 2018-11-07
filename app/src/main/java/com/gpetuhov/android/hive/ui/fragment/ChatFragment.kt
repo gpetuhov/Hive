@@ -43,7 +43,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
-        binding?.handler = this
         binding?.presenter = presenter
 
         return binding?.root
@@ -96,10 +95,5 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         findNavController().navigateUp()
     }
 
-    // === Public methods ===
-
-    fun sendMessage() {
-        repo.sendMessage(message_text.text.toString()) { /* Do nothing */ }
-        message_text.setText("")
-    }
+    override fun clearMessageText() = message_text.setText("")
 }

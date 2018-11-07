@@ -12,6 +12,9 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
 
     @Inject lateinit var repo: Repo
 
+    // Two-way data binding is used for this property
+    var messageText = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -19,4 +22,10 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
     // === Public methods ===
 
     fun navigateUp() = viewState.navigateUp()
+
+    fun sendMessage() {
+        // TODO: handle onError here
+        repo.sendMessage(messageText) { /* Do nothing */ }
+        viewState.clearMessageText()
+    }
 }
