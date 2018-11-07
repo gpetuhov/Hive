@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.utils
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
+import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 
@@ -85,5 +86,16 @@ class TestRepository : Repo {
     }
 
     override fun stopGettingSearchUserDetailsUpdates() {
+    }
+
+    override fun messages(): MutableLiveData<MutableList<Message>> = MutableLiveData()
+
+    override fun startGettingMessagesUpdates(userUid1: String, userUid2: String) {
+    }
+
+    override fun stopGettingMessagesUpdates() {
+    }
+
+    override fun sendMessage(messageText: String, onError: () -> Unit) {
     }
 }
