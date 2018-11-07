@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import javax.inject.Inject
 
@@ -11,6 +12,7 @@ import javax.inject.Inject
 class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
 
     @Inject lateinit var repo: Repo
+    @Inject lateinit var resultMessages: ResultMessages
 
     // Two-way data binding is used for this property
     var messageText = ""
@@ -26,8 +28,7 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
     fun navigateUp() = viewState.navigateUp()
 
     fun sendMessage() {
-        // TODO: refactor error message into message provider
-        repo.sendMessage(messageText) { viewState.showToast("Error sending message") }
+        repo.sendMessage(messageText) { viewState.showToast(resultMessages.getSendMessageErrorMessage()) }
         viewState.clearMessageText()
     }
 

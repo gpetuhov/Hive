@@ -10,4 +10,5 @@ interface ResultMessages {
     fun getSaveServiceErrorMessage(): String
     fun getDeleteServiceErrorMessage(): String
     fun getSaveVisibilityErrorMessage(): String
+    fun getSendMessageErrorMessage(): String
 }

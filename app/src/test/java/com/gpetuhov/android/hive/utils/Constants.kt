@@ -18,5 +18,7 @@ class Constants {
         const val DELETE_SERVICE_ERROR = "Delete service error"
 
         const val SAVE_VISIBILITY_ERROR = "Save visibility error"
+
+        const val SEND_MESSAGE_ERROR = "Send message error"
     }
 }

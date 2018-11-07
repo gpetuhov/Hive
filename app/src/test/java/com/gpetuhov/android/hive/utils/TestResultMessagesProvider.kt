@@ -20,4 +20,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getDeleteServiceErrorMessage() = Constants.DELETE_SERVICE_ERROR
 
     override fun getSaveVisibilityErrorMessage(): String = Constants.SAVE_VISIBILITY_ERROR
+
+    override fun getSendMessageErrorMessage(): String = Constants.SEND_MESSAGE_ERROR
 }

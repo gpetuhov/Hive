@@ -32,5 +32,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveVisibilityErrorMessage(): String = getString(R.string.visibility_save_error)
 
+    override fun getSendMessageErrorMessage(): String = getString(R.string.send_message_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }
