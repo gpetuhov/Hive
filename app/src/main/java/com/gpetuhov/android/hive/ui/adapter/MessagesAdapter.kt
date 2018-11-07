@@ -5,14 +5,12 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.repository.Repo
+import kotlinx.android.synthetic.main.item_message.view.*
 import javax.inject.Inject
 
 class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
@@ -49,13 +47,8 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
         @Inject lateinit var repo: Repo
 
+        private var view = itemView
         private lateinit var message: Message
-        private var rootLayout: LinearLayout = itemView.findViewById(R.id.message_root_layout)
-        private var leftSpace: View = itemView.findViewById(R.id.message_left_space)
-        private var rightSpace: View = itemView.findViewById(R.id.message_right_space)
-        private var messageWrapper: ConstraintLayout = itemView.findViewById(R.id.item_message_wrapper)
-        private var messageTextView: TextView = itemView.findViewById(R.id.item_message_text)
-        private var messageTimeTextView: TextView = itemView.findViewById(R.id.item_message_time)
 
         init {
             HiveApp.appComponent.inject(this)
@@ -63,20 +56,20 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
 
         fun bindMessage(message: Message) {
             this.message = message
-            messageTextView.text = message.text
-            messageTimeTextView.text = message.getMessageTime()
+            view.item_message_text.text = message.text
+            view.item_message_time.text = message.getMessageTime()
 
             if (message.isFromUser(repo.currentUserUid())) {
-                rootLayout.gravity = Gravity.END
-                leftSpace.visibility = View.VISIBLE
-                rightSpace.visibility = View.GONE
-                messageWrapper.setBackgroundResource(R.drawable.message_background_current_user)
+                view.message_root_layout.gravity = Gravity.END
+                view.message_left_space.visibility = View.VISIBLE
+                view.message_right_space.visibility = View.GONE
+                view.item_message_wrapper.setBackgroundResource(R.drawable.message_background_current_user)
 
             } else {
-                rootLayout.gravity = Gravity.START
-                leftSpace.visibility = View.GONE
-                rightSpace.visibility = View.VISIBLE
-                messageWrapper.setBackgroundResource(R.drawable.message_background)
+                view.message_root_layout.gravity = Gravity.START
+                view.message_left_space.visibility = View.GONE
+                view.message_right_space.visibility = View.VISIBLE
+                view.item_message_wrapper.setBackgroundResource(R.drawable.message_background)
             }
         }
     }
