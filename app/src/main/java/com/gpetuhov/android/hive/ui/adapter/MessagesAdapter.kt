@@ -1,31 +1,20 @@
 package com.gpetuhov.android.hive.ui.adapter
 
-import android.content.Context
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Message
-import com.gpetuhov.android.hive.domain.repository.Repo
 import kotlinx.android.synthetic.main.item_message.view.*
-import javax.inject.Inject
 
 class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
 
-    @Inject lateinit var context: Context
-    @Inject lateinit var repo: Repo
-
     private var messageList = mutableListOf<Message>()
 
-    init {
-        HiveApp.appComponent.inject(this)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-        val layoutInflater = LayoutInflater.from(context)
+        val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.item_message, parent, false)
         return MessageViewHolder(view)
     }

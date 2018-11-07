@@ -59,6 +59,4 @@ interface AppComponent {
     fun inject(searchInteractor: SearchInteractor)
 
     fun inject(messagesProvider: MessagesProvider)
-
-    fun inject(messagesAdapter: MessagesAdapter)
 }
