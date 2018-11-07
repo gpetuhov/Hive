@@ -14,32 +14,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentChatBinding
 import com.gpetuhov.android.hive.domain.model.Message
-import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_chat.*
-import javax.inject.Inject
 
 class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     @InjectPresenter lateinit var presenter: ChatFragmentPresenter
 
-    @Inject lateinit var repo: Repo
-
     private val messagesAdapter = MessagesAdapter()
     private var binding: FragmentChatBinding? = null
-    private var userUid = ""
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        HiveApp.appComponent.inject(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
@@ -51,7 +40,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userUid = ChatFragmentArgs.fromBundle(arguments).uid
+        presenter.userUid = ChatFragmentArgs.fromBundle(arguments).uid
         val name = ChatFragmentArgs.fromBundle(arguments).name
         chat_user_name_text.text = name
 
@@ -81,12 +70,12 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun onResume() {
         super.onResume()
-        repo.startGettingMessagesUpdates(userUid)
+        presenter.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        repo.stopGettingMessagesUpdates()
+        presenter.onPause()
     }
 
     // === ChatFragmentView

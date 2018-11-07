@@ -31,7 +31,6 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(mapFragment: MapFragment)
-    fun inject(chatFragment: ChatFragment)
 
     fun inject(locationService: LocationService)
 

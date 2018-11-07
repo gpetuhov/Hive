@@ -15,6 +15,8 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
     // Two-way data binding is used for this property
     var messageText = ""
 
+    var userUid = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -28,4 +30,8 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>() {
         repo.sendMessage(messageText) { /* Do nothing */ }
         viewState.clearMessageText()
     }
+
+    fun onResume() = repo.startGettingMessagesUpdates(userUid)
+
+    fun onPause() = repo.stopGettingMessagesUpdates()
 }
