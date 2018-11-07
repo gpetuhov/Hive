@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
@@ -52,7 +53,7 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
         private var rootLayout: LinearLayout = itemView.findViewById(R.id.message_root_layout)
         private var leftSpace: View = itemView.findViewById(R.id.message_left_space)
         private var rightSpace: View = itemView.findViewById(R.id.message_right_space)
-        private var messageWrapper: LinearLayout = itemView.findViewById(R.id.item_message_wrapper)
+        private var messageWrapper: ConstraintLayout = itemView.findViewById(R.id.item_message_wrapper)
         private var messageTextView: TextView = itemView.findViewById(R.id.item_message_text)
         private var messageTimeTextView: TextView = itemView.findViewById(R.id.item_message_time)
 
@@ -63,7 +64,7 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
         fun bindMessage(message: Message) {
             this.message = message
             messageTextView.text = message.text
-            messageTimeTextView.text = (message.timestamp / 1000000).toString()
+            messageTimeTextView.text = (message.timestamp / 1000).toString()
 
             if (message.isFromUser(repo.currentUserUid())) {
                 rootLayout.gravity = Gravity.END
