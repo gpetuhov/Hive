@@ -7,25 +7,16 @@ import org.junit.Test
 
 class MessageTest {
 
-    companion object {
-        const val DUMMY_SENDER_UID = "9j82qho"
-    }
-
     private lateinit var message: Message
 
     @Before
     fun initUser() {
         message = Message(
-            senderUid = DUMMY_SENDER_UID,
+            senderUid = "9j82qho",
             timestamp = System.currentTimeMillis(),
-            text = "Message text"
+            text = "Message text",
+            isFromCurrentUser = true
         )
-    }
-
-    @Test
-    fun isFromUser() {
-        assertEquals(true, message.isFromUser(DUMMY_SENDER_UID))
-        assertEquals(false, message.isFromUser("563h89ju"))
     }
 
     @Test

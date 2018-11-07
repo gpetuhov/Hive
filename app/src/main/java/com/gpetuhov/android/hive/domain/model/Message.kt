@@ -9,9 +9,6 @@ data class Message(
     var text: String,
     var isFromCurrentUser: Boolean
 ) {
-
-    fun isFromUser(userUid: String) = senderUid == userUid
-
     fun getMessageTime(): String {
         return try {
             val format = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
