@@ -34,15 +34,15 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.presenter = presenter
 
+        val args = ChatFragmentArgs.fromBundle(arguments)
+        binding?.userName = args.name
+        presenter.userUid = args.uid
+
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        presenter.userUid = ChatFragmentArgs.fromBundle(arguments).uid
-        val name = ChatFragmentArgs.fromBundle(arguments).name
-        chat_user_name_text.text = name
 
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
