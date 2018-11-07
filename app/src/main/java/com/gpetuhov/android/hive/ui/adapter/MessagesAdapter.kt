@@ -64,7 +64,7 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
         fun bindMessage(message: Message) {
             this.message = message
             messageTextView.text = message.text
-            messageTimeTextView.text = (message.timestamp / 1000).toString()
+            messageTimeTextView.text = message.getMessageTime()
 
             if (message.isFromUser(repo.currentUserUid())) {
                 rootLayout.gravity = Gravity.END
