@@ -2,6 +2,7 @@
 <resources>
     <dimen name="big_text_size">30sp</dimen>
     <dimen name="basic_text_size">20sp</dimen>
+    <dimen name="small_text_size">10sp</dimen>
     <dimen name="basic_view_size">48dp</dimen>
     <dimen name="map_top_padding">56dp</dimen>
 </resources>

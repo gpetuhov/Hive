@@ -52,7 +52,9 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
         private var rootLayout: LinearLayout = itemView.findViewById(R.id.message_root_layout)
         private var leftSpace: View = itemView.findViewById(R.id.message_left_space)
         private var rightSpace: View = itemView.findViewById(R.id.message_right_space)
+        private var messageWrapper: LinearLayout = itemView.findViewById(R.id.item_message_wrapper)
         private var messageTextView: TextView = itemView.findViewById(R.id.item_message_text)
+        private var messageTimeTextView: TextView = itemView.findViewById(R.id.item_message_time)
 
         init {
             HiveApp.appComponent.inject(this)
@@ -61,18 +63,19 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
         fun bindMessage(message: Message) {
             this.message = message
             messageTextView.text = message.text
+            messageTimeTextView.text = (message.timestamp / 1000000).toString()
 
             if (message.isFromUser(repo.currentUserUid())) {
                 rootLayout.gravity = Gravity.END
                 leftSpace.visibility = View.VISIBLE
                 rightSpace.visibility = View.GONE
-                messageTextView.setBackgroundResource(R.drawable.message_background_current_user)
+                messageWrapper.setBackgroundResource(R.drawable.message_background_current_user)
 
             } else {
                 rootLayout.gravity = Gravity.START
                 leftSpace.visibility = View.GONE
                 rightSpace.visibility = View.VISIBLE
-                messageTextView.setBackgroundResource(R.drawable.message_background)
+                messageWrapper.setBackgroundResource(R.drawable.message_background)
             }
         }
     }
