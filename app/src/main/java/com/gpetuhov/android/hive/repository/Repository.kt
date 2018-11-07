@@ -262,6 +262,8 @@ class Repository : Repo {
             // Chatroom collection consists of chatroom documents with chatroom uids.
             // Chatroom uid is calculated as userUid1_userUid2
             // Each chatroom document contains subcollection, which contains chatroom messages.
+            // Hierarchy:
+            // Chatrooms_collection -> Chatroom_document -> Messages_collection -> Message_document
 
             // This is needed for the chat room to have the same name,
             // despite of the uid of the user, who started the conversation.
