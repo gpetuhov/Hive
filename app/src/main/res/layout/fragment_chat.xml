@@ -70,7 +70,7 @@
         <EditText
                 android:id="@+id/message_text"
                 android:hint="@string/enter_message"
-                android:imeOptions="actionNone"
+                android:imeOptions="flagNoExtractUi"
                 android:inputType="textMultiLine"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/basic_view_size"
@@ -80,6 +80,8 @@
                 android:background="@android:color/transparent"
                 android:onTextChanged="@{(s, start, before, count) -> presenter.onTextChanged(s)}"
                 tools:text="Message text"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:layout_marginStart="8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginLeft="8dp"
