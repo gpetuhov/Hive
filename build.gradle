@@ -31,7 +31,7 @@ buildscript {
         classpath 'com.google.gms:google-services:4.0.1'
 
         // Firebase Crashlytics
-        classpath 'io.fabric.tools:gradle:1.25.4'
+        classpath 'io.fabric.tools:gradle:1.26.1'
 
         // This is needed for the navigation safe-args
         classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0-alpha07"

@@ -8,6 +8,9 @@ apply plugin: 'kotlin-kapt'
 // This is needed for the navigation safe-args
 apply plugin: 'androidx.navigation.safeargs'
 
+// Firebase Crashlytics
+apply plugin: 'io.fabric'
+
 def appVersionCode = 1007
 def appVersionName = "0.1.7"
 
@@ -112,7 +115,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
 
     // Firebase Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.6'
 
     // Facebook (required for FirebaseUI)
     implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
