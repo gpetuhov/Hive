@@ -85,6 +85,7 @@ class Repository : Repo {
         resetCurrentUser()
         clearResult()
         resetSearchUserDetails()
+        resetChatrooms()
     }
 
     // === Repo ===
@@ -502,5 +503,9 @@ class Repository : Repo {
         return firestore
             .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
             .collection(MESSAGES_COLLECTION)
+    }
+
+    private fun resetChatrooms() {
+        chatrooms.value = mutableListOf()
     }
 }

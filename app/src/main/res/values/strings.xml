@@ -64,6 +64,9 @@
     <string name="send_message">Send message</string>
     <string name="send_message_error">Error sending message</string>
 
+    <!-- ChatroomsFragment -->
+    <string name="no_messages">You have no messages yet</string>
+
     <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>
     <string name="location_sharing_channel_name">Location sharing channel</string>
