@@ -44,7 +44,7 @@
         <!-- adjustPan is needed to prevent keyboard from pushing activity up -->
         <activity
                 android:name=".ui.activity.MainActivity"
-                android:windowSoftInputMode="stateHidden|adjustPan">
+                android:windowSoftInputMode="stateUnchanged|adjustPan">
         </activity>
 
         <service android:name=".service.LocationService"/>
