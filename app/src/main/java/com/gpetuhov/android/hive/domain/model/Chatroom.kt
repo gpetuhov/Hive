@@ -5,5 +5,4 @@ data class Chatroom (
     var secondUserUid: String,    // Uid of the second user in the chat (not the current user)
     var lastMessageText: String,
     var lastMessageTimestamp: Long
-) {
-}
+)
