@@ -11,7 +11,7 @@
     <fragment
             android:id="@+id/navigation_search"
             android:name="com.gpetuhov.android.hive.ui.fragment.MapFragment"
-            android:label="fragment_map"
+            android:label="MapFragment"
             tools:layout="@layout/fragment_map" >
         <action
                 android:id="@+id/action_navigation_search_to_details_fragment"
@@ -22,14 +22,14 @@
 
     <fragment
             android:id="@+id/navigation_messages"
-            android:name="com.gpetuhov.android.hive.ui.fragment.MessagesFragment"
-            android:label="fragment_messages"
-            tools:layout="@layout/fragment_messages" />
+            android:name="com.gpetuhov.android.hive.ui.fragment.ChatroomsFragment"
+            android:label="ChatroomsFragment"
+            tools:layout="@layout/fragment_chatrooms" />
 
     <fragment
             android:id="@+id/navigation_profile"
             android:name="com.gpetuhov.android.hive.ui.fragment.ProfileFragment"
-            android:label="fragment_profile"
+            android:label="ProfileFragment"
             tools:layout="@layout/fragment_profile" />
 
     <!-- Secondary fragments -->
