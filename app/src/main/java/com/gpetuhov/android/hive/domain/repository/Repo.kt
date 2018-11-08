@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.domain.repository
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
+import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
 
@@ -32,4 +33,5 @@ interface Repo {
     fun startGettingMessagesUpdates(userUid: String)
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
+    fun chatrooms(): MutableLiveData<MutableList<Chatroom>>
 }

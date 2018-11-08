@@ -12,13 +12,6 @@ class ChatroomsAdapter : RecyclerView.Adapter<ChatroomsAdapter.ChatroomViewHolde
 
     private var chatroomList = mutableListOf<Chatroom>()
 
-    init {
-        // TODO: remove this
-        for (i in 1..100) {
-            chatroomList.add(Chatroom("Chatroom $i", "", "", 0))
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatroomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemChatroomBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_chatroom, parent, false)

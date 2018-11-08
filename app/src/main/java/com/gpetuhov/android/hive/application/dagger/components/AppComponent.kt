@@ -7,15 +7,12 @@ import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
 import com.gpetuhov.android.hive.presentation.presenter.DetailsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
-import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
-import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
-import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
-import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
+import com.gpetuhov.android.hive.ui.viewmodel.*
 import com.gpetuhov.android.hive.util.ResultMessagesProvider
 import dagger.Component
 import javax.inject.Singleton
@@ -41,6 +38,7 @@ interface AppComponent {
     fun inject(searchResultViewModel: SearchResultViewModel)
     fun inject(searchUserDetailsViewModel: SearchUserDetailsViewModel)
     fun inject(chatMessagesViewModel: ChatMessagesViewModel)
+    fun inject(chatroomsViewModel: ChatroomsViewModel)
 
     fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
     fun inject(mapFragmentPresenter: MapFragmentPresenter)

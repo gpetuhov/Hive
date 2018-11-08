@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.repository
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.*
+import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
@@ -57,6 +58,7 @@ class Repository : Repo {
     private val searchUserDetails = MutableLiveData<User>()
 
     private val messages = MutableLiveData<MutableList<Message>>()
+    private val chatrooms = MutableLiveData<MutableList<Chatroom>>()
 
     private var isAuthorized = false
     private var currentUserUid: String = ""
@@ -320,6 +322,8 @@ class Repository : Repo {
             onError()
         }
     }
+
+    override fun chatrooms() = chatrooms
 
     // === Private methods ===
 
