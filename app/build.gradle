@@ -1,5 +1,3 @@
-import com.google.gms.googleservices.GoogleServicesPlugin
-
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -158,7 +156,3 @@ dependencies {
 // Needed for Firebase
 // Must be at the bottom of the file!
 apply plugin: 'com.google.gms.google-services'
-
-// Without this line the app won't build due to different versions of google services
-// used in plugin and in FirebaseUI
-GoogleServicesPlugin.config.disableVersionCheck = true
