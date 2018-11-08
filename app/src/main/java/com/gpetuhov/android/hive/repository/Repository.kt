@@ -24,6 +24,8 @@ class Repository : Repo {
         private const val USERS_COLLECTION = "users"
         private const val CHATROOMS_COLLECTION = "chatrooms"
         private const val MESSAGES_COLLECTION = "messages"
+        private const val USER_CHATROOMS_COLLECTION = "userChatrooms"
+        private const val CHATROOMS_OF_USER_COLLECTION = "chatroomsOfUser"
         private const val NAME_KEY = "name"
         private const val USERNAME_KEY = "username"
         private const val EMAIL_KEY = "email"
@@ -34,6 +36,7 @@ class Repository : Repo {
         private const val SENDER_UID_KEY = "sender_uid"
         private const val TIMESTAMP_KEY = "timestamp"
         private const val MESSAGE_TEXT_KEY = "message_text"
+        private const val CHATROOM_UID_KEY = "chatroom_uid"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -70,6 +73,7 @@ class Repository : Repo {
     private var currentUserListenerRegistration: ListenerRegistration? = null
     private var searchUserDetailsListenerRegistration: ListenerRegistration? = null
     private var messagesListenerRegistration: ListenerRegistration? = null
+    private var chatroomsListenerRegistration: ListenerRegistration? = null
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -326,6 +330,35 @@ class Repository : Repo {
 
     override fun chatrooms() = chatrooms
 
+    override fun startGettingChatroomsUpdates() {
+        if (isAuthorized) {
+            chatroomsListenerRegistration = getChatroomsCollectionReference()
+                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        Timber.tag(TAG).d("Listen success")
+
+                        val chatroomList = mutableListOf<Chatroom>()
+
+                        if (querySnapshot != null) {
+                            for (doc in querySnapshot.documents) {
+                                chatroomList.add(getChatroomFromDocumentSnapshot(doc))
+                            }
+
+                        } else {
+                            Timber.tag(TAG).d("Listen failed")
+                        }
+
+                        chatrooms.value = chatroomList
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+        }
+    }
+
+    override fun stopGettingChatroomsUpdates() = chatroomsListenerRegistration?.remove() ?: Unit
+
     // === Private methods ===
 
     private fun resetCurrentUser() {
@@ -507,5 +540,20 @@ class Repository : Repo {
 
     private fun resetChatrooms() {
         chatrooms.value = mutableListOf()
+    }
+
+    private fun getChatroomsCollectionReference(): CollectionReference {
+        return firestore
+            .collection(USER_CHATROOMS_COLLECTION).document(currentUserUid)
+            .collection(CHATROOMS_OF_USER_COLLECTION)
+    }
+
+    private fun getChatroomFromDocumentSnapshot(doc: DocumentSnapshot): Chatroom {
+        return Chatroom(
+            chatroomUid = doc.getString(CHATROOM_UID_KEY) ?: "",
+            secondUserUid = "",
+            lastMessageText = "",
+            lastMessageTimestamp = 0
+        )
     }
 }

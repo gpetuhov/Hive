@@ -34,4 +34,6 @@ interface Repo {
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
     fun chatrooms(): MutableLiveData<MutableList<Chatroom>>
+    fun startGettingChatroomsUpdates()
+    fun stopGettingChatroomsUpdates()
 }

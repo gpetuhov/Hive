@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
+import com.gpetuhov.android.hive.ui.fragment.ChatroomsFragment
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
 import com.gpetuhov.android.hive.ui.viewmodel.*
 import com.gpetuhov.android.hive.util.ResultMessagesProvider
@@ -25,6 +26,7 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(mapFragment: MapFragment)
+    fun inject(chatroomsFragment: ChatroomsFragment)
 
     fun inject(locationService: LocationService)
 

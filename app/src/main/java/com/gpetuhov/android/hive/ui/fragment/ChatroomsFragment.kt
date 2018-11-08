@@ -11,16 +11,26 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentChatroomsBinding
 import com.gpetuhov.android.hive.domain.model.Chatroom
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
 import kotlinx.android.synthetic.main.fragment_chatrooms.*
+import javax.inject.Inject
 
 class ChatroomsFragment : Fragment() {
 
+    @Inject lateinit var repo: Repo
+
     private val chatroomsAdapter = ChatroomsAdapter()
     private var binding: FragmentChatroomsBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        HiveApp.appComponent.inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chatrooms, container, false)
@@ -38,5 +48,15 @@ class ChatroomsFragment : Fragment() {
             chatroomsAdapter.setChatrooms(chatroomList)
             binding?.chatroomListEmpty = chatroomList.isEmpty()
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        repo.startGettingChatroomsUpdates()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        repo.stopGettingChatroomsUpdates()
     }
 }
