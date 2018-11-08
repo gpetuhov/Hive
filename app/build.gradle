@@ -131,7 +131,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.5'
 
     // Data Binding
-    kapt 'androidx.databinding:databinding-compiler:3.4.0-alpha02'
+    kapt 'androidx.databinding:databinding-compiler:3.4.0-alpha03'
 
     // Moxy
     implementation "com.arello-mobile:moxy:$moxyVersion"
@@ -145,6 +145,11 @@ dependencies {
 
     // GeoFirestore
     implementation 'com.github.imperiumlabs:GeoFirestore-Android:v1.1.1'
+
+    // Android Lifecycle
+    // Without this there will be "Unresolved reference: ViewModelProviders"
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 }
 
 // Needed for Firebase
