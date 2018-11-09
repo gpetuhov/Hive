@@ -387,6 +387,7 @@ class Repository : Repo {
             // but in a separate userChatrooms collection)
 
             chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid)
+                .orderBy(CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY, Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
                         Timber.tag(TAG).d("Listen success")
