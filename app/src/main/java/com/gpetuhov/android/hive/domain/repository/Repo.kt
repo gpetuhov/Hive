@@ -34,11 +34,7 @@ interface Repo {
     fun searchResult(): MutableLiveData<MutableMap<String, User>>
     fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit)
     fun stopGettingSearchResultUpdates()
-    fun searchUserDetails(): MutableLiveData<User>
     fun initSearchUserDetails(uid: String)
-    fun startGettingSearchUserDetailsUpdates(uid: String)
-    fun stopGettingSearchUserDetailsUpdates()
-    fun copySearchUserDetailsIntoSecondUser()
 
     // Message
     fun messages(): MutableLiveData<MutableList<Message>>

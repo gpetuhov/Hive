@@ -16,7 +16,7 @@ class SearchUserDetailsViewModel : ViewModel() {
 
     init {
         HiveApp.appComponent.inject(this)
-        searchUserDetails = repo.searchUserDetails()
+        searchUserDetails = repo.secondUser()
     }
 
     fun getFirstUpdate(uid: String) = repo.initSearchUserDetails(uid)

@@ -63,6 +63,9 @@ class Repository : Repo {
     // 3. UI that observes currentUser (through ViewModel) is updated
     private val currentUser = MutableLiveData<User>()
 
+    // Second user in the chat and user from search results
+    private val secondUser = MutableLiveData<User>()
+
     // For searchResult the single source of truth is also Firestore.
     // Sequence of updates:
     // 1. Data in Firestore is updated
@@ -71,7 +74,6 @@ class Repository : Repo {
     // (Same sequence of changes is used for all other data, that Repository provides)
     private val searchResult = MutableLiveData<MutableMap<String, User>>()
     private val tempSearchResult = mutableMapOf<String, User>()
-    private val searchUserDetails = MutableLiveData<User>()
 
     // Messages of the current chatroom
     // (chatroom is the chat between current user and second user)
@@ -79,9 +81,6 @@ class Repository : Repo {
 
     // Chatrooms of the current user
     private val chatrooms = MutableLiveData<MutableList<Chatroom>>()
-
-    // Second user in the chat
-    private val secondUser = MutableLiveData<User>()
 
     // True if current user is authorized
     private var isAuthorized = false
@@ -108,7 +107,6 @@ class Repository : Repo {
     // Firestore listeners
     private var currentUserListenerRegistration: ListenerRegistration? = null
     private var secondUserListenerRegistration: ListenerRegistration? = null
-    private var searchUserDetailsListenerRegistration: ListenerRegistration? = null
     private var messagesListenerRegistration: ListenerRegistration? = null
     private var chatroomsListenerRegistration: ListenerRegistration? = null
 
@@ -124,10 +122,9 @@ class Repository : Repo {
         geoFirestore = GeoFirestore(firestore.collection(USERS_COLLECTION))
 
         resetCurrentUser()
-        clearResult()
-        resetSearchUserDetails()
-        resetChatrooms()
         resetSecondUser()
+        clearResult()
+        resetChatrooms()
     }
 
     // === Repo ===
@@ -231,7 +228,7 @@ class Repository : Repo {
     }
 
     override fun startGettingSecondUserUpdates(uid: String) {
-        searchUserDetailsListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
+        secondUserListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
     }
 
     override fun stopGettingSecondUserUpdates() = secondUserListenerRegistration?.remove() ?: Unit
@@ -302,22 +299,10 @@ class Repository : Repo {
 
     override fun stopGettingSearchResultUpdates() = geoQuery?.removeAllListeners() ?: Unit
 
-    override fun searchUserDetails() = searchUserDetails
-
     override fun initSearchUserDetails(uid: String) {
         // Get first update of user details from the search results, which are already available
         val user = searchResult.value?.get(uid)
-        if (user != null) searchUserDetails.value = user
-    }
-
-    override fun startGettingSearchUserDetailsUpdates(uid: String) {
-        searchUserDetailsListenerRegistration = startGettingUserUpdates(uid) { user -> searchUserDetails.value = user }
-    }
-
-    override fun stopGettingSearchUserDetailsUpdates() = searchUserDetailsListenerRegistration?.remove() ?: Unit
-
-    override fun copySearchUserDetailsIntoSecondUser() {
-        secondUser.value = searchUserDetails.value
+        if (user != null) secondUser.value = user
     }
 
     // --- Message ---
@@ -576,10 +561,6 @@ class Repository : Repo {
     }
 
     private fun clearTempResult() = tempSearchResult.clear()
-
-    private fun resetSearchUserDetails() {
-        searchUserDetails.value = createAnonymousUser()
-    }
 
     private fun updateUserInSearchResult(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
         if (doc != null && doc.id != currentUser.value?.uid) {
