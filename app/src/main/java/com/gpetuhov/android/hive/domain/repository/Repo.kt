@@ -17,6 +17,7 @@ interface Repo {
 
     // User
     fun currentUser(): MutableLiveData<User>
+    fun secondUser(): MutableLiveData<User>
     fun currentUserUsername(): String
     fun currentUserService(): String
     fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit)
@@ -26,6 +27,8 @@ interface Repo {
     fun saveUserLocation(newLocation: LatLng)
     fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
+    fun startGettingSecondUserUpdates(uid: String)
+    fun stopGettingSecondUserUpdates()
 
     // Search
     fun searchResult(): MutableLiveData<MutableMap<String, User>>
@@ -35,10 +38,11 @@ interface Repo {
     fun initSearchUserDetails(uid: String)
     fun startGettingSearchUserDetailsUpdates(uid: String)
     fun stopGettingSearchUserDetailsUpdates()
+    fun copySearchUserDetailsIntoSecondUser()
 
     // Message
     fun messages(): MutableLiveData<MutableList<Message>>
-    fun startGettingMessagesUpdates(secondUserUid: String, secondUserName: String)
+    fun startGettingMessagesUpdates(secondUserUid: String)
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
 

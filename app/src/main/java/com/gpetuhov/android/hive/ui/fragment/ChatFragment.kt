@@ -14,6 +14,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentChatBinding
 import com.gpetuhov.android.hive.domain.model.Message
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
@@ -35,9 +36,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         // Set name and uid of the user, with whom current user is chatting
         val args = ChatFragmentArgs.fromBundle(arguments)
-        binding?.userName = args.name
         presenter.secondUserUid = args.uid
-        presenter.secondUserName = args.name
 
         return binding?.root
     }
@@ -54,6 +53,9 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter.setMessages(messageList)
             messages.scrollToPosition(0)
+        })
+        viewModel.secondUser.observe(this, Observer<User> { secondUser ->
+            binding?.userName = secondUser.getUsernameOrName()
         })
     }
 

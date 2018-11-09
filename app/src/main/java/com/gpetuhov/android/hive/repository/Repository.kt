@@ -80,6 +80,9 @@ class Repository : Repo {
     // Chatrooms of the current user
     private val chatrooms = MutableLiveData<MutableList<Chatroom>>()
 
+    // Second user in the chat
+    private val secondUser = MutableLiveData<User>()
+
     // True if current user is authorized
     private var isAuthorized = false
 
@@ -88,9 +91,6 @@ class Repository : Repo {
 
     // Uid of the second user in the chat
     private var secondUserUid: String = ""
-
-    // Name of the second user in the chat (name or username)
-    private var secondUserName: String = ""
 
     // Query text used to search users on map
     private var queryText = ""
@@ -107,6 +107,7 @@ class Repository : Repo {
 
     // Firestore listeners
     private var currentUserListenerRegistration: ListenerRegistration? = null
+    private var secondUserListenerRegistration: ListenerRegistration? = null
     private var searchUserDetailsListenerRegistration: ListenerRegistration? = null
     private var messagesListenerRegistration: ListenerRegistration? = null
     private var chatroomsListenerRegistration: ListenerRegistration? = null
@@ -126,6 +127,7 @@ class Repository : Repo {
         clearResult()
         resetSearchUserDetails()
         resetChatrooms()
+        resetSecondUser()
     }
 
     // === Repo ===
@@ -159,6 +161,8 @@ class Repository : Repo {
     // --- User ---
 
     override fun currentUser() = currentUser
+
+    override fun secondUser() = secondUser
 
     override fun currentUserUsername() = currentUser.value?.username ?: ""
 
@@ -225,6 +229,12 @@ class Repository : Repo {
             onError()
         }
     }
+
+    override fun startGettingSecondUserUpdates(uid: String) {
+        searchUserDetailsListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
+    }
+
+    override fun stopGettingSecondUserUpdates() = secondUserListenerRegistration?.remove() ?: Unit
 
     // --- Search ---
 
@@ -306,13 +316,16 @@ class Repository : Repo {
 
     override fun stopGettingSearchUserDetailsUpdates() = searchUserDetailsListenerRegistration?.remove() ?: Unit
 
+    override fun copySearchUserDetailsIntoSecondUser() {
+        secondUser.value = searchUserDetails.value
+    }
+
     // --- Message ---
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates(secondUserUid: String, secondUserName: String) {
+    override fun startGettingMessagesUpdates(secondUserUid: String) {
         this.secondUserUid = secondUserUid
-        this.secondUserName = secondUserName
 
         if (isAuthorized) {
             // Chatroom collection consists of chatroom documents with chatroom uids.
@@ -434,6 +447,11 @@ class Repository : Repo {
         currentUserUid = ""
     }
 
+    private fun resetSecondUser() {
+        secondUser.value = createAnonymousUser()
+        secondUserUid = ""
+    }
+
     private fun createAnonymousUser(): User {
         return User(
             uid = "",
@@ -548,6 +566,8 @@ class Repository : Repo {
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""
 
+    private fun secondUserNameOrUsername() = secondUser.value?.getUsernameOrName() ?: ""
+
     // --- Search ---
 
     private fun clearResult() {
@@ -660,7 +680,7 @@ class Repository : Repo {
         data[CHATROOM_USER_UID_1_KEY] = currentUserUid
         data[CHATROOM_USER_UID_2_KEY] = secondUserUid
         data[CHATROOM_USER_NAME_1_KEY] = currentUserNameOrUsername()
-        data[CHATROOM_USER_NAME_2_KEY] = secondUserName
+        data[CHATROOM_USER_NAME_2_KEY] = secondUserNameOrUsername()
 
         data[CHATROOM_LAST_MESSAGE_TEXT_KEY] = lastMessageText
         data[CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
