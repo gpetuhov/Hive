@@ -121,6 +121,7 @@ class Repository : Repo {
     }
 
     // === Repo ===
+    // --- Authentication ---
 
     override fun onSignIn(user: User) {
         if (!isAuthorized) {
@@ -146,6 +147,8 @@ class Repository : Repo {
             resetCurrentUser()
         }
     }
+
+    // --- User ---
 
     override fun currentUser() = currentUser
 
@@ -210,6 +213,8 @@ class Repository : Repo {
             onError()
         }
     }
+
+    // --- Search ---
 
     override fun searchResult() = searchResult
 
@@ -289,6 +294,8 @@ class Repository : Repo {
 
     override fun stopGettingSearchUserDetailsUpdates() = searchUserDetailsListenerRegistration?.remove() ?: Unit
 
+    // --- Message ---
+
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
     override fun startGettingMessagesUpdates(secondUserUid: String) {
@@ -362,6 +369,8 @@ class Repository : Repo {
             onError()
         }
     }
+
+    // --- Chatroom ---
 
     override fun chatrooms() = chatrooms
 

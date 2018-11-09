@@ -10,8 +10,12 @@ import com.gpetuhov.android.hive.domain.model.User
 // All classes at this layer call methods of this interface to retrieve and save data.
 // The interface must be implemented at the storage (outer) layer.
 interface Repo {
+
+    // Authentication
     fun onSignIn(user: User)
     fun onSignOut()
+
+    // User
     fun currentUser(): MutableLiveData<User>
     fun currentUserUsername(): String
     fun currentUserService(): String
@@ -22,6 +26,8 @@ interface Repo {
     fun saveUserLocation(newLocation: LatLng)
     fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
+
+    // Search
     fun searchResult(): MutableLiveData<MutableMap<String, User>>
     fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit)
     fun stopGettingSearchResultUpdates()
@@ -29,10 +35,14 @@ interface Repo {
     fun initSearchUserDetails(uid: String)
     fun startGettingSearchUserDetailsUpdates(uid: String)
     fun stopGettingSearchUserDetailsUpdates()
+
+    // Message
     fun messages(): MutableLiveData<MutableList<Message>>
     fun startGettingMessagesUpdates(secondUserUid: String)
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
+
+    // Chatroom
     fun chatrooms(): MutableLiveData<MutableList<Chatroom>>
     fun startGettingChatroomsUpdates()
     fun stopGettingChatroomsUpdates()
