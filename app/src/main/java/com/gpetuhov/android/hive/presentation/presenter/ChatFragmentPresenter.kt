@@ -16,7 +16,7 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
     // Two-way data binding is used for this property
     var messageText = ""
 
-    var userUid = ""
+    var secondUserUid = ""
 
     private val sendMessageInteractor = SendMessageInteractor(this)
 
@@ -42,7 +42,7 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
 
     // === Lifecycle methods ===
 
-    fun onResume() = repo.startGettingMessagesUpdates(userUid)
+    fun onResume() = repo.startGettingMessagesUpdates(secondUserUid)
 
     fun onPause() = repo.stopGettingMessagesUpdates()
 }

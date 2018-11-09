@@ -30,7 +30,7 @@ interface Repo {
     fun startGettingSearchUserDetailsUpdates(uid: String)
     fun stopGettingSearchUserDetailsUpdates()
     fun messages(): MutableLiveData<MutableList<Message>>
-    fun startGettingMessagesUpdates(userUid: String)
+    fun startGettingMessagesUpdates(secondUserUid: String)
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
     fun chatrooms(): MutableLiveData<MutableList<Chatroom>>

@@ -36,7 +36,7 @@ class Repository : Repo {
         private const val SENDER_UID_KEY = "sender_uid"
         private const val TIMESTAMP_KEY = "timestamp"
         private const val MESSAGE_TEXT_KEY = "message_text"
-        private const val CHATROOM_UID_KEY = "chatroom_uid"
+        private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -65,6 +65,7 @@ class Repository : Repo {
 
     private var isAuthorized = false
     private var currentUserUid: String = ""
+    private var secondUserUid: String = ""
     private var queryText = ""
     private val firestore = FirebaseFirestore.getInstance()
     private var geoFirestore: GeoFirestore      // GeoFirestore is used to query users by location
@@ -263,7 +264,9 @@ class Repository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates(userUid: String) {
+    override fun startGettingMessagesUpdates(secondUserUid: String) {
+        this.secondUserUid = secondUserUid
+
         if (isAuthorized) {
             // Chatroom collection consists of chatroom documents with chatroom uids.
             // Chatroom uid is calculated as userUid1_userUid2
@@ -273,7 +276,7 @@ class Repository : Repo {
 
             // This is needed for the chat room to have the same name,
             // despite of the uid of the user, who started the conversation.
-            currentChatRoomUid = if (currentUserUid < userUid) "${currentUserUid}_$userUid" else "${userUid}_$currentUserUid"
+            currentChatRoomUid = if (currentUserUid < secondUserUid) "${currentUserUid}_$secondUserUid" else "${secondUserUid}_$currentUserUid"
 
             messagesListenerRegistration = getMessagesCollectionReference()
                 .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
@@ -304,6 +307,7 @@ class Repository : Repo {
     override fun stopGettingMessagesUpdates() {
         messagesListenerRegistration?.remove()
         currentChatRoomUid = ""
+        secondUserUid = ""
     }
 
     override fun sendMessage(messageText: String, onError: () -> Unit) {
@@ -313,6 +317,7 @@ class Repository : Repo {
             data[MESSAGE_TEXT_KEY] = messageText
             data[TIMESTAMP_KEY] = FieldValue.serverTimestamp()  // Get timestamp on the server, not on the device
 
+            // Send message to the current chatroom
             getMessagesCollectionReference()
                 .add(data)
                 .addOnSuccessListener {
@@ -323,6 +328,9 @@ class Repository : Repo {
                     onError()
                 }
 
+            // Update chatroom for current and second user
+            updateChatroom()
+
         } else {
             onError()
         }
@@ -332,7 +340,7 @@ class Repository : Repo {
 
     override fun startGettingChatroomsUpdates() {
         if (isAuthorized) {
-            chatroomsListenerRegistration = getChatroomsCollectionReference()
+            chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
                         Timber.tag(TAG).d("Listen success")
@@ -542,18 +550,40 @@ class Repository : Repo {
         chatrooms.value = mutableListOf()
     }
 
-    private fun getChatroomsCollectionReference(): CollectionReference {
+    private fun getChatroomsCollectionReference(userUid: String): CollectionReference {
         return firestore
-            .collection(USER_CHATROOMS_COLLECTION).document(currentUserUid)
+            .collection(USER_CHATROOMS_COLLECTION).document(userUid)
             .collection(CHATROOMS_OF_USER_COLLECTION)
     }
 
     private fun getChatroomFromDocumentSnapshot(doc: DocumentSnapshot): Chatroom {
         return Chatroom(
-            chatroomUid = doc.getString(CHATROOM_UID_KEY) ?: "",
+            chatroomUid = doc.id,
             secondUserUid = "",
             lastMessageText = "",
             lastMessageTimestamp = 0
         )
+    }
+
+    private fun updateChatroom() {
+        val data = HashMap<String, Any>()
+        data[CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
+
+        // We have to update current chatroom for both users in the chat
+        // (current user and the second user).
+        updateChatroomForUser(currentUserUid, data)
+        updateChatroomForUser(secondUserUid, data)
+    }
+
+    private fun updateChatroomForUser(userUid: String, data: HashMap<String, Any>) {
+        getChatroomsCollectionReference(userUid)
+            .document(currentChatRoomUid)
+            .set(data, SetOptions.merge())
+            .addOnSuccessListener {
+                Timber.tag(TAG).d("Chatroom successfully updated")
+            }
+            .addOnFailureListener { error ->
+                Timber.tag(TAG).d("Error updating chatroom")
+            }
     }
 }
