@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.utils
 
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
+import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
@@ -89,7 +90,7 @@ class TestRepository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = MutableLiveData()
 
-    override fun startGettingMessagesUpdates(userUid: String) {
+    override fun startGettingMessagesUpdates(secondUserUid: String) {
     }
 
     override fun stopGettingMessagesUpdates() {
@@ -101,5 +102,13 @@ class TestRepository : Repo {
         } else {
             onError()
         }
+    }
+
+    override fun chatrooms(): MutableLiveData<MutableList<Chatroom>> = MutableLiveData()
+
+    override fun startGettingChatroomsUpdates() {
+    }
+
+    override fun stopGettingChatroomsUpdates() {
     }
 }
