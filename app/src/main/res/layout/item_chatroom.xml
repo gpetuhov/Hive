@@ -30,7 +30,8 @@
                     android:maxLines="1"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    style="@style/basicTextStyle"
+                    android:textStyle="bold"
+                    style="@style/mediumTextStyle"
                     tools:text="User name"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"/>
@@ -52,7 +53,7 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:singleLine="true"
-                style="@style/basicTextStyle"
+                style="@style/mediumTextStyle"
                 tools:text="Message text"/>
 
     </LinearLayout>
