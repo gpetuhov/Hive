@@ -584,11 +584,14 @@ class Repository : Repo {
 
         return Message(
             senderUid = senderUid,
-            timestamp = doc.getTimestamp(TIMESTAMP_KEY)?.seconds ?: (System.currentTimeMillis() / 1000),
+            timestamp = getTimestameFromDocumentSnapshot(doc, TIMESTAMP_KEY),
             text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
             isFromCurrentUser = senderUid == currentUserUid
         )
     }
+
+    private fun getTimestameFromDocumentSnapshot(doc: DocumentSnapshot, timestampKey: String) =
+        doc.getTimestamp(timestampKey)?.seconds ?: (System.currentTimeMillis() / 1000)
 
     private fun getMessagesCollectionReference(): CollectionReference {
         return firestore
@@ -613,7 +616,7 @@ class Repository : Repo {
             chatroomUid = doc.id,
             secondUserUid = "",
             lastMessageText = "",
-            lastMessageTimestamp = 0
+            lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY)
         )
     }
 
