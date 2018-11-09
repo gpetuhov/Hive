@@ -4,18 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentChatroomsBinding
 import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
+import com.gpetuhov.android.hive.ui.recycler.SimpleItemDecoration
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
 import kotlinx.android.synthetic.main.fragment_chatrooms.*
 import javax.inject.Inject
@@ -42,6 +45,10 @@ class ChatroomsFragment : Fragment() {
 
         chatrooms.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         chatrooms.adapter = chatroomsAdapter
+
+        // Add divider between items
+        val dividerItemDecoration = SimpleItemDecoration(context?.let { ContextCompat.getDrawable(it, R.drawable.item_divider) })
+        chatrooms.addItemDecoration(dividerItemDecoration)
 
         val viewModel = ViewModelProviders.of(this).get(ChatroomsViewModel::class.java)
         viewModel.chatrooms.observe(this, Observer<MutableList<Chatroom>> { chatroomList ->
