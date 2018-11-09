@@ -302,6 +302,13 @@ class Repository : Repo {
         if (user != null) secondUser.value = user
     }
 
+    override fun initSecondUser(uid: String, name: String) {
+        val secondUserValue = createAnonymousUser()
+        secondUserValue.uid = uid
+        secondUserValue.name = name
+        secondUser.value = secondUserValue
+    }
+
     // --- Message ---
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages

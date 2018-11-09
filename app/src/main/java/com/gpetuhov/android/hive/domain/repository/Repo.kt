@@ -29,6 +29,7 @@ interface Repo {
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
     fun startGettingSecondUserUpdates(uid: String)
     fun stopGettingSecondUserUpdates()
+    fun initSecondUser(uid: String, name: String)
 
     // Search
     fun searchResult(): MutableLiveData<MutableMap<String, User>>
