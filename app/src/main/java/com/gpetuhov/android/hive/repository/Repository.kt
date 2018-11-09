@@ -44,6 +44,8 @@ class Repository : Repo {
         private const val MESSAGE_TEXT_KEY = "message_text"
 
         // Chatroom
+        private const val CHATROOM_USER_UID_1_KEY = "userUid1"
+        private const val CHATROOM_USER_UID_2_KEY = "userUid2"
         private const val CHATROOM_USER_NAME_1_KEY = "userName1"
         private const val CHATROOM_USER_NAME_2_KEY = "userName2"
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
@@ -622,15 +624,21 @@ class Repository : Repo {
     }
 
     private fun getChatroomFromDocumentSnapshot(doc: DocumentSnapshot): Chatroom {
-        // Get both user names from document snapshot
+        // Get both user uids and names from document snapshot
+        val userUid1 = doc.getString(CHATROOM_USER_UID_1_KEY) ?: ""
+        val userUid2 = doc.getString(CHATROOM_USER_UID_2_KEY) ?: ""
         val userName1 = doc.getString(CHATROOM_USER_NAME_1_KEY) ?: ""
         val userName2 = doc.getString(CHATROOM_USER_NAME_2_KEY) ?: ""
+
+        // Second user uid is the one, that is not equal to current user uid
+        val secondUserUid = if (userUid1 != currentUserUid) userUid1 else userUid2
 
         // Second user name is the one, that is not equal to current user name
         val secondUserName = if (userName1 != currentUserNameOrUserName()) userName1 else userName2
 
         return Chatroom(
             chatroomUid = doc.id,
+            secondUserUid = secondUserUid,
             secondUserName = secondUserName,
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY)
@@ -640,7 +648,9 @@ class Repository : Repo {
     private fun updateChatroom(lastMessageText: String) {
         val data = HashMap<String, Any>()
 
-        // We set BOTH current and second user names in Firestore
+        // We set BOTH current and second user uids and names in Firestore
+        data[CHATROOM_USER_UID_1_KEY] = currentUserUid
+        data[CHATROOM_USER_UID_2_KEY] = secondUserUid
         data[CHATROOM_USER_NAME_1_KEY] = currentUserNameOrUserName()
         data[CHATROOM_USER_NAME_2_KEY] = secondUserName
 
