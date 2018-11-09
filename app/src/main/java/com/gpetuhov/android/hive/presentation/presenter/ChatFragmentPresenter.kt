@@ -17,6 +17,7 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
     var messageText = ""
 
     var secondUserUid = ""
+    var secondUserName = ""
 
     private val sendMessageInteractor = SendMessageInteractor(this)
 
@@ -42,7 +43,7 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
 
     // === Lifecycle methods ===
 
-    fun onResume() = repo.startGettingMessagesUpdates(secondUserUid)
+    fun onResume() = repo.startGettingMessagesUpdates(secondUserUid, secondUserName)
 
     fun onPause() = repo.stopGettingMessagesUpdates()
 }

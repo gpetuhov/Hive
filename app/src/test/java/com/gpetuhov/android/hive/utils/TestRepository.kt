@@ -90,7 +90,7 @@ class TestRepository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = MutableLiveData()
 
-    override fun startGettingMessagesUpdates(secondUserUid: String) {
+    override fun startGettingMessagesUpdates(secondUserUid: String, secondUserName: String) {
     }
 
     override fun stopGettingMessagesUpdates() {

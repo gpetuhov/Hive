@@ -37,6 +37,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         val args = ChatFragmentArgs.fromBundle(arguments)
         binding?.userName = args.name
         presenter.secondUserUid = args.uid
+        presenter.secondUserName = args.name
 
         return binding?.root
     }

@@ -44,6 +44,8 @@ class Repository : Repo {
         private const val MESSAGE_TEXT_KEY = "message_text"
 
         // Chatroom
+        private const val CHATROOM_USER_NAME_1_KEY = "userName1"
+        private const val CHATROOM_USER_NAME_2_KEY = "userName2"
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
     }
@@ -84,6 +86,9 @@ class Repository : Repo {
 
     // Uid of the second user in the chat
     private var secondUserUid: String = ""
+
+    // Name of the second user in the chat (name or username)
+    private var secondUserName: String = ""
 
     // Query text used to search users on map
     private var queryText = ""
@@ -299,8 +304,9 @@ class Repository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates(secondUserUid: String) {
+    override fun startGettingMessagesUpdates(secondUserUid: String, secondUserName: String) {
         this.secondUserUid = secondUserUid
+        this.secondUserName = secondUserName
 
         if (isAuthorized) {
             // Chatroom collection consists of chatroom documents with chatroom uids.
@@ -534,6 +540,8 @@ class Repository : Repo {
         }
     }
 
+    private fun currentUserNameOrUserName() = currentUser.value?.getUsernameOrName() ?: ""
+
     // --- Search ---
 
     private fun clearResult() {
@@ -614,9 +622,16 @@ class Repository : Repo {
     }
 
     private fun getChatroomFromDocumentSnapshot(doc: DocumentSnapshot): Chatroom {
+        // Get both user names from document snapshot
+        val userName1 = doc.getString(CHATROOM_USER_NAME_1_KEY) ?: ""
+        val userName2 = doc.getString(CHATROOM_USER_NAME_2_KEY) ?: ""
+
+        // Second user name is the one, that is not equal to current user name
+        val secondUserName = if (userName1 != currentUserNameOrUserName()) userName1 else userName2
+
         return Chatroom(
             chatroomUid = doc.id,
-            secondUserUid = "",
+            secondUserName = secondUserName,
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY)
         )
@@ -624,6 +639,11 @@ class Repository : Repo {
 
     private fun updateChatroom(lastMessageText: String) {
         val data = HashMap<String, Any>()
+
+        // We set BOTH current and second user names in Firestore
+        data[CHATROOM_USER_NAME_1_KEY] = currentUserNameOrUserName()
+        data[CHATROOM_USER_NAME_2_KEY] = secondUserName
+
         data[CHATROOM_LAST_MESSAGE_TEXT_KEY] = lastMessageText
         data[CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
 
