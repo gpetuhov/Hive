@@ -23,6 +23,8 @@ class TestRepository : Repo {
 
     override fun currentUser(): MutableLiveData<User> = MutableLiveData()
 
+    override fun secondUser(): MutableLiveData<User> = MutableLiveData()
+
     override fun currentUserUsername() = username
 
     override fun currentUserService() = service
@@ -70,6 +72,15 @@ class TestRepository : Repo {
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
     }
 
+    override fun startGettingSecondUserUpdates(uid: String) {
+    }
+
+    override fun stopGettingSecondUserUpdates() {
+    }
+
+    override fun initSecondUser(uid: String, name: String) {
+    }
+
     override fun searchResult(): MutableLiveData<MutableMap<String, User>> = MutableLiveData()
 
     override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) = onComplete()
@@ -77,20 +88,12 @@ class TestRepository : Repo {
     override fun stopGettingSearchResultUpdates() {
     }
 
-    override fun searchUserDetails(): MutableLiveData<User> = MutableLiveData()
-
     override fun initSearchUserDetails(uid: String) {
-    }
-
-    override fun startGettingSearchUserDetailsUpdates(uid: String) {
-    }
-
-    override fun stopGettingSearchUserDetailsUpdates() {
     }
 
     override fun messages(): MutableLiveData<MutableList<Message>> = MutableLiveData()
 
-    override fun startGettingMessagesUpdates(secondUserUid: String, secondUserName: String) {
+    override fun startGettingMessagesUpdates() {
     }
 
     override fun stopGettingMessagesUpdates() {
