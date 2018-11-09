@@ -60,12 +60,6 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.ChatFragment"
             android:label="ChatFragment"
             tools:layout="@layout/fragment_chat">
-        <argument
-                android:name="uid"
-                app:argType="string"/>
-        <argument
-                android:name="name"
-                app:argType="string"/>
     </fragment>
 
 </navigation>

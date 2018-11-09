@@ -33,10 +33,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.presenter = presenter
-
-        // Set name and uid of the user, with whom current user is chatting
-        val args = ChatFragmentArgs.fromBundle(arguments)
-
         return binding?.root
     }
 

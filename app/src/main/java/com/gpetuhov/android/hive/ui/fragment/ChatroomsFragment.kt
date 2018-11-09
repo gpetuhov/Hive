@@ -71,11 +71,7 @@ class ChatroomsFragment : Fragment(), ChatroomsAdapter.Callback {
 
     override fun onChatroomClick(chatroom: Chatroom?) {
         if (chatroom != null) {
-            val action = ChatroomsFragmentDirections.actionNavigationMessagesToChatFragment(
-                chatroom.secondUserUid,
-                chatroom.secondUserName
-            )
-
+            val action = ChatroomsFragmentDirections.actionNavigationMessagesToChatFragment()
             findNavController().navigate(action)
         }
     }
