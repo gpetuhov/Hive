@@ -20,14 +20,15 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
 import com.gpetuhov.android.hive.ui.recycler.SimpleItemDecoration
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
+import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chatrooms.*
 import javax.inject.Inject
 
-class ChatroomsFragment : Fragment() {
+class ChatroomsFragment : Fragment(), ChatroomsAdapter.Callback {
 
     @Inject lateinit var repo: Repo
 
-    private val chatroomsAdapter = ChatroomsAdapter()
+    private val chatroomsAdapter = ChatroomsAdapter(this)
     private var binding: FragmentChatroomsBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,5 +66,11 @@ class ChatroomsFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         repo.stopGettingChatroomsUpdates()
+    }
+
+    // === ChatroomsAdapter.Callback ===
+
+    override fun onChatroomClick(chatroom: Chatroom?) {
+        toast("Chatroom with ${chatroom?.secondUserName}")
     }
 }

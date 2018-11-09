@@ -8,13 +8,20 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.ItemChatroomBinding
 import com.gpetuhov.android.hive.domain.model.Chatroom
 
-class ChatroomsAdapter : RecyclerView.Adapter<ChatroomsAdapter.ChatroomViewHolder>() {
+class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<ChatroomsAdapter.ChatroomViewHolder>() {
+
+    interface Callback {
+        fun onChatroomClick(chatroom: Chatroom?)
+    }
 
     private var chatroomList = mutableListOf<Chatroom>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatroomViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemChatroomBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_chatroom, parent, false)
+
+        binding.root.setOnClickListener { callback.onChatroomClick(binding.chatroom) }
+
         return ChatroomViewHolder(binding)
     }
 
