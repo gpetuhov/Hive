@@ -158,7 +158,9 @@ class MapManager {
     // Save map state into MapManager
     // (MapManager is alive during the whole app lifecycle)
     fun saveMapState(queryText: String) {
-        mapState = MapState(googleMap.cameraPosition, googleMap.mapType, queryText)
+        if (::googleMap.isInitialized) {
+            mapState = MapState(googleMap.cameraPosition, googleMap.mapType, queryText)
+        }
     }
 
     // Save map state into savedInstanceState
