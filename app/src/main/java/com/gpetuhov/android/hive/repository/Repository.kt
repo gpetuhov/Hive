@@ -44,6 +44,7 @@ class Repository : Repo {
         private const val MESSAGE_TEXT_KEY = "message_text"
 
         // Chatroom
+        private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
     }
 
@@ -363,7 +364,7 @@ class Repository : Repo {
                 }
 
             // Update chatroom for current and second user
-            updateChatroom()
+            updateChatroom(messageText)
 
         } else {
             onError()
@@ -615,13 +616,14 @@ class Repository : Repo {
         return Chatroom(
             chatroomUid = doc.id,
             secondUserUid = "",
-            lastMessageText = "",
+            lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY)
         )
     }
 
-    private fun updateChatroom() {
+    private fun updateChatroom(lastMessageText: String) {
         val data = HashMap<String, Any>()
+        data[CHATROOM_LAST_MESSAGE_TEXT_KEY] = lastMessageText
         data[CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
 
         // We have to update current chatroom for both users in the chat

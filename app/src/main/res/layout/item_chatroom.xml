@@ -39,15 +39,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{chatroom.getLastMessageTime()}"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:singleLine="true"
                     android:layout_gravity="center_vertical"
                     style="@style/smallTextStyle"
                     tools:text="2018-11-7 12:29"/>
 
         </LinearLayout>
 
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{chatroom.lastMessageText}"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                style="@style/basicTextStyle"
+                tools:text="Message text"/>
 
     </LinearLayout>
 
