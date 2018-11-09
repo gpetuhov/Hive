@@ -413,53 +413,11 @@ class Repository : Repo {
     override fun stopGettingChatroomsUpdates() = chatroomsListenerRegistration?.remove() ?: Unit
 
     // === Private methods ===
+    // --- User ---
 
     private fun resetCurrentUser() {
         currentUser.value = createAnonymousUser()
         currentUserUid = ""
-    }
-
-    private fun clearResult() {
-        clearTempResult()
-        updateSearchResult()
-    }
-
-    private fun clearTempResult() = tempSearchResult.clear()
-
-    private fun resetSearchUserDetails() {
-        searchUserDetails.value = createAnonymousUser()
-    }
-
-    private fun updateUserInSearchResult(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
-        if (doc != null && doc.id != currentUser.value?.uid) {
-            val user = getUserFromDocumentSnapshot(doc, geoPoint)
-
-            if (checkConditions(user)) {
-                tempSearchResult[user.uid] = user
-                updateSearchResult()
-            } else {
-                removeUserFromSearchResults(user.uid)
-            }
-        }
-    }
-
-    private fun checkConditions(user: User): Boolean = user.isVisible && checkQueryText(user)
-
-    private fun checkQueryText(user: User): Boolean {
-        return user.service.contains(queryText, true)
-                || user.name.contains(queryText, true)
-                || user.username.contains(queryText, true)
-    }
-
-    private fun removeUserFromSearchResults(uid: String?) {
-        if (uid != null) {
-            tempSearchResult.remove(uid)
-            updateSearchResult()
-        }
-    }
-
-    private fun updateSearchResult() {
-        searchResult.value = tempSearchResult
     }
 
     private fun createAnonymousUser(): User {
@@ -574,6 +532,53 @@ class Repository : Repo {
         }
     }
 
+    // --- Search ---
+
+    private fun clearResult() {
+        clearTempResult()
+        updateSearchResult()
+    }
+
+    private fun clearTempResult() = tempSearchResult.clear()
+
+    private fun resetSearchUserDetails() {
+        searchUserDetails.value = createAnonymousUser()
+    }
+
+    private fun updateUserInSearchResult(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+        if (doc != null && doc.id != currentUser.value?.uid) {
+            val user = getUserFromDocumentSnapshot(doc, geoPoint)
+
+            if (checkConditions(user)) {
+                tempSearchResult[user.uid] = user
+                updateSearchResult()
+            } else {
+                removeUserFromSearchResults(user.uid)
+            }
+        }
+    }
+
+    private fun checkConditions(user: User): Boolean = user.isVisible && checkQueryText(user)
+
+    private fun checkQueryText(user: User): Boolean {
+        return user.service.contains(queryText, true)
+                || user.name.contains(queryText, true)
+                || user.username.contains(queryText, true)
+    }
+
+    private fun removeUserFromSearchResults(uid: String?) {
+        if (uid != null) {
+            tempSearchResult.remove(uid)
+            updateSearchResult()
+        }
+    }
+
+    private fun updateSearchResult() {
+        searchResult.value = tempSearchResult
+    }
+
+    // --- Message ---
+
     private fun getMessageFromDocumentSnapshot(doc: DocumentSnapshot): Message {
         val senderUid = doc.getString(SENDER_UID_KEY) ?: ""
 
@@ -590,6 +595,8 @@ class Repository : Repo {
             .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
             .collection(MESSAGES_COLLECTION)
     }
+
+    // --- Chatroom ---
 
     private fun resetChatrooms() {
         chatrooms.value = mutableListOf()
