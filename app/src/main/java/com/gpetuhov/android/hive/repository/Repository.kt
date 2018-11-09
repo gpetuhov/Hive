@@ -88,9 +88,6 @@ class Repository : Repo {
     // Uid of the current user
     private var currentUserUid: String = ""
 
-    // Uid of the second user in the chat
-    private var secondUserUid: String = ""
-
     // Query text used to search users on map
     private var queryText = ""
 
@@ -309,9 +306,7 @@ class Repository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates(secondUserUid: String) {
-        this.secondUserUid = secondUserUid
-
+    override fun startGettingMessagesUpdates() {
         if (isAuthorized) {
             // Chatroom collection consists of chatroom documents with chatroom uids.
             // Chatroom uid is calculated as userUid1_userUid2
@@ -321,7 +316,7 @@ class Repository : Repo {
 
             // This is needed for the chat room to have the same name,
             // despite of the uid of the user, who started the conversation.
-            currentChatRoomUid = if (currentUserUid < secondUserUid) "${currentUserUid}_$secondUserUid" else "${secondUserUid}_$currentUserUid"
+            currentChatRoomUid = if (currentUserUid < secondUserUid()) "${currentUserUid}_${secondUserUid()}" else "${secondUserUid()}_$currentUserUid"
 
             messagesListenerRegistration = getMessagesCollectionReference()
                 .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
@@ -352,7 +347,6 @@ class Repository : Repo {
     override fun stopGettingMessagesUpdates() {
         messagesListenerRegistration?.remove()
         currentChatRoomUid = ""
-        secondUserUid = ""
     }
 
     override fun sendMessage(messageText: String, onError: () -> Unit) {
@@ -434,7 +428,6 @@ class Repository : Repo {
 
     private fun resetSecondUser() {
         secondUser.value = createAnonymousUser()
-        secondUserUid = ""
     }
 
     private fun createAnonymousUser(): User {
@@ -449,6 +442,8 @@ class Repository : Repo {
             location = Constants.Map.DEFAULT_LOCATION
         )
     }
+
+    private fun secondUserUid() = secondUser.value?.uid ?: ""
 
     private fun saveUserNameAndEmail(user: User) {
         val data = HashMap<String, Any>()
@@ -659,7 +654,7 @@ class Repository : Repo {
 
         // We set BOTH current and second user uids and names in Firestore
         data[CHATROOM_USER_UID_1_KEY] = currentUserUid
-        data[CHATROOM_USER_UID_2_KEY] = secondUserUid
+        data[CHATROOM_USER_UID_2_KEY] = secondUserUid()
         data[CHATROOM_USER_NAME_1_KEY] = currentUserNameOrUsername()
         data[CHATROOM_USER_NAME_2_KEY] = secondUserNameOrUsername()
 
@@ -669,7 +664,7 @@ class Repository : Repo {
         // We have to update current chatroom for both users in the chat
         // (current user and the second user).
         updateChatroomForUser(currentChatRoomUid, currentUserUid, data)
-        updateChatroomForUser(currentChatRoomUid, secondUserUid, data)
+        updateChatroomForUser(currentChatRoomUid, secondUserUid(), data)
     }
 
     private fun updateChatroomForUser(chatroomUid: String, userUid: String, data: HashMap<String, Any>) {

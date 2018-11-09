@@ -43,7 +43,7 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
     // === Lifecycle methods ===
 
     fun onResume() {
-        repo.startGettingMessagesUpdates(secondUserUid)
+        repo.startGettingMessagesUpdates()
         repo.startGettingSecondUserUpdates(secondUserUid)
     }
 

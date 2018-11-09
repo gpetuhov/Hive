@@ -36,7 +36,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         // Set name and uid of the user, with whom current user is chatting
         val args = ChatFragmentArgs.fromBundle(arguments)
-        presenter.secondUserUid = args.uid
 
         return binding?.root
     }
@@ -55,6 +54,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
             messages.scrollToPosition(0)
         })
         viewModel.secondUser.observe(this, Observer<User> { secondUser ->
+            presenter.secondUserUid = secondUser.uid
             binding?.userName = secondUser.getUsernameOrName()
         })
     }
