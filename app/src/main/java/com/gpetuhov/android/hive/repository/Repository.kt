@@ -21,11 +21,15 @@ class Repository : Repo {
 
     companion object {
         private const val TAG = "Repo"
+
+        // Collections
         private const val USERS_COLLECTION = "users"
         private const val CHATROOMS_COLLECTION = "chatrooms"
         private const val MESSAGES_COLLECTION = "messages"
         private const val USER_CHATROOMS_COLLECTION = "userChatrooms"
         private const val CHATROOMS_OF_USER_COLLECTION = "chatroomsOfUser"
+
+        // User
         private const val NAME_KEY = "name"
         private const val USERNAME_KEY = "username"
         private const val EMAIL_KEY = "email"
@@ -33,9 +37,13 @@ class Repository : Repo {
         private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
+
+        // Message
         private const val SENDER_UID_KEY = "sender_uid"
         private const val TIMESTAMP_KEY = "timestamp"
         private const val MESSAGE_TEXT_KEY = "message_text"
+
+        // Chatroom
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
     }
 
@@ -55,22 +63,41 @@ class Repository : Repo {
     // 1. Data in Firestore is updated
     // 2. searchResult is updated
     // 3. UI the observes searchResult is updated
+    // (Same sequence of changes is used for all other data, that Repository provides)
     private val searchResult = MutableLiveData<MutableMap<String, User>>()
     private val tempSearchResult = mutableMapOf<String, User>()
-
     private val searchUserDetails = MutableLiveData<User>()
 
+    // Messages of the current chatroom
+    // (chatroom is the chat between current user and second user)
     private val messages = MutableLiveData<MutableList<Message>>()
+
+    // Chatrooms of the current user
     private val chatrooms = MutableLiveData<MutableList<Chatroom>>()
 
+    // True if current user is authorized
     private var isAuthorized = false
+
+    // Uid of the current user
     private var currentUserUid: String = ""
+
+    // Uid of the second user in the chat
     private var secondUserUid: String = ""
+
+    // Query text used to search users on map
     private var queryText = ""
-    private val firestore = FirebaseFirestore.getInstance()
-    private var geoFirestore: GeoFirestore      // GeoFirestore is used to query users by location
-    private var geoQuery: GeoQuery? = null
+
+    // Uid of the current chatroom
     private var currentChatRoomUid = ""
+
+    // Firestore
+    private val firestore = FirebaseFirestore.getInstance()
+
+    // GeoFirestore is used to query users by location
+    private var geoFirestore: GeoFirestore
+    private var geoQuery: GeoQuery? = null
+
+    // Firestore listeners
     private var currentUserListenerRegistration: ListenerRegistration? = null
     private var searchUserDetailsListenerRegistration: ListenerRegistration? = null
     private var messagesListenerRegistration: ListenerRegistration? = null
@@ -340,6 +367,15 @@ class Repository : Repo {
 
     override fun startGettingChatroomsUpdates() {
         if (isAuthorized) {
+            // We keep a collection of chatrooms for every user.
+            // This is needed to easily display a list of all chats,
+            // that current user participates in.
+            // Chatrooms of users are saved in a separate collection.
+            // Hierarchy:
+            // userChatrooms_collection -> User_document -> chatroomsOfUser_collection -> Chatroom_document
+            // (Note that chatrooms of users are saved NOT in the users collection,
+            // but in a separate userChatrooms collection)
+
             chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
