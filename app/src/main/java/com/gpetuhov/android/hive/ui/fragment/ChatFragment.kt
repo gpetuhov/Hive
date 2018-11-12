@@ -71,6 +71,8 @@ class ChatFragment :
             }
         })
 
+        scroll_down_button.setOnClickListener { messages.smoothScrollToPosition(0) }
+
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter.setMessages(messageList)
