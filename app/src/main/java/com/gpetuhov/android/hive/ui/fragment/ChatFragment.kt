@@ -73,6 +73,11 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun clearMessageText() = message_text.setText("")
 
+    override fun openUserDetails() {
+        val action = ChatFragmentDirections.actionChatFragmentToDetailsFragment()
+        findNavController().navigate(action)
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }

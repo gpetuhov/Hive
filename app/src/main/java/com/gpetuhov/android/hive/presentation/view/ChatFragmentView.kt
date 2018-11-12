@@ -14,6 +14,9 @@ interface ChatFragmentView : MvpView {
     fun clearMessageText()
 
     @StateStrategyType(SkipStrategy::class)
+    fun openUserDetails()
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 
     @StateStrategyType(SkipStrategy::class)

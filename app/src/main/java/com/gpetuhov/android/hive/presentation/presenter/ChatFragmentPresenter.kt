@@ -38,6 +38,10 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
         viewState.clearMessageText()
     }
 
+    // We don't have to initialize second user in the repo before opening user details,
+    // because second user has already been initialized while opening chat fragment.
+    fun openUserDetails() = viewState.openUserDetails()
+
     fun navigateUp() = viewState.navigateUp()
 
     // === Lifecycle methods ===

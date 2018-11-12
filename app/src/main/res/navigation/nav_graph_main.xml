@@ -57,6 +57,11 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.ChatFragment"
             android:label="ChatFragment"
             tools:layout="@layout/fragment_chat">
+        <action
+                android:id="@+id/action_chat_fragment_to_details_fragment"
+                app:destination="@id/details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
 </navigation>
