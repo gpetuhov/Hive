@@ -53,13 +53,21 @@ class ChatFragment :
 
         messages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
                 if (dy > 0) {
                     scroll_down_button.show()
                 } else {
                     scroll_down_button.hide()
                 }
+            }
 
-                super.onScrolled(recyclerView, dx, dy)
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    scroll_down_button.hide()
+                }
             }
         })
 
