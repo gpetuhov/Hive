@@ -29,10 +29,14 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     private val messagesAdapter = MessagesAdapter()
     private var binding: FragmentChatBinding? = null
+    private var isOpenFromDetails = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.presenter = presenter
+
+        isOpenFromDetails = ChatFragmentArgs.fromBundle(arguments).isOpenFromDetails
+
         return binding?.root
     }
 
@@ -74,8 +78,15 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     override fun clearMessageText() = message_text.setText("")
 
     override fun openUserDetails() {
-        val action = ChatFragmentDirections.actionChatFragmentToDetailsFragment()
-        findNavController().navigate(action)
+        // If chat fragment has been opened from user details fragment,
+        // then just pop back stack.
+        // Otherwise, open details fragment.
+        if (isOpenFromDetails) {
+            findNavController().popBackStack()
+        } else {
+            val action = ChatFragmentDirections.actionChatFragmentToDetailsFragment(true)
+            findNavController().navigate(action)
+        }
     }
 
     override fun showToast(message: String) {

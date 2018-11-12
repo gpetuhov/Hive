@@ -66,7 +66,7 @@ class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
     // === ChatroomsFragmentView ===
 
     override fun openChat() {
-        val action = ChatroomsFragmentDirections.actionNavigationMessagesToChatFragment()
+        val action = ChatroomsFragmentDirections.actionNavigationMessagesToChatFragment(false)
         findNavController().navigate(action)
     }
 }

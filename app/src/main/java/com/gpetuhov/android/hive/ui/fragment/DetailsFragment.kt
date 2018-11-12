@@ -23,13 +23,15 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
     @InjectPresenter lateinit var presenter: DetailsFragmentPresenter
 
     private var binding: FragmentDetailsBinding? = null
+    private var isOpenFromChat = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding?.presenter = presenter
 
-        val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
+        isOpenFromChat = DetailsFragmentArgs.fromBundle(arguments).isOpenFromChat
 
+        val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
             binding?.user = user
@@ -55,7 +57,14 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
     }
 
     override fun openChat() {
-        val action = DetailsFragmentDirections.actionDetailsFragmentToChatFragment()
-        findNavController().navigate(action)
+        // If details fragment has been opened from chat fragment,
+        // then just pop back stack.
+        // Otherwise, open chat fragment.
+        if (isOpenFromChat) {
+            findNavController().popBackStack()
+        } else {
+            val action = DetailsFragmentDirections.actionDetailsFragmentToChatFragment(true)
+            findNavController().navigate(action)
+        }
     }
 }
