@@ -14,7 +14,7 @@ import com.gpetuhov.android.hive.databinding.FragmentDetailsBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.DetailsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.DetailsFragmentView
-import com.gpetuhov.android.hive.ui.viewmodel.SearchUserDetailsViewModel
+import com.gpetuhov.android.hive.ui.viewmodel.DetailsViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 
 // Shows user details on map marker click
@@ -30,14 +30,14 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding?.presenter = presenter
 
-        val viewModel = ViewModelProviders.of(this).get(SearchUserDetailsViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
 
         uid = DetailsFragmentArgs.fromBundle(arguments).uid
 
         // This is needed to get user details immediately from the already available search results
         viewModel.getFirstUpdate(uid)
 
-        viewModel.searchUserDetails.observe(this, Observer<User> { user ->
+        viewModel.userDetails.observe(this, Observer<User> { user ->
             binding?.user = user
             name = user.getUsernameOrName()
         })

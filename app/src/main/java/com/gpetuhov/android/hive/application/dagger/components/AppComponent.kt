@@ -8,7 +8,6 @@ import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
-import com.gpetuhov.android.hive.ui.fragment.ChatroomsFragment
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
 import com.gpetuhov.android.hive.ui.viewmodel.*
 import com.gpetuhov.android.hive.util.ResultMessagesProvider
@@ -34,7 +33,7 @@ interface AppComponent {
 
     fun inject(userViewModel: CurrentUserViewModel)
     fun inject(searchResultViewModel: SearchResultViewModel)
-    fun inject(searchUserDetailsViewModel: SearchUserDetailsViewModel)
+    fun inject(detailsViewModel: DetailsViewModel)
     fun inject(chatMessagesViewModel: ChatMessagesViewModel)
     fun inject(chatroomsViewModel: ChatroomsViewModel)
 
