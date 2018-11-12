@@ -55,9 +55,9 @@ class ChatFragment :
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
-                if (dy > 0) {
+                if (dy > 5 && scroll_down_button.visibility != View.VISIBLE) {
                     scroll_down_button.show()
-                } else {
+                } else if ((dy == 0 || dy < -5) && scroll_down_button.visibility == View.VISIBLE) {
                     scroll_down_button.hide()
                 }
             }
