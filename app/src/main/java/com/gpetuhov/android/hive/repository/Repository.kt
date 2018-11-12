@@ -85,9 +85,6 @@ class Repository : Repo {
     // True if current user is authorized
     private var isAuthorized = false
 
-    // Uid of the current user
-    private var currentUserUid: String = ""
-
     // Query text used to search users on map
     private var queryText = ""
 
@@ -134,7 +131,9 @@ class Repository : Repo {
             // Current user's uid initially comes from Firebase Auth,
             // so we must save it to start getting updates
             // for the corresponding documents in Firestore.
-            currentUserUid = user.uid
+            val tempUser = createAnonymousUser()
+            tempUser.uid = user.uid
+            currentUser.value = tempUser
             startGettingCurrentUserUpdates()
 
             // Current user's name and email initially come from Firebase Auth,
@@ -196,7 +195,7 @@ class Repository : Repo {
     }
 
     override fun saveUserLocation(newLocation: LatLng) =
-        geoFirestore.setLocation(currentUserUid, GeoPoint(newLocation.latitude, newLocation.longitude))
+        geoFirestore.setLocation(currentUserUid(), GeoPoint(newLocation.latitude, newLocation.longitude))
 
     override fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
         val data = HashMap<String, Any>()
@@ -207,7 +206,7 @@ class Repository : Repo {
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(currentUserUid)
+            firestore.collection(USERS_COLLECTION).document(currentUserUid())
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully deleted")
@@ -323,7 +322,7 @@ class Repository : Repo {
 
             // This is needed for the chat room to have the same name,
             // despite of the uid of the user, who started the conversation.
-            currentChatRoomUid = if (currentUserUid < secondUserUid()) "${currentUserUid}_${secondUserUid()}" else "${secondUserUid()}_$currentUserUid"
+            currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
 
             messagesListenerRegistration = getMessagesCollectionReference()
                 .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
@@ -359,7 +358,7 @@ class Repository : Repo {
     override fun sendMessage(messageText: String, onError: () -> Unit) {
         if (isAuthorized && currentChatRoomUid != "") {
             val data = HashMap<String, Any>()
-            data[SENDER_UID_KEY] = currentUserUid
+            data[SENDER_UID_KEY] = currentUserUid()
             data[MESSAGE_TEXT_KEY] = messageText
             data[TIMESTAMP_KEY] = FieldValue.serverTimestamp()  // Get timestamp on the server, not on the device
 
@@ -397,7 +396,7 @@ class Repository : Repo {
             // (Note that chatrooms of users are saved NOT in the users collection,
             // but in a separate userChatrooms collection)
 
-            chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid)
+            chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid())
                 .orderBy(CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY, Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
@@ -430,7 +429,6 @@ class Repository : Repo {
 
     private fun resetCurrentUser() {
         currentUser.value = createAnonymousUser()
-        currentUserUid = ""
     }
 
     private fun resetSecondUser() {
@@ -450,6 +448,8 @@ class Repository : Repo {
         )
     }
 
+    private fun currentUserUid() = currentUser.value?.uid ?: ""
+
     private fun secondUserUid() = secondUser.value?.uid ?: ""
 
     private fun saveUserNameAndEmail(user: User) {
@@ -462,7 +462,7 @@ class Repository : Repo {
 
     private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
-            firestore.collection(USERS_COLLECTION).document(currentUserUid)
+            firestore.collection(USERS_COLLECTION).document(currentUserUid())
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully written")
@@ -479,7 +479,7 @@ class Repository : Repo {
     }
 
     private fun startGettingCurrentUserUpdates() {
-        currentUserListenerRegistration = startGettingUserUpdates(currentUserUid) { user ->
+        currentUserListenerRegistration = startGettingUserUpdates(currentUserUid()) { user ->
             // Turn off visibility if user is visible and has no services
             // (this is needed in case service has been cleared on the backend)
             if (!user.hasService && user.isVisible) saveUserVisibility(false) { /* Do nothing */ }
@@ -605,7 +605,7 @@ class Repository : Repo {
             senderUid = senderUid,
             timestamp = getTimestameFromDocumentSnapshot(doc, TIMESTAMP_KEY),
             text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
-            isFromCurrentUser = senderUid == currentUserUid
+            isFromCurrentUser = senderUid == currentUserUid()
         )
     }
 
@@ -638,7 +638,7 @@ class Repository : Repo {
         val userName2 = doc.getString(CHATROOM_USER_NAME_2_KEY) ?: ""
 
         // Second user uid is the one, that is not equal to current user uid
-        val secondUserUid = if (userUid1 != currentUserUid) userUid1 else userUid2
+        val secondUserUid = if (userUid1 != currentUserUid()) userUid1 else userUid2
 
         // Second user name is the one, that is not equal to current user name
         val secondUserName = if (userName1 != currentUserNameOrUsername()) userName1 else userName2
@@ -660,7 +660,7 @@ class Repository : Repo {
         val data = HashMap<String, Any>()
 
         // We set BOTH current and second user uids and names in Firestore
-        data[CHATROOM_USER_UID_1_KEY] = currentUserUid
+        data[CHATROOM_USER_UID_1_KEY] = currentUserUid()
         data[CHATROOM_USER_UID_2_KEY] = secondUserUid()
         data[CHATROOM_USER_NAME_1_KEY] = currentUserNameOrUsername()
         data[CHATROOM_USER_NAME_2_KEY] = secondUserNameOrUsername()
@@ -670,7 +670,7 @@ class Repository : Repo {
 
         // We have to update current chatroom for both users in the chat
         // (current user and the second user).
-        updateChatroomForUser(currentChatRoomUid, currentUserUid, data)
+        updateChatroomForUser(currentChatRoomUid, currentUserUid(), data)
         updateChatroomForUser(currentChatRoomUid, secondUserUid(), data)
     }
 
@@ -689,7 +689,7 @@ class Repository : Repo {
     private fun changeUserNameInChatrooms(oldUsername: String, newUsername: String) {
         if (isAuthorized) {
             // Get chatrooms for the current user
-            getChatroomsCollectionReference(currentUserUid)
+            getChatroomsCollectionReference(currentUserUid())
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful && task.result != null) {
