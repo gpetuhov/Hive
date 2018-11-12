@@ -6,4 +6,6 @@
     <dimen name="small_text_size">10sp</dimen>
     <dimen name="basic_view_size">48dp</dimen>
     <dimen name="map_top_padding">56dp</dimen>
+    <dimen name="message_big_padding">50dp</dimen>
+    <dimen name="message_no_padding">0dp</dimen>
 </resources>

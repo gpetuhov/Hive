@@ -14,12 +14,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="@{message.isFromCurrentUser ? Gravity.END : Gravity.START}">
-
-        <View
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:visibility="@{message.isFromCurrentUser ? View.VISIBLE : View.GONE}"/>
+            android:gravity="@{message.isFromCurrentUser ? Gravity.END : Gravity.START}"
+            android:paddingStart="@{message.isFromCurrentUser ? @dimen/message_big_padding : @dimen/message_no_padding}"
+            android:paddingLeft="@{message.isFromCurrentUser ? @dimen/message_big_padding : @dimen/message_no_padding}"
+            android:paddingEnd="@{message.isFromCurrentUser ? @dimen/message_no_padding : @dimen/message_big_padding}"
+            android:paddingRight="@{message.isFromCurrentUser ? @dimen/message_no_padding : @dimen/message_big_padding}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
@@ -55,11 +54,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:visibility="@{message.isFromCurrentUser ? View.GONE : View.VISIBLE}"/>
 
     </LinearLayout>
 
