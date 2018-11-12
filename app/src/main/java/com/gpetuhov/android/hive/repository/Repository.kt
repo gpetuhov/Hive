@@ -602,6 +602,7 @@ class Repository : Repo {
         val senderUid = doc.getString(SENDER_UID_KEY) ?: ""
 
         return Message(
+            uid = doc.id,
             senderUid = senderUid,
             timestamp = getTimestameFromDocumentSnapshot(doc, TIMESTAMP_KEY),
             text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
