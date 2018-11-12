@@ -6,34 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.databinding.FragmentChatroomsBinding
 import com.gpetuhov.android.hive.domain.model.Chatroom
-import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.presentation.presenter.ChatroomsFragmentPresenter
+import com.gpetuhov.android.hive.presentation.view.ChatroomsFragmentView
 import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
 import com.gpetuhov.android.hive.ui.recycler.SimpleItemDecoration
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
+import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import kotlinx.android.synthetic.main.fragment_chatrooms.*
-import javax.inject.Inject
 
-class ChatroomsFragment : Fragment(), ChatroomsAdapter.Callback {
+class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
 
-    @Inject lateinit var repo: Repo
+    @InjectPresenter lateinit var presenter: ChatroomsFragmentPresenter
 
-    private val chatroomsAdapter = ChatroomsAdapter(this)
+    private var chatroomsAdapter: ChatroomsAdapter? = null
     private var binding: FragmentChatroomsBinding? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        HiveApp.appComponent.inject(this)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chatrooms, container, false)
@@ -44,6 +39,7 @@ class ChatroomsFragment : Fragment(), ChatroomsAdapter.Callback {
         super.onViewCreated(view, savedInstanceState)
 
         chatrooms.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        chatroomsAdapter = ChatroomsAdapter(presenter)
         chatrooms.adapter = chatroomsAdapter
 
         // Add divider between items
@@ -52,29 +48,25 @@ class ChatroomsFragment : Fragment(), ChatroomsAdapter.Callback {
 
         val viewModel = ViewModelProviders.of(this).get(ChatroomsViewModel::class.java)
         viewModel.chatrooms.observe(this, Observer<MutableList<Chatroom>> { chatroomList ->
-            chatroomsAdapter.setChatrooms(chatroomList)
+            chatroomsAdapter?.setChatrooms(chatroomList)
             binding?.chatroomListEmpty = chatroomList.isEmpty()
         })
     }
 
     override fun onResume() {
         super.onResume()
-        repo.startGettingChatroomsUpdates()
+        presenter.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        repo.stopGettingChatroomsUpdates()
+        presenter.onPause()
     }
 
-    // === ChatroomsAdapter.Callback ===
+    // === ChatroomsFragmentView ===
 
-    override fun onChatroomClick(chatroom: Chatroom?) {
-        if (chatroom != null) {
-            repo.initSecondUser(chatroom.secondUserUid, chatroom.secondUserName)
-
-            val action = ChatroomsFragmentDirections.actionNavigationMessagesToChatFragment()
-            findNavController().navigate(action)
-        }
+    override fun openChat() {
+        val action = ChatroomsFragmentDirections.actionNavigationMessagesToChatFragment()
+        findNavController().navigate(action)
     }
 }

@@ -11,7 +11,7 @@ import com.gpetuhov.android.hive.domain.model.Chatroom
 class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<ChatroomsAdapter.ChatroomViewHolder>() {
 
     interface Callback {
-        fun onChatroomClick(chatroom: Chatroom?)
+        fun openChat(secondUserUid: String, secondUserName: String)
     }
 
     private var chatroomList = mutableListOf<Chatroom>()
@@ -20,7 +20,13 @@ class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<Ch
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ItemChatroomBinding = DataBindingUtil.inflate(layoutInflater, R.layout.item_chatroom, parent, false)
 
-        binding.root.setOnClickListener { callback.onChatroomClick(binding.chatroom) }
+        binding.root.setOnClickListener {
+            val chatroom = binding.chatroom
+
+            if (chatroom != null) {
+                callback.openChat(chatroom.secondUserUid, chatroom.secondUserName)
+            }
+        }
 
         return ChatroomViewHolder(binding)
     }

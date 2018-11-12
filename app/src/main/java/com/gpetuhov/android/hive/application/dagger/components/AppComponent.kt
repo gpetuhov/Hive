@@ -3,10 +3,7 @@ package com.gpetuhov.android.hive.application.dagger.components
 import com.gpetuhov.android.hive.application.dagger.modules.AppModule
 import com.gpetuhov.android.hive.domain.interactor.*
 import com.gpetuhov.android.hive.managers.*
-import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
-import com.gpetuhov.android.hive.presentation.presenter.DetailsFragmentPresenter
-import com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter
-import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
+import com.gpetuhov.android.hive.presentation.presenter.*
 import com.gpetuhov.android.hive.service.LocationService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
@@ -26,7 +23,6 @@ interface AppComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(mapFragment: MapFragment)
-    fun inject(chatroomsFragment: ChatroomsFragment)
 
     fun inject(locationService: LocationService)
 
@@ -46,6 +42,7 @@ interface AppComponent {
     fun inject(mapFragmentPresenter: MapFragmentPresenter)
     fun inject(detailsFragmentPresenter: DetailsFragmentPresenter)
     fun inject(chatFragmentPresenter: ChatFragmentPresenter)
+    fun inject(chatroomsFragmentPresenter: ChatroomsFragmentPresenter)
 
     fun inject(deleteUserInteractor: DeleteUserInteractor)
     fun inject(signOutInteractor: SignOutInteractor)
