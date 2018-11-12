@@ -45,9 +45,6 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.DetailsFragment"
             android:label="DetailsFragment"
             tools:layout="@layout/fragment_details">
-        <argument
-                android:name="uid"
-                app:argType="string"/>
         <action
                 android:id="@+id/action_details_fragment_to_chat_fragment"
                 app:destination="@id/chat_fragment"

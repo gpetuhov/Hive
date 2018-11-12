@@ -12,6 +12,8 @@ class DetailsFragmentPresenter : MvpPresenter<DetailsFragmentView>() {
 
     @Inject lateinit var repo: Repo
 
+    var userUid = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -23,7 +25,7 @@ class DetailsFragmentPresenter : MvpPresenter<DetailsFragmentView>() {
     fun openChat() = viewState.openChat()
 
     // This is needed to change user details in the UI if changed on the backend
-    fun onResume(uid: String) = repo.startGettingSecondUserUpdates(uid)
+    fun onResume() = repo.startGettingSecondUserUpdates(userUid)
 
     fun onPause() = repo.stopGettingSecondUserUpdates()
 }

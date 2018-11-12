@@ -23,7 +23,6 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
     @InjectPresenter lateinit var presenter: DetailsFragmentPresenter
 
     private var binding: FragmentDetailsBinding? = null
-    private var uid = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
@@ -31,9 +30,8 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
 
-        uid = DetailsFragmentArgs.fromBundle(arguments).uid
-
         viewModel.userDetails.observe(this, Observer<User> { user ->
+            presenter.userUid = user.uid
             binding?.user = user
         })
 
@@ -42,7 +40,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume(uid)
+        presenter.onResume()
     }
 
     override fun onPause() {
