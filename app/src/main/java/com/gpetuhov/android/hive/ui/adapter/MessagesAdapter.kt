@@ -9,8 +9,16 @@ import com.gpetuhov.android.hive.databinding.ItemMessageBinding
 import com.gpetuhov.android.hive.domain.model.Message
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
+class MessagesAdapter(private var callback: Callback) : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
+
+    interface Callback {
+        fun onMessagesUpdated()
+    }
 
     private var messageList = mutableListOf<Message>()
 
@@ -30,30 +38,29 @@ class MessagesAdapter : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>(
     // === Public methods ===
 
     fun setMessages(messages: MutableList<Message>) {
-        // TODO: this must run in background
-        val diffResult = DiffUtil.calculateDiff(DiffCallback(messages, messageList))
+        // TODO: cancel previously started coroutine
 
-        // The backing data must be updated at the same time with notifying the adapter about the changes
-        messageList.clear()
-        messageList.addAll(messages)
+        GlobalScope.launch {
+            // Calculate diff result in background
+            val diffResult = DiffUtil.calculateDiff(DiffCallback(messages, messageList))
 
-        diffResult.dispatchUpdatesTo(object : ListUpdateCallback{
-            override fun onChanged(position: Int, count: Int, payload: Any?) {
-                notifyItemRangeChanged(position, count, payload)
+            GlobalScope.launch(Dispatchers.Main) {
+                // Dispatch updates on the main thread
+
+                // The backing data must be updated at the same time with notifying the adapter about the changes
+                messageList.clear()
+                messageList.addAll(messages)
+
+                diffResult.dispatchUpdatesTo(object : ListUpdateCallback{
+                    override fun onChanged(position: Int, count: Int, payload: Any?) = notifyItemRangeChanged(position, count, payload)
+                    override fun onMoved(fromPosition: Int, toPosition: Int) = notifyItemMoved(fromPosition, toPosition)
+                    override fun onInserted(position: Int, count: Int) = notifyItemRangeInserted(position, count)
+                    override fun onRemoved(position: Int, count: Int) = notifyItemRangeRemoved(position, count)
+                })
+
+                callback.onMessagesUpdated()
             }
-
-            override fun onMoved(fromPosition: Int, toPosition: Int) {
-                notifyItemMoved(fromPosition, toPosition)
-            }
-
-            override fun onInserted(position: Int, count: Int) {
-                notifyItemRangeInserted(position, count)
-            }
-
-            override fun onRemoved(position: Int, count: Int) {
-                notifyItemRangeRemoved(position, count)
-            }
-        })
+        }
     }
 
     // === Inner classes ===

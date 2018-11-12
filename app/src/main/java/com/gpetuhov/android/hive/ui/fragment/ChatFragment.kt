@@ -23,11 +23,14 @@ import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
 
-class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
+class ChatFragment :
+    MvpAppCompatFragment(),
+    ChatFragmentView,
+    MessagesAdapter.Callback {
 
     @InjectPresenter lateinit var presenter: ChatFragmentPresenter
 
-    private val messagesAdapter = MessagesAdapter()
+    private val messagesAdapter = MessagesAdapter(this)
     private var binding: FragmentChatBinding? = null
     private var isOpenFromDetails = false
 
@@ -51,7 +54,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter.setMessages(messageList)
-            messages.scrollToPosition(0)
         })
         viewModel.secondUser.observe(this, Observer<User> { secondUser ->
             presenter.secondUserUid = secondUser.uid
@@ -95,5 +97,11 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
+    }
+
+    // === MessagesAdapter.Callback ===
+
+    override fun onMessagesUpdated() {
+        messages.scrollToPosition(0)
     }
 }
