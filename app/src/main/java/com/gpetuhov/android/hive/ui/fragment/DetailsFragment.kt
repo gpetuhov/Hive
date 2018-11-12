@@ -24,7 +24,6 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
 
     private var binding: FragmentDetailsBinding? = null
     private var uid = ""
-    private var name = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
@@ -34,12 +33,8 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
 
         uid = DetailsFragmentArgs.fromBundle(arguments).uid
 
-        // This is needed to get user details immediately from the already available search results
-        viewModel.getFirstUpdate(uid)
-
         viewModel.userDetails.observe(this, Observer<User> { user ->
             binding?.user = user
-            name = user.getUsernameOrName()
         })
 
         return binding?.root

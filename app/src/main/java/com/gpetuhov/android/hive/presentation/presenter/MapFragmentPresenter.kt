@@ -51,7 +51,11 @@ class MapFragmentPresenter :
         search()
     }
 
-    override fun showDetails(uid: String) = viewState.showDetails(uid)
+    override fun showDetails(uid: String) {
+        // This is needed to get user details immediately from the already available search results
+        repo.initSearchUserDetails(uid)
+        viewState.showDetails(uid)
+    }
 
     // === SearchInteractor.Callback ===
 
