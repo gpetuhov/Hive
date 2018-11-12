@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -19,7 +18,6 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
-import com.gpetuhov.android.hive.ui.recycler.SpeedyLinearLayoutManager
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
@@ -50,7 +48,7 @@ class ChatFragment :
 
         sendButtonEnabled(false)
 
-        messages.layoutManager = SpeedyLinearLayoutManager(context, RecyclerView.VERTICAL, true)
+        messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
 
         messages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -73,7 +71,7 @@ class ChatFragment :
             }
         })
 
-        scroll_down_button.setOnClickListener { messages.smoothScrollToPosition(0) }
+        scroll_down_button.setOnClickListener { messages.scrollToPosition(0) }
 
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
