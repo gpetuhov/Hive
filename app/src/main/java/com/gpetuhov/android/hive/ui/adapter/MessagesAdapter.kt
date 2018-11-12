@@ -9,10 +9,7 @@ import com.gpetuhov.android.hive.databinding.ItemMessageBinding
 import com.gpetuhov.android.hive.domain.model.Message
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MessagesAdapter(private var callback: Callback) : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
 
@@ -21,6 +18,7 @@ class MessagesAdapter(private var callback: Callback) : RecyclerView.Adapter<Mes
     }
 
     private var messageList = mutableListOf<Message>()
+    private var calculateDiffJob: Job? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -38,9 +36,10 @@ class MessagesAdapter(private var callback: Callback) : RecyclerView.Adapter<Mes
     // === Public methods ===
 
     fun setMessages(messages: MutableList<Message>) {
-        // TODO: cancel previously started coroutine
+        // Cancel previously started coroutine
+        calculateDiffJob?.cancel()
 
-        GlobalScope.launch {
+        calculateDiffJob = GlobalScope.launch {
             // Calculate diff result in background
             val diffResult = DiffUtil.calculateDiff(DiffCallback(messages, messageList))
 
