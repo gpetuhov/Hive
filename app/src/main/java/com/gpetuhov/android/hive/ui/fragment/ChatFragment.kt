@@ -51,6 +51,18 @@ class ChatFragment :
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
 
+        messages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) {
+                    scroll_down_button.show()
+                } else {
+                    scroll_down_button.hide()
+                }
+
+                super.onScrolled(recyclerView, dx, dy)
+            }
+        })
+
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter.setMessages(messageList)
