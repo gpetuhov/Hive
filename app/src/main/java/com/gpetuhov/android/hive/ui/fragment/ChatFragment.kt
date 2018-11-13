@@ -25,6 +25,10 @@ import kotlinx.android.synthetic.main.fragment_chat.*
 
 class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
+    companion object {
+        private const val MIN_SCROLL_VALUE = 5
+    }
+
     @InjectPresenter lateinit var presenter: ChatFragmentPresenter
 
     private var messagesAdapter: MessagesAdapter? = null
@@ -50,26 +54,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
 
-        messages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                if (dy > 5 && scroll_down_button.visibility != View.VISIBLE) {
-                    scroll_down_button.show()
-                } else if ((dy == 0 || dy < -5) && scroll_down_button.visibility == View.VISIBLE) {
-                    scroll_down_button.hide()
-                }
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-                // Hide scroll down button, if reached bottom of the list
-                if (!recyclerView.canScrollVertically(1)) {
-                    scroll_down_button.hide()
-                }
-            }
-        })
+        initScrollDownButtonShowHide()
 
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
@@ -119,5 +104,31 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
+    }
+
+    // === Private methods ===
+
+    private fun initScrollDownButtonShowHide() {
+        messages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                // Show scroll down button on messages list scroll down, hide on scroll up.
+                if (dy > MIN_SCROLL_VALUE && scroll_down_button.visibility != View.VISIBLE) {
+                    scroll_down_button.show()
+                } else if ((dy == 0 || dy < -MIN_SCROLL_VALUE) && scroll_down_button.visibility == View.VISIBLE) {
+                    scroll_down_button.hide()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                // Hide scroll down button, if reached bottom of the list
+                if (!recyclerView.canScrollVertically(1)) {
+                    scroll_down_button.hide()
+                }
+            }
+        })
     }
 }
