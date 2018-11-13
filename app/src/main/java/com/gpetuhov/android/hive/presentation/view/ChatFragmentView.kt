@@ -10,6 +10,12 @@ interface ChatFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun sendButtonEnabled(isEnabled: Boolean)
 
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showScrollDownButton()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun hideScrollDownButton()
+
     @StateStrategyType(SkipStrategy::class)
     fun clearMessageText()
 

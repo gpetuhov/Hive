@@ -52,6 +52,10 @@ class ChatFragmentPresenter :
 
     fun scrollToLastMessage() = viewState.scrollToLastMessage()
 
+    fun showScrollDownButton() = viewState.showScrollDownButton()
+
+    fun hideScrollDownButton() = viewState.hideScrollDownButton()
+
     fun navigateUp() = viewState.navigateUp()
 
     // === Lifecycle methods ===

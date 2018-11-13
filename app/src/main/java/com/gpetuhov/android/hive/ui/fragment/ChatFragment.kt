@@ -84,6 +84,10 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         message_send_button.isEnabled = isEnabled
     }
 
+    override fun showScrollDownButton() = scroll_down_button.show()
+
+    override fun hideScrollDownButton() = scroll_down_button.hide()
+
     override fun clearMessageText() = message_text.setText("")
 
     override fun openUserDetails() {
@@ -124,9 +128,9 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
                 // hide on scroll up for more than MIN_SCROLL_SUM.
                 // Also hide if dy == 0, because onScrolled is called with dy == 0 after list bottom is reached.
                 if (scrollSum > MIN_SCROLL_SUM && scroll_down_button.visibility != View.VISIBLE) {
-                    scroll_down_button.show()
+                    presenter.showScrollDownButton()
                 } else if ((dy == 0 || scrollSum < -MIN_SCROLL_SUM) && scroll_down_button.visibility == View.VISIBLE) {
-                    scroll_down_button.hide()
+                    presenter.hideScrollDownButton()
                 }
             }
 
@@ -137,7 +141,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
                 // Hide scroll down button, if reached bottom of the list
                 if (!recyclerView.canScrollVertically(1)) {
-                    scroll_down_button.hide()
+                    presenter.hideScrollDownButton()
                 }
             }
         })
