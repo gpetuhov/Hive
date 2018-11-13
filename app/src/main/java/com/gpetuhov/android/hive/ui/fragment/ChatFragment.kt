@@ -22,12 +22,12 @@ import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
-import timber.log.Timber
 
 class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     companion object {
-        private const val MIN_SCROLL_VALUE = 100
+        private const val MIN_SCROLL = 1
+        private const val MIN_SCROLL_SUM = 200
     }
 
     @InjectPresenter lateinit var presenter: ChatFragmentPresenter
@@ -116,18 +116,16 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
                 super.onScrolled(recyclerView, dx, dy)
 
                 // Reset scroll sum if changed scroll direction
-                if (scrollSum < 0 && dy > 0 || scrollSum > 0 && dy < 0) scrollSum = 0
+                if (scrollSum < 0 && dy > MIN_SCROLL || scrollSum > 0 && dy < -MIN_SCROLL) scrollSum = 0
 
                 scrollSum += dy
 
-                Timber.tag("Scroll").d("scrollSum = $scrollSum, dy = $dy")
-
                 // Show scroll down button on messages list scroll down, hide on scroll up.
-                if (scrollSum > MIN_SCROLL_VALUE && scroll_down_button.visibility != View.VISIBLE) {
+                if (scrollSum > MIN_SCROLL_SUM && scroll_down_button.visibility != View.VISIBLE) {
                     scroll_down_button.show()
 
                 // dy == 0 is needed, because onScrolled is called with dy == 0 after list bottom is reached
-                } else if ((dy == 0 || scrollSum < -MIN_SCROLL_VALUE) && scroll_down_button.visibility == View.VISIBLE) {
+                } else if ((dy == 0 || scrollSum < -MIN_SCROLL_SUM) && scroll_down_button.visibility == View.VISIBLE) {
                     scroll_down_button.hide()
                 }
             }
