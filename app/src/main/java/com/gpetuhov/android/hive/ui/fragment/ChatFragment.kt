@@ -22,11 +22,12 @@ import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
+import timber.log.Timber
 
 class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     companion object {
-        private const val MIN_SCROLL_VALUE = 5
+        private const val MIN_SCROLL_VALUE = 100
     }
 
     @InjectPresenter lateinit var presenter: ChatFragmentPresenter
@@ -34,6 +35,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     private var messagesAdapter: MessagesAdapter? = null
     private var binding: FragmentChatBinding? = null
     private var isOpenFromDetails = false
+    private var scrollSum = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
@@ -113,16 +115,27 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
+                // Reset scroll sum if changed scroll direction
+                if (scrollSum < 0 && dy > 0 || scrollSum > 0 && dy < 0) scrollSum = 0
+
+                scrollSum += dy
+
+                Timber.tag("Scroll").d("scrollSum = $scrollSum, dy = $dy")
+
                 // Show scroll down button on messages list scroll down, hide on scroll up.
-                if (dy > MIN_SCROLL_VALUE && scroll_down_button.visibility != View.VISIBLE) {
+                if (scrollSum > MIN_SCROLL_VALUE && scroll_down_button.visibility != View.VISIBLE) {
                     scroll_down_button.show()
-                } else if ((dy == 0 || dy < -MIN_SCROLL_VALUE) && scroll_down_button.visibility == View.VISIBLE) {
+
+                // dy == 0 is needed, because onScrolled is called with dy == 0 after list bottom is reached
+                } else if ((dy == 0 || scrollSum < -MIN_SCROLL_VALUE) && scroll_down_button.visibility == View.VISIBLE) {
                     scroll_down_button.hide()
                 }
             }
 
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
+
+                scrollSum = 0
 
                 // Hide scroll down button, if reached bottom of the list
                 if (!recyclerView.canScrollVertically(1)) {
