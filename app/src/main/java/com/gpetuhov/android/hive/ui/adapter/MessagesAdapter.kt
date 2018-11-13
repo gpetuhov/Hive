@@ -68,10 +68,17 @@ class MessagesAdapter(private var callback: Callback) : RecyclerView.Adapter<Mes
 
     // This class is needed to calculate difference between old and new lists of messages
     // (to minimize RecyclerView updates)
-    class DiffCallback(
-        var newMessages: List<Message>,
-        var oldMessages: List<Message>
-    ) : DiffUtil.Callback() {
+    class DiffCallback(newMessagesSource: List<Message>, oldMessagesSource: List<Message>) : DiffUtil.Callback() {
+
+        private var newMessages = mutableListOf<Message>()
+        private var oldMessages = mutableListOf<Message>()
+
+        init {
+            // We have to copy source lists,
+            // so that lists won't change while diff is being calculated.
+            newMessages.addAll(newMessagesSource)
+            oldMessages.addAll(oldMessagesSource)
+        }
 
         override fun getOldListSize() = oldMessages.size
 
