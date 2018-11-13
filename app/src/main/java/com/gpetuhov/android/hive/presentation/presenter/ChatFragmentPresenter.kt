@@ -65,10 +65,7 @@ class ChatFragmentPresenter :
 
     fun scrollToLastMessage() = viewState.scrollToPosition(0)
 
-    fun navigateUp() {
-        repo.clearMessages()
-        viewState.navigateUp()
-    }
+    fun navigateUp() = viewState.navigateUp()
 
     // === Lifecycle methods ===
 
