@@ -25,17 +25,11 @@ import kotlinx.android.synthetic.main.fragment_chat.*
 
 class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
-    companion object {
-        private const val MIN_SCROLL = 1
-        private const val MIN_SCROLL_SUM = 200
-    }
-
     @InjectPresenter lateinit var presenter: ChatFragmentPresenter
 
     private var messagesAdapter: MessagesAdapter? = null
     private var binding: FragmentChatBinding? = null
     private var isOpenFromDetails = false
-    private var scrollSum = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
@@ -55,8 +49,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
-
-        initScrollDownButtonShowHide()
+        messages.addOnScrollListener(presenter.scrollListener)
 
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
@@ -84,9 +77,13 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         message_send_button.isEnabled = isEnabled
     }
 
-    override fun showScrollDownButton() = scroll_down_button.show()
+    override fun showScrollDownButton() {
+        if (scroll_down_button.visibility != View.VISIBLE) scroll_down_button.show()
+    }
 
-    override fun hideScrollDownButton() = scroll_down_button.hide()
+    override fun hideScrollDownButton() {
+        if (scroll_down_button.visibility == View.VISIBLE) scroll_down_button.hide()
+    }
 
     override fun clearMessageText() = message_text.setText("")
 
@@ -110,40 +107,5 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
-    }
-
-    // === Private methods ===
-
-    private fun initScrollDownButtonShowHide() {
-        messages.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-
-                // Reset scroll sum if changed scroll direction
-                if (scrollSum < 0 && dy > MIN_SCROLL || scrollSum > 0 && dy < -MIN_SCROLL) scrollSum = 0
-
-                scrollSum += dy
-
-                // Show scroll down button on messages list scroll down for more than MIN_SCROLL_SUM,
-                // hide on scroll up for more than MIN_SCROLL_SUM.
-                // Also hide if dy == 0, because onScrolled is called with dy == 0 after list bottom is reached.
-                if (scrollSum > MIN_SCROLL_SUM && scroll_down_button.visibility != View.VISIBLE) {
-                    presenter.showScrollDownButton()
-                } else if ((dy == 0 || scrollSum < -MIN_SCROLL_SUM) && scroll_down_button.visibility == View.VISIBLE) {
-                    presenter.hideScrollDownButton()
-                }
-            }
-
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-                scrollSum = 0
-
-                // Hide scroll down button, if reached bottom of the list
-                if (!recyclerView.canScrollVertically(1)) {
-                    presenter.hideScrollDownButton()
-                }
-            }
-        })
     }
 }
