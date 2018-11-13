@@ -381,6 +381,10 @@ class Repository : Repo {
         }
     }
 
+    override fun clearMessages() {
+        messages.value = mutableListOf()
+    }
+
     // --- Chatroom ---
 
     override fun chatrooms() = chatrooms

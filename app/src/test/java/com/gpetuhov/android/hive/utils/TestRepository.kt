@@ -107,6 +107,9 @@ class TestRepository : Repo {
         }
     }
 
+    override fun clearMessages() {
+    }
+
     override fun chatrooms(): MutableLiveData<MutableList<Chatroom>> = MutableLiveData()
 
     override fun startGettingChatroomsUpdates() {
