@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
@@ -30,6 +31,8 @@ class ChatFragmentPresenter :
     lateinit var scrollListener: RecyclerView.OnScrollListener
 
     private var scrollSum = 0
+    private var lastScrollPosition = 0
+
     private val sendMessageInteractor = SendMessageInteractor(this)
 
     init {
@@ -43,7 +46,8 @@ class ChatFragmentPresenter :
 
     // === MessagesAdapter.Callback ===
 
-    override fun onMessagesUpdated() = scrollToLastMessage()
+    override fun onMessagesUpdated(isChanged: Boolean) =
+        if (isChanged) scrollToLastMessage() else restoreScrollPosition()
 
     // === Public methods ===
 
@@ -59,7 +63,7 @@ class ChatFragmentPresenter :
     // because second user has already been initialized while opening chat fragment.
     fun openUserDetails() = viewState.openUserDetails()
 
-    fun scrollToLastMessage() = viewState.scrollToLastMessage()
+    fun scrollToLastMessage() = viewState.scrollToPosition(0)
 
     fun navigateUp() {
         repo.clearMessages()
@@ -109,7 +113,13 @@ class ChatFragmentPresenter :
                 if (!recyclerView.canScrollVertically(1)) {
                     viewState.hideScrollDownButton()
                 }
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    lastScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                }
             }
         }
     }
+
+    private fun restoreScrollPosition() = viewState.scrollToPosition(lastScrollPosition)
 }

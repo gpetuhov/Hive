@@ -23,7 +23,7 @@ interface ChatFragmentView : MvpView {
     fun openUserDetails()
 
     @StateStrategyType(SkipStrategy::class)
-    fun scrollToLastMessage()
+    fun scrollToPosition(position: Int)
 
     @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)

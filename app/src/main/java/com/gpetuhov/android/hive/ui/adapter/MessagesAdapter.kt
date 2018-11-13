@@ -17,7 +17,7 @@ class MessagesAdapter(
 ) : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
 
     interface Callback {
-        fun onMessagesUpdated()
+        fun onMessagesUpdated(isChanged: Boolean)
     }
 
     private var messageList = mutableListOf<Message>()
@@ -81,7 +81,7 @@ class MessagesAdapter(
                     }
                 })
 
-                if (changesCount > 0) callback.onMessagesUpdated()
+                callback.onMessagesUpdated(changesCount > 0)
             }
         }
     }

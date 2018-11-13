@@ -100,7 +100,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         }
     }
 
-    override fun scrollToLastMessage() = messages.scrollToPosition(0)
+    override fun scrollToPosition(position: Int) = messages.scrollToPosition(position)
 
     override fun showToast(message: String) {
         toast(message)
