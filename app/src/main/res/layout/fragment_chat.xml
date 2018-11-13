@@ -67,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_down"
                 android:visibility="invisible"
+                android:onClick="@{view -> presenter.scrollToLastMessage()}"
                 app:layout_constraintEnd_toEndOf="@id/messages"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"

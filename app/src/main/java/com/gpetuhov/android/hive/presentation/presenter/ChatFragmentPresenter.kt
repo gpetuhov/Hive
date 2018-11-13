@@ -6,10 +6,14 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SendMessageInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
+import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import javax.inject.Inject
 
 @InjectViewState
-class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInteractor.Callback {
+class ChatFragmentPresenter :
+    MvpPresenter<ChatFragmentView>(),
+    SendMessageInteractor.Callback,
+    MessagesAdapter.Callback {
 
     @Inject lateinit var repo: Repo
 
@@ -28,6 +32,10 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
 
     override fun onSendMessageError(errorMessage: String) = viewState.showToast(errorMessage)
 
+    // === MessagesAdapter.Callback ===
+
+    override fun onMessagesUpdated() = scrollToLastMessage()
+
     // === Public methods ===
 
     fun onTextChanged(s: CharSequence?) =
@@ -41,6 +49,8 @@ class ChatFragmentPresenter : MvpPresenter<ChatFragmentView>(), SendMessageInter
     // We don't have to initialize second user in the repo before opening user details,
     // because second user has already been initialized while opening chat fragment.
     fun openUserDetails() = viewState.openUserDetails()
+
+    fun scrollToLastMessage() = viewState.scrollToLastMessage()
 
     fun navigateUp() = viewState.navigateUp()
 

@@ -23,14 +23,11 @@ import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
 
-class ChatFragment :
-    MvpAppCompatFragment(),
-    ChatFragmentView,
-    MessagesAdapter.Callback {
+class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     @InjectPresenter lateinit var presenter: ChatFragmentPresenter
 
-    private val messagesAdapter = MessagesAdapter(this)
+    private var messagesAdapter: MessagesAdapter? = null
     private var binding: FragmentChatBinding? = null
     private var isOpenFromDetails = false
 
@@ -47,6 +44,8 @@ class ChatFragment :
         super.onViewCreated(view, savedInstanceState)
 
         sendButtonEnabled(false)
+
+        messagesAdapter = MessagesAdapter(presenter)
 
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
@@ -65,17 +64,16 @@ class ChatFragment :
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
+                // Hide scroll down button, if reached bottom of the list
                 if (!recyclerView.canScrollVertically(1)) {
                     scroll_down_button.hide()
                 }
             }
         })
 
-        scroll_down_button.setOnClickListener { messages.scrollToPosition(0) }
-
         val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
-            messagesAdapter.setMessages(messageList)
+            messagesAdapter?.setMessages(messageList)
         })
         viewModel.secondUser.observe(this, Observer<User> { secondUser ->
             presenter.secondUserUid = secondUser.uid
@@ -113,17 +111,13 @@ class ChatFragment :
         }
     }
 
+    override fun scrollToLastMessage() = messages.scrollToPosition(0)
+
     override fun showToast(message: String) {
         toast(message)
     }
 
     override fun navigateUp() {
         findNavController().navigateUp()
-    }
-
-    // === MessagesAdapter.Callback ===
-
-    override fun onMessagesUpdated() {
-        messages.scrollToPosition(0)
     }
 }
