@@ -11,7 +11,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import kotlinx.coroutines.*
 
-class MessagesAdapter(private var callback: Callback) : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
+class MessagesAdapter(
+    private var callback: Callback,
+    initialMessagesList: MutableList<Message>?
+) : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
 
     interface Callback {
         fun onMessagesUpdated()
@@ -19,6 +22,10 @@ class MessagesAdapter(private var callback: Callback) : RecyclerView.Adapter<Mes
 
     private var messageList = mutableListOf<Message>()
     private var calculateDiffJob: Job? = null
+
+    init {
+        if (initialMessagesList != null) messageList.addAll(initialMessagesList)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -50,14 +57,31 @@ class MessagesAdapter(private var callback: Callback) : RecyclerView.Adapter<Mes
                 messageList.clear()
                 messageList.addAll(messages)
 
+                var changesCount = 0
+
                 diffResult.dispatchUpdatesTo(object : ListUpdateCallback{
-                    override fun onChanged(position: Int, count: Int, payload: Any?) = notifyItemRangeChanged(position, count, payload)
-                    override fun onMoved(fromPosition: Int, toPosition: Int) = notifyItemMoved(fromPosition, toPosition)
-                    override fun onInserted(position: Int, count: Int) = notifyItemRangeInserted(position, count)
-                    override fun onRemoved(position: Int, count: Int) = notifyItemRangeRemoved(position, count)
+                    override fun onChanged(position: Int, count: Int, payload: Any?) {
+                        notifyItemRangeChanged(position, count, payload)
+                        changesCount++
+                    }
+
+                    override fun onMoved(fromPosition: Int, toPosition: Int) {
+                        notifyItemMoved(fromPosition, toPosition)
+                        changesCount++
+                    }
+
+                    override fun onInserted(position: Int, count: Int) {
+                        notifyItemRangeInserted(position, count)
+                        changesCount++
+                    }
+
+                    override fun onRemoved(position: Int, count: Int) {
+                        notifyItemRangeRemoved(position, count)
+                        changesCount++
+                    }
                 })
 
-                callback.onMessagesUpdated()
+                if (changesCount > 0) callback.onMessagesUpdated()
             }
         }
     }

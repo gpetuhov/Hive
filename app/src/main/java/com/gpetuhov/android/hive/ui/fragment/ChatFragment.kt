@@ -45,13 +45,14 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         sendButtonEnabled(false)
 
-        messagesAdapter = MessagesAdapter(presenter)
+        val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
+
+        messagesAdapter = MessagesAdapter(presenter, viewModel.messages.value)
 
         messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
         messages.adapter = messagesAdapter
         messages.addOnScrollListener(presenter.scrollListener)
 
-        val viewModel = ViewModelProviders.of(this).get(ChatMessagesViewModel::class.java)
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter?.setMessages(messageList)
         })
