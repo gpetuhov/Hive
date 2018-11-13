@@ -63,7 +63,11 @@ class ChatFragmentPresenter :
     // because second user has already been initialized while opening chat fragment.
     fun openUserDetails() = viewState.openUserDetails()
 
-    fun scrollToLastMessage() = viewState.scrollToPosition(0)
+    fun scrollToLastMessage() {
+        lastScrollPosition = 0
+        viewState.scrollToPosition(0)
+        viewState.hideScrollDownButton()
+    }
 
     fun navigateUp() = viewState.navigateUp()
 
@@ -93,10 +97,9 @@ class ChatFragmentPresenter :
 
                 // Show scroll down button on messages list scroll down for more than MIN_SCROLL_SUM,
                 // hide on scroll up for more than MIN_SCROLL_SUM.
-                // Also hide if dy == 0, because onScrolled is called with dy == 0 after list bottom is reached.
                 if (scrollSum > MIN_SCROLL_SUM) {
                     viewState.showScrollDownButton()
-                } else if ((dy == 0 || scrollSum < -MIN_SCROLL_SUM)) {
+                } else if (scrollSum < -MIN_SCROLL_SUM) {
                     viewState.hideScrollDownButton()
                 }
             }
