@@ -1,11 +1,9 @@
 package com.gpetuhov.android.hive.ui.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -22,6 +20,7 @@ import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
+import com.gpetuhov.android.hive.util.hideSoftKeyboard
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputResize
 import com.pawegio.kandroid.toast
@@ -61,10 +60,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         messages.adapter = messagesAdapter
         messages.addOnScrollListener(presenter.scrollListener)
 
-        // This is needed to restore last scroll position on keyboard show or hide.
-        // This will be triggered only if windowSoftInputMode="adjustResize" is set for the parent activity.
-//        messages.addOnLayoutChangeListener(presenter.layoutChangeListener)
-
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter?.setMessages(messageList)
         })
@@ -78,14 +73,17 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         super.onResume()
         presenter.onResume()
 
-        activity?.findViewById<View>(R.id.main_activity_root_view)?.addOnLayoutChangeListener(presenter.layoutChangeListener)
+        // This is needed to restore last scroll position
+        // and to show or hide bottom navigation on keyboard show or hide.
+        // This will be triggered only if windowSoftInputMode="adjustResize" is set for the activity.
+        getActivityRootView()?.addOnLayoutChangeListener(presenter.layoutChangeListener)
     }
 
     override fun onPause() {
         super.onPause()
         presenter.onPause()
 
-        activity?.findViewById<View>(R.id.main_activity_root_view)?.removeOnLayoutChangeListener(presenter.layoutChangeListener)
+        getActivityRootView()?.removeOnLayoutChangeListener(presenter.layoutChangeListener)
     }
 
     // === ChatFragmentView
@@ -114,6 +112,8 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
             val action = ChatFragmentDirections.actionChatFragmentToDetailsFragment(true)
             findNavController().navigate(action)
         }
+
+        hideSoftKeyboard()
     }
 
     override fun scrollToPosition(position: Int) = messages.scrollToPosition(position)
@@ -128,17 +128,11 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     }
 
     override fun showBottomNavigation() {
-        // Show bottom navigation, if keyboard is hidden
-//        if (!isKeyboardShowing()) {
-            getBottomNavigation()?.visibility = View.VISIBLE
-//        }
+        getBottomNavigation()?.visibility = View.VISIBLE
     }
 
     override fun hideBottomNavigation() {
-        // Hide bottom navigation, if keyboard is open
-//        if (isKeyboardShowing()) {
-            getBottomNavigation()?.visibility = View.GONE
-//        }
+        getBottomNavigation()?.visibility = View.GONE
     }
 
     override fun showToast(message: String) {
@@ -147,12 +141,12 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
+        hideSoftKeyboard()
     }
 
     // === Private methods ===
 
-    private fun getBottomNavigation() = activity?.findViewById<BottomNavigationView>(R.id.navigation_view)
+    private fun getActivityRootView() = activity?.findViewById<View>(R.id.main_activity_root_view)
 
-    private fun isKeyboardShowing() =
-        if (activity != null) (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).isActive else false
+    private fun getBottomNavigation() = activity?.findViewById<BottomNavigationView>(R.id.navigation_view)
 }

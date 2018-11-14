@@ -23,6 +23,7 @@ import android.view.inputmethod.EditorInfo
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
+import com.gpetuhov.android.hive.util.hideSoftKeyboard
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 
 
@@ -128,9 +129,7 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
         // Remove cursor from EditText
         query_text.clearFocus()
 
-        // Hide keyboard
-        val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+        hideSoftKeyboard()
     }
 
     override fun onMinZoom() {
