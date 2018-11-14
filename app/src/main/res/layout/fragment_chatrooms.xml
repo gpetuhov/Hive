@@ -6,7 +6,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <variable name="chatroomListEmpty" type="Boolean"/>
+        <variable name="chatroomListEmpty" type="boolean"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
