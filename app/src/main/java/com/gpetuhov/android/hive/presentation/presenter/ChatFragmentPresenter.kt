@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.InjectViewState
@@ -29,15 +30,17 @@ class ChatFragmentPresenter :
 
     var secondUserUid = ""
     lateinit var scrollListener: RecyclerView.OnScrollListener
+    lateinit var layoutChangeListener: View.OnLayoutChangeListener
 
     private var scrollSum = 0
-    var lastScrollPosition = 0
+    private var lastScrollPosition = 0
 
     private val sendMessageInteractor = SendMessageInteractor(this)
 
     init {
         HiveApp.appComponent.inject(this)
         initScrollListener()
+        initLayoutChangeListener()
     }
 
     // === SendMessageInteractor.Callback ===
@@ -119,6 +122,15 @@ class ChatFragmentPresenter :
                 }
             }
         }
+    }
+
+    private fun initLayoutChangeListener() {
+        layoutChangeListener =
+                View.OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+                    if (bottom != oldBottom) {
+                        viewState.scrollToPositionWithOffsetAndDelay(lastScrollPosition)
+                    }
+                }
     }
 
     private fun restoreScrollPosition() = viewState.scrollToPosition(lastScrollPosition)

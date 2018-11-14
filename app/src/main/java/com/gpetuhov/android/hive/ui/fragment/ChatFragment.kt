@@ -58,6 +58,10 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         messages.adapter = messagesAdapter
         messages.addOnScrollListener(presenter.scrollListener)
 
+        // This is needed to restore last scroll position on keyboard show or hide.
+        // This will be triggered only if windowSoftInputMode="adjustResize" is set for the parent activity.
+        messages.addOnLayoutChangeListener(presenter.layoutChangeListener)
+
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter?.setMessages(messageList)
         })
@@ -65,18 +69,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
             presenter.secondUserUid = secondUser.uid
             binding?.userName = secondUser.getUsernameOrName()
         })
-
-        messages.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-            // This will work only if windowSoftInputMode="adjustResize" for the parent activity
-            if (bottom != oldBottom) {
-                messages.postDelayed({
-                    // Scroll like this, because
-                    // RecyclerView.scrollToPosition() does not move item to top of the list,
-                    // it just scrolls until item is visible on screen.
-                    (messages.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(presenter.lastScrollPosition, 0)
-                }, 100)
-            }
-        }
     }
 
     override fun onResume() {
@@ -118,6 +110,15 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     }
 
     override fun scrollToPosition(position: Int) = messages.scrollToPosition(position)
+
+    override fun scrollToPositionWithOffsetAndDelay(position: Int) {
+        messages.postDelayed({
+            // Scroll like this, because
+            // RecyclerView.scrollToPosition() does not move item to top of the list,
+            // it just scrolls until item is visible on screen.
+            (messages.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
+        }, 100)
+    }
 
     override fun showToast(message: String) {
         toast(message)
