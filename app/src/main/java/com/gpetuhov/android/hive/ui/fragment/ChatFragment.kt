@@ -26,8 +26,13 @@ import com.gpetuhov.android.hive.util.setActivitySoftInputResize
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
+import timber.log.Timber
 
 class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
+
+    companion object {
+        private const val TAG = "ChatFragment"
+    }
 
     @InjectPresenter lateinit var presenter: ChatFragmentPresenter
 
@@ -59,7 +64,17 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         messagesAdapter = MessagesAdapter(presenter, viewModel.messages.value)
 
-        messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+        messages.layoutManager = object : LinearLayoutManager(context, RecyclerView.VERTICAL, true) {
+            override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+                // This is needed to avoid exception on navigation between chat and user details
+                try {
+                    super.onLayoutChildren(recycler, state)
+                } catch (e: IndexOutOfBoundsException) {
+                    Timber.tag(TAG).d(e)
+                }
+            }
+        }
+
         messages.adapter = messagesAdapter
         messages.addOnScrollListener(presenter.scrollListener)
 
