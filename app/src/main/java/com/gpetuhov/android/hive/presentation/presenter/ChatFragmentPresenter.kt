@@ -130,6 +130,14 @@ class ChatFragmentPresenter :
                     if (bottom != oldBottom) {
                         viewState.scrollToPositionWithOffset(lastScrollPosition)
                     }
+
+                    if (bottom < oldBottom) {
+                        // Keyboard shown, hide bottom navigation
+                        viewState.hideBottomNavigation()
+                    } else if (bottom > oldBottom) {
+                        // Keyboard hidden, show bottom navigation
+                        viewState.showBottomNavigation()
+                    }
                 }
     }
 

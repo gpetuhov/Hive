@@ -1,9 +1,11 @@
 package com.gpetuhov.android.hive.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentChatBinding
 import com.gpetuhov.android.hive.domain.model.Message
@@ -60,7 +63,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         // This is needed to restore last scroll position on keyboard show or hide.
         // This will be triggered only if windowSoftInputMode="adjustResize" is set for the parent activity.
-        messages.addOnLayoutChangeListener(presenter.layoutChangeListener)
+//        messages.addOnLayoutChangeListener(presenter.layoutChangeListener)
 
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter?.setMessages(messageList)
@@ -74,11 +77,15 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     override fun onResume() {
         super.onResume()
         presenter.onResume()
+
+        activity?.findViewById<View>(R.id.main_activity_root_view)?.addOnLayoutChangeListener(presenter.layoutChangeListener)
     }
 
     override fun onPause() {
         super.onPause()
         presenter.onPause()
+
+        activity?.findViewById<View>(R.id.main_activity_root_view)?.removeOnLayoutChangeListener(presenter.layoutChangeListener)
     }
 
     // === ChatFragmentView
@@ -120,6 +127,20 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         }
     }
 
+    override fun showBottomNavigation() {
+        // Show bottom navigation, if keyboard is hidden
+//        if (!isKeyboardShowing()) {
+            getBottomNavigation()?.visibility = View.VISIBLE
+//        }
+    }
+
+    override fun hideBottomNavigation() {
+        // Hide bottom navigation, if keyboard is open
+//        if (isKeyboardShowing()) {
+            getBottomNavigation()?.visibility = View.GONE
+//        }
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }
@@ -127,4 +148,11 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     override fun navigateUp() {
         findNavController().navigateUp()
     }
+
+    // === Private methods ===
+
+    private fun getBottomNavigation() = activity?.findViewById<BottomNavigationView>(R.id.navigation_view)
+
+    private fun isKeyboardShowing() =
+        if (activity != null) (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).isActive else false
 }

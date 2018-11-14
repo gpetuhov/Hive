@@ -29,6 +29,12 @@ interface ChatFragmentView : MvpView {
     fun scrollToPositionWithOffset(position: Int)
 
     @StateStrategyType(SkipStrategy::class)
+    fun showBottomNavigation()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun hideBottomNavigation()
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 
     @StateStrategyType(SkipStrategy::class)
