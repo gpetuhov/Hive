@@ -5,7 +5,6 @@
         tools:context=".ui.fragment.ChatFragment">
 
     <data>
-        <variable name="userName" type="String"/>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter"/>
     </data>
 

@@ -87,7 +87,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         })
         viewModel.secondUser.observe(this, Observer<User> { secondUser ->
             presenter.secondUserUid = secondUser.uid
-            binding?.userName = secondUser.getUsernameOrName()
             getToolbar()?.title = secondUser.getUsernameOrName()
         })
     }
