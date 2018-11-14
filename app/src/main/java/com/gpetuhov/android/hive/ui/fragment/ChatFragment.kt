@@ -71,7 +71,10 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         messages.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
             if (bottom != oldBottom) {
                 messages.postDelayed({
-                    messages.scrollToPosition(presenter.lastScrollPosition)
+                    // Scroll like this, because
+                    // RecyclerView.scrollToPosition() does not move item to top of the list,
+                    // it just scrolls until item is visible on screen.
+                    (messages.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(presenter.lastScrollPosition, 0)
                 }, 100)
             }
         }
