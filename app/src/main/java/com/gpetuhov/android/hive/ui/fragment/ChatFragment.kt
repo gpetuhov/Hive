@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,6 +20,7 @@ import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
+import com.gpetuhov.android.hive.util.setActivitySoftInputResize
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
 
@@ -35,9 +35,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_resize is needed to push activity up, when keyboard is shown,
         // so that the recycler view will scroll to previously shown position after keyboard is shown.
-        activity?.window?.setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
-        )
+        setActivitySoftInputResize()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.presenter = presenter
@@ -69,6 +67,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         })
 
         messages.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            // This will work only if windowSoftInputMode="adjustResize" for the parent activity
             if (bottom != oldBottom) {
                 messages.postDelayed({
                     // Scroll like this, because

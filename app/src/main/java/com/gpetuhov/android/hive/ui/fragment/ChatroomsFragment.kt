@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -22,6 +21,7 @@ import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
 import com.gpetuhov.android.hive.ui.recycler.SimpleItemDecoration
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
+import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import kotlinx.android.synthetic.main.fragment_chatrooms.*
 
 class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
@@ -33,9 +33,7 @@ class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
-        activity?.window?.setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
-        )
+        setActivitySoftInputPan()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chatrooms, container, false)
         return binding?.root
