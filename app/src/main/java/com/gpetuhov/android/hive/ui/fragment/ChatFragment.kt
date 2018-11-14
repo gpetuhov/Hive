@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +33,12 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     private var isOpenFromDetails = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Adjust_resize is needed to push activity up, when keyboard is shown,
+        // so that the recycler view will scroll to previously shown position after keyboard is shown.
+        activity?.window?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.presenter = presenter
 
@@ -60,6 +67,14 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
             presenter.secondUserUid = secondUser.uid
             binding?.userName = secondUser.getUsernameOrName()
         })
+
+        messages.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            if (bottom != oldBottom) {
+                messages.postDelayed({
+                    messages.scrollToPosition(presenter.lastScrollPosition)
+                }, 100)
+            }
+        }
     }
 
     override fun onResume() {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -31,6 +32,11 @@ class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
     private var binding: FragmentChatroomsBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
+        activity?.window?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+        )
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chatrooms, container, false)
         return binding?.root
     }

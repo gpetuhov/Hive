@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -32,6 +33,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private var binding: FragmentProfileBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
+        activity?.window?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+        )
+
         initDialogs()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)

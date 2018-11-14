@@ -21,6 +21,7 @@ import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_map.*
 import android.view.inputmethod.EditorInfo
 import android.content.Context
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import androidx.navigation.fragment.findNavController
 
@@ -33,6 +34,11 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     private var binding: FragmentMapBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
+        activity?.window?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_UNCHANGED or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN
+        )
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
         binding?.presenter = presenter
 

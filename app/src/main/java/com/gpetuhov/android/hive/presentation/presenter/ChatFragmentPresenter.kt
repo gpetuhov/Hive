@@ -31,7 +31,7 @@ class ChatFragmentPresenter :
     lateinit var scrollListener: RecyclerView.OnScrollListener
 
     private var scrollSum = 0
-    private var lastScrollPosition = 0
+    var lastScrollPosition = 0
 
     private val sendMessageInteractor = SendMessageInteractor(this)
 
