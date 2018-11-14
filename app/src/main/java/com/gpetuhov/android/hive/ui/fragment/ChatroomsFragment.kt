@@ -22,6 +22,7 @@ import com.gpetuhov.android.hive.ui.recycler.SimpleItemDecoration
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
+import com.gpetuhov.android.hive.util.showBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_chatrooms.*
 
 class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
@@ -34,6 +35,8 @@ class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
+
+        showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chatrooms, container, false)
         return binding?.root

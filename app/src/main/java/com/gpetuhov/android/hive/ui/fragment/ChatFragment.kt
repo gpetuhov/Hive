@@ -11,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentChatBinding
 import com.gpetuhov.android.hive.domain.model.Message
@@ -20,9 +19,11 @@ import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
+import com.gpetuhov.android.hive.util.hideBottomNavigationView
 import com.gpetuhov.android.hive.util.hideSoftKeyboard
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputResize
+import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
 
@@ -38,6 +39,8 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         // Adjust_resize is needed to push activity up, when keyboard is shown,
         // so that the recycler view will scroll to previously shown position after keyboard is shown.
         setActivitySoftInputResize()
+
+        showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.presenter = presenter
@@ -127,13 +130,9 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         }
     }
 
-    override fun showBottomNavigation() {
-        getBottomNavigation()?.visibility = View.VISIBLE
-    }
+    override fun showBottomNavigation() = showBottomNavigationView()
 
-    override fun hideBottomNavigation() {
-        getBottomNavigation()?.visibility = View.GONE
-    }
+    override fun hideBottomNavigation() = hideBottomNavigationView()
 
     override fun showToast(message: String) {
         toast(message)
@@ -147,6 +146,4 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     // === Private methods ===
 
     private fun getActivityRootView() = activity?.findViewById<View>(R.id.main_activity_root_view)
-
-    private fun getBottomNavigation() = activity?.findViewById<BottomNavigationView>(R.id.navigation_view)
 }

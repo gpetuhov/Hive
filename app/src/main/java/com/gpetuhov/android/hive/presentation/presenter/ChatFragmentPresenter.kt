@@ -132,10 +132,12 @@ class ChatFragmentPresenter :
                     }
 
                     if (bottom < oldBottom) {
-                        // Keyboard shown, hide bottom navigation
+                        // If new screen is smaller, than before,
+                        // then keyboard is shown, so hide bottom navigation.
                         viewState.hideBottomNavigation()
                     } else if (bottom > oldBottom) {
-                        // Keyboard hidden, show bottom navigation
+                        // If new screen is bigger, than before,
+                        // then keyboard is hidden, so show bottom navigation
                         viewState.showBottomNavigation()
                     }
                 }
