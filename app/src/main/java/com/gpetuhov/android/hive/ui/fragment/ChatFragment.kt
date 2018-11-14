@@ -42,11 +42,13 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         // so that the recycler view will scroll to previously shown position after keyboard is shown.
         setActivitySoftInputResize()
 
-        getToolbar()?.setNavigationIcon(R.drawable.ic_arrow_back)
-        getToolbar()?.setNavigationOnClickListener { presenter.navigateUp() }
-        getToolbar()?.setOnClickListener { presenter.openUserDetails() }
+        showToolbar(
+            "",
+            R.drawable.ic_arrow_back,
+            { presenter.navigateUp() },
+            { presenter.openUserDetails() }
+        )
 
-        showToolbar()
         showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
