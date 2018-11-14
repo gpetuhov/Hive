@@ -68,19 +68,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         messagesAdapter = MessagesAdapter(presenter, viewModel.messages.value)
 
-        messages.layoutManager = object : LinearLayoutManager(context, RecyclerView.VERTICAL, true) {
-            override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
-                // This is needed to avoid exception on navigation between chat and user details
-                try {
-                    super.onLayoutChildren(recycler, state)
-                } catch (e: IndexOutOfBoundsException) {
-                    Timber.tag(TAG).d(e)
-                }
-            }
-        }
-
-        messages.adapter = messagesAdapter
-        messages.addOnScrollListener(presenter.scrollListener)
+        initMessagesList()
 
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter?.setMessages(messageList)
@@ -165,4 +153,20 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     // === Private methods ===
 
     private fun getActivityRootView() = activity?.findViewById<View>(R.id.main_activity_root_view)
+
+    private fun initMessagesList() {
+        messages.layoutManager = object : LinearLayoutManager(context, RecyclerView.VERTICAL, true) {
+            override fun onLayoutChildren(recycler: RecyclerView.Recycler, state: RecyclerView.State) {
+                // This is needed to avoid exception on navigation between chat and user details
+                try {
+                    super.onLayoutChildren(recycler, state)
+                } catch (e: IndexOutOfBoundsException) {
+                    Timber.tag(TAG).d(e)
+                }
+            }
+        }
+
+        messages.adapter = messagesAdapter
+        messages.addOnScrollListener(presenter.scrollListener)
+    }
 }
