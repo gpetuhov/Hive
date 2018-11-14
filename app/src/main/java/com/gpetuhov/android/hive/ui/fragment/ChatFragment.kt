@@ -19,11 +19,8 @@ import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
-import com.gpetuhov.android.hive.util.hideBottomNavigationView
-import com.gpetuhov.android.hive.util.hideSoftKeyboard
+import com.gpetuhov.android.hive.util.*
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
-import com.gpetuhov.android.hive.util.setActivitySoftInputResize
-import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
 import timber.log.Timber
@@ -45,6 +42,11 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         // so that the recycler view will scroll to previously shown position after keyboard is shown.
         setActivitySoftInputResize()
 
+        getToolbar()?.setNavigationIcon(R.drawable.ic_arrow_back)
+        getToolbar()?.setNavigationOnClickListener { presenter.navigateUp() }
+        getToolbar()?.setOnClickListener { presenter.openUserDetails() }
+
+        showToolbar()
         showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
@@ -84,6 +86,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         viewModel.secondUser.observe(this, Observer<User> { secondUser ->
             presenter.secondUserUid = secondUser.uid
             binding?.userName = secondUser.getUsernameOrName()
+            getToolbar()?.title = secondUser.getUsernameOrName()
         })
     }
 

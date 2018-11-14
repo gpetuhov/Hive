@@ -15,6 +15,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.DetailsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.DetailsFragmentView
 import com.gpetuhov.android.hive.ui.viewmodel.DetailsViewModel
+import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -31,6 +32,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
+        hideToolbar()
         showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)

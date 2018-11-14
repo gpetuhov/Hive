@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import android.view.inputmethod.EditorInfo
 import androidx.navigation.fragment.findNavController
 import com.gpetuhov.android.hive.util.hideSoftKeyboard
+import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 
@@ -37,6 +38,7 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
+        hideToolbar()
         showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gpetuhov.android.hive.R
@@ -28,6 +29,16 @@ fun Fragment.showBottomNavigationView() {
 fun Fragment.hideBottomNavigationView() {
     getBottomNavigationView()?.visibility = View.GONE
 }
+
+fun Fragment.showToolbar() {
+    getToolbar()?.visibility = View.VISIBLE
+}
+
+fun Fragment.hideToolbar() {
+    getToolbar()?.visibility = View.GONE
+}
+
+fun Fragment.getToolbar() = activity?.findViewById<Toolbar>(R.id.toolbar)
 
 // === Private methods ===
 

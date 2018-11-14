@@ -17,6 +17,7 @@ import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
+import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -37,6 +38,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
+        hideToolbar()
         showBottomNavigationView()
 
         initDialogs()
