@@ -31,24 +31,16 @@ fun Fragment.hideBottomNavigationView() {
 }
 
 fun Fragment.showToolbar(title: String, navigationIconId: Int, onNavigationClick: () -> Unit, onClick: () -> Unit) {
-    val toolbar = getToolbar()
-    toolbar?.title = title
-    toolbar?.setNavigationIcon(navigationIconId)
-    toolbar?.setNavigationOnClickListener { onNavigationClick() }
-    toolbar?.setOnClickListener { onClick() }
-    toolbar?.visibility = View.VISIBLE
+    initToolbar(true, title, navigationIconId, onNavigationClick, onClick)
 }
 
 fun Fragment.hideToolbar() {
-    val toolbar = getToolbar()
-    toolbar?.visibility = View.GONE
-    toolbar?.title = ""
-    toolbar?.navigationIcon = null
-    toolbar?.setNavigationOnClickListener(null)
-    toolbar?.setOnClickListener(null)
+    initToolbar(false, "", 0, { /* Do nothing */ }, { /* Do nothing */ })
 }
 
-fun Fragment.getToolbar() = activity?.findViewById<Toolbar>(R.id.toolbar)
+fun Fragment.setToolbarTitle(title: String) {
+    getToolbar()?.title = title
+}
 
 // === Private methods ===
 
@@ -60,3 +52,21 @@ private fun Fragment.setActivitySoftInput(isResize: Boolean) {
 }
 
 private fun Fragment.getBottomNavigationView() = activity?.findViewById<BottomNavigationView>(R.id.navigation_view)
+
+private fun Fragment.getToolbar() = activity?.findViewById<Toolbar>(R.id.toolbar)
+
+private fun Fragment.initToolbar(isVisible: Boolean, title: String, navigationIconId: Int, onNavigationClick: () -> Unit, onClick: () -> Unit) {
+    val toolbar = getToolbar()
+
+    toolbar?.visibility = if (isVisible) View.VISIBLE else  View.GONE
+    toolbar?.title = title
+
+    if (navigationIconId != 0) {
+        toolbar?.setNavigationIcon(navigationIconId)
+    } else {
+        toolbar?.navigationIcon = null
+    }
+
+    toolbar?.setNavigationOnClickListener { onNavigationClick() }
+    toolbar?.setOnClickListener { onClick() }
+}
