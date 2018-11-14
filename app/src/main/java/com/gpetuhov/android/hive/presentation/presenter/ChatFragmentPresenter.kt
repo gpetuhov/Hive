@@ -128,7 +128,7 @@ class ChatFragmentPresenter :
         layoutChangeListener =
                 View.OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
                     if (bottom != oldBottom) {
-                        viewState.scrollToPositionWithOffsetAndDelay(lastScrollPosition)
+                        viewState.scrollToPositionWithOffset(lastScrollPosition)
                     }
                 }
     }

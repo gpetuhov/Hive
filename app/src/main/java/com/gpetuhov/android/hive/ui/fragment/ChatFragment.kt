@@ -111,13 +111,13 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     override fun scrollToPosition(position: Int) = messages.scrollToPosition(position)
 
-    override fun scrollToPositionWithOffsetAndDelay(position: Int) {
-        messages.postDelayed({
+    override fun scrollToPositionWithOffset(position: Int) {
+        messages.post {
             // Scroll like this, because
             // RecyclerView.scrollToPosition() does not move item to top of the list,
             // it just scrolls until item is visible on screen.
             (messages.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
-        }, 100)
+        }
     }
 
     override fun showToast(message: String) {
