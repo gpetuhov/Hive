@@ -13,6 +13,7 @@ class DetailsFragmentPresenter : MvpPresenter<DetailsFragmentView>() {
     @Inject lateinit var repo: Repo
 
     var userUid = ""
+    var isOpenFromChat = false
 
     init {
         HiveApp.appComponent.inject(this)
@@ -23,7 +24,7 @@ class DetailsFragmentPresenter : MvpPresenter<DetailsFragmentView>() {
     fun navigateUp() = viewState.navigateUp()
 
     fun openChat() {
-        repo.clearMessages()
+        if (!isOpenFromChat) repo.clearMessages()
         viewState.openChat()
     }
 

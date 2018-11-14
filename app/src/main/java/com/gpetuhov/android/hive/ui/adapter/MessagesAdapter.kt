@@ -24,7 +24,10 @@ class MessagesAdapter(
     private var calculateDiffJob: Job? = null
 
     init {
-        if (initialMessagesList != null) messageList.addAll(initialMessagesList)
+        if (initialMessagesList != null) {
+            messageList.addAll(initialMessagesList)
+            notifyDataSetChanged()
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {

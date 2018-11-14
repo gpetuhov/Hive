@@ -37,6 +37,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
         binding?.presenter = presenter
 
         isOpenFromChat = DetailsFragmentArgs.fromBundle(arguments).isOpenFromChat
+        presenter.isOpenFromChat = isOpenFromChat
 
         val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
