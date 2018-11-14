@@ -86,7 +86,7 @@
         <EditText
                 android:id="@+id/message_text"
                 android:hint="@string/enter_message"
-                android:imeOptions="flagNoExtractUi"
+                android:imeOptions="actionNone"
                 android:inputType="textMultiLine"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/basic_view_size"
