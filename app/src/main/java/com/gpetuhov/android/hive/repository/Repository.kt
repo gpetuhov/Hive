@@ -42,6 +42,7 @@ class Repository : Repo {
 
         // Message
         private const val SENDER_UID_KEY = "sender_uid"
+        private const val RECEIVER_UID_KEY = "receiver_uid"
         private const val TIMESTAMP_KEY = "timestamp"
         private const val MESSAGE_TEXT_KEY = "message_text"
 
@@ -368,6 +369,7 @@ class Repository : Repo {
         if (isAuthorized && currentChatRoomUid != "") {
             val data = HashMap<String, Any>()
             data[SENDER_UID_KEY] = currentUserUid()
+            data[RECEIVER_UID_KEY] = secondUserUid()
             data[MESSAGE_TEXT_KEY] = messageText
             data[TIMESTAMP_KEY] = FieldValue.serverTimestamp()  // Get timestamp on the server, not on the device
 
