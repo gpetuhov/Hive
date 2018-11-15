@@ -30,6 +30,14 @@ fun Fragment.hideBottomNavigationView() {
     getBottomNavigationView()?.visibility = View.GONE
 }
 
+fun Fragment.showToolbar(titleId: Int) {
+    showToolbar(getString(titleId))
+}
+
+fun Fragment.showToolbar(title: String) {
+    initToolbar(true, title, 0, { /* Do nothing */ }, { /* Do nothing */ })
+}
+
 fun Fragment.showToolbar(title: String, navigationIconId: Int, onNavigationClick: () -> Unit, onClick: () -> Unit) {
     initToolbar(true, title, navigationIconId, onNavigationClick, onClick)
 }
