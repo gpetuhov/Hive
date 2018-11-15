@@ -115,6 +115,9 @@ dependencies {
     // Firebase Crashlytics
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.6'
 
+    // Firebase Cloud Messaging
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
     // Facebook (required for FirebaseUI)
     implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
 
