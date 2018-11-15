@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.repository
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.*
@@ -11,13 +12,14 @@ import timber.log.Timber
 import java.util.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
+import com.pawegio.kandroid.defaultSharedPreferences
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
 import java.lang.Exception
 
 // Read and write data to remote storage (Firestore)
-class Repository : Repo {
+class Repository(private val context: Context) : Repo {
 
     companion object {
         private const val TAG = "Repo"
@@ -37,6 +39,7 @@ class Repository : Repo {
         private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
+        private const val FCM_TOKEN_KEY = "fcm_token"
 
         // Message
         private const val SENDER_UID_KEY = "sender_uid"
@@ -138,7 +141,7 @@ class Repository : Repo {
 
             // Current user's name and email initially come from Firebase Auth,
             // so after successful sign in we must write them to Firestore.
-            saveUserNameAndEmail(user)
+            saveUserNameEmailAndToken(user)
         }
     }
 
@@ -308,6 +311,13 @@ class Repository : Repo {
         secondUser.value = secondUserValue
     }
 
+    override fun saveFcmToken(token: String) {
+        val data = HashMap<String, Any>()
+        data[FCM_TOKEN_KEY] = token
+
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+    }
+
     // --- Message ---
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
@@ -456,10 +466,13 @@ class Repository : Repo {
 
     private fun secondUserUid() = secondUser.value?.uid ?: ""
 
-    private fun saveUserNameAndEmail(user: User) {
+    private fun saveUserNameEmailAndToken(user: User) {
         val data = HashMap<String, Any>()
         data[NAME_KEY] = user.name
         data[EMAIL_KEY] = user.email
+
+        // Also after successful login we must save current FCM token
+        data[FCM_TOKEN_KEY] = context.defaultSharedPreferences.getString(Constants.Auth.FCM_TOKEN_KEY, "") ?: ""
 
         saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }

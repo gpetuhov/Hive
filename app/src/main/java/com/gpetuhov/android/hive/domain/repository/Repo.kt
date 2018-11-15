@@ -30,6 +30,7 @@ interface Repo {
     fun startGettingSecondUserUpdates(uid: String)
     fun stopGettingSecondUserUpdates()
     fun initSecondUser(uid: String, name: String)
+    fun saveFcmToken(token: String)
 
     // Search
     fun searchResult(): MutableLiveData<MutableMap<String, User>>
