@@ -40,4 +40,10 @@
         <item name="android:textColor">@color/md_green_600</item>
     </style>
 
+    <!-- Toolbar title style -->
+    <!-- This is needed to prevent small toolbar title text size in landscape -->
+    <style name="toolbarTitleStyle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/basic_text_size</item>
+    </style>
+
 </resources>
