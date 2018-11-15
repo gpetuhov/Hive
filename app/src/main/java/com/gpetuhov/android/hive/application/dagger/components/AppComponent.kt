@@ -5,6 +5,7 @@ import com.gpetuhov.android.hive.domain.interactor.*
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.presentation.presenter.*
 import com.gpetuhov.android.hive.service.LocationService
+import com.gpetuhov.android.hive.service.MessageService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
@@ -24,6 +25,7 @@ interface AppComponent {
     fun inject(mapFragment: MapFragment)
 
     fun inject(locationService: LocationService)
+    fun inject(messageService: MessageService)
 
     fun inject(authManager: AuthManager)
     fun inject(locationManager: LocationManager)

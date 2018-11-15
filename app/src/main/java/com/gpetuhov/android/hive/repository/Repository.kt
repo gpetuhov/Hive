@@ -1,9 +1,9 @@
 package com.gpetuhov.android.hive.repository
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.*
+import com.google.firebase.iid.FirebaseInstanceId
 import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
@@ -12,14 +12,13 @@ import timber.log.Timber
 import java.util.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
-import com.pawegio.kandroid.defaultSharedPreferences
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
 import java.lang.Exception
 
 // Read and write data to remote storage (Firestore)
-class Repository(private val context: Context) : Repo {
+class Repository : Repo {
 
     companion object {
         private const val TAG = "Repo"
@@ -467,14 +466,21 @@ class Repository(private val context: Context) : Repo {
     private fun secondUserUid() = secondUser.value?.uid ?: ""
 
     private fun saveUserNameEmailAndToken(user: User) {
-        val data = HashMap<String, Any>()
-        data[NAME_KEY] = user.name
-        data[EMAIL_KEY] = user.email
+        // First, get current FCM token
+        FirebaseInstanceId.getInstance().instanceId
+            .addOnCompleteListener { task ->
+                // When getting FCM token task is complete,
+                // save it and user's name and email into Firestore
+                var token = ""
+                if (task.isSuccessful) token = task.result?.token ?: ""
 
-        // Also after successful login we must save current FCM token
-        data[FCM_TOKEN_KEY] = context.defaultSharedPreferences.getString(Constants.Auth.FCM_TOKEN_KEY, "") ?: ""
+                val data = HashMap<String, Any>()
+                data[NAME_KEY] = user.name
+                data[EMAIL_KEY] = user.email
+                data[FCM_TOKEN_KEY] = token
 
-        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+                saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+            }
     }
 
     private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {

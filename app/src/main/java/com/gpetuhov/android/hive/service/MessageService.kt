@@ -3,11 +3,16 @@ package com.gpetuhov.android.hive.service
 import androidx.core.content.edit
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.util.Constants
 import com.pawegio.kandroid.defaultSharedPreferences
 import timber.log.Timber
+import javax.inject.Inject
 
 class MessageService : FirebaseMessagingService() {
+
+    @Inject lateinit var repo: Repo
 
     companion object {
         private const val TAG = "MessageService"
@@ -30,18 +35,23 @@ class MessageService : FirebaseMessagingService() {
     // new message document is created in Firestore chatrooms collection.
     // Cloud Functions code is hosted in a SEPARATE repository.
 
+    override fun onCreate() {
+        super.onCreate()
+        HiveApp.appComponent.inject(this)
+    }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         val messageData = remoteMessage?.data.toString()
         Timber.tag(TAG).d("messageData = $messageData")
     }
 
-    // This one is called when new FCM token is received
+    // This one is called when new FCM token is received.
+    // This token is used to send new message notifications only to that user,
+    // who is the receiver of this message (inside the Cloud Functions code).
     override fun onNewToken(token: String?) {
         if (token != null) {
             Timber.tag(TAG).d("Token = $token")
-
-            // Save token to shared prefs and repo
-            defaultSharedPreferences.edit { putString(Constants.Auth.FCM_TOKEN_KEY, token) }
+            repo.saveFcmToken(token)
         }
     }
 }
