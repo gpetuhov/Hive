@@ -9,8 +9,8 @@ apply plugin: 'androidx.navigation.safeargs'
 // Firebase Crashlytics
 apply plugin: 'io.fabric'
 
-def appVersionCode = 1011
-def appVersionName = "0.1.11"
+def appVersionCode = 1012
+def appVersionName = "0.1.12"
 
 android {
     compileSdkVersion 28
