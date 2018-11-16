@@ -479,10 +479,15 @@ class Repository : Repo {
 
                         chatrooms.value = chatroomList
 
-                        // Do not call onUpdate on first time listener is triggered,
-                        // because first time is just the first read from Firestore
-                        // (nothing has changed yet).
-                        if (chatroomUpdateCounter > 0) onNotify()
+                        if (!chatroomList.isEmpty()) {
+                            // TODO: notify user only if CHANGED chatrooms have last message sender uid different from current user uid
+                            // TODO: problem is that chatrooms are not ordered and maybe we will have to keep old list of chatrooms to see the changes
+
+                            // Do not call onUpdate on first time listener is triggered,
+                            // because first time is just the first read from Firestore
+                            // (nothing has changed yet).
+                            if (chatroomUpdateCounter > 0) onNotify()
+                        }
 
                         chatroomUpdateCounter++
 
