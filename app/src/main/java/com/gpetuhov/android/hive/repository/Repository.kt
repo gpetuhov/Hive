@@ -85,6 +85,8 @@ class Repository : Repo {
     // Chatrooms of the current user
     private val chatrooms = MutableLiveData<MutableList<Chatroom>>()
 
+    private var isAppInForeground = false
+
     // True if current user is authorized
     private var isAuthorized = false
 
@@ -125,6 +127,18 @@ class Repository : Repo {
     }
 
     // === Repo ===
+    // --- App status ---
+
+    override fun isInForeground() = isAppInForeground
+
+    override fun setInForeground() {
+        isAppInForeground = true
+    }
+
+    override fun setInBackground() {
+        isAppInForeground = false
+    }
+
     // --- Authentication ---
 
     override fun onSignIn(user: User) {

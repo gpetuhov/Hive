@@ -11,6 +11,11 @@ import com.gpetuhov.android.hive.domain.model.User
 // The interface must be implemented at the storage (outer) layer.
 interface Repo {
 
+    // App status
+    fun isInForeground(): Boolean
+    fun setInForeground()
+    fun setInBackground()
+
     // Authentication
     fun onSignIn(user: User)
     fun onSignOut()

@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.interactor.SaveOnlineInteractor
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.managers.NotificationManager
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_CHECK_SETTINGS = 101
     }
 
+    @Inject lateinit var repo: Repo
     @Inject lateinit var locationManager: LocationManager
     @Inject lateinit var auth: Auth
     @Inject lateinit var mapManager: MapManager
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkPlayServicesAndPermissions()
+        repo.setInForeground()
         auth.startListenAuth()
         notificationManager.cancelNewMessageNotification()
         updateUserOnlineStatus(true)
@@ -64,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
+        repo.setInBackground()
         auth.stopListenAuth()
         updateUserOnlineStatus(false)
     }
