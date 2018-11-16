@@ -72,6 +72,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         viewModel.messages.observe(this, Observer<MutableList<Message>> { messageList ->
             messagesAdapter?.setMessages(messageList)
+            presenter.notifyNewMessage()
         })
         viewModel.secondUser.observe(this, Observer<User> { secondUser ->
             presenter.secondUserUid = secondUser.uid

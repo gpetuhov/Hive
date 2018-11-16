@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.managers.NotificationManager
 import com.gpetuhov.android.hive.presentation.view.ChatroomsFragmentView
 import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
 import javax.inject.Inject
@@ -12,6 +13,7 @@ import javax.inject.Inject
 class ChatroomsFragmentPresenter : MvpPresenter<ChatroomsFragmentView>(), ChatroomsAdapter.Callback {
 
     @Inject lateinit var repo: Repo
+    @Inject lateinit var notificationManager: NotificationManager
 
     init {
         HiveApp.appComponent.inject(this)
@@ -26,6 +28,10 @@ class ChatroomsFragmentPresenter : MvpPresenter<ChatroomsFragmentView>(), Chatro
         repo.clearMessages()
         viewState.openChat()
     }
+
+    // === Public methods ===
+
+    fun notifyNewMessage() = notificationManager.notifyNewMessageWithoutNotification()
 
     // === Lifecycle methods ===
 

@@ -8,6 +8,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SendMessageInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.managers.NotificationManager
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import javax.inject.Inject
@@ -24,6 +25,7 @@ class ChatFragmentPresenter :
     }
 
     @Inject lateinit var repo: Repo
+    @Inject lateinit var notificationManager: NotificationManager
 
     // Two-way data binding is used for this property
     var messageText = ""
@@ -73,6 +75,8 @@ class ChatFragmentPresenter :
     }
 
     fun navigateUp() = viewState.navigateUp()
+
+    fun notifyNewMessage() = notificationManager.notifyNewMessageWithoutNotification()
 
     // === Lifecycle methods ===
 

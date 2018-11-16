@@ -57,6 +57,7 @@ class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(ChatroomsViewModel::class.java)
         viewModel.chatrooms.observe(this, Observer<MutableList<Chatroom>> { chatroomList ->
+            presenter.notifyNewMessage()
             chatroomsAdapter?.setChatrooms(chatroomList)
             binding?.chatroomListEmpty = chatroomList.isEmpty()
         })

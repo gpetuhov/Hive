@@ -68,8 +68,6 @@ class NotificationManager {
             // In other cases user will be notified by the corresponding listeners
             // (so that sound or vibration will be triggered at the moment of the UI change.
 
-            // TODO: don't forget to notify in listeners
-
             if (!repo.isChatroomListOpen() && !repo.isChatroomOpen(senderUid)) {
                 notifyNewMessageWithoutNotification()
             }
