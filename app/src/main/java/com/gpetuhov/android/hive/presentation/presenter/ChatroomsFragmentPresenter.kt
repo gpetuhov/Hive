@@ -29,7 +29,13 @@ class ChatroomsFragmentPresenter : MvpPresenter<ChatroomsFragmentView>(), Chatro
 
     // === Lifecycle methods ===
 
-    fun onResume() = repo.startGettingChatroomsUpdates()
+    fun onResume() {
+        repo.setInChatroomsList(true)
+        repo.startGettingChatroomsUpdates()
+    }
 
-    fun onPause() = repo.stopGettingChatroomsUpdates()
+    fun onPause() {
+        repo.setInChatroomsList(false)
+        repo.stopGettingChatroomsUpdates()
+    }
 }

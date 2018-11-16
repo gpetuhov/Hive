@@ -87,6 +87,10 @@ class Repository : Repo {
 
     private var isAppInForeground = false
 
+    private var isUserInChatroomsList = false
+
+    private var isUserInChatroom = false
+
     // True if current user is authorized
     private var isAuthorized = false
 
@@ -137,6 +141,18 @@ class Repository : Repo {
 
     override fun setInBackground() {
         isAppInForeground = false
+    }
+
+    override fun isInChatroomsList() = isUserInChatroomsList
+
+    override fun setInChatroomsList(value: Boolean) {
+        isUserInChatroomsList = value
+    }
+
+    override fun isInChatroom() = isUserInChatroom
+
+    override fun setInChatroom(value: Boolean) {
+        isUserInChatroom = value
     }
 
     // --- Authentication ---

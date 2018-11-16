@@ -15,6 +15,10 @@ interface Repo {
     fun isInForeground(): Boolean
     fun setInForeground()
     fun setInBackground()
+    fun isInChatroomsList(): Boolean
+    fun setInChatroomsList(value: Boolean)
+    fun isInChatroom(): Boolean
+    fun setInChatroom(value: Boolean)
 
     // Authentication
     fun onSignIn(user: User)

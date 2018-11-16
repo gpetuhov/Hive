@@ -61,9 +61,22 @@ class NotificationManager {
 
     fun showNewMessageNotification(senderName: String, messageText: String) {
         if (repo.isInForeground()) {
-            vibrate()
+            // If the app is in foreground,
+            // and chatroom list is not open,
+            // and chatroom, new chat message belongs to, is not open,
+            // notify user without showing notification (sound or vibrate).
+            // In other cases user will be notified by the corresponding listeners
+            // (so that sound or vibration will be triggered at the moment,
+            // the UI changes).
+
+            // TODO: don't forget to check secondUserUid for the chatroom
+            if (!repo.isInChatroomsList() && !(repo.isInChatroom())) {
+                notifyNewMessageWithoutNotification()
+            }
 
         } else {
+            // If the app is in background, show notification
+
             val intent = Intent(context, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
             val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
@@ -83,6 +96,14 @@ class NotificationManager {
     }
 
     fun cancelNewMessageNotification() = notificationManager.cancel(NEW_MESSAGE_NOTIFICATION_ID)
+
+    fun notifyNewMessageWithoutNotification() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
+        }
+    }
 
     // === Private methods ===
 
@@ -122,14 +143,6 @@ class NotificationManager {
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun vibrate() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            vibrator.vibrate(200)
         }
     }
 }
