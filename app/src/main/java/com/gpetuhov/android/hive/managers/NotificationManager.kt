@@ -77,7 +77,8 @@ class NotificationManager {
         createNotificationChannel(
             LOCATION_SHARING_CHANNEL,
             R.string.location_sharing_channel_name,
-            R.string.location_sharing_channel_description
+            R.string.location_sharing_channel_description,
+            false
         )
     }
 
@@ -85,17 +86,23 @@ class NotificationManager {
         createNotificationChannel(
             NEW_MESSAGE_CHANNEL,
             R.string.new_message_channel_name,
-            R.string.new_message_channel_description
+            R.string.new_message_channel_description,
+            true
         )
     }
 
-    private fun createNotificationChannel(channelId: String, channelNameId: Int, channelDescriptionId: Int) {
+    private fun createNotificationChannel(channelId: String, channelNameId: Int, channelDescriptionId: Int, isImportanceHigh: Boolean) {
         // Notification channels are needed since Android Oreo
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel
             val name = context.getString(channelNameId)
             val descriptionText = context.getString(channelDescriptionId)
-            val importance = android.app.NotificationManager.IMPORTANCE_LOW
+
+            // Importance must be high for the notifications to show up at the top of the screen
+            val importance =
+                if (isImportanceHigh) android.app.NotificationManager.IMPORTANCE_HIGH
+                else android.app.NotificationManager.IMPORTANCE_LOW
+
             val channel = NotificationChannel(channelId, name, importance)
             channel.description = descriptionText
 
