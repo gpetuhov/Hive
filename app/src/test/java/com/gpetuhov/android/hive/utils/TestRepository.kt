@@ -25,7 +25,7 @@ class TestRepository : Repo {
     override fun setChatroomListOpen(value: Boolean) {
     }
 
-    override fun isChatroomOpen() = false
+    override fun isChatroomOpen(secondUserUid: String) = false
 
     override fun setChatroomOpen(value: Boolean) {
     }

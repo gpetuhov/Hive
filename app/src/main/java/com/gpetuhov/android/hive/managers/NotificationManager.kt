@@ -59,21 +59,18 @@ class NotificationManager {
         return builder.build()
     }
 
-    fun showNewMessageNotification(senderName: String, messageText: String) {
+    fun showNewMessageNotification(senderUid: String, senderName: String, messageText: String) {
         if (repo.isForeground()) {
-            // If the app is in foreground,
+            // If the app is in the foreground,
             // and chatroom list is not open,
             // and chatroom, new chat message belongs to, is not open,
             // notify user without showing notification (sound or vibrate).
             // In other cases user will be notified by the corresponding listeners
-            // (so that sound or vibration will be triggered at the moment,
-            // the UI changes).
-
-            // TODO: don't forget to check secondUserUid for the chatroom
+            // (so that sound or vibration will be triggered at the moment of the UI change.
 
             // TODO: don't forget to notify in listeners
 
-            if (!repo.isChatroomListOpen() && !(repo.isChatroomOpen())) {
+            if (!repo.isChatroomListOpen() && !repo.isChatroomOpen(senderUid)) {
                 notifyNewMessageWithoutNotification()
             }
 

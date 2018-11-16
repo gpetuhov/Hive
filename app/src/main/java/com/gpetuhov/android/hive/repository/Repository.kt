@@ -145,7 +145,8 @@ class Repository : Repo {
         isUserInChatroomsList = value
     }
 
-    override fun isChatroomOpen() = isUserInChatroom
+    // Return true if chat with secondUserUid is open
+    override fun isChatroomOpen(secondUserUid: String) = isUserInChatroom && secondUserUid == secondUserUid()
 
     override fun setChatroomOpen(value: Boolean) {
         isUserInChatroom = value

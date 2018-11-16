@@ -16,7 +16,7 @@ interface Repo {
     fun setForeground(value: Boolean)
     fun isChatroomListOpen(): Boolean
     fun setChatroomListOpen(value: Boolean)
-    fun isChatroomOpen(): Boolean
+    fun isChatroomOpen(secondUserUid: String): Boolean
     fun setChatroomOpen(value: Boolean)
 
     // Authentication
