@@ -133,25 +133,21 @@ class Repository : Repo {
     // === Repo ===
     // --- App status ---
 
-    override fun isInForeground() = isAppInForeground
+    override fun isForeground() = isAppInForeground
 
-    override fun setInForeground() {
-        isAppInForeground = true
+    override fun setForeground(value: Boolean) {
+        isAppInForeground = value
     }
 
-    override fun setInBackground() {
-        isAppInForeground = false
-    }
+    override fun isChatroomListOpen() = isUserInChatroomsList
 
-    override fun isInChatroomsList() = isUserInChatroomsList
-
-    override fun setInChatroomsList(value: Boolean) {
+    override fun setChatroomListOpen(value: Boolean) {
         isUserInChatroomsList = value
     }
 
-    override fun isInChatroom() = isUserInChatroom
+    override fun isChatroomOpen() = isUserInChatroom
 
-    override fun setInChatroom(value: Boolean) {
+    override fun setChatroomOpen(value: Boolean) {
         isUserInChatroom = value
     }
 

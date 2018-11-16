@@ -60,7 +60,7 @@ class NotificationManager {
     }
 
     fun showNewMessageNotification(senderName: String, messageText: String) {
-        if (repo.isInForeground()) {
+        if (repo.isForeground()) {
             // If the app is in foreground,
             // and chatroom list is not open,
             // and chatroom, new chat message belongs to, is not open,
@@ -70,7 +70,10 @@ class NotificationManager {
             // the UI changes).
 
             // TODO: don't forget to check secondUserUid for the chatroom
-            if (!repo.isInChatroomsList() && !(repo.isInChatroom())) {
+
+            // TODO: don't forget to notify in listeners
+
+            if (!repo.isChatroomListOpen() && !(repo.isChatroomOpen())) {
                 notifyNewMessageWithoutNotification()
             }
 

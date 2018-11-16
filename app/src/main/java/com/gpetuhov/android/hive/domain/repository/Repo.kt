@@ -12,13 +12,12 @@ import com.gpetuhov.android.hive.domain.model.User
 interface Repo {
 
     // App status
-    fun isInForeground(): Boolean
-    fun setInForeground()
-    fun setInBackground()
-    fun isInChatroomsList(): Boolean
-    fun setInChatroomsList(value: Boolean)
-    fun isInChatroom(): Boolean
-    fun setInChatroom(value: Boolean)
+    fun isForeground(): Boolean
+    fun setForeground(value: Boolean)
+    fun isChatroomListOpen(): Boolean
+    fun setChatroomListOpen(value: Boolean)
+    fun isChatroomOpen(): Boolean
+    fun setChatroomOpen(value: Boolean)
 
     // Authentication
     fun onSignIn(user: User)

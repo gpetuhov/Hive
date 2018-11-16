@@ -15,12 +15,19 @@ class TestRepository : Repo {
     var isOnline = false
     var messageText = ""
 
-    override fun isInForeground() = false
+    override fun isForeground() = false
 
-    override fun setInForeground() {
+    override fun setForeground(value: Boolean) {
     }
 
-    override fun setInBackground() {
+    override fun isChatroomListOpen() = false
+
+    override fun setChatroomListOpen(value: Boolean) {
+    }
+
+    override fun isChatroomOpen() = false
+
+    override fun setChatroomOpen(value: Boolean) {
     }
 
     override fun onSignIn(user: User) {

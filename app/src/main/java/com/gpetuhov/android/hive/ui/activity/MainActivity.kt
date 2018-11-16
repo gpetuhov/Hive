@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkPlayServicesAndPermissions()
-        repo.setInForeground()
+        repo.setForeground(true)
         auth.startListenAuth()
         notificationManager.cancelNewMessageNotification()
         updateUserOnlineStatus(true)
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        repo.setInBackground()
+        repo.setForeground(false)
         auth.stopListenAuth()
         updateUserOnlineStatus(false)
     }

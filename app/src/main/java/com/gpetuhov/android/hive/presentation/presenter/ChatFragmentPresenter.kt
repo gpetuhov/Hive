@@ -77,13 +77,13 @@ class ChatFragmentPresenter :
     // === Lifecycle methods ===
 
     fun onResume() {
-        repo.setInChatroom(true)
+        repo.setChatroomOpen(true)
         repo.startGettingMessagesUpdates()
         repo.startGettingSecondUserUpdates(secondUserUid)
     }
 
     fun onPause() {
-        repo.setInChatroom(false)
+        repo.setChatroomOpen(false)
         repo.stopGettingMessagesUpdates()
         repo.stopGettingSecondUserUpdates()
     }
