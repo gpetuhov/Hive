@@ -71,6 +71,8 @@
     <string name="location_sharing_enabled">Location sharing enabled</string>
     <string name="location_sharing_channel_name">Location sharing channel</string>
     <string name="location_sharing_channel_description">Shows location sharing notifications</string>
+    <string name="new_message_channel_name">New message channel</string>
+    <string name="new_message_channel_description">Shows new message notifications</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>

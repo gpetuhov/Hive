@@ -1,12 +1,9 @@
 package com.gpetuhov.android.hive.service
 
-import androidx.core.content.edit
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.util.Constants
-import com.pawegio.kandroid.defaultSharedPreferences
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -34,6 +31,10 @@ class MessageService : FirebaseMessagingService() {
     // In this app we send DATA messages using Firebase Cloud Functions every time,
     // new message document is created in Firestore chatrooms collection.
     // Cloud Functions code is hosted in a SEPARATE repository.
+
+    // Note that FCM messages are NOT delivered to the app,
+    // if the app has been FORCE CLOSED (not swiped away).
+    // (on some devices, the app is force closed if swiped away).
 
     override fun onCreate() {
         super.onCreate()

@@ -19,15 +19,25 @@ class NotificationManager {
 
     companion object {
         const val LOCATION_SHARING_NOTIFICATION_ID = 1001
+        const val NEW_MESSAGE_NOTIFICATION_ID = 1002
         private const val LOCATION_SHARING_CHANNEL = "location_sharing_channel"
+        private const val NEW_MESSAGE_CHANNEL = "new_message_channel"
     }
 
     @Inject lateinit var context: Context
 
+    private var notificationManager: NotificationManager
+
     init {
         HiveApp.appComponent.inject(this)
-        createDefaultNotificationChannel()
+
+        notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java) as NotificationManager
+
+        createLocationSharingNotificationChannel()
+        createNewMessageNotificationChannel()
     }
+
+    // === Public methods ===
 
     fun getLocationSharingNotification(): Notification? {
         val intent = Intent(context, MainActivity::class.java)
@@ -43,19 +53,36 @@ class NotificationManager {
         return builder.build()
     }
 
-    private fun createDefaultNotificationChannel() {
+    // === Private methods ===
+
+    private fun createLocationSharingNotificationChannel() {
+        createNotificationChannel(
+            LOCATION_SHARING_CHANNEL,
+            R.string.location_sharing_channel_name,
+            R.string.location_sharing_channel_description
+        )
+    }
+
+    private fun createNewMessageNotificationChannel() {
+        createNotificationChannel(
+            NEW_MESSAGE_CHANNEL,
+            R.string.new_message_channel_name,
+            R.string.new_message_channel_description
+        )
+    }
+
+    private fun createNotificationChannel(channelId: String, channelNameId: Int, channelDescriptionId: Int) {
         // Notification channels are needed since Android Oreo
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel
-            val name = context.getString(R.string.location_sharing_channel_name)
-            val descriptionText = context.getString(R.string.location_sharing_channel_description)
+            val name = context.getString(channelNameId)
+            val descriptionText = context.getString(channelDescriptionId)
             val importance = android.app.NotificationManager.IMPORTANCE_LOW
-            val channel = NotificationChannel(LOCATION_SHARING_CHANNEL, name, importance)
+            val channel = NotificationChannel(channelId, name, importance)
             channel.description = descriptionText
 
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            val notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
