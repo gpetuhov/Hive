@@ -69,7 +69,7 @@ class NotificationManager {
             // (so that sound or vibration will be triggered at the moment of the UI change.
 
             if (!repo.isChatroomListOpen() && !repo.isChatroomOpen(senderUid)) {
-                notifyNewMessageWithoutNotification()
+                notifyNewMessageFromInsideTheApp()
             }
 
         } else {
@@ -95,12 +95,10 @@ class NotificationManager {
 
     fun cancelNewMessageNotification() = notificationManager.cancel(NEW_MESSAGE_NOTIFICATION_ID)
 
-    fun notifyNewMessageWithoutNotification() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            vibrator.vibrate(200)
-        }
+    fun notifyNewMessageFromInsideChatOrChatroomList() {
+        // TODO: play different sound here
+
+        notifyNewMessageFromInsideTheApp()
     }
 
     // === Private methods ===
@@ -141,6 +139,16 @@ class NotificationManager {
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun notifyNewMessageFromInsideTheApp() {
+        // TODO: play sound instead of vibrate
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
         }
     }
 }

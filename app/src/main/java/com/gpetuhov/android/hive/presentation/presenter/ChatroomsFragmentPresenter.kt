@@ -33,7 +33,7 @@ class ChatroomsFragmentPresenter : MvpPresenter<ChatroomsFragmentView>(), Chatro
 
     fun onResume() {
         repo.setChatroomListOpen(true)
-        repo.startGettingChatroomsUpdates { notificationManager.notifyNewMessageWithoutNotification() }
+        repo.startGettingChatroomsUpdates { notificationManager.notifyNewMessageFromInsideChatOrChatroomList() }
     }
 
     fun onPause() {
