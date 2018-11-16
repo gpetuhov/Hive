@@ -386,10 +386,16 @@ class Repository : Repo {
 
                         messages.value = messagesList
 
-                        // Do not call onUpdate on first time listener is triggered,
-                        // because first time is just the first read from Firestore
-                        // (nothing has changed yet).
-                        if (chatUpdateCounter > 0) onUpdate()
+                        if (!messagesList.isEmpty()) {
+                            val lastMessageSenderUid = messagesList[0].senderUid
+
+                            // Do not call onUpdate on first time listener is triggered,
+                            // because first time is just the first read from Firestore
+                            // (nothing has changed yet)
+                            // and if last message sender uid equals to current user uid
+                            // (new message has been sent by current user).
+                            if (chatUpdateCounter > 0 && lastMessageSenderUid != currentUserUid()) onUpdate()
+                        }
 
                         chatUpdateCounter++
 

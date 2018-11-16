@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -144,6 +145,10 @@ class NotificationManager {
 
     private fun notifyNewMessageFromInsideTheApp() {
         // TODO: play sound instead of vibrate
+
+//        val mediaPlayer = MediaPlayer.create(context, R.raw.plucky)
+//        mediaPlayer?.start()
+//        mediaPlayer?.release()
 
         if (Build.VERSION.SDK_INT >= 26) {
             vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
