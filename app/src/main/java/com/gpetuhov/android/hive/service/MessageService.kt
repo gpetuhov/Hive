@@ -48,10 +48,11 @@ class MessageService : FirebaseMessagingService() {
         Timber.tag(TAG).d("messageData = $messageData")
 
         if (messageData != null) {
-            val messageText = messageData["messageText"]
+            val senderName = messageData["senderName"] ?: ""
+            val messageText = messageData["messageText"] ?: ""
 
-            if (messageText != null) {
-                notificationManager.showNewMessageNotification(messageText)
+            if (senderName != "" && messageText != "") {
+                notificationManager.showNewMessageNotification(senderName, messageText)
             }
         }
     }
