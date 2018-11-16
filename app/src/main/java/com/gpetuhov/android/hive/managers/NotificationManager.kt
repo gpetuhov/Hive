@@ -64,6 +64,9 @@ class NotificationManager {
             .setSmallIcon(R.drawable.android_round)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
         notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
     }
