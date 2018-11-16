@@ -15,6 +15,14 @@ class TestRepository : Repo {
     var isOnline = false
     var messageText = ""
 
+    override fun isInForeground() = false
+
+    override fun setInForeground() {
+    }
+
+    override fun setInBackground() {
+    }
+
     override fun onSignIn(user: User) {
     }
 
@@ -79,6 +87,9 @@ class TestRepository : Repo {
     }
 
     override fun initSecondUser(uid: String, name: String) {
+    }
+
+    override fun saveFcmToken(token: String) {
     }
 
     override fun searchResult(): MutableLiveData<MutableMap<String, User>> = MutableLiveData()
