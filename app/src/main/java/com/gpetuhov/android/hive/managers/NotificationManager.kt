@@ -70,7 +70,7 @@ class NotificationManager {
             // (so that sound or vibration will be triggered at the moment of the UI change.
 
             if (!repo.isChatroomListOpen() && !repo.isChatroomOpen(senderUid)) {
-                notifyNewMessageFromInsideTheApp()
+                notifyNewMessageFromInsideTheApp(false)
             }
 
         } else {
@@ -96,11 +96,7 @@ class NotificationManager {
 
     fun cancelNewMessageNotification() = notificationManager.cancel(NEW_MESSAGE_NOTIFICATION_ID)
 
-    fun notifyNewMessageFromInsideChatOrChatroomList() {
-        // TODO: play different sound here
-
-        notifyNewMessageFromInsideTheApp()
-    }
+    fun notifyNewMessageFromInsideChatOrChatroomList() = notifyNewMessageFromInsideTheApp(true)
 
     // === Private methods ===
 
@@ -143,17 +139,17 @@ class NotificationManager {
         }
     }
 
-    private fun notifyNewMessageFromInsideTheApp() {
-        // TODO: play sound instead of vibrate
+    private fun notifyNewMessageFromInsideTheApp(isLight: Boolean) {
+        // Sounds are taken from:
+        // https://notificationsounds.com/notification-sounds/light-562
+        // https://notificationsounds.com/notification-sounds/plucky-564
+        val mediaPlayer = MediaPlayer.create(context, if (isLight) R.raw.light else R.raw.plucky)
+        mediaPlayer?.start()
 
-//        val mediaPlayer = MediaPlayer.create(context, R.raw.plucky)
-//        mediaPlayer?.start()
-//        mediaPlayer?.release()
-
-        if (Build.VERSION.SDK_INT >= 26) {
-            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-        } else {
-            vibrator.vibrate(200)
-        }
+//        if (Build.VERSION.SDK_INT >= 26) {
+//            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+//        } else {
+//            vibrator.vibrate(200)
+//        }
     }
 }
