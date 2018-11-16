@@ -55,6 +55,6 @@ interface Repo {
 
     // Chatroom
     fun chatrooms(): MutableLiveData<MutableList<Chatroom>>
-    fun startGettingChatroomsUpdates()
+    fun startGettingChatroomsUpdates(onUpdate: () -> Unit)
     fun stopGettingChatroomsUpdates()
 }

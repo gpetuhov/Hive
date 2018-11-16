@@ -29,15 +29,11 @@ class ChatroomsFragmentPresenter : MvpPresenter<ChatroomsFragmentView>(), Chatro
         viewState.openChat()
     }
 
-    // === Public methods ===
-
-    fun notifyNewMessage() = notificationManager.notifyNewMessageWithoutNotification()
-
     // === Lifecycle methods ===
 
     fun onResume() {
         repo.setChatroomListOpen(true)
-        repo.startGettingChatroomsUpdates()
+        repo.startGettingChatroomsUpdates { notificationManager.notifyNewMessageWithoutNotification() }
     }
 
     fun onPause() {

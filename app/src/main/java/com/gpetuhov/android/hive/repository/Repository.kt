@@ -100,6 +100,8 @@ class Repository : Repo {
     // Uid of the current chatroom
     private var currentChatRoomUid = ""
 
+    private var chatroomUpdateCounter = 0
+
     // Firestore
     private val firestore = FirebaseFirestore.getInstance()
 
@@ -427,7 +429,7 @@ class Repository : Repo {
 
     override fun chatrooms() = chatrooms
 
-    override fun startGettingChatroomsUpdates() {
+    override fun startGettingChatroomsUpdates(onUpdate: () -> Unit) {
         if (isAuthorized) {
             // We keep a collection of chatrooms for every user.
             // This is needed to easily display a list of all chats,
@@ -437,6 +439,8 @@ class Repository : Repo {
             // userChatrooms_collection -> User_document -> chatroomsOfUser_collection -> Chatroom_document
             // (Note that chatrooms of users are saved NOT in the users collection,
             // but in a separate userChatrooms collection)
+
+            chatroomUpdateCounter = 0
 
             chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid())
                 .orderBy(CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY, Query.Direction.DESCENDING)
@@ -457,6 +461,12 @@ class Repository : Repo {
 
                         chatrooms.value = chatroomList
 
+                        // Do not call onUpdate on first time listener is triggered,
+                        // because first time is just the first read from Firestore.
+                        if (chatroomUpdateCounter > 0) onUpdate()
+
+                        chatroomUpdateCounter++
+
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
                     }
@@ -464,7 +474,10 @@ class Repository : Repo {
         }
     }
 
-    override fun stopGettingChatroomsUpdates() = chatroomsListenerRegistration?.remove() ?: Unit
+    override fun stopGettingChatroomsUpdates() {
+        chatroomsListenerRegistration?.remove() ?: Unit
+        chatroomUpdateCounter = 0
+    }
 
     // === Private methods ===
     // --- User ---
