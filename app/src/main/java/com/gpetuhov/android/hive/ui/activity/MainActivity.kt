@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         checkPlayServicesAndPermissions()
         repo.setForeground(true)
         auth.startListenAuth()
-        notificationManager.cancelNewMessageNotification()
+        notificationManager.onResume()
         updateUserOnlineStatus(true)
     }
 
@@ -69,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
         repo.setForeground(false)
         auth.stopListenAuth()
+        notificationManager.onPause()
         updateUserOnlineStatus(false)
     }
 

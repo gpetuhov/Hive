@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Build
-import android.os.VibrationEffect
 import android.os.Vibrator
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
@@ -33,6 +32,8 @@ class NotificationManager {
 
     private var notificationManager: NotificationManager
     private var vibrator: Vibrator
+    private var mediaPlayer: MediaPlayer? = null
+    private var mediaPlayerLight: MediaPlayer? = null
 
     init {
         HiveApp.appComponent.inject(this)
@@ -94,9 +95,26 @@ class NotificationManager {
         }
     }
 
-    fun cancelNewMessageNotification() = notificationManager.cancel(NEW_MESSAGE_NOTIFICATION_ID)
-
     fun notifyNewMessageFromInsideChatOrChatroomList() = notifyNewMessageFromInsideTheApp(true)
+
+    // === Lifecycle calls ===
+
+    fun onResume() {
+        cancelNewMessageNotification()
+
+        // Sounds are taken from:
+        // https://notificationsounds.com/notification-sounds/light-562
+        // https://notificationsounds.com/notification-sounds/plucky-564
+        mediaPlayer = MediaPlayer.create(context, R.raw.plucky)
+        mediaPlayerLight = MediaPlayer.create(context, R.raw.light)
+    }
+
+    fun onPause() {
+        mediaPlayer?.release()
+        mediaPlayer = null
+        mediaPlayerLight?.release()
+        mediaPlayerLight = null
+    }
 
     // === Private methods ===
 
@@ -139,17 +157,10 @@ class NotificationManager {
         }
     }
 
-    private fun notifyNewMessageFromInsideTheApp(isLight: Boolean) {
-        // Sounds are taken from:
-        // https://notificationsounds.com/notification-sounds/light-562
-        // https://notificationsounds.com/notification-sounds/plucky-564
-        val mediaPlayer = MediaPlayer.create(context, if (isLight) R.raw.light else R.raw.plucky)
-        mediaPlayer?.start()
+    private fun cancelNewMessageNotification() = notificationManager.cancel(NEW_MESSAGE_NOTIFICATION_ID)
 
-//        if (Build.VERSION.SDK_INT >= 26) {
-//            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
-//        } else {
-//            vibrator.vibrate(200)
-//        }
+    private fun notifyNewMessageFromInsideTheApp(isLight: Boolean) {
+        val tempMediaPlayer = if (isLight) mediaPlayerLight else mediaPlayer
+        tempMediaPlayer?.start()
     }
 }
