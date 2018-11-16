@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.interactor.SaveOnlineInteractor
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
+import com.gpetuhov.android.hive.managers.NotificationManager
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var locationManager: LocationManager
     @Inject lateinit var auth: Auth
     @Inject lateinit var mapManager: MapManager
+    @Inject lateinit var notificationManager: NotificationManager
 
     private lateinit var navController: NavController
 
@@ -56,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         checkPlayServicesAndPermissions()
         auth.startListenAuth()
+        notificationManager.cancelNewMessageNotification()
         updateUserOnlineStatus(true)
     }
 

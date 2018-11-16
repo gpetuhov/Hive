@@ -71,6 +71,8 @@ class NotificationManager {
         notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
     }
 
+    fun cancelNewMessageNotification() = notificationManager.cancel(NEW_MESSAGE_NOTIFICATION_ID)
+
     // === Private methods ===
 
     private fun createLocationSharingNotificationChannel() {
