@@ -44,10 +44,16 @@ class MessageService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
-        val messageData = remoteMessage?.data.toString()
+        val messageData = remoteMessage?.data
         Timber.tag(TAG).d("messageData = $messageData")
 
-        notificationManager.showNewMessageNotification()
+        if (messageData != null) {
+            val messageText = messageData["messageText"]
+
+            if (messageText != null) {
+                notificationManager.showNewMessageNotification(messageText)
+            }
+        }
     }
 
     // This one is called when new FCM token is received.
