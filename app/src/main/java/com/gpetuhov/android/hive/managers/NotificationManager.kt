@@ -53,6 +53,21 @@ class NotificationManager {
         return builder.build()
     }
 
+    fun showNewMessageNotification() {
+        val intent = Intent(context, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+
+        val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
+            .setContentTitle(context.getString(R.string.app_name))
+            .setContentText("You have new message")
+            .setSmallIcon(R.drawable.android_round)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
+    }
+
     // === Private methods ===
 
     private fun createLocationSharingNotificationChannel() {

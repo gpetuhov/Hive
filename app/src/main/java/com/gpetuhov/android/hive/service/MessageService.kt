@@ -4,12 +4,14 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.managers.NotificationManager
 import timber.log.Timber
 import javax.inject.Inject
 
 class MessageService : FirebaseMessagingService() {
 
     @Inject lateinit var repo: Repo
+    @Inject lateinit var notificationManager: NotificationManager
 
     companion object {
         private const val TAG = "MessageService"
@@ -44,6 +46,8 @@ class MessageService : FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage?) {
         val messageData = remoteMessage?.data.toString()
         Timber.tag(TAG).d("messageData = $messageData")
+
+        notificationManager.showNewMessageNotification()
     }
 
     // This one is called when new FCM token is received.
