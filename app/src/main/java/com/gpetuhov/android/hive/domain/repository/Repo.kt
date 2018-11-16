@@ -48,7 +48,7 @@ interface Repo {
 
     // Message
     fun messages(): MutableLiveData<MutableList<Message>>
-    fun startGettingMessagesUpdates()
+    fun startGettingMessagesUpdates(onUpdate: () -> Unit)
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
     fun clearMessages()

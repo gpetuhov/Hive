@@ -100,7 +100,9 @@ class Repository : Repo {
     // Uid of the current chatroom
     private var currentChatRoomUid = ""
 
+    // Chatroom and chat update counters
     private var chatroomUpdateCounter = 0
+    private var chatUpdateCounter = 0
 
     // Firestore
     private val firestore = FirebaseFirestore.getInstance()
@@ -351,13 +353,15 @@ class Repository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates() {
+    override fun startGettingMessagesUpdates(onUpdate: () -> Unit) {
         if (isAuthorized) {
             // Chatroom collection consists of chatroom documents with chatroom uids.
             // Chatroom uid is calculated as userUid1_userUid2
             // Each chatroom document contains subcollection, which contains chatroom messages.
             // Hierarchy:
             // Chatrooms_collection -> Chatroom_document -> Messages_collection -> Message_document
+
+            chatUpdateCounter = 0
 
             // This is needed for the chat room to have the same name,
             // despite of the uid of the user, who started the conversation.
@@ -382,6 +386,13 @@ class Repository : Repo {
 
                         messages.value = messagesList
 
+                        // Do not call onUpdate on first time listener is triggered,
+                        // because first time is just the first read from Firestore
+                        // (nothing has changed yet).
+                        if (chatUpdateCounter > 0) onUpdate()
+
+                        chatUpdateCounter++
+
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
                     }
@@ -392,6 +403,7 @@ class Repository : Repo {
     override fun stopGettingMessagesUpdates() {
         messagesListenerRegistration?.remove()
         currentChatRoomUid = ""
+        chatUpdateCounter = 0
     }
 
     override fun sendMessage(messageText: String, onError: () -> Unit) {
@@ -462,7 +474,8 @@ class Repository : Repo {
                         chatrooms.value = chatroomList
 
                         // Do not call onUpdate on first time listener is triggered,
-                        // because first time is just the first read from Firestore.
+                        // because first time is just the first read from Firestore
+                        // (nothing has changed yet).
                         if (chatroomUpdateCounter > 0) onUpdate()
 
                         chatroomUpdateCounter++

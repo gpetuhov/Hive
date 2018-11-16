@@ -76,13 +76,11 @@ class ChatFragmentPresenter :
 
     fun navigateUp() = viewState.navigateUp()
 
-    fun notifyNewMessage() = notificationManager.notifyNewMessageWithoutNotification()
-
     // === Lifecycle methods ===
 
     fun onResume() {
         repo.setChatroomOpen(true)
-        repo.startGettingMessagesUpdates()
+        repo.startGettingMessagesUpdates { notificationManager.notifyNewMessageWithoutNotification() }
         repo.startGettingSecondUserUpdates(secondUserUid)
     }
 
