@@ -111,7 +111,7 @@ class TestRepository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = MutableLiveData()
 
-    override fun startGettingMessagesUpdates() {
+    override fun startGettingMessagesUpdates(onUpdate: () -> Unit) {
     }
 
     override fun stopGettingMessagesUpdates() {
@@ -130,7 +130,7 @@ class TestRepository : Repo {
 
     override fun chatrooms(): MutableLiveData<MutableList<Chatroom>> = MutableLiveData()
 
-    override fun startGettingChatroomsUpdates() {
+    override fun startGettingChatroomsUpdates(onUpdate: () -> Unit) {
     }
 
     override fun stopGettingChatroomsUpdates() {
