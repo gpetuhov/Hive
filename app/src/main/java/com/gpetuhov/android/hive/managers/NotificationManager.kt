@@ -7,10 +7,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import javax.inject.Inject
 
@@ -25,13 +28,16 @@ class NotificationManager {
     }
 
     @Inject lateinit var context: Context
+    @Inject lateinit var repo: Repo
 
     private var notificationManager: NotificationManager
+    private var vibrator: Vibrator
 
     init {
         HiveApp.appComponent.inject(this)
 
         notificationManager = ContextCompat.getSystemService(context, NotificationManager::class.java) as NotificationManager
+        vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         createLocationSharingNotificationChannel()
         createNewMessageNotificationChannel()
@@ -54,21 +60,26 @@ class NotificationManager {
     }
 
     fun showNewMessageNotification(senderName: String, messageText: String) {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+        if (repo.isInForeground()) {
+            vibrate()
 
-        val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
-            .setContentTitle(senderName)
-            .setContentText(messageText)
-            .setSmallIcon(R.drawable.android_round)
-            .setContentIntent(pendingIntent)
-            .setAutoCancel(true)
-            .setDefaults(NotificationCompat.DEFAULT_ALL)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        } else {
+            val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
 
-        notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
+            val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
+                .setContentTitle(senderName)
+                .setContentText(messageText)
+                .setSmallIcon(R.drawable.android_round)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+
+            notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
+        }
     }
 
     fun cancelNewMessageNotification() = notificationManager.cancel(NEW_MESSAGE_NOTIFICATION_ID)
@@ -111,6 +122,14 @@ class NotificationManager {
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun vibrate() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
+        } else {
+            vibrator.vibrate(200)
         }
     }
 }
