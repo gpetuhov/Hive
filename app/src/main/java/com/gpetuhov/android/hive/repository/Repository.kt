@@ -353,7 +353,7 @@ class Repository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates(onUpdate: () -> Unit) {
+    override fun startGettingMessagesUpdates(onNotify: () -> Unit) {
         if (isAuthorized) {
             // Chatroom collection consists of chatroom documents with chatroom uids.
             // Chatroom uid is calculated as userUid1_userUid2
@@ -394,7 +394,7 @@ class Repository : Repo {
                             // (nothing has changed yet)
                             // and if last message sender uid equals to current user uid
                             // (new message has been sent by current user).
-                            if (chatUpdateCounter > 0 && lastMessageSenderUid != currentUserUid()) onUpdate()
+                            if (chatUpdateCounter > 0 && lastMessageSenderUid != currentUserUid()) onNotify()
                         }
 
                         chatUpdateCounter++
@@ -447,7 +447,7 @@ class Repository : Repo {
 
     override fun chatrooms() = chatrooms
 
-    override fun startGettingChatroomsUpdates(onUpdate: () -> Unit) {
+    override fun startGettingChatroomsUpdates(onNotify: () -> Unit) {
         if (isAuthorized) {
             // We keep a collection of chatrooms for every user.
             // This is needed to easily display a list of all chats,
@@ -482,7 +482,7 @@ class Repository : Repo {
                         // Do not call onUpdate on first time listener is triggered,
                         // because first time is just the first read from Firestore
                         // (nothing has changed yet).
-                        if (chatroomUpdateCounter > 0) onUpdate()
+                        if (chatroomUpdateCounter > 0) onNotify()
 
                         chatroomUpdateCounter++
 
