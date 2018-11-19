@@ -747,7 +747,8 @@ class Repository : Repo {
             lastMessageSenderUid = doc.getString(CHATROOM_LAST_MESSAGE_SENDER_UID_KEY) ?: "",
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
-            newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
+            // TODO: set default 0
+            newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 10
         )
     }
 

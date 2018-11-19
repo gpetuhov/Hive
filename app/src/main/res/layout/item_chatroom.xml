@@ -5,6 +5,7 @@
         tools:context=".ui.fragment.ProfileFragment">
 
     <data>
+        <import type="android.view.View"/>
         <variable name="chatroom" type="com.gpetuhov.android.hive.domain.model.Chatroom"/>
     </data>
 
@@ -46,15 +47,32 @@
 
         </LinearLayout>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{chatroom.lastMessageText}"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:singleLine="true"
-                style="@style/mediumTextStyle"
-                tools:text="Message text"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{chatroom.lastMessageText}"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    style="@style/mediumTextStyle"
+                    tools:text="Message text"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{chatroom.getNewMessageCountString()}"
+                    android:visibility="@{chatroom.newMessageCount > 0 ? View.VISIBLE : View.GONE}"
+                    android:layout_gravity="center_vertical"
+                    style="@style/mediumTextStyle"
+                    tools:text="30"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

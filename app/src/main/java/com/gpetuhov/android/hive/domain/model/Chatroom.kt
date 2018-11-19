@@ -16,4 +16,5 @@ data class Chatroom (
     var newMessageCount: Long
 ) {
     fun getLastMessageTime() = getDateTimeFromTimestamp(lastMessageTimestamp)
+    fun getNewMessageCountString() = newMessageCount.toString()
 }
