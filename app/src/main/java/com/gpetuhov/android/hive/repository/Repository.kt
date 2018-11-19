@@ -481,12 +481,14 @@ class Repository : Repo {
                         chatrooms.value = chatroomList
 
                         if (!chatroomList.isEmpty()) {
-                            // TODO: notify user only if CHANGED chatrooms have last message sender uid different from current user uid
+                            val lastMessageSenderUid = chatroomList[0].lastMessageSenderUid
 
                             // Do not call onUpdate on first time listener is triggered,
                             // because first time is just the first read from Firestore
-                            // (nothing has changed yet).
-                            if (chatroomUpdateCounter > 0) onNotify()
+                            // (nothing has changed yet)
+                            // and if last message sender uid equals to current user uid
+                            // (new message has been sent by current user).
+                            if (chatroomUpdateCounter > 0 && lastMessageSenderUid != currentUserUid()) onNotify()
                         }
 
                         chatroomUpdateCounter++
