@@ -54,6 +54,7 @@ class Repository : Repo {
         private const val CHATROOM_LAST_MESSAGE_SENDER_UID_KEY = "lastMessageSenderUid"
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
+        private const val CHATROOM_NEW_MESSAGE_COUNT_KEY = "newMessageCount"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -745,7 +746,8 @@ class Repository : Repo {
             secondUserName = secondUserName,
             lastMessageSenderUid = doc.getString(CHATROOM_LAST_MESSAGE_SENDER_UID_KEY) ?: "",
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
-            lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY)
+            lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
+            newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
         )
     }
 

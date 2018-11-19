@@ -12,7 +12,8 @@ data class Chatroom (
     var secondUserName: String,
     var lastMessageSenderUid: String,
     var lastMessageText: String,
-    var lastMessageTimestamp: Long
+    var lastMessageTimestamp: Long,
+    var newMessageCount: Long
 ) {
     fun getLastMessageTime() = getDateTimeFromTimestamp(lastMessageTimestamp)
 }
