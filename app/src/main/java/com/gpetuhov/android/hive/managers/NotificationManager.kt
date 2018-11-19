@@ -6,6 +6,8 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Vibrator
@@ -105,8 +107,23 @@ class NotificationManager {
         // Sounds are taken from:
         // https://notificationsounds.com/notification-sounds/light-562
         // https://notificationsounds.com/notification-sounds/plucky-564
-        mediaPlayer = MediaPlayer.create(context, R.raw.plucky)
-        mediaPlayerLight = MediaPlayer.create(context, R.raw.light)
+//        mediaPlayer = MediaPlayer.create(context, R.raw.plucky)
+//        mediaPlayer?.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
+//
+//        mediaPlayerLight = MediaPlayer.create(context, R.raw.light)
+//        mediaPlayerLight?.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
+
+        val fileDescriptor = context.resources.openRawResourceFd(R.raw.plucky)
+        mediaPlayer = MediaPlayer()
+        mediaPlayer?.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
+        mediaPlayer?.setDataSource(fileDescriptor.fileDescriptor, fileDescriptor.startOffset, fileDescriptor.length)
+        mediaPlayer?.prepare()
+
+        val fileDescriptor2 = context.resources.openRawResourceFd(R.raw.light)
+        mediaPlayerLight = MediaPlayer()
+        mediaPlayerLight?.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
+        mediaPlayerLight?.setDataSource(fileDescriptor2.fileDescriptor, fileDescriptor2.startOffset, fileDescriptor2.length)
+        mediaPlayerLight?.prepare()
     }
 
     fun onPause() {
