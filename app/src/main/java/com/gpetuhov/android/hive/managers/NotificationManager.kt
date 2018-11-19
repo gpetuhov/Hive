@@ -107,23 +107,8 @@ class NotificationManager {
         // Sounds are taken from:
         // https://notificationsounds.com/notification-sounds/light-562
         // https://notificationsounds.com/notification-sounds/plucky-564
-//        mediaPlayer = MediaPlayer.create(context, R.raw.plucky)
-//        mediaPlayer?.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
-//
-//        mediaPlayerLight = MediaPlayer.create(context, R.raw.light)
-//        mediaPlayerLight?.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
-
-        val fileDescriptor = context.resources.openRawResourceFd(R.raw.plucky)
-        mediaPlayer = MediaPlayer()
-        mediaPlayer?.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
-        mediaPlayer?.setDataSource(fileDescriptor.fileDescriptor, fileDescriptor.startOffset, fileDescriptor.length)
-        mediaPlayer?.prepare()
-
-        val fileDescriptor2 = context.resources.openRawResourceFd(R.raw.light)
-        mediaPlayerLight = MediaPlayer()
-        mediaPlayerLight?.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
-        mediaPlayerLight?.setDataSource(fileDescriptor2.fileDescriptor, fileDescriptor2.startOffset, fileDescriptor2.length)
-        mediaPlayerLight?.prepare()
+        mediaPlayer = createMediaPlayer(R.raw.plucky)
+        mediaPlayerLight = createMediaPlayer(R.raw.light)
     }
 
     fun onPause() {
@@ -179,5 +164,14 @@ class NotificationManager {
     private fun notifyNewMessageFromInsideTheApp(isLight: Boolean) {
         val tempMediaPlayer = if (isLight) mediaPlayerLight else mediaPlayer
         tempMediaPlayer?.start()
+    }
+
+    private fun createMediaPlayer(soundId: Int): MediaPlayer {
+        val fileDescriptor = context.resources.openRawResourceFd(soundId)
+        val player = MediaPlayer()
+        player.setAudioStreamType(AudioManager.STREAM_NOTIFICATION)
+        player.setDataSource(fileDescriptor.fileDescriptor, fileDescriptor.startOffset, fileDescriptor.length)
+        player.prepare()
+        return player
     }
 }
