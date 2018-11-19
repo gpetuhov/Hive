@@ -433,8 +433,8 @@ class Repository : Repo {
                     onError()
                 }
 
-            // Update chatroom for current and second user
-            updateChatroom(messageText)
+            // Chatrooms for current and second user are updated from the Cloud Functions
+            // on every new chat message creation.
 
         } else {
             onError()
@@ -747,28 +747,8 @@ class Repository : Repo {
             lastMessageSenderUid = doc.getString(CHATROOM_LAST_MESSAGE_SENDER_UID_KEY) ?: "",
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
-            // TODO: set default 0
-            newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 30
+            newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
         )
-    }
-
-    private fun updateChatroom(lastMessageText: String) {
-        val data = HashMap<String, Any>()
-
-        // We set BOTH current and second user uids and names in Firestore
-        data[CHATROOM_USER_UID_1_KEY] = currentUserUid()
-        data[CHATROOM_USER_UID_2_KEY] = secondUserUid()
-        data[CHATROOM_USER_NAME_1_KEY] = currentUserNameOrUsername()
-        data[CHATROOM_USER_NAME_2_KEY] = secondUserNameOrUsername()
-
-        data[CHATROOM_LAST_MESSAGE_SENDER_UID_KEY] = currentUserUid()
-        data[CHATROOM_LAST_MESSAGE_TEXT_KEY] = lastMessageText
-        data[CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
-
-        // We have to update current chatroom for both users in the chat
-        // (current user and the second user).
-        updateChatroomForUser(currentChatRoomUid, currentUserUid(), data)
-        updateChatroomForUser(currentChatRoomUid, secondUserUid(), data)
     }
 
     private fun updateChatroomForUser(chatroomUid: String, userUid: String, data: HashMap<String, Any>) {
