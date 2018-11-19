@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:text="@{chatroom.getLastMessageTime()}"
                     android:layout_gravity="center_vertical"
+                    android:textColor="@{chatroom.newMessageCount > 0 ? @color/md_green_600 : @color/md_grey_600}"
                     style="@style/smallTextStyle"
                     tools:text="2018-11-7 12:29"/>
 
