@@ -361,73 +361,6 @@ class Repository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates(onNotify: () -> Unit) {
-        if (isAuthorized) {
-            // Chatroom collection consists of chatroom documents with chatroom uids.
-            // Chatroom uid is calculated as userUid1_userUid2
-            // Each chatroom document contains subcollection, which contains chatroom messages.
-            // Hierarchy:
-            // Chatrooms_collection -> Chatroom_document -> Messages_collection -> Message_document
-
-            chatUpdateCounter = 0
-
-            // This is needed for the chat room to have the same name,
-            // despite of the uid of the user, who started the conversation.
-            currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
-
-            messagesListenerRegistration = getMessagesCollectionReference()
-                .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
-                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                    if (firebaseFirestoreException == null) {
-                        Timber.tag(TAG).d("Listen success")
-
-                        val messagesList = mutableListOf<Message>()
-
-                        if (querySnapshot != null) {
-                            for (doc in querySnapshot.documents) {
-                                messagesList.add(getMessageFromDocumentSnapshot(doc))
-                            }
-
-                        } else {
-                            Timber.tag(TAG).d("Listen failed")
-                        }
-
-                        messages.value = messagesList
-
-                        if (!messagesList.isEmpty()) {
-                            val lastMessageSenderUid = messagesList[0].senderUid
-                            val lastMessageTimestamp = messagesList[0].timestamp
-
-                            // If new message has not been sent by current user
-                            if (lastMessageSenderUid != currentUserUid()) {
-                                // TODO: comment this
-                                // Clear new message count for the current chatroom
-                                // of the current user (because, if the user is inside the chatroom,
-                                // that means, that  he sees new messages).
-                                if (lastMessageTimestamp >= currentChatRoomLastMessageTimestamp) clearNewMessageCount()
-
-                                // Do not call onUpdate on first time listener is triggered,
-                                // because first time is just the first read from Firestore
-                                // (nothing has changed yet)
-                                if (chatUpdateCounter > 0) onNotify()
-                            }
-                        }
-
-                        chatUpdateCounter++
-
-                    } else {
-                        Timber.tag(TAG).d(firebaseFirestoreException)
-                    }
-                }
-        }
-    }
-
-    override fun stopGettingMessagesUpdates() {
-        messagesListenerRegistration?.remove()
-        currentChatRoomUid = ""
-        chatUpdateCounter = 0
-    }
-
     override fun sendMessage(messageText: String, onError: () -> Unit) {
         if (isAuthorized && currentChatRoomUid != "") {
             val data = HashMap<String, Any>()
@@ -525,6 +458,8 @@ class Repository : Repo {
 
             currentChatRoomLastMessageTimestamp = 0L
 
+            // This is needed for the chat room to have the same name,
+            // despite of the uid of the user, who started the conversation.
             currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
 
             // Get current chatroom for the current user
@@ -536,6 +471,9 @@ class Repository : Repo {
                         val snapshot = task.result
                         if (snapshot != null && snapshot.exists()) {
                             Timber.tag(TAG).d("Get success")
+
+                            // Save current chatroom last message timestamp.
+                            // This is needed to detect, whether new messages have been loaded or not.
                             val chatroom = getChatroomFromDocumentSnapshot(snapshot)
                             currentChatRoomLastMessageTimestamp = chatroom.lastMessageTimestamp
 
@@ -546,14 +484,13 @@ class Repository : Repo {
                         Timber.tag(TAG).d("Get failed")
                     }
 
+                    // Start getting messages updates only after getting current chatroom last message timestamp
                     startGettingMessagesUpdates(onNotify)
                 }
         }
     }
 
-    override fun stopGettingCurrentChatroomUpdates() {
-        stopGettingMessagesUpdates()
-    }
+    override fun stopGettingCurrentChatroomUpdates() = stopGettingMessagesUpdates()
 
     // === Private methods ===
     // --- User ---
@@ -756,6 +693,70 @@ class Repository : Repo {
         return firestore
             .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
             .collection(MESSAGES_COLLECTION)
+    }
+
+    private fun startGettingMessagesUpdates(onNotify: () -> Unit) {
+        if (isAuthorized) {
+            // Chatroom collection consists of chatroom documents with chatroom uids.
+            // Chatroom uid is calculated as userUid1_userUid2
+            // Each chatroom document contains subcollection, which contains chatroom messages.
+            // Hierarchy:
+            // Chatrooms_collection -> Chatroom_document -> Messages_collection -> Message_document
+
+            chatUpdateCounter = 0
+
+            messagesListenerRegistration = getMessagesCollectionReference()
+                .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
+                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        Timber.tag(TAG).d("Listen success")
+
+                        val messagesList = mutableListOf<Message>()
+
+                        if (querySnapshot != null) {
+                            for (doc in querySnapshot.documents) {
+                                messagesList.add(getMessageFromDocumentSnapshot(doc))
+                            }
+
+                        } else {
+                            Timber.tag(TAG).d("Listen failed")
+                        }
+
+                        messages.value = messagesList
+
+                        if (!messagesList.isEmpty()) {
+                            val lastMessage = messagesList[0]
+
+                            // If new message has not been sent by the current user
+                            if (lastMessage.senderUid != currentUserUid()) {
+                                // If timestamp of the new message
+                                // is more or equal than the current chatroom last message timestamp
+                                // (that means, that we have really loaded new messages here),
+                                // clear new message count for the current chatroom
+                                // of the current user (if new messages have been loaded,
+                                // then we don't consider them new any more).
+                                if (lastMessage.timestamp >= currentChatRoomLastMessageTimestamp) clearNewMessageCount()
+
+                                // Do not call onUpdate on first time listener is triggered,
+                                // because first time is just the first read from Firestore
+                                // (nothing has changed yet)
+                                if (chatUpdateCounter > 0) onNotify()
+                            }
+                        }
+
+                        chatUpdateCounter++
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+        }
+    }
+
+    private fun stopGettingMessagesUpdates() {
+        messagesListenerRegistration?.remove()
+        currentChatRoomUid = ""
+        chatUpdateCounter = 0
     }
 
     // --- Chatroom ---
