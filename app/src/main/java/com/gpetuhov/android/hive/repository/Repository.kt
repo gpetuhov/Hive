@@ -16,6 +16,7 @@ import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
 import java.lang.Exception
+import java.util.logging.Handler
 
 // Read and write data to remote storage (Firestore)
 class Repository : Repo {
@@ -391,12 +392,18 @@ class Repository : Repo {
                         if (!messagesList.isEmpty()) {
                             val lastMessageSenderUid = messagesList[0].senderUid
 
-                            // Do not call onUpdate on first time listener is triggered,
-                            // because first time is just the first read from Firestore
-                            // (nothing has changed yet)
-                            // and if last message sender uid equals to current user uid
-                            // (new message has been sent by current user).
-                            if (chatUpdateCounter > 0 && lastMessageSenderUid != currentUserUid()) onNotify()
+                            // If new message has not been sent by current user
+                            if (lastMessageSenderUid != currentUserUid()) {
+                                // Clear new message count for the current chatroom
+                                // of the current user (because, if the user is inside the chatroom,
+                                // that means, that  he sees new messages).
+                                clearNewMessageCount()
+
+                                // Do not call onUpdate on first time listener is triggered,
+                                // because first time is just the first read from Firestore
+                                // (nothing has changed yet)
+                                if (chatUpdateCounter > 0) onNotify()
+                            }
                         }
 
                         chatUpdateCounter++
@@ -793,5 +800,12 @@ class Repository : Repo {
         // that participate in this chatroom.
         updateChatroomForUser(chatroom.chatroomUid, chatroom.userUid1, data)
         updateChatroomForUser(chatroom.chatroomUid, chatroom.userUid2, data)
+    }
+
+    private fun clearNewMessageCount() {
+        val data = HashMap<String, Any>()
+        data[CHATROOM_NEW_MESSAGE_COUNT_KEY] = 0
+
+        updateChatroomForUser(currentChatRoomUid, currentUserUid(), data)
     }
 }
