@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.repository
 
+import android.os.Handler
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.*
@@ -16,7 +17,6 @@ import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
 import java.lang.Exception
-import java.util.logging.Handler
 
 // Read and write data to remote storage (Firestore)
 class Repository : Repo {
@@ -56,6 +56,8 @@ class Repository : Repo {
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
         private const val CHATROOM_NEW_MESSAGE_COUNT_KEY = "newMessageCount"
+
+        private const val CLEAR_NEW_MESSAGE_COUNT_DELAY = 1000L
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -803,9 +805,15 @@ class Repository : Repo {
     }
 
     private fun clearNewMessageCount() {
-        val data = HashMap<String, Any>()
-        data[CHATROOM_NEW_MESSAGE_COUNT_KEY] = 0
+        // This is needed, so that chatroom uid won't change during the delay
+        val tempCurrentChatRoomUid = currentChatRoomUid
 
-        updateChatroomForUser(currentChatRoomUid, currentUserUid(), data)
+        // Delay is needed, so that clear message counter operation
+        // will be executed AFTER message counter is set by the Cloud Function.
+        Handler().postDelayed({
+            val data = HashMap<String, Any>()
+            data[CHATROOM_NEW_MESSAGE_COUNT_KEY] = 0
+            updateChatroomForUser(tempCurrentChatRoomUid, currentUserUid(), data)
+        }, CLEAR_NEW_MESSAGE_COUNT_DELAY)
     }
 }
