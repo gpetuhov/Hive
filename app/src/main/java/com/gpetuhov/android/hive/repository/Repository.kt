@@ -105,6 +105,9 @@ class Repository : Repo {
     // Uid of the current chatroom
     private var currentChatRoomUid = ""
 
+    // Timestamp of the last message in current chatroom
+    private var currentChatRoomLastMessageTimestamp = 0L
+
     // Chatroom and chat update counters
     private var chatroomUpdateCounter = 0
     private var chatUpdateCounter = 0
@@ -393,13 +396,15 @@ class Repository : Repo {
 
                         if (!messagesList.isEmpty()) {
                             val lastMessageSenderUid = messagesList[0].senderUid
+                            val lastMessageTimestamp = messagesList[0].timestamp
 
                             // If new message has not been sent by current user
                             if (lastMessageSenderUid != currentUserUid()) {
+                                // TODO: comment this
                                 // Clear new message count for the current chatroom
                                 // of the current user (because, if the user is inside the chatroom,
                                 // that means, that  he sees new messages).
-                                clearNewMessageCount()
+                                if (lastMessageTimestamp >= currentChatRoomLastMessageTimestamp) clearNewMessageCount()
 
                                 // Do not call onUpdate on first time listener is triggered,
                                 // because first time is just the first read from Firestore
@@ -513,6 +518,41 @@ class Repository : Repo {
     override fun stopGettingChatroomsUpdates() {
         chatroomsListenerRegistration?.remove() ?: Unit
         chatroomUpdateCounter = 0
+    }
+
+    override fun startGettingCurrentChatroomUpdates(onNotify: () -> Unit) {
+        if (isAuthorized) {
+
+            currentChatRoomLastMessageTimestamp = 0L
+
+            currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
+
+            // Get current chatroom for the current user
+            getChatroomsCollectionReference(currentUserUid())
+                .document(currentChatRoomUid)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val snapshot = task.result
+                        if (snapshot != null && snapshot.exists()) {
+                            Timber.tag(TAG).d("Get success")
+                            val chatroom = getChatroomFromDocumentSnapshot(snapshot)
+                            currentChatRoomLastMessageTimestamp = chatroom.lastMessageTimestamp
+
+                        } else {
+                            Timber.tag(TAG).d("No such document")
+                        }
+                    } else {
+                        Timber.tag(TAG).d("Get failed")
+                    }
+
+                    startGettingMessagesUpdates(onNotify)
+                }
+        }
+    }
+
+    override fun stopGettingCurrentChatroomUpdates() {
+        stopGettingMessagesUpdates()
     }
 
     // === Private methods ===
@@ -653,8 +693,6 @@ class Repository : Repo {
     }
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""
-
-    private fun secondUserNameOrUsername() = secondUser.value?.getUsernameOrName() ?: ""
 
     // --- Search ---
 
