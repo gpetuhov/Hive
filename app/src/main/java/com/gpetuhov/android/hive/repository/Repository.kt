@@ -696,7 +696,7 @@ class Repository : Repo {
     }
 
     private fun startGettingMessagesUpdates(onNotify: () -> Unit) {
-        if (isAuthorized) {
+        if (isAuthorized && currentChatRoomUid != "") {
             // Chatroom collection consists of chatroom documents with chatroom uids.
             // Chatroom uid is calculated as userUid1_userUid2
             // Each chatroom document contains subcollection, which contains chatroom messages.
