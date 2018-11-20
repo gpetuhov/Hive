@@ -10,7 +10,6 @@ data class Chatroom (
     var userName2: String,
     var secondUserUid: String,
     var secondUserName: String,
-    var lastMessageUid: String,
     var lastMessageSenderUid: String,
     var lastMessageText: String,
     var lastMessageTimestamp: Long,

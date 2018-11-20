@@ -52,7 +52,6 @@ class Repository : Repo {
         private const val CHATROOM_USER_UID_2_KEY = "userUid2"
         private const val CHATROOM_USER_NAME_1_KEY = "userName1"
         private const val CHATROOM_USER_NAME_2_KEY = "userName2"
-        private const val CHATROOM_LAST_MESSAGE_UID_KEY = "lastMessageUid"
         private const val CHATROOM_LAST_MESSAGE_SENDER_UID_KEY = "lastMessageSenderUid"
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
@@ -774,7 +773,6 @@ class Repository : Repo {
             userName2 = userName2,
             secondUserUid = secondUserUid,
             secondUserName = secondUserName,
-            lastMessageUid = doc.getString(CHATROOM_LAST_MESSAGE_UID_KEY) ?: "",
             lastMessageSenderUid = doc.getString(CHATROOM_LAST_MESSAGE_SENDER_UID_KEY) ?: "",
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
