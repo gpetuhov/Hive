@@ -63,6 +63,7 @@
     <string name="enter_message">Enter message</string>
     <string name="send_message">Send message</string>
     <string name="send_message_error">Error sending message</string>
+    <string name="message_is_read">Message is read</string>
 
     <!-- ChatroomsFragment -->
     <string name="no_messages">You have no messages yet</string>
