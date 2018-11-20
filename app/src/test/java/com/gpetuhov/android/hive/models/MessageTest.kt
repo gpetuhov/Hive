@@ -16,7 +16,8 @@ class MessageTest {
             senderUid = "9j82qho",
             timestamp = System.currentTimeMillis(),
             text = "Message text",
-            isFromCurrentUser = true
+            isFromCurrentUser = true,
+            isRead = false
         )
     }
 
