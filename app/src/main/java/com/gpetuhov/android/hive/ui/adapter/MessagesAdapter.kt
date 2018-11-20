@@ -117,5 +117,6 @@ class MessagesAdapter(
         // This is called if areItemsTheSame() returns true
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
             oldMessages[oldItemPosition].text == newMessages[newItemPosition].text
+                    && oldMessages[oldItemPosition].isRead == newMessages[newItemPosition].isRead
     }
 }
