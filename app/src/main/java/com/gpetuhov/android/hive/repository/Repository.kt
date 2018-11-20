@@ -46,6 +46,7 @@ class Repository : Repo {
         private const val RECEIVER_UID_KEY = "receiver_uid"
         private const val TIMESTAMP_KEY = "timestamp"
         private const val MESSAGE_TEXT_KEY = "message_text"
+        private const val MESSAGE_IS_READ_KEY = "isRead"
 
         // Chatroom
         private const val CHATROOM_USER_UID_1_KEY = "userUid1"
@@ -441,6 +442,7 @@ class Repository : Repo {
             data[RECEIVER_UID_KEY] = secondUserUid()
             data[MESSAGE_TEXT_KEY] = messageText
             data[TIMESTAMP_KEY] = FieldValue.serverTimestamp()  // Get timestamp on the server, not on the device
+            data[MESSAGE_IS_READ_KEY] = false
 
             // Send message to the current chatroom
             getMessagesCollectionReference()
@@ -716,7 +718,8 @@ class Repository : Repo {
             senderUid = senderUid,
             timestamp = getTimestameFromDocumentSnapshot(doc, TIMESTAMP_KEY),
             text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
-            isFromCurrentUser = senderUid == currentUserUid()
+            isFromCurrentUser = senderUid == currentUserUid(),
+            isRead = doc.getBoolean(MESSAGE_IS_READ_KEY) ?: false
         )
     }
 

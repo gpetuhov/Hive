@@ -7,7 +7,8 @@ data class Message(
     var senderUid: String,
     var timestamp: Long,
     var text: String,
-    var isFromCurrentUser: Boolean
+    var isFromCurrentUser: Boolean,
+    var isRead: Boolean
 ) {
     fun getMessageTime() = getDateTimeFromTimestamp(timestamp)
 }
