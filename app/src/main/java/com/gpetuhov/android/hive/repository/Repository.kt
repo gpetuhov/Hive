@@ -392,7 +392,12 @@ class Repository : Repo {
 
                         if (querySnapshot != null) {
                             for (doc in querySnapshot.documents) {
-                                messagesList.add(getMessageFromDocumentSnapshot(doc))
+                                val message = getMessageFromDocumentSnapshot(doc)
+                                messagesList.add(message)
+
+                                // If message is not from the current user and is not read, then mark it as read
+                                // (because the receiver has just read this message).
+                                if (!message.isFromCurrentUser && !message.isRead) markMessageAsRead(message.uid)
                             }
 
                         } else {
@@ -730,6 +735,23 @@ class Repository : Repo {
         return firestore
             .collection(CHATROOMS_COLLECTION).document(currentChatRoomUid)
             .collection(MESSAGES_COLLECTION)
+    }
+
+    private fun markMessageAsRead(messageUid: String) {
+        if (isAuthorized && currentChatRoomUid != "") {
+            val data = HashMap<String, Any>()
+            data[MESSAGE_IS_READ_KEY] = true
+
+            getMessagesCollectionReference()
+                .document(messageUid)
+                .set(data, SetOptions.merge())
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("Message mark as read successfully")
+                }
+                .addOnFailureListener { error ->
+                    Timber.tag(TAG).d("Error mark message as read")
+                }
+        }
     }
 
     // --- Chatroom ---
