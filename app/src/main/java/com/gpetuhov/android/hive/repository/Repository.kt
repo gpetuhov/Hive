@@ -729,34 +729,6 @@ class Repository : Repo {
             .collection(MESSAGES_COLLECTION)
     }
 
-    private fun getLastMessageFromTheServerAndClearNewMessageCountIfSuccess(lastMessageUid: String) {
-        if (isAuthorized && currentChatRoomUid != "" && lastMessageUid != "") {
-            getMessagesCollectionReference()
-                .document(lastMessageUid)
-                .get(Source.SERVER)     // Get result from the server, NOT from cache
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val snapshot = task.result
-                        if (snapshot != null && snapshot.exists()) {
-                            Timber.tag(TAG).d("Get last chatroom message from server success")
-
-                            // If we get from the SERVER (not from cache) the message,
-                            // that is currently considered on the client as the last chatroom message,
-                            // then we are online, so we will definitely get all other new messages
-                            // from the server (if any), maybe some time later.
-                            // That's why we clear new messages counter here.
-                            clearNewMessageCount()
-
-                        } else {
-                            Timber.tag(TAG).d("Get last chatroom message from server: no such document")
-                        }
-                    } else {
-                        Timber.tag(TAG).d("Get last chatroom message from server failed")
-                    }
-                }
-        }
-    }
-
     // --- Chatroom ---
 
     private fun resetChatrooms() {
@@ -845,8 +817,21 @@ class Repository : Repo {
     }
 
     private fun clearNewMessageCountIfOnline() {
+        getCurrentChatroom { chatroom ->
+            // To check online status we try to get current chatroom last message from the server
+            getCurrentChatroomMessageFromTheServer(chatroom.lastMessageUid) {
+                // If we get from the SERVER (not from cache) the message,
+                // that is currently considered on the client as the last chatroom message,
+                // then we are online, so we will definitely get all other new messages
+                // from the server (if any), maybe some time later.
+                // That's why we clear new messages counter here.
+                clearNewMessageCount()
+            }
+        }
+    }
+
+    private fun getCurrentChatroom(onSuccess: (Chatroom) -> Unit) {
         if (isAuthorized && currentChatRoomUid != "") {
-            // Get current chatroom for the current user
             getChatroomsCollectionReference(currentUserUid())
                 .document(currentChatRoomUid)
                 .get()
@@ -854,18 +839,36 @@ class Repository : Repo {
                     if (task.isSuccessful) {
                         val snapshot = task.result
                         if (snapshot != null && snapshot.exists()) {
-                            Timber.tag(TAG).d("Get current chatroom success")
-
-                            val chatroom = getChatroomFromDocumentSnapshot(snapshot)
-
-                            // To check online status we try to get current chatroom last message from the server
-                            getLastMessageFromTheServerAndClearNewMessageCountIfSuccess(chatroom.lastMessageUid)
+                            Timber.tag(TAG).d("Get chatroom success")
+                            onSuccess(getChatroomFromDocumentSnapshot(snapshot))
 
                         } else {
-                            Timber.tag(TAG).d("Get current chatroom: no such document")
+                            Timber.tag(TAG).d("Get chatroom: no such document")
                         }
                     } else {
-                        Timber.tag(TAG).d("Get current chatroom failed")
+                        Timber.tag(TAG).d("Get chatroom failed")
+                    }
+                }
+        }
+    }
+
+    private fun getCurrentChatroomMessageFromTheServer(messageUid: String, onSuccess: () -> Unit) {
+        if (isAuthorized && currentChatRoomUid != "" && messageUid != "") {
+            getMessagesCollectionReference()
+                .document(messageUid)
+                .get(Source.SERVER)     // Get result from the server, NOT from cache
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val snapshot = task.result
+                        if (snapshot != null && snapshot.exists()) {
+                            Timber.tag(TAG).d("Get message from server success")
+                            onSuccess()
+
+                        } else {
+                            Timber.tag(TAG).d("Get message from server: no such document")
+                        }
+                    } else {
+                        Timber.tag(TAG).d("Get message from server failed")
                     }
                 }
         }
