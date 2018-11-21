@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.domain.model.Message
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 class MessagesAdapter(
     private var callback: Callback,
@@ -61,6 +62,8 @@ class MessagesAdapter(
                 messageList.addAll(messages)
 
                 var changesCount = 0
+
+                Timber.tag("MessageAdapter").d("Dispatching updates")
 
                 diffResult.dispatchUpdatesTo(object : ListUpdateCallback{
                     override fun onChanged(position: Int, count: Int, payload: Any?) {
@@ -115,8 +118,12 @@ class MessagesAdapter(
             oldMessages[oldItemPosition].uid == newMessages[newItemPosition].uid
 
         // This is called if areItemsTheSame() returns true
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
-            oldMessages[oldItemPosition].text == newMessages[newItemPosition].text
-                    && oldMessages[oldItemPosition].isRead == newMessages[newItemPosition].isRead
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val isTextTheSame = oldMessages[oldItemPosition].text == newMessages[newItemPosition].text
+            val isReadTheSame = oldMessages[oldItemPosition].isRead == newMessages[newItemPosition].isRead
+
+            // Do not consider isRead flag if the message is not from current user
+            return if (newMessages[newItemPosition].isFromCurrentUser) isTextTheSame && isReadTheSame else isTextTheSame
+        }
     }
 }
