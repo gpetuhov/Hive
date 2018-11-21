@@ -376,12 +376,6 @@ class Repository : Repo {
                     if (firebaseFirestoreException == null) {
                         Timber.tag(TAG).d("Messages listen success")
 
-                        // isFromCache = false, only if we receive message when we are already INSIDE the chat.
-                        // Initial update when chat is being open is performed FROM CACHE.
-                        val isFromCache = querySnapshot?.metadata?.isFromCache ?: false
-
-                        Timber.tag(TAG).d("Messages isFromCache = $isFromCache")
-
                         val messagesList = mutableListOf<Message>()
 
                         if (querySnapshot != null) {
