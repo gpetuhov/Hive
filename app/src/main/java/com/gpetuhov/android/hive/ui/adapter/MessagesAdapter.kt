@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import kotlinx.coroutines.*
 import timber.log.Timber
+import java.util.*
 
 class MessagesAdapter(
     private var callback: Callback,
@@ -22,7 +23,11 @@ class MessagesAdapter(
     }
 
     private var messageList = mutableListOf<Message>()
-    private var calculateDiffJob: Job? = null
+
+    // Keeps pending adapter updates.
+    // This is needed, if a new message list comes,
+    // while previous update is just being applied.
+    private var pendingUpdates = ArrayDeque<MutableList<Message>>()
 
     init {
         if (initialMessagesList != null) {
@@ -47,49 +52,78 @@ class MessagesAdapter(
     // === Public methods ===
 
     fun setMessages(messages: MutableList<Message>) {
-        // Cancel previously started coroutine
-        calculateDiffJob?.cancel()
+        // Add new list to the END of the queue
+        pendingUpdates.add(messages)
 
-        calculateDiffJob = GlobalScope.launch {
+        // If the queue contains only one pending update
+        // (the one, we've just added), start the update now
+        // (otherwise the update will be started inside applyDiffResult() after
+        // previous update has been applied).
+        if (pendingUpdates.size == 1) updateItemsInternal(messages)
+    }
+
+    // === Private methods ===
+
+    private fun updateItemsInternal(messages: MutableList<Message>) {
+        GlobalScope.launch {
             // Calculate diff result in background
             val diffResult = DiffUtil.calculateDiff(DiffCallback(messages, messageList))
 
             GlobalScope.launch(Dispatchers.Main) {
-                // Dispatch updates on the main thread
-
-                // The backing data must be updated at the same time with notifying the adapter about the changes
-                messageList.clear()
-                messageList.addAll(messages)
-
-                var changesCount = 0
-
-                Timber.tag("MessageAdapter").d("Dispatching updates")
-
-                diffResult.dispatchUpdatesTo(object : ListUpdateCallback{
-                    override fun onChanged(position: Int, count: Int, payload: Any?) {
-                        notifyItemRangeChanged(position, count, payload)
-                        changesCount++
-                    }
-
-                    override fun onMoved(fromPosition: Int, toPosition: Int) {
-                        notifyItemMoved(fromPosition, toPosition)
-                        changesCount++
-                    }
-
-                    override fun onInserted(position: Int, count: Int) {
-                        notifyItemRangeInserted(position, count)
-                        changesCount++
-                    }
-
-                    override fun onRemoved(position: Int, count: Int) {
-                        notifyItemRangeRemoved(position, count)
-                        changesCount++
-                    }
-                })
-
-                callback.onMessagesUpdated(changesCount > 0)
+                // Apply diff result on the main thread
+                applyDiffResult(messages, diffResult)
             }
         }
+    }
+
+    private fun applyDiffResult(messages: MutableList<Message>, diffResult: DiffUtil.DiffResult) {
+        // Remove the head of the queue
+        // (because diff result for this update has just been calculated)
+        pendingUpdates.remove()
+
+        // Dispatch current diff result updates
+        dispatchUpdates(messages, diffResult)
+
+        // If there are any pending updates, start the update for one, that is at the head of the queue
+        // (all pending updates are dispatched sequentially in order).
+        if (pendingUpdates.size > 0) {
+            // peek() retrieves, but not removes the head of the queue
+            updateItemsInternal(pendingUpdates.peek())
+        }
+    }
+
+    private fun dispatchUpdates(messages: MutableList<Message>, diffResult: DiffUtil.DiffResult) {
+        // The backing data must be updated at the same time with notifying the adapter about the changes
+        messageList.clear()
+        messageList.addAll(messages)
+
+        var changesCount = 0
+
+        Timber.tag("MessageAdapter").d("Dispatching updates")
+
+        diffResult.dispatchUpdatesTo(object : ListUpdateCallback{
+            override fun onChanged(position: Int, count: Int, payload: Any?) {
+                notifyItemRangeChanged(position, count, payload)
+                changesCount++
+            }
+
+            override fun onMoved(fromPosition: Int, toPosition: Int) {
+                notifyItemMoved(fromPosition, toPosition)
+                changesCount++
+            }
+
+            override fun onInserted(position: Int, count: Int) {
+                notifyItemRangeInserted(position, count)
+                changesCount++
+            }
+
+            override fun onRemoved(position: Int, count: Int) {
+                notifyItemRangeRemoved(position, count)
+                changesCount++
+            }
+        })
+
+        callback.onMessagesUpdated(changesCount > 0)
     }
 
     // === Inner classes ===
