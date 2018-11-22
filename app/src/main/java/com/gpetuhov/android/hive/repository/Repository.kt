@@ -202,11 +202,8 @@ class Repository : Repo {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
 
-        val oldUsername = currentUserNameOrUsername()
-
         // Save user name.
-        // If username successfully saved, change it in all chatrooms of this user.
-        saveUserDataRemote(data, { changeUserNameInChatrooms(oldUsername, newUsername) }, onError)
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserService(newService: String, onError: () -> Unit) {
@@ -772,51 +769,5 @@ class Repository : Repo {
             lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
             newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
         )
-    }
-
-    private fun updateChatroomForUser(chatroomUid: String, userUid: String, data: HashMap<String, Any>) {
-        if (isAuthorized && chatroomUid != "" && userUid != "") {
-            getChatroomsCollectionReference(userUid)
-                .document(chatroomUid)
-                .set(data, SetOptions.merge())
-                .addOnSuccessListener {
-                    Timber.tag(TAG).d("Chatroom successfully updated")
-                }
-                .addOnFailureListener { error ->
-                    Timber.tag(TAG).d("Error updating chatroom")
-                }
-        }
-    }
-
-    private fun changeUserNameInChatrooms(oldUsername: String, newUsername: String) {
-        if (isAuthorized) {
-            // Get chatrooms for the current user
-            getChatroomsCollectionReference(currentUserUid())
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful && task.result != null) {
-                        // For all chatrooms of the current user
-                        for (doc in task.result!!) {
-                            val chatroom = getChatroomFromDocumentSnapshot(doc)
-                            updateChatroomUsername(oldUsername, newUsername, chatroom)
-                        }
-                    }
-                }
-        }
-    }
-
-    private fun updateChatroomUsername(oldUsername: String, newUsername: String, chatroom: Chatroom) {
-        // Second user name is the one that is not equal to OLD name of the current user
-        // (this is because at this moment current user's username has already been successfully changed in Firestore).
-        val secondUserName = if (chatroom.userName1 != oldUsername) chatroom.userName1 else chatroom.userName2
-
-        val data = HashMap<String, Any>()
-        data[CHATROOM_USER_NAME_1_KEY] = newUsername
-        data[CHATROOM_USER_NAME_2_KEY] = secondUserName
-
-        // Change name of the current user in the chatroom for BOTH users,
-        // that participate in this chatroom.
-        updateChatroomForUser(chatroom.chatroomUid, chatroom.userUid1, data)
-        updateChatroomForUser(chatroom.chatroomUid, chatroom.userUid2, data)
     }
 }
