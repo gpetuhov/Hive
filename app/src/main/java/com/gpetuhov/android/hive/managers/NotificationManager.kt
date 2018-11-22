@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.media.AudioAttributes
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
@@ -17,6 +16,10 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.ui.activity.MainActivity
+import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 // Show notifications
@@ -37,6 +40,9 @@ class NotificationManager {
     private var mediaPlayer: MediaPlayer? = null
     private var mediaPlayerLight: MediaPlayer? = null
 
+    private var notificationSub = PublishSubject.create<NotificationInfo>()
+    private var notificationSubDisposable: Disposable? = null
+
     init {
         HiveApp.appComponent.inject(this)
 
@@ -45,6 +51,8 @@ class NotificationManager {
 
         createLocationSharingNotificationChannel()
         createNewMessageNotificationChannel()
+
+        startNotificationSub()
     }
 
     // === Public methods ===
@@ -174,4 +182,19 @@ class NotificationManager {
         player.prepare()
         return player
     }
+
+    private fun startNotificationSub() {
+        notificationSubDisposable = notificationSub
+            .buffer(10000, TimeUnit.MILLISECONDS)
+            .subscribe { notificationInfoList ->
+                Timber.tag("NotificationManager").d("${notificationInfoList.size}")
+            }
+    }
+
+    // === Inner classes ===
+
+    private class NotificationInfo(
+        val senderName: String,
+        val messageText: String
+    )
 }
