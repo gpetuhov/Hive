@@ -14,6 +14,7 @@ import timber.log.Timber
 import java.util.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
+import com.pawegio.kandroid.runOnUiThread
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
@@ -463,16 +464,20 @@ class Repository(private val context: Context) : Repo {
                         Timber.tag(TAG).d("Listen success")
 
                         val chatroomList = mutableListOf<Chatroom>()
+                        var chatroomsContainUnreadMessages = false
 
                         if (querySnapshot != null) {
                             for (doc in querySnapshot.documents) {
-                                chatroomList.add(getChatroomFromDocumentSnapshot(doc))
+                                val chatroom = getChatroomFromDocumentSnapshot(doc)
+                                chatroomList.add(chatroom)
+                                if (chatroom.newMessageCount > 0) chatroomsContainUnreadMessages = true
                             }
 
                         } else {
                             Timber.tag(TAG).d("Listen failed")
                         }
 
+                        setUnreadMessagesExist(chatroomsContainUnreadMessages)
                         chatrooms.value = chatroomList
 
                     } else {
@@ -489,8 +494,10 @@ class Repository(private val context: Context) : Repo {
     override fun unreadMessagesExist() = unreadMessagesFlag
 
     override fun setUnreadMessagesExist(value: Boolean) {
-        unreadMessagesFlag.value = value
-        context.defaultSharedPreferences.edit { putBoolean(UNREAD_MESSAGES_EXIST_KEY, value) }
+        runOnUiThread {
+            unreadMessagesFlag.value = value
+            context.defaultSharedPreferences.edit { putBoolean(UNREAD_MESSAGES_EXIST_KEY, value) }
+        }
     }
 
     // === Private methods ===

@@ -54,6 +54,7 @@ class MessageService : FirebaseMessagingService() {
             val messageTimestamp = messageData["messageTimestamp"] ?: ""
 
             if (senderUid != "" && senderName != "" && messageText != "" && messageTimestamp != "") {
+                repo.setUnreadMessagesExist(true)
 
                 // Convert timestamp from String to number
                 var messageTimestampValue = 0L

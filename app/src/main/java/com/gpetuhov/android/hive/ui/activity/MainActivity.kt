@@ -4,6 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -15,13 +18,13 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.managers.NotificationManager
+import com.gpetuhov.android.hive.ui.viewmodel.UnreadMessagesExistViewModel
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
 import javax.inject.Inject
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,6 +55,11 @@ class MainActivity : AppCompatActivity() {
         initNavigation()
         initAuthManager()
         checkLocationSettings()
+
+        val viewModel = ViewModelProviders.of(this).get(UnreadMessagesExistViewModel::class.java)
+        viewModel.unreadMessagesExist.observe(this, Observer<Boolean> { unreadMessagesExist ->
+            updateMessagesIcon(unreadMessagesExist)
+        })
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
@@ -89,6 +97,8 @@ class MainActivity : AppCompatActivity() {
         if (!isChangingConfigurations) mapManager.resetMapState()
     }
 
+    // === Private methods ===
+
     private fun initNavigation() {
         // Find NavController
         navController = findNavController(R.id.nav_host)
@@ -125,4 +135,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUserOnlineStatus(isOnline: Boolean) = saveOnlineInteractor.saveOnline(isOnline)
+
+    private fun updateMessagesIcon(unreadMessagesExist: Boolean) {
+        val iconId = if (unreadMessagesExist) R.drawable.ic_mail_unread else R.drawable.ic_mail_read
+        navigation_view.menu.findItem(R.id.navigation_messages).icon = ContextCompat.getDrawable(this, iconId)
+    }
 }
