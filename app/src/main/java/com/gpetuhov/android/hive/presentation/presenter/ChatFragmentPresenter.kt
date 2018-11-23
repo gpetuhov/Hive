@@ -80,7 +80,7 @@ class ChatFragmentPresenter :
 
     fun onResume() {
         repo.setChatroomOpen(true)
-        repo.startGettingMessagesUpdates { notificationManager.notifyNewMessageFromInsideChatOrChatroomList() }
+        repo.startGettingMessagesUpdates()
         repo.startGettingSecondUserUpdates(secondUserUid)
     }
 

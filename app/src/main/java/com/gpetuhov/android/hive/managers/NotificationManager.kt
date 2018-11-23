@@ -77,10 +77,6 @@ class NotificationManager {
     fun showNewMessageNotification(senderUid: String, senderName: String, messageText: String, messageTimestamp: Long) =
         notificationSub.onNext(NotificationInfo(senderUid, senderName, messageText, messageTimestamp))
 
-    // TODO: maybe remove this
-//    fun notifyNewMessageFromInsideChatOrChatroomList() = notifyNewMessageFromInsideTheApp(true)
-    fun notifyNewMessageFromInsideChatOrChatroomList() {}
-
     // === Lifecycle calls ===
 
     fun onResume() {

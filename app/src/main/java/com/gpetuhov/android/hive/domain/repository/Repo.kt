@@ -48,13 +48,13 @@ interface Repo {
 
     // Message
     fun messages(): MutableLiveData<MutableList<Message>>
-    fun startGettingMessagesUpdates(onNotify: () -> Unit)
+    fun startGettingMessagesUpdates()
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
     fun clearMessages()
 
     // Chatroom
     fun chatrooms(): MutableLiveData<MutableList<Chatroom>>
-    fun startGettingChatroomsUpdates(onNotify: () -> Unit)
+    fun startGettingChatroomsUpdates()
     fun stopGettingChatroomsUpdates()
 }

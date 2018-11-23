@@ -103,10 +103,6 @@ class Repository : Repo {
     // Uid of the current chatroom
     private var currentChatRoomUid = ""
 
-    // Chatroom and chat update counters
-    private var chatroomUpdateCounter = 0
-    private var chatUpdateCounter = 0
-
     // Firestore
     private val firestore = FirebaseFirestore.getInstance()
 
@@ -353,7 +349,7 @@ class Repository : Repo {
 
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
-    override fun startGettingMessagesUpdates(onNotify: () -> Unit) {
+    override fun startGettingMessagesUpdates() {
         // This is needed for the chat room to have the same name,
         // despite of the uid of the user, who started the conversation.
         currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
@@ -364,8 +360,6 @@ class Repository : Repo {
             // Each chatroom document contains subcollection, which contains chatroom messages.
             // Hierarchy:
             // Chatrooms_collection -> Chatroom_document -> Messages_collection -> Message_document
-
-            chatUpdateCounter = 0
 
             messagesListenerRegistration = getMessagesCollectionReference()
                 .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
@@ -393,17 +387,6 @@ class Repository : Repo {
 
                         messages.value = messagesList
 
-                        if (!messagesList.isEmpty()) {
-                            val lastMessageSenderUid = messagesList[0].senderUid
-
-                            // Do not call onUpdate on first time listener is triggered,
-                            // because first time is just the first read from Firestore
-                            // (nothing has changed yet)
-                            if (chatUpdateCounter > 0 && lastMessageSenderUid != currentUserUid()) onNotify()
-                        }
-
-                        chatUpdateCounter++
-
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
                     }
@@ -414,7 +397,6 @@ class Repository : Repo {
     override fun stopGettingMessagesUpdates() {
         messagesListenerRegistration?.remove()
         currentChatRoomUid = ""
-        chatUpdateCounter = 0
     }
 
     override fun sendMessage(messageText: String, onError: () -> Unit) {
@@ -453,7 +435,7 @@ class Repository : Repo {
 
     override fun chatrooms() = chatrooms
 
-    override fun startGettingChatroomsUpdates(onNotify: () -> Unit) {
+    override fun startGettingChatroomsUpdates() {
         if (isAuthorized) {
             // We keep a collection of chatrooms for every user.
             // This is needed to easily display a list of all chats,
@@ -463,8 +445,6 @@ class Repository : Repo {
             // userChatrooms_collection -> User_document -> chatroomsOfUser_collection -> Chatroom_document
             // (Note that chatrooms of users are saved NOT in the users collection,
             // but in a separate userChatrooms collection)
-
-            chatroomUpdateCounter = 0
 
             chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid())
                 .orderBy(CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY, Query.Direction.DESCENDING)
@@ -485,19 +465,6 @@ class Repository : Repo {
 
                         chatrooms.value = chatroomList
 
-                        if (!chatroomList.isEmpty()) {
-                            val lastMessageSenderUid = chatroomList[0].lastMessageSenderUid
-
-                            // Do not call onUpdate on first time listener is triggered,
-                            // because first time is just the first read from Firestore
-                            // (nothing has changed yet)
-                            // and if last message sender uid equals to current user uid
-                            // (new message has been sent by current user).
-                            if (chatroomUpdateCounter > 0 && lastMessageSenderUid != currentUserUid()) onNotify()
-                        }
-
-                        chatroomUpdateCounter++
-
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
                     }
@@ -505,10 +472,7 @@ class Repository : Repo {
         }
     }
 
-    override fun stopGettingChatroomsUpdates() {
-        chatroomsListenerRegistration?.remove() ?: Unit
-        chatroomUpdateCounter = 0
-    }
+    override fun stopGettingChatroomsUpdates() = chatroomsListenerRegistration?.remove() ?: Unit
 
     // === Private methods ===
     // --- User ---
