@@ -73,8 +73,8 @@ class NotificationManager {
 
     // Do not notify on every new message.
     // Buffer notifications and notify only once per period of time.
-    fun showNewMessageNotification(senderUid: String, senderName: String, messageText: String) =
-        notificationSub.onNext(NotificationInfo(senderUid, senderName, messageText))
+    fun showNewMessageNotification(senderUid: String, senderName: String, messageText: String, messageTimestamp: Long) =
+        notificationSub.onNext(NotificationInfo(senderUid, senderName, messageText, messageTimestamp))
 
     fun notifyNewMessageFromInsideChatOrChatroomList() = notifyNewMessageFromInsideTheApp(true)
 
@@ -158,10 +158,18 @@ class NotificationManager {
         notificationSubDisposable = notificationSub
             .buffer(10000, TimeUnit.MILLISECONDS)
             .subscribe { notificationInfoList ->
-                Timber.tag("NotificationManager").d("${notificationInfoList.size}")
-
                 if (!notificationInfoList.isEmpty()) {
-                    notify(notificationInfoList[notificationInfoList.size - 1])
+                    Timber.tag("NotificationManager").d("${notificationInfoList.size}")
+                    var latestNotificationInfo = notificationInfoList[0]
+
+                    // Choose latest notification info
+                    for (notificationInfo in notificationInfoList) {
+                        if (notificationInfo.messageTimestamp > latestNotificationInfo.messageTimestamp) {
+                            latestNotificationInfo = notificationInfo
+                        }
+                    }
+
+                    notify(latestNotificationInfo)
                 }
             }
     }
@@ -205,6 +213,7 @@ class NotificationManager {
     private class NotificationInfo(
         val senderUid: String,
         val senderName: String,
-        val messageText: String
+        val messageText: String,
+        val messageTimestamp: Long
     )
 }

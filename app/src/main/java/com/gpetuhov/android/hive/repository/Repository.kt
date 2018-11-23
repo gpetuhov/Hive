@@ -698,14 +698,14 @@ class Repository : Repo {
         return Message(
             uid = doc.id,
             senderUid = senderUid,
-            timestamp = getTimestameFromDocumentSnapshot(doc, TIMESTAMP_KEY),
+            timestamp = getTimestampFromDocumentSnapshot(doc, TIMESTAMP_KEY),
             text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
             isFromCurrentUser = senderUid == currentUserUid(),
             isRead = doc.getBoolean(MESSAGE_IS_READ_KEY) ?: false
         )
     }
 
-    private fun getTimestameFromDocumentSnapshot(doc: DocumentSnapshot, timestampKey: String) =
+    private fun getTimestampFromDocumentSnapshot(doc: DocumentSnapshot, timestampKey: String) =
         doc.getTimestamp(timestampKey)?.seconds ?: (System.currentTimeMillis() / 1000)
 
     private fun getMessagesCollectionReference(): CollectionReference {
@@ -766,7 +766,7 @@ class Repository : Repo {
             secondUserName = secondUserName,
             lastMessageSenderUid = doc.getString(CHATROOM_LAST_MESSAGE_SENDER_UID_KEY) ?: "",
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
-            lastMessageTimestamp = getTimestameFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
+            lastMessageTimestamp = getTimestampFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
             newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
         )
     }

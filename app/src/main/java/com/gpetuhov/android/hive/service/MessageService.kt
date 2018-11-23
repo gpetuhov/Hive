@@ -51,9 +51,19 @@ class MessageService : FirebaseMessagingService() {
             val senderUid = messageData["senderUid"] ?: ""
             val senderName = messageData["senderName"] ?: ""
             val messageText = messageData["messageText"] ?: ""
+            val messageTimestamp = messageData["messageTimestamp"] ?: ""
 
-            if (senderUid != "" && senderName != "" && messageText != "") {
-                notificationManager.showNewMessageNotification(senderUid, senderName, messageText)
+            if (senderUid != "" && senderName != "" && messageText != "" && messageTimestamp != "") {
+
+                // Convert timestamp from String to number
+                var messageTimestampValue = 0L
+                try {
+                    messageTimestampValue = messageTimestamp.toLong()
+                } catch (e: Exception) {
+                    Timber.tag(TAG).d("Message timestamp not a number")
+                }
+
+                notificationManager.showNewMessageNotification(senderUid, senderName, messageText, messageTimestampValue)
             }
         }
     }
