@@ -77,7 +77,9 @@ class NotificationManager {
     fun showNewMessageNotification(senderUid: String, senderName: String, messageText: String, messageTimestamp: Long) =
         notificationSub.onNext(NotificationInfo(senderUid, senderName, messageText, messageTimestamp))
 
-    fun notifyNewMessageFromInsideChatOrChatroomList() = notifyNewMessageFromInsideTheApp(true)
+    // TODO: maybe remove this
+//    fun notifyNewMessageFromInsideChatOrChatroomList() = notifyNewMessageFromInsideTheApp(true)
+    fun notifyNewMessageFromInsideChatOrChatroomList() {}
 
     // === Lifecycle calls ===
 
@@ -163,28 +165,40 @@ class NotificationManager {
                     Timber.tag("NotificationManager").d("${notificationInfoList.size}")
                     var latestNotificationInfo = notificationInfoList[0]
 
+                    val senderUidList = mutableListOf<String>()
+
                     // Choose latest notification info
                     for (notificationInfo in notificationInfoList) {
                         if (notificationInfo.messageTimestamp > latestNotificationInfo.messageTimestamp) {
                             latestNotificationInfo = notificationInfo
                         }
+
+                        // Save all sender uids in a list
+                        if (!senderUidList.contains(notificationInfo.senderUid)) senderUidList.add(notificationInfo.senderUid)
                     }
 
-                    notify(latestNotificationInfo)
+                    notify(latestNotificationInfo, senderUidList)
                 }
             }
     }
 
-    private fun notify(notificationInfo: NotificationInfo) {
+    private fun notify(notificationInfo: NotificationInfo, senderUidList: MutableList<String>) {
         if (repo.isForeground()) {
             // If the app is in the foreground,
-            // and chatroom list is not open,
-            // and chatroom, new chat message belongs to, is not open,
-            // notify user without showing notification (sound or vibrate).
-            // In other cases user will be notified by the corresponding listeners
-            // (so that sound or vibration will be triggered at the moment of the UI change.
 
-            if (!repo.isChatroomListOpen() && !repo.isChatroomOpen(notificationInfo.senderUid)) {
+            // Check if sender uid list has at least one uid with not open chatroom
+            var notInChatroomWithAtLeastOneSender = false
+            for (senderUid in senderUidList) {
+                if (!repo.isChatroomOpen(senderUid)) {
+                    notInChatroomWithAtLeastOneSender = true
+                    break
+                }
+            }
+
+            // If chatroom list is not open
+            // and user is not in chatroom with at least one sender,
+            // notify user without showing notification (sound or vibrate).
+            if (!repo.isChatroomListOpen() && notInChatroomWithAtLeastOneSender) {
                 notifyNewMessageFromInsideTheApp(false)
             }
 
