@@ -113,6 +113,8 @@ class Repository(private val context: Context) : Repo {
     // Uid of the current chatroom
     private var currentChatRoomUid = ""
 
+    private var chatroomUpdateCounter = 0
+
     // Firestore
     private val firestore = FirebaseFirestore.getInstance()
 
@@ -457,6 +459,8 @@ class Repository(private val context: Context) : Repo {
             // (Note that chatrooms of users are saved NOT in the users collection,
             // but in a separate userChatrooms collection)
 
+            chatroomUpdateCounter = 0
+
             chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid())
                 .orderBy(CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY, Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -477,8 +481,11 @@ class Repository(private val context: Context) : Repo {
                             Timber.tag(TAG).d("Listen failed")
                         }
 
-                        setUnreadMessagesExist(chatroomsContainUnreadMessages)
+                        if (chatroomUpdateCounter > 0) setUnreadMessagesExist(chatroomsContainUnreadMessages)
+
                         chatrooms.value = chatroomList
+
+                        chatroomUpdateCounter++
 
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
@@ -487,7 +494,10 @@ class Repository(private val context: Context) : Repo {
         }
     }
 
-    override fun stopGettingChatroomsUpdates() = chatroomsListenerRegistration?.remove() ?: Unit
+    override fun stopGettingChatroomsUpdates() {
+        chatroomsListenerRegistration?.remove() ?: Unit
+        chatroomUpdateCounter = 0
+    }
 
     // === Unread messages ===
 
