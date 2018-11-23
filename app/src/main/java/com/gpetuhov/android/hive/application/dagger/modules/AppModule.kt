@@ -45,5 +45,5 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesRepo(): Repo = Repository()
+    fun providesRepo(context: Context): Repo = Repository(context)
 }

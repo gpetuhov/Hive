@@ -57,4 +57,8 @@ interface Repo {
     fun chatrooms(): MutableLiveData<MutableList<Chatroom>>
     fun startGettingChatroomsUpdates()
     fun stopGettingChatroomsUpdates()
+
+    // Unread messages
+    fun unreadMessagesExist(): MutableLiveData<Boolean>
+    fun setUnreadMessagesExist(value: Boolean)
 }
