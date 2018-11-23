@@ -30,6 +30,7 @@ class NotificationManager {
         const val NEW_MESSAGE_NOTIFICATION_ID = 1002
         private const val LOCATION_SHARING_CHANNEL = "location_sharing_channel"
         private const val NEW_MESSAGE_CHANNEL = "new_message_channel"
+        private const val NOTIFICATION_BUFFER_TIME = 5000L
     }
 
     @Inject lateinit var context: Context
@@ -156,7 +157,7 @@ class NotificationManager {
 
     private fun startNotificationSub() {
         notificationSubDisposable = notificationSub
-            .buffer(10000, TimeUnit.MILLISECONDS)
+            .buffer(NOTIFICATION_BUFFER_TIME, TimeUnit.MILLISECONDS)
             .subscribe { notificationInfoList ->
                 if (!notificationInfoList.isEmpty()) {
                     Timber.tag("NotificationManager").d("${notificationInfoList.size}")
