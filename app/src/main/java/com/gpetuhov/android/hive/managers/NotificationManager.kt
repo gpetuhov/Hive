@@ -58,15 +58,11 @@ class NotificationManager {
     // === Public methods ===
 
     fun getLocationSharingNotification(): Notification? {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-
         val builder = NotificationCompat.Builder(context, LOCATION_SHARING_CHANNEL)
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(context.getString(R.string.location_sharing_enabled))
             .setSmallIcon(R.drawable.android_round)
-            .setContentIntent(pendingIntent)
+            .setContentIntent(getMainActivityPendingIntent())
 
         return builder.build()
     }
@@ -181,16 +177,11 @@ class NotificationManager {
 
         } else {
             // If the app is in background, show notification
-
-            val intent = Intent(context, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-
             val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
                 .setContentTitle(notificationInfo.senderName)
                 .setContentText(notificationInfo.messageText)
                 .setSmallIcon(R.drawable.android_round)
-                .setContentIntent(pendingIntent)
+                .setContentIntent(getMainActivityPendingIntent())
                 .setAutoCancel(true)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -212,6 +203,12 @@ class NotificationManager {
         }
 
         return result
+    }
+
+    private fun getMainActivityPendingIntent(): PendingIntent? {
+        val intent = Intent(context, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
     }
 
     // === Inner classes ===
