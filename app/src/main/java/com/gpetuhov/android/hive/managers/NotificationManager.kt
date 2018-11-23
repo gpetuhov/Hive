@@ -172,19 +172,10 @@ class NotificationManager {
         if (repo.isForeground()) {
             // If the app is in the foreground,
 
-            // Check if sender uid list has at least one uid with not open chatroom
-            var notInChatroomWithAtLeastOneSender = false
-            for (senderUid in senderUidList) {
-                if (!repo.isChatroomOpen(senderUid)) {
-                    notInChatroomWithAtLeastOneSender = true
-                    break
-                }
-            }
-
             // If chatroom list is not open
             // and user is not in chatroom with at least one sender,
-            // notify user without showing notification (sound or vibrate).
-            if (!repo.isChatroomListOpen() && notInChatroomWithAtLeastOneSender) {
+            // notify user without showing notification (play sound).
+            if (!repo.isChatroomListOpen() && atLeastOneSenderNotInChatroom(senderUidList)) {
                 mediaPlayer?.start()
             }
 
@@ -207,6 +198,20 @@ class NotificationManager {
 
             notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
         }
+    }
+
+    private fun atLeastOneSenderNotInChatroom(senderUidList: MutableList<String>): Boolean {
+        // Check if sender uid list has at least one uid with not open chatroom
+        var result = false
+
+        for (senderUid in senderUidList) {
+            if (!repo.isChatroomOpen(senderUid)) {
+                result = true
+                break
+            }
+        }
+
+        return result
     }
 
     // === Inner classes ===
