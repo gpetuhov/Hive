@@ -71,39 +71,10 @@ class NotificationManager {
         return builder.build()
     }
 
-    fun showNewMessageNotification(senderUid: String, senderName: String, messageText: String) {
-        if (repo.isForeground()) {
-            // If the app is in the foreground,
-            // and chatroom list is not open,
-            // and chatroom, new chat message belongs to, is not open,
-            // notify user without showing notification (sound or vibrate).
-            // In other cases user will be notified by the corresponding listeners
-            // (so that sound or vibration will be triggered at the moment of the UI change.
-
-            if (!repo.isChatroomListOpen() && !repo.isChatroomOpen(senderUid)) {
-                notifyNewMessageFromInsideTheApp(false)
-            }
-
-        } else {
-            // If the app is in background, show notification
-
-            val intent = Intent(context, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-
-            val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
-                .setContentTitle(senderName)
-                .setContentText(messageText)
-                .setSmallIcon(R.drawable.android_round)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-
-            notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
-        }
-    }
+    // Do not notify on every new message.
+    // Buffer notifications and notify only once per period of time.
+    fun showNewMessageNotification(senderUid: String, senderName: String, messageText: String) =
+        notificationSub.onNext(NotificationInfo(senderUid, senderName, messageText))
 
     fun notifyNewMessageFromInsideChatOrChatroomList() = notifyNewMessageFromInsideTheApp(true)
 
@@ -188,12 +159,51 @@ class NotificationManager {
             .buffer(10000, TimeUnit.MILLISECONDS)
             .subscribe { notificationInfoList ->
                 Timber.tag("NotificationManager").d("${notificationInfoList.size}")
+
+                if (!notificationInfoList.isEmpty()) {
+                    notify(notificationInfoList[notificationInfoList.size - 1])
+                }
             }
+    }
+
+    private fun notify(notificationInfo: NotificationInfo) {
+        if (repo.isForeground()) {
+            // If the app is in the foreground,
+            // and chatroom list is not open,
+            // and chatroom, new chat message belongs to, is not open,
+            // notify user without showing notification (sound or vibrate).
+            // In other cases user will be notified by the corresponding listeners
+            // (so that sound or vibration will be triggered at the moment of the UI change.
+
+            if (!repo.isChatroomListOpen() && !repo.isChatroomOpen(notificationInfo.senderUid)) {
+                notifyNewMessageFromInsideTheApp(false)
+            }
+
+        } else {
+            // If the app is in background, show notification
+
+            val intent = Intent(context, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+            val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+
+            val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
+                .setContentTitle(notificationInfo.senderName)
+                .setContentText(notificationInfo.messageText)
+                .setSmallIcon(R.drawable.android_round)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+
+            notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
+        }
     }
 
     // === Inner classes ===
 
     private class NotificationInfo(
+        val senderUid: String,
         val senderName: String,
         val messageText: String
     )
