@@ -170,13 +170,16 @@ class NotificationManager {
 
             // If chatroom list is not open
             // and user is not in chatroom with at least one sender,
-            // notify user without showing notification (play sound).
+            // notify user without showing notification (play sound)
+            // and set unread messages flag.
             if (!repo.isChatroomListOpen() && atLeastOneSenderNotInChatroom(senderUidList)) {
                 mediaPlayer?.start()
+                repo.setUnreadMessagesExist(true)
             }
 
         } else {
             // If the app is in background, show notification
+            // and set unread messages flag.
             val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
                 .setContentTitle(notificationInfo.senderName)
                 .setContentText(notificationInfo.messageText)
@@ -188,6 +191,8 @@ class NotificationManager {
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
             notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
+
+            repo.setUnreadMessagesExist(true)
         }
     }
 

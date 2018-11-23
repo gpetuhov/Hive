@@ -113,7 +113,9 @@ class Repository(private val context: Context) : Repo {
     // Uid of the current chatroom
     private var currentChatRoomUid = ""
 
-    private var chatroomUpdateCounter = 0
+    // Counts how many times chatroom list has been updated,
+    // since we started listening to its changes.
+    private var chatroomsUpdateCounter = 0
 
     // Firestore
     private val firestore = FirebaseFirestore.getInstance()
@@ -459,7 +461,7 @@ class Repository(private val context: Context) : Repo {
             // (Note that chatrooms of users are saved NOT in the users collection,
             // but in a separate userChatrooms collection)
 
-            chatroomUpdateCounter = 0
+            chatroomsUpdateCounter = 0
 
             chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid())
                 .orderBy(CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY, Query.Direction.DESCENDING)
@@ -481,11 +483,15 @@ class Repository(private val context: Context) : Repo {
                             Timber.tag(TAG).d("Listen failed")
                         }
 
-                        if (chatroomUpdateCounter > 0) setUnreadMessagesExist(chatroomsContainUnreadMessages)
+                        // Do not call update unread messages flag
+                        // on first time listener is triggered,
+                        // because first time is just the first read from Firestore
+                        // (nothing has changed yet).
+                        if (chatroomsUpdateCounter > 0) setUnreadMessagesExist(chatroomsContainUnreadMessages)
 
                         chatrooms.value = chatroomList
 
-                        chatroomUpdateCounter++
+                        chatroomsUpdateCounter++
 
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
@@ -496,7 +502,7 @@ class Repository(private val context: Context) : Repo {
 
     override fun stopGettingChatroomsUpdates() {
         chatroomsListenerRegistration?.remove() ?: Unit
-        chatroomUpdateCounter = 0
+        chatroomsUpdateCounter = 0
     }
 
     // === Unread messages ===
@@ -504,6 +510,7 @@ class Repository(private val context: Context) : Repo {
     override fun unreadMessagesExist() = unreadMessagesFlag
 
     override fun setUnreadMessagesExist(value: Boolean) {
+        // Value of LiveData must be changed on the UI thread
         runOnUiThread {
             unreadMessagesFlag.value = value
             context.defaultSharedPreferences.edit { putBoolean(UNREAD_MESSAGES_EXIST_KEY, value) }
