@@ -39,7 +39,6 @@ class NotificationManager {
     private var notificationManager: NotificationManager
     private var vibrator: Vibrator
     private var mediaPlayer: MediaPlayer? = null
-    private var mediaPlayerLight: MediaPlayer? = null
 
     private var notificationSub = PublishSubject.create<NotificationInfo>()
     private var notificationSubDisposable: Disposable? = null
@@ -83,17 +82,13 @@ class NotificationManager {
         cancelNewMessageNotification()
 
         // Sounds are taken from:
-        // https://notificationsounds.com/notification-sounds/light-562
         // https://notificationsounds.com/notification-sounds/plucky-564
         mediaPlayer = createMediaPlayer(R.raw.plucky)
-        mediaPlayerLight = createMediaPlayer(R.raw.light)
     }
 
     fun onPause() {
         mediaPlayer?.release()
         mediaPlayer = null
-        mediaPlayerLight?.release()
-        mediaPlayerLight = null
     }
 
     // === Private methods ===
@@ -138,11 +133,6 @@ class NotificationManager {
     }
 
     private fun cancelNewMessageNotification() = notificationManager.cancel(NEW_MESSAGE_NOTIFICATION_ID)
-
-    private fun notifyNewMessageFromInsideTheApp(isLight: Boolean) {
-        val tempMediaPlayer = if (isLight) mediaPlayerLight else mediaPlayer
-        tempMediaPlayer?.start()
-    }
 
     private fun createMediaPlayer(soundId: Int): MediaPlayer {
         val fileDescriptor = context.resources.openRawResourceFd(soundId)
@@ -195,7 +185,7 @@ class NotificationManager {
             // and user is not in chatroom with at least one sender,
             // notify user without showing notification (sound or vibrate).
             if (!repo.isChatroomListOpen() && notInChatroomWithAtLeastOneSender) {
-                notifyNewMessageFromInsideTheApp(false)
+                mediaPlayer?.start()
             }
 
         } else {
