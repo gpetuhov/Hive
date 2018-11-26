@@ -24,7 +24,6 @@ import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
-import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
@@ -62,8 +61,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Glide.with(this).load(R.drawable.ic_person_dark)
-            .apply(RequestOptions.circleCropTransform())
+        Glide.with(this).load(R.mipmap.ic_launcher)
+//            .apply(RequestOptions.circleCropTransform())
             .into(user_pic)
     }
 
