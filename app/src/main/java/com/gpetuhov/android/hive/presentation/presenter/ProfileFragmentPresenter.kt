@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import android.net.Uri
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
@@ -165,7 +166,9 @@ class ProfileFragmentPresenter :
 
     // --- Change user pic ---
 
-    fun changeUserPic() = viewState.changeUserPic()
+    fun chooseUserPic() = viewState.chooseUserPic()
+
+    fun changeUserPic(selectedImageUri: Uri) = repo.changeUserPic(selectedImageUri)
 
     // === Private methods ===
 

@@ -86,8 +86,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
         if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
             val selectedImageUri = data?.data
-
-            Timber.tag(TAG).d(selectedImageUri.toString())
+            if (selectedImageUri != null) presenter.changeUserPic(selectedImageUri)
         }
     }
 
@@ -129,7 +128,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun dismissServiceDialog() = serviceDialog?.dismiss() ?: Unit
 
-    override fun changeUserPic() {
+    override fun chooseUserPic() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = Constants.FileTypes.IMAGE
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)

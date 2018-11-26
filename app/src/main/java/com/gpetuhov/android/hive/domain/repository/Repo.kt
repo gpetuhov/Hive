@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.domain.repository
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.Chatroom
@@ -61,4 +62,7 @@ interface Repo {
     // Unread messages
     fun unreadMessagesExist(): MutableLiveData<Boolean>
     fun setUnreadMessagesExist(value: Boolean)
+
+    // User pic
+    fun changeUserPic(selectedImageUri: Uri)
 }

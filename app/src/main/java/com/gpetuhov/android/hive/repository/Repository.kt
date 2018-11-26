@@ -1,11 +1,16 @@
 package com.gpetuhov.android.hive.repository
 
 import android.content.Context
+import android.net.Uri
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
@@ -122,6 +127,8 @@ class Repository(private val context: Context) : Repo {
     // GeoFirestore is used to query users by location
     private var geoFirestore: GeoFirestore
     private var geoQuery: GeoQuery? = null
+
+    private var storage = FirebaseStorage.getInstance()
 
     // Firestore listeners
     private var currentUserListenerRegistration: ListenerRegistration? = null
@@ -511,6 +518,43 @@ class Repository(private val context: Context) : Repo {
     override fun setUnreadMessagesExist(value: Boolean) {
         unreadMessagesFlag.value = value
         context.defaultSharedPreferences.edit { putBoolean(UNREAD_MESSAGES_EXIST_KEY, value) }
+    }
+
+    // === User pic ===
+
+    override fun changeUserPic(selectedImageUri: Uri) {
+        val userPicRef = storage.reference.child("userpic/userpic.jpg")
+
+        val uploadTask = userPicRef.putFile(selectedImageUri)
+            .addOnSuccessListener { taskSnapshot ->
+                userPicRef.downloadUrl
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val downloadUri = task.result
+                            Timber.tag(TAG).d("Download url = $downloadUri")
+
+                        } else {
+                            // Handle failures
+                            // ...
+                        }
+                    }
+            }
+
+//        val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+//            if (!task.isSuccessful) {
+//                task.exception?.let {
+//                    throw it
+//                }
+//            }
+//            return@Continuation userPicRef.downloadUrl
+//        }).addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                val downloadUri = task.result
+//            } else {
+//                // Handle failures
+//                // ...
+//            }
+//        }
     }
 
     // === Private methods ===
