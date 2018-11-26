@@ -22,6 +22,7 @@ class UserTest {
             name = "John",
             username = "",
             email = "mail@mail.com",
+            userPicUrl = "",
             service = "",
             isVisible = false,
             isOnline = false,

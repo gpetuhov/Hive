@@ -9,6 +9,7 @@ data class User(
     var name: String,
     var username: String,
     var email: String,
+    var userPicUrl: String,
     var service: String,
     var isVisible: Boolean,
     var isOnline: Boolean,

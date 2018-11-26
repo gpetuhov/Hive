@@ -47,6 +47,7 @@ class Repository(private val context: Context) : Repo {
         private const val NAME_KEY = "name"
         private const val USERNAME_KEY = "username"
         private const val EMAIL_KEY = "email"
+        private const val USER_PIC_URL_KEY = "userPicUrl"
         private const val SERVICE_KEY = "service"
         private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
@@ -576,6 +577,7 @@ class Repository(private val context: Context) : Repo {
             name = Constants.Auth.DEFAULT_USER_NAME,
             username = "",
             email = Constants.Auth.DEFAULT_USER_MAIL,
+            userPicUrl = "",
             service = "",
             isVisible = false,
             isOnline = false,
@@ -677,6 +679,7 @@ class Repository(private val context: Context) : Repo {
             name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
+            userPicUrl = doc.getString(USER_PIC_URL_KEY) ?: "",
             service = doc.getString(SERVICE_KEY) ?: "",
             isVisible = doc.getBoolean(IS_VISIBLE_KEY) ?: false,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
@@ -697,6 +700,13 @@ class Repository(private val context: Context) : Repo {
     }
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""
+
+    private fun saveUserPicUrl(newUserPicUrl: String) {
+        val data = HashMap<String, Any>()
+        data[USER_PIC_URL_KEY] = newUserPicUrl
+
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+    }
 
     // --- Search ---
 
@@ -852,13 +862,11 @@ class Repository(private val context: Context) : Repo {
                     Timber.tag(TAG).d("Download url = $downloadUri")
 
                     // Update current user with new user pic download URL
-
-                    // TODO: save URL into user
+                    saveUserPicUrl(downloadUri.toString())
 
                 } else {
                     onError()
                 }
             }
-
     }
 }

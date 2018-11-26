@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.utils
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.Chatroom
@@ -139,5 +140,8 @@ class TestRepository : Repo {
     override fun unreadMessagesExist(): MutableLiveData<Boolean> = MutableLiveData()
 
     override fun setUnreadMessagesExist(value: Boolean) {
+    }
+
+    override fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit) {
     }
 }
