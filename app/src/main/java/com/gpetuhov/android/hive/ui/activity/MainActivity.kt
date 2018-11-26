@@ -82,6 +82,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
         if (requestCode == REQUEST_CHECK_SETTINGS) {
             if (resultCode != Activity.RESULT_OK) {
                 toast("Please, turn on geolocation")

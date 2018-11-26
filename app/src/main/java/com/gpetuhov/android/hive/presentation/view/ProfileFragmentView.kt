@@ -54,6 +54,11 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissServiceDialog()
 
+    // === Change user pic ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun changeUserPic()
+
     // === Common ===
 
     // We don't need to keep this command in the queue,

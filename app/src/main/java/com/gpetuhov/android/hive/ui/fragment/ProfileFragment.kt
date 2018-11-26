@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.ui.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,8 +28,14 @@ import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_profile.*
+import timber.log.Timber
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
+
+    companion object {
+        private const val TAG = "ProfileFragment"
+        private const val RC_PHOTO_PICKER = 1001
+    }
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
 
@@ -72,6 +80,16 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         dismissDialogs()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
+            val selectedImageUri = data?.data
+
+            Timber.tag(TAG).d(selectedImageUri.toString())
+        }
+    }
+
     // === ProfileFragmentView ===
 
     override fun showSignOutDialog() = signOutDialog?.show() ?: Unit
@@ -109,6 +127,14 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     }
 
     override fun dismissServiceDialog() = serviceDialog?.dismiss() ?: Unit
+
+    override fun changeUserPic() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/jpeg"
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+        startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER)
+        // Result will be passed into onActivityResult()
+    }
 
     override fun showToast(message: String) {
         toast(message)

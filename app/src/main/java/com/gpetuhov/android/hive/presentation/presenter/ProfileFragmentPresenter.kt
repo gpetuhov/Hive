@@ -163,6 +163,10 @@ class ProfileFragmentPresenter :
 
     fun saveVisibility(newIsVisible: Boolean) = saveVisibilityInteractor.saveVisibility(newIsVisible)
 
+    // --- Change user pic ---
+
+    fun changeUserPic() = viewState.changeUserPic()
+
     // === Private methods ===
 
     private fun showToast(message: String) {
