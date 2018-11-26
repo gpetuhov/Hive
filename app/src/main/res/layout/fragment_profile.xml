@@ -22,6 +22,7 @@
                     android:id="@+id/user_pic"
                     android:layout_width="72dp"
                     android:layout_height="72dp"
+                    android:contentDescription="@string/user_picture"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -40,8 +41,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/username_textview"
                     android:layout_marginTop="8dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-            />
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                     android:id="@+id/username_textview"

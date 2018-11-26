@@ -24,6 +24,7 @@
     </string>
 
     <!-- ProfileFragment -->
+    <string name="user_picture">User picture</string>
     <string name="enter_username">Enter username</string>
     <string name="enter_service">Enter service</string>
     <string name="username">Username</string>

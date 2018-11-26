@@ -61,8 +61,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Glide.with(this).load(R.mipmap.ic_launcher)
-//            .apply(RequestOptions.circleCropTransform())
+        Glide.with(this).load(R.drawable.ic_account_circle)
+            .apply(RequestOptions.circleCropTransform())
             .into(user_pic)
     }
 
