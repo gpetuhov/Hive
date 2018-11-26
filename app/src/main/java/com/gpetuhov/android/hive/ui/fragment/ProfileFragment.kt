@@ -14,19 +14,14 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
-import com.gpetuhov.android.hive.util.Constants
-import com.gpetuhov.android.hive.util.hideToolbar
+import com.gpetuhov.android.hive.util.*
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
-import com.gpetuhov.android.hive.util.setActivitySoftInputPan
-import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_profile.*
 
@@ -65,7 +60,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         // Every time current user data changes, update binding object with new data
         viewModel.currentUser.observe(this, Observer<User> { user ->
             binding?.user = user
-            updateUserPic(user.userPicUrl)
+            updateUserPic(this, user, userPic)
         })
 
         return binding?.root
@@ -213,14 +208,5 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun deleteUserButtonEnabled(isEnabled: Boolean) {
         delete_user_button.isEnabled = isEnabled
-    }
-
-    private fun updateUserPic(userPicUrl: String) {
-        val glideManager = Glide.with(this)
-        val glideBuilder = if (userPicUrl != "") glideManager.load(userPicUrl) else glideManager.load(R.drawable.ic_account_circle)
-
-        glideBuilder
-            .apply(RequestOptions.circleCropTransform())
-            .into(userPic)
     }
 }

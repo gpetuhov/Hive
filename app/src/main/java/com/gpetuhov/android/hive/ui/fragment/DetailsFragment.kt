@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -19,11 +20,14 @@ import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.gpetuhov.android.hive.util.updateUserPic
 
 // Shows user details on map marker click
 class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: DetailsFragmentPresenter
+
+    private lateinit var userPic: ImageView
 
     private var binding: FragmentDetailsBinding? = null
     private var isOpenFromChat = false
@@ -38,6 +42,8 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         binding?.presenter = presenter
 
+        userPic = binding?.root?.findViewById(R.id.details_user_pic) ?: ImageView(context)
+
         isOpenFromChat = DetailsFragmentArgs.fromBundle(arguments).isOpenFromChat
         presenter.isOpenFromChat = isOpenFromChat
 
@@ -45,6 +51,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
             binding?.user = user
+            updateUserPic(this, user, userPic)
         })
 
         return binding?.root
