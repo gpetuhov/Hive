@@ -5,12 +5,9 @@ import android.net.Uri
 import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.domain.model.User
@@ -24,6 +21,13 @@ import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
 import org.jetbrains.anko.defaultSharedPreferences
 import java.lang.Exception
+import android.graphics.Bitmap
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 // Read and write data to remote storage (Firestore)
 class Repository(private val context: Context) : Repo {
@@ -524,22 +528,28 @@ class Repository(private val context: Context) : Repo {
 
     override fun changeUserPic(selectedImageUri: Uri) {
         if (isAuthorized) {
-            val userPicRef = storage.reference.child("${currentUserUid()}/userpic.jpg")
+            GlobalScope.launch {
+                val userPicRef = storage.reference.child("${currentUserUid()}/userpic.jpg")
 
-            userPicRef.putFile(selectedImageUri)
-                .addOnSuccessListener {
-                    userPicRef.downloadUrl
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val downloadUri = task.result
-                                Timber.tag(TAG).d("Download url = $downloadUri")
+                val byteArray = resizeImage(selectedImageUri)
 
-                            } else {
-                                // TODO: Handle failures
-                                // ...
-                            }
+                if (byteArray != null) {
+                    userPicRef.putBytes(byteArray)
+                        .addOnSuccessListener {
+                            userPicRef.downloadUrl
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        val downloadUri = task.result
+                                        Timber.tag(TAG).d("Download url = $downloadUri")
+
+                                    } else {
+                                        // TODO: Handle failures
+                                        // ...
+                                    }
+                                }
                         }
                 }
+            }
         }
     }
 
@@ -806,5 +816,55 @@ class Repository(private val context: Context) : Repo {
             lastMessageTimestamp = getTimestampFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
             newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
         )
+    }
+
+    // --- User pic ---
+
+    private fun resizeImage(selectedImageUri: Uri): ByteArray? {
+        // This must run in background
+        val bitmap = Glide.with(context)
+            .asBitmap()
+            .load(selectedImageUri)
+            .apply(RequestOptions().override(300).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+            .submit().get()
+
+        val outStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
+
+        return outStream.toByteArray()
+
+
+//        val imgFileOrig = File(URI(selectedImageUri.toString()))
+//
+//        val b = BitmapFactory.decodeFile(imgFileOrig.absolutePath)
+//        // original measurements
+//        val origWidth = b.width
+//        val origHeight = b.height
+//
+//        val destWidth = 300 //or the width you need
+//
+//        if (origWidth > destWidth) {
+//            // picture is wider than we want it, we calculate its target height
+//            val destHeight = origHeight / (origWidth / destWidth)
+//            // we create an scaled bitmap so it reduces the image, not just trim it
+//            val b2 = Bitmap.createScaledBitmap(b, destWidth, destHeight, false)
+//            val outStream = ByteArrayOutputStream()
+//            // compress to the format you want, JPEG, PNG...
+//            // 70 is the 0-100 quality percentage
+//            b2.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
+//
+//
+//            // we save the file, at least until we have made use of it
+//                   val f = File(
+//                       Environment.getExternalStorageDirectory()
+//                + File.separator + "test.jpg"
+//                   )
+//            f.createNewFile()
+//            //write the bytes in file
+//            val fo = FileOutputStream(f)
+//            fo.write(outStream.toByteArray())
+//            // remember close de FileOutput
+//            fo.close()
+//        }
     }
 }
