@@ -25,7 +25,6 @@
                 android:id="@+id/toolbar_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/ic_account_circle"
                 android:contentDescription="@string/user_picture"/>
 
         <TextView
