@@ -4,6 +4,8 @@ import android.content.Context
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -47,7 +49,7 @@ fun Fragment.hideToolbar() {
 }
 
 fun Fragment.setToolbarTitle(title: String) {
-    getToolbar()?.title = title
+    getToolbarTitle()?.text = title
 }
 
 // === Private methods ===
@@ -62,6 +64,10 @@ private fun Fragment.setActivitySoftInput(isResize: Boolean) {
 private fun Fragment.getBottomNavigationView() = activity?.findViewById<BottomNavigationView>(R.id.navigation_view)
 
 private fun Fragment.getToolbar() = activity?.findViewById<Toolbar>(R.id.toolbar)
+
+private fun Fragment.getToolbarImage() = activity?.findViewById<ImageView>(R.id.toolbar_image)
+
+private fun Fragment.getToolbarTitle() = activity?.findViewById<TextView>(R.id.toolbar_title)
 
 private fun Fragment.initToolbar(isVisible: Boolean, title: String, navigationIconId: Int, onNavigationClick: () -> Unit, onClick: () -> Unit) {
     val toolbar = getToolbar()
