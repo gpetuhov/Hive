@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -30,6 +31,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
 
+    private lateinit var userPic: ImageView
+
     private var usernameDialog: MaterialDialog? = null
     private var serviceDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
@@ -48,6 +51,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding?.presenter = presenter
 
+        initUserPic()
+
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
 
         // Every time current user data changes, update binding object with new data
@@ -56,14 +61,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         })
 
         return binding?.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        Glide.with(this).load(R.drawable.ic_account_circle)
-            .apply(RequestOptions.circleCropTransform())
-            .into(user_pic)
     }
 
     override fun onDestroyView() {
@@ -191,5 +188,13 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun deleteUserButtonEnabled(isEnabled: Boolean) {
         delete_user_button.isEnabled = isEnabled
+    }
+
+    private fun initUserPic() {
+        userPic = binding?.root?.findViewById(R.id.user_pic) ?: ImageView(context)
+
+        Glide.with(this).load(R.drawable.ic_account_circle)
+            .apply(RequestOptions.circleCropTransform())
+            .into(userPic)
     }
 }
