@@ -25,6 +25,7 @@ import android.graphics.Bitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
@@ -71,6 +72,9 @@ class Repository(private val context: Context) : Repo {
 
         // Shared Preferences
         private const val UNREAD_MESSAGES_EXIST_KEY = "unreadMessagesExist"
+
+        // User pic
+        private const val USER_PIC_SIZE = 300
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -526,30 +530,32 @@ class Repository(private val context: Context) : Repo {
 
     // === User pic ===
 
-    override fun changeUserPic(selectedImageUri: Uri) {
+    override fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit) {
         if (isAuthorized) {
+            // This is because resizeImage() must run in background
             GlobalScope.launch {
+                // Get reference to current user's pic in Cloud Storage
+                // (every user has his own folder with the same name as user's uid).
+                // File in the cloud will be recreated on every new upload, so there
+                // will be no unused old files.
                 val userPicRef = storage.reference.child("${currentUserUid()}/userpic.jpg")
 
+                // Resize selected image
                 val byteArray = resizeImage(selectedImageUri)
 
+                // Upload resized image to Cloud Storage
                 if (byteArray != null) {
                     userPicRef.putBytes(byteArray)
-                        .addOnSuccessListener {
-                            userPicRef.downloadUrl
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) {
-                                        val downloadUri = task.result
-                                        Timber.tag(TAG).d("Download url = $downloadUri")
+                        .addOnFailureListener { onError() }
+                        .addOnSuccessListener { getDownloadUrlAndUpdateUser(userPicRef, onError) }
 
-                                    } else {
-                                        // TODO: Handle failures
-                                        // ...
-                                    }
-                                }
-                        }
+                } else {
+                    onError()
                 }
             }
+
+        } else {
+            onError()
         }
     }
 
@@ -820,51 +826,39 @@ class Repository(private val context: Context) : Repo {
 
     // --- User pic ---
 
+    // Resize selected image to take less space and traffic
     private fun resizeImage(selectedImageUri: Uri): ByteArray? {
-        // This must run in background
+        // Resize image.
+        // This must run in background!
         val bitmap = Glide.with(context)
             .asBitmap()
             .load(selectedImageUri)
-            .apply(RequestOptions().override(300).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+            .apply(RequestOptions().override(USER_PIC_SIZE).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
             .submit().get()
 
+        // Compress into JPEG
         val outStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
 
         return outStream.toByteArray()
+    }
 
+    private fun getDownloadUrlAndUpdateUser(userPicRef: StorageReference, onError: () -> Unit) {
+        // After the image has been uploaded, we can get its download URL
+        userPicRef.downloadUrl
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    Timber.tag(TAG).d("Download url = $downloadUri")
 
-//        val imgFileOrig = File(URI(selectedImageUri.toString()))
-//
-//        val b = BitmapFactory.decodeFile(imgFileOrig.absolutePath)
-//        // original measurements
-//        val origWidth = b.width
-//        val origHeight = b.height
-//
-//        val destWidth = 300 //or the width you need
-//
-//        if (origWidth > destWidth) {
-//            // picture is wider than we want it, we calculate its target height
-//            val destHeight = origHeight / (origWidth / destWidth)
-//            // we create an scaled bitmap so it reduces the image, not just trim it
-//            val b2 = Bitmap.createScaledBitmap(b, destWidth, destHeight, false)
-//            val outStream = ByteArrayOutputStream()
-//            // compress to the format you want, JPEG, PNG...
-//            // 70 is the 0-100 quality percentage
-//            b2.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
-//
-//
-//            // we save the file, at least until we have made use of it
-//                   val f = File(
-//                       Environment.getExternalStorageDirectory()
-//                + File.separator + "test.jpg"
-//                   )
-//            f.createNewFile()
-//            //write the bytes in file
-//            val fo = FileOutputStream(f)
-//            fo.write(outStream.toByteArray())
-//            // remember close de FileOutput
-//            fo.close()
-//        }
+                    // Update current user with new user pic download URL
+
+                    // TODO: save URL into user
+
+                } else {
+                    onError()
+                }
+            }
+
     }
 }

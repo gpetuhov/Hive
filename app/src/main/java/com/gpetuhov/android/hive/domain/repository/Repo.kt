@@ -64,5 +64,5 @@ interface Repo {
     fun setUnreadMessagesExist(value: Boolean)
 
     // User pic
-    fun changeUserPic(selectedImageUri: Uri)
+    fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit)
 }

@@ -168,7 +168,7 @@ class ProfileFragmentPresenter :
 
     fun chooseUserPic() = viewState.chooseUserPic()
 
-    fun changeUserPic(selectedImageUri: Uri) = repo.changeUserPic(selectedImageUri)
+    fun changeUserPic(selectedImageUri: Uri) = repo.changeUserPic(selectedImageUri) { showToast("Error changing user pic") }
 
     // === Private methods ===
 
