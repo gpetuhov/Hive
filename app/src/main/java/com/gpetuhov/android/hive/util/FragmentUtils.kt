@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.domain.model.User
 
 // === Public methods ===
 
@@ -48,6 +49,10 @@ fun Fragment.hideToolbar() {
     initToolbar(false, "", 0, { /* Do nothing */ }, { /* Do nothing */ })
 }
 
+fun Fragment.setToolbarUserPic(user: User) {
+    updateUserPic(this, user, getToolbarImage())
+}
+
 fun Fragment.setToolbarTitle(title: String) {
     getToolbarTitle()?.text = title
 }
@@ -65,7 +70,7 @@ private fun Fragment.getBottomNavigationView() = activity?.findViewById<BottomNa
 
 private fun Fragment.getToolbar() = activity?.findViewById<Toolbar>(R.id.toolbar)
 
-private fun Fragment.getToolbarImage() = activity?.findViewById<ImageView>(R.id.toolbar_image)
+private fun Fragment.getToolbarImage() = activity?.findViewById(R.id.toolbar_image) ?: ImageView(context)
 
 private fun Fragment.getToolbarTitle() = activity?.findViewById<TextView>(R.id.toolbar_title)
 
