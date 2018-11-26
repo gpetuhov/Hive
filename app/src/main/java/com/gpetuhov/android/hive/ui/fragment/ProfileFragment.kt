@@ -29,12 +29,10 @@ import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_profile.*
-import timber.log.Timber
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     companion object {
-        private const val TAG = "ProfileFragment"
         private const val RC_PHOTO_PICKER = 1001
     }
 
@@ -60,13 +58,12 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding?.presenter = presenter
 
-        initUserPic()
-
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
 
         // Every time current user data changes, update binding object with new data
         viewModel.currentUser.observe(this, Observer<User> { user ->
             binding?.user = user
+            updateUserPic(user.userPicUrl)
         })
 
         return binding?.root
@@ -216,11 +213,18 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         delete_user_button.isEnabled = isEnabled
     }
 
-    private fun initUserPic() {
+    private fun updateUserPic(userPicUrl: String) {
         userPic = binding?.root?.findViewById(R.id.user_pic) ?: ImageView(context)
 
-        Glide.with(this).load(R.drawable.ic_account_circle)
-            .apply(RequestOptions.circleCropTransform())
-            .into(userPic)
+        if (userPicUrl != "") {
+            Glide.with(this).load(userPicUrl)
+                .apply(RequestOptions.circleCropTransform())
+                .into(userPic)
+
+        } else {
+            Glide.with(this).load(R.drawable.ic_account_circle)
+                .apply(RequestOptions.circleCropTransform())
+                .into(userPic)
+        }
     }
 }
