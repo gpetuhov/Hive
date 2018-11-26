@@ -86,7 +86,8 @@ class PermissionsActivity : AppCompatActivity() {
     fun requestPermissions() {
         val permissions = arrayOf(
             Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_EXTERNAL_STORAGE
         )
 
         ActivityCompat.requestPermissions(this, permissions, PERM_REQUEST_CODE)
@@ -99,6 +100,7 @@ class PermissionsActivity : AppCompatActivity() {
         // False if the app runs for the first time or the user denied permissions and opted Don't show again
         return ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                 && ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                && ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
     private fun openSystemSettings() {
