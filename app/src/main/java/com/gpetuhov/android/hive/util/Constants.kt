@@ -28,7 +28,12 @@ class Constants {
         companion object {
             const val DEFAULT_USER_NAME = "Anonymous"
             const val DEFAULT_USER_MAIL = ""
-            const val FCM_TOKEN_KEY = "fcmToken"
+        }
+    }
+
+    class FileTypes {
+        companion object {
+            const val IMAGE = "image/jpeg"
         }
     }
 }

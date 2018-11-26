@@ -22,6 +22,7 @@ import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
@@ -130,9 +131,9 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun changeUserPic() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/jpeg"
+        intent.type = Constants.FileTypes.IMAGE
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-        startActivityForResult(Intent.createChooser(intent, "Complete action using"), RC_PHOTO_PICKER)
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.complete_action_using)), RC_PHOTO_PICKER)
         // Result will be passed into onActivityResult()
     }
 
