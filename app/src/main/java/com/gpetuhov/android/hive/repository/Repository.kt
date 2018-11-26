@@ -66,6 +66,8 @@ class Repository(private val context: Context) : Repo {
         private const val CHATROOM_USER_UID_2_KEY = "userUid2"
         private const val CHATROOM_USER_NAME_1_KEY = "userName1"
         private const val CHATROOM_USER_NAME_2_KEY = "userName2"
+        private const val CHATROOM_USER_PIC_URL_1_KEY = "userPicUrl1"
+        private const val CHATROOM_USER_PIC_URL_2_KEY = "userPicUrl2"
         private const val CHATROOM_LAST_MESSAGE_SENDER_UID_KEY = "lastMessageSenderUid"
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
@@ -702,6 +704,8 @@ class Repository(private val context: Context) : Repo {
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""
 
+    private fun currentUserPicUrl() = currentUser.value?.userPicUrl ?: ""
+
     private fun saveUserPicUrl(newUserPicUrl: String) {
         val data = HashMap<String, Any>()
         data[USER_PIC_URL_KEY] = newUserPicUrl
@@ -813,12 +817,17 @@ class Repository(private val context: Context) : Repo {
         val userUid2 = doc.getString(CHATROOM_USER_UID_2_KEY) ?: ""
         val userName1 = doc.getString(CHATROOM_USER_NAME_1_KEY) ?: ""
         val userName2 = doc.getString(CHATROOM_USER_NAME_2_KEY) ?: ""
+        val userPicUrl1 = doc.getString(CHATROOM_USER_PIC_URL_1_KEY) ?: ""
+        val userPicUrl2 = doc.getString(CHATROOM_USER_PIC_URL_2_KEY) ?: ""
 
         // Second user uid is the one, that is not equal to current user uid
         val secondUserUid = if (userUid1 != currentUserUid()) userUid1 else userUid2
 
         // Second user name is the one, that is not equal to current user name
         val secondUserName = if (userName1 != currentUserNameOrUsername()) userName1 else userName2
+
+        // Second user pic URL is the one, that is not equal to current user pic URL
+        val secondUserPicUrl = if (userPicUrl1 != currentUserPicUrl()) userPicUrl1 else userPicUrl2
 
         return Chatroom(
             chatroomUid = doc.id,
@@ -828,6 +837,7 @@ class Repository(private val context: Context) : Repo {
             userName2 = userName2,
             secondUserUid = secondUserUid,
             secondUserName = secondUserName,
+            secondUserPicUrl = secondUserPicUrl,
             lastMessageSenderUid = doc.getString(CHATROOM_LAST_MESSAGE_SENDER_UID_KEY) ?: "",
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestampFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),

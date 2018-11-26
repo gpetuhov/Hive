@@ -27,8 +27,7 @@ class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<Ch
             val chatroom = binding.chatroom
 
             if (chatroom != null) {
-                // TODO: init second user pic url here
-                callback.openChat(chatroom.secondUserUid, chatroom.secondUserName, "")
+                callback.openChat(chatroom.secondUserUid, chatroom.secondUserName, chatroom.secondUserPicUrl)
             }
         }
 
