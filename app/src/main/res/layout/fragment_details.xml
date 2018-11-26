@@ -32,6 +32,19 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_marginTop="16dp"/>
 
+            <ImageView
+                    android:id="@+id/details_user_pic"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:contentDescription="@string/user_picture"
+                    android:src="@drawable/ic_account_circle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintBottom_toTopOf="@+id/details_name"
+                    app:layout_constraintVertical_chainStyle="packed"/>
+
             <TextView
                     android:id="@+id/details_name"
                     android:layout_width="wrap_content"
@@ -41,10 +54,10 @@
                     tools:text="Name or username"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/details_user_pic"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintBottom_toTopOf="@+id/details_email"
-                    app:layout_constraintVertical_chainStyle="packed"/>
+                    android:layout_marginTop="8dp"/>
 
             <TextView
                     android:id="@+id/details_email"
