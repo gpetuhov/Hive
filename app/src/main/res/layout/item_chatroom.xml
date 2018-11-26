@@ -10,72 +10,91 @@
     </data>
 
     <LinearLayout
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp">
 
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@{chatroom.secondUserName}"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:textStyle="bold"
-                    style="@style/mediumTextStyle"
-                    tools:text="User name"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"/>
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{chatroom.getLastMessageTime()}"
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@{chatroom.newMessageCount > 0 ? @color/md_green_600 : @color/md_grey_600}"
-                    style="@style/smallTextStyle"
-                    tools:text="2018-11-7 12:29"/>
-
-        </LinearLayout>
+        <ImageView
+                android:id="@+id/item_chatroom_user_pic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_account_circle"
+                android:contentDescription="@string/user_picture"/>
 
         <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="0dp">
 
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@{chatroom.lastMessageText}"
-                    android:maxLines="1"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    style="@style/mediumTextStyle"
-                    tools:text="Message text"/>
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{chatroom.getNewMessageCountString()}"
-                    android:textColor="@color/md_white_1000"
-                    android:visibility="@{chatroom.newMessageCount > 0 ? View.VISIBLE : View.GONE}"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/new_message_count_background"
-                    style="@style/mediumTextStyle"
-                    android:paddingStart="4dp"
-                    android:paddingEnd="4dp"
-                    tools:text="30"/>
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{chatroom.secondUserName}"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textStyle="bold"
+                        style="@style/mediumTextStyle"
+                        tools:text="User name"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{chatroom.getLastMessageTime()}"
+                        android:layout_gravity="center_vertical"
+                        android:textColor="@{chatroom.newMessageCount > 0 ? @color/md_green_600 : @color/md_grey_600}"
+                        style="@style/smallTextStyle"
+                        tools:text="2018-11-7 12:29"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@{chatroom.lastMessageText}"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        style="@style/mediumTextStyle"
+                        tools:text="Message text"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{chatroom.getNewMessageCountString()}"
+                        android:textColor="@color/md_white_1000"
+                        android:visibility="@{chatroom.newMessageCount > 0 ? View.VISIBLE : View.GONE}"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/new_message_count_background"
+                        style="@style/mediumTextStyle"
+                        android:paddingStart="4dp"
+                        android:paddingEnd="4dp"
+                        tools:text="30"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -2,11 +2,14 @@ package com.gpetuhov.android.hive.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.ItemChatroomBinding
 import com.gpetuhov.android.hive.domain.model.Chatroom
+import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.util.updateUserPic
 
 class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<ChatroomsAdapter.ChatroomViewHolder>() {
 
@@ -48,5 +51,10 @@ class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<Ch
 
     // === Inner classes ===
 
-    class ChatroomViewHolder(var binding: ItemChatroomBinding) : RecyclerView.ViewHolder(binding.root)
+    class ChatroomViewHolder(var binding: ItemChatroomBinding) : RecyclerView.ViewHolder(binding.root) {
+
+//        private var userPic = binding.root.findViewById<ImageView>(R.id.item_chatroom_user_pic)
+
+//        fun bindUserPic(user: User) = updateUserPic(binding.root.context, user, userPic)
+    }
 }
