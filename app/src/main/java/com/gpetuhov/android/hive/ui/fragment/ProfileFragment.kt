@@ -11,6 +11,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
@@ -22,6 +24,7 @@ import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
+import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
@@ -54,6 +57,14 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         })
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        Glide.with(this).load(R.drawable.ic_person_dark)
+            .apply(RequestOptions.circleCropTransform())
+            .into(user_pic)
     }
 
     override fun onDestroyView() {
