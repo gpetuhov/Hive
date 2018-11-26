@@ -21,10 +21,10 @@ class ChatroomsFragmentPresenter : MvpPresenter<ChatroomsFragmentView>(), Chatro
 
     // === ChatroomsAdapter.Callback ===
 
-    override fun openChat(secondUserUid: String, secondUserName: String) {
+    override fun openChat(secondUserUid: String, secondUserName: String, secondUserPicUrl: String) {
         // Before opening the chat, we must initialize the second user with uid and name
         // from the chosen chatroom and clear messages.
-        repo.initSecondUser(secondUserUid, secondUserName)
+        repo.initSecondUser(secondUserUid, secondUserName, secondUserPicUrl)
         repo.clearMessages()
         viewState.openChat()
     }

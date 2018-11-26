@@ -38,7 +38,7 @@ interface Repo {
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
     fun startGettingSecondUserUpdates(uid: String)
     fun stopGettingSecondUserUpdates()
-    fun initSecondUser(uid: String, name: String)
+    fun initSecondUser(uid: String, name: String, userPicUrl: String)
     fun saveFcmToken(token: String)
 
     // Search

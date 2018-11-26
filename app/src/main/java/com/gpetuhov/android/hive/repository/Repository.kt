@@ -361,10 +361,11 @@ class Repository(private val context: Context) : Repo {
         if (user != null) secondUser.value = user
     }
 
-    override fun initSecondUser(uid: String, name: String) {
+    override fun initSecondUser(uid: String, name: String, userPicUrl: String) {
         val secondUserValue = createAnonymousUser()
         secondUserValue.uid = uid
         secondUserValue.name = name
+        secondUserValue.userPicUrl = userPicUrl
         secondUser.value = secondUserValue
     }
 
