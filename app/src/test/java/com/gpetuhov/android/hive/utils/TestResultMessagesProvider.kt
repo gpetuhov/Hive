@@ -22,4 +22,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveVisibilityErrorMessage(): String = Constants.SAVE_VISIBILITY_ERROR
 
     override fun getSendMessageErrorMessage(): String = Constants.SEND_MESSAGE_ERROR
+
+    override fun getChangeUserPicErrorMessage(): String = ""
 }

@@ -58,6 +58,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding?.presenter = presenter
 
+        userPic = binding?.root?.findViewById(R.id.user_pic) ?: ImageView(context)
+
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
 
         // Every time current user data changes, update binding object with new data
@@ -214,8 +216,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     }
 
     private fun updateUserPic(userPicUrl: String) {
-        userPic = binding?.root?.findViewById(R.id.user_pic) ?: ImageView(context)
-
         val glideManager = Glide.with(this)
         val glideBuilder = if (userPicUrl != "") glideManager.load(userPicUrl) else glideManager.load(R.drawable.ic_account_circle)
 

@@ -34,5 +34,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSendMessageErrorMessage(): String = getString(R.string.send_message_error)
 
+    override fun getChangeUserPicErrorMessage(): String = getString(R.string.change_user_picture_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

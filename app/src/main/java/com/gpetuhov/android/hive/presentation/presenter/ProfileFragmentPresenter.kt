@@ -6,6 +6,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.*
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import javax.inject.Inject
 
@@ -26,6 +27,7 @@ class ProfileFragmentPresenter :
     SaveVisibilityInteractor.Callback {
 
     @Inject lateinit var repo: Repo
+    @Inject lateinit var resultMessages: ResultMessages
 
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
@@ -168,7 +170,7 @@ class ProfileFragmentPresenter :
 
     fun chooseUserPic() = viewState.chooseUserPic()
 
-    fun changeUserPic(selectedImageUri: Uri) = repo.changeUserPic(selectedImageUri) { showToast("Error changing user pic") }
+    fun changeUserPic(selectedImageUri: Uri) = repo.changeUserPic(selectedImageUri) { showToast(resultMessages.getChangeUserPicErrorMessage()) }
 
     // === Private methods ===
 

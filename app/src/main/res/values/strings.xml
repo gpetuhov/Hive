@@ -26,6 +26,7 @@
     <!-- ProfileFragment -->
     <string name="user_picture">User picture</string>
     <string name="complete_action_using">Complete action using</string>
+    <string name="change_user_picture_error">Error changing user picture</string>
     <string name="enter_username">Enter username</string>
     <string name="enter_service">Enter service</string>
     <string name="username">Username</string>
