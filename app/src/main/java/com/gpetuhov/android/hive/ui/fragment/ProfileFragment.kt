@@ -216,15 +216,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private fun updateUserPic(userPicUrl: String) {
         userPic = binding?.root?.findViewById(R.id.user_pic) ?: ImageView(context)
 
-        if (userPicUrl != "") {
-            Glide.with(this).load(userPicUrl)
-                .apply(RequestOptions.circleCropTransform())
-                .into(userPic)
+        val glideManager = Glide.with(this)
+        val glideBuilder = if (userPicUrl != "") glideManager.load(userPicUrl) else glideManager.load(R.drawable.ic_account_circle)
 
-        } else {
-            Glide.with(this).load(R.drawable.ic_account_circle)
-                .apply(RequestOptions.circleCropTransform())
-                .into(userPic)
-        }
+        glideBuilder
+            .apply(RequestOptions.circleCropTransform())
+            .into(userPic)
     }
 }
