@@ -16,6 +16,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.ui.activity.MainActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
@@ -142,6 +143,7 @@ class NotificationManager {
     private fun startNotificationSub() {
         notificationSubDisposable = notificationSub
             .buffer(NOTIFICATION_BUFFER_TIME, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe { notificationInfoList ->
                 if (!notificationInfoList.isEmpty()) {
                     Timber.tag("NotificationManager").d("${notificationInfoList.size}")

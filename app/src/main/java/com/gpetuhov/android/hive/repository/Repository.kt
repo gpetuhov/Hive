@@ -14,7 +14,6 @@ import timber.log.Timber
 import java.util.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
-import com.pawegio.kandroid.runOnUiThread
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
@@ -510,11 +509,8 @@ class Repository(private val context: Context) : Repo {
     override fun unreadMessagesExist() = unreadMessagesFlag
 
     override fun setUnreadMessagesExist(value: Boolean) {
-        // Value of LiveData must be changed on the UI thread
-        runOnUiThread {
-            unreadMessagesFlag.value = value
-            context.defaultSharedPreferences.edit { putBoolean(UNREAD_MESSAGES_EXIST_KEY, value) }
-        }
+        unreadMessagesFlag.value = value
+        context.defaultSharedPreferences.edit { putBoolean(UNREAD_MESSAGES_EXIST_KEY, value) }
     }
 
     // === Private methods ===
