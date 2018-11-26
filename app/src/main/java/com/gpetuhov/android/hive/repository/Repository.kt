@@ -523,38 +523,24 @@ class Repository(private val context: Context) : Repo {
     // === User pic ===
 
     override fun changeUserPic(selectedImageUri: Uri) {
-        val userPicRef = storage.reference.child("userpic/userpic.jpg")
+        if (isAuthorized) {
+            val userPicRef = storage.reference.child("${currentUserUid()}/userpic.jpg")
 
-        val uploadTask = userPicRef.putFile(selectedImageUri)
-            .addOnSuccessListener { taskSnapshot ->
-                userPicRef.downloadUrl
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val downloadUri = task.result
-                            Timber.tag(TAG).d("Download url = $downloadUri")
+            userPicRef.putFile(selectedImageUri)
+                .addOnSuccessListener {
+                    userPicRef.downloadUrl
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val downloadUri = task.result
+                                Timber.tag(TAG).d("Download url = $downloadUri")
 
-                        } else {
-                            // Handle failures
-                            // ...
+                            } else {
+                                // TODO: Handle failures
+                                // ...
+                            }
                         }
-                    }
-            }
-
-//        val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-//            if (!task.isSuccessful) {
-//                task.exception?.let {
-//                    throw it
-//                }
-//            }
-//            return@Continuation userPicRef.downloadUrl
-//        }).addOnCompleteListener { task ->
-//            if (task.isSuccessful) {
-//                val downloadUri = task.result
-//            } else {
-//                // Handle failures
-//                // ...
-//            }
-//        }
+                }
+        }
     }
 
     // === Private methods ===
