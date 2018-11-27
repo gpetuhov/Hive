@@ -22,16 +22,9 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import com.bumptech.glide.request.target.SizeReadyCallback
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.provider.Contacts
-import com.bumptech.glide.request.target.BaseTarget
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.gpetuhov.android.hive.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -47,6 +40,7 @@ class NotificationManager {
         private const val LOCATION_SHARING_CHANNEL = "location_sharing_channel"
         private const val NEW_MESSAGE_CHANNEL = "new_message_channel"
         private const val NOTIFICATION_BUFFER_TIME = 5000L
+        private const val NOTIFICATION_USER_PIC_SIZE = 64   // dp
     }
 
     @Inject lateinit var context: Context
@@ -200,7 +194,8 @@ class NotificationManager {
             repo.setUnreadMessagesExist(true)
 
             GlobalScope.launch {
-                val largeIconSize = Math.round(64 * context.resources.displayMetrics.density)
+                // Calculate large icon size in pixels
+                val largeIconSize = Math.round(NOTIFICATION_USER_PIC_SIZE * context.resources.displayMetrics.density)
 
                 // If large icon is null, no icon will be displayed in the notification
                 var largeIcon: Bitmap? = null
