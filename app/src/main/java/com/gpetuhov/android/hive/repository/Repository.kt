@@ -77,7 +77,7 @@ class Repository(private val context: Context) : Repo {
         private const val UNREAD_MESSAGES_EXIST_KEY = "unreadMessagesExist"
 
         // User pic
-        private const val USER_PIC_SIZE = 300
+        private const val USER_PIC_SIZE = 100
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -892,7 +892,7 @@ class Repository(private val context: Context) : Repo {
             val bitmap = Glide.with(context)
                 .asBitmap()
                 .load(selectedImageUri)
-                .apply(RequestOptions().override(USER_PIC_SIZE).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                .apply(RequestOptions().override(USER_PIC_SIZE).centerCrop().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
                 .submit().get()
 
             // Compress into JPEG
