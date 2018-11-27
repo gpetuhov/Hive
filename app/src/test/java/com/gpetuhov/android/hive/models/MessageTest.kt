@@ -13,7 +13,6 @@ class MessageTest {
     fun initUser() {
         message = Message(
             uid = "834ghih",
-            senderUid = "9j82qho",
             timestamp = System.currentTimeMillis(),
             text = "Message text",
             isFromCurrentUser = true,

@@ -760,7 +760,6 @@ class Repository(private val context: Context) : Repo {
 
         return Message(
             uid = doc.id,
-            senderUid = senderUid,
             timestamp = getTimestampFromDocumentSnapshot(doc, TIMESTAMP_KEY),
             text = doc.getString(MESSAGE_TEXT_KEY) ?: "",
             isFromCurrentUser = senderUid == currentUserUid(),
