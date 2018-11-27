@@ -5,10 +5,10 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import javax.inject.Inject
 
-class DeleteServiceInteractor(private val callback: Callback) : Interactor {
+class DeleteOfferInteractor(private val callback: Callback) : Interactor {
 
     interface Callback {
-        fun onDeleteServiceError(errorMessage: String)
+        fun onDeleteOfferError(errorMessage: String)
     }
 
     @Inject lateinit var repo: Repo
@@ -19,5 +19,5 @@ class DeleteServiceInteractor(private val callback: Callback) : Interactor {
     }
 
     override fun execute() =
-        repo.deleteUserService { callback.onDeleteServiceError(resultMessages.getDeleteServiceErrorMessage()) }
+        repo.deleteUserOffer { callback.onDeleteOfferError(resultMessages.getDeleteOfferErrorMessage()) }
 }

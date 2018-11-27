@@ -15,9 +15,9 @@ class TestResultMessagesProvider : ResultMessages {
 
     override fun getSaveUsernameErrorMessage() = Constants.SAVE_USERNAME_ERROR
 
-    override fun getSaveServiceErrorMessage() = Constants.SAVE_SERVICE_ERROR
+    override fun getSaveOfferErrorMessage() = Constants.SAVE_OFFER_ERROR
 
-    override fun getDeleteServiceErrorMessage() = Constants.DELETE_SERVICE_ERROR
+    override fun getDeleteOfferErrorMessage() = Constants.DELETE_OFFER_ERROR
 
     override fun getSaveVisibilityErrorMessage(): String = Constants.SAVE_VISIBILITY_ERROR
 

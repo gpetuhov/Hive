@@ -49,7 +49,7 @@ class Repository(private val context: Context) : Repo {
         private const val USERNAME_KEY = "username"
         private const val EMAIL_KEY = "email"
         private const val USER_PIC_URL_KEY = "userPicUrl"
-        private const val SERVICE_KEY = "service"
+        private const val OFFER_KEY = "offer"
         private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
@@ -224,7 +224,7 @@ class Repository(private val context: Context) : Repo {
 
     override fun currentUserUsername() = currentUser.value?.username ?: ""
 
-    override fun currentUserService() = currentUser.value?.service ?: ""
+    override fun currentUserOffer() = currentUser.value?.offer ?: ""
 
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
@@ -234,16 +234,16 @@ class Repository(private val context: Context) : Repo {
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
-    override fun saveUserService(newService: String, onError: () -> Unit) {
+    override fun saveUserOffer(newOffer: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
-        data[SERVICE_KEY] = newService
+        data[OFFER_KEY] = newOffer
 
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
-    override fun deleteUserService(onError: () -> Unit) {
+    override fun deleteUserOffer(onError: () -> Unit) {
         val data = HashMap<String, Any>()
-        data[SERVICE_KEY] = ""
+        data[OFFER_KEY] = ""
         data[IS_VISIBLE_KEY] = false
 
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
@@ -581,7 +581,7 @@ class Repository(private val context: Context) : Repo {
             username = "",
             email = Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = "",
-            service = "",
+            offer = "",
             isVisible = false,
             isOnline = false,
             location = Constants.Map.DEFAULT_LOCATION
@@ -674,9 +674,9 @@ class Repository(private val context: Context) : Repo {
 
     private fun startGettingCurrentUserUpdates() {
         currentUserListenerRegistration = startGettingUserUpdates(currentUserUid()) { user ->
-            // Turn off visibility if user is visible and has no services
-            // (this is needed in case service has been cleared on the backend)
-            if (!user.hasService && user.isVisible) saveUserVisibility(false) { /* Do nothing */ }
+            // Turn off visibility if user is visible and has no offer
+            // (this is needed in case offer has been cleared on the backend)
+            if (!user.hasOffer && user.isVisible) saveUserVisibility(false) { /* Do nothing */ }
 
             // If current user is visible, start sharing location,
             // otherwise stop sharing.
@@ -727,7 +727,7 @@ class Repository(private val context: Context) : Repo {
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = doc.getString(USER_PIC_URL_KEY) ?: "",
-            service = doc.getString(SERVICE_KEY) ?: "",
+            offer = doc.getString(OFFER_KEY) ?: "",
             isVisible = doc.getBoolean(IS_VISIBLE_KEY) ?: false,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
@@ -782,7 +782,7 @@ class Repository(private val context: Context) : Repo {
     private fun checkConditions(user: User): Boolean = user.isVisible && checkQueryText(user)
 
     private fun checkQueryText(user: User): Boolean {
-        return user.service.contains(queryText, true)
+        return user.offer.contains(queryText, true)
                 || user.name.contains(queryText, true)
                 || user.username.contains(queryText, true)
     }

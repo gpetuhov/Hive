@@ -23,7 +23,7 @@ class UserTest {
             username = "",
             email = "mail@mail.com",
             userPicUrl = "",
-            service = "",
+            offer = "",
             isVisible = false,
             isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
@@ -39,9 +39,9 @@ class UserTest {
 
     @Test
     fun emptyService() {
-        assertEquals(false, user.hasService)
-        user.service = "free car"
-        assertEquals(true, user.hasService)
+        assertEquals(false, user.hasOffer)
+        user.offer = "free car"
+        assertEquals(true, user.hasOffer)
     }
 
     @Test

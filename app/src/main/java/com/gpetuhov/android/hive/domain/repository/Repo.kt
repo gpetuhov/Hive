@@ -28,11 +28,11 @@ interface Repo {
     fun currentUser(): MutableLiveData<User>
     fun secondUser(): MutableLiveData<User>
     fun currentUserUsername(): String
-    fun currentUserService(): String
+    fun currentUserOffer(): String
     fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit)
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
-    fun saveUserService(newService: String, onError: () -> Unit)
-    fun deleteUserService(onError: () -> Unit)
+    fun saveUserOffer(newOffer: String, onError: () -> Unit)
+    fun deleteUserOffer(onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)
     fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)

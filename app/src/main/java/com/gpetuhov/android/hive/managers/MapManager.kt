@@ -140,8 +140,8 @@ class MapManager {
 //
 //            val iconBitmap = iconGenerator.makeIcon("${name} \n$status")
 
-            val iconBitmap = if (user.hasService) {
-                iconGenerator.makeIcon("$name \n${user.service}")
+            val iconBitmap = if (user.hasOffer) {
+                iconGenerator.makeIcon("$name \n${user.offer}")
             } else {
                 iconGenerator.makeIcon(name)
             }

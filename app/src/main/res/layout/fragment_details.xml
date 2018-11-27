@@ -69,14 +69,14 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/details_name"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintBottom_toTopOf="@+id/details_service"
+                    app:layout_constraintBottom_toTopOf="@+id/details_offer"
                     android:layout_marginTop="8dp"/>
 
             <TextView
-                    android:id="@+id/details_service"
+                    android:id="@+id/details_offer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.service}"
+                    android:text="@{user.offer}"
                     style="@style/basicTextStyle"
                     tools:text="service"
                     app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/details_service"
+                    app:layout_constraintTop_toBottomOf="@+id/details_offer"
                     app:layout_constraintHorizontal_bias="0.5"
                     android:layout_marginTop="8dp"/>
 

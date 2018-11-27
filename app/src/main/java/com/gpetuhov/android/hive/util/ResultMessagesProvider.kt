@@ -26,9 +26,9 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveUsernameErrorMessage(): String = getString(R.string.username_save_error)
 
-    override fun getSaveServiceErrorMessage(): String = getString(R.string.service_save_error)
+    override fun getSaveOfferErrorMessage(): String = getString(R.string.offer_save_error)
 
-    override fun getDeleteServiceErrorMessage(): String = getString(R.string.service_delete_error)
+    override fun getDeleteOfferErrorMessage(): String = getString(R.string.offer_delete_error)
 
     override fun getSaveVisibilityErrorMessage(): String = getString(R.string.visibility_save_error)
 

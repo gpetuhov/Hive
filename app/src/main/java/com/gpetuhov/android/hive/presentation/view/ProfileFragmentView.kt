@@ -46,13 +46,13 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissUsernameDialog()
 
-    // === Change service ===
+    // === Change offer ===
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun showServiceDialog()
+    fun showOfferDialog()
 
     @StateStrategyType(AddToEndSingleStrategy::class)
-    fun dismissServiceDialog()
+    fun dismissOfferDialog()
 
     // === Change user pic ===
 

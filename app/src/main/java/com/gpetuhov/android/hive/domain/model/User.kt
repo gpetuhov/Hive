@@ -10,12 +10,12 @@ data class User(
     var username: String,
     var email: String,
     var userPicUrl: String,
-    var service: String,
+    var offer: String,
     var isVisible: Boolean,
     var isOnline: Boolean,
     var location: LatLng
 ) {
     val hasUsername get() = username != ""
-    val hasService get() = service != ""
+    val hasOffer get() = offer != ""
     fun getUsernameOrName() = if (hasUsername) username else name
 }

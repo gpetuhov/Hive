@@ -36,7 +36,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private lateinit var userPic: ImageView
 
     private var usernameDialog: MaterialDialog? = null
-    private var serviceDialog: MaterialDialog? = null
+    private var offerDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
     private var binding: FragmentProfileBinding? = null
@@ -112,15 +112,15 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun dismissUsernameDialog() = usernameDialog?.dismiss() ?: Unit
 
-    override fun showServiceDialog() {
+    override fun showOfferDialog() {
         // Prefill dialog with text provided by presenter
-        val editText = serviceDialog?.getInputField()
-        editText?.setText(presenter.getServicePrefill())
+        val editText = offerDialog?.getInputField()
+        editText?.setText(presenter.getOfferPrefill())
         editText?.setSelection(editText.text.length)
-        serviceDialog?.show()
+        offerDialog?.show()
     }
 
-    override fun dismissServiceDialog() = serviceDialog?.dismiss() ?: Unit
+    override fun dismissOfferDialog() = offerDialog?.dismiss() ?: Unit
 
     override fun chooseUserPic() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -159,15 +159,15 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun initServiceDialog() {
         if (context != null) {
-            serviceDialog = MaterialDialog(context!!)
-                .title(R.string.service)
+            offerDialog = MaterialDialog(context!!)
+                .title(R.string.offer)
                 .noAutoDismiss()
                 .cancelable(false)
-                .input(hintRes = R.string.enter_service, waitForPositiveButton = false) { dialog, text ->
-                    presenter.updateTempService(text.toString())
+                .input(hintRes = R.string.enter_offer, waitForPositiveButton = false) { dialog, text ->
+                    presenter.updateTempOffer(text.toString())
                 }
-                .positiveButton { presenter.saveService() }
-                .negativeButton { presenter.dismissServiceDialog() }
+                .positiveButton { presenter.saveOffer() }
+                .negativeButton { presenter.dismissOfferDialog() }
         }
     }
 
@@ -197,7 +197,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun dismissDialogs() {
         dismissUsernameDialog()
-        dismissServiceDialog()
+        dismissOfferDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
     }

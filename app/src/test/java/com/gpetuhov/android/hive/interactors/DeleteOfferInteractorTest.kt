@@ -2,7 +2,7 @@ package com.gpetuhov.android.hive.interactors
 
 import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.interactor.SaveServiceInteractor
+import com.gpetuhov.android.hive.domain.interactor.DeleteOfferInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
-class SaveServiceInteractorTest {
+class DeleteOfferInteractorTest {
 
     @Inject lateinit var context: Context
     @Inject lateinit var repo: Repo
@@ -27,31 +27,31 @@ class SaveServiceInteractorTest {
     }
 
     @Test
-    fun saveServiceSuccess() {
-        testSaveServiceInteractor(true)
+    fun deleteServiceSuccess() {
+        testDeleteServiceInteractor(true)
     }
 
     @Test
-    fun saveServiceError() {
-        testSaveServiceInteractor(false)
+    fun deleteServiceError() {
+        testDeleteServiceInteractor(false)
     }
 
-    private fun testSaveServiceInteractor(isSuccess: Boolean) {
+    private fun testDeleteServiceInteractor(isSuccess: Boolean) {
         (repo as TestRepository).isSuccess = isSuccess
 
         var errorCounter = 0
 
-        val callback = object : SaveServiceInteractor.Callback {
-            override fun onSaveServiceError(errorMessage: String) {
+        val callback = object : DeleteOfferInteractor.Callback {
+            override fun onDeleteOfferError(errorMessage: String) {
                 errorCounter++
-                assertEquals(Constants.SAVE_SERVICE_ERROR, errorMessage)
+                assertEquals(Constants.DELETE_OFFER_ERROR, errorMessage)
             }
         }
 
-        val interactor = SaveServiceInteractor(callback)
-        interactor.saveService(Constants.DUMMY_SERVICE)
+        val interactor = DeleteOfferInteractor(callback)
+        interactor.execute()
 
-        assertEquals(if (isSuccess) Constants.DUMMY_SERVICE else "", (repo as TestRepository).service)
+        assertEquals("", (repo as TestRepository).offer)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)
     }
 }

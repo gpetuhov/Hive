@@ -22,8 +22,8 @@ class ProfileFragmentPresenter :
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
     SaveUsernameInteractor.Callback,
-    SaveServiceInteractor.Callback,
-    DeleteServiceInteractor.Callback,
+    SaveOfferInteractor.Callback,
+    DeleteOfferInteractor.Callback,
     SaveVisibilityInteractor.Callback {
 
     @Inject lateinit var repo: Repo
@@ -32,15 +32,15 @@ class ProfileFragmentPresenter :
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
-    private val saveServiceInteractor = SaveServiceInteractor(this)
-    private val deleteServiceInteractor = DeleteServiceInteractor(this)
+    private val saveOfferInteractor = SaveOfferInteractor(this)
+    private val deleteOfferInteractor = DeleteOfferInteractor(this)
     private val saveVisibilityInteractor = SaveVisibilityInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
 
-    // Keeps current text entered in service dialog
-    private var tempService = ""
+    // Keeps current text entered in offer dialog
+    private var tempOffer = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -66,13 +66,13 @@ class ProfileFragmentPresenter :
 
     override fun onSaveUsernameError(errorMessage: String) = showToast(errorMessage)
 
-    // === SaveServiceInteractor.Callback ===
+    // === SaveOfferInteractor.Callback ===
 
-    override fun onSaveServiceError(errorMessage: String) = showToast(errorMessage)
+    override fun onSaveOfferError(errorMessage: String) = showToast(errorMessage)
 
-    // === DeleteServiceInteractor.Callback ===
+    // === DeleteOfferInteractor.Callback ===
 
-    override fun onDeleteServiceError(errorMessage: String) = showToast(errorMessage)
+    override fun onDeleteOfferError(errorMessage: String) = showToast(errorMessage)
 
     // === SaveVisibilityInteractor.Callback ===
 
@@ -137,30 +137,30 @@ class ProfileFragmentPresenter :
         viewState.dismissUsernameDialog()
     }
 
-    // --- Change service ---
+    // --- Change offer ---
 
-    fun showServiceDialog() = viewState.showServiceDialog()
+    fun showOfferDialog() = viewState.showOfferDialog()
 
-    // Prefill service dialog with currently entered text or current service
-    fun getServicePrefill() = if (tempService != "") tempService else repo.currentUserService()
+    // Prefill offer dialog with currently entered text or current offer
+    fun getOfferPrefill() = if (tempOffer != "") tempOffer else repo.currentUserOffer()
 
-    fun updateTempService(newTempService: String) {
-        tempService = newTempService
+    fun updateTempOffer(newTempOffer: String) {
+        tempOffer = newTempOffer
     }
 
-    fun saveService() {
-        saveServiceInteractor.saveService(tempService)
-        dismissServiceDialog()
+    fun saveOffer() {
+        saveOfferInteractor.saveOffer(tempOffer)
+        dismissOfferDialog()
     }
 
-    fun dismissServiceDialog() {
-        tempService = ""
-        viewState.dismissServiceDialog()
+    fun dismissOfferDialog() {
+        tempOffer = ""
+        viewState.dismissOfferDialog()
     }
 
-    // --- Delete service ---
+    // --- Delete offer ---
 
-    fun deleteService() = deleteServiceInteractor.execute()
+    fun deleteOffer() = deleteOfferInteractor.execute()
 
     // --- Change visibility ---
 

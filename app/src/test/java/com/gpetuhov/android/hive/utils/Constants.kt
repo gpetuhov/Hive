@@ -12,10 +12,10 @@ class Constants {
         const val DUMMY_USERNAME = "DummyUsername"
         const val SAVE_USERNAME_ERROR = "Save username error"
 
-        const val DUMMY_SERVICE = "Dummy service"
-        const val SAVE_SERVICE_ERROR = "Save service error"
+        const val DUMMY_OFFER = "Dummy offer"
+        const val SAVE_OFFER_ERROR = "Save offer error"
 
-        const val DELETE_SERVICE_ERROR = "Delete service error"
+        const val DELETE_OFFER_ERROR = "Delete offer error"
 
         const val SAVE_VISIBILITY_ERROR = "Save visibility error"
 

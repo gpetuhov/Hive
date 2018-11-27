@@ -11,7 +11,7 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 class TestRepository : Repo {
     var isSuccess = false
     var username = ""
-    var service = ""
+    var offer = ""
     var isVisible = false
     var isOnline = false
     var messageText = ""
@@ -43,7 +43,7 @@ class TestRepository : Repo {
 
     override fun currentUserUsername() = username
 
-    override fun currentUserService() = service
+    override fun currentUserOffer() = offer
 
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         if (isSuccess) {
@@ -53,17 +53,17 @@ class TestRepository : Repo {
         }
     }
 
-    override fun saveUserService(newService: String, onError: () -> Unit) {
+    override fun saveUserOffer(newOffer: String, onError: () -> Unit) {
         if (isSuccess) {
-            service = newService
+            offer = newOffer
         } else {
             onError()
         }
     }
 
-    override fun deleteUserService(onError: () -> Unit) {
+    override fun deleteUserOffer(onError: () -> Unit) {
         if (isSuccess) {
-            service = ""
+            offer = ""
         } else {
             onError()
         }
@@ -94,7 +94,7 @@ class TestRepository : Repo {
     override fun stopGettingSecondUserUpdates() {
     }
 
-    override fun initSecondUser(uid: String, name: String) {
+    override fun initSecondUser(uid: String, name: String, userPicUrl: String) {
     }
 
     override fun saveFcmToken(token: String) {
