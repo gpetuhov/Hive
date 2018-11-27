@@ -50,6 +50,7 @@ class MessageService : FirebaseMessagingService() {
         if (messageData != null) {
             val senderUid = messageData["senderUid"] ?: ""
             val senderName = messageData["senderName"] ?: ""
+            val senderUserPicUrl = messageData["senderUserPicUrl"] ?: ""
             val messageText = messageData["messageText"] ?: ""
             val messageTimestamp = messageData["messageTimestamp"] ?: ""
 
@@ -62,7 +63,7 @@ class MessageService : FirebaseMessagingService() {
                     Timber.tag(TAG).d("Message timestamp not a number")
                 }
 
-                notificationManager.showNewMessageNotification(senderUid, senderName, messageText, messageTimestampValue)
+                notificationManager.showNewMessageNotification(senderUid, senderName, senderUserPicUrl, messageText, messageTimestampValue)
             }
         }
     }

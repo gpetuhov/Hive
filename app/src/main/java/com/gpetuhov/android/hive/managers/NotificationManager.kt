@@ -70,8 +70,8 @@ class NotificationManager {
 
     // Do not notify on every new message.
     // Buffer notifications and notify only once per period of time.
-    fun showNewMessageNotification(senderUid: String, senderName: String, messageText: String, messageTimestamp: Long) =
-        notificationSub.onNext(NotificationInfo(senderUid, senderName, messageText, messageTimestamp))
+    fun showNewMessageNotification(senderUid: String, senderName: String, senderUserPicUrl: String, messageText: String, messageTimestamp: Long) =
+        notificationSub.onNext(NotificationInfo(senderUid, senderName, senderUserPicUrl, messageText, messageTimestamp))
 
     // === Lifecycle calls ===
 
@@ -180,6 +180,8 @@ class NotificationManager {
             }
 
         } else {
+            // TODO: show sender user pic in notification
+
             // If the app is in background, show notification
             // and set unread messages flag.
             val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
@@ -223,6 +225,7 @@ class NotificationManager {
     private class NotificationInfo(
         val senderUid: String,
         val senderName: String,
+        val senderUserPicUrl: String,
         val messageText: String,
         val messageTimestamp: Long
     )
