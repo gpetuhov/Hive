@@ -26,6 +26,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import com.bumptech.glide.request.target.SizeReadyCallback
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.provider.Contacts
 import com.bumptech.glide.request.target.BaseTarget
 import com.bumptech.glide.Glide
@@ -34,6 +35,7 @@ import com.gpetuhov.android.hive.repository.Repository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 // Show notifications
 class NotificationManager {
@@ -41,6 +43,7 @@ class NotificationManager {
     companion object {
         const val LOCATION_SHARING_NOTIFICATION_ID = 1001
         const val NEW_MESSAGE_NOTIFICATION_ID = 1002
+        private const val TAG = "NotificationManager"
         private const val LOCATION_SHARING_CHANNEL = "location_sharing_channel"
         private const val NEW_MESSAGE_CHANNEL = "new_message_channel"
         private const val NOTIFICATION_BUFFER_TIME = 5000L
@@ -192,32 +195,45 @@ class NotificationManager {
             }
 
         } else {
-            // TODO: show sender user pic in notification
+            // If the app is in background, show notification
+            // and set unread messages flag.
+            repo.setUnreadMessagesExist(true)
 
             GlobalScope.launch {
                 val largeIconSize = Math.round(64 * context.resources.displayMetrics.density)
 
-                val requestOptions = RequestOptions
-                    .circleCropTransform()
-                    .override(largeIconSize)
-                    .placeholder(R.drawable.ic_account_circle)
-                    .error(R.drawable.ic_account_circle)
+                // If large icon is null, no icon will be displayed in the notification
+                var largeIcon: Bitmap? = null
 
-                // This must run in background, because it is blocking!
-                val bitmap = Glide.with(context)
-                    .asBitmap()
-                    .load(notificationInfo.senderUserPicUrl)
-                    .apply(requestOptions)
-                    .submit().get()
+                // Start loading user pic if user pic URL not empty
+                if (notificationInfo.senderUserPicUrl != "") {
+                    val requestOptions = RequestOptions
+                        .circleCropTransform()
+                        .override(largeIconSize)
+                        .placeholder(R.drawable.ic_account_circle)
+                        .error(R.drawable.ic_account_circle)
+
+                    try {
+                        // This must be wrapped inside try-catch because throws
+                        // exception if URL is wrong.
+                        // This must run in background, because it is blocking!
+                        largeIcon = Glide.with(context)
+                            .asBitmap()
+                            .load(notificationInfo.senderUserPicUrl)
+                            .apply(requestOptions)
+                            .submit().get()
+
+                    } catch (e: Exception) {
+                        Timber.tag(TAG).d(e)
+                    }
+                }
 
                 launch(Dispatchers.Main) {
-                    // If the app is in background, show notification
-                    // and set unread messages flag.
                     val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
                         .setContentTitle(notificationInfo.senderName)
                         .setContentText(notificationInfo.messageText)
                         .setSmallIcon(R.drawable.android_round)
-                        .setLargeIcon(bitmap)
+                        .setLargeIcon(largeIcon)
                         .setContentIntent(getMainActivityPendingIntent())
                         .setAutoCancel(true)
                         .setDefaults(NotificationCompat.DEFAULT_ALL)
@@ -225,42 +241,8 @@ class NotificationManager {
                         .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
 
                     notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
-
-                    repo.setUnreadMessagesExist(true)
                 }
             }
-
-
-
-
-//            Glide.with(context)
-//                .asBitmap()
-//                .load(notificationInfo.senderUserPicUrl)
-//                .apply(RequestOptions().override(largeIconSize).placeholder(R.drawable.ic_account_circle).error(R.drawable.ic_account_circle))
-//                .into(object : BaseTarget<Bitmap>() {
-//                    fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>) {
-//                        notificationBuilder.setLargeIcon(resource)
-//                        publish()
-//                    }
-//
-//                    override fun getSize(cb: SizeReadyCallback) {
-//                        cb.onSizeReady(largeIconSize, largeIconSize)
-//                    }
-//
-//                    override fun onLoadFailed(@Nullable errorDrawable: Drawable?) {
-//                        super.onLoadFailed(errorDrawable)
-//                        notificationBuilder.setLargeIcon((errorDrawable as BitmapDrawable).bitmap)
-//                        publish()
-//                    }
-//
-//                    override fun onLoadStarted(@Nullable placeholder: Drawable?) {
-//                        super.onLoadStarted(placeholder)
-//                        notificationBuilder.setLargeIcon((placeholder as BitmapDrawable).bitmap)
-//                        publish()
-//                    }
-//                })
-//
-
         }
     }
 
