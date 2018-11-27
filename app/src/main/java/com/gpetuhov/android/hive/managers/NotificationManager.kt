@@ -194,51 +194,64 @@ class NotificationManager {
             repo.setUnreadMessagesExist(true)
 
             GlobalScope.launch {
-                // Calculate large icon size in pixels
-                val largeIconSize = Math.round(NOTIFICATION_USER_PIC_SIZE * context.resources.displayMetrics.density)
-
-                // If large icon is null, no icon will be displayed in the notification
-                var largeIcon: Bitmap? = null
-
-                // Start loading user pic if user pic URL not empty
-                if (notificationInfo.senderUserPicUrl != "") {
-                    val requestOptions = RequestOptions
-                        .circleCropTransform()
-                        .override(largeIconSize)
-                        .placeholder(R.drawable.ic_account_circle)
-                        .error(R.drawable.ic_account_circle)
-
-                    try {
-                        // This must be wrapped inside try-catch because throws
-                        // exception if URL is wrong.
-                        // This must run in background, because it is blocking!
-                        largeIcon = Glide.with(context)
-                            .asBitmap()
-                            .load(notificationInfo.senderUserPicUrl)
-                            .apply(requestOptions)
-                            .submit().get()
-
-                    } catch (e: Exception) {
-                        Timber.tag(TAG).d(e)
-                    }
-                }
+                // Load user pic in background
+                val userPic = loadUserPic(notificationInfo.senderUserPicUrl)
 
                 launch(Dispatchers.Main) {
-                    val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
-                        .setContentTitle(notificationInfo.senderName)
-                        .setContentText(notificationInfo.messageText)
-                        .setSmallIcon(R.drawable.android_round)
-                        .setLargeIcon(largeIcon)
-                        .setContentIntent(getMainActivityPendingIntent())
-                        .setAutoCancel(true)
-                        .setDefaults(NotificationCompat.DEFAULT_ALL)
-                        .setPriority(NotificationCompat.PRIORITY_HIGH)
-                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-
-                    notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
+                    // Show notification on main thread
+                    showNotification(notificationInfo, userPic)
                 }
             }
         }
+    }
+
+    private fun loadUserPic(userPicUrl: String): Bitmap? {
+        // Calculate user pic size in pixels
+        val userPicSizePixels = Math.round(NOTIFICATION_USER_PIC_SIZE * context.resources.displayMetrics.density)
+
+        // User pic is shown in notification large icon.
+        // If null, no icon is shown.
+        var userPic: Bitmap? = null
+
+        // Start loading user pic if user pic URL not empty
+        if (userPicUrl != "") {
+            val requestOptions = RequestOptions
+                .circleCropTransform()
+                .override(userPicSizePixels)
+                .placeholder(R.drawable.ic_account_circle)
+                .error(R.drawable.ic_account_circle)
+
+            try {
+                // This must be wrapped inside try-catch because throws
+                // exception if URL is wrong.
+                // This must run in background, because it is blocking!
+                userPic = Glide.with(context)
+                    .asBitmap()
+                    .load(userPicUrl)
+                    .apply(requestOptions)
+                    .submit().get()
+
+            } catch (e: Exception) {
+                Timber.tag(TAG).d(e)
+            }
+        }
+
+        return userPic
+    }
+
+    private fun showNotification(notificationInfo: NotificationInfo, userPic: Bitmap?) {
+        val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
+            .setContentTitle(notificationInfo.senderName)
+            .setContentText(notificationInfo.messageText)
+            .setSmallIcon(R.drawable.android_round)
+            .setLargeIcon(userPic)
+            .setContentIntent(getMainActivityPendingIntent())
+            .setAutoCancel(true)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+
+        notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
     }
 
     private fun atLeastOneSenderNotInChatroom(senderUidList: MutableList<String>): Boolean {
