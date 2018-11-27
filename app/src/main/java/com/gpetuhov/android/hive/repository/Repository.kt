@@ -29,7 +29,7 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
-import java.lang.NullPointerException
+import com.google.firebase.firestore.DocumentSnapshot
 
 // Read and write data to remote storage (Firestore)
 class Repository(private val context: Context) : Repo {
@@ -203,7 +203,7 @@ class Repository(private val context: Context) : Repo {
 
             // Current user's name and email initially come from Firebase Auth,
             // so after successful sign in we must write them to Firestore.
-            saveUserNameEmailAndToken(user)
+            saveUserNameEmailPicAndToken(user)
         }
     }
 
@@ -592,7 +592,7 @@ class Repository(private val context: Context) : Repo {
 
     private fun secondUserUid() = secondUser.value?.uid ?: ""
 
-    private fun saveUserNameEmailAndToken(user: User) {
+    private fun saveUserNameEmailPicAndToken(user: User) {
         // First, get current FCM token
         FirebaseInstanceId.getInstance().instanceId
             .addOnCompleteListener { task ->
@@ -606,7 +606,43 @@ class Repository(private val context: Context) : Repo {
                 data[EMAIL_KEY] = user.email
                 data[FCM_TOKEN_KEY] = token
 
-                saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+                // If user from Firebase Auth has user pic
+                if (user.userPicUrl != "") {
+                    // Load existing user data from Firestore
+                    loadCurrentUser({ existingUser ->
+                        // If existing user data has no user pic,
+                        // update it with user pic from Firebase Auth
+                        if (existingUser.userPicUrl == "") data[USER_PIC_URL_KEY] = user.userPicUrl
+
+                        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+
+                    }, {
+                        // On existing user load error, just update name, email and token
+                        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+                    })
+
+                } else {
+                    saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+                }
+            }
+    }
+
+    private fun loadCurrentUser(onSuccess: (User) -> Unit, onError: () -> Unit) {
+        firestore.collection(USERS_COLLECTION).document(currentUserUid()).get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+
+                    if (document != null && document.exists()) {
+                        onSuccess(getUserFromDocumentSnapshot(document))
+
+                    } else {
+                        onError()
+                    }
+
+                } else {
+                    onError()
+                }
             }
     }
 

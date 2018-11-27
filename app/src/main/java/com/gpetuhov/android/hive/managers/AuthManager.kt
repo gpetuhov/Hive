@@ -47,6 +47,7 @@ open class AuthManager : Auth {
                 Timber.tag(TAG).d("User id = ${firebaseUser.uid}")
                 Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
                 Timber.tag(TAG).d("User email = ${firebaseUser.email}")
+                Timber.tag(TAG).d("User pic URL = ${firebaseUser.photoUrl}")
 
                 repo.onSignIn(convertFirebaseUser(firebaseUser))
                 onSignIn()
@@ -141,7 +142,7 @@ open class AuthManager : Auth {
             name = firebaseUser.displayName ?: Constants.Auth.DEFAULT_USER_NAME,
             username = "",
             email = firebaseUser.email ?: Constants.Auth.DEFAULT_USER_MAIL,
-            userPicUrl = "",
+            userPicUrl = firebaseUser.photoUrl?.toString() ?: "",
             service = "",
             isVisible = false,
             isOnline = false,
