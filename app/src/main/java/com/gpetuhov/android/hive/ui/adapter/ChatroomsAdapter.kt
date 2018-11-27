@@ -14,7 +14,7 @@ import com.gpetuhov.android.hive.util.updateUserPic
 class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<ChatroomsAdapter.ChatroomViewHolder>() {
 
     interface Callback {
-        fun openChat(secondUserUid: String, secondUserName: String, secondUserPic: String)
+        fun openChat(secondUserUid: String, secondUserName: String, secondUserPicUrl: String)
     }
 
     private var chatroomList = mutableListOf<Chatroom>()
