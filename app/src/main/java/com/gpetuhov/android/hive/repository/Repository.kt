@@ -68,7 +68,6 @@ class Repository(private val context: Context) : Repo {
         private const val CHATROOM_USER_NAME_2_KEY = "userName2"
         private const val CHATROOM_USER_PIC_URL_1_KEY = "userPicUrl1"
         private const val CHATROOM_USER_PIC_URL_2_KEY = "userPicUrl2"
-        private const val CHATROOM_LAST_MESSAGE_SENDER_UID_KEY = "lastMessageSenderUid"
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
         private const val CHATROOM_NEW_MESSAGE_COUNT_KEY = "newMessageCount"
@@ -830,15 +829,9 @@ class Repository(private val context: Context) : Repo {
         val secondUserPicUrl = if (userPicUrl1 != currentUserPicUrl()) userPicUrl1 else userPicUrl2
 
         return Chatroom(
-            chatroomUid = doc.id,
-            userUid1 = userUid1,
-            userUid2 = userUid2,
-            userName1 = userName1,
-            userName2 = userName2,
             secondUserUid = secondUserUid,
             secondUserName = secondUserName,
             secondUserPicUrl = secondUserPicUrl,
-            lastMessageSenderUid = doc.getString(CHATROOM_LAST_MESSAGE_SENDER_UID_KEY) ?: "",
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestampFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
             newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
