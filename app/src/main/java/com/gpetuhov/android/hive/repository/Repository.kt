@@ -29,6 +29,7 @@ import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
+import java.lang.NullPointerException
 
 // Read and write data to remote storage (Firestore)
 class Repository(private val context: Context) : Repo {
@@ -841,19 +842,24 @@ class Repository(private val context: Context) : Repo {
 
     // Resize selected image to take less space and traffic
     private fun resizeImage(selectedImageUri: Uri): ByteArray? {
-        // Resize image.
-        // This must run in background!
-        val bitmap = Glide.with(context)
-            .asBitmap()
-            .load(selectedImageUri)
-            .apply(RequestOptions().override(USER_PIC_SIZE).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-            .submit().get()
+        try {
+            // Resize image.
+            // This must run in background!
+            val bitmap = Glide.with(context)
+                .asBitmap()
+                .load(selectedImageUri)
+                .apply(RequestOptions().override(USER_PIC_SIZE).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                .submit().get()
 
-        // Compress into JPEG
-        val outStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
+            // Compress into JPEG
+            val outStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
 
-        return outStream.toByteArray()
+            return outStream.toByteArray()
+
+        } catch (e: Exception) {
+            return null
+        }
     }
 
     private fun getDownloadUrlAndUpdateUser(userPicRef: StorageReference, onError: () -> Unit) {
