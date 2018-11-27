@@ -22,6 +22,18 @@ import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import com.bumptech.glide.request.target.SizeReadyCallback
+import android.graphics.Bitmap
+import android.provider.Contacts
+import com.bumptech.glide.request.target.BaseTarget
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.gpetuhov.android.hive.repository.Repository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 // Show notifications
 class NotificationManager {
@@ -182,21 +194,73 @@ class NotificationManager {
         } else {
             // TODO: show sender user pic in notification
 
-            // If the app is in background, show notification
-            // and set unread messages flag.
-            val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
-                .setContentTitle(notificationInfo.senderName)
-                .setContentText(notificationInfo.messageText)
-                .setSmallIcon(R.drawable.android_round)
-                .setContentIntent(getMainActivityPendingIntent())
-                .setAutoCancel(true)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            GlobalScope.launch {
+                val largeIconSize = Math.round(64 * context.resources.displayMetrics.density)
 
-            notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
+                val requestOptions = RequestOptions
+                    .circleCropTransform()
+                    .override(largeIconSize)
+                    .placeholder(R.drawable.ic_account_circle)
+                    .error(R.drawable.ic_account_circle)
 
-            repo.setUnreadMessagesExist(true)
+                // This must run in background, because it is blocking!
+                val bitmap = Glide.with(context)
+                    .asBitmap()
+                    .load(notificationInfo.senderUserPicUrl)
+                    .apply(requestOptions)
+                    .submit().get()
+
+                launch(Dispatchers.Main) {
+                    // If the app is in background, show notification
+                    // and set unread messages flag.
+                    val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
+                        .setContentTitle(notificationInfo.senderName)
+                        .setContentText(notificationInfo.messageText)
+                        .setSmallIcon(R.drawable.android_round)
+                        .setLargeIcon(bitmap)
+                        .setContentIntent(getMainActivityPendingIntent())
+                        .setAutoCancel(true)
+                        .setDefaults(NotificationCompat.DEFAULT_ALL)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+
+                    notificationManager.notify(NEW_MESSAGE_NOTIFICATION_ID, builder.build())
+
+                    repo.setUnreadMessagesExist(true)
+                }
+            }
+
+
+
+
+//            Glide.with(context)
+//                .asBitmap()
+//                .load(notificationInfo.senderUserPicUrl)
+//                .apply(RequestOptions().override(largeIconSize).placeholder(R.drawable.ic_account_circle).error(R.drawable.ic_account_circle))
+//                .into(object : BaseTarget<Bitmap>() {
+//                    fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>) {
+//                        notificationBuilder.setLargeIcon(resource)
+//                        publish()
+//                    }
+//
+//                    override fun getSize(cb: SizeReadyCallback) {
+//                        cb.onSizeReady(largeIconSize, largeIconSize)
+//                    }
+//
+//                    override fun onLoadFailed(@Nullable errorDrawable: Drawable?) {
+//                        super.onLoadFailed(errorDrawable)
+//                        notificationBuilder.setLargeIcon((errorDrawable as BitmapDrawable).bitmap)
+//                        publish()
+//                    }
+//
+//                    override fun onLoadStarted(@Nullable placeholder: Drawable?) {
+//                        super.onLoadStarted(placeholder)
+//                        notificationBuilder.setLargeIcon((placeholder as BitmapDrawable).bitmap)
+//                        publish()
+//                    }
+//                })
+//
+
         }
     }
 
