@@ -37,7 +37,9 @@ class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<Ch
     override fun getItemCount() = chatroomList.size
 
     override fun onBindViewHolder(holder: ChatroomViewHolder, position: Int) {
-        holder.binding.chatroom = chatroomList[position]
+        val chatroom = chatroomList[position]
+        holder.bindUserPic(chatroom.secondUserPicUrl)
+        holder.binding.chatroom = chatroom
         holder.binding.executePendingBindings() // This line is important, it will force to load the variable in a custom view
     }
 
@@ -53,8 +55,8 @@ class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<Ch
 
     class ChatroomViewHolder(var binding: ItemChatroomBinding) : RecyclerView.ViewHolder(binding.root) {
 
-//        private var userPic = binding.root.findViewById<ImageView>(R.id.item_chatroom_user_pic)
+        private var userPic = binding.root.findViewById<ImageView>(R.id.item_chatroom_user_pic)
 
-//        fun bindUserPic(user: User) = updateUserPic(binding.root.context, user, userPic)
+        fun bindUserPic(userPicUrl: String) = updateUserPic(binding.root.context, userPicUrl, userPic)
     }
 }

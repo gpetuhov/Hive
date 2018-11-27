@@ -12,8 +12,8 @@ import com.gpetuhov.android.hive.domain.model.User
 fun updateUserPic(fragment: Fragment, user: User, destinationView: ImageView) =
     update(Glide.with(fragment), user.userPicUrl, destinationView)
 
-fun updateUserPic(context: Context, user: User, destinationView: ImageView) =
-    update(Glide.with(context), user.userPicUrl, destinationView)
+fun updateUserPic(context: Context, userPicUrl: String, destinationView: ImageView) =
+    update(Glide.with(context), userPicUrl, destinationView)
 
 private fun update(glideManager: RequestManager, userPicUrl: String, destinationView: ImageView) {
     val glideBuilder = if (userPicUrl != "") glideManager.load(userPicUrl) else glideManager.load(R.drawable.ic_account_circle)
