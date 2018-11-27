@@ -608,21 +608,18 @@ class Repository(private val context: Context) : Repo {
 
                 // If user from Firebase Auth has user pic
                 if (user.userPicUrl != "") {
-                    // Load existing user data from Firestore
-                    loadCurrentUser({ existingUser ->
-                        // If existing user data has no user pic,
-                        // update it with user pic from Firebase Auth
-                        if (existingUser.userPicUrl == "") data[USER_PIC_URL_KEY] = user.userPicUrl
+                    // Load existing user data from Firestore to see if it already has user pic set,
+                    // and update it with user pic from Auth if not.
+                    loadCurrentUser(
+                        // On load success, update data with user pic URL if needed
+                        { existingUser -> saveUserDataWithUserPicIfNeeded(data, user.userPicUrl, existingUser) },
 
-                        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
-
-                    }, {
-                        // On existing user load error, just update name, email and token
-                        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
-                    })
+                        // On load error, just update name, email and token
+                        { saveUserDataWithoutUserPic(data) }
+                    )
 
                 } else {
-                    saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+                    saveUserDataWithoutUserPic(data)
                 }
             }
     }
@@ -645,6 +642,17 @@ class Repository(private val context: Context) : Repo {
                 }
             }
     }
+
+    private fun saveUserDataWithUserPicIfNeeded(data: HashMap<String, Any>, userPicUrl: String, existingUser: User) {
+        // If existing user data has no user pic,
+        // update it with user pic from Firebase Auth
+        if (existingUser.userPicUrl == "") data[USER_PIC_URL_KEY] = userPicUrl
+
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+    }
+
+    private fun saveUserDataWithoutUserPic(data: HashMap<String, Any>) =
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
 
     private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
