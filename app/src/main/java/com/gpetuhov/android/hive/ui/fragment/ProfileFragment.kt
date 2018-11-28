@@ -46,7 +46,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
         initDialogs()
 
-        val view = inflater.inflate(R.layout.fragment_profile_2, container, false)
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         controller = ProfileListController(presenter)
 
