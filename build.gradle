@@ -9,6 +9,7 @@ buildscript {
     ext.materialDialogsVersion = '2.0.0-beta4'
     ext.moxyVersion = '1.5.5'
     ext.coroutinesVersion = '1.0.0'
+    ext.epoxy_version='3.0.0'
 
     repositories {
         google()
