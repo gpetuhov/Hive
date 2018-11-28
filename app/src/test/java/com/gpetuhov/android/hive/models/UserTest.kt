@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.models
 
 import com.google.android.gms.maps.model.LatLng
+import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
 import org.junit.Assert.assertEquals
@@ -40,5 +41,16 @@ class UserTest {
         assertEquals(user.name, user.getUsernameOrName())
         user.username = DUMMY_USERNAME
         assertEquals(DUMMY_USERNAME, user.getUsernameOrName())
+    }
+
+    @Test
+    fun hasActiveOffer() {
+        assertEquals(false, user.hasActiveOffer())
+
+        user.offerList.add(Offer("pizza", "tasty pizza", 10.0, false, false))
+        assertEquals(false, user.hasActiveOffer())
+
+        user.offerList.add(Offer("burger", "yummy burgers", 5.0, false, true))
+        assertEquals(true, user.hasActiveOffer())
     }
 }
