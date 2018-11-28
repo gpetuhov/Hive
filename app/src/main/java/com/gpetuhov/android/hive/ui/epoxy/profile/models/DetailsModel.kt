@@ -7,6 +7,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
+import com.gpetuhov.android.hive.util.updateUserPic
 
 @EpoxyModelClass(layout = R.layout.profile_details_view)
 abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
@@ -18,9 +19,7 @@ abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
 
     override fun bind(holder: DetailsHolder) {
         holder.username.text = username
-
-        // TODO: load user pic here
-
+        updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.name.text = name
         holder.email.text = email
     }
