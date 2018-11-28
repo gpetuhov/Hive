@@ -6,6 +6,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
 import javax.inject.Inject
@@ -32,6 +33,11 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
             name(user.name)
             email(user.email)
+        }
+
+        addOffer {
+            id("addOffer")
+            onClick { presenter.addOffer() }
         }
 
         settings {

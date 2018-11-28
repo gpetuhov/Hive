@@ -29,6 +29,7 @@
     <string name="change_user_picture_error">Error changing user picture</string>
     <string name="enter_username">Enter username</string>
     <string name="offers">Offers</string>
+    <string name="add_offer">Add offer</string>
     <string name="username">Username</string>
     <string name="username_save_error">Error updating username</string>
     <string name="offer">Offer</string>
