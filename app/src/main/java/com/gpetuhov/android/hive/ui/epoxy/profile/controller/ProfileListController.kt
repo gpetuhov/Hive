@@ -7,6 +7,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
+import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
 import javax.inject.Inject
 
 class ProfileListController(private val presenter: ProfileFragmentPresenter) : EpoxyController() {
@@ -31,6 +32,12 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
             name(user.name)
             email(user.email)
+        }
+
+        settings {
+            id("settings")
+            onSignOutClick { presenter.showSignOutDialog() }
+            onDeleteAccountClick { presenter.showDeleteUserDialog() }
         }
     }
 
