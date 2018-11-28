@@ -16,6 +16,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
     @Inject lateinit var context: Context
 
     private lateinit var user: User
+    private var signOutEnabled = true
+    private var deleteAccountEnabled = true
 
     init {
         HiveApp.appComponent.inject(this)
@@ -42,13 +44,27 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
         settings {
             id("settings")
+
             onSignOutClick { presenter.showSignOutDialog() }
+            signOutEnabled(signOutEnabled)
+
             onDeleteAccountClick { presenter.showDeleteUserDialog() }
+            deleteAccountEnabled(deleteAccountEnabled)
         }
     }
 
     fun changeUser(user: User) {
         this.user = user
+        requestModelBuild()
+    }
+
+    fun signOutEnabled(isEnabled: Boolean) {
+        signOutEnabled = isEnabled
+        requestModelBuild()
+    }
+
+    fun deleteAccountEnabled(isEnabled: Boolean) {
+        deleteAccountEnabled = isEnabled
         requestModelBuild()
     }
 }

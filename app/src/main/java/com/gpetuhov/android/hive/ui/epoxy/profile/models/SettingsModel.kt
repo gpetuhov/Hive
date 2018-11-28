@@ -10,12 +10,18 @@ import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 @EpoxyModelClass(layout = R.layout.profile_settings_view)
 abstract class SettingsModel : EpoxyModelWithHolder<SettingsHolder>() {
 
+    @EpoxyAttribute var signOutEnabled = true
     @EpoxyAttribute lateinit var onSignOutClick: () -> Unit
+
+    @EpoxyAttribute var deleteAccountEnabled = true
     @EpoxyAttribute lateinit var onDeleteAccountClick: () -> Unit
 
     override fun bind(holder: SettingsHolder) {
         holder.signOut.setOnClickListener { onSignOutClick() }
+        holder.signOut.isEnabled = signOutEnabled
+
         holder.deleteAccount.setOnClickListener { onDeleteAccountClick() }
+        holder.deleteAccount.isEnabled = deleteAccountEnabled
     }
 }
 

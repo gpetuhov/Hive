@@ -171,12 +171,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         dismissDeleteUserDialog()
     }
 
-    // TODO: fix this
-    private fun signOutButtonEnabled(isEnabled: Boolean) {
-//        signout_button.isEnabled = isEnabled
-    }
+    private fun signOutButtonEnabled(isEnabled: Boolean) = controller.signOutEnabled(isEnabled)
 
-    private fun deleteUserButtonEnabled(isEnabled: Boolean) {
-//        delete_user_button.isEnabled = isEnabled
-    }
+    private fun deleteUserButtonEnabled(isEnabled: Boolean) = controller.deleteAccountEnabled(isEnabled)
 }
