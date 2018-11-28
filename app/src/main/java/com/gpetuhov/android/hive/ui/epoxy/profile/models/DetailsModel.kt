@@ -14,7 +14,10 @@ abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
 
     @EpoxyAttribute lateinit var username: String
     @EpoxyAttribute lateinit var onUsernameClick: () -> Unit
+
     @EpoxyAttribute lateinit var userPicUrl: String
+    @EpoxyAttribute lateinit var onUserPicClick: () -> Unit
+
     @EpoxyAttribute lateinit var name: String
     @EpoxyAttribute lateinit var email: String
 
@@ -23,6 +26,7 @@ abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
         holder.username.setOnClickListener { onUsernameClick() }
 
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
+        holder.userPic.setOnClickListener { onUserPicClick() }
 
         holder.name.text = name
         holder.email.text = email
