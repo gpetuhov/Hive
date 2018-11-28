@@ -232,13 +232,6 @@ class Repository(private val context: Context) : Repo {
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
-    override fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[IS_VISIBLE_KEY] = newIsVisible
-
-        saveUserDataRemote(data, { /* Do nothing */ }, onError)
-    }
-
     override fun saveUserLocation(newLocation: LatLng) =
         geoFirestore.setLocation(currentUserUid(), GeoPoint(newLocation.latitude, newLocation.longitude))
 
@@ -657,10 +650,6 @@ class Repository(private val context: Context) : Repo {
 
     private fun startGettingCurrentUserUpdates() {
         currentUserListenerRegistration = startGettingUserUpdates(currentUserUid()) { user ->
-            // Turn off visibility if user is visible and has no offer
-            // (this is needed in case offer has been cleared on the backend)
-            if (!user.hasOffer && user.isVisible) saveUserVisibility(false) { /* Do nothing */ }
-
             // If current user is visible, start sharing location,
             // otherwise stop sharing.
             LocationManager.shareLocation(user.isVisible)

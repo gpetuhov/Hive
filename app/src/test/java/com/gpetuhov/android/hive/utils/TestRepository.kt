@@ -11,7 +11,6 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 class TestRepository : Repo {
     var isSuccess = false
     var username = ""
-    var isVisible = false
     var isOnline = false
     var messageText = ""
 
@@ -45,14 +44,6 @@ class TestRepository : Repo {
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         if (isSuccess) {
             username = newUsername
-        } else {
-            onError()
-        }
-    }
-
-    override fun saveUserVisibility(newIsVisible: Boolean, onError: () -> Unit) {
-        if (isSuccess) {
-            isVisible = newIsVisible
         } else {
             onError()
         }
