@@ -12,13 +12,6 @@ class Constants {
         const val DUMMY_USERNAME = "DummyUsername"
         const val SAVE_USERNAME_ERROR = "Save username error"
 
-        const val DUMMY_OFFER = "Dummy offer"
-        const val SAVE_OFFER_ERROR = "Save offer error"
-
-        const val DELETE_OFFER_ERROR = "Delete offer error"
-
-        const val SAVE_VISIBILITY_ERROR = "Save visibility error"
-
         const val DUMMY_MESSAGE_TEXT = "Dummy message text"
         const val SEND_MESSAGE_ERROR = "Send message error"
     }
