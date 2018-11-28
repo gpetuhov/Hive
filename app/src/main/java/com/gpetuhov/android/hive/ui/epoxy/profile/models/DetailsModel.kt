@@ -13,13 +13,17 @@ import com.gpetuhov.android.hive.util.updateUserPic
 abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
 
     @EpoxyAttribute lateinit var username: String
+    @EpoxyAttribute lateinit var onUsernameClick: () -> Unit
     @EpoxyAttribute lateinit var userPicUrl: String
     @EpoxyAttribute lateinit var name: String
     @EpoxyAttribute lateinit var email: String
 
     override fun bind(holder: DetailsHolder) {
         holder.username.text = username
+        holder.username.setOnClickListener { onUsernameClick() }
+
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
+
         holder.name.text = name
         holder.email.text = email
     }

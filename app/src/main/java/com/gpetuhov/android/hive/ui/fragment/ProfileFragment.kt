@@ -31,7 +31,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
 
-    private val controller = ProfileListController()
+    private lateinit var controller: ProfileListController
 
     private var usernameDialog: MaterialDialog? = null
     private var offerDialog: MaterialDialog? = null
@@ -48,6 +48,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         initDialogs()
 
         val view = inflater.inflate(R.layout.fragment_profile_2, container, false)
+
+        controller = ProfileListController(presenter)
 
         val profileRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.profile_recycler_view)
         profileRecyclerView.adapter = controller.adapter
