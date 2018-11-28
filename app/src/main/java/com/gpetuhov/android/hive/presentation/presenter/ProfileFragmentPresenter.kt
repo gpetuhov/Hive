@@ -22,7 +22,6 @@ class ProfileFragmentPresenter :
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
     SaveUsernameInteractor.Callback,
-    SaveOfferInteractor.Callback,
     DeleteOfferInteractor.Callback,
     SaveVisibilityInteractor.Callback {
 
@@ -32,15 +31,11 @@ class ProfileFragmentPresenter :
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
-    private val saveOfferInteractor = SaveOfferInteractor(this)
     private val deleteOfferInteractor = DeleteOfferInteractor(this)
     private val saveVisibilityInteractor = SaveVisibilityInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
-
-    // Keeps current text entered in offer dialog
-    private var tempOffer = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -65,10 +60,6 @@ class ProfileFragmentPresenter :
     // === SaveUsernameInteractor.Callback ===
 
     override fun onSaveUsernameError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveOfferInteractor.Callback ===
-
-    override fun onSaveOfferError(errorMessage: String) = showToast(errorMessage)
 
     // === DeleteOfferInteractor.Callback ===
 
@@ -135,27 +126,6 @@ class ProfileFragmentPresenter :
     fun dismissUsernameDialog() {
         tempUsername = ""
         viewState.dismissUsernameDialog()
-    }
-
-    // --- Change offer ---
-
-    fun showOfferDialog() = viewState.showOfferDialog()
-
-    // Prefill offer dialog with currently entered text or current offer
-    fun getOfferPrefill() = if (tempOffer != "") tempOffer else repo.currentUserOffer()
-
-    fun updateTempOffer(newTempOffer: String) {
-        tempOffer = newTempOffer
-    }
-
-    fun saveOffer() {
-        saveOfferInteractor.saveOffer(tempOffer)
-        dismissOfferDialog()
-    }
-
-    fun dismissOfferDialog() {
-        tempOffer = ""
-        viewState.dismissOfferDialog()
     }
 
     // --- Delete offer ---

@@ -34,7 +34,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private lateinit var controller: ProfileListController
 
     private var usernameDialog: MaterialDialog? = null
-    private var offerDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
 
@@ -108,16 +107,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun dismissUsernameDialog() = usernameDialog?.dismiss() ?: Unit
 
-    override fun showOfferDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = offerDialog?.getInputField()
-        editText?.setText(presenter.getOfferPrefill())
-        editText?.setSelection(editText.text.length)
-        offerDialog?.show()
-    }
-
-    override fun dismissOfferDialog() = offerDialog?.dismiss() ?: Unit
-
     override fun chooseUserPic() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = Constants.FileTypes.IMAGE
@@ -134,7 +123,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun initDialogs() {
         initUsernameDialog()
-        initServiceDialog()
         initSignOutDialog()
         initDeleteUserDialog()
     }
@@ -150,20 +138,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 }
                 .positiveButton { presenter.saveUsername() }
                 .negativeButton { presenter.dismissUsernameDialog() }
-        }
-    }
-
-    private fun initServiceDialog() {
-        if (context != null) {
-            offerDialog = MaterialDialog(context!!)
-                .title(R.string.offer)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(hintRes = R.string.enter_offer, waitForPositiveButton = false) { dialog, text ->
-                    presenter.updateTempOffer(text.toString())
-                }
-                .positiveButton { presenter.saveOffer() }
-                .negativeButton { presenter.dismissOfferDialog() }
         }
     }
 
@@ -193,7 +167,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun dismissDialogs() {
         dismissUsernameDialog()
-        dismissOfferDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
     }
