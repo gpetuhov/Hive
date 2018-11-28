@@ -14,7 +14,6 @@ interface TestAppComponent : AppComponent {
     fun inject(deleteUserInteractorTest: DeleteUserInteractorTest)
     fun inject(signOutInteractorTest: SignOutInteractorTest)
     fun inject(saveUsernameInteractorTest: SaveUsernameInteractorTest)
-    fun inject(saveVisibilityInteractorTest: SaveVisibilityInteractorTest)
     fun inject(saveOnlineInteractorTest: SaveOnlineInteractorTest)
     fun inject(searchInteractorTest: SearchInteractorTest)
     fun inject(sendMessageInteractorTest: SendMessageInteractorTest)

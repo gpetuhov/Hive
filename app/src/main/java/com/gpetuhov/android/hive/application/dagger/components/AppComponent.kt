@@ -50,7 +50,6 @@ interface AppComponent {
     fun inject(deleteUserInteractor: DeleteUserInteractor)
     fun inject(signOutInteractor: SignOutInteractor)
     fun inject(saveUsernameInteractor: SaveUsernameInteractor)
-    fun inject(saveVisibilityInteractor: SaveVisibilityInteractor)
     fun inject(saveOnlineInteractor: SaveOnlineInteractor)
     fun inject(searchInteractor: SearchInteractor)
     fun inject(sendMessageInteractor: SendMessageInteractor)

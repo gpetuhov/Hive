@@ -21,8 +21,7 @@ class ProfileFragmentPresenter :
     MvpPresenter<ProfileFragmentView>(),
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
-    SaveUsernameInteractor.Callback,
-    SaveVisibilityInteractor.Callback {
+    SaveUsernameInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -30,7 +29,6 @@ class ProfileFragmentPresenter :
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
-    private val saveVisibilityInteractor = SaveVisibilityInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -58,10 +56,6 @@ class ProfileFragmentPresenter :
     // === SaveUsernameInteractor.Callback ===
 
     override fun onSaveUsernameError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveVisibilityInteractor.Callback ===
-
-    override fun onSaveVisibilityError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -121,10 +115,6 @@ class ProfileFragmentPresenter :
         tempUsername = ""
         viewState.dismissUsernameDialog()
     }
-
-    // --- Change visibility ---
-
-    fun saveVisibility(newIsVisible: Boolean) = saveVisibilityInteractor.saveVisibility(newIsVisible)
 
     // --- Change user pic ---
 
