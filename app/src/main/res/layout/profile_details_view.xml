@@ -14,8 +14,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:drawableRight="@drawable/ic_edit"
-            android:drawableEnd="@drawable/ic_edit"
             style="@style/titleTextStyle"
             tools:text="username"/>
 
