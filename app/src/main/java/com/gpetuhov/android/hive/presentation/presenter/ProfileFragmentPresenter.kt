@@ -22,7 +22,6 @@ class ProfileFragmentPresenter :
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
     SaveUsernameInteractor.Callback,
-    DeleteOfferInteractor.Callback,
     SaveVisibilityInteractor.Callback {
 
     @Inject lateinit var repo: Repo
@@ -31,7 +30,6 @@ class ProfileFragmentPresenter :
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
-    private val deleteOfferInteractor = DeleteOfferInteractor(this)
     private val saveVisibilityInteractor = SaveVisibilityInteractor(this)
 
     // Keeps current text entered in username dialog
@@ -60,10 +58,6 @@ class ProfileFragmentPresenter :
     // === SaveUsernameInteractor.Callback ===
 
     override fun onSaveUsernameError(errorMessage: String) = showToast(errorMessage)
-
-    // === DeleteOfferInteractor.Callback ===
-
-    override fun onDeleteOfferError(errorMessage: String) = showToast(errorMessage)
 
     // === SaveVisibilityInteractor.Callback ===
 
@@ -127,10 +121,6 @@ class ProfileFragmentPresenter :
         tempUsername = ""
         viewState.dismissUsernameDialog()
     }
-
-    // --- Delete offer ---
-
-    fun deleteOffer() = deleteOfferInteractor.execute()
 
     // --- Change visibility ---
 
