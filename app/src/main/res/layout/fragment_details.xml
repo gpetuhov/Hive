@@ -76,7 +76,6 @@
                     android:id="@+id/details_offer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{user.offer}"
                     style="@style/basicTextStyle"
                     tools:text="service"
                     app:layout_constraintStart_toStartOf="parent"

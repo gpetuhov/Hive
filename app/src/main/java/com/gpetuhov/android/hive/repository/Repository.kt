@@ -556,7 +556,6 @@ class Repository(private val context: Context) : Repo {
             username = "",
             email = Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = "",
-            offer = "",
             isOnline = false,
             location = Constants.Map.DEFAULT_LOCATION
         )
@@ -648,9 +647,9 @@ class Repository(private val context: Context) : Repo {
 
     private fun startGettingCurrentUserUpdates() {
         currentUserListenerRegistration = startGettingUserUpdates(currentUserUid()) { user ->
-            // If current user has offer, start sharing location,
+            // If current user has active offer, start sharing location,
             // otherwise stop sharing.
-            LocationManager.shareLocation(user.hasOffer)
+            LocationManager.shareLocation(user.hasActiveOffer())
 
             currentUser.value = user
         }
@@ -697,7 +696,6 @@ class Repository(private val context: Context) : Repo {
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = doc.getString(USER_PIC_URL_KEY) ?: "",
-            offer = doc.getString(OFFER_KEY) ?: "",
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )
@@ -750,9 +748,9 @@ class Repository(private val context: Context) : Repo {
 
     private fun checkConditions(user: User): Boolean = checkQueryText(user)
 
+    // TODO: search in offer titles and descriptions here
     private fun checkQueryText(user: User): Boolean {
-        return user.offer.contains(queryText, true)
-                || user.name.contains(queryText, true)
+        return user.name.contains(queryText, true)
                 || user.username.contains(queryText, true)
     }
 
