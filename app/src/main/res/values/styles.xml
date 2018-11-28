@@ -35,6 +35,13 @@
         <item name="android:textSize">@dimen/small_text_size</item>
     </style>
 
+    <!-- Title text style -->
+    <style name="titleTextStyle">
+        <item name="android:textColor">@color/md_grey_600</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Map marker text style for online users -->
     <style name="greenTextStyle">
         <item name="android:textColor">@color/md_green_600</item>
