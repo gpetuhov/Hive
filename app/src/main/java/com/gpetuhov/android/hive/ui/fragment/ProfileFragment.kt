@@ -6,16 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
+import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.databinding.FragmentProfileBinding
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
@@ -24,8 +22,6 @@ import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListControll
 import com.gpetuhov.android.hive.util.*
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.fragment_profile_2.*
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
@@ -35,15 +31,12 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
 
-    private lateinit var userPic: ImageView
-
-    val controller = ProfileListController()
+    private val controller = ProfileListController()
 
     private var usernameDialog: MaterialDialog? = null
     private var offerDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
-    private var binding: FragmentProfileBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -56,33 +49,15 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
         val view = inflater.inflate(R.layout.fragment_profile_2, container, false)
 
-//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile_2, container, false)
-//        binding?.presenter = presenter
-
-//        userPic = binding?.root?.findViewById(R.id.user_pic) ?: ImageView(context)
+        val profileRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.profile_recycler_view)
+        profileRecyclerView.adapter = controller.adapter
 
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
-
-        // Every time current user data changes, update binding object with new data
-        viewModel.currentUser.observe(this, Observer<User> { user ->
-//            binding?.user = user
-//            updateUserPic(this, user, userPic)
-        })
-
-        return view
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        profile_recycler_view.adapter = controller.adapter
-
-        val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
-
-        // Every time current user data changes, update UI with new data
         viewModel.currentUser.observe(this, Observer<User> { user ->
             controller.changeUser(user)
         })
+
+        return view
     }
 
     override fun onDestroyView() {
@@ -221,11 +196,12 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         dismissDeleteUserDialog()
     }
 
+    // TODO: fix this
     private fun signOutButtonEnabled(isEnabled: Boolean) {
-        signout_button.isEnabled = isEnabled
+//        signout_button.isEnabled = isEnabled
     }
 
     private fun deleteUserButtonEnabled(isEnabled: Boolean) {
-        delete_user_button.isEnabled = isEnabled
+//        delete_user_button.isEnabled = isEnabled
     }
 }
