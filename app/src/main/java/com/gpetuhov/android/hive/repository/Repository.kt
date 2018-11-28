@@ -224,28 +224,11 @@ class Repository(private val context: Context) : Repo {
 
     override fun currentUserUsername() = currentUser.value?.username ?: ""
 
-    override fun currentUserOffer() = currentUser.value?.offer ?: ""
-
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
 
         // Save user name.
-        saveUserDataRemote(data, { /* Do nothing */ }, onError)
-    }
-
-    override fun saveUserOffer(newOffer: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[OFFER_KEY] = newOffer
-
-        saveUserDataRemote(data, { /* Do nothing */ }, onError)
-    }
-
-    override fun deleteUserOffer(onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[OFFER_KEY] = ""
-        data[IS_VISIBLE_KEY] = false
-
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
