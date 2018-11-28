@@ -11,7 +11,6 @@ data class User(
     var email: String,
     var userPicUrl: String,
     var offer: String,
-    var isVisible: Boolean,
     var isOnline: Boolean,
     var location: LatLng
 ) {

@@ -50,7 +50,6 @@ class Repository(private val context: Context) : Repo {
         private const val EMAIL_KEY = "email"
         private const val USER_PIC_URL_KEY = "userPicUrl"
         private const val OFFER_KEY = "offer"
-        private const val IS_VISIBLE_KEY = "is_visible"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
         private const val FCM_TOKEN_KEY = "fcm_token"
@@ -558,7 +557,6 @@ class Repository(private val context: Context) : Repo {
             email = Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = "",
             offer = "",
-            isVisible = false,
             isOnline = false,
             location = Constants.Map.DEFAULT_LOCATION
         )
@@ -650,9 +648,9 @@ class Repository(private val context: Context) : Repo {
 
     private fun startGettingCurrentUserUpdates() {
         currentUserListenerRegistration = startGettingUserUpdates(currentUserUid()) { user ->
-            // If current user is visible, start sharing location,
+            // If current user has offer, start sharing location,
             // otherwise stop sharing.
-            LocationManager.shareLocation(user.isVisible)
+            LocationManager.shareLocation(user.hasOffer)
 
             currentUser.value = user
         }
@@ -700,7 +698,6 @@ class Repository(private val context: Context) : Repo {
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = doc.getString(USER_PIC_URL_KEY) ?: "",
             offer = doc.getString(OFFER_KEY) ?: "",
-            isVisible = doc.getBoolean(IS_VISIBLE_KEY) ?: false,
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )
@@ -751,7 +748,7 @@ class Repository(private val context: Context) : Repo {
         }
     }
 
-    private fun checkConditions(user: User): Boolean = user.isVisible && checkQueryText(user)
+    private fun checkConditions(user: User): Boolean = checkQueryText(user)
 
     private fun checkQueryText(user: User): Boolean {
         return user.offer.contains(queryText, true)
