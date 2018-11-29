@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.DocumentSnapshot
 import com.gpetuhov.android.hive.domain.model.Offer
+import kotlin.collections.HashMap
 
 // Read and write data to remote storage (Firestore)
 class Repository(private val context: Context) : Repo {
@@ -51,6 +52,7 @@ class Repository(private val context: Context) : Repo {
         private const val EMAIL_KEY = "email"
         private const val DESCRIPTION_KEY = "description"
         private const val USER_PIC_URL_KEY = "userPicUrl"
+        private const val OFFER_LIST_KEY = "offerList"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
         private const val FCM_TOKEN_KEY = "fcm_token"
@@ -555,11 +557,29 @@ class Repository(private val context: Context) : Repo {
 
     // === Offer ===
 
+    override fun currentUserOfferList() = currentUser.value?.offerList ?: mutableListOf()
+
     override fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized && offer != null) {
-            // TODO: implement this
+            // TODO: implement updating existing offer
 
-            onSuccess()
+            val offerList = currentUserOfferList()
+            offerList.add(offer)
+
+            val offerListForSaving = mutableListOf<HashMap<String, Any>>()
+
+            for (offerItem in offerList) {
+                val offerForSaving = HashMap<String, Any>()
+                offerForSaving[OFFER_TITLE_KEY] = offerItem.title
+                offerForSaving[OFFER_DESCRIPTION_KEY] = offerItem.description
+
+                offerListForSaving.add(offerForSaving)
+            }
+
+            val data = HashMap<String, Any>()
+            data[OFFER_LIST_KEY] = offerListForSaving
+
+            saveUserDataRemote(data, onSuccess, onError)
 
         } else {
             onError()

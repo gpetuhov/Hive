@@ -66,5 +66,6 @@ interface Repo {
     fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit)
 
     // Offer
+    fun currentUserOfferList(): MutableList<Offer>
     fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit)
 }
