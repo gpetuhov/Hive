@@ -26,6 +26,8 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveUsernameErrorMessage(): String = getString(R.string.username_save_error)
 
+    override fun getSaveDescriptionErrorMessage(): String = getString(R.string.description_save_error)
+
     override fun getSendMessageErrorMessage(): String = getString(R.string.send_message_error)
 
     override fun getChangeUserPicErrorMessage(): String = getString(R.string.change_user_picture_error)

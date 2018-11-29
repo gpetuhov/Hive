@@ -34,6 +34,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     private lateinit var controller: ProfileListController
 
     private var usernameDialog: MaterialDialog? = null
+    private var descriptionDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
 
@@ -107,6 +108,16 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     override fun dismissUsernameDialog() = usernameDialog?.dismiss() ?: Unit
 
+    override fun showDescriptionDialog() {
+        // Prefill dialog with text provided by presenter
+        val editText = descriptionDialog?.getInputField()
+        editText?.setText(presenter.getDescriptionPrefill())
+        editText?.setSelection(editText.text.length)
+        descriptionDialog?.show()
+    }
+
+    override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
+
     override fun chooseUserPic() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = Constants.FileTypes.IMAGE
@@ -123,6 +134,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun initDialogs() {
         initUsernameDialog()
+        initDescriptionDialog()
         initSignOutDialog()
         initDeleteUserDialog()
     }
@@ -138,6 +150,20 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
                 }
                 .positiveButton { presenter.saveUsername() }
                 .negativeButton { presenter.dismissUsernameDialog() }
+        }
+    }
+
+    private fun initDescriptionDialog() {
+        if (context != null) {
+            descriptionDialog = MaterialDialog(context!!)
+                .title(R.string.about_me)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(hintRes = R.string.enter_description, waitForPositiveButton = false) { dialog, text ->
+                    presenter.updateTempDescription(text.toString())
+                }
+                .positiveButton { presenter.saveDescription() }
+                .negativeButton { presenter.dismissDescriptionDialog() }
         }
     }
 
@@ -167,6 +193,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
 
     private fun dismissDialogs() {
         dismissUsernameDialog()
+        dismissDescriptionDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
     }

@@ -48,8 +48,8 @@ class Repository(private val context: Context) : Repo {
         private const val NAME_KEY = "name"
         private const val USERNAME_KEY = "username"
         private const val EMAIL_KEY = "email"
+        private const val DESCRIPTION_KEY = "description"
         private const val USER_PIC_URL_KEY = "userPicUrl"
-        private const val OFFER_KEY = "offer"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
         private const val FCM_TOKEN_KEY = "fcm_token"
@@ -223,11 +223,21 @@ class Repository(private val context: Context) : Repo {
 
     override fun currentUserUsername() = currentUser.value?.username ?: ""
 
+    override fun currentUserDescription() = currentUser.value?.description ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
 
         // Save user name.
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserDescription(newDescription: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[DESCRIPTION_KEY] = newDescription
+
+        // Save user description.
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
@@ -697,7 +707,7 @@ class Repository(private val context: Context) : Repo {
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = doc.getString(USER_PIC_URL_KEY) ?: "",
-            description = "",
+            description = doc.getString(DESCRIPTION_KEY) ?: "",
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )

@@ -34,6 +34,7 @@
     <string name="add_offer">Add offer</string>
     <string name="username">Username</string>
     <string name="username_save_error">Error updating username</string>
+    <string name="description_save_error">Error updating user description</string>
     <string name="offer">Offer</string>
     <string name="settings">Settings</string>
     <string name="sign_out">Sign out</string>

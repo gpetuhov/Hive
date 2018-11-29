@@ -7,6 +7,7 @@ interface ResultMessages {
     fun getDeleteUserErrorMessage(): String
     fun getDeleteUserNetworkErrorMessage(): String
     fun getSaveUsernameErrorMessage(): String
+    fun getSaveDescriptionErrorMessage(): String
     fun getSendMessageErrorMessage(): String
     fun getChangeUserPicErrorMessage(): String
 }

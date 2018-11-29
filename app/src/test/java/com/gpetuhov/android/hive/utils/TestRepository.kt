@@ -41,6 +41,8 @@ class TestRepository : Repo {
 
     override fun currentUserUsername() = username
 
+    override fun currentUserDescription() = ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         if (isSuccess) {
             username = newUsername

@@ -46,6 +46,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissUsernameDialog()
 
+    // === Change description ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showDescriptionDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissDescriptionDialog()
+
     // === Change user pic ===
 
     @StateStrategyType(SkipStrategy::class)

@@ -21,7 +21,8 @@ class ProfileFragmentPresenter :
     MvpPresenter<ProfileFragmentView>(),
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
-    SaveUsernameInteractor.Callback {
+    SaveUsernameInteractor.Callback,
+    SaveDescriptionInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -29,9 +30,13 @@ class ProfileFragmentPresenter :
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
+    private val saveDescriptionInteractor = SaveDescriptionInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
+
+    // Keeps current text entered in description dialog
+    private var tempDescription = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -56,6 +61,10 @@ class ProfileFragmentPresenter :
     // === SaveUsernameInteractor.Callback ===
 
     override fun onSaveUsernameError(errorMessage: String) = showToast(errorMessage)
+
+    // === SaveDescriptionInteractor.Callback ===
+
+    override fun onSaveDescriptionError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -116,16 +125,32 @@ class ProfileFragmentPresenter :
         viewState.dismissUsernameDialog()
     }
 
+    // --- Change description ---
+
+    fun showDescriptionDialog() = viewState.showDescriptionDialog()
+
+    // Prefill description dialog with currently entered text or current description
+    fun getDescriptionPrefill() = if (tempDescription != "") tempDescription else repo.currentUserDescription()
+
+    fun updateTempDescription(newTempDescription: String) {
+        tempDescription = newTempDescription
+    }
+
+    fun saveDescription() {
+        saveDescriptionInteractor.saveDescription(tempDescription)
+        dismissDescriptionDialog()
+    }
+
+    fun dismissDescriptionDialog() {
+        tempDescription = ""
+        viewState.dismissDescriptionDialog()
+    }
+
     // --- Change user pic ---
 
     fun chooseUserPic() = viewState.chooseUserPic()
 
     fun changeUserPic(selectedImageUri: Uri) = repo.changeUserPic(selectedImageUri) { showToast(resultMessages.getChangeUserPicErrorMessage()) }
-
-    // --- Change description ---
-
-    // TODO: implement this
-    fun showDescriptionDialog() = showToast("Change description")
 
     // --- Add offer ---
 
