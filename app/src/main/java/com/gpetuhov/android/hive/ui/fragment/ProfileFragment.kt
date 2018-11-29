@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
@@ -125,6 +126,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
         startActivityForResult(Intent.createChooser(intent, getString(R.string.complete_action_using)), RC_PHOTO_PICKER)
         // Result will be passed into onActivityResult()
+    }
+
+    override fun addOffer() {
+        val action = ProfileFragmentDirections.actionNavigationProfileToUpdateOfferFragment()
+        findNavController().navigate(action)
     }
 
     override fun showToast(message: String) {

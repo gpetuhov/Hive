@@ -154,8 +154,7 @@ class ProfileFragmentPresenter :
 
     // --- Add offer ---
 
-    // TODO: implement this
-    fun addOffer() = showToast("Add offer")
+    fun addOffer() = viewState.addOffer()
 
     // === Private methods ===
 

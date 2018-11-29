@@ -59,6 +59,11 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun chooseUserPic()
 
+    // === Add offer ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun addOffer()
+
     // === Common ===
 
     // We don't need to keep this command in the queue,
