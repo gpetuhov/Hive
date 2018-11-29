@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.model.Message
+import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 
 // At domain layer (business logic layer) we have only interface of the repo.
@@ -63,4 +64,7 @@ interface Repo {
 
     // User pic
     fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit)
+
+    // Offer
+    fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit)
 }

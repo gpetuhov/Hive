@@ -2,10 +2,14 @@ package com.gpetuhov.android.hive.presentation.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import com.gpetuhov.android.hive.domain.interactor.SaveOfferInteractor
+import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
 
 @InjectViewState
-class UpdateOfferFragmentPresenter : MvpPresenter<UpdateOfferFragmentView>() {
+class UpdateOfferFragmentPresenter :
+    MvpPresenter<UpdateOfferFragmentView>(),
+    SaveOfferInteractor.Callback {
 
     var title = ""
     var description = ""
@@ -13,8 +17,15 @@ class UpdateOfferFragmentPresenter : MvpPresenter<UpdateOfferFragmentView>() {
     private var tempTitle = ""
     private var tempDescription = ""
 
-    // === Public methods ===
+    private var saveOfferInteractor = SaveOfferInteractor(this)
 
+    // === SaveOfferInteractor.Callback ===
+
+    override fun onSaveOfferSuccess() = viewState.navigateUp()
+
+    override fun onSaveOfferError(errorMessage: String) = showToast(errorMessage)
+
+    // === Public methods ===
     // --- Change username ---
 
     fun showTitleDialog() = viewState.showTitleDialog()
@@ -64,8 +75,7 @@ class UpdateOfferFragmentPresenter : MvpPresenter<UpdateOfferFragmentView>() {
 
     // --- Save offer ---
 
-    // TODO: implement this
-    fun saveOffer() = showToast("Save offer")
+    fun saveOffer() = saveOfferInteractor.saveOffer(Offer(title, description, 0.0, false, true))
 
     // --- Navigate up ---
 

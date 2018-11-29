@@ -32,5 +32,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getChangeUserPicErrorMessage(): String = getString(R.string.change_user_picture_error)
 
+    override fun getSaveOfferErrorMessage(): String = context.getString(R.string.save_offer_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

@@ -56,6 +56,7 @@ interface AppComponent {
     fun inject(saveOnlineInteractor: SaveOnlineInteractor)
     fun inject(searchInteractor: SearchInteractor)
     fun inject(sendMessageInteractor: SendMessageInteractor)
+    fun inject(saveOfferInteractor: SaveOfferInteractor)
 
     fun inject(resultMessagesProvider: ResultMessagesProvider)
 

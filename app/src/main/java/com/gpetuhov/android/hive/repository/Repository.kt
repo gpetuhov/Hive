@@ -30,6 +30,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.DocumentSnapshot
+import com.gpetuhov.android.hive.domain.model.Offer
 
 // Read and write data to remote storage (Firestore)
 class Repository(private val context: Context) : Repo {
@@ -53,6 +54,10 @@ class Repository(private val context: Context) : Repo {
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
         private const val FCM_TOKEN_KEY = "fcm_token"
+
+        // Offer
+        private const val OFFER_TITLE_KEY = "offer_title"
+        private const val OFFER_DESCRIPTION_KEY = "offer_description"
 
         // Message
         private const val SENDER_UID_KEY = "sender_uid"
@@ -542,6 +547,19 @@ class Repository(private val context: Context) : Repo {
                     onError()
                 }
             }
+
+        } else {
+            onError()
+        }
+    }
+
+    // === Offer ===
+
+    override fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isAuthorized && offer != null) {
+            // TODO: implement this
+
+            onSuccess()
 
         } else {
             onError()
