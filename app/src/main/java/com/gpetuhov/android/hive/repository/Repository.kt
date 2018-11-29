@@ -768,12 +768,14 @@ class Repository(private val context: Context) : Repo {
     }
 
     private fun getOfferListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Offer> {
-        val offerMapList = doc.get(OFFER_LIST_KEY) as MutableList<HashMap<String, Any>>?
+        val offerSnapshotList = doc.get(OFFER_LIST_KEY) as List<*>?
 
         val offerList = mutableListOf<Offer>()
 
-        if (offerMapList != null) {
-            for (offerMap in offerMapList) {
+        if (offerSnapshotList != null) {
+            for (offerSnapshot in offerSnapshotList) {
+                val offerMap = offerSnapshot as HashMap<*, *>
+
                 val offerTitle = offerMap[OFFER_TITLE_KEY] as String?
                 val offerDescription = offerMap[OFFER_DESCRIPTION_KEY] as String?
 
