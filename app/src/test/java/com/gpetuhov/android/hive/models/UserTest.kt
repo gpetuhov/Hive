@@ -45,6 +45,13 @@ class UserTest {
     }
 
     @Test
+    fun emptyDescription() {
+        assertEquals(false, user.hasDescription)
+        user.description = "Dummy description"
+        assertEquals(true, user.hasDescription)
+    }
+
+    @Test
     fun hasActiveOffer() {
         assertEquals(false, user.hasActiveOffer())
 
