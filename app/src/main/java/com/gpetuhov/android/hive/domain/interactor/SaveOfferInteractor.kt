@@ -24,11 +24,19 @@ class SaveOfferInteractor(private val callback: Callback) : Interactor {
 
     // Do not call this directly!
     override fun execute() {
-        repo.saveOffer(
-            offer,
-            { callback.onSaveOfferSuccess() },
-            { callback.onSaveOfferError(resultMessages.getSaveOfferErrorMessage()) }
-        )
+        if (offer?.title == null || offer?.title == "") {
+            callback.onSaveOfferError("Please, add offer title")
+
+        } else if (offer?.description == null || offer?.description == "") {
+            callback.onSaveOfferError("Please, add offer description")
+
+        } else {
+            repo.saveOffer(
+                offer,
+                { callback.onSaveOfferSuccess() },
+                { callback.onSaveOfferError(resultMessages.getSaveOfferErrorMessage()) }
+            )
+        }
     }
 
     // Call this method to save offer

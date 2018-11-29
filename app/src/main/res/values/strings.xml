@@ -82,6 +82,8 @@
     <string name="offer_description">Offer description</string>
     <string name="add_description">Add description</string>
     <string name="save_offer_error">Error saving offer</string>
+    <string name="title_empty_error">Please, add offer title</string>
+    <string name="description_empty_error">Please, add offer description</string>
 
     <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>

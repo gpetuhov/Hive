@@ -11,4 +11,6 @@ interface ResultMessages {
     fun getSendMessageErrorMessage(): String
     fun getChangeUserPicErrorMessage(): String
     fun getSaveOfferErrorMessage(): String
+    fun getOfferEmptyTitleErrorMessage(): String
+    fun getOfferEmptyDescriptionErrorMessage(): String
 }
