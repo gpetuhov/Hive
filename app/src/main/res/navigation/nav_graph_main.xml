@@ -14,8 +14,8 @@
             android:label="MapFragment"
             tools:layout="@layout/fragment_map" >
         <action
-                android:id="@+id/action_navigation_search_to_details_fragment"
-                app:destination="@id/details_fragment"
+                android:id="@+id/action_navigation_search_to_user_details_fragment"
+                app:destination="@id/user_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
@@ -41,12 +41,12 @@
     <!-- Secondary fragments -->
 
     <fragment
-            android:id="@+id/details_fragment"
+            android:id="@+id/user_details_fragment"
             android:name="com.gpetuhov.android.hive.ui.fragment.UserDetailsFragment"
-            android:label="DetailsFragment"
-            tools:layout="@layout/fragment_details">
+            android:label="UserDetailsFragment"
+            tools:layout="@layout/fragment_user_details">
         <action
-                android:id="@+id/action_details_fragment_to_chat_fragment"
+                android:id="@+id/action_user_details_fragment_to_chat_fragment"
                 app:destination="@id/chat_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
@@ -61,8 +61,8 @@
             android:label="ChatFragment"
             tools:layout="@layout/fragment_chat">
         <action
-                android:id="@+id/action_chat_fragment_to_details_fragment"
-                app:destination="@id/details_fragment"
+                android:id="@+id/action_chat_fragment_to_user_details_fragment"
+                app:destination="@id/user_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
         <argument

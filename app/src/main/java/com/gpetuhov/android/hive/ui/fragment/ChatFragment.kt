@@ -120,7 +120,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         if (isOpenFromDetails) {
             findNavController().popBackStack()
         } else {
-            val action = ChatFragmentDirections.actionChatFragmentToDetailsFragment(true)
+            val action = ChatFragmentDirections.actionChatFragmentToUserDetailsFragment(true)
             findNavController().navigate(action)
         }
 

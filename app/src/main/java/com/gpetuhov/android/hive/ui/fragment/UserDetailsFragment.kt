@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -12,7 +11,6 @@ import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.databinding.FragmentDetailsBinding
 import com.gpetuhov.android.hive.databinding.FragmentUserDetailsBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
@@ -84,7 +82,7 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
         if (isOpenFromChat) {
             findNavController().popBackStack()
         } else {
-            val action = UserDetailsFragmentDirections.actionDetailsFragmentToChatFragment(true)
+            val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToChatFragment(true)
             findNavController().navigate(action)
         }
     }

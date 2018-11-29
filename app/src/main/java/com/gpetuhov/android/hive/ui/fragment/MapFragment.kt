@@ -151,7 +151,7 @@ class MapFragment : MvpAppCompatFragment(), MapFragmentView {
     }
 
     override fun showDetails(uid: String) {
-        val action = MapFragmentDirections.actionNavigationSearchToDetailsFragment(false)
+        val action = MapFragmentDirections.actionNavigationSearchToUserDetailsFragment(false)
         findNavController().navigate(action)
     }
 
