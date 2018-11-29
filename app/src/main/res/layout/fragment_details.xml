@@ -5,7 +5,7 @@
         tools:context=".ui.fragment.UserDetailsFragment">
 
     <data>
-        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.DetailsFragmentPresenter"/>
+        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter"/>
         <variable name="user" type="com.gpetuhov.android.hive.domain.model.User"/>
     </data>
 

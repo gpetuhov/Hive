@@ -43,7 +43,7 @@ interface AppComponent {
 
     fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
     fun inject(mapFragmentPresenter: MapFragmentPresenter)
-    fun inject(detailsFragmentPresenter: DetailsFragmentPresenter)
+    fun inject(userDetailsFragmentPresenter: UserDetailsFragmentPresenter)
     fun inject(chatFragmentPresenter: ChatFragmentPresenter)
     fun inject(chatroomsFragmentPresenter: ChatroomsFragmentPresenter)
 

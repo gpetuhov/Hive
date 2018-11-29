@@ -8,7 +8,7 @@ import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class DetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
+class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
 
     @Inject lateinit var repo: Repo
 
