@@ -14,7 +14,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentDetailsBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.DetailsFragmentPresenter
-import com.gpetuhov.android.hive.presentation.view.DetailsFragmentView
+import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
 import com.gpetuhov.android.hive.ui.viewmodel.DetailsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
@@ -23,7 +23,7 @@ import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.gpetuhov.android.hive.util.updateUserPic
 
 // Shows user details on map marker click
-class UserDetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
+class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: DetailsFragmentPresenter
 
@@ -67,7 +67,7 @@ class UserDetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
         presenter.onPause()
     }
 
-    // === DetailsFragmentView ===
+    // === UserDetailsFragmentView ===
 
     override fun navigateUp() {
         findNavController().navigateUp()

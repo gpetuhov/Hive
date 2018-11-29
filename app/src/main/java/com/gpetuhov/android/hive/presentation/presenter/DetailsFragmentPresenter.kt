@@ -4,11 +4,11 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.presentation.view.DetailsFragmentView
+import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class DetailsFragmentPresenter : MvpPresenter<DetailsFragmentView>() {
+class DetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
 
     @Inject lateinit var repo: Repo
 
