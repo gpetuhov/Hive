@@ -11,11 +11,17 @@ import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetailsHolder>() {
 
     @EpoxyAttribute lateinit var title: String
+    @EpoxyAttribute lateinit var onTitleClick: () -> Unit
+
     @EpoxyAttribute lateinit var description: String
+    @EpoxyAttribute lateinit var onDescriptionClick: () -> Unit
 
     override fun bind(holder: UpdateOfferDetailsHolder) {
         holder.title.text = title
+        holder.title.setOnClickListener { onTitleClick() }
+
         holder.description.text = description
+        holder.description.setOnClickListener { onDescriptionClick() }
     }
 }
 

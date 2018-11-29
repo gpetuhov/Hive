@@ -32,8 +32,12 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
 
         updateOfferDetails {
             id("update_offer_details")
+
             title(if (presenter.title != "") presenter.title else context.getString(R.string.add_title))
+            onTitleClick { presenter.showTitleDialog() }
+
             description(if (presenter.description != "") presenter.description else context.getString(R.string.add_description))
+            onDescriptionClick { presenter.showDescriptionDialog() }
         }
     }
 }

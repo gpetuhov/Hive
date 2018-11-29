@@ -77,7 +77,9 @@
     <string name="close_offer_update">Close offer update</string>
     <string name="delete_offer">Delete offer</string>
     <string name="save_offer">Save offer</string>
+    <string name="offer_title">Offer title</string>
     <string name="add_title">Add title</string>
+    <string name="offer_description">Offer description</string>
     <string name="add_description">Add description</string>
 
     <!-- NotificationManager -->
