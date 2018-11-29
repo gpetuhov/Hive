@@ -19,13 +19,19 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             username(user?.getUsernameOrName() ?: "")
         }
 
-        userDetailsDescription {
-            id("user_details_description")
-            description(user?.description ?: "")
+        val hasDescription = user?.hasDescription ?: false
+        if (hasDescription) {
+            userDetailsDescription {
+                id("user_details_description")
+                description(user?.description ?: "")
+            }
         }
 
-        userDetailsOfferHeader {
-            id("user_details_offer_header")
+        val hasActiveOffer = user?.hasActiveOffer() ?: false
+        if (hasActiveOffer) {
+            userDetailsOfferHeader {
+                id("user_details_offer_header")
+            }
         }
     }
 
