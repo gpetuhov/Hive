@@ -13,10 +13,12 @@ abstract class AddOfferModel : EpoxyModelWithHolder<AddOfferHolder>() {
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     override fun bind(holder: AddOfferHolder) {
-        holder.rootView.setOnClickListener { onClick() }
+        holder.addOfferButton.setOnClickListener { onClick() }
+        holder.addOfferTextView.setOnClickListener { onClick() }
     }
 }
 
 class AddOfferHolder : KotlinHolder() {
-    val rootView by bind<View>(R.id.profile_add_offer)
+    val addOfferButton by bind<View>(R.id.profile_add_offer_button)
+    val addOfferTextView by bind<View>(R.id.profile_add_offer_textview)
 }
