@@ -61,6 +61,7 @@
     <string name="about">About</string>
     <string name="close_details">Close details</string>
     <string name="chat">Chat</string>
+    <string name="no_active_offer">No active offers</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
