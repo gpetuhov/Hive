@@ -7,6 +7,12 @@ import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
 @InjectViewState
 class UpdateOfferFragmentPresenter : MvpPresenter<UpdateOfferFragmentView>() {
 
+    var title = ""
+    var description = ""
+
+    private var tempTitle = ""
+    private var tempDescription = ""
+
     // === Public methods ===
 
     // TODO: implement this

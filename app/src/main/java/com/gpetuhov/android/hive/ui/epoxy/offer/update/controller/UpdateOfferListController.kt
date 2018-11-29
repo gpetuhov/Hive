@@ -1,11 +1,21 @@
 package com.gpetuhov.android.hive.ui.epoxy.offer.update.controller
 
+import android.content.Context
 import com.airbnb.epoxy.EpoxyController
+import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
+import javax.inject.Inject
 
 class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresenter) : EpoxyController() {
+
+    @Inject lateinit var context: Context
+
+    init {
+        HiveApp.appComponent.inject(this)
+    }
 
     override fun buildModels() {
         updateOfferHeader {
@@ -22,10 +32,8 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
 
         updateOfferDetails {
             id("update_offer_details")
-
-            // TODO: implement logic here
-            title("Add title")
-            description("Add description")
+            title(if (presenter.title != "") presenter.title else context.getString(R.string.add_title))
+            description(if (presenter.description != "") presenter.description else context.getString(R.string.add_description))
         }
     }
 }
