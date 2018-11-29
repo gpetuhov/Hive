@@ -43,7 +43,7 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
 
         val view = inflater.inflate(R.layout.fragment_user_details, container, false)
 
-        controller = UserDetailsListController()
+        controller = UserDetailsListController(presenter)
 
         val userDetailsRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.user_details_recycler_view)
         userDetailsRecyclerView.adapter = controller.adapter
