@@ -35,6 +35,9 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
         val updateOfferRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.update_offer_recycler_view)
         updateOfferRecyclerView.adapter = controller.adapter
 
+        // TODO: remove this
+        controller.requestModelBuild()
+
         return view
     }
 }
