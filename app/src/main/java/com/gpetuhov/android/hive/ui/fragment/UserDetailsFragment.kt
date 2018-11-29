@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -12,6 +13,7 @@ import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentDetailsBinding
+import com.gpetuhov.android.hive.databinding.FragmentUserDetailsBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
@@ -28,10 +30,8 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
     @InjectPresenter lateinit var presenter: UserDetailsFragmentPresenter
 
     private lateinit var controller: UserDetailsListController
+    private var binding: FragmentUserDetailsBinding? = null
 
-    private lateinit var userPic: ImageView
-
-    private var binding: FragmentDetailsBinding? = null
     private var isOpenFromChat = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -41,17 +41,13 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
         hideToolbar()
         showBottomNavigationView()
 
-        val view = inflater.inflate(R.layout.fragment_user_details, container, false)
-
         controller = UserDetailsListController(presenter)
 
-        val userDetailsRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.user_details_recycler_view)
-        userDetailsRecyclerView.adapter = controller.adapter
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_details, container, false)
+        binding?.presenter = presenter
 
-//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
-//        binding?.presenter = presenter
-//
-//        userPic = binding?.root?.findViewById(R.id.details_user_pic) ?: ImageView(context)
+        val userDetailsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.user_details_recycler_view)
+        userDetailsRecyclerView?.adapter = controller.adapter
 
         isOpenFromChat = UserDetailsFragmentArgs.fromBundle(arguments).isOpenFromChat
         presenter.isOpenFromChat = isOpenFromChat
@@ -60,11 +56,9 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
             controller.changeUser(user)
-//            binding?.user = user
-//            updateUserPic(this, user, userPic)
         })
 
-        return view
+        return binding?.root
     }
 
     override fun onResume() {
