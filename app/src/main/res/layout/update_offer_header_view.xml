@@ -39,6 +39,7 @@
             android:src="@drawable/ic_delete"
             android:background="@android:color/transparent"
             android:contentDescription="@string/delete_offer"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/update_offer_save_button"

@@ -12,7 +12,11 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
             id("update_offer_header")
 
             onBackButtonClick { presenter.navigateUp() }
+
+            // TODO: show/hide depending on new offer or offer edit
+            deleteButtonVisible(false)
             onDeleteButtonClick { presenter.showDeleteOfferDialog() }
+
             onSaveButtonClick { presenter.saveOffer() }
         }
 

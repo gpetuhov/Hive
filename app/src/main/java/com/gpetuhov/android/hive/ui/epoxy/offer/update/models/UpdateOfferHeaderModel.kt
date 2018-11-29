@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.offer.update.models
 
+import android.view.View
 import android.widget.ImageView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -11,12 +12,18 @@ import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 abstract class UpdateOfferHeaderModel : EpoxyModelWithHolder<UpdateOfferHeaderHolder>() {
 
     @EpoxyAttribute lateinit var onBackButtonClick: () -> Unit
+
+    @EpoxyAttribute var deleteButtonVisible = false
     @EpoxyAttribute lateinit var onDeleteButtonClick: () -> Unit
+
     @EpoxyAttribute lateinit var onSaveButtonClick: () -> Unit
 
     override fun bind(holder: UpdateOfferHeaderHolder) {
         holder.backButton.setOnClickListener { onBackButtonClick() }
+
+        holder.deleteButton.visibility = if (deleteButtonVisible) View.VISIBLE else View.GONE
         holder.deleteButton.setOnClickListener { onDeleteButtonClick() }
+
         holder.saveButton.setOnClickListener { onSaveButtonClick() }
     }
 }
