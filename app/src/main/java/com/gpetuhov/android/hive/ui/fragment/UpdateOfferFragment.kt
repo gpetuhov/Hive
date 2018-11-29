@@ -40,6 +40,8 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
         initDialogs()
 
+        // TODO: get offer title and description from args and init presenter here
+
         val view = inflater.inflate(R.layout.fragment_update_offer, container, false)
 
         controller = UpdateOfferListController(presenter)
@@ -47,8 +49,7 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
         val updateOfferRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.update_offer_recycler_view)
         updateOfferRecyclerView.adapter = controller?.adapter
 
-        // TODO: remove this
-        controller?.requestModelBuild()
+        updateUI()
 
         return view
     }
@@ -84,9 +85,7 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
     override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
 
-    override fun updateUI() {
-        controller?.requestModelBuild()
-    }
+    override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {
         findNavController().navigateUp()
