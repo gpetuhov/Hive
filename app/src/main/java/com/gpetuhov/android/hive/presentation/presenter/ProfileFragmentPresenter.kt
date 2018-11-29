@@ -122,6 +122,11 @@ class ProfileFragmentPresenter :
 
     fun changeUserPic(selectedImageUri: Uri) = repo.changeUserPic(selectedImageUri) { showToast(resultMessages.getChangeUserPicErrorMessage()) }
 
+    // --- Change description ---
+
+    // TODO: implement this
+    fun showDescriptionDialog() = showToast("Change description")
+
     // --- Add offer ---
 
     // TODO: implement this

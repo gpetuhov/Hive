@@ -10,11 +10,13 @@ data class User(
     var username: String,
     var email: String,
     var userPicUrl: String,
+    var description: String,
     var isOnline: Boolean,
     var location: LatLng
 ) {
     var offerList = mutableListOf<Offer>()
     val hasUsername get() = username != ""
+    val hasDescription get() = description != ""
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 

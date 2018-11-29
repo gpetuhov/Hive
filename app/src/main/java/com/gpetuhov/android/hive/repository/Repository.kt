@@ -556,6 +556,7 @@ class Repository(private val context: Context) : Repo {
             username = "",
             email = Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = "",
+            description = "",
             isOnline = false,
             location = Constants.Map.DEFAULT_LOCATION
         )
@@ -696,6 +697,7 @@ class Repository(private val context: Context) : Repo {
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = doc.getString(USER_PIC_URL_KEY) ?: "",
+            description = "",
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )

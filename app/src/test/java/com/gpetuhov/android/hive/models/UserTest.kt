@@ -24,6 +24,7 @@ class UserTest {
             username = "",
             email = "mail@mail.com",
             userPicUrl = "",
+            description = "",
             isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )

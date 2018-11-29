@@ -28,7 +28,6 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
             id("details")
 
             val hasUsername = user?.hasUsername ?: false
-
             username(if (hasUsername) user?.username ?: "" else context.getString(R.string.enter_username))
             onUsernameClick { presenter.showUsernameDialog() }
 
@@ -37,6 +36,10 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
             name(user?.name ?: "")
             email(user?.email ?: "")
+
+            val hasDescription = user?.hasDescription ?: false
+            description(if (hasDescription) user?.description ?: "" else context.getString(R.string.enter_description))
+            onDescriptionClick { presenter.showDescriptionDialog() }
         }
 
         addOffer {

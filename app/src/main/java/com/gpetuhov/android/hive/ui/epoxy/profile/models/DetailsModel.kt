@@ -21,6 +21,9 @@ abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
     @EpoxyAttribute lateinit var name: String
     @EpoxyAttribute lateinit var email: String
 
+    @EpoxyAttribute lateinit var description: String
+    @EpoxyAttribute lateinit var onDescriptionClick: () -> Unit
+
     override fun bind(holder: DetailsHolder) {
         holder.username.text = username
         holder.username.setOnClickListener { onUsernameClick() }
@@ -30,6 +33,9 @@ abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
 
         holder.name.text = name
         holder.email.text = email
+
+        holder.description.text = description
+        holder.description.setOnClickListener { onDescriptionClick() }
     }
 }
 
@@ -38,4 +44,5 @@ class DetailsHolder : KotlinHolder() {
     val userPic by bind<ImageView>(R.id.user_pic)
     val name by bind<TextView>(R.id.user_name_textview)
     val email by bind<TextView>(R.id.user_email_textview)
+    val description by bind<TextView>(R.id.user_description_textview)
 }

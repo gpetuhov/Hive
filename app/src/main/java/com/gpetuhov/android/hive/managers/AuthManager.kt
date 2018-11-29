@@ -143,6 +143,7 @@ open class AuthManager : Auth {
             username = "",
             email = firebaseUser.email ?: Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = firebaseUser.photoUrl?.toString() ?: "",
+            description = "",
             isOnline = false,
             location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
         )

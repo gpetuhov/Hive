@@ -68,8 +68,28 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:text="@string/about_me"
+            style="@style/titleTextStyle"/>
+
+    <TextView
+            android:id="@+id/user_description_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="Description"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/md_grey_300"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/offers"
-            style="@style/titleTextStyle"
-            tools:text="Offers"/>
+            style="@style/titleTextStyle"/>
 
 </LinearLayout>

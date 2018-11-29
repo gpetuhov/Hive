@@ -28,6 +28,8 @@
     <string name="complete_action_using">Complete action using</string>
     <string name="change_user_picture_error">Error changing user picture</string>
     <string name="enter_username">Enter username</string>
+    <string name="about_me">About me</string>
+    <string name="enter_description">Tell a few words about yourself</string>
     <string name="offers">Offers</string>
     <string name="add_offer">Add offer</string>
     <string name="username">Username</string>
