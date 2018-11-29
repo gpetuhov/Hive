@@ -73,6 +73,11 @@
     <!-- ChatroomsFragment -->
     <string name="no_messages">You have no messages yet</string>
 
+    <!-- UpdateOfferFragment -->
+    <string name="close_offer_update">Close offer update</string>
+    <string name="delete_offer">Delete offer</string>
+    <string name="save_offer">Save offer</string>
+
     <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>
     <string name="location_sharing_channel_name">Location sharing channel</string>
