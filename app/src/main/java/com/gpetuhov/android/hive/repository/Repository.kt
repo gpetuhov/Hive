@@ -739,7 +739,7 @@ class Repository(private val context: Context) : Repo {
             getUserLocationFromDocumentSnapshot(doc)
         }
 
-        return User(
+        val user = User(
             uid = doc.id,
             name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
             username = doc.getString(USERNAME_KEY) ?: "",
@@ -749,6 +749,10 @@ class Repository(private val context: Context) : Repo {
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location
         )
+
+        user.offerList = getOfferListFromDocumentSnapshot(doc)
+
+        return user
     }
 
     private fun getUserLocationFromGeoPoint(geoPoint: GeoPoint) = LatLng(geoPoint.latitude, geoPoint.longitude)
@@ -761,6 +765,26 @@ class Repository(private val context: Context) : Repo {
         } else {
             Constants.Map.DEFAULT_LOCATION
         }
+    }
+
+    private fun getOfferListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Offer> {
+        val offerMapList = doc.get(OFFER_LIST_KEY) as MutableList<HashMap<String, Any>>?
+
+        val offerList = mutableListOf<Offer>()
+
+        if (offerMapList != null) {
+            for (offerMap in offerMapList) {
+                val offerTitle = offerMap[OFFER_TITLE_KEY] as String?
+                val offerDescription = offerMap[OFFER_DESCRIPTION_KEY] as String?
+
+                if (offerTitle != null && offerTitle != "" && offerDescription != null && offerDescription != "") {
+                    val offer = Offer(offerTitle, offerDescription, 0.0, false, true)
+                    offerList.add(offer)
+                }
+            }
+        }
+
+        return offerList
     }
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""
