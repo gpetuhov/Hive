@@ -5,27 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentDetailsBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
+import com.gpetuhov.android.hive.ui.epoxy.user.controller.UserDetailsListController
 import com.gpetuhov.android.hive.ui.viewmodel.DetailsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
-import com.gpetuhov.android.hive.util.updateUserPic
 
 // Shows user details on map marker click
 class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: UserDetailsFragmentPresenter
+
+    private lateinit var controller: UserDetailsListController
 
     private lateinit var userPic: ImageView
 
@@ -39,10 +41,17 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
         hideToolbar()
         showBottomNavigationView()
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
-        binding?.presenter = presenter
+        val view = inflater.inflate(R.layout.fragment_user_details, container, false)
 
-        userPic = binding?.root?.findViewById(R.id.details_user_pic) ?: ImageView(context)
+        controller = UserDetailsListController()
+
+        val userDetailsRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.user_details_recycler_view)
+        userDetailsRecyclerView.adapter = controller.adapter
+
+//        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
+//        binding?.presenter = presenter
+//
+//        userPic = binding?.root?.findViewById(R.id.details_user_pic) ?: ImageView(context)
 
         isOpenFromChat = UserDetailsFragmentArgs.fromBundle(arguments).isOpenFromChat
         presenter.isOpenFromChat = isOpenFromChat
@@ -50,11 +59,12 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
         val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
-            binding?.user = user
-            updateUserPic(this, user, userPic)
+            controller.changeUser(user)
+//            binding?.user = user
+//            updateUserPic(this, user, userPic)
         })
 
-        return binding?.root
+        return view
     }
 
     override fun onResume() {

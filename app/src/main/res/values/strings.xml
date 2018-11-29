@@ -58,6 +58,7 @@
     <string name="offline">offline</string>
 
     <!-- UserDetailsFragment -->
+    <string name="about">About</string>
     <string name="close_details">Close details</string>
     <string name="chat">Chat</string>
 
