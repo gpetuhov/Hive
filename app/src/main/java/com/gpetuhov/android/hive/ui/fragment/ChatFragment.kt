@@ -97,7 +97,7 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
         getActivityRootView()?.removeOnLayoutChangeListener(presenter.layoutChangeListener)
     }
 
-    // === ChatFragmentView
+    // === ChatFragmentView ===
 
     override fun sendButtonEnabled(isEnabled: Boolean) {
         message_send_button.isEnabled = isEnabled

@@ -12,7 +12,7 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
             id("update_offer_header")
 
             // TODO: implement this !!!
-            onBackButtonClick {  }
+            onBackButtonClick { presenter.navigateUp() }
             onDeleteButtonClick {  }
             onSaveButtonClick {  }
         }

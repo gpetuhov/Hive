@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferListController
+import com.gpetuhov.android.hive.util.hideSoftKeyboard
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
@@ -39,5 +41,12 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
         controller.requestModelBuild()
 
         return view
+    }
+
+    // === UpdateOfferFragmentView ===
+
+    override fun navigateUp() {
+        findNavController().navigateUp()
+        hideSoftKeyboard()
     }
 }
