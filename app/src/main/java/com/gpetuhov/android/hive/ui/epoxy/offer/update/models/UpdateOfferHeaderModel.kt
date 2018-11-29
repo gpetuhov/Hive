@@ -16,8 +16,8 @@ abstract class UpdateOfferHeaderModel : EpoxyModelWithHolder<UpdateOfferHeaderHo
 
     override fun bind(holder: UpdateOfferHeaderHolder) {
         holder.backButton.setOnClickListener { onBackButtonClick() }
-        holder.deleteButton.setOnClickListener { onDeleteButtonClick }
-        holder.saveButton.setOnClickListener { onSaveButtonClick }
+        holder.deleteButton.setOnClickListener { onDeleteButtonClick() }
+        holder.saveButton.setOnClickListener { onSaveButtonClick() }
     }
 }
 

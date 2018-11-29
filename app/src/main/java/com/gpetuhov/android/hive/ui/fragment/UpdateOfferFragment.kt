@@ -16,6 +16,7 @@ import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.pawegio.kandroid.toast
 
 class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
@@ -44,6 +45,10 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
     }
 
     // === UpdateOfferFragmentView ===
+
+    override fun showToast(message: String) {
+        toast(message)
+    }
 
     override fun navigateUp() {
         findNavController().navigateUp()

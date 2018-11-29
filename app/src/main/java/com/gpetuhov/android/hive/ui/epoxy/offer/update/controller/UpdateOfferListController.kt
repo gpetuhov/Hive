@@ -11,10 +11,9 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
         updateOfferHeader {
             id("update_offer_header")
 
-            // TODO: implement this !!!
             onBackButtonClick { presenter.navigateUp() }
-            onDeleteButtonClick {  }
-            onSaveButtonClick {  }
+            onDeleteButtonClick { presenter.showDeleteOfferDialog() }
+            onSaveButtonClick { presenter.saveOffer() }
         }
 
         updateOfferDetails {

@@ -9,6 +9,18 @@ class UpdateOfferFragmentPresenter : MvpPresenter<UpdateOfferFragmentView>() {
 
     // === Public methods ===
 
+    // TODO: implement this
+    fun showDeleteOfferDialog() = showToast("Delete offer")
+
+    // TODO: implement this
+    fun saveOffer() = showToast("Save offer")
+
     // TODO: show "Are you sure?" dialog here
     fun navigateUp() = viewState.navigateUp()
+
+    // === Private methods ===
+
+    private fun showToast(message: String) {
+        viewState.showToast(message)
+    }
 }
