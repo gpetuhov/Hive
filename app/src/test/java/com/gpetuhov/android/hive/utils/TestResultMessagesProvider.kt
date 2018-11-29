@@ -15,6 +15,8 @@ class TestResultMessagesProvider : ResultMessages {
 
     override fun getSaveUsernameErrorMessage() = Constants.SAVE_USERNAME_ERROR
 
+    override fun getSaveDescriptionErrorMessage() = Constants.SAVE_DESCRIPTION_ERROR
+
     override fun getSendMessageErrorMessage(): String = Constants.SEND_MESSAGE_ERROR
 
     override fun getChangeUserPicErrorMessage(): String = ""

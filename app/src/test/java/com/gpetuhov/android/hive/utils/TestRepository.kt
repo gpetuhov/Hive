@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 class TestRepository : Repo {
     var isSuccess = false
     var username = ""
+    var description = ""
     var isOnline = false
     var messageText = ""
 
@@ -46,6 +47,14 @@ class TestRepository : Repo {
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         if (isSuccess) {
             username = newUsername
+        } else {
+            onError()
+        }
+    }
+
+    override fun saveUserDescription(newDescription: String, onError: () -> Unit) {
+        if (isSuccess) {
+            description = newDescription
         } else {
             onError()
         }
