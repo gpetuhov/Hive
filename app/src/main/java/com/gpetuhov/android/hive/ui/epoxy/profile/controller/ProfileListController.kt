@@ -15,7 +15,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
     @Inject lateinit var context: Context
 
-    private lateinit var user: User
+    private var user: User? = null
     private var signOutEnabled = true
     private var deleteAccountEnabled = true
 
@@ -27,14 +27,16 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
         details {
             id("details")
 
-            username(if (user.hasUsername) user.username else context.getString(R.string.enter_username))
+            val hasUsername = user?.hasUsername ?: false
+
+            username(if (hasUsername) user?.username ?: "" else context.getString(R.string.enter_username))
             onUsernameClick { presenter.showUsernameDialog() }
 
-            userPicUrl(user.userPicUrl)
+            userPicUrl(user?.userPicUrl ?: "")
             onUserPicClick { presenter.chooseUserPic() }
 
-            name(user.name)
-            email(user.email)
+            name(user?.name ?: "")
+            email(user?.email ?: "")
         }
 
         addOffer {
