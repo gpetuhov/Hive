@@ -6,7 +6,7 @@ buildscript {
     ext.navigationVersion = '1.0.0-alpha07'
     ext.playServicesVersion = '16.0.0'
     ext.daggerVersion = '2.11'
-    ext.materialDialogsVersion = '2.0.0-beta4'
+    ext.materialDialogsVersion = '2.0.0-rc2'
     ext.moxyVersion = '1.5.5'
     ext.coroutinesVersion = '1.0.0'
     ext.epoxy_version='3.0.0'
