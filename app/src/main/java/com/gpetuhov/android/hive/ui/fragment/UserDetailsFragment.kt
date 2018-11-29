@@ -23,7 +23,7 @@ import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.gpetuhov.android.hive.util.updateUserPic
 
 // Shows user details on map marker click
-class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
+class UserDetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: DetailsFragmentPresenter
 
@@ -44,7 +44,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
 
         userPic = binding?.root?.findViewById(R.id.details_user_pic) ?: ImageView(context)
 
-        isOpenFromChat = DetailsFragmentArgs.fromBundle(arguments).isOpenFromChat
+        isOpenFromChat = UserDetailsFragmentArgs.fromBundle(arguments).isOpenFromChat
         presenter.isOpenFromChat = isOpenFromChat
 
         val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
@@ -80,7 +80,7 @@ class DetailsFragment : MvpAppCompatFragment(), DetailsFragmentView {
         if (isOpenFromChat) {
             findNavController().popBackStack()
         } else {
-            val action = DetailsFragmentDirections.actionDetailsFragmentToChatFragment(true)
+            val action = UserDetailsFragmentDirections.actionDetailsFragmentToChatFragment(true)
             findNavController().navigate(action)
         }
     }

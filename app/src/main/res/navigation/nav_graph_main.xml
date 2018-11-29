@@ -42,7 +42,7 @@
 
     <fragment
             android:id="@+id/details_fragment"
-            android:name="com.gpetuhov.android.hive.ui.fragment.DetailsFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.UserDetailsFragment"
             android:label="DetailsFragment"
             tools:layout="@layout/fragment_details">
         <action

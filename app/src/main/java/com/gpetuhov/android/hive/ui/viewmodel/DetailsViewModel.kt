@@ -7,7 +7,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import javax.inject.Inject
 
-// Provides user details for the DetailsFragment
+// Provides user details for the UserDetailsFragment
 class DetailsViewModel : ViewModel() {
 
     @Inject lateinit var repo: Repo
