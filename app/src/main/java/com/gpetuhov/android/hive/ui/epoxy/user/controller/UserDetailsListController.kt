@@ -6,9 +6,11 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
+import java.util.*
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : EpoxyController() {
@@ -42,6 +44,15 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
             val hasActiveOffer = user?.hasActiveOffer() ?: false
             offerHeader(if (hasActiveOffer) context.getString(R.string.offers) else context.getString(R.string.no_active_offer))
+        }
+
+        user?.offerList?.forEach {
+            offerItem {
+                // TODO: use offer UID here (when it will be implemented)
+                id(UUID.randomUUID().toString())
+                onClick { presenter.openOffer() }
+                title(it.title)
+            }
         }
     }
 
