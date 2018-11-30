@@ -35,7 +35,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
     private var messagesAdapter: MessagesAdapter? = null
     private var binding: FragmentChatBinding? = null
-    private var isOpenFromDetails = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_resize is needed to push activity up, when keyboard is shown,
@@ -53,8 +52,6 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat, container, false)
         binding?.presenter = presenter
-
-        isOpenFromDetails = ChatFragmentArgs.fromBundle(arguments).isOpenFromDetails
 
         return binding?.root
     }
@@ -114,15 +111,8 @@ class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
     override fun clearMessageText() = message_text.setText("")
 
     override fun openUserDetails() {
-        // If chat fragment has been opened from user details fragment,
-        // then just pop back stack.
-        // Otherwise, open details fragment.
-        if (isOpenFromDetails) {
-            findNavController().popBackStack()
-        } else {
-            val action = ChatFragmentDirections.actionChatFragmentToUserDetailsFragment(true)
-            findNavController().navigate(action)
-        }
+        val action = ChatFragmentDirections.actionChatFragmentToUserDetailsFragment()
+        findNavController().navigate(action)
 
         hideSoftKeyboard()
     }

@@ -30,8 +30,6 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
     private lateinit var controller: UserDetailsListController
     private var binding: FragmentUserDetailsBinding? = null
 
-    private var isOpenFromChat = false
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -46,9 +44,6 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
 
         val userDetailsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.user_details_recycler_view)
         userDetailsRecyclerView?.adapter = controller.adapter
-
-        isOpenFromChat = UserDetailsFragmentArgs.fromBundle(arguments).isOpenFromChat
-        presenter.isOpenFromChat = isOpenFromChat
 
         val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
@@ -76,15 +71,8 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
     }
 
     override fun openChat() {
-        // If details fragment has been opened from chat fragment,
-        // then just pop back stack.
-        // Otherwise, open chat fragment.
-        if (isOpenFromChat) {
-            findNavController().popBackStack()
-        } else {
-            val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToChatFragment(true)
-            findNavController().navigate(action)
-        }
+        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToChatFragment()
+        findNavController().navigate(action)
     }
 
     override fun openOffer(offerUid: String) {

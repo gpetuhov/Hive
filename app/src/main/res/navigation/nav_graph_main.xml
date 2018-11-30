@@ -55,9 +55,6 @@
                 app:destination="@id/chat_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <argument
-                android:name="isOpenFromChat"
-                app:argType="boolean"/>
         <action android:id="@+id/action_user_details_fragment_to_offer_details_fragment"
                 app:destination="@id/offer_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
@@ -74,9 +71,6 @@
                 app:destination="@id/user_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <argument
-                android:name="isOpenFromDetails"
-                app:argType="boolean"/>
     </fragment>
 
     <fragment android:id="@+id/update_offer_fragment"
