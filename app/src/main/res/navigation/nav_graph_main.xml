@@ -58,6 +58,10 @@
         <argument
                 android:name="isOpenFromChat"
                 app:argType="boolean"/>
+        <action android:id="@+id/action_user_details_fragment_to_offer_details_fragment"
+                app:destination="@id/offer_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
@@ -79,6 +83,15 @@
               android:name="com.gpetuhov.android.hive.ui.fragment.UpdateOfferFragment"
               android:label="UpdateOfferFragment"
               tools:layout="@layout/fragment_update_offer">
+        <argument
+                android:name="offerUid"
+                app:argType="string"/>
+    </fragment>
+
+    <fragment android:id="@+id/offer_details_fragment"
+              android:name="com.gpetuhov.android.hive.ui.fragment.OfferDetailsFragment"
+              android:label="OfferDetailsFragment"
+              tools:layout="@layout/fragment_offer_details">
         <argument
                 android:name="offerUid"
                 app:argType="string"/>

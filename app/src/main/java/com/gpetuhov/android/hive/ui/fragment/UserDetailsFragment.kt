@@ -86,4 +86,9 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
             findNavController().navigate(action)
         }
     }
+
+    override fun openOffer(offerUid: String) {
+        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToOfferDetailsFragment(offerUid)
+        findNavController().navigate(action)
+    }
 }

@@ -49,7 +49,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         user?.offerList?.forEach {
             offerItem {
                 id(it.uid)
-                onClick { presenter.openOffer() }
+                onClick { presenter.openOffer(it.uid) }
                 title(it.title)
             }
         }

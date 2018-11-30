@@ -4,16 +4,15 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
+import com.gpetuhov.android.hive.presentation.view.OfferDetailsFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
+class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
 
     @Inject lateinit var repo: Repo
 
     var userUid = ""
-    var isOpenFromChat = false
 
     init {
         HiveApp.appComponent.inject(this)
@@ -24,11 +23,9 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
     fun navigateUp() = viewState.navigateUp()
 
     fun openChat() {
-        if (!isOpenFromChat) repo.clearMessages()
+        repo.clearMessages()
         viewState.openChat()
     }
-
-    fun openOffer(offerUid: String) = viewState.openOffer(offerUid)
 
     // --- Lifecycle ---
 
