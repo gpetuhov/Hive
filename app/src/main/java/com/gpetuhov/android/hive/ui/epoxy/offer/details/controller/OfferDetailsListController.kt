@@ -6,6 +6,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsHeader
+import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle
 
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : EpoxyController() {
 
@@ -17,9 +18,13 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
             onBackButtonClick { presenter.navigateUp() }
         }
 
+        offerDetailsTitle {
+            id("offer_details_title")
+            title(offer?.title ?: "")
+        }
+
         offerDetailsDetails {
             id("offer_details_details")
-            title(offer?.title ?: "")
             description(offer?.description ?: "")
         }
     }
