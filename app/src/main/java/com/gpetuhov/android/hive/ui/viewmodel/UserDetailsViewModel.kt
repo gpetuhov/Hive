@@ -8,7 +8,7 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import javax.inject.Inject
 
 // Provides user details for the UserDetailsFragment
-class DetailsViewModel : ViewModel() {
+class UserDetailsViewModel : ViewModel() {
 
     @Inject lateinit var repo: Repo
 
@@ -18,6 +18,4 @@ class DetailsViewModel : ViewModel() {
         HiveApp.appComponent.inject(this)
         userDetails = repo.secondUser()
     }
-
-    fun getFirstUpdate(uid: String) = repo.initSearchUserDetails(uid)
 }

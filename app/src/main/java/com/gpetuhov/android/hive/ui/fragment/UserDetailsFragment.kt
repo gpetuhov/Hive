@@ -16,7 +16,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.user.controller.UserDetailsListController
-import com.gpetuhov.android.hive.ui.viewmodel.DetailsViewModel
+import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
@@ -45,7 +45,7 @@ class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
         val userDetailsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.user_details_recycler_view)
         userDetailsRecyclerView?.adapter = controller.adapter
 
-        val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
+        val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
             controller.changeUser(user)

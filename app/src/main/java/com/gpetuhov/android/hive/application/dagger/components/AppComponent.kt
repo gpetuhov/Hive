@@ -39,7 +39,7 @@ interface AppComponent {
 
     fun inject(userViewModel: CurrentUserViewModel)
     fun inject(searchResultViewModel: SearchResultViewModel)
-    fun inject(detailsViewModel: DetailsViewModel)
+    fun inject(userDetailsViewModel: UserDetailsViewModel)
     fun inject(chatMessagesViewModel: ChatMessagesViewModel)
     fun inject(chatroomsViewModel: ChatroomsViewModel)
     fun inject(unreadMessagesExistViewModel: UnreadMessagesExistViewModel)
