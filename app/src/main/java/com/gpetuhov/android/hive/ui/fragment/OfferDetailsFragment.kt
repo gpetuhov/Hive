@@ -41,7 +41,7 @@ class OfferDetailsFragment : MvpAppCompatFragment(), OfferDetailsFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_details, container, false)
         binding?.presenter = presenter
 
-        // TODO: get offer uid from args here
+        val offerUid = OfferDetailsFragmentArgs.fromBundle(arguments).offerUid
 
         val offerDetailsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.offer_details_recycler_view)
         offerDetailsRecyclerView?.adapter = controller.adapter
@@ -49,9 +49,7 @@ class OfferDetailsFragment : MvpAppCompatFragment(), OfferDetailsFragmentView {
         val viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
-
-            // TODO: pass offer uid here
-            controller.changeOffer(user, "")
+            controller.changeOffer(user, offerUid)
         })
 
         return binding?.root
