@@ -22,6 +22,7 @@ class UpdateOfferFragmentPresenter :
 
     private var tempTitle = ""
     private var tempDescription = ""
+    private var editStarted = false
 
     private var saveOfferInteractor = SaveOfferInteractor(this)
 
@@ -39,7 +40,9 @@ class UpdateOfferFragmentPresenter :
     // --- Init ---
 
     fun initOffer(offerUid: String) {
-        if (offerUid != "") {
+        // Init UI with data from offer, if offer exists (uid not empty)
+        // and user has not started editing yet.
+        if (offerUid != "" && !editStarted) {
             val offerList = repo.currentUserOfferList()
             val offer = offerList.firstOrNull { it.uid == offerUid }
             if (offer != null) {
@@ -61,6 +64,7 @@ class UpdateOfferFragmentPresenter :
     }
 
     fun saveTitle() {
+        editStarted = true
         title = tempTitle
         updateUI()
         dismissTitleDialog()
@@ -82,6 +86,7 @@ class UpdateOfferFragmentPresenter :
     }
 
     fun saveDescription() {
+        editStarted = true
         description = tempDescription
         updateUI()
         dismissDescriptionDialog()
