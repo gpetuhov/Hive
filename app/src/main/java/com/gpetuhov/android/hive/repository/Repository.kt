@@ -562,26 +562,33 @@ class Repository(private val context: Context) : Repo {
 
     override fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized && offer != null) {
-            // TODO: implement updating existing offer
+            // If offer uid is not empty, then offer already exist.
+            // Update it with new data.
+            if (offer.uid != "") {
+                // TODO: implement updating existing offer
 
-            val offerList = currentUserOfferList()
-            offerList.add(offer)
+            } else {
+                // If offer uid is empty, then offer does not exist.
+                // Just generate uid and add new offer with it.
+                val offerList = currentUserOfferList()
+                offerList.add(offer)
 
-            val offerListForSaving = mutableListOf<HashMap<String, Any>>()
+                val offerListForSaving = mutableListOf<HashMap<String, Any>>()
 
-            for (offerItem in offerList) {
-                val offerForSaving = HashMap<String, Any>()
-                offerForSaving[OFFER_UID_KEY] = UUID.randomUUID().toString()
-                offerForSaving[OFFER_TITLE_KEY] = offerItem.title
-                offerForSaving[OFFER_DESCRIPTION_KEY] = offerItem.description
+                for (offerItem in offerList) {
+                    val offerForSaving = HashMap<String, Any>()
+                    offerForSaving[OFFER_UID_KEY] = UUID.randomUUID().toString()
+                    offerForSaving[OFFER_TITLE_KEY] = offerItem.title
+                    offerForSaving[OFFER_DESCRIPTION_KEY] = offerItem.description
 
-                offerListForSaving.add(offerForSaving)
+                    offerListForSaving.add(offerForSaving)
+                }
+
+                val data = HashMap<String, Any>()
+                data[OFFER_LIST_KEY] = offerListForSaving
+
+                saveUserDataRemote(data, onSuccess, onError)
             }
-
-            val data = HashMap<String, Any>()
-            data[OFFER_LIST_KEY] = offerListForSaving
-
-            saveUserDataRemote(data, onSuccess, onError)
 
         } else {
             onError()

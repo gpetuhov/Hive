@@ -11,6 +11,7 @@ class UpdateOfferFragmentPresenter :
     MvpPresenter<UpdateOfferFragmentView>(),
     SaveOfferInteractor.Callback {
 
+    var uid = ""
     var title = ""
     var description = ""
 
@@ -75,8 +76,7 @@ class UpdateOfferFragmentPresenter :
 
     // --- Save offer ---
 
-    // Init offer uid with empty string, because this is the new offer
-    fun saveOffer() = saveOfferInteractor.saveOffer(Offer("", title, description, 0.0, false, true))
+    fun saveOffer() = saveOfferInteractor.saveOffer(Offer(uid, title, description, 0.0, false, true))
 
     // --- Navigate up ---
 
