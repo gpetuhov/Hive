@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.service.MessageService
 import com.gpetuhov.android.hive.ui.activity.AuthActivity
 import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
+import com.gpetuhov.android.hive.ui.epoxy.offer.details.controller.OfferDetailsListController
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferListController
 import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListController
 import com.gpetuhov.android.hive.ui.epoxy.user.controller.UserDetailsListController
@@ -65,4 +66,5 @@ interface AppComponent {
     fun inject(profileListController: ProfileListController)
     fun inject(userDetailsListController: UserDetailsListController)
     fun inject(updateOfferListController: UpdateOfferListController)
+    fun inject(offerDetailsListController: OfferDetailsListController)
 }
