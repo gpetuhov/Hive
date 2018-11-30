@@ -33,12 +33,12 @@ class UpdateOfferFragmentPresenter :
     // === SaveOfferInteractor.Callback ===
 
     override fun onSaveOfferSuccess() {
-        onSaveOfferComplete()
+        onOperationComplete()
         viewState.navigateUp()
     }
 
     override fun onSaveOfferError(errorMessage: String) {
-        onSaveOfferComplete()
+        onOperationComplete()
         showToast(errorMessage)
     }
 
@@ -106,7 +106,7 @@ class UpdateOfferFragmentPresenter :
     // --- Save offer ---
 
     fun saveOffer() {
-        onSaveOfferStart()
+        onOperationStart()
         saveOfferInteractor.saveOffer(Offer(uid, title, description, 0.0, false, true))
     }
 
@@ -114,7 +114,7 @@ class UpdateOfferFragmentPresenter :
 
     // TODO: implement this
     fun showDeleteOfferDialog() {
-        onDeleteOfferStart()
+        onOperationStart()
         showToast("Delete offer")
     }
 
@@ -131,23 +131,15 @@ class UpdateOfferFragmentPresenter :
         viewState.showToast(message)
     }
 
-    private fun onSaveOfferStart() {
+    private fun onOperationStart() {
         viewState.showProgress()
         viewState.disableSaveOfferButton()
-    }
-
-    private fun onSaveOfferComplete() {
-        viewState.hideProgress()
-        viewState.enableSaveOfferButton()
-    }
-
-    private fun onDeleteOfferStart() {
-        viewState.showProgress()
         viewState.disableDeleteOfferButton()
     }
 
-    private fun onDeleteOfferComplete() {
+    private fun onOperationComplete() {
         viewState.hideProgress()
+        viewState.enableSaveOfferButton()
         viewState.enableDeleteOfferButton()
     }
 }
