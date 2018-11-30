@@ -75,4 +75,9 @@ class OfferDetailsFragment : MvpAppCompatFragment(), OfferDetailsFragmentView {
         val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToChatFragment()
         findNavController().navigate(action)
     }
+
+    override fun openUserDetails() {
+        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToUserDetailsFragment()
+        findNavController().navigate(action)
+    }
 }

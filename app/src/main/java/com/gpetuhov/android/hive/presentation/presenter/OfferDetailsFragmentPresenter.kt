@@ -27,9 +27,7 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
         viewState.openChat()
     }
 
-    fun openUserDetails() {
-        // TODO: implement this
-    }
+    fun openUserDetails() = viewState.openUserDetails()
 
     // --- Lifecycle ---
 

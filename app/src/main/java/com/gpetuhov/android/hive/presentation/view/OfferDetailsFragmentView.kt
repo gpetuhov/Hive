@@ -11,4 +11,7 @@ interface OfferDetailsFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun openChat()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openUserDetails()
 }
