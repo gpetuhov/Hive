@@ -159,7 +159,7 @@ class ProfileFragmentPresenter :
     // --- Edit offer ---
 
     // TODO: implement this
-    fun editOffer() = showToast("Edit offer")
+    fun editOffer(offerUid: String) = showToast("Edit offer $offerUid")
 
     // === Private methods ===
 

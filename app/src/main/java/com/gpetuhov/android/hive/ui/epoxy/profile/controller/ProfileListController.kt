@@ -47,8 +47,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
         user?.offerList?.forEach {
             offerItem {
                 id(it.uid)
-                onClick { presenter.editOffer() }
                 title(it.title)
+                onClick { presenter.editOffer(it.uid) }
             }
         }
 

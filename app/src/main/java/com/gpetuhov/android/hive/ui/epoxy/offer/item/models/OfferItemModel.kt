@@ -11,12 +11,12 @@ import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 @EpoxyModelClass(layout = R.layout.offer_item_view)
 abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
 
-    @EpoxyAttribute lateinit var onClick: () -> Unit
     @EpoxyAttribute lateinit var title: String
+    @EpoxyAttribute lateinit var onClick: () -> Unit
 
     override fun bind(holder: OfferItemHolder) {
-        holder.rootView.setOnClickListener { onClick() }
         holder.title.text = title
+        holder.rootView.setOnClickListener { onClick() }
     }
 }
 
