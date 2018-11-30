@@ -85,6 +85,14 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
     override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
 
+    override fun enableSaveOfferButton() = saveButtonEnabled(true) ?: Unit
+
+    override fun disableSaveOfferButton() = saveButtonEnabled(false) ?: Unit
+
+    override fun enableDeleteOfferButton() = deleteButtonEnabled(true) ?: Unit
+
+    override fun disableDeleteOfferButton() = deleteButtonEnabled(false) ?: Unit
+
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {
@@ -139,4 +147,8 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
         dismissTitleDialog()
         dismissDescriptionDialog()
     }
+
+    private fun saveButtonEnabled(isEnabled: Boolean) = controller?.saveButtonEnabled(isEnabled)
+
+    private fun deleteButtonEnabled(isEnabled: Boolean) = controller?.deleteButtonEnabled(isEnabled)
 }

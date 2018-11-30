@@ -13,6 +13,9 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
 
     @Inject lateinit var context: Context
 
+    private var saveButtonEnabled = true
+    private var deleteButtonEnabled = true
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -24,8 +27,10 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
             onBackButtonClick { presenter.navigateUp() }
 
             deleteButtonVisible(presenter.uid != "")
+            deleteButtonEnabled(deleteButtonEnabled)
             onDeleteButtonClick { presenter.showDeleteOfferDialog() }
 
+            saveButtonEnabled(saveButtonEnabled)
             onSaveButtonClick { presenter.saveOffer() }
         }
 
@@ -38,5 +43,15 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
             description(if (presenter.description != "") presenter.description else context.getString(R.string.add_description))
             onDescriptionClick { presenter.showDescriptionDialog() }
         }
+    }
+
+    fun saveButtonEnabled(isEnabled: Boolean) {
+        saveButtonEnabled = isEnabled
+        requestModelBuild()
+    }
+
+    fun deleteButtonEnabled(isEnabled: Boolean) {
+        deleteButtonEnabled = isEnabled
+        requestModelBuild()
     }
 }

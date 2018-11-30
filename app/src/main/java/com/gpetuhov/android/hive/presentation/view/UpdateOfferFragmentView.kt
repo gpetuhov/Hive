@@ -23,6 +23,22 @@ interface UpdateOfferFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissDescriptionDialog()
 
+    // === Save offer ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun enableSaveOfferButton()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun disableSaveOfferButton()
+
+    // === Delete offer ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun enableDeleteOfferButton()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun disableDeleteOfferButton()
+
     // === Common ===
 
     @StateStrategyType(SkipStrategy::class)

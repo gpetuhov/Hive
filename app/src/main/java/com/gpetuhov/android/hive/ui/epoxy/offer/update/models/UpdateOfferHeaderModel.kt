@@ -14,16 +14,20 @@ abstract class UpdateOfferHeaderModel : EpoxyModelWithHolder<UpdateOfferHeaderHo
     @EpoxyAttribute lateinit var onBackButtonClick: () -> Unit
 
     @EpoxyAttribute var deleteButtonVisible = false
+    @EpoxyAttribute var deleteButtonEnabled = true
     @EpoxyAttribute lateinit var onDeleteButtonClick: () -> Unit
 
+    @EpoxyAttribute var saveButtonEnabled = true
     @EpoxyAttribute lateinit var onSaveButtonClick: () -> Unit
 
     override fun bind(holder: UpdateOfferHeaderHolder) {
         holder.backButton.setOnClickListener { onBackButtonClick() }
 
         holder.deleteButton.visibility = if (deleteButtonVisible) View.VISIBLE else View.GONE
+        holder.deleteButton.isEnabled = deleteButtonEnabled
         holder.deleteButton.setOnClickListener { onDeleteButtonClick() }
 
+        holder.saveButton.isEnabled = saveButtonEnabled
         holder.saveButton.setOnClickListener { onSaveButtonClick() }
     }
 }
