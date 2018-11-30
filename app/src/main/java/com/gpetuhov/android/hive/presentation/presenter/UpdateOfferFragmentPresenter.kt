@@ -75,7 +75,8 @@ class UpdateOfferFragmentPresenter :
 
     // --- Save offer ---
 
-    fun saveOffer() = saveOfferInteractor.saveOffer(Offer(title, description, 0.0, false, true))
+    // Init offer uid with empty string, because this is the new offer
+    fun saveOffer() = saveOfferInteractor.saveOffer(Offer("", title, description, 0.0, false, true))
 
     // --- Navigate up ---
 

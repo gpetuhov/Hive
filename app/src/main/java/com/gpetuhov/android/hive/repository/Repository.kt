@@ -58,6 +58,7 @@ class Repository(private val context: Context) : Repo {
         private const val FCM_TOKEN_KEY = "fcm_token"
 
         // Offer
+        private const val OFFER_UID_KEY = "offer_uid"
         private const val OFFER_TITLE_KEY = "offer_title"
         private const val OFFER_DESCRIPTION_KEY = "offer_description"
 
@@ -570,6 +571,7 @@ class Repository(private val context: Context) : Repo {
 
             for (offerItem in offerList) {
                 val offerForSaving = HashMap<String, Any>()
+                offerForSaving[OFFER_UID_KEY] = UUID.randomUUID().toString()
                 offerForSaving[OFFER_TITLE_KEY] = offerItem.title
                 offerForSaving[OFFER_DESCRIPTION_KEY] = offerItem.description
 
@@ -776,11 +778,18 @@ class Repository(private val context: Context) : Repo {
             for (offerSnapshot in offerSnapshotList) {
                 val offerMap = offerSnapshot as HashMap<*, *>
 
+                val offerUid = offerMap[OFFER_UID_KEY] as String?
                 val offerTitle = offerMap[OFFER_TITLE_KEY] as String?
                 val offerDescription = offerMap[OFFER_DESCRIPTION_KEY] as String?
 
-                if (offerTitle != null && offerTitle != "" && offerDescription != null && offerDescription != "") {
-                    val offer = Offer(offerTitle, offerDescription, 0.0, false, true)
+                if (offerUid != null
+                    && offerUid != ""
+                    && offerTitle != null
+                    && offerTitle != ""
+                    && offerDescription != null
+                    && offerDescription != ""
+                ) {
+                    val offer = Offer(offerUid, offerTitle, offerDescription, 0.0, false, true)
                     offerList.add(offer)
                 }
             }

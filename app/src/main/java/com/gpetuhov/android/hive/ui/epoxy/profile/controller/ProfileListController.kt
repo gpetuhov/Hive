@@ -46,8 +46,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
         user?.offerList?.forEach {
             offerItem {
-                // TODO: use offer UID here (when it will be implemented)
-                id(UUID.randomUUID().toString())
+                id(it.uid)
                 onClick { presenter.editOffer() }
                 title(it.title)
             }
