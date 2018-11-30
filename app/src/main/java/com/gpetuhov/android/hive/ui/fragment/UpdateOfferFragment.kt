@@ -86,17 +86,17 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
     override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
 
-    override fun enableSaveOfferButton() = saveButtonEnabled(true) ?: Unit
+    override fun onOperationStart() {
+        progressVisible(true)
+        saveButtonEnabled(false)
+        deleteButtonEnabled(false)
+    }
 
-    override fun disableSaveOfferButton() = saveButtonEnabled(false) ?: Unit
-
-    override fun enableDeleteOfferButton() = deleteButtonEnabled(true) ?: Unit
-
-    override fun disableDeleteOfferButton() = deleteButtonEnabled(false) ?: Unit
-
-    override fun showProgress() = progressVisible(true)
-
-    override fun hideProgress() = progressVisible(false)
+    override fun onOperationComplete() {
+        progressVisible(false)
+        saveButtonEnabled(true)
+        deleteButtonEnabled(true)
+    }
 
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
