@@ -48,13 +48,13 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
             offerItem {
                 id(it.uid)
                 title(it.title)
-                onClick { presenter.editOffer(it.uid) }
+                onClick { presenter.updateOffer(it.uid) }
             }
         }
 
         addOffer {
             id("addOffer")
-            onClick { presenter.addOffer() }
+            onClick { presenter.updateOffer("") }
         }
 
         settings {

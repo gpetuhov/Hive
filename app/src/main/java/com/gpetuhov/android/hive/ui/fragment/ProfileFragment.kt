@@ -128,8 +128,8 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
         // Result will be passed into onActivityResult()
     }
 
-    override fun addOffer() {
-        val action = ProfileFragmentDirections.actionNavigationProfileToUpdateOfferFragment("")
+    override fun updateOffer(offerUid: String) {
+        val action = ProfileFragmentDirections.actionNavigationProfileToUpdateOfferFragment(offerUid)
         findNavController().navigate(action)
     }
 

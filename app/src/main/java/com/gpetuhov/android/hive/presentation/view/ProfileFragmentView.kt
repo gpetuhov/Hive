@@ -62,7 +62,7 @@ interface ProfileFragmentView : MvpView {
     // === Add offer ===
 
     @StateStrategyType(SkipStrategy::class)
-    fun addOffer()
+    fun updateOffer(offerUid: String)
 
     // === Common ===
 

@@ -152,14 +152,9 @@ class ProfileFragmentPresenter :
 
     fun changeUserPic(selectedImageUri: Uri) = repo.changeUserPic(selectedImageUri) { showToast(resultMessages.getChangeUserPicErrorMessage()) }
 
-    // --- Add offer ---
+    // --- Update (add, edit) offer ---
 
-    fun addOffer() = viewState.addOffer()
-
-    // --- Edit offer ---
-
-    // TODO: implement this
-    fun editOffer(offerUid: String) = showToast("Edit offer $offerUid")
+    fun updateOffer(offerUid: String) = viewState.updateOffer(offerUid)
 
     // === Private methods ===
 
