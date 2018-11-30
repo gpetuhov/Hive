@@ -21,6 +21,7 @@ import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
+import kotlinx.android.synthetic.main.fragment_update_offer.*
 
 class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
@@ -93,6 +94,10 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
     override fun disableDeleteOfferButton() = deleteButtonEnabled(false) ?: Unit
 
+    override fun showProgress() = progressVisible(true)
+
+    override fun hideProgress() = progressVisible(false)
+
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {
@@ -151,4 +156,8 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
     private fun saveButtonEnabled(isEnabled: Boolean) = controller?.saveButtonEnabled(isEnabled)
 
     private fun deleteButtonEnabled(isEnabled: Boolean) = controller?.deleteButtonEnabled(isEnabled)
+
+    private fun progressVisible(isVisible: Boolean) {
+        update_offer_progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
 }

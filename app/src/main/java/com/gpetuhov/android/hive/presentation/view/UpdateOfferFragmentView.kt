@@ -39,6 +39,14 @@ interface UpdateOfferFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun disableDeleteOfferButton()
 
+    // === Progress bar ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showProgress()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun hideProgress()
+
     // === Common ===
 
     @StateStrategyType(SkipStrategy::class)
