@@ -569,7 +569,7 @@ class Repository(private val context: Context) : Repo {
             if (offer.uid != "") {
                 val offerIndex = offerList.indexOfFirst { it.uid == offer.uid }
 
-                if (offerIndex > 0 && offerIndex < offerList.size) {
+                if (offerIndex >= 0 && offerIndex < offerList.size) {
                     offerList[offerIndex] = offer
                 }
 
