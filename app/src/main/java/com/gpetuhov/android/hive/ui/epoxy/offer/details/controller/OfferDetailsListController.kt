@@ -7,9 +7,11 @@ import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPres
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle
+import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsUser
 
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : EpoxyController() {
 
+    private var user: User? = null
     private var offer: Offer? = null
 
     override fun buildModels() {
@@ -23,6 +25,13 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
             title(offer?.title ?: "")
         }
 
+        offerDetailsUser {
+            id("offer_details_user")
+            onClick { presenter.openUserDetails() }
+            userPicUrl(user?.userPicUrl ?: "")
+            username(user?.getUsernameOrName() ?: "")
+        }
+
         offerDetailsDetails {
             id("offer_details_details")
             description(offer?.description ?: "")
@@ -30,6 +39,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
     }
 
     fun changeOffer(user: User, offerUid: String) {
+        this.user = user
         val offerList = user.offerList
         offer = offerList.firstOrNull { it.uid == offerUid }
         requestModelBuild()
