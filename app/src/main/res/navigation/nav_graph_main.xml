@@ -78,6 +78,10 @@
     <fragment android:id="@+id/update_offer_fragment"
               android:name="com.gpetuhov.android.hive.ui.fragment.UpdateOfferFragment"
               android:label="UpdateOfferFragment"
-              tools:layout="@layout/fragment_update_offer"/>
+              tools:layout="@layout/fragment_update_offer">
+        <argument
+                android:name="offerUid"
+                app:argType="string"/>
+    </fragment>
 
 </navigation>

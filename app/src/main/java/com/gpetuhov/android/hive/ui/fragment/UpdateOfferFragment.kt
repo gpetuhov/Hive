@@ -40,7 +40,7 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
         initDialogs()
 
-        // TODO: get offer title and description from args and init presenter here
+        presenter.initOffer(UpdateOfferFragmentArgs.fromBundle(arguments).offerUid)
 
         val view = inflater.inflate(R.layout.fragment_update_offer, container, false)
 

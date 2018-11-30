@@ -2,14 +2,19 @@ package com.gpetuhov.android.hive.presentation.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SaveOfferInteractor
 import com.gpetuhov.android.hive.domain.model.Offer
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
+import javax.inject.Inject
 
 @InjectViewState
 class UpdateOfferFragmentPresenter :
     MvpPresenter<UpdateOfferFragmentView>(),
     SaveOfferInteractor.Callback {
+
+    @Inject lateinit var repo: Repo
 
     var uid = ""
     var title = ""
@@ -20,6 +25,10 @@ class UpdateOfferFragmentPresenter :
 
     private var saveOfferInteractor = SaveOfferInteractor(this)
 
+    init {
+        HiveApp.appComponent.inject(this)
+    }
+
     // === SaveOfferInteractor.Callback ===
 
     override fun onSaveOfferSuccess() = viewState.navigateUp()
@@ -27,6 +36,20 @@ class UpdateOfferFragmentPresenter :
     override fun onSaveOfferError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
+    // --- Init ---
+
+    fun initOffer(offerUid: String) {
+        if (offerUid != "") {
+            val offerList = repo.currentUserOfferList()
+            val offer = offerList.firstOrNull { it.uid == offerUid }
+            if (offer != null) {
+                uid = offerUid
+                title = offer.title
+                description = offer.description
+            }
+        }
+    }
+
     // --- Change username ---
 
     fun showTitleDialog() = viewState.showTitleDialog()

@@ -129,7 +129,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
     }
 
     override fun addOffer() {
-        val action = ProfileFragmentDirections.actionNavigationProfileToUpdateOfferFragment()
+        val action = ProfileFragmentDirections.actionNavigationProfileToUpdateOfferFragment("")
         findNavController().navigate(action)
     }
 
