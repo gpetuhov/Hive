@@ -156,6 +156,11 @@ class ProfileFragmentPresenter :
 
     fun addOffer() = viewState.addOffer()
 
+    // --- Edit offer ---
+
+    // TODO: implement this
+    fun editOffer() = showToast("Edit offer")
+
     // === Private methods ===
 
     private fun showToast(message: String) {

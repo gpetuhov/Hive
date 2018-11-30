@@ -6,9 +6,11 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
+import java.util.*
 import javax.inject.Inject
 
 class ProfileListController(private val presenter: ProfileFragmentPresenter) : EpoxyController() {
@@ -40,6 +42,15 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
             val hasDescription = user?.hasDescription ?: false
             description(if (hasDescription) user?.description ?: "" else context.getString(R.string.enter_description))
             onDescriptionClick { presenter.showDescriptionDialog() }
+        }
+
+        user?.offerList?.forEach {
+            offerItem {
+                // TODO: use offer UID here (when it will be implemented)
+                id(UUID.randomUUID().toString())
+                onClick { presenter.editOffer() }
+                title(it.title)
+            }
         }
 
         addOffer {
