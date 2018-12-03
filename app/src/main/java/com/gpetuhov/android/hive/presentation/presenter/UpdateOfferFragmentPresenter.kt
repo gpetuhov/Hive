@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.DeleteOfferInteractor
 import com.gpetuhov.android.hive.domain.interactor.SaveOfferInteractor
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.repository.Repo
@@ -12,7 +13,8 @@ import javax.inject.Inject
 @InjectViewState
 class UpdateOfferFragmentPresenter :
     MvpPresenter<UpdateOfferFragmentView>(),
-    SaveOfferInteractor.Callback {
+    SaveOfferInteractor.Callback,
+    DeleteOfferInteractor.Callback {
 
     @Inject lateinit var repo: Repo
 
@@ -25,6 +27,7 @@ class UpdateOfferFragmentPresenter :
     private var editStarted = false
 
     private var saveOfferInteractor = SaveOfferInteractor(this)
+    private var deleteOfferInteractor = DeleteOfferInteractor(this)
 
     init {
         HiveApp.appComponent.inject(this)
@@ -38,6 +41,18 @@ class UpdateOfferFragmentPresenter :
     }
 
     override fun onSaveOfferError(errorMessage: String) {
+        onOperationComplete()
+        showToast(errorMessage)
+    }
+
+    // === DeleteOfferInteractor.Callback ===
+
+    override fun onDeleteOfferSuccess() {
+        onOperationComplete()
+        viewState.navigateUp()
+    }
+
+    override fun onDeleteOfferError(errorMessage: String) {
         onOperationComplete()
         showToast(errorMessage)
     }
@@ -59,7 +74,7 @@ class UpdateOfferFragmentPresenter :
         }
     }
 
-    // --- Change username ---
+    // --- Change title ---
 
     fun showTitleDialog() = viewState.showTitleDialog()
 
@@ -121,9 +136,7 @@ class UpdateOfferFragmentPresenter :
     fun deleteOffer() {
         viewState.showProgress()
         viewState.dismissDeleteOfferDialog()
-
-        // TODO: implement this
-//        deleteOfferInteractor.execute()
+        deleteOfferInteractor.deleteOffer(uid)
     }
 
     fun deleteOfferCancel() {

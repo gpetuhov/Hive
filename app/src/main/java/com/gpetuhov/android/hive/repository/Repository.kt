@@ -567,11 +567,7 @@ class Repository(private val context: Context) : Repo {
             // If offer uid is not empty, then offer already exist.
             // Update it with new data.
             if (offer.uid != "") {
-                val offerIndex = offerList.indexOfFirst { it.uid == offer.uid }
-
-                if (offerIndex >= 0 && offerIndex < offerList.size) {
-                    offerList[offerIndex] = offer
-                }
+                updateOfferList(offerList, offer.uid) { offerIndex -> offerList[offerIndex] = offer }
 
             } else {
                 // If offer uid is empty, then offer does not exist.
@@ -580,21 +576,18 @@ class Repository(private val context: Context) : Repo {
                 offerList.add(offer)
             }
 
-            val offerListForSaving = mutableListOf<HashMap<String, Any>>()
+            saveOfferList(offerList, onSuccess, onError)
 
-            for (offerItem in offerList) {
-                val offerForSaving = HashMap<String, Any>()
-                offerForSaving[OFFER_UID_KEY] = offerItem.uid
-                offerForSaving[OFFER_TITLE_KEY] = offerItem.title
-                offerForSaving[OFFER_DESCRIPTION_KEY] = offerItem.description
+        } else {
+            onError()
+        }
+    }
 
-                offerListForSaving.add(offerForSaving)
-            }
-
-            val data = HashMap<String, Any>()
-            data[OFFER_LIST_KEY] = offerListForSaving
-
-            saveUserDataRemote(data, onSuccess, onError)
+    override fun deleteOffer(offerUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isAuthorized && offerUid != "") {
+            val offerList = currentUserOfferList()
+            updateOfferList(offerList, offerUid) { offerIndex -> offerList.removeAt(offerIndex) }
+            saveOfferList(offerList, onSuccess, onError)
 
         } else {
             onError()
@@ -986,5 +979,33 @@ class Repository(private val context: Context) : Repo {
                     onError()
                 }
             }
+    }
+
+    // --- Offer ---
+
+    private fun updateOfferList(offerList: MutableList<Offer>, offerUid: String, update: (Int) -> Unit) {
+        val offerIndex = offerList.indexOfFirst { it.uid == offerUid }
+
+        if (offerIndex >= 0 && offerIndex < offerList.size) {
+            update(offerIndex)
+        }
+    }
+
+    private fun saveOfferList(offerList: MutableList<Offer>, onSuccess: () -> Unit, onError: () -> Unit) {
+        val offerListForSaving = mutableListOf<HashMap<String, Any>>()
+
+        for (offerItem in offerList) {
+            val offerForSaving = HashMap<String, Any>()
+            offerForSaving[OFFER_UID_KEY] = offerItem.uid
+            offerForSaving[OFFER_TITLE_KEY] = offerItem.title
+            offerForSaving[OFFER_DESCRIPTION_KEY] = offerItem.description
+
+            offerListForSaving.add(offerForSaving)
+        }
+
+        val data = HashMap<String, Any>()
+        data[OFFER_LIST_KEY] = offerListForSaving
+
+        saveUserDataRemote(data, onSuccess, onError)
     }
 }

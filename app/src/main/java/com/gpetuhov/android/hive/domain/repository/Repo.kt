@@ -68,4 +68,5 @@ interface Repo {
     // Offer
     fun currentUserOfferList(): MutableList<Offer>
     fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit)
+    fun deleteOffer(offerUid: String, onSuccess: () -> Unit, onError: () -> Unit)
 }

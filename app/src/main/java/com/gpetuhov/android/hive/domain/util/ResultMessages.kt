@@ -13,4 +13,5 @@ interface ResultMessages {
     fun getSaveOfferErrorMessage(): String
     fun getOfferEmptyTitleErrorMessage(): String
     fun getOfferEmptyDescriptionErrorMessage(): String
+    fun getDeleteOfferErrorMessage(): String
 }

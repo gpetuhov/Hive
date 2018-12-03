@@ -38,5 +38,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getOfferEmptyDescriptionErrorMessage(): String = context.getString(R.string.description_empty_error)
 
+    override fun getDeleteOfferErrorMessage(): String = context.getString(R.string.delete_offer_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }
