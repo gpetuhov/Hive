@@ -37,7 +37,19 @@ class SaveOfferInteractorTest {
         testSaveOfferInteractor(Constants.DUMMY_OFFER, false)
     }
 
-    // TODO: test empty title, description
+    @Test
+    fun saveOfferEmptyTitle() {
+        val offer = Constants.DUMMY_OFFER
+        offer.title = ""
+        testSaveOfferInteractor(offer, true)
+    }
+
+    @Test
+    fun saveOfferEmptyDescription() {
+        val offer = Constants.DUMMY_OFFER
+        offer.description = ""
+        testSaveOfferInteractor(offer, true)
+    }
 
     private fun testSaveOfferInteractor(offer: Offer, isSuccess: Boolean) {
         (repo as TestRepository).isSuccess = isSuccess
