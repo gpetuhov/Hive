@@ -92,6 +92,8 @@
     <string name="max_active_offers">You have reached maximum number of active offers</string>
     <string name="free">Free</string>
     <string name="price_usd">Price (USD)</string>
+    <string name="offer_price">Offer price</string>
+    <string name="enter_price">Enter offer price</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Provided by</string>

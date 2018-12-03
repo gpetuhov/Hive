@@ -32,6 +32,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     private var descriptionDialog: MaterialDialog? = null
     private var deleteOfferDialog: MaterialDialog? = null
     private var quitDialog: MaterialDialog? = null
+    private var priceDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -108,6 +109,16 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
     override fun dismissQuitOfferUpdateDialog() = quitDialog?.dismiss() ?: Unit
 
+    override fun showPriceDialog() {
+        // Prefill dialog with text provided by presenter
+        val editText = priceDialog?.getInputField()
+        editText?.setText(presenter.getPricePrefill())
+        editText?.setSelection(editText.text.length)
+        priceDialog?.show()
+    }
+
+    override fun dismissPriceDialog() = priceDialog?.dismiss() ?: Unit
+
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {
@@ -126,6 +137,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         initDescriptionDialog()
         initDeleteOfferDialog()
         initQuitDialog()
+        initPriceDialog()
     }
 
     private fun initTitleDialog() {
@@ -184,11 +196,26 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         }
     }
 
+    private fun initPriceDialog() {
+        if (context != null) {
+            priceDialog = MaterialDialog(context!!)
+                .title(R.string.offer_price)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(hintRes = R.string.enter_price, waitForPositiveButton = false) { dialog, text ->
+                    presenter.updateTempPrice(text.toString().toDouble())
+                }
+                .positiveButton { presenter.savePrice() }
+                .negativeButton { presenter.dismissPriceDialog() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissTitleDialog()
         dismissDescriptionDialog()
         dismissDeleteOfferDialog()
         dismissQuitOfferUpdateDialog()
+        dismissPriceDialog()
     }
 
     private fun saveDeleteButtonsEnabled(isEnabled: Boolean) {

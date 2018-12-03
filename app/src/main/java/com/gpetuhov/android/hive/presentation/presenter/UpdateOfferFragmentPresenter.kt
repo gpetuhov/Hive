@@ -29,6 +29,7 @@ class UpdateOfferFragmentPresenter :
 
     private var tempTitle = ""
     private var tempDescription = ""
+    private var tempPrice = 0.0
     private var editStarted = false
 
     private var saveOfferInteractor = SaveOfferInteractor(this)
@@ -183,7 +184,7 @@ class UpdateOfferFragmentPresenter :
 
     fun quitOfferUpdateCancel() = viewState.dismissQuitOfferUpdateDialog()
 
-    // === Offer is active ===
+    // --- Offer is active ---
 
     fun onActiveClick(isActive: Boolean) {
         if (activeEnabled) {
@@ -192,7 +193,7 @@ class UpdateOfferFragmentPresenter :
         }
     }
 
-    // === Price ===
+    // --- Offer is free ---
 
     fun onFreeClick(isFree: Boolean) {
         free = isFree
@@ -200,8 +201,26 @@ class UpdateOfferFragmentPresenter :
         updateUI()
     }
 
-    fun showPriceDialog() {
-        // TODO: implement this
+    // --- Change price ---
+
+    fun showPriceDialog() = viewState.showPriceDialog()
+
+    fun getPricePrefill() = if (tempPrice != 0.0) tempPrice.toString() else price.toString()
+
+    fun updateTempPrice(newTempPrice: Double) {
+        tempPrice = newTempPrice
+    }
+
+    fun savePrice() {
+        editStarted = true
+        price = tempPrice
+        updateUI()
+        dismissPriceDialog()
+    }
+
+    fun dismissPriceDialog() {
+        tempPrice = 0.0
+        viewState.dismissPriceDialog()
     }
 
     // === Private methods ===

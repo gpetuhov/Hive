@@ -7,7 +7,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 interface UpdateOfferFragmentView : MvpView {
 
-    // === Change username ===
+    // === Change title ===
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showTitleDialog()
@@ -52,6 +52,14 @@ interface UpdateOfferFragmentView : MvpView {
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissQuitOfferUpdateDialog()
+
+    // === Change price ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showPriceDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissPriceDialog()
 
     // === Common ===
 
