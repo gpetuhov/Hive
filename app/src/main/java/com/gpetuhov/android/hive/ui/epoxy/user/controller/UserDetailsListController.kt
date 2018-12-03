@@ -47,10 +47,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         }
 
         user?.offerList?.forEach {
-            offerItem {
-                id(it.uid)
-                onClick { presenter.openOffer(it.uid) }
-                title(it.title)
+            if (it.isActive) {
+                offerItem {
+                    id(it.uid)
+                    onClick { presenter.openOffer(it.uid) }
+                    title(it.title)
+                }
             }
         }
     }
