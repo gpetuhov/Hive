@@ -47,6 +47,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
         user?.offerList?.forEach {
             offerItem {
                 id(it.uid)
+                active(it.isActive)
+                activeVisible(true)
                 title(it.title)
                 onClick { presenter.updateOffer(it.uid) }
             }

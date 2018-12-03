@@ -50,8 +50,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             if (it.isActive) {
                 offerItem {
                     id(it.uid)
-                    onClick { presenter.openOffer(it.uid) }
+                    active(it.isActive)
+                    activeVisible(false)
                     title(it.title)
+                    onClick { presenter.openOffer(it.uid) }
                 }
             }
         }
