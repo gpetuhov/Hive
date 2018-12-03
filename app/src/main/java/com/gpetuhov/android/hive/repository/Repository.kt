@@ -62,6 +62,7 @@ class Repository(private val context: Context) : Repo {
         private const val OFFER_TITLE_KEY = "offer_title"
         private const val OFFER_DESCRIPTION_KEY = "offer_description"
         private const val OFFER_ACTIVE_KEY = "offer_active"
+        private const val OFFER_FREE_KEY = "offer_free"
 
         // Message
         private const val SENDER_UID_KEY = "sender_uid"
@@ -789,6 +790,7 @@ class Repository(private val context: Context) : Repo {
                 val offerTitle = offerMap[OFFER_TITLE_KEY] as String?
                 val offerDescription = offerMap[OFFER_DESCRIPTION_KEY] as String?
                 val offerActive = offerMap[OFFER_ACTIVE_KEY] as Boolean?
+                val offerFree = offerMap[OFFER_FREE_KEY] as Boolean?
 
                 if (offerUid != null
                     && offerUid != ""
@@ -797,8 +799,9 @@ class Repository(private val context: Context) : Repo {
                     && offerDescription != null
                     && offerDescription != ""
                     && offerActive != null
+                    && offerFree != null
                 ) {
-                    val offer = Offer(offerUid, offerTitle, offerDescription, 0.0, false, offerActive)
+                    val offer = Offer(offerUid, offerTitle, offerDescription, 0.0, offerFree, offerActive)
                     offerList.add(offer)
                 }
             }
@@ -1003,6 +1006,7 @@ class Repository(private val context: Context) : Repo {
             offerForSaving[OFFER_TITLE_KEY] = offerItem.title
             offerForSaving[OFFER_DESCRIPTION_KEY] = offerItem.description
             offerForSaving[OFFER_ACTIVE_KEY] = offerItem.isActive
+            offerForSaving[OFFER_FREE_KEY] = offerItem.isFree
 
             offerListForSaving.add(offerForSaving)
         }
