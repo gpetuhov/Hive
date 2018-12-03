@@ -133,6 +133,12 @@ class TestRepository : Repo {
     override fun currentUserOfferList(): MutableList<Offer> = offerList
 
     override fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isSuccess && offer != null) {
+            offerList.add(offer)
+            onSuccess()
+        } else {
+            onError()
+        }
     }
 
     override fun deleteOffer(offerUid: String, onSuccess: () -> Unit, onError: () -> Unit) {

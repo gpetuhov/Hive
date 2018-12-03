@@ -3,8 +3,6 @@ package com.gpetuhov.android.hive.interactors
 import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.DeleteOfferInteractor
-import com.gpetuhov.android.hive.domain.interactor.SaveUsernameInteractor
-import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
