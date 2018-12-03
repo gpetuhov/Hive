@@ -25,7 +25,6 @@ import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
-import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -66,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
     // This is needed to handle back pressed inside fragments
     override fun onBackPressed() {
-        val fragmentList = supportFragmentManager.fragments
+        val fragmentList = nav_host.childFragmentManager.fragments
 
         var handled = false
         for (fragment in fragmentList) {
