@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.offer.update.models
 
+import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import com.airbnb.epoxy.EpoxyAttribute
@@ -15,6 +16,8 @@ abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetails
     @EpoxyAttribute var activeEnabled = false
     @EpoxyAttribute lateinit var onActiveClick: (Boolean) -> Unit
 
+    @EpoxyAttribute var maxActiveWarningVisible = false
+
     @EpoxyAttribute lateinit var title: String
     @EpoxyAttribute lateinit var onTitleClick: () -> Unit
 
@@ -26,6 +29,8 @@ abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetails
         holder.active.isEnabled = activeEnabled
         holder.active.setOnClickListener { view -> onActiveClick((view as SwitchCompat).isChecked) }
 
+        holder.maxActiveWarning.visibility = if (maxActiveWarningVisible) View.VISIBLE else View.GONE
+
         holder.title.text = title
         holder.title.setOnClickListener { onTitleClick() }
 
@@ -36,6 +41,7 @@ abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetails
 
 class UpdateOfferDetailsHolder : KotlinHolder() {
     val active by bind<SwitchCompat>(R.id.update_offer_active)
+    val maxActiveWarning by bind<TextView>(R.id.update_offer_active_max_warning)
     val title by bind<TextView>(R.id.update_offer_title)
     val description by bind<TextView>(R.id.update_offer_description)
 }

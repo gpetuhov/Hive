@@ -41,6 +41,8 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
             activeEnabled(presenter.activeEnabled)
             onActiveClick { isActive -> presenter.onActiveClick(isActive) }
 
+            maxActiveWarningVisible(!presenter.activeEnabled)
+
             title(if (presenter.title != "") presenter.title else context.getString(R.string.add_title))
             onTitleClick { presenter.showTitleDialog() }
 
