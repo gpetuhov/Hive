@@ -36,4 +36,10 @@ class Constants {
             const val IMAGE = "image/jpeg"
         }
     }
+
+    class Offer {
+        companion object {
+            const val MAX_ACTIVE_OFFER_COUNT = 3
+        }
+    }
 }

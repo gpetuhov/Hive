@@ -8,6 +8,7 @@ import com.gpetuhov.android.hive.domain.interactor.SaveOfferInteractor
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
+import com.gpetuhov.android.hive.util.Constants
 import javax.inject.Inject
 
 @InjectViewState
@@ -21,10 +22,12 @@ class UpdateOfferFragmentPresenter :
     var uid = ""
     var title = ""
     var description = ""
+    var active = false
+    var activeEnabled = false
+    var editStarted = false
 
     private var tempTitle = ""
     private var tempDescription = ""
-    private var editStarted = false
 
     private var saveOfferInteractor = SaveOfferInteractor(this)
     private var deleteOfferInteractor = DeleteOfferInteractor(this)
@@ -61,16 +64,31 @@ class UpdateOfferFragmentPresenter :
     // --- Init ---
 
     fun initOffer(offerUid: String) {
+        val offerList = repo.currentUserOfferList()
+        val activeOfferCount = offerList.filter { it.isActive }.size
+        val activeOfferCountLessThanMax = activeOfferCount < Constants.Offer.MAX_ACTIVE_OFFER_COUNT
+
         // Init UI with data from offer, if offer exists (uid not empty)
         // and user has not started editing yet.
-        if (offerUid != "" && !editStarted) {
-            val offerList = repo.currentUserOfferList()
-            val offer = offerList.firstOrNull { it.uid == offerUid }
-            if (offer != null) {
-                uid = offerUid
-                title = offer.title
-                description = offer.description
+        if (offerUid != "") {
+            if (!editStarted) {
+                val offer = offerList.firstOrNull { it.uid == offerUid }
+                if (offer != null) {
+                    uid = offerUid
+                    title = offer.title
+                    description = offer.description
+                    active = offer.isActive
+
+                    // For existing offer enable active switch if active offer count is less than max
+                    // or if offer is already active (to be able to turn it off)
+                    activeEnabled = activeOfferCountLessThanMax || offer.isActive
+                }
             }
+
+        } else {
+            // For new offer set active and enable active switch only if active offer count is less than max
+            active = activeOfferCountLessThanMax
+            activeEnabled = activeOfferCountLessThanMax
         }
     }
 
@@ -123,7 +141,7 @@ class UpdateOfferFragmentPresenter :
     fun saveOffer() {
         viewState.disableButtons()
         viewState.showProgress()
-        saveOfferInteractor.saveOffer(Offer(uid, title, description, 0.0, false, true))
+        saveOfferInteractor.saveOffer(Offer(uid, title, description, 0.0, false, active))
     }
 
     // --- Delete offer ---

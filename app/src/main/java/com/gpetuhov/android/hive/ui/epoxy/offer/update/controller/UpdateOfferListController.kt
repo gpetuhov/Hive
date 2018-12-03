@@ -37,6 +37,13 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
         updateOfferDetails {
             id("update_offer_details")
 
+            active(presenter.active)
+            activeEnabled(presenter.activeEnabled)
+            onActiveClick { isActive ->
+                presenter.active = isActive
+                presenter.editStarted = true
+            }
+
             title(if (presenter.title != "") presenter.title else context.getString(R.string.add_title))
             onTitleClick { presenter.showTitleDialog() }
 
