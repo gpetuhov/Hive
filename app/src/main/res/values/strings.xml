@@ -88,6 +88,7 @@
     <string name="delete_offer_error">Error deleting offer</string>
     <string name="quit">Quit</string>
     <string name="quit_offer_update_prompt">Quit updating offer? All changes will be lost</string>
+    <string name="offer_is_active">Offer is active</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Provided by</string>
