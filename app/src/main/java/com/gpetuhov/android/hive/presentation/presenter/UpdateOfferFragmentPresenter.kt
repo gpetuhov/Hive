@@ -24,10 +24,10 @@ class UpdateOfferFragmentPresenter :
     var description = ""
     var active = false
     var activeEnabled = false
-    var editStarted = false
 
     private var tempTitle = ""
     private var tempDescription = ""
+    private var editStarted = false
 
     private var saveOfferInteractor = SaveOfferInteractor(this)
     private var deleteOfferInteractor = DeleteOfferInteractor(this)
@@ -178,6 +178,15 @@ class UpdateOfferFragmentPresenter :
     }
 
     fun quitOfferUpdateCancel() = viewState.dismissQuitOfferUpdateDialog()
+
+    // === Offer is active ===
+
+    fun onActiveClick(isActive: Boolean) {
+        if (activeEnabled) {
+            active = isActive
+            editStarted = true
+        }
+    }
 
     // === Private methods ===
 
