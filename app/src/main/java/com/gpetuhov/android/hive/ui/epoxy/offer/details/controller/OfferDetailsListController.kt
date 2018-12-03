@@ -32,22 +32,26 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
         offerDetailsTitle {
             id("offer_details_title")
-            title(offer?.title ?: "")
+            title(offer?.title ?: context.getString(R.string.offer_deleted))
         }
 
-        offerDetailsUser {
-            id("offer_details_user")
-            onClick { presenter.openUserDetails() }
-            userPicUrl(user?.userPicUrl ?: "")
+        // Offer can become null if deleted by offer provider,
+        // when we are inside offer details.
+        if (offer != null) {
+            offerDetailsUser {
+                id("offer_details_user")
+                onClick { presenter.openUserDetails() }
+                userPicUrl(user?.userPicUrl ?: "")
 
-            val providedBy = context.getString(R.string.provided_by)
-            val username = user?.getUsernameOrName() ?: ""
-            username("$providedBy $username")
-        }
+                val providedBy = context.getString(R.string.provided_by)
+                val username = user?.getUsernameOrName() ?: ""
+                username("$providedBy $username")
+            }
 
-        offerDetailsDetails {
-            id("offer_details_details")
-            description(offer?.description ?: "")
+            offerDetailsDetails {
+                id("offer_details_details")
+                description(offer?.description ?: "")
+            }
         }
     }
 

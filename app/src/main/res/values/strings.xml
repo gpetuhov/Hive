@@ -89,6 +89,7 @@
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Provided by</string>
+    <string name="offer_deleted">Offer has been deleted</string>
 
     <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>
