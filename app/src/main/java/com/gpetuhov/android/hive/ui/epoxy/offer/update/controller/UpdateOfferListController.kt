@@ -7,6 +7,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
+import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferPrice
 import javax.inject.Inject
 
 class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresenter) : EpoxyController() {
@@ -48,6 +49,16 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
 
             description(if (presenter.description != "") presenter.description else context.getString(R.string.add_description))
             onDescriptionClick { presenter.showDescriptionDialog() }
+        }
+
+        updateOfferPrice {
+            id("update_offer_price")
+
+            // TODO: implement this
+            free(false)
+            onFreeClick {  }
+            price("150")
+            onPriceClick {  }
         }
     }
 

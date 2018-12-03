@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp">
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/md_grey_300"/>
+
+    <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/update_offer_free"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/free"
+            android:layout_marginTop="16dp"
+            android:checked="true"
+            style="@style/basicTextStyle"/>
+
+    <LinearLayout
+            android:id="@+id/update_offer_price_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price_usd"
+                style="@style/basicTextStyle"/>
+
+        <TextView
+                android:id="@+id/update_offer_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="0dp"
+                style="@style/basicTextStyle"
+                tools:text="15"/>
+
+    </LinearLayout>
+
+</LinearLayout>
