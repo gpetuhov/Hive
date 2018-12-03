@@ -150,14 +150,10 @@ class UpdateOfferFragmentPresenter :
 
     fun quitOfferUpdate() {
         viewState.dismissQuitOfferUpdateDialog()
-        navigateUp()
+        viewState.navigateUp()
     }
 
     fun quitOfferUpdateCancel() = viewState.dismissQuitOfferUpdateDialog()
-
-    // --- Navigate up ---
-
-    fun navigateUp() = viewState.navigateUp()
 
     // === Private methods ===
 

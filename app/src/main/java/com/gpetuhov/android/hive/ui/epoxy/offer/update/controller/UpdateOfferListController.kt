@@ -24,7 +24,7 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
         updateOfferHeader {
             id("update_offer_header")
 
-            onBackButtonClick { presenter.navigateUp() }
+            onBackButtonClick { presenter.showQuitOfferUpdateDialog() }
 
             deleteButtonVisible(presenter.uid != "")
             deleteButtonEnabled(deleteButtonEnabled)
