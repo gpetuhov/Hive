@@ -146,11 +146,17 @@ class UpdateOfferFragmentPresenter :
 
     // --- Quit offer update
 
-    fun showQuitOfferUpdateDialog() = viewState.showQuitOfferUpdateDialog()
+    fun showQuitOfferUpdateDialog() {
+        if (editStarted) {
+            viewState.showQuitOfferUpdateDialog()
+        } else {
+            navigateUp()
+        }
+    }
 
     fun quitOfferUpdate() {
         viewState.dismissQuitOfferUpdateDialog()
-        viewState.navigateUp()
+        navigateUp()
     }
 
     fun quitOfferUpdateCancel() = viewState.dismissQuitOfferUpdateDialog()
@@ -165,4 +171,6 @@ class UpdateOfferFragmentPresenter :
         viewState.enableButtons()
         viewState.hideProgress()
     }
+
+    private fun navigateUp() = viewState.navigateUp()
 }
