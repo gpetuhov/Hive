@@ -31,6 +31,7 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
     private var titleDialog: MaterialDialog? = null
     private var descriptionDialog: MaterialDialog? = null
+    private var deleteOfferDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -86,17 +87,17 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
 
     override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
 
-    override fun onOperationStart() {
-        progressVisible(true)
-        saveButtonEnabled(false)
-        deleteButtonEnabled(false)
-    }
+    override fun disableButtons() = saveDeleteButtonsEnabled(false)
 
-    override fun onOperationComplete() {
-        progressVisible(false)
-        saveButtonEnabled(true)
-        deleteButtonEnabled(true)
-    }
+    override fun enableButtons() = saveDeleteButtonsEnabled(true)
+
+    override fun showProgress() = progressVisible(true)
+
+    override fun hideProgress() = progressVisible(false)
+
+    override fun showDeleteOfferDialog() = deleteOfferDialog?.show() ?: Unit
+
+    override fun dismissDeleteOfferDialog() = deleteOfferDialog?.dismiss() ?: Unit
 
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
@@ -114,6 +115,7 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
     private fun initDialogs() {
         initTitleDialog()
         initDescriptionDialog()
+        initDeleteOfferDialog()
     }
 
     private fun initTitleDialog() {
@@ -148,14 +150,28 @@ class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
         }
     }
 
+    private fun initDeleteOfferDialog() {
+        if (context != null) {
+            deleteOfferDialog = MaterialDialog(context!!)
+                .title(R.string.delete_offer)
+                .message(R.string.prompt_delete_offer)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton { presenter.deleteOffer() }
+                .negativeButton { presenter.deleteOfferCancel() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissTitleDialog()
         dismissDescriptionDialog()
+        dismissDeleteOfferDialog()
     }
 
-    private fun saveButtonEnabled(isEnabled: Boolean) = controller?.saveButtonEnabled(isEnabled)
-
-    private fun deleteButtonEnabled(isEnabled: Boolean) = controller?.deleteButtonEnabled(isEnabled)
+    private fun saveDeleteButtonsEnabled(isEnabled: Boolean) {
+        controller?.saveButtonEnabled(isEnabled)
+        controller?.deleteButtonEnabled(isEnabled)
+    }
 
     private fun progressVisible(isVisible: Boolean) {
         update_offer_progress.visibility = if (isVisible) View.VISIBLE else View.GONE
