@@ -54,11 +54,11 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
         updateOfferPrice {
             id("update_offer_price")
 
-            // TODO: implement this
-            free(false)
-            onFreeClick {  }
-            price("150")
-            onPriceClick {  }
+            free(presenter.free)
+            onFreeClick { isFree -> presenter.onFreeClick(isFree) }
+
+            price(presenter.price.toString())
+            onPriceClick { presenter.showPriceDialog() }
         }
     }
 

@@ -24,6 +24,8 @@ class UpdateOfferFragmentPresenter :
     var description = ""
     var active = false
     var activeEnabled = false
+    var free = true
+    var price = 0.0
 
     private var tempTitle = ""
     private var tempDescription = ""
@@ -78,6 +80,8 @@ class UpdateOfferFragmentPresenter :
                     title = offer.title
                     description = offer.description
                     active = offer.isActive
+                    free = offer.isFree
+                    price = offer.price
 
                     // For existing offer enable active switch if active offer count is less than max
                     // or if offer is already active (to be able to turn it off)
@@ -141,7 +145,7 @@ class UpdateOfferFragmentPresenter :
     fun saveOffer() {
         viewState.disableButtons()
         viewState.showProgress()
-        saveOfferInteractor.saveOffer(Offer(uid, title, description, 0.0, false, active))
+        saveOfferInteractor.saveOffer(Offer(uid, title, description, price, free, active))
     }
 
     // --- Delete offer ---
@@ -186,6 +190,18 @@ class UpdateOfferFragmentPresenter :
             active = isActive
             editStarted = true
         }
+    }
+
+    // === Price ===
+
+    fun onFreeClick(isFree: Boolean) {
+        free = isFree
+        editStarted = true
+        updateUI()
+    }
+
+    fun showPriceDialog() {
+        // TODO: implement this
     }
 
     // === Private methods ===
