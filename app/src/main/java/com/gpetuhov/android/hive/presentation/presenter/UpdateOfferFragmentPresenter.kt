@@ -144,9 +144,19 @@ class UpdateOfferFragmentPresenter :
         viewState.dismissDeleteOfferDialog()
     }
 
+    // --- Quit offer update
+
+    fun showQuitOfferUpdateDialog() = viewState.showQuitOfferUpdateDialog()
+
+    fun quitOfferUpdate() {
+        viewState.dismissQuitOfferUpdateDialog()
+        navigateUp()
+    }
+
+    fun quitOfferUpdateCancel() = viewState.dismissQuitOfferUpdateDialog()
+
     // --- Navigate up ---
 
-    // TODO: show "Are you sure?" dialog here
     fun navigateUp() = viewState.navigateUp()
 
     // === Private methods ===

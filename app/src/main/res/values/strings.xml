@@ -86,6 +86,8 @@
     <string name="description_empty_error">Please, add offer description</string>
     <string name="prompt_delete_offer">Do you really want to delete this offer?</string>
     <string name="delete_offer_error">Error deleting offer</string>
+    <string name="quit">Quit</string>
+    <string name="quit_offer_update_prompt">Quit updating offer? All changes will be lost</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Provided by</string>

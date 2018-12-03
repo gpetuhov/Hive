@@ -6,5 +6,5 @@ import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 open class BaseFragment : MvpAppCompatFragment() {
 
     // Return true if back button click is handled by fragment
-    fun onBackPressed() = false
+    open fun onBackPressed() = false
 }

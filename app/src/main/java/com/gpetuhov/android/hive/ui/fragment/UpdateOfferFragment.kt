@@ -31,6 +31,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     private var titleDialog: MaterialDialog? = null
     private var descriptionDialog: MaterialDialog? = null
     private var deleteOfferDialog: MaterialDialog? = null
+    private var quitDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -62,6 +63,11 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         // Here we intentially dismiss dialogs directly, not via the presenter,
         // so that Moxy command queue doesn't change.
         dismissDialogs()
+    }
+
+    override fun onBackPressed(): Boolean {
+        presenter.showQuitOfferUpdateDialog()
+        return true
     }
 
     // === UpdateOfferFragmentView ===
@@ -98,6 +104,10 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
     override fun dismissDeleteOfferDialog() = deleteOfferDialog?.dismiss() ?: Unit
 
+    override fun showQuitOfferUpdateDialog() = quitDialog?.show() ?: Unit
+
+    override fun dismissQuitOfferUpdateDialog() = quitDialog?.dismiss() ?: Unit
+
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {
@@ -115,6 +125,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         initTitleDialog()
         initDescriptionDialog()
         initDeleteOfferDialog()
+        initQuitDialog()
     }
 
     private fun initTitleDialog() {
@@ -161,10 +172,23 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         }
     }
 
+    private fun initQuitDialog() {
+        if (context != null) {
+            quitDialog = MaterialDialog(context!!)
+                .title(R.string.quit)
+                .message(R.string.quit_offer_update_prompt)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton { presenter.quitOfferUpdate() }
+                .negativeButton { presenter.quitOfferUpdateCancel() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissTitleDialog()
         dismissDescriptionDialog()
         dismissDeleteOfferDialog()
+        dismissQuitOfferUpdateDialog()
     }
 
     private fun saveDeleteButtonsEnabled(isEnabled: Boolean) {
