@@ -16,7 +16,6 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.MapFragmentView
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
-import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_map.*
 import android.view.inputmethod.EditorInfo
@@ -27,7 +26,7 @@ import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 
 
-class MapFragment : MvpAppCompatFragment(), MapFragmentView {
+class MapFragment : BaseFragment(), MapFragmentView {
 
     @InjectPresenter lateinit var presenter: MapFragmentPresenter
 

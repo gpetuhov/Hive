@@ -18,11 +18,10 @@ import com.gpetuhov.android.hive.presentation.view.OfferDetailsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.controller.OfferDetailsListController
 import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
-import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 
-class OfferDetailsFragment : MvpAppCompatFragment(), OfferDetailsFragmentView {
+class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: OfferDetailsFragmentPresenter
 

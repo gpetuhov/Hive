@@ -20,12 +20,11 @@ import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.util.*
-import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
 import timber.log.Timber
 
-class ChatFragment : MvpAppCompatFragment(), ChatFragmentView {
+class ChatFragment : BaseFragment(), ChatFragmentView {
 
     companion object {
         private const val TAG = "ChatFragment"

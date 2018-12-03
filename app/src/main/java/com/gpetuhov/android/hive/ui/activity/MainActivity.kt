@@ -18,12 +18,14 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.managers.NotificationManager
+import com.gpetuhov.android.hive.ui.fragment.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UnreadMessagesExistViewModel
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.toast
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -60,6 +62,22 @@ class MainActivity : AppCompatActivity() {
         viewModel.unreadMessagesExist.observe(this, Observer<Boolean> { unreadMessagesExist ->
             updateMessagesIcon(unreadMessagesExist)
         })
+    }
+
+    // This is needed to handle back pressed inside fragments
+    override fun onBackPressed() {
+        val fragmentList = supportFragmentManager.fragments
+
+        var handled = false
+        for (fragment in fragmentList) {
+            if (fragment is BaseFragment && fragment.userVisibleHint) {
+                handled = fragment.onBackPressed()
+
+                if (handled) break
+            }
+        }
+
+        if (!handled) super.onBackPressed()
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()

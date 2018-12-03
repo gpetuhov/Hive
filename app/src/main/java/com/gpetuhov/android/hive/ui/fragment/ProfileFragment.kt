@@ -22,10 +22,9 @@ import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListController
 import com.gpetuhov.android.hive.util.*
-import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.pawegio.kandroid.toast
 
-class ProfileFragment : MvpAppCompatFragment(), ProfileFragmentView {
+class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     companion object {
         private const val RC_PHOTO_PICKER = 1001

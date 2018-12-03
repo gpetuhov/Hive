@@ -21,12 +21,11 @@ import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
 import com.gpetuhov.android.hive.ui.recycler.SimpleItemDecoration
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
-import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_chatrooms.*
 
-class ChatroomsFragment : MvpAppCompatFragment(), ChatroomsFragmentView {
+class ChatroomsFragment : BaseFragment(), ChatroomsFragmentView {
 
     @InjectPresenter lateinit var presenter: ChatroomsFragmentPresenter
 

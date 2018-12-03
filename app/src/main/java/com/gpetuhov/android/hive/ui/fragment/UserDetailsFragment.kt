@@ -18,12 +18,11 @@ import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.user.controller.UserDetailsListController
 import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
-import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 
 // Shows user details on map marker click
-class UserDetailsFragment : MvpAppCompatFragment(), UserDetailsFragmentView {
+class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: UserDetailsFragmentPresenter
 

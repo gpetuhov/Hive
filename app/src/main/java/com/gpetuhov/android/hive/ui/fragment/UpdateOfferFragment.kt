@@ -17,13 +17,12 @@ import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferListController
 import com.gpetuhov.android.hive.util.hideSoftKeyboard
 import com.gpetuhov.android.hive.util.hideToolbar
-import com.gpetuhov.android.hive.util.moxy.MvpAppCompatFragment
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_update_offer.*
 
-class UpdateOfferFragment : MvpAppCompatFragment(), UpdateOfferFragmentView {
+class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
     @InjectPresenter lateinit var presenter: UpdateOfferFragmentPresenter
 
