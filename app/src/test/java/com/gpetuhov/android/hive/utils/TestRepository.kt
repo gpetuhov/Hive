@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.domain.model.Message
+import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 
@@ -14,6 +15,7 @@ class TestRepository : Repo {
     var description = ""
     var isOnline = false
     var messageText = ""
+    var offerList = mutableListOf<Offer>()
 
     override fun isForeground() = false
 
@@ -126,5 +128,19 @@ class TestRepository : Repo {
     }
 
     override fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit) {
+    }
+
+    override fun currentUserOfferList(): MutableList<Offer> = offerList
+
+    override fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit) {
+    }
+
+    override fun deleteOffer(offerUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isSuccess) {
+            offerList.clear()
+            onSuccess()
+        } else {
+            onError()
+        }
     }
 }

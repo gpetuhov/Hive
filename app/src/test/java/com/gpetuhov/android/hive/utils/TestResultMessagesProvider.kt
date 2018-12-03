@@ -19,5 +19,13 @@ class TestResultMessagesProvider : ResultMessages {
 
     override fun getSendMessageErrorMessage(): String = Constants.SEND_MESSAGE_ERROR
 
+    override fun getSaveOfferErrorMessage(): String = Constants.SAVE_OFFER_ERROR
+
+    override fun getOfferEmptyTitleErrorMessage(): String = Constants.SAVE_OFFER_TITLE_ERROR
+
+    override fun getOfferEmptyDescriptionErrorMessage(): String = Constants.SAVE_OFFER_DESCRIPTION_ERROR
+
+    override fun getDeleteOfferErrorMessage(): String = Constants.DELETE_OFFER_ERROR
+
     override fun getChangeUserPicErrorMessage(): String = ""
 }

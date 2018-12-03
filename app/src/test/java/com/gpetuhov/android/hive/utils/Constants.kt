@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.utils
 
+import com.gpetuhov.android.hive.domain.model.Offer
+
 class Constants {
     companion object {
         const val DELETE_USER_SUCCESS = "Delete user success"
@@ -17,5 +19,13 @@ class Constants {
 
         const val DUMMY_MESSAGE_TEXT = "Dummy message text"
         const val SEND_MESSAGE_ERROR = "Send message error"
+
+        val DUMMY_OFFER = Offer("2g5g2g", "dfgfdg", "ddsfdfs", 0.0, false, true)
+
+        const val SAVE_OFFER_ERROR = "Save offer error"
+        const val SAVE_OFFER_TITLE_ERROR = "Save offer title error"
+        const val SAVE_OFFER_DESCRIPTION_ERROR = "Save offer description error"
+
+        const val DELETE_OFFER_ERROR = "Delete offer error"
     }
 }
