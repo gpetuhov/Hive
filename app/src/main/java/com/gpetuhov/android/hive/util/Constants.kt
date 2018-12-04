@@ -14,6 +14,7 @@ class Constants {
             const val DEFAULT_TILT = 0.0F
             const val DEFAULT_RADIUS = 1.0
             val DEFAULT_LOCATION = LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
+            const val MAX_OFFER_TITLE_LENGTH = 30
         }
     }
 
