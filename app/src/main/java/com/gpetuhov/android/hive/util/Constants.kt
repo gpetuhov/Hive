@@ -39,6 +39,8 @@ class Constants {
 
     class Offer {
         companion object {
+            const val MAX_TITLE_LENGTH = 70
+            const val MAX_DESCRIPTION_LENGTH = 255
             const val MAX_ACTIVE_OFFER_COUNT = 3
             const val DEFAULT_PRICE = 0.01
         }

@@ -17,10 +17,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferListController
-import com.gpetuhov.android.hive.util.hideSoftKeyboard
-import com.gpetuhov.android.hive.util.hideToolbar
-import com.gpetuhov.android.hive.util.setActivitySoftInputPan
-import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.gpetuhov.android.hive.util.*
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_update_offer.*
 
@@ -148,8 +145,15 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
                 .title(R.string.offer_title)
                 .noAutoDismiss()
                 .cancelable(false)
-                .input(hintRes = R.string.add_title, waitForPositiveButton = false) { dialog, text ->
-                    presenter.updateTempTitle(text.toString())
+                .input(
+                    maxLength = Constants.Offer.MAX_TITLE_LENGTH,
+                    hintRes = R.string.add_title,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    val positiveButtonEnabled = inputText.length <= Constants.Offer.MAX_TITLE_LENGTH
+                    presenter.updateTempTitle(inputText)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
                 }
                 .positiveButton { presenter.saveTitle() }
                 .negativeButton { presenter.dismissTitleDialog() }
@@ -163,11 +167,15 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
                 .noAutoDismiss()
                 .cancelable(false)
                 .input(
+                    maxLength = Constants.Offer.MAX_DESCRIPTION_LENGTH,
                     inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE,
                     hintRes = R.string.add_description,
                     waitForPositiveButton = false
                 ) { dialog, text ->
-                    presenter.updateTempDescription(text.toString())
+                    val inputText = text.toString()
+                    val positiveButtonEnabled = inputText.length <= Constants.Offer.MAX_DESCRIPTION_LENGTH
+                    presenter.updateTempDescription(inputText)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
                 }
                 .positiveButton { presenter.saveDescription() }
                 .negativeButton { presenter.dismissDescriptionDialog() }
