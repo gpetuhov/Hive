@@ -160,9 +160,8 @@ class ProfileFragmentPresenter :
 
     fun choosePhoto() = viewState.choosePhoto()
 
-    fun addPhoto(selectedImageUri: Uri) {
-        // TODO: implement this
-    }
+    // TODO: add on error
+    fun addPhoto(selectedImageUri: Uri) = repo.addUserPhoto(selectedImageUri) { }
 
     // === Private methods ===
 

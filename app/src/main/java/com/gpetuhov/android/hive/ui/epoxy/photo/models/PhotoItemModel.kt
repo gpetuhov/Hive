@@ -4,9 +4,9 @@ import android.widget.ImageView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
+import com.bumptech.glide.Glide
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
-import com.gpetuhov.android.hive.util.updateUserPic
 
 @EpoxyModelClass(layout = R.layout.photo_item_view)
 abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemHolder>() {
@@ -14,7 +14,11 @@ abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemHolder>() {
     @EpoxyAttribute lateinit var photoUrl: String
 
     override fun bind(holder: PhotoItemHolder) {
-        updateUserPic(holder.photo.context, photoUrl, holder.photo)
+        if (photoUrl != "") {
+            Glide.with(holder.photo.context)
+                .load(photoUrl)
+                .into(holder.photo)
+        }
     }
 }
 

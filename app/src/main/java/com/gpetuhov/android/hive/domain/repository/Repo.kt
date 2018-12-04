@@ -69,4 +69,7 @@ interface Repo {
     fun currentUserOfferList(): MutableList<Offer>
     fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit)
     fun deleteOffer(offerUid: String, onSuccess: () -> Unit, onError: () -> Unit)
+
+    // User photo
+    fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit)
 }

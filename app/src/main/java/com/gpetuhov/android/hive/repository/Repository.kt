@@ -53,6 +53,7 @@ class Repository(private val context: Context) : Repo {
         private const val DESCRIPTION_KEY = "description"
         private const val USER_PIC_URL_KEY = "userPicUrl"
         private const val OFFER_LIST_KEY = "offerList"
+        private const val PHOTO_LIST_KEY = "photoList"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
         private const val FCM_TOKEN_KEY = "fcm_token"
@@ -88,6 +89,9 @@ class Repository(private val context: Context) : Repo {
 
         // User pic
         private const val USER_PIC_SIZE = 100
+
+        // User photo
+        private const val USER_PHOTO_SIZE = 600
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -532,7 +536,7 @@ class Repository(private val context: Context) : Repo {
 
     override fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit) {
         if (isAuthorized) {
-            // This is because resizeImage() must run in background
+            // This is because resizeUserPic() must run in background
             GlobalScope.launch {
                 // Get reference to current user's pic in Cloud Storage
                 // (every user has his own folder with the same name as user's uid).
@@ -541,7 +545,7 @@ class Repository(private val context: Context) : Repo {
                 val userPicRef = storage.reference.child("${currentUserUid()}/userpic.jpg")
 
                 // Resize selected image
-                val byteArray = resizeImage(selectedImageUri)
+                val byteArray = resizeUserPic(selectedImageUri)
 
                 // Upload resized image to Cloud Storage
                 if (byteArray != null) {
@@ -591,6 +595,31 @@ class Repository(private val context: Context) : Repo {
             val offerList = currentUserOfferList()
             updateOfferList(offerList, offerUid) { offerIndex -> offerList.removeAt(offerIndex) }
             saveOfferList(offerList, onSuccess, onError)
+
+        } else {
+            onError()
+        }
+    }
+
+    // === User photo ===
+
+    override fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit) {
+        if (isAuthorized) {
+            GlobalScope.launch {
+                val photoFileName = UUID.randomUUID()
+                val userPicRef = storage.reference.child("${currentUserUid()}/user_photos/$photoFileName.jpg")
+
+                val byteArray = resizeUserPhoto(selectedImageUri)
+
+                if (byteArray != null) {
+                    userPicRef.putBytes(byteArray)
+                        .addOnFailureListener { onError() }
+                        .addOnSuccessListener { getDownloadUrlAndSaveUserPhotos(userPicRef, onError) }
+
+                } else {
+                    onError()
+                }
+            }
 
         } else {
             onError()
@@ -762,6 +791,7 @@ class Repository(private val context: Context) : Repo {
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc)
+        user.photoList = getPhotoListFromDocumentSnapshot(doc)
 
         return user
     }
@@ -811,6 +841,24 @@ class Repository(private val context: Context) : Repo {
         }
 
         return offerList
+    }
+
+    private fun getPhotoListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<String> {
+        val photoSnapshotList = doc.get(PHOTO_LIST_KEY) as List<*>?
+
+        val photoList = mutableListOf<String>()
+
+        if (photoSnapshotList != null) {
+            for (photoSnapshot in photoSnapshotList) {
+                val photoUrl = photoSnapshot as String?
+
+                if (photoUrl != null && photoUrl != "") {
+                    photoList.add(photoUrl)
+                }
+            }
+        }
+
+        return photoList
     }
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""
@@ -970,7 +1018,7 @@ class Repository(private val context: Context) : Repo {
     // --- User pic ---
 
     // Resize selected image to take less space and traffic
-    private fun resizeImage(selectedImageUri: Uri): ByteArray? {
+    private fun resizeUserPic(selectedImageUri: Uri): ByteArray? {
         try {
             // Resize image.
             // This must run in background!
@@ -1037,5 +1085,57 @@ class Repository(private val context: Context) : Repo {
         data[OFFER_LIST_KEY] = offerListForSaving
 
         saveUserDataRemote(data, onSuccess, onError)
+    }
+
+    // --- User photo ---
+
+    private fun currentUserPhotoList() = currentUser.value?.photoList ?: mutableListOf()
+
+    private fun getDownloadUrlAndSaveUserPhotos(userPicRef: StorageReference, onError: () -> Unit) {
+        userPicRef.downloadUrl
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    Timber.tag(TAG).d("Download url = $downloadUri")
+                    saveUserPhotoUrl(downloadUri.toString())
+
+                } else {
+                    onError()
+                }
+            }
+    }
+
+    private fun saveUserPhotoUrl(photoUrl: String) {
+        val photoList = currentUserPhotoList()
+
+        if (!photoList.contains(photoUrl)) {
+            photoList.add(photoUrl)
+
+            val data = HashMap<String, Any>()
+            data[PHOTO_LIST_KEY] = photoList
+
+            saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        }
+    }
+
+    private fun resizeUserPhoto(selectedImageUri: Uri): ByteArray? {
+        try {
+            // Resize image.
+            // This must run in background!
+            val bitmap = Glide.with(context)
+                .asBitmap()
+                .load(selectedImageUri)
+                .apply(RequestOptions().override(USER_PHOTO_SIZE).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                .submit().get()
+
+            // Compress into JPEG
+            val outStream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
+
+            return outStream.toByteArray()
+
+        } catch (e: Exception) {
+            return null
+        }
     }
 }
