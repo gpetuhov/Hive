@@ -34,7 +34,7 @@ class MapManager {
         fun onMaxZoom()
         fun onNormalZoom()
         fun onCameraIdle(latitude: Double, longitude: Double, radius: Double)
-        fun showDetails(uid: String)
+        fun showDetails(userUid: String, offerUid: String)
     }
 
     companion object {
@@ -123,7 +123,7 @@ class MapManager {
             val offerUid = markerInfo[OFFER_UID_KEY] as String?
 
             if (userUid != null && !userUid.isEmpty()) {
-                callback.showDetails(userUid)
+                callback.showDetails(userUid, offerUid ?: "")
             }
 
             true
@@ -153,11 +153,14 @@ class MapManager {
 //
 //            val iconBitmap = iconGenerator.makeIcon("${name} \n$status")
 
+            // Contains user and offer uid of the corresponding marker
+            // (this is needed to open user or offer details on marker click)
             val markerInfo = mutableMapOf<String, String>()
             markerInfo[USER_UID_KEY] = user.uid
 
             val markerText = if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
                 // User contains offer that corresponds to search query text
+                // Show this offer on map and include in marker info
                 val offer = offerList[offerSearchResultIndex]
                 markerInfo[OFFER_UID_KEY] = offer.uid
 
@@ -166,6 +169,8 @@ class MapManager {
                 "$offerTitle \n$offerPrice"
 
             } else {
+                // User does not contain offer that corresponds to search query,
+                // just show user name.
                 name
             }
 

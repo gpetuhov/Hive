@@ -149,8 +149,12 @@ class MapFragment : BaseFragment(), MapFragmentView {
         zoomOutEnabled(true)
     }
 
-    override fun showDetails(uid: String) {
-        val action = MapFragmentDirections.actionNavigationSearchToUserDetailsFragment()
+    override fun showDetails(userUid: String, offerUid: String) {
+        // If offer uid not empty, open offer details.
+        // Otherwise, open user details
+        val action = if(offerUid != "") MapFragmentDirections.actionNavigationSearchToOfferDetailsFragment(offerUid)
+        else MapFragmentDirections.actionNavigationSearchToUserDetailsFragment()
+
         findNavController().navigate(action)
     }
 
