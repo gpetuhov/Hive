@@ -14,6 +14,7 @@ import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ui.IconGenerator
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.util.Constants
@@ -158,14 +159,10 @@ class MapManager {
             val markerText = if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
                 // User contains offer that corresponds to search query text
                 val offer = offerList[offerSearchResultIndex]
-
-                val offerTitle = if (offer.title.length <= Constants.Map.MAX_OFFER_TITLE_LENGTH) offer.title
-                else "${offer.title.substring(0, Constants.Map.MAX_OFFER_TITLE_LENGTH)}..."
-
-                val offerPrice = if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD"
-
                 markerInfo[OFFER_UID_KEY] = offer.uid
 
+                val offerTitle = getOfferTitle(offer)
+                val offerPrice = getOfferPrice(offer)
                 "$offerTitle \n$offerPrice"
 
             } else {
@@ -301,6 +298,14 @@ class MapManager {
 
     private fun zoom(zoom: Float) =
         animateCamera(CameraPosition.Builder(googleMap.cameraPosition).zoom(zoom).build())
+
+    private fun getOfferTitle(offer: Offer): String {
+        return if (offer.title.length <= Constants.Map.MAX_OFFER_TITLE_LENGTH) offer.title
+        else "${offer.title.substring(0, Constants.Map.MAX_OFFER_TITLE_LENGTH)}..."
+    }
+
+    private fun getOfferPrice(offer: Offer): String =
+        if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD"
 
     // === Inner classes ===
 
