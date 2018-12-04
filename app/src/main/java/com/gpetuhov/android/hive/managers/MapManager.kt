@@ -45,6 +45,8 @@ class MapManager {
         private const val BEARING = "bearing"
         private const val MAPTYPE = "maptype"
         private const val QUERY_TEXT = "queryText"
+        private const val USER_UID_KEY = "user_uid"
+        private const val OFFER_UID_KEY = "offer_uid"
     }
 
     @Inject lateinit var context: Context
@@ -113,8 +115,16 @@ class MapManager {
         }
 
         googleMap.setOnMarkerClickListener { marker ->
-            Timber.tag(TAG).d("Clicked on uid = ${marker.title}")
-            callback.showDetails(marker.title)
+            val markerInfo = marker.tag as MutableMap<*, *>
+            Timber.tag(TAG).d("Clicked on marker = $markerInfo")
+
+            val userUid = markerInfo[USER_UID_KEY] as String?
+            val offerUid = markerInfo[OFFER_UID_KEY] as String?
+
+            if (userUid != null && !userUid.isEmpty()) {
+                callback.showDetails(userUid)
+            }
+
             true
         }
     }
@@ -129,6 +139,8 @@ class MapManager {
             val statusId = if (user.isOnline) R.string.online else R.string.offline
             val status = context.getString(statusId)
             val name = user.getUsernameOrName()
+            val offerList = user.offerList
+            val offerSearchResultIndex = user.offerSearchResultIndex
 
             val iconGenerator = IconGenerator(context)
 
@@ -147,14 +159,28 @@ class MapManager {
 //                iconGenerator.makeIcon(name)
 //            }
 
-            val iconBitmap = iconGenerator.makeIcon(name)
+            val markerInfo = mutableMapOf<String, String>()
+            markerInfo[USER_UID_KEY] = user.uid
 
-            googleMap.addMarker(
+            val markerText = if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
+                // User contains offer that corresponds to search query text
+                val offer = offerList[offerSearchResultIndex]
+                markerInfo[OFFER_UID_KEY] = offer.uid
+                "${offer.title} \n${offer.price}"
+
+            } else {
+                name
+            }
+
+            val iconBitmap = iconGenerator.makeIcon(markerText)
+
+            val marker = googleMap.addMarker(
                 MarkerOptions()
                     .position(user.location)
-                    .title(user.uid)
                     .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
             )
+
+            marker.tag = markerInfo
         }
     }
 
