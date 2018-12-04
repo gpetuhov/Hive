@@ -6,10 +6,13 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.OfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
+import com.gpetuhov.android.hive.ui.epoxy.util.carousel
+import com.gpetuhov.android.hive.ui.epoxy.util.withModelsFrom
 import java.util.*
 import javax.inject.Inject
 
@@ -26,6 +29,23 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
     }
 
     override fun buildModels() {
+        carousel {
+            id("photo_carousel")
+
+            numViewsToShowOnScreen(1.0F)
+
+            withModelsFrom(user?.offerList ?: mutableListOf()) {
+                OfferItemModel_()
+                    .id(it.uid)
+                    .active(it.isActive)
+                    .activeVisible(true)
+                    .title(it.title)
+                    .free(it.isFree)
+                    .price(if (it.isFree) context.getString(R.string.free_caps) else "${it.price} USD")
+                    .onClick { presenter.updateOffer(it.uid) }
+            }
+        }
+
         details {
             id("details")
 
