@@ -211,20 +211,34 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
                 ) { dialog, text ->
                     val inputField = dialog.getInputField()
 
+                    var positiveButtonEnabled: Boolean
+                    var error: String? = null
+
                     val isEmpty = text.toString().isEmpty()
-                    var isValid = true
 
                     if (!isEmpty) {
-                        isValid = try {
-                            presenter.updateTempPrice(text.toString().toDouble())
-                            true
+                        try {
+                            val number = text.toString().toDouble()
+
+                            if (number >= 0.01) {
+                                presenter.updateTempPrice(number)
+                                positiveButtonEnabled = true
+                            } else {
+                                error = "Must be greater than 0.01"
+                                positiveButtonEnabled = false
+                            }
+
                         } catch (e: Exception) {
-                            false
+                            error = "Not a number"
+                            positiveButtonEnabled = false
                         }
+
+                    } else {
+                        positiveButtonEnabled = false
                     }
 
-                    inputField?.error = if (isValid) null else "Not a number"
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid && !isEmpty)
+                    inputField?.error = error
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
                 }
                 .positiveButton { presenter.savePrice() }
                 .negativeButton { presenter.dismissPriceDialog() }
