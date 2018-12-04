@@ -67,7 +67,7 @@ interface ProfileFragmentView : MvpView {
     // === Add photo ===
 
     @StateStrategyType(SkipStrategy::class)
-    fun addPhoto()
+    fun choosePhoto()
 
     // === Common ===
 

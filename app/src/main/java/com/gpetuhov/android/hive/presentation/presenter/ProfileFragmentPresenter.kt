@@ -158,7 +158,11 @@ class ProfileFragmentPresenter :
 
     // --- Add photo ---
 
-    fun addPhoto() = viewState.addPhoto()
+    fun choosePhoto() = viewState.choosePhoto()
+
+    fun addPhoto(selectedImageUri: Uri) {
+        // TODO: implement this
+    }
 
     // === Private methods ===
 

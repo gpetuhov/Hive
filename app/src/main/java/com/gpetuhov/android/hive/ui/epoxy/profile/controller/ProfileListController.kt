@@ -48,7 +48,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
         addPhoto {
             id("addPhoto")
-            onClick { presenter.addPhoto() }
+            onClick { presenter.choosePhoto() }
         }
 
         details {

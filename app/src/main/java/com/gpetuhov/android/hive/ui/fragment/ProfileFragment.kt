@@ -29,7 +29,8 @@ import com.pawegio.kandroid.toast
 class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     companion object {
-        private const val RC_PHOTO_PICKER = 1001
+        private const val RC_USERPIC_PICKER = 1001
+        private const val RC_USER_PHOTO_PICKER = 1002
     }
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
@@ -77,9 +78,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
+        if (requestCode == RC_USERPIC_PICKER && resultCode == Activity.RESULT_OK) {
             val selectedImageUri = data?.data
             if (selectedImageUri != null) presenter.changeUserPic(selectedImageUri)
+        }
+
+        if (requestCode == RC_USER_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
+            val selectedImageUri = data?.data
+            if (selectedImageUri != null) presenter.addPhoto(selectedImageUri)
         }
     }
 
@@ -121,23 +127,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
 
-    override fun chooseUserPic() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = Constants.FileTypes.IMAGE
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.complete_action_using)), RC_PHOTO_PICKER)
-        // Result will be passed into onActivityResult()
-    }
+    override fun chooseUserPic() = startPhotoPicker(RC_USERPIC_PICKER)
 
     override fun updateOffer(offerUid: String) {
         val action = ProfileFragmentDirections.actionNavigationProfileToUpdateOfferFragment(offerUid)
         findNavController().navigate(action)
     }
 
-    override fun addPhoto() {
-        // TODO: implement this
-        showToast("Add photo")
-    }
+    override fun choosePhoto() = startPhotoPicker(RC_USER_PHOTO_PICKER)
 
     override fun showToast(message: String) {
         toast(message)
@@ -235,4 +232,12 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller.signOutEnabled(isEnabled)
 
     private fun deleteUserButtonEnabled(isEnabled: Boolean) = controller.deleteAccountEnabled(isEnabled)
+
+    private fun startPhotoPicker(requestCode: Int) {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = Constants.FileTypes.IMAGE
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.complete_action_using)), requestCode)
+        // Result will be passed into onActivityResult()
+    }
 }
