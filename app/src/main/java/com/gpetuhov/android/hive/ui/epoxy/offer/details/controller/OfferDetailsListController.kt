@@ -55,7 +55,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
                 val isFree = offer?.isFree ?: true
                 val price = offer?.price ?: Constants.Offer.DEFAULT_PRICE
-                price(if (isFree) context.getString(R.string.free) else "$price USD")
+                price(if (isFree) context.getString(R.string.free_caps) else "$price USD")
             }
         }
     }
