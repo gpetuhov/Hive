@@ -32,11 +32,16 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
     override fun buildModels() {
         val photoList = user?.photoList ?: mutableListOf()
 
+        addPhoto {
+            id("addPhoto")
+            onClick { presenter.choosePhoto() }
+        }
+
         if (!photoList.isEmpty()) {
             carousel {
                 id("photo_carousel")
 
-                numViewsToShowOnScreen(1.0F)
+                paddingDp(0)
 
                 withModelsFrom(user?.photoList ?: mutableListOf()) {
                     PhotoItemModel_()
@@ -44,11 +49,6 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                         .photoUrl(it)
                 }
             }
-        }
-
-        addPhoto {
-            id("addPhoto")
-            onClick { presenter.choosePhoto() }
         }
 
         details {
