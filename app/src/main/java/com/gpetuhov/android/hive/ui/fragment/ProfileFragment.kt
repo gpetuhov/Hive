@@ -11,6 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.airbnb.epoxy.EpoxyRecyclerView
@@ -151,8 +153,15 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                 .title(R.string.username)
                 .noAutoDismiss()
                 .cancelable(false)
-                .input(hintRes = R.string.enter_username, waitForPositiveButton = false) { dialog, text ->
-                    presenter.updateTempUsername(text.toString())
+                .input(
+                    maxLength = Constants.User.MAX_USERNAME_LENGTH,
+                    hintRes = R.string.enter_username,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    val positiveButtonEnabled = inputText.length <= Constants.User.MAX_USERNAME_LENGTH
+                    presenter.updateTempUsername(inputText)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
                 }
                 .positiveButton { presenter.saveUsername() }
                 .negativeButton { presenter.dismissUsernameDialog() }
@@ -166,11 +175,15 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                 .noAutoDismiss()
                 .cancelable(false)
                 .input(
+                    maxLength = Constants.User.MAX_DESCRIPTION_LENGTH,
                     inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE,
                     hintRes = R.string.enter_description,
                     waitForPositiveButton = false
                 ) { dialog, text ->
-                    presenter.updateTempDescription(text.toString())
+                    val inputText = text.toString()
+                    val positiveButtonEnabled = inputText.length <= Constants.User.MAX_DESCRIPTION_LENGTH
+                    presenter.updateTempDescription(inputText)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
                 }
                 .positiveButton { presenter.saveDescription() }
                 .negativeButton { presenter.dismissDescriptionDialog() }

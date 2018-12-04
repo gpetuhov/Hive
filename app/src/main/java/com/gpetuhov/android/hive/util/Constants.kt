@@ -37,6 +37,13 @@ class Constants {
         }
     }
 
+    class User {
+        companion object {
+            const val MAX_USERNAME_LENGTH = 30
+            const val MAX_DESCRIPTION_LENGTH = 255
+        }
+    }
+
     class Offer {
         companion object {
             const val MAX_TITLE_LENGTH = 70
