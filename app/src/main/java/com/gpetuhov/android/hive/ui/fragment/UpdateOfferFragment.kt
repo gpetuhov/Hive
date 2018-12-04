@@ -202,7 +202,10 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
                 .title(R.string.offer_price)
                 .noAutoDismiss()
                 .cancelable(false)
-                .input(hintRes = R.string.enter_price, waitForPositiveButton = false) { dialog, text ->
+                .input(
+                    inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
                     presenter.updateTempPrice(text.toString().toDouble())
                 }
                 .positiveButton { presenter.savePrice() }
