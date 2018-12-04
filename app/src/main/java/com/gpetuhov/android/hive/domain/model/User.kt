@@ -16,6 +16,7 @@ data class User(
     var offerSearchResultIndex: Int = -1    // index of the offer that corresponds to search query text
 ) {
     var offerList = mutableListOf<Offer>()
+    var photoList = mutableListOf<String>()
     val hasUsername get() = username != ""
     val hasDescription get() = description != ""
 

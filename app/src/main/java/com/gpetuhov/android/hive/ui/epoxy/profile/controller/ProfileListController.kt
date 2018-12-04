@@ -8,6 +8,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.OfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
+import com.gpetuhov.android.hive.ui.epoxy.photo.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
@@ -28,21 +29,19 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
     }
 
     override fun buildModels() {
-        carousel {
-            id("photo_carousel")
+        val photoList = user?.photoList ?: mutableListOf()
 
-            numViewsToShowOnScreen(1.0F)
+        if (!photoList.isEmpty()) {
+            carousel {
+                id("photo_carousel")
 
-            // TODO: change this to user photos
-            withModelsFrom(user?.offerList ?: mutableListOf()) {
-                OfferItemModel_()
-                    .id(it.uid)
-                    .active(it.isActive)
-                    .activeVisible(true)
-                    .title(it.title)
-                    .free(it.isFree)
-                    .price(if (it.isFree) context.getString(R.string.free_caps) else "${it.price} USD")
-                    .onClick { presenter.updateOffer(it.uid) }
+                numViewsToShowOnScreen(1.0F)
+
+                withModelsFrom(user?.photoList ?: mutableListOf()) {
+                    PhotoItemModel_()
+                        .id(it)
+                        .photoUrl(it)
+                }
             }
         }
 
