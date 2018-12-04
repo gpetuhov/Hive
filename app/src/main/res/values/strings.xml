@@ -48,6 +48,7 @@
     <string name="delete_account_success">User account successfully deleted</string>
     <string name="delete_account_no_network">No Internet connection. Cannot delete account</string>
     <string name="delete_account_error">Error deleting user account. Please, try again</string>
+    <string name="add_photo">Add photo</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

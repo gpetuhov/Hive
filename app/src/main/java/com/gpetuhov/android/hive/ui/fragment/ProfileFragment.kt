@@ -134,6 +134,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun addPhoto() {
+        // TODO: implement this
+        showToast("Add photo")
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }

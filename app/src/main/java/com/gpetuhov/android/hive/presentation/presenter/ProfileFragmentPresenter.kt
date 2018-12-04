@@ -156,6 +156,10 @@ class ProfileFragmentPresenter :
 
     fun updateOffer(offerUid: String) = viewState.updateOffer(offerUid)
 
+    // --- Add photo ---
+
+    fun addPhoto() = viewState.addPhoto()
+
     // === Private methods ===
 
     private fun showToast(message: String) {

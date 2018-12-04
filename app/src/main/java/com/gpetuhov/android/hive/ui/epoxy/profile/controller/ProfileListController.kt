@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.OfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
+import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
 import com.gpetuhov.android.hive.util.epoxy.carousel
@@ -43,6 +44,11 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                         .photoUrl(it)
                 }
             }
+        }
+
+        addPhoto {
+            id("addPhoto")
+            onClick { presenter.addPhoto() }
         }
 
         details {
