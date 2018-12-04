@@ -11,9 +11,8 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
-import com.gpetuhov.android.hive.ui.epoxy.util.carousel
-import com.gpetuhov.android.hive.ui.epoxy.util.withModelsFrom
-import java.util.*
+import com.gpetuhov.android.hive.util.epoxy.carousel
+import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
 
 class ProfileListController(private val presenter: ProfileFragmentPresenter) : EpoxyController() {
@@ -34,6 +33,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
             numViewsToShowOnScreen(1.0F)
 
+            // TODO: change this to user photos
             withModelsFrom(user?.offerList ?: mutableListOf()) {
                 OfferItemModel_()
                     .id(it.uid)

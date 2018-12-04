@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.ui.epoxy.util
+package com.gpetuhov.android.hive.util.epoxy
 
 import com.airbnb.epoxy.CarouselModelBuilder
 import com.airbnb.epoxy.CarouselModel_
