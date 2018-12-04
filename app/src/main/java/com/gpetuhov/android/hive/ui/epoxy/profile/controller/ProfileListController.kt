@@ -50,6 +50,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                 active(it.isActive)
                 activeVisible(true)
                 title(it.title)
+                price(if (it.isFree) context.getString(R.string.free) else "${it.price} USD")
                 onClick { presenter.updateOffer(it.uid) }
             }
         }

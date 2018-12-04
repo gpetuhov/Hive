@@ -16,6 +16,7 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
     @EpoxyAttribute var activeVisible = false
 
     @EpoxyAttribute lateinit var title: String
+    @EpoxyAttribute lateinit var price: String
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     override fun bind(holder: OfferItemHolder) {
@@ -23,7 +24,7 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
         holder.active.visibility = if (activeVisible) View.VISIBLE else View.GONE
 
         holder.title.text = title
-
+        holder.price.text = price
         holder.rootView.setOnClickListener { onClick() }
     }
 }
@@ -32,4 +33,5 @@ class OfferItemHolder : KotlinHolder() {
     val rootView by bind<View>(R.id.offer_item_root)
     val active by bind<ImageView>(R.id.offer_item_active)
     val title by bind<TextView>(R.id.offer_item_title)
+    val price by bind<TextView>(R.id.offer_item_price)
 }

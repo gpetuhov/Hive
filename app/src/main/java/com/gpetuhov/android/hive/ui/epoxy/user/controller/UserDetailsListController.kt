@@ -53,6 +53,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                     active(it.isActive)
                     activeVisible(false)
                     title(it.title)
+                    price(if (it.isFree) context.getString(R.string.free) else "${it.price} USD")
                     onClick { presenter.openOffer(it.uid) }
                 }
             }
