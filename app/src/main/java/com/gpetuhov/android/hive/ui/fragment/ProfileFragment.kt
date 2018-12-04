@@ -159,8 +159,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     waitForPositiveButton = false
                 ) { dialog, text ->
                     val inputText = text.toString()
-                    val positiveButtonEnabled = inputText.length <= Constants.User.MAX_USERNAME_LENGTH
+                    var positiveButtonEnabled = inputText.length <= Constants.User.MAX_USERNAME_LENGTH
                     presenter.updateTempUsername(inputText)
+
+                    if (inputText.contains(" ")) {
+                        dialog.getInputField()?.error = "Must not contain spaces"
+                        positiveButtonEnabled = false
+                    }
+
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
                 }
                 .positiveButton { presenter.saveUsername() }
