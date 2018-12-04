@@ -848,10 +848,28 @@ class Repository(private val context: Context) : Repo {
 
     private fun checkConditions(user: User): Boolean = checkQueryText(user)
 
-    // TODO: search in offer titles and descriptions here
     private fun checkQueryText(user: User): Boolean {
         return user.name.contains(queryText, true)
                 || user.username.contains(queryText, true)
+                || offersContainQueryText(user)
+    }
+
+    private fun offersContainQueryText(user: User): Boolean {
+        var result = false
+        val offerList = user.offerList
+
+        if (offerList.size > 0) {
+            for (i in offerList.indices) {
+                val offer = offerList[i]
+                if (offer.title.contains(queryText, true) || offer.description.contains(queryText, true)) {
+                    result = true
+                    user.offerSearchResultIndex = i
+                    break
+                }
+            }
+        }
+
+        return result
     }
 
     private fun removeUserFromSearchResults(uid: String?) {

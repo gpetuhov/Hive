@@ -12,7 +12,8 @@ data class User(
     var userPicUrl: String,
     var description: String,
     var isOnline: Boolean,
-    var location: LatLng
+    var location: LatLng,
+    var offerSearchResultIndex: Int = -1    // index of the offer that corresponds to search query text
 ) {
     var offerList = mutableListOf<Offer>()
     val hasUsername get() = username != ""
