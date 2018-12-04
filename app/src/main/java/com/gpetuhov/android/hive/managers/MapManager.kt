@@ -158,8 +158,11 @@ class MapManager {
             val markerText = if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
                 // User contains offer that corresponds to search query text
                 val offer = offerList[offerSearchResultIndex]
+                val offerTitle = offer.title
+                val offerPrice = if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD"
+
                 markerInfo[OFFER_UID_KEY] = offer.uid
-                "${offer.title} \n${offer.price}"
+                "$offerTitle \n$offerPrice"
 
             } else {
                 name
