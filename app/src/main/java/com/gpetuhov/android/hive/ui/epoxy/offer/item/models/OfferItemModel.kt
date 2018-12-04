@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.ui.epoxy.offer.item.models
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -16,7 +17,10 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
     @EpoxyAttribute var activeVisible = false
 
     @EpoxyAttribute lateinit var title: String
+
+    @EpoxyAttribute var free = true
     @EpoxyAttribute lateinit var price: String
+
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     override fun bind(holder: OfferItemHolder) {
@@ -24,7 +28,12 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
         holder.active.visibility = if (activeVisible) View.VISIBLE else View.GONE
 
         holder.title.text = title
+
         holder.price.text = price
+
+        val colorId = if (free) R.color.md_red_600 else R.color.md_grey_600
+        holder.price.setTextColor(ContextCompat.getColor(holder.price.context, colorId))
+
         holder.rootView.setOnClickListener { onClick() }
     }
 }
