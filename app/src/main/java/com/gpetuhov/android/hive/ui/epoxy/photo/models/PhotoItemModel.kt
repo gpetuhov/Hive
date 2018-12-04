@@ -5,6 +5,7 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 
@@ -17,6 +18,7 @@ abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemHolder>() {
         if (photoUrl != "") {
             Glide.with(holder.photo.context)
                 .load(photoUrl)
+                .apply(RequestOptions.centerCropTransform())
                 .into(holder.photo)
         }
     }
