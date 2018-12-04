@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsDetai
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsUser
+import com.gpetuhov.android.hive.util.Constants
 import javax.inject.Inject
 
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : EpoxyController() {
@@ -51,6 +52,10 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
             offerDetailsDetails {
                 id("offer_details_details")
                 description(offer?.description ?: "")
+
+                val isFree = offer?.isFree ?: true
+                val price = offer?.price ?: Constants.Offer.DEFAULT_PRICE
+                price(if (isFree) context.getString(R.string.free) else "$price USD")
             }
         }
     }
