@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.WhichButton
+import com.afollestad.materialdialogs.actions.setActionButtonEnabled
 import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.airbnb.epoxy.EpoxyRecyclerView
@@ -204,9 +206,25 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
                 .cancelable(false)
                 .input(
                     inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL,
+                    hintRes = R.string.enter_price,
                     waitForPositiveButton = false
                 ) { dialog, text ->
-                    presenter.updateTempPrice(text.toString().toDouble())
+                    val inputField = dialog.getInputField()
+
+                    val isEmpty = text.toString().isEmpty()
+                    var isValid = true
+
+                    if (!isEmpty) {
+                        isValid = try {
+                            presenter.updateTempPrice(text.toString().toDouble())
+                            true
+                        } catch (e: Exception) {
+                            false
+                        }
+                    }
+
+                    inputField?.error = if (isValid) null else "Not a number"
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, isValid && !isEmpty)
                 }
                 .positiveButton { presenter.savePrice() }
                 .negativeButton { presenter.dismissPriceDialog() }
