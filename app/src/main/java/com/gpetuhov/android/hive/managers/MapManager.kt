@@ -152,13 +152,6 @@ class MapManager {
 //
 //            val iconBitmap = iconGenerator.makeIcon("${name} \n$status")
 
-            // TODO: show username and offer that matches search
-//            val iconBitmap = if (user.hasActiveOffer) {
-//                iconGenerator.makeIcon("$name \n${user.offer}")
-//            } else {
-//                iconGenerator.makeIcon(name)
-//            }
-
             val markerInfo = mutableMapOf<String, String>()
             markerInfo[USER_UID_KEY] = user.uid
 

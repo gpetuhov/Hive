@@ -861,7 +861,7 @@ class Repository(private val context: Context) : Repo {
         if (offerList.size > 0) {
             for (i in offerList.indices) {
                 val offer = offerList[i]
-                if (offer.title.contains(queryText, true) || offer.description.contains(queryText, true)) {
+                if (offer.isActive && (offer.title.contains(queryText, true) || offer.description.contains(queryText, true))) {
                     result = true
                     user.offerSearchResultIndex = i
                     break
