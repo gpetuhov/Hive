@@ -224,7 +224,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
                                 presenter.updateTempPrice(number)
                                 positiveButtonEnabled = true
                             } else {
-                                error = "Must be greater than 0.01"
+                                error = "Must not be less than 0.01"
                                 positiveButtonEnabled = false
                             }
 

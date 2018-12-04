@@ -25,11 +25,11 @@ class UpdateOfferFragmentPresenter :
     var active = false
     var activeEnabled = false
     var free = true
-    var price = 0.01
+    var price = Constants.Offer.DEFAULT_PRICE
 
     private var tempTitle = ""
     private var tempDescription = ""
-    private var tempPrice = 0.01
+    private var tempPrice = Constants.Offer.DEFAULT_PRICE
     private var editStarted = false
 
     private var saveOfferInteractor = SaveOfferInteractor(this)
@@ -205,7 +205,13 @@ class UpdateOfferFragmentPresenter :
 
     fun showPriceDialog() = viewState.showPriceDialog()
 
-    fun getPricePrefill() = if (tempPrice != 0.01) tempPrice.toString() else price.toString()
+    fun getPricePrefill(): String {
+        return when {
+            tempPrice != Constants.Offer.DEFAULT_PRICE -> tempPrice.toString()
+            price != Constants.Offer.DEFAULT_PRICE -> price.toString()
+            else -> ""
+        }
+    }
 
     fun updateTempPrice(newTempPrice: Double) {
         tempPrice = newTempPrice
@@ -219,7 +225,7 @@ class UpdateOfferFragmentPresenter :
     }
 
     fun dismissPriceDialog() {
-        tempPrice = 0.01
+        tempPrice = Constants.Offer.DEFAULT_PRICE
         viewState.dismissPriceDialog()
     }
 
