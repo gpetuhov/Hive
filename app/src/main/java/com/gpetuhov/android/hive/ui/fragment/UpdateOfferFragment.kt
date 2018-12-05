@@ -38,7 +38,9 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         setActivitySoftInputPan()
 
         hideToolbar()
-        showBottomNavigationView()
+
+        // Hide bottom navigation view, so that user can't quit without quit dialog
+        hideBottomNavigationView()
 
         initDialogs()
 
