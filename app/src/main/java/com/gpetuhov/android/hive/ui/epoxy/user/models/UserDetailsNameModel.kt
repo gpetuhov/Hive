@@ -10,21 +10,21 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 import com.gpetuhov.android.hive.util.updateUserPic
 
-@EpoxyModelClass(layout = R.layout.user_details_header_view)
-abstract class UserDetailsHeaderModel : EpoxyModelWithHolder<UserDetailsHeaderHolder>() {
+@EpoxyModelClass(layout = R.layout.user_details_name_view)
+abstract class UserDetailsHeaderModel : EpoxyModelWithHolder<UserDetailsNameHolder>() {
 
     @EpoxyAttribute lateinit var onBackButtonClick: () -> Unit
     @EpoxyAttribute lateinit var userPicUrl: String
     @EpoxyAttribute lateinit var username: String
 
-    override fun bind(holder: UserDetailsHeaderHolder) {
+    override fun bind(holder: UserDetailsNameHolder) {
         holder.backButton.setOnClickListener { onBackButtonClick() }
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.username.text = username
     }
 }
 
-class UserDetailsHeaderHolder : KotlinHolder() {
+class UserDetailsNameHolder : KotlinHolder() {
     val backButton by bind<ImageButton>(R.id.user_details_back_button)
     val userPic by bind<ImageView>(R.id.user_details_user_pic)
     val username by bind<TextView>(R.id.user_details_username)
