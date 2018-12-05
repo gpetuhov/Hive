@@ -12,6 +12,7 @@ import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
@@ -34,12 +35,14 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         val photoList = user?.photoList ?: mutableListOf()
         if (!photoList.isEmpty()) {
+            val visiblePhotos = photoList.filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }
+
             carousel {
                 id("photo_carousel")
 
                 paddingDp(0)
 
-                withModelsFrom(user?.photoList ?: mutableListOf()) {
+                withModelsFrom(visiblePhotos) {
                     PhotoItemModel_()
                         .id(it)
                         .photoUrl(it)
