@@ -529,32 +529,36 @@ class Repository(private val context: Context) : Repo {
     // === User pic ===
 
     override fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit) {
-        if (isAuthorized) {
-            // This is because resizeUserPic() must run in background
-            GlobalScope.launch {
-                // Get reference to current user's pic in Cloud Storage
-                // (every user has his own folder with the same name as user's uid).
-                // File in the cloud will be recreated on every new upload, so there
-                // will be no unused old files.
-                val userPicRef = storage.reference.child("${currentUserUid()}/userpic.jpg")
+        // Get path to current user's pic in Cloud Storage
+        // (every user has his own folder with the same name as user's uid).
+        // File in the cloud will be recreated on every new upload, so there
+        // will be no unused old files.
+        val storagePath = "${currentUserUid()}/userpic.jpg"
 
-                // Resize selected image
-                val byteArray = resizeImage(selectedImageUri, Constants.Image.USER_PIC_SIZE, true)
+        uploadImage(
+            selectedImageUri,
+            storagePath,
+            Constants.Image.USER_PIC_SIZE,
+            true,
+            { downloadUrl -> saveUserPicUrl(downloadUrl) },
+            onError
+        )
+    }
 
-                // Upload resized image to Cloud Storage
-                if (byteArray != null) {
-                    userPicRef.putBytes(byteArray)
-                        .addOnFailureListener { onError() }
-                        .addOnSuccessListener { getDownloadUrl(userPicRef, { downloadUrl -> saveUserPicUrl(downloadUrl) }, onError) }
+    // === User photo ===
 
-                } else {
-                    onError()
-                }
-            }
+    override fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit) {
+        val photoFileName = UUID.randomUUID()
+        val storagePath = "${currentUserUid()}/user_photos/$photoFileName.jpg"
 
-        } else {
-            onError()
-        }
+        uploadImage(
+            selectedImageUri,
+            storagePath,
+            Constants.Image.USER_PHOTO_SIZE,
+            false,
+            { downloadUrl -> saveUserPhotoUrl(downloadUrl) },
+            onError
+        )
     }
 
     // === Offer ===
@@ -589,31 +593,6 @@ class Repository(private val context: Context) : Repo {
             val offerList = currentUserOfferList()
             updateOfferList(offerList, offerUid) { offerIndex -> offerList.removeAt(offerIndex) }
             saveOfferList(offerList, onSuccess, onError)
-
-        } else {
-            onError()
-        }
-    }
-
-    // === User photo ===
-
-    override fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit) {
-        if (isAuthorized) {
-            GlobalScope.launch {
-                val photoFileName = UUID.randomUUID()
-                val userPicRef = storage.reference.child("${currentUserUid()}/user_photos/$photoFileName.jpg")
-
-                val byteArray = resizeImage(selectedImageUri, Constants.Image.USER_PHOTO_SIZE, false)
-
-                if (byteArray != null) {
-                    userPicRef.putBytes(byteArray)
-                        .addOnFailureListener { onError() }
-                        .addOnSuccessListener { getDownloadUrl(userPicRef, { downloadUrl -> saveUserPhotoUrl(downloadUrl) }, onError) }
-
-                } else {
-                    onError()
-                }
-            }
 
         } else {
             onError()
@@ -1024,6 +1003,31 @@ class Repository(private val context: Context) : Repo {
 
     // --- Image ---
 
+    private fun uploadImage(selectedImageUri: Uri, storagePath: String, downsampleSize: Int, centerCrop: Boolean, onSuccess: (String) -> Unit, onError: () -> Unit) {
+        if (isAuthorized) {
+            // This is because resizeImage() must run in background
+            GlobalScope.launch {
+                val storageRef = storage.reference.child(storagePath)
+
+                // Resize selected image
+                val byteArray = resizeImage(selectedImageUri, downsampleSize, centerCrop)
+
+                // Upload resized image to Cloud Storage
+                if (byteArray != null) {
+                    storageRef.putBytes(byteArray)
+                        .addOnFailureListener { onError() }
+                        .addOnSuccessListener { getDownloadUrl(storageRef, { downloadUrl -> onSuccess(downloadUrl) }, onError) }
+
+                } else {
+                    onError()
+                }
+            }
+
+        } else {
+            onError()
+        }
+    }
+
     // Resize selected image to take less space and traffic
     private fun resizeImage(selectedImageUri: Uri, size: Int, centerCrop: Boolean): ByteArray? {
         try {
@@ -1049,7 +1053,7 @@ class Repository(private val context: Context) : Repo {
         }
     }
 
-    // --- File upload ---
+    // --- File download URL ---
 
     private fun getDownloadUrl(storageRef: StorageReference, onSuccess: (String) -> Unit, onError: () -> Unit) {
         // After the file has been uploaded, we can get its download URL
