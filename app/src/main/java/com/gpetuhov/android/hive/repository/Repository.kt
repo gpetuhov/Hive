@@ -86,12 +86,6 @@ class Repository(private val context: Context) : Repo {
 
         // Shared Preferences
         private const val UNREAD_MESSAGES_EXIST_KEY = "unreadMessagesExist"
-
-        // User pic
-        private const val USER_PIC_SIZE = 100
-
-        // User photo
-        private const val USER_PHOTO_SIZE = 600
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -545,7 +539,7 @@ class Repository(private val context: Context) : Repo {
                 val userPicRef = storage.reference.child("${currentUserUid()}/userpic.jpg")
 
                 // Resize selected image
-                val byteArray = resizeUserPic(selectedImageUri)
+                val byteArray = resizeImage(selectedImageUri, Constants.Image.USER_PIC_SIZE, true)
 
                 // Upload resized image to Cloud Storage
                 if (byteArray != null) {
@@ -609,7 +603,7 @@ class Repository(private val context: Context) : Repo {
                 val photoFileName = UUID.randomUUID()
                 val userPicRef = storage.reference.child("${currentUserUid()}/user_photos/$photoFileName.jpg")
 
-                val byteArray = resizeUserPhoto(selectedImageUri)
+                val byteArray = resizeImage(selectedImageUri, Constants.Image.USER_PHOTO_SIZE, false)
 
                 if (byteArray != null) {
                     userPicRef.putBytes(byteArray)
@@ -1018,19 +1012,22 @@ class Repository(private val context: Context) : Repo {
     // --- User pic ---
 
     // Resize selected image to take less space and traffic
-    private fun resizeUserPic(selectedImageUri: Uri): ByteArray? {
+    private fun resizeImage(selectedImageUri: Uri, size: Int, centerCrop: Boolean): ByteArray? {
         try {
+            val requestOptions = RequestOptions().override(size).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
+            if (centerCrop) requestOptions.centerCrop()
+
             // Resize image.
             // This must run in background!
             val bitmap = Glide.with(context)
                 .asBitmap()
                 .load(selectedImageUri)
-                .apply(RequestOptions().override(USER_PIC_SIZE).centerCrop().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                .apply(requestOptions)
                 .submit().get()
 
             // Compress into JPEG
             val outStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, Constants.Image.JPEG_QUALITY, outStream)
 
             return outStream.toByteArray()
 
@@ -1115,27 +1112,6 @@ class Repository(private val context: Context) : Repo {
             data[PHOTO_LIST_KEY] = photoList
 
             saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
-        }
-    }
-
-    private fun resizeUserPhoto(selectedImageUri: Uri): ByteArray? {
-        try {
-            // Resize image.
-            // This must run in background!
-            val bitmap = Glide.with(context)
-                .asBitmap()
-                .load(selectedImageUri)
-                .apply(RequestOptions().override(USER_PHOTO_SIZE).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
-                .submit().get()
-
-            // Compress into JPEG
-            val outStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 70, outStream)
-
-            return outStream.toByteArray()
-
-        } catch (e: Exception) {
-            return null
         }
     }
 }
