@@ -58,7 +58,7 @@ class Constants {
     class Image {
         companion object {
             const val USER_PIC_SIZE = 100
-            const val USER_PHOTO_SIZE = 800
+            const val USER_PHOTO_SIZE = 600
             const val JPEG_QUALITY = 70
         }
     }
