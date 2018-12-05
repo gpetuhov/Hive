@@ -8,13 +8,12 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.models.PhotoItemModel_
-import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
+import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
-import java.util.*
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : EpoxyController() {
@@ -28,8 +27,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
     }
 
     override fun buildModels() {
-        val photoList = user?.photoList ?: mutableListOf()
+        userDetailsHeader {
+            id("user_details_header")
+            onBackButtonClick { presenter.navigateUp() }
+        }
 
+        val photoList = user?.photoList ?: mutableListOf()
         if (!photoList.isEmpty()) {
             carousel {
                 id("photo_carousel")
@@ -44,9 +47,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             }
         }
 
-        userDetailsHeader {
-            id("user_details_header")
-            onBackButtonClick { presenter.navigateUp() }
+        userDetailsName {
+            id("user_details_name")
             userPicUrl(user?.userPicUrl ?: "")
             username(user?.getUsernameOrName() ?: "")
         }
