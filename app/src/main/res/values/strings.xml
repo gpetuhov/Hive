@@ -49,6 +49,9 @@
     <string name="delete_account_no_network">No Internet connection. Cannot delete account</string>
     <string name="delete_account_error">Error deleting user account. Please, try again</string>
     <string name="add_photo">Add photo</string>
+    <string name="max_visible_photos">You have reached maximum number of visible photos.
+        All newly added photos will not be visible to other users
+    </string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

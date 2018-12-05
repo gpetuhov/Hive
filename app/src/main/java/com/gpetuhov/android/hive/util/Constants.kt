@@ -42,6 +42,7 @@ class Constants {
         companion object {
             const val MAX_USERNAME_LENGTH = 30
             const val MAX_DESCRIPTION_LENGTH = 255
+            const val MAX_VISIBLE_PHOTO_COUNT = 5
         }
     }
 
