@@ -545,7 +545,7 @@ class Repository(private val context: Context) : Repo {
                 if (byteArray != null) {
                     userPicRef.putBytes(byteArray)
                         .addOnFailureListener { onError() }
-                        .addOnSuccessListener { getDownloadUrlAndUpdateUser(userPicRef, onError) }
+                        .addOnSuccessListener { getDownloadUrl(userPicRef, { downloadUrl -> saveUserPicUrl(downloadUrl) }, onError) }
 
                 } else {
                     onError()
@@ -608,7 +608,7 @@ class Repository(private val context: Context) : Repo {
                 if (byteArray != null) {
                     userPicRef.putBytes(byteArray)
                         .addOnFailureListener { onError() }
-                        .addOnSuccessListener { getDownloadUrlAndSaveUserPhotos(userPicRef, onError) }
+                        .addOnSuccessListener { getDownloadUrl(userPicRef, { downloadUrl -> saveUserPhotoUrl(downloadUrl) }, onError) }
 
                 } else {
                     onError()
@@ -866,6 +866,19 @@ class Repository(private val context: Context) : Repo {
         saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
+    private fun saveUserPhotoUrl(photoUrl: String) {
+        val photoList = currentUser.value?.photoList ?: mutableListOf()
+
+        if (!photoList.contains(photoUrl)) {
+            photoList.add(photoUrl)
+
+            val data = HashMap<String, Any>()
+            data[PHOTO_LIST_KEY] = photoList
+
+            saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        }
+    }
+
     // --- Search ---
 
     private fun clearResult() {
@@ -1009,7 +1022,7 @@ class Repository(private val context: Context) : Repo {
         )
     }
 
-    // --- User pic ---
+    // --- Image ---
 
     // Resize selected image to take less space and traffic
     private fun resizeImage(selectedImageUri: Uri, size: Int, centerCrop: Boolean): ByteArray? {
@@ -1036,16 +1049,18 @@ class Repository(private val context: Context) : Repo {
         }
     }
 
-    private fun getDownloadUrlAndUpdateUser(userPicRef: StorageReference, onError: () -> Unit) {
-        // After the image has been uploaded, we can get its download URL
-        userPicRef.downloadUrl
+    // --- File upload ---
+
+    private fun getDownloadUrl(storageRef: StorageReference, onSuccess: (String) -> Unit, onError: () -> Unit) {
+        // After the file has been uploaded, we can get its download URL
+        storageRef.downloadUrl
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUri = task.result
                     Timber.tag(TAG).d("Download url = $downloadUri")
 
-                    // Update current user with new user pic download URL
-                    saveUserPicUrl(downloadUri.toString())
+                    // Get download URL and pass it into onSuccess()
+                    onSuccess(downloadUri.toString())
 
                 } else {
                     onError()
@@ -1082,36 +1097,5 @@ class Repository(private val context: Context) : Repo {
         data[OFFER_LIST_KEY] = offerListForSaving
 
         saveUserDataRemote(data, onSuccess, onError)
-    }
-
-    // --- User photo ---
-
-    private fun currentUserPhotoList() = currentUser.value?.photoList ?: mutableListOf()
-
-    private fun getDownloadUrlAndSaveUserPhotos(userPicRef: StorageReference, onError: () -> Unit) {
-        userPicRef.downloadUrl
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    Timber.tag(TAG).d("Download url = $downloadUri")
-                    saveUserPhotoUrl(downloadUri.toString())
-
-                } else {
-                    onError()
-                }
-            }
-    }
-
-    private fun saveUserPhotoUrl(photoUrl: String) {
-        val photoList = currentUserPhotoList()
-
-        if (!photoList.contains(photoUrl)) {
-            photoList.add(photoUrl)
-
-            val data = HashMap<String, Any>()
-            data[PHOTO_LIST_KEY] = photoList
-
-            saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
-        }
     }
 }
