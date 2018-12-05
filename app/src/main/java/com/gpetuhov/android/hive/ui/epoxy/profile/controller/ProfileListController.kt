@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
@@ -35,6 +36,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
         addPhoto {
             id("addPhoto")
             onClick { presenter.choosePhoto() }
+            maxPhotoWarningVisible(photoList.size >= Constants.User.MAX_VISIBLE_PHOTO_COUNT)
         }
 
         if (!photoList.isEmpty()) {
