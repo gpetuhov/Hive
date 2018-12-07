@@ -40,7 +40,7 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
             onSaveButtonClick { presenter.saveOffer() }
         }
 
-        val photoList = presenter.photoList
+        val photoList = presenter.photoList.filter { !it.isDeleted }
 
         addPhoto {
             id("addPhoto")

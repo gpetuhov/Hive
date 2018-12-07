@@ -264,11 +264,9 @@ class UpdateOfferFragmentPresenter :
 
     fun deletePhoto() {
         viewState.dismissDeletePhotoDialog()
-
-        // TODO: mark photo as deleted here
-        showToast("Delete photo $deletePhotoUid")
-
+        markPhotoAsDeleted()
         deletePhotoUid = ""
+        updateUI()
     }
 
     fun deletePhotoCancel() {
@@ -291,7 +289,16 @@ class UpdateOfferFragmentPresenter :
 
     private fun onAddPhotoSuccess(photo: Photo) {
         editStarted = true
+        photo.markAsNew()
         photoList.add(photo)
         updateUI()
+    }
+
+    private fun markPhotoAsDeleted() {
+        val index = photoList.indexOfFirst { it.uid == deletePhotoUid }
+
+        if (index >=0 && index < photoList.size) {
+            photoList[index].markAsDeleted()
+        }
     }
 }
