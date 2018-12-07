@@ -9,5 +9,5 @@ data class Offer(
     var isFree: Boolean,
     var isActive: Boolean
 ) {
-    var photoList = mutableListOf<Image>()
+    var photoList = mutableListOf<Photo>()
 }

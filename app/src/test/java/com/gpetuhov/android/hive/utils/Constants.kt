@@ -1,6 +1,6 @@
 package com.gpetuhov.android.hive.utils
 
-import com.gpetuhov.android.hive.domain.model.Image
+import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.domain.model.Offer
 
 class Constants {
@@ -30,7 +30,7 @@ class Constants {
 
         const val DELETE_OFFER_ERROR = "Delete offer error"
 
-        val DUMMY_PHOTO = Image("3984fq9f", "389gj349fj")
+        val DUMMY_PHOTO = Photo("3984fq9f", "389gj349fj")
 
         const val DELETE_PHOTO_ERROR = "Delete photo error"
 

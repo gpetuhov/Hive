@@ -6,7 +6,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.DeleteOfferInteractor
 import com.gpetuhov.android.hive.domain.interactor.SaveOfferInteractor
-import com.gpetuhov.android.hive.domain.model.Image
+import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
@@ -30,7 +30,7 @@ class UpdateOfferFragmentPresenter :
     var activeEnabled = false
     var free = true
     var price = Constants.Offer.DEFAULT_PRICE
-    var photoList= mutableListOf<Image>()
+    var photoList= mutableListOf<Photo>()
 
     private var tempTitle = ""
     private var tempDescription = ""
@@ -273,7 +273,7 @@ class UpdateOfferFragmentPresenter :
 
     private fun navigateUp() = viewState.navigateUp()
 
-    private fun onAddPhotoSuccess(photo: Image) {
+    private fun onAddPhotoSuccess(photo: Photo) {
         editStarted = true
         photoList.add(photo)
         updateUI()

@@ -13,7 +13,7 @@ class TestRepository : Repo {
     var isOnline = false
     var messageText = ""
     var offerList = mutableListOf<Offer>()
-    var photoList = mutableListOf<Image>()
+    var photoList = mutableListOf<Photo>()
 
     override fun isForeground() = false
 
@@ -159,6 +159,6 @@ class TestRepository : Repo {
         }
     }
 
-    override fun addOfferPhoto(selectedImageUri: Uri, onSuccess: (Image) -> Unit, onError: () -> Unit) {
+    override fun addOfferPhoto(selectedImageUri: Uri, onSuccess: (Photo) -> Unit, onError: () -> Unit) {
     }
 }

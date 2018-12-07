@@ -4,7 +4,6 @@ import android.content.Context
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.model.Image
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
