@@ -263,7 +263,7 @@ class UpdateOfferFragmentPresenter :
 
     fun deletePhoto() {
         viewState.dismissDeletePhotoDialog()
-        markPhotoAsDeleted()
+        deletePhotoOrMarkAsDeleted()
         deletePhotoUid = ""
         updateUI()
     }
@@ -293,11 +293,19 @@ class UpdateOfferFragmentPresenter :
         updateUI()
     }
 
-    private fun markPhotoAsDeleted() {
+    private fun deletePhotoOrMarkAsDeleted() {
         val index = photoList.indexOfFirst { it.uid == deletePhotoUid }
 
         if (index >=0 && index < photoList.size) {
-            photoList[index].markAsDeleted()
+            val photo = photoList[index]
+            if (photo.isNew) {
+                // If photo is new, delete it from storage immediately
+                // TODO: delete photo immediately right here
+            } else {
+                // Otherwise just mark photo as deleted,
+                // so that it will be deleted if the user confirms offer changes
+                photoList[index].markAsDeleted()
+            }
         }
     }
 

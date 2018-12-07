@@ -587,6 +587,9 @@ class Repository(private val context: Context) : Repo {
             // If offer uid is not empty, then offer already exist.
             // Update it with new data.
             if (offer.uid != "") {
+                // TODO: delete photos, marked as deleted, from Storage and remove them from offer.photoList
+                // TODO: and only after that save offer list
+
                 updateOfferList(offerList, offer.uid) { offerIndex -> offerList[offerIndex] = offer }
 
             } else {
