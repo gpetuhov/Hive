@@ -41,8 +41,7 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
             onSaveButtonClick { presenter.saveOffer() }
         }
 
-        // TODO: get photo list from offer
-        val photoList = mutableListOf<Image>()
+        val photoList = presenter.photoList
 
         addPhoto {
             id("addPhoto")

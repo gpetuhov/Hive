@@ -6,8 +6,10 @@ import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.DeleteOfferInteractor
 import com.gpetuhov.android.hive.domain.interactor.SaveOfferInteractor
+import com.gpetuhov.android.hive.domain.model.Image
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
 import com.gpetuhov.android.hive.util.Constants
 import javax.inject.Inject
@@ -19,6 +21,7 @@ class UpdateOfferFragmentPresenter :
     DeleteOfferInteractor.Callback {
 
     @Inject lateinit var repo: Repo
+    @Inject lateinit var resultMessages: ResultMessages
 
     var uid = ""
     var title = ""
@@ -27,6 +30,7 @@ class UpdateOfferFragmentPresenter :
     var activeEnabled = false
     var free = true
     var price = Constants.Offer.DEFAULT_PRICE
+    var photoList= mutableListOf<Image>()
 
     private var tempTitle = ""
     private var tempDescription = ""
@@ -84,6 +88,8 @@ class UpdateOfferFragmentPresenter :
                     active = offer.isActive
                     free = offer.isFree
                     price = offer.price
+                    photoList.clear()
+                    photoList.addAll(offer.photoList)
 
                     // For existing offer enable active switch if active offer count is less than max
                     // or if offer is already active (to be able to turn it off)
@@ -234,8 +240,13 @@ class UpdateOfferFragmentPresenter :
 
     fun choosePhoto() = viewState.choosePhoto()
 
-    // TODO: implement
-    fun addPhoto(selectedImageUri: Uri) = showToast("Add photo")
+    fun addPhoto(selectedImageUri: Uri) {
+        repo.addOfferPhoto(
+            selectedImageUri,
+            { photo -> onAddPhotoSuccess(photo) },
+            { showToast(resultMessages.getAddPhotoErrorMessage()) }
+        )
+    }
 
     // --- Delete photo ---
 
@@ -256,4 +267,10 @@ class UpdateOfferFragmentPresenter :
     }
 
     private fun navigateUp() = viewState.navigateUp()
+
+    private fun onAddPhotoSuccess(photo: Image) {
+        editStarted = true
+        photoList.add(photo)
+        updateUI()
+    }
 }

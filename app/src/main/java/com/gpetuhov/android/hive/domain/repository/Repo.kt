@@ -3,10 +3,7 @@ package com.gpetuhov.android.hive.domain.repository
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
-import com.gpetuhov.android.hive.domain.model.Chatroom
-import com.gpetuhov.android.hive.domain.model.Message
-import com.gpetuhov.android.hive.domain.model.Offer
-import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.domain.model.*
 
 // At domain layer (business logic layer) we have only interface of the repo.
 // All classes at this layer call methods of this interface to retrieve and save data.
@@ -73,4 +70,5 @@ interface Repo {
     fun currentUserOfferList(): MutableList<Offer>
     fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit)
     fun deleteOffer(offerUid: String, onSuccess: () -> Unit, onError: () -> Unit)
+    fun addOfferPhoto(selectedImageUri: Uri, onSuccess: (Image) -> Unit, onError: () -> Unit)
 }

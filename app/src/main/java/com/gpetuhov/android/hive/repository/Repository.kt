@@ -549,15 +549,10 @@ class Repository(private val context: Context) : Repo {
     // === User photo ===
 
     override fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit) {
-        val photoUid = UUID.randomUUID().toString()
-        val storagePath = getUserPhotoStoragePath(photoUid)
-
-        uploadImage(
+        addImage(
             selectedImageUri,
-            storagePath,
-            Constants.Image.USER_PHOTO_SIZE,
-            false,
-            { downloadUrl -> saveUserPhotoUrl(photoUid, downloadUrl) },
+            true,
+            { photoUid, downloadUrl -> saveUserPhotoUrl(photoUid, downloadUrl) },
             onError
         )
     }
@@ -573,7 +568,7 @@ class Repository(private val context: Context) : Repo {
 
         if (photoIndex >= 0 && photoIndex < photoList.size) {
             photoList.removeAt(photoIndex)
-            saveUserPhotoList(photoList, { deleteImage(photoUid) }, onError)
+            saveUserPhotoList(photoList, { deleteImage(photoUid, true) }, onError)
 
         } else {
             onError()
@@ -616,6 +611,15 @@ class Repository(private val context: Context) : Repo {
         } else {
             onError()
         }
+    }
+
+    override fun addOfferPhoto(selectedImageUri: Uri, onSuccess: (Image) -> Unit, onError: () -> Unit) {
+        addImage(
+            selectedImageUri,
+            false,
+            { photoUid, downloadUrl -> onSuccess(Image(photoUid, downloadUrl)) },
+            onError
+        )
     }
 
     // === Private methods ===
@@ -1048,7 +1052,24 @@ class Repository(private val context: Context) : Repo {
 
     // --- Image ---
 
-    private fun getUserPhotoStoragePath(photoUid: String) = "${currentUserUid()}/user_photos/$photoUid.jpg"
+    private fun getPhotoStoragePath(photoUid: String, userPhoto: Boolean): String {
+        val subfolderName = if (userPhoto) "user_photo" else "offer_photo"
+        return "${currentUserUid()}/$subfolderName/$photoUid.jpg"
+    }
+
+    private fun addImage(selectedImageUri: Uri, userPhoto: Boolean, onSuccess: (String, String) -> Unit, onError: () -> Unit) {
+        val photoUid = UUID.randomUUID().toString()
+        val storagePath = getPhotoStoragePath(photoUid, userPhoto)
+
+        uploadImage(
+            selectedImageUri,
+            storagePath,
+            if (userPhoto) Constants.Image.USER_PHOTO_SIZE else Constants.Image.OFFER_PHOTO_SIZE,
+            false,
+            { downloadUrl -> onSuccess(photoUid, downloadUrl) },
+            onError
+        )
+    }
 
     private fun uploadImage(selectedImageUri: Uri, storagePath: String, downsampleSize: Int, centerCrop: Boolean, onSuccess: (String) -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
@@ -1100,8 +1121,8 @@ class Repository(private val context: Context) : Repo {
         }
     }
 
-    private fun deleteImage(photoUid: String) {
-        val storagePath = getUserPhotoStoragePath(photoUid)
+    private fun deleteImage(photoUid: String, userPhoto: Boolean) {
+        val storagePath = getPhotoStoragePath(photoUid, userPhoto)
         val storageRef = storage.reference.child(storagePath)
 
         storageRef.delete()
