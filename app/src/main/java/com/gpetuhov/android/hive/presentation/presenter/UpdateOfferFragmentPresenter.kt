@@ -301,6 +301,7 @@ class UpdateOfferFragmentPresenter :
         }
     }
 
+    // This is needed so that offer photos won't be updated inside repo directly
     private fun copyPhotoList(photoList: MutableList<Photo>): MutableList<Photo> {
         val result = mutableListOf<Photo>()
 
