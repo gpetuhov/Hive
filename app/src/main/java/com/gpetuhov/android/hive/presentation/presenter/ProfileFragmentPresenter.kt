@@ -160,8 +160,7 @@ class ProfileFragmentPresenter :
 
     fun choosePhoto() = viewState.choosePhoto()
 
-    // TODO: add on error
-    fun addPhoto(selectedImageUri: Uri) = repo.addUserPhoto(selectedImageUri) { }
+    fun addPhoto(selectedImageUri: Uri) = repo.addUserPhoto(selectedImageUri) { showToast(resultMessages.getAddPhotoErrorMessage()) }
 
     // --- Delete photo ---
 

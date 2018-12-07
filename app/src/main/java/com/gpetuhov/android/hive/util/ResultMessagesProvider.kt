@@ -40,5 +40,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getDeleteOfferErrorMessage(): String = context.getString(R.string.delete_offer_error)
 
+    override fun getAddPhotoErrorMessage(): String = getString(R.string.add_photo_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

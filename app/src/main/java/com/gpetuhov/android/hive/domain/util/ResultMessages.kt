@@ -14,4 +14,5 @@ interface ResultMessages {
     fun getOfferEmptyTitleErrorMessage(): String
     fun getOfferEmptyDescriptionErrorMessage(): String
     fun getDeleteOfferErrorMessage(): String
+    fun getAddPhotoErrorMessage(): String
 }
