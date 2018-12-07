@@ -3,10 +3,7 @@ package com.gpetuhov.android.hive.utils
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
-import com.gpetuhov.android.hive.domain.model.Chatroom
-import com.gpetuhov.android.hive.domain.model.Message
-import com.gpetuhov.android.hive.domain.model.Offer
-import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.domain.model.*
 import com.gpetuhov.android.hive.domain.repository.Repo
 
 class TestRepository : Repo {
@@ -16,6 +13,7 @@ class TestRepository : Repo {
     var isOnline = false
     var messageText = ""
     var offerList = mutableListOf<Offer>()
+    var photoList = mutableListOf<Image>()
 
     override fun isForeground() = false
 
@@ -145,6 +143,17 @@ class TestRepository : Repo {
         if (isSuccess) {
             offerList.clear()
             onSuccess()
+        } else {
+            onError()
+        }
+    }
+
+    override fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit) {
+    }
+
+    override fun deleteUserPhoto(photoUid: String, onError: () -> Unit) {
+        if (isSuccess) {
+            photoList.clear()
         } else {
             onError()
         }

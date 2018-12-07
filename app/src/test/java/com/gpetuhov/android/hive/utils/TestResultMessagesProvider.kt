@@ -27,5 +27,9 @@ class TestResultMessagesProvider : ResultMessages {
 
     override fun getDeleteOfferErrorMessage(): String = Constants.DELETE_OFFER_ERROR
 
+    override fun getAddPhotoErrorMessage(): String = ""
+
+    override fun getDeletePhotoErrorMessage(): String = Constants.DELETE_PHOTO_ERROR
+
     override fun getChangeUserPicErrorMessage(): String = ""
 }
