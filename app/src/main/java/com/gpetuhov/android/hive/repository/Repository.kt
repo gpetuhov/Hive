@@ -562,6 +562,11 @@ class Repository(private val context: Context) : Repo {
         )
     }
 
+    override fun deleteUserPhoto(photoUid: String, onError: () -> Unit) {
+        // TODO: implement this
+        onError()
+    }
+
     // === Offer ===
 
     override fun currentUserOfferList() = currentUser.value?.offerList ?: mutableListOf()
