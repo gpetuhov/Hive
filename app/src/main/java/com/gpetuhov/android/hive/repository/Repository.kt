@@ -563,8 +563,23 @@ class Repository(private val context: Context) : Repo {
     }
 
     override fun deleteUserPhoto(photoUid: String, onError: () -> Unit) {
-        // TODO: implement this
-        onError()
+        // Photo is deleted in 2 steps:
+        // 1. Delete photo from user photo list in Firestore
+        // 2. On success delete image file from Cloud Storage
+
+        val photoList = currentUserPhotoList()
+
+        val photoIndex = photoList.indexOfFirst { it.uid == photoUid }
+
+        if (photoIndex >= 0 && photoIndex < photoList.size) {
+            photoList.removeAt(photoIndex)
+
+            // TODO: delete image file on success
+            saveUserPhotoList(photoList, {}, onError)
+
+        } else {
+            onError()
+        }
     }
 
     // === Offer ===
@@ -852,6 +867,8 @@ class Repository(private val context: Context) : Repo {
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""
 
+    private fun currentUserPhotoList() = currentUser.value?.photoList ?: mutableListOf()
+
     private fun currentUserPicUrl() = currentUser.value?.userPicUrl ?: ""
 
     private fun saveUserPicUrl(newUserPicUrl: String) {
@@ -863,11 +880,15 @@ class Repository(private val context: Context) : Repo {
 
     private fun saveUserPhotoUrl(photoUid: String, photoDownloadUrl: String) {
         val photoList = mutableListOf<Image>()
-        photoList.addAll(currentUser.value?.photoList ?: mutableListOf())
+        photoList.addAll(currentUserPhotoList())
 
         val photo = Image(photoUid, photoDownloadUrl)
         photoList.add(photo)
 
+        saveUserPhotoList(photoList, { /* Do nothing */ }, { /* Do nothing */ })
+    }
+
+    private fun saveUserPhotoList(photoList: MutableList<Image>, onSuccess: () -> Unit, onError: () -> Unit) {
         val photoListForSaving = mutableListOf<HashMap<String, Any>>()
 
         for (photoItem in photoList) {
@@ -881,7 +902,7 @@ class Repository(private val context: Context) : Repo {
         val data = HashMap<String, Any>()
         data[PHOTO_LIST_KEY] = photoListForSaving
 
-        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        saveUserDataRemote(data, onSuccess, onError)
     }
 
     // --- Search ---
