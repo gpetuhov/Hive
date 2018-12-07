@@ -163,6 +163,10 @@ class ProfileFragmentPresenter :
     // TODO: add on error
     fun addPhoto(selectedImageUri: Uri) = repo.addUserPhoto(selectedImageUri) { }
 
+    // --- Delete photo ---
+
+    fun showDeletePhotoDialog(photoUid: String) = showToast("Delete photo $photoUid")
+
     // === Private methods ===
 
     private fun showToast(message: String) {

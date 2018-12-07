@@ -13,8 +13,14 @@ import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemHolder>() {
 
     @EpoxyAttribute lateinit var photoUrl: String
+    @EpoxyAttribute lateinit var onLongClick: () -> Unit
 
     override fun bind(holder: PhotoItemHolder) {
+        holder.photo.setOnLongClickListener {
+            onLongClick()
+            true
+        }
+
         if (photoUrl != "") {
             Glide.with(holder.photo.context)
                 .load(photoUrl)
