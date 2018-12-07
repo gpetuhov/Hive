@@ -44,8 +44,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
                 withModelsFrom(visiblePhotos) {
                     PhotoItemModel_()
-                        .id(it)
-                        .photoUrl(it)
+                        .id(it.uid)
+                        .photoUrl(it.downloadUrl)
                 }
             }
         }

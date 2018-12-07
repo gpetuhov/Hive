@@ -6,7 +6,6 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
-import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.OfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
@@ -47,8 +46,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
                 withModelsFrom(user?.photoList ?: mutableListOf()) {
                     PhotoItemModel_()
-                        .id(it)
-                        .photoUrl(it)
+                        .id(it.uid)
+                        .photoUrl(it.downloadUrl)
                 }
             }
         }

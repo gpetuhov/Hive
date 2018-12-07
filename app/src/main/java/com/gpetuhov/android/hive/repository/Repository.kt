@@ -8,9 +8,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.*
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
-import com.gpetuhov.android.hive.domain.model.Chatroom
-import com.gpetuhov.android.hive.domain.model.Message
-import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 import java.util.*
@@ -30,7 +27,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.DocumentSnapshot
-import com.gpetuhov.android.hive.domain.model.Offer
+import com.gpetuhov.android.hive.domain.model.*
 import kotlin.collections.HashMap
 
 // Read and write data to remote storage (Firestore)
@@ -57,6 +54,10 @@ class Repository(private val context: Context) : Repo {
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
         private const val FCM_TOKEN_KEY = "fcm_token"
+
+        // Image
+        private const val IMAGE_UID_KEY = "imageUid"
+        private const val IMAGE_DOWNLOAD_URL_KEY = "imageDownloadUrl"
 
         // Offer
         private const val OFFER_UID_KEY = "offer_uid"
@@ -548,15 +549,15 @@ class Repository(private val context: Context) : Repo {
     // === User photo ===
 
     override fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit) {
-        val photoFileName = UUID.randomUUID()
-        val storagePath = "${currentUserUid()}/user_photos/$photoFileName.jpg"
+        val photoUid = UUID.randomUUID().toString()
+        val storagePath = "${currentUserUid()}/user_photos/$photoUid.jpg"
 
         uploadImage(
             selectedImageUri,
             storagePath,
             Constants.Image.USER_PHOTO_SIZE,
             false,
-            { downloadUrl -> saveUserPhotoUrl(downloadUrl) },
+            { downloadUrl -> saveUserPhotoUrl(photoUid, downloadUrl) },
             onError
         )
     }
@@ -797,7 +798,8 @@ class Repository(private val context: Context) : Repo {
                 val offerFree = offerMap[OFFER_FREE_KEY] as Boolean?
                 val offerPrice = offerMap[OFFER_PRICE_KEY] as Double?
 
-                if (offerUid != null
+                if (
+                    offerUid != null
                     && offerUid != ""
                     && offerTitle != null
                     && offerTitle != ""
@@ -816,17 +818,26 @@ class Repository(private val context: Context) : Repo {
         return offerList
     }
 
-    private fun getPhotoListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<String> {
+    private fun getPhotoListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Image> {
         val photoSnapshotList = doc.get(PHOTO_LIST_KEY) as List<*>?
 
-        val photoList = mutableListOf<String>()
+        val photoList = mutableListOf<Image>()
 
         if (photoSnapshotList != null) {
             for (photoSnapshot in photoSnapshotList) {
-                val photoUrl = photoSnapshot as String?
+                val photoMap = photoSnapshot as HashMap<*, *>
 
-                if (photoUrl != null && photoUrl != "") {
-                    photoList.add(photoUrl)
+                val photoUid = photoMap[IMAGE_UID_KEY] as String?
+                val photoDownloadUrl = photoMap[IMAGE_DOWNLOAD_URL_KEY] as String?
+
+                if (
+                    photoUid != null
+                    && photoUid != ""
+                    && photoDownloadUrl != null
+                    && photoDownloadUrl != ""
+                ) {
+                    val photo = Image(photoUid, photoDownloadUrl)
+                    photoList.add(photo)
                 }
             }
         }
@@ -845,17 +856,27 @@ class Repository(private val context: Context) : Repo {
         saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
-    private fun saveUserPhotoUrl(photoUrl: String) {
-        val photoList = currentUser.value?.photoList ?: mutableListOf()
+    private fun saveUserPhotoUrl(photoUid: String, photoDownloadUrl: String) {
+        val photoList = mutableListOf<Image>()
+        photoList.addAll(currentUser.value?.photoList ?: mutableListOf())
 
-        if (!photoList.contains(photoUrl)) {
-            photoList.add(photoUrl)
+        val photo = Image(photoUid, photoDownloadUrl)
+        photoList.add(photo)
 
-            val data = HashMap<String, Any>()
-            data[PHOTO_LIST_KEY] = photoList
+        val photoListForSaving = mutableListOf<HashMap<String, Any>>()
 
-            saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        for (photoItem in photoList) {
+            val photoForSaving = HashMap<String, Any>()
+            photoForSaving[IMAGE_UID_KEY] = photoItem.uid
+            photoForSaving[IMAGE_DOWNLOAD_URL_KEY] = photoItem.downloadUrl
+
+            photoListForSaving.add(photoForSaving)
         }
+
+        val data = HashMap<String, Any>()
+        data[PHOTO_LIST_KEY] = photoListForSaving
+
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
     // --- Search ---
