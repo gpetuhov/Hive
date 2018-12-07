@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.ui.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -22,6 +24,10 @@ import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_update_offer.*
 
 class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
+
+    companion object {
+        private const val RC_PHOTO_PICKER = 1001
+    }
 
     @InjectPresenter lateinit var presenter: UpdateOfferFragmentPresenter
 
@@ -72,6 +78,15 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         return true
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_PHOTO_PICKER && resultCode == Activity.RESULT_OK) {
+            val selectedImageUri = data?.data
+            if (selectedImageUri != null) presenter.addPhoto(selectedImageUri)
+        }
+    }
+
     // === UpdateOfferFragmentView ===
 
     override fun showTitleDialog() {
@@ -119,6 +134,8 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     }
 
     override fun dismissPriceDialog() = priceDialog?.dismiss() ?: Unit
+
+    override fun choosePhoto() = startPhotoPicker(RC_PHOTO_PICKER)
 
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 

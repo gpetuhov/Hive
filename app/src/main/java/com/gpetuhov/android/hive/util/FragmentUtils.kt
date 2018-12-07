@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.util
 
 import android.content.Context
+import android.content.Intent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -55,6 +56,14 @@ fun Fragment.setToolbarUserPic(user: User) {
 
 fun Fragment.setToolbarTitle(title: String) {
     getToolbarTitle()?.text = title
+}
+
+fun Fragment.startPhotoPicker(requestCode: Int) {
+    val intent = Intent(Intent.ACTION_GET_CONTENT)
+    intent.type = Constants.FileTypes.IMAGE
+    intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+    startActivityForResult(Intent.createChooser(intent, getString(R.string.complete_action_using)), requestCode)
+    // Result will be passed into onActivityResult()
 }
 
 // === Private methods ===

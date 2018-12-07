@@ -232,8 +232,10 @@ class UpdateOfferFragmentPresenter :
 
     // --- Add photo ---
 
+    fun choosePhoto() = viewState.choosePhoto()
+
     // TODO: implement
-    fun choosePhoto() = showToast("Choose photo")
+    fun addPhoto(selectedImageUri: Uri) = showToast("Add photo")
 
     // --- Delete photo ---
 

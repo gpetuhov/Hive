@@ -251,12 +251,4 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller.signOutEnabled(isEnabled)
 
     private fun deleteUserButtonEnabled(isEnabled: Boolean) = controller.deleteAccountEnabled(isEnabled)
-
-    private fun startPhotoPicker(requestCode: Int) {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = Constants.FileTypes.IMAGE
-        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
-        startActivityForResult(Intent.createChooser(intent, getString(R.string.complete_action_using)), requestCode)
-        // Result will be passed into onActivityResult()
-    }
 }

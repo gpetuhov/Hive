@@ -61,6 +61,11 @@ interface UpdateOfferFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissPriceDialog()
 
+    // === Add photo ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun choosePhoto()
+
     // === Common ===
 
     @StateStrategyType(SkipStrategy::class)
