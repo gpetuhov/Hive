@@ -90,8 +90,7 @@ class UpdateOfferFragmentPresenter :
                     active = offer.isActive
                     free = offer.isFree
                     price = offer.price
-                    photoList.clear()
-                    photoList.addAll(offer.photoList)
+                    photoList = copyPhotoList(offer.photoList)
 
                     // For existing offer enable active switch if active offer count is less than max
                     // or if offer is already active (to be able to turn it off)
@@ -300,5 +299,16 @@ class UpdateOfferFragmentPresenter :
         if (index >=0 && index < photoList.size) {
             photoList[index].markAsDeleted()
         }
+    }
+
+    private fun copyPhotoList(photoList: MutableList<Photo>): MutableList<Photo> {
+        val result = mutableListOf<Photo>()
+
+        for (photo in photoList) {
+            val photoCopy = Photo(photo.uid, photo.downloadUrl)
+            result.add(photoCopy)
+        }
+
+        return result
     }
 }
