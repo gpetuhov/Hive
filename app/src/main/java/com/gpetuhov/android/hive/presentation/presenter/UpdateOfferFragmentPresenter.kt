@@ -153,7 +153,12 @@ class UpdateOfferFragmentPresenter :
     fun saveOffer() {
         viewState.disableButtons()
         viewState.showProgress()
-        saveOfferInteractor.saveOffer(Offer(uid, title, description, price, free, active))
+
+        val offer = Offer(uid, title, description, price, free, active)
+        offer.photoList.clear()
+        offer.photoList.addAll(photoList)
+
+        saveOfferInteractor.saveOffer(offer)
     }
 
     // --- Delete offer ---

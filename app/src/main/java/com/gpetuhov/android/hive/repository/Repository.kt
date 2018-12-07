@@ -66,6 +66,7 @@ class Repository(private val context: Context) : Repo {
         private const val OFFER_ACTIVE_KEY = "offer_active"
         private const val OFFER_FREE_KEY = "offer_free"
         private const val OFFER_PRICE_KEY = "offer_price"
+        private const val OFFER_PHOTO_LIST_KEY = "offer_photo_list"
 
         // Message
         private const val SENDER_UID_KEY = "sender_uid"
@@ -832,6 +833,10 @@ class Repository(private val context: Context) : Repo {
                     && offerPrice != null
                 ) {
                     val offer = Offer(offerUid, offerTitle, offerDescription, offerPrice, offerFree, offerActive)
+
+                    val offerPhotoList = getPhotoListFromPhotoSnapshotList(offerMap[OFFER_PHOTO_LIST_KEY] as List<*>?)
+                    offer.photoList = offerPhotoList
+
                     offerList.add(offer)
                 }
             }
@@ -840,9 +845,10 @@ class Repository(private val context: Context) : Repo {
         return offerList
     }
 
-    private fun getPhotoListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Image> {
-        val photoSnapshotList = doc.get(PHOTO_LIST_KEY) as List<*>?
+    private fun getPhotoListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Image> =
+        getPhotoListFromPhotoSnapshotList(doc.get(PHOTO_LIST_KEY) as List<*>?)
 
+    private fun getPhotoListFromPhotoSnapshotList(photoSnapshotList: List<*>?): MutableList<Image> {
         val photoList = mutableListOf<Image>()
 
         if (photoSnapshotList != null) {
@@ -891,18 +897,8 @@ class Repository(private val context: Context) : Repo {
     }
 
     private fun saveUserPhotoList(photoList: MutableList<Image>, onSuccess: () -> Unit, onError: () -> Unit) {
-        val photoListForSaving = mutableListOf<HashMap<String, Any>>()
-
-        for (photoItem in photoList) {
-            val photoForSaving = HashMap<String, Any>()
-            photoForSaving[IMAGE_UID_KEY] = photoItem.uid
-            photoForSaving[IMAGE_DOWNLOAD_URL_KEY] = photoItem.downloadUrl
-
-            photoListForSaving.add(photoForSaving)
-        }
-
         val data = HashMap<String, Any>()
-        data[PHOTO_LIST_KEY] = photoListForSaving
+        data[PHOTO_LIST_KEY] = getPhotoListForSaving(photoList)
 
         saveUserDataRemote(data, onSuccess, onError)
     }
@@ -1050,7 +1046,7 @@ class Repository(private val context: Context) : Repo {
         )
     }
 
-    // --- Image ---
+    // --- Photo ---
 
     private fun getPhotoStoragePath(photoUid: String, userPhoto: Boolean): String {
         val subfolderName = if (userPhoto) "user_photo" else "offer_photo"
@@ -1130,6 +1126,20 @@ class Repository(private val context: Context) : Repo {
             .addOnFailureListener { /* Do nothing */ }
     }
 
+    private fun getPhotoListForSaving(photoList: MutableList<Image>): MutableList<HashMap<String, Any>> {
+        val photoListForSaving = mutableListOf<HashMap<String, Any>>()
+
+        for (photoItem in photoList) {
+            val photoForSaving = HashMap<String, Any>()
+            photoForSaving[IMAGE_UID_KEY] = photoItem.uid
+            photoForSaving[IMAGE_DOWNLOAD_URL_KEY] = photoItem.downloadUrl
+
+            photoListForSaving.add(photoForSaving)
+        }
+
+        return photoListForSaving
+    }
+
     // --- File download URL ---
 
     private fun getDownloadUrl(storageRef: StorageReference, onSuccess: (String) -> Unit, onError: () -> Unit) {
@@ -1170,6 +1180,7 @@ class Repository(private val context: Context) : Repo {
             offerForSaving[OFFER_ACTIVE_KEY] = offerItem.isActive
             offerForSaving[OFFER_FREE_KEY] = offerItem.isFree
             offerForSaving[OFFER_PRICE_KEY] = offerItem.price
+            offerForSaving[OFFER_PHOTO_LIST_KEY] = getPhotoListForSaving(offerItem.photoList)
 
             offerListForSaving.add(offerForSaving)
         }
