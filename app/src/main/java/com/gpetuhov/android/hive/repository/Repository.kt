@@ -550,7 +550,7 @@ class Repository(private val context: Context) : Repo {
 
     override fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit) {
         val photoUid = UUID.randomUUID().toString()
-        val storagePath = "${currentUserUid()}/user_photos/$photoUid.jpg"
+        val storagePath = getUserPhotoStoragePath(photoUid)
 
         uploadImage(
             selectedImageUri,
@@ -573,9 +573,7 @@ class Repository(private val context: Context) : Repo {
 
         if (photoIndex >= 0 && photoIndex < photoList.size) {
             photoList.removeAt(photoIndex)
-
-            // TODO: delete image file on success
-            saveUserPhotoList(photoList, {}, onError)
+            saveUserPhotoList(photoList, { deleteImage(photoUid) }, onError)
 
         } else {
             onError()
@@ -1050,6 +1048,8 @@ class Repository(private val context: Context) : Repo {
 
     // --- Image ---
 
+    private fun getUserPhotoStoragePath(photoUid: String) = "${currentUserUid()}/user_photos/$photoUid.jpg"
+
     private fun uploadImage(selectedImageUri: Uri, storagePath: String, downsampleSize: Int, centerCrop: Boolean, onSuccess: (String) -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
             // This is because resizeImage() must run in background
@@ -1098,6 +1098,15 @@ class Repository(private val context: Context) : Repo {
         } catch (e: Exception) {
             return null
         }
+    }
+
+    private fun deleteImage(photoUid: String) {
+        val storagePath = getUserPhotoStoragePath(photoUid)
+        val storageRef = storage.reference.child(storagePath)
+
+        storageRef.delete()
+            .addOnSuccessListener { /* Do nothing */ }
+            .addOnFailureListener { /* Do nothing */ }
     }
 
     // --- File download URL ---
