@@ -38,6 +38,9 @@ class ProfileFragmentPresenter :
     // Keeps current text entered in description dialog
     private var tempDescription = ""
 
+    // Uid of the photo to be deleted
+    private var deletePhotoUid = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -164,7 +167,24 @@ class ProfileFragmentPresenter :
 
     // --- Delete photo ---
 
-    fun showDeletePhotoDialog(photoUid: String) = showToast("Delete photo $photoUid")
+    fun showDeletePhotoDialog(photoUid: String) {
+        deletePhotoUid = photoUid
+        viewState.showDeletePhotoDialog()
+    }
+
+    fun deletePhoto() {
+        viewState.dismissDeletePhotoDialog()
+
+        // TODO: implement this
+        showToast("Delete photo $deletePhotoUid")
+//        deletePhotoInteractor.deletePhoto(photoUid)
+        deletePhotoUid = ""
+    }
+
+    fun deletePhotoCancel() {
+        deletePhotoUid = ""
+        viewState.dismissDeletePhotoDialog()
+    }
 
     // === Private methods ===
 

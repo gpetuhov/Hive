@@ -42,5 +42,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getAddPhotoErrorMessage(): String = getString(R.string.add_photo_error)
 
+    override fun getDeletePhotoErrorMessage(): String = getString(R.string.delete_photo_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

@@ -53,6 +53,9 @@
     <string name="max_visible_photos">You have reached maximum number of visible photos.
         All newly added photos will not be visible to other users
     </string>
+    <string name="delete_photo">Delete photo</string>
+    <string name="delete_photo_error">Error deleting photo</string>
+    <string name="prompt_delete_photo">Do you really want to delete this photo?</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

@@ -41,6 +41,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var descriptionDialog: MaterialDialog? = null
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
+    private var deletePhotoDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -136,6 +137,10 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun choosePhoto() = startPhotoPicker(RC_USER_PHOTO_PICKER)
 
+    override fun showDeletePhotoDialog() = deletePhotoDialog?.show() ?: Unit
+
+    override fun dismissDeletePhotoDialog() = deletePhotoDialog?.dismiss() ?: Unit
+
     override fun showToast(message: String) {
         toast(message)
     }
@@ -147,6 +152,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initDescriptionDialog()
         initSignOutDialog()
         initDeleteUserDialog()
+        initDeletePhotoDialog()
     }
 
     private fun initUsernameDialog() {
@@ -222,11 +228,24 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun initDeletePhotoDialog() {
+        if (context != null) {
+            deletePhotoDialog = MaterialDialog(context!!)
+                .title(R.string.delete_photo)
+                .message(R.string.prompt_delete_photo)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton { presenter.deletePhoto() }
+                .negativeButton { presenter.deletePhotoCancel() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
+        dismissDeletePhotoDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller.signOutEnabled(isEnabled)

@@ -69,6 +69,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun choosePhoto()
 
+    // === Delete user ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showDeletePhotoDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissDeletePhotoDialog()
+
     // === Common ===
 
     // We don't need to keep this command in the queue,
