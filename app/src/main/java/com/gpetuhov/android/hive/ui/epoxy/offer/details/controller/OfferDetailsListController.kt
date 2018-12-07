@@ -11,7 +11,10 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsDetai
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsUser
+import com.gpetuhov.android.hive.ui.epoxy.photo.models.PhotoItemModel_
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.epoxy.carousel
+import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
 
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : EpoxyController() {
@@ -29,6 +32,22 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
         offerDetailsHeader {
             id("offer_details_header")
             onBackButtonClick { presenter.navigateUp() }
+        }
+
+        val photoList = offer?.photoList ?: mutableListOf()
+        if (!photoList.isEmpty()) {
+            carousel {
+                id("photo_carousel")
+
+                paddingDp(0)
+
+                withModelsFrom(photoList) {
+                    PhotoItemModel_()
+                        .id(it.uid)
+                        .photoUrl(it.downloadUrl)
+                        .onLongClick { /* Do nothing */ }
+                }
+            }
         }
 
         offerDetailsTitle {
