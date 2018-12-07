@@ -40,6 +40,8 @@ class UpdateOfferFragmentPresenter :
     private var saveOfferInteractor = SaveOfferInteractor(this)
     private var deleteOfferInteractor = DeleteOfferInteractor(this)
 
+    private var deletePhotoUid = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -255,9 +257,23 @@ class UpdateOfferFragmentPresenter :
 
     // --- Delete photo ---
 
-    // TODO: implement
     fun showDeletePhotoDialog(photoUid: String) {
-        showToast("Delete photo $photoUid")
+        deletePhotoUid = photoUid
+        viewState.showDeletePhotoDialog()
+    }
+
+    fun deletePhoto() {
+        viewState.dismissDeletePhotoDialog()
+
+        // TODO: mark photo as deleted here
+        showToast("Delete photo $deletePhotoUid")
+
+        deletePhotoUid = ""
+    }
+
+    fun deletePhotoCancel() {
+        deletePhotoUid = ""
+        viewState.dismissDeletePhotoDialog()
     }
 
     // === Private methods ===

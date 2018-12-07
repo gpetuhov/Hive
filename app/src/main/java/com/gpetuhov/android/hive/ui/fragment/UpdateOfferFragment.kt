@@ -38,6 +38,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     private var deleteOfferDialog: MaterialDialog? = null
     private var quitDialog: MaterialDialog? = null
     private var priceDialog: MaterialDialog? = null
+    private var deletePhotoDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -137,6 +138,10 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
     override fun choosePhoto() = startPhotoPicker(RC_PHOTO_PICKER)
 
+    override fun showDeletePhotoDialog() = deletePhotoDialog?.show() ?: Unit
+
+    override fun dismissDeletePhotoDialog() = deletePhotoDialog?.dismiss() ?: Unit
+
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {
@@ -156,6 +161,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         initDeleteOfferDialog()
         initQuitDialog()
         initPriceDialog()
+        initDeletePhotoDialog()
     }
 
     private fun initTitleDialog() {
@@ -272,12 +278,25 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         }
     }
 
+    private fun initDeletePhotoDialog() {
+        if (context != null) {
+            deletePhotoDialog = MaterialDialog(context!!)
+                .title(R.string.delete_photo)
+                .message(R.string.prompt_delete_photo)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton { presenter.deletePhoto() }
+                .negativeButton { presenter.deletePhotoCancel() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissTitleDialog()
         dismissDescriptionDialog()
         dismissDeleteOfferDialog()
         dismissQuitOfferUpdateDialog()
         dismissPriceDialog()
+        dismissDeletePhotoDialog()
     }
 
     private fun saveDeleteButtonsEnabled(isEnabled: Boolean) {
