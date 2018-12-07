@@ -44,7 +44,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
                 paddingDp(0)
 
-                withModelsFrom(user?.photoList ?: mutableListOf()) {
+                withModelsFrom(photoList) {
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)

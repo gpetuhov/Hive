@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import android.net.Uri
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
@@ -227,6 +228,18 @@ class UpdateOfferFragmentPresenter :
     fun dismissPriceDialog() {
         tempPrice = Constants.Offer.DEFAULT_PRICE
         viewState.dismissPriceDialog()
+    }
+
+    // --- Add photo ---
+
+    // TODO: implement
+    fun choosePhoto() = showToast("Choose photo")
+
+    // --- Delete photo ---
+
+    // TODO: implement
+    fun showDeletePhotoDialog(photoUid: String) {
+        showToast("Delete photo $photoUid")
     }
 
     // === Private methods ===

@@ -4,10 +4,16 @@ import android.content.Context
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.model.Image
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferPrice
+import com.gpetuhov.android.hive.ui.epoxy.photo.models.PhotoItemModel_
+import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
+import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.epoxy.carousel
+import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
 
 class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresenter) : EpoxyController() {
@@ -33,6 +39,30 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
 
             saveButtonEnabled(saveButtonEnabled)
             onSaveButtonClick { presenter.saveOffer() }
+        }
+
+        // TODO: get photo list from offer
+        val photoList = mutableListOf<Image>()
+
+        addPhoto {
+            id("addPhoto")
+            onClick { presenter.choosePhoto() }
+            maxPhotoWarningVisible(photoList.size >= Constants.Offer.MAX_VISIBLE_PHOTO_COUNT)
+        }
+
+        if (!photoList.isEmpty()) {
+            carousel {
+                id("photo_carousel")
+
+                paddingDp(0)
+
+                withModelsFrom(photoList) {
+                    PhotoItemModel_()
+                        .id(it.uid)
+                        .photoUrl(it.downloadUrl)
+                        .onLongClick { presenter.showDeletePhotoDialog(it.uid) }
+                }
+            }
         }
 
         updateOfferDetails {
