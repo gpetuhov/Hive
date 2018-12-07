@@ -13,6 +13,7 @@ interface ResultMessages {
     fun getSaveOfferErrorMessage(): String
     fun getOfferEmptyTitleErrorMessage(): String
     fun getOfferEmptyDescriptionErrorMessage(): String
+    fun getOfferEmptyPhotoListErrorMessage(): String
     fun getDeleteOfferErrorMessage(): String
     fun getAddPhotoErrorMessage(): String
     fun getDeletePhotoErrorMessage(): String

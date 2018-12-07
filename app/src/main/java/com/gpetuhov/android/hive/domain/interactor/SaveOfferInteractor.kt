@@ -30,6 +30,9 @@ class SaveOfferInteractor(private val callback: Callback) : Interactor {
         } else if (offer?.description == null || offer?.description == "") {
             callback.onSaveOfferError(resultMessages.getOfferEmptyDescriptionErrorMessage())
 
+        } else if (offer?.photoList == null || offer?.photoList?.size == 0) {
+            callback.onSaveOfferError(resultMessages.getOfferEmptyPhotoListErrorMessage())
+
         } else {
             repo.saveOffer(
                 offer,

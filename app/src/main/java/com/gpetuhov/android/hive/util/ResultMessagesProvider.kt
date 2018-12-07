@@ -32,13 +32,15 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getChangeUserPicErrorMessage(): String = getString(R.string.change_user_picture_error)
 
-    override fun getSaveOfferErrorMessage(): String = context.getString(R.string.save_offer_error)
+    override fun getSaveOfferErrorMessage(): String = getString(R.string.save_offer_error)
 
-    override fun getOfferEmptyTitleErrorMessage(): String = context.getString(R.string.title_empty_error)
+    override fun getOfferEmptyTitleErrorMessage(): String = getString(R.string.title_empty_error)
 
-    override fun getOfferEmptyDescriptionErrorMessage(): String = context.getString(R.string.description_empty_error)
+    override fun getOfferEmptyDescriptionErrorMessage(): String = getString(R.string.description_empty_error)
 
-    override fun getDeleteOfferErrorMessage(): String = context.getString(R.string.delete_offer_error)
+    override fun getOfferEmptyPhotoListErrorMessage(): String = getString(R.string.photo_list_empty_error)
+
+    override fun getDeleteOfferErrorMessage(): String = getString(R.string.delete_offer_error)
 
     override fun getAddPhotoErrorMessage(): String = getString(R.string.add_photo_error)
 

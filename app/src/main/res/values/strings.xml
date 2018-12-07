@@ -93,6 +93,7 @@
     <string name="save_offer_error">Error saving offer</string>
     <string name="title_empty_error">Please, add offer title</string>
     <string name="description_empty_error">Please, add offer description</string>
+    <string name="photo_list_empty_error">Please, add at least one photo</string>
     <string name="prompt_delete_offer">Do you really want to delete this offer?</string>
     <string name="delete_offer_error">Error deleting offer</string>
     <string name="quit">Quit without saving</string>
