@@ -158,4 +158,7 @@ class TestRepository : Repo {
             onError()
         }
     }
+
+    override fun addOfferPhoto(selectedImageUri: Uri, onSuccess: (Image) -> Unit, onError: () -> Unit) {
+    }
 }

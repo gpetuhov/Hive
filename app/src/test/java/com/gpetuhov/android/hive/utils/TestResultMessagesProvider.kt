@@ -25,6 +25,8 @@ class TestResultMessagesProvider : ResultMessages {
 
     override fun getOfferEmptyDescriptionErrorMessage(): String = Constants.SAVE_OFFER_DESCRIPTION_ERROR
 
+    override fun getOfferEmptyPhotoListErrorMessage(): String = Constants.SAVE_OFFER_PHOTO_ERROR
+
     override fun getDeleteOfferErrorMessage(): String = Constants.DELETE_OFFER_ERROR
 
     override fun getAddPhotoErrorMessage(): String = ""

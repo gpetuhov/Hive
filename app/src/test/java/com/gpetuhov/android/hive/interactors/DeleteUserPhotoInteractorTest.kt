@@ -25,7 +25,7 @@ class DeleteUserPhotoInteractorTest {
         HiveApp.application = context as HiveApp
         HiveApp.appComponent = testAppComponent
 
-        (repo as TestRepository).photoList.add(Constants.DUMMY_IMAGE)
+        (repo as TestRepository).photoList.add(Constants.DUMMY_PHOTO)
     }
 
     @Test
@@ -51,7 +51,7 @@ class DeleteUserPhotoInteractorTest {
         }
 
         val interactor = DeleteUserPhotoInteractor(callback)
-        interactor.deletePhoto(Constants.DUMMY_IMAGE.uid)
+        interactor.deletePhoto(Constants.DUMMY_PHOTO.uid)
 
         assertEquals(isSuccess, (repo as TestRepository).photoList.isEmpty())
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

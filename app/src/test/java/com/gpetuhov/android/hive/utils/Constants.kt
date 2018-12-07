@@ -21,16 +21,23 @@ class Constants {
         const val DUMMY_MESSAGE_TEXT = "Dummy message text"
         const val SEND_MESSAGE_ERROR = "Send message error"
 
-        val DUMMY_OFFER = Offer("2g5g2g", "dfgfdg", "ddsfdfs", 0.0, false, true)
+        val DUMMY_OFFER = getDummyOffer()
 
         const val SAVE_OFFER_ERROR = "Save offer error"
         const val SAVE_OFFER_TITLE_ERROR = "Save offer title error"
         const val SAVE_OFFER_DESCRIPTION_ERROR = "Save offer description error"
+        const val SAVE_OFFER_PHOTO_ERROR = "Save offer photo error"
 
         const val DELETE_OFFER_ERROR = "Delete offer error"
 
-        val DUMMY_IMAGE = Image("3984fq9f", "389gj349fj")
+        val DUMMY_PHOTO = Image("3984fq9f", "389gj349fj")
 
         const val DELETE_PHOTO_ERROR = "Delete photo error"
+
+        private fun getDummyOffer(): Offer {
+            val offer = Offer("2g5g2g", "dfgfdg", "ddsfdfs", 0.0, false, true)
+            offer.photoList.add(DUMMY_PHOTO)
+            return offer
+        }
     }
 }

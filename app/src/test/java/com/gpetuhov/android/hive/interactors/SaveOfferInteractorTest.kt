@@ -51,6 +51,13 @@ class SaveOfferInteractorTest {
         testSaveOfferInteractor(offer, true)
     }
 
+    @Test
+    fun saveOfferEmptyPhoto() {
+        val offer = Constants.DUMMY_OFFER
+        offer.photoList.clear()
+        testSaveOfferInteractor(offer, true)
+    }
+
     private fun testSaveOfferInteractor(offer: Offer, isSuccess: Boolean) {
         (repo as TestRepository).isSuccess = isSuccess
 
@@ -68,6 +75,7 @@ class SaveOfferInteractorTest {
                 val expectedMessage: String = when {
                     offer.title == "" -> Constants.SAVE_OFFER_TITLE_ERROR
                     offer.description == "" -> Constants.SAVE_OFFER_DESCRIPTION_ERROR
+                    offer.photoList.isEmpty() -> Constants.SAVE_OFFER_PHOTO_ERROR
                     else -> Constants.SAVE_OFFER_ERROR
                 }
 
