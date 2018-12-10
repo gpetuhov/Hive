@@ -56,8 +56,9 @@
     <string name="delete_photo">Delete photo</string>
     <string name="delete_photo_error">Error deleting photo</string>
     <string name="prompt_delete_photo">Do you really want to delete this photo?</string>
+    <string name="no_active_offers_warning">You are not visible in search results, because you have no active offers</string>
 
-    <!-- MapFragment -->
+        <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
     <string name="my_location">My location</string>
     <string name="zoom_in">Zoom in</string>

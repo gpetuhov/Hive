@@ -1,7 +1,9 @@
 package com.gpetuhov.android.hive.ui.epoxy.profile.models
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -24,6 +26,8 @@ abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
     @EpoxyAttribute lateinit var description: String
     @EpoxyAttribute lateinit var onDescriptionClick: () -> Unit
 
+    @EpoxyAttribute var noActiveOffersWarningVisible = false
+
     override fun bind(holder: DetailsHolder) {
         holder.username.text = username
         holder.username.setOnClickListener { onUsernameClick() }
@@ -36,6 +40,8 @@ abstract class DetailsModel : EpoxyModelWithHolder<DetailsHolder>() {
 
         holder.description.text = description
         holder.description.setOnClickListener { onDescriptionClick() }
+
+        holder.noActiveOffersWarning.visibility = if (noActiveOffersWarningVisible) View.VISIBLE else View.GONE
     }
 }
 
@@ -45,4 +51,5 @@ class DetailsHolder : KotlinHolder() {
     val name by bind<TextView>(R.id.user_name_textview)
     val email by bind<TextView>(R.id.user_email_textview)
     val description by bind<TextView>(R.id.user_description_textview)
+    val noActiveOffersWarning by bind<TextView>(R.id.user_no_active_offers_warning)
 }

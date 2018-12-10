@@ -69,6 +69,9 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
             val hasDescription = user?.hasDescription ?: false
             description(if (hasDescription) user?.description ?: "" else context.getString(R.string.enter_description))
             onDescriptionClick { presenter.showDescriptionDialog() }
+
+            val hasActiveOffer = user?.hasActiveOffer() ?: false
+            noActiveOffersWarningVisible(!hasActiveOffer)
         }
 
         user?.offerList?.forEach {

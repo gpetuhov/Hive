@@ -97,4 +97,13 @@
             android:text="@string/offers"
             style="@style/titleTextStyle"/>
 
+    <TextView
+            android:id="@+id/user_no_active_offers_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/no_active_offers_warning"
+            android:visibility="gone"
+            style="@style/mediumTextStyle"/>
+
 </LinearLayout>
