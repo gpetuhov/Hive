@@ -46,6 +46,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
+                        .onClick { presenter.openPhotos(it.uid) }
                         .onLongClick { /* Do nothing */ }
                 }
             }

@@ -48,6 +48,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
+                        .onClick { /* Do nothing */ }
                         .onLongClick { presenter.showDeletePhotoDialog(it.uid) }
                 }
             }

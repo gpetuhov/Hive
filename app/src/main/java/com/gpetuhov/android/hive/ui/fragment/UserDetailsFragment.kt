@@ -78,4 +78,9 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToOfferDetailsFragment(offerUid)
         findNavController().navigate(action)
     }
+
+    override fun openPhotos(selectedPhotoUid: String) {
+        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToPhotoFragment("", selectedPhotoUid)
+        findNavController().navigate(action)
+    }
 }

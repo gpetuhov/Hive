@@ -13,9 +13,12 @@ import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemHolder>() {
 
     @EpoxyAttribute lateinit var photoUrl: String
+    @EpoxyAttribute lateinit var onClick: () -> Unit
     @EpoxyAttribute lateinit var onLongClick: () -> Unit
 
     override fun bind(holder: PhotoItemHolder) {
+        holder.photo.setOnClickListener { onClick() }
+
         holder.photo.setOnLongClickListener {
             onLongClick()
             true

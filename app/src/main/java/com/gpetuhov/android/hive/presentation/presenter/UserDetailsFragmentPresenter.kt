@@ -29,6 +29,8 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
 
     fun openOffer(offerUid: String) = viewState.openOffer(offerUid)
 
+    fun openPhotos(selectedPhotoUid: String) = viewState.openPhotos(selectedPhotoUid)
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend

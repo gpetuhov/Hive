@@ -58,6 +58,7 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
+                        .onClick { /* Do nothing */ }
                         .onLongClick { presenter.showDeletePhotoDialog(it.uid) }
                 }
             }
