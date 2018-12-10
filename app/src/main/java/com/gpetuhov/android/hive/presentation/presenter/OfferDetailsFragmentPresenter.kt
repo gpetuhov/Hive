@@ -13,6 +13,7 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
     @Inject lateinit var repo: Repo
 
     var userUid = ""
+    var offerUid = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -28,6 +29,8 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
     }
 
     fun openUserDetails() = viewState.openUserDetails()
+
+    fun openPhotos(selectedPhotoUid: String) = viewState.openPhotos(offerUid, selectedPhotoUid)
 
     // --- Lifecycle ---
 

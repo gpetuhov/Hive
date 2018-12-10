@@ -41,6 +41,7 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         binding?.presenter = presenter
 
         val offerUid = OfferDetailsFragmentArgs.fromBundle(arguments).offerUid
+        presenter.offerUid = offerUid
 
         val offerDetailsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.offer_details_recycler_view)
         offerDetailsRecyclerView?.adapter = controller.adapter
@@ -77,6 +78,11 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
 
     override fun openUserDetails() {
         val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToUserDetailsFragment()
+        findNavController().navigate(action)
+    }
+
+    override fun openPhotos(offerUid: String, selectedPhotoUid: String) {
+        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToPhotoFragment(offerUid, selectedPhotoUid)
         findNavController().navigate(action)
     }
 }

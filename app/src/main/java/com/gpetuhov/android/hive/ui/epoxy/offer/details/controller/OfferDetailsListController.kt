@@ -47,8 +47,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        // TODO: implement
-                        .onClick {  }
+                        .onClick { presenter.openPhotos(it.uid) }
                         .onLongClick { /* Do nothing */ }
                 }
             }
