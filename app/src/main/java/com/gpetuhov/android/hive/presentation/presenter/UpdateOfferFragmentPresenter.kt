@@ -53,6 +53,7 @@ class UpdateOfferFragmentPresenter :
 
     override fun onSaveOfferSuccess() {
         onOperationComplete()
+        cancelPhotoUploads()
         viewState.navigateUp()
     }
 
@@ -65,6 +66,7 @@ class UpdateOfferFragmentPresenter :
 
     override fun onDeleteOfferSuccess() {
         onOperationComplete()
+        cancelPhotoUploads()
         viewState.navigateUp()
     }
 
@@ -158,8 +160,6 @@ class UpdateOfferFragmentPresenter :
         viewState.disableButtons()
         viewState.showProgress()
 
-        cancelPhotoUploads()
-
         val offer = Offer(uid, title, description, price, free, active)
         offer.photoList.clear()
         offer.photoList.addAll(photoList)
@@ -177,7 +177,6 @@ class UpdateOfferFragmentPresenter :
     fun deleteOffer() {
         viewState.showProgress()
         viewState.dismissDeleteOfferDialog()
-        cancelPhotoUploads()
         deleteNewPhotosFromStorage()
         deleteOfferInteractor.deleteOffer(uid)
     }
