@@ -13,6 +13,8 @@ class PhotoFragmentPresenter : MvpPresenter<PhotoFragmentView>() {
     @Inject lateinit var repo: Repo
 
     var userUid = ""
+    var offerUid = ""
+    var photoUid = ""
 
     init {
         HiveApp.appComponent.inject(this)

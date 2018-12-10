@@ -38,7 +38,9 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo, container, false)
         binding?.presenter = presenter
 
-        // TODO: get args from bundle here
+        val args = PhotoFragmentArgs.fromBundle(arguments)
+        presenter.offerUid = args.offerUid
+        presenter.photoUid = args.photoUid
 
         val photoRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.photo_recycler_view)
 //        photoRecyclerView?.adapter = controller.adapter

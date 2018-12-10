@@ -60,8 +60,14 @@
                 app:destination="@id/chat_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action android:id="@+id/action_user_details_fragment_to_offer_details_fragment"
+        <action
+                android:id="@+id/action_user_details_fragment_to_offer_details_fragment"
                 app:destination="@id/offer_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_user_details_fragment_to_photoFragment"
+                app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
@@ -102,6 +108,19 @@
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
         <argument
                 android:name="offerUid"
+                app:argType="string"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/photoFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.PhotoFragment"
+            android:label="PhotoFragment"
+            tools:layout="@layout/fragment_photo">
+        <argument
+                android:name="offerUid"
+                app:argType="string"/>
+        <argument
+                android:name="photoUid"
                 app:argType="string"/>
     </fragment>
 
