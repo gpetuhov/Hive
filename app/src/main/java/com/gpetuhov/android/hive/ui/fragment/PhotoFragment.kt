@@ -15,6 +15,7 @@ import com.gpetuhov.android.hive.databinding.FragmentPhotoBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.PhotoFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.PhotoFragmentView
+import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller.PhotoFullscreenListController
 import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.hideBottomNavigationView
 import com.gpetuhov.android.hive.util.hideToolbar
@@ -24,6 +25,7 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
 
     @InjectPresenter lateinit var presenter: PhotoFragmentPresenter
 
+    private lateinit var controller: PhotoFullscreenListController
     private var binding: FragmentPhotoBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,7 +35,7 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         hideToolbar()
         hideBottomNavigationView()
 
-//        controller = OfferDetailsListController(presenter)
+        controller = PhotoFullscreenListController(presenter)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo, container, false)
         binding?.presenter = presenter
@@ -43,12 +45,12 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         presenter.photoUid = args.photoUid
 
         val photoRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.photo_recycler_view)
-//        photoRecyclerView?.adapter = controller.adapter
+        photoRecyclerView?.adapter = controller.adapter
 
         val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
-//            controller.changeOffer(user, offerUid)
+            controller.changeUser(user)
         })
 
         return binding?.root
