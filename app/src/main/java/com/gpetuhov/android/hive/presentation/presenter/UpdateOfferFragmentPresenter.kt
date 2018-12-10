@@ -51,29 +51,15 @@ class UpdateOfferFragmentPresenter :
 
     // === SaveOfferInteractor.Callback ===
 
-    override fun onSaveOfferSuccess() {
-        onOperationComplete()
-        cancelPhotoUploads()
-        viewState.navigateUp()
-    }
+    override fun onSaveOfferSuccess() = onSuccess()
 
-    override fun onSaveOfferError(errorMessage: String) {
-        onOperationComplete()
-        showToast(errorMessage)
-    }
+    override fun onSaveOfferError(errorMessage: String) = onError(errorMessage)
 
     // === DeleteOfferInteractor.Callback ===
 
-    override fun onDeleteOfferSuccess() {
-        onOperationComplete()
-        cancelPhotoUploads()
-        viewState.navigateUp()
-    }
+    override fun onDeleteOfferSuccess() = onSuccess()
 
-    override fun onDeleteOfferError(errorMessage: String) {
-        onOperationComplete()
-        showToast(errorMessage)
-    }
+    override fun onDeleteOfferError(errorMessage: String) = onError(errorMessage)
 
     // === Public methods ===
     // --- Init ---
@@ -294,17 +280,32 @@ class UpdateOfferFragmentPresenter :
         viewState.hideProgress()
     }
 
+    private fun onSuccess() {
+        onOperationComplete()
+        cancelPhotoUploads()
+        viewState.navigateUp()
+    }
+
+    private fun onError(errorMessage: String) {
+        onOperationComplete()
+        showToast(errorMessage)
+    }
+
     private fun navigateUp() = viewState.navigateUp()
 
     private fun onAddPhotoSuccess(photo: Photo) {
         if (!isOfferEditStopped) {
+            // If offer editing has not been stopped, mark photo as new, add it to list and update UI
             photo.markAsNew()
             photoList.add(photo)
             updateUI()
 
         } else {
-            // If update offer fragment is not active, delete uploaded photo from Storage,
-            // because the user has already stopped updating offer and this photo has not been added to the offer.
+            // If offer editing has been stopped, delete uploaded photo from Cloud Storage,
+            // because photo has not been added to the offer
+            // We get here if the user has stopped editing offer after the photo has already been uploaded,
+            // but before it has been added to offer photo list.
+            // If we don't delete it here, it will remain in Cloud Storage forever without user knowing about it.
             repo.deleteOfferPhotoFromStorage(photo.uid)
         }
     }
