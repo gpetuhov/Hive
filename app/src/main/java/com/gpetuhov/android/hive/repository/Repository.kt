@@ -607,7 +607,7 @@ class Repository(private val context: Context) : Repo {
                 {
                     // If offer list successfully updated in Firestore,
                     // remove deleted photos from Cloud Storage.
-                    removeDeletedPhotosFromStorage(photoUidsToDeleteFromStorage)
+                    removeOfferPhotosFromStorage(photoUidsToDeleteFromStorage)
                     onSuccess()
                 },
                 onError
@@ -621,8 +621,26 @@ class Repository(private val context: Context) : Repo {
     override fun deleteOffer(offerUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized && offerUid != "") {
             val offerList = currentUserOfferList()
-            updateOfferList(offerList, offerUid) { offerIndex -> offerList.removeAt(offerIndex) }
-            saveOfferList(offerList, onSuccess, onError)
+
+            var photoUidsToDeleteFromStorage = mutableListOf<String>()
+
+            updateOfferList(offerList, offerUid) { offerIndex ->
+                // Save offer photo uids
+                photoUidsToDeleteFromStorage = offerList[offerIndex].photoList.map { it.uid }.toMutableList()
+                // Remove offer from list
+                offerList.removeAt(offerIndex)
+            }
+
+            saveOfferList(
+                offerList,
+                {
+                    // If offer list successfully updated in Firestore,
+                    // remove photos of the deleted offer from Cloud Storage.
+                    removeOfferPhotosFromStorage(photoUidsToDeleteFromStorage)
+                    onSuccess()
+                },
+                onError
+            )
 
         } else {
             onError()
@@ -1226,8 +1244,8 @@ class Repository(private val context: Context) : Repo {
         return deletedPhotoUids
     }
 
-    // Remove deleted photos from Cloud Storage
-    private fun removeDeletedPhotosFromStorage(photoUidsToDeleteFromStorage: MutableList<String>) {
+    // Remove offer photos from Cloud Storage
+    private fun removeOfferPhotosFromStorage(photoUidsToDeleteFromStorage: MutableList<String>) {
         for (photoUid in photoUidsToDeleteFromStorage) {
             deleteImage(photoUid, false)
         }
