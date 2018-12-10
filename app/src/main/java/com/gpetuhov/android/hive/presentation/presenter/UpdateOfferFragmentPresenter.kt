@@ -192,6 +192,7 @@ class UpdateOfferFragmentPresenter :
 
     fun quitOfferUpdate() {
         viewState.dismissQuitOfferUpdateDialog()
+        deleteNewPhotosFromStorage()
         navigateUp()
     }
 
@@ -323,4 +324,6 @@ class UpdateOfferFragmentPresenter :
 
         return result
     }
+
+    private fun deleteNewPhotosFromStorage() = photoList.filter { it.isNew }.forEach { repo.deleteOfferPhotoFromStorage(it.uid) }
 }
