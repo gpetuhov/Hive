@@ -172,6 +172,7 @@ class UpdateOfferFragmentPresenter :
     fun deleteOffer() {
         viewState.showProgress()
         viewState.dismissDeleteOfferDialog()
+        deleteNewPhotosFromStorage()
         deleteOfferInteractor.deleteOffer(uid)
     }
 
