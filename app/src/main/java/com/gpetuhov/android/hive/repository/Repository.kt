@@ -971,7 +971,7 @@ class Repository(private val context: Context) : Repo {
         }
     }
 
-    private fun checkConditions(user: User): Boolean = checkQueryText(user)
+    private fun checkConditions(user: User): Boolean = user.hasActiveOffer() && checkQueryText(user)
 
     private fun checkQueryText(user: User): Boolean {
         return user.name.contains(queryText, true)
