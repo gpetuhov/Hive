@@ -262,6 +262,7 @@ class UpdateOfferFragmentPresenter :
     }
 
     fun deletePhoto() {
+        editStarted = true
         viewState.dismissDeletePhotoDialog()
         deletePhotoOrMarkAsDeleted()
         deletePhotoUid = ""

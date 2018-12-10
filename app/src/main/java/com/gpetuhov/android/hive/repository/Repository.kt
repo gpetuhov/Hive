@@ -583,13 +583,16 @@ class Repository(private val context: Context) : Repo {
     override fun saveOffer(offer: Offer?, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized && offer != null) {
             val offerList = currentUserOfferList()
+            var photoUidsToDeleteFromStorage = mutableListOf<String>()
 
             // If offer uid is not empty, then offer already exist.
             // Update it with new data.
             if (offer.uid != "") {
-                // TODO: delete photos, marked as deleted, from Storage and remove them from offer.photoList
-                // TODO: and only after that save offer list
+                // Remove deleted photos from offer photo list
+                // and save uids of deleted photos.
+                photoUidsToDeleteFromStorage = removeDeletedPhotosFromList(offer)
 
+                // Update existing offer
                 updateOfferList(offerList, offer.uid) { offerIndex -> offerList[offerIndex] = offer }
 
             } else {
@@ -599,7 +602,16 @@ class Repository(private val context: Context) : Repo {
                 offerList.add(offer)
             }
 
-            saveOfferList(offerList, onSuccess, onError)
+            saveOfferList(
+                offerList,
+                {
+                    // If offer list successfully updated in Firestore,
+                    // remove deleted photos from Cloud Storage.
+                    removeDeletedPhotosFromStorage(photoUidsToDeleteFromStorage)
+                    onSuccess()
+                },
+                onError
+            )
 
         } else {
             onError()
@@ -1192,5 +1204,30 @@ class Repository(private val context: Context) : Repo {
         data[OFFER_LIST_KEY] = offerListForSaving
 
         saveUserDataRemote(data, onSuccess, onError)
+    }
+
+    // Remove deleted photos from photo list of the offer,
+    // return deleted photo uids list.
+    private fun removeDeletedPhotosFromList(offer: Offer): MutableList<String> {
+        val deletedPhotoUids = mutableListOf<String>()
+
+        // We use iterator, because here we change list while iterating through it
+        val iterator = offer.photoList.listIterator()
+        while (iterator.hasNext()) {
+            val photo = iterator.next()
+            if (photo.isDeleted) {
+                deletedPhotoUids.add(photo.uid)
+                iterator.remove()
+            }
+        }
+
+        return deletedPhotoUids
+    }
+
+    // Remove deleted photos from Cloud Storage
+    private fun removeDeletedPhotosFromStorage(photoUidsToDeleteFromStorage: MutableList<String>) {
+        for (photoUid in photoUidsToDeleteFromStorage) {
+            deleteImage(photoUid, false)
+        }
     }
 }
