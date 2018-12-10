@@ -36,12 +36,14 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
         val photoList = offer?.photoList ?: mutableListOf()
         if (!photoList.isEmpty()) {
+            val visiblePhotos = photoList.filterIndexed { index, item -> index < Constants.Offer.MAX_VISIBLE_PHOTO_COUNT }
+
             carousel {
                 id("photo_carousel")
 
                 paddingDp(0)
 
-                withModelsFrom(photoList) {
+                withModelsFrom(visiblePhotos) {
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
