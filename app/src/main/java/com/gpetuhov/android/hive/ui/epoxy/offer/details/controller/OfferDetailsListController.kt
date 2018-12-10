@@ -11,7 +11,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsDetai
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsUser
-import com.gpetuhov.android.hive.ui.epoxy.photo.models.PhotoItemModel_
+import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom

@@ -8,7 +8,7 @@ import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPrese
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferPrice
-import com.gpetuhov.android.hive.ui.epoxy.photo.models.PhotoItemModel_
+import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.carousel

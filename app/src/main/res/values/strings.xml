@@ -120,6 +120,7 @@
 
     <!-- PhotoFragment -->
     <string name="close_photos">Close photos</string>
+    <string name="photo_fullscreen">Photo fullscreen</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
