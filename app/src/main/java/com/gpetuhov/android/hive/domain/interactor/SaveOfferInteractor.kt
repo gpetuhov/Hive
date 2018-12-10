@@ -24,13 +24,16 @@ class SaveOfferInteractor(private val callback: Callback) : Interactor {
 
     // Do not call this directly!
     override fun execute() {
+        // Count photos that are NOT marked as deleted
+        val photoCount = offer?.photoList?.filter { !it.isDeleted }?.size ?: 0
+
         if (offer?.title == null || offer?.title == "") {
             callback.onSaveOfferError(resultMessages.getOfferEmptyTitleErrorMessage())
 
         } else if (offer?.description == null || offer?.description == "") {
             callback.onSaveOfferError(resultMessages.getOfferEmptyDescriptionErrorMessage())
 
-        } else if (offer?.photoList == null || offer?.photoList?.size == 0) {
+        } else if (photoCount == 0) {
             callback.onSaveOfferError(resultMessages.getOfferEmptyPhotoListErrorMessage())
 
         } else {
