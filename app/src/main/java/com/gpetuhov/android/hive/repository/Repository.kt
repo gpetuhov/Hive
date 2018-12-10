@@ -27,6 +27,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.*
 import kotlin.collections.HashMap
 
@@ -149,7 +150,11 @@ class Repository(private val context: Context) : Repo {
     private var geoFirestore: GeoFirestore
     private var geoQuery: GeoQuery? = null
 
+    // Cloud Storage
     private var storage = FirebaseStorage.getInstance()
+
+    // Keeps Storage upload tasks for cancellation if needed
+    private var uploadTasks = mutableListOf<UploadTask>()
 
     // Firestore listeners
     private var currentUserListenerRegistration: ListenerRegistration? = null
@@ -542,6 +547,7 @@ class Repository(private val context: Context) : Repo {
             storagePath,
             Constants.Image.USER_PIC_SIZE,
             true,
+            false,
             { downloadUrl -> saveUserPicUrl(downloadUrl) },
             onError
         )
@@ -657,6 +663,11 @@ class Repository(private val context: Context) : Repo {
     }
 
     override fun deleteOfferPhotoFromStorage(photoUid: String) = deleteImage(photoUid, false)
+
+    override fun cancelPhotoUploadTasks() {
+        uploadTasks.forEach { it.cancel() }
+        uploadTasks.clear()
+    }
 
     // === Private methods ===
     // --- User ---
@@ -1097,12 +1108,13 @@ class Repository(private val context: Context) : Repo {
             storagePath,
             if (userPhoto) Constants.Image.USER_PHOTO_SIZE else Constants.Image.OFFER_PHOTO_SIZE,
             false,
+            !userPhoto,
             { downloadUrl -> onSuccess(photoUid, downloadUrl) },
             onError
         )
     }
 
-    private fun uploadImage(selectedImageUri: Uri, storagePath: String, downsampleSize: Int, centerCrop: Boolean, onSuccess: (String) -> Unit, onError: () -> Unit) {
+    private fun uploadImage(selectedImageUri: Uri, storagePath: String, downsampleSize: Int, centerCrop: Boolean, offerPhoto: Boolean, onSuccess: (String) -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
             // This is because resizeImage() must run in background
             GlobalScope.launch {
@@ -1113,9 +1125,19 @@ class Repository(private val context: Context) : Repo {
 
                 // Upload resized image to Cloud Storage
                 if (byteArray != null) {
-                    storageRef.putBytes(byteArray)
-                        .addOnFailureListener { onError() }
-                        .addOnSuccessListener { getDownloadUrl(storageRef, { downloadUrl -> onSuccess(downloadUrl) }, onError) }
+                    val uploadTask = storageRef.putBytes(byteArray)
+
+                    if (offerPhoto) uploadTasks.add(uploadTask)
+
+                    uploadTask
+                        .addOnFailureListener {
+                            uploadTasks.remove(uploadTask)
+                            onError()
+                        }
+                        .addOnSuccessListener {
+                            uploadTasks.remove(uploadTask)
+                            getDownloadUrl(storageRef, { downloadUrl -> onSuccess(downloadUrl) }, onError)
+                        }
 
                 } else {
                     onError()

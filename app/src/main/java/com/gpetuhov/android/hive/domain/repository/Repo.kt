@@ -72,4 +72,5 @@ interface Repo {
     fun deleteOffer(offerUid: String, onSuccess: () -> Unit, onError: () -> Unit)
     fun addOfferPhoto(selectedImageUri: Uri, onSuccess: (Photo) -> Unit, onError: () -> Unit)
     fun deleteOfferPhotoFromStorage(photoUid: String)
+    fun cancelPhotoUploadTasks()
 }

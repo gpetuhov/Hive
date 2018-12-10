@@ -42,6 +42,9 @@ class UpdateOfferFragmentPresenter :
 
     private var deletePhotoUid = ""
 
+    // True if offer editing is stopped (user has chosen quit, save or delete)
+    private var isOfferEditStopped = false
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -155,6 +158,8 @@ class UpdateOfferFragmentPresenter :
         viewState.disableButtons()
         viewState.showProgress()
 
+        cancelPhotoUploads()
+
         val offer = Offer(uid, title, description, price, free, active)
         offer.photoList.clear()
         offer.photoList.addAll(photoList)
@@ -172,6 +177,7 @@ class UpdateOfferFragmentPresenter :
     fun deleteOffer() {
         viewState.showProgress()
         viewState.dismissDeleteOfferDialog()
+        cancelPhotoUploads()
         deleteNewPhotosFromStorage()
         deleteOfferInteractor.deleteOffer(uid)
     }
@@ -193,6 +199,7 @@ class UpdateOfferFragmentPresenter :
 
     fun quitOfferUpdate() {
         viewState.dismissQuitOfferUpdateDialog()
+        cancelPhotoUploads()
         deleteNewPhotosFromStorage()
         navigateUp()
     }
@@ -249,6 +256,7 @@ class UpdateOfferFragmentPresenter :
     fun choosePhoto() = viewState.choosePhoto()
 
     fun addPhoto(selectedImageUri: Uri) {
+        editStarted = true
         repo.addOfferPhoto(
             selectedImageUri,
             { photo -> onAddPhotoSuccess(photo) },
@@ -290,10 +298,16 @@ class UpdateOfferFragmentPresenter :
     private fun navigateUp() = viewState.navigateUp()
 
     private fun onAddPhotoSuccess(photo: Photo) {
-        editStarted = true
-        photo.markAsNew()
-        photoList.add(photo)
-        updateUI()
+        if (!isOfferEditStopped) {
+            photo.markAsNew()
+            photoList.add(photo)
+            updateUI()
+
+        } else {
+            // If update offer fragment is not active, delete uploaded photo from Storage,
+            // because the user has already stopped updating offer and this photo has not been added to the offer.
+            repo.deleteOfferPhotoFromStorage(photo.uid)
+        }
     }
 
     private fun deletePhotoOrMarkAsDeleted() {
@@ -327,4 +341,9 @@ class UpdateOfferFragmentPresenter :
     }
 
     private fun deleteNewPhotosFromStorage() = photoList.filter { it.isNew }.forEach { repo.deleteOfferPhotoFromStorage(it.uid) }
+
+    private fun cancelPhotoUploads() {
+        isOfferEditStopped = true
+        repo.cancelPhotoUploadTasks()
+    }
 }
