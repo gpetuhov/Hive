@@ -300,8 +300,10 @@ class UpdateOfferFragmentPresenter :
         if (index >=0 && index < photoList.size) {
             val photo = photoList[index]
             if (photo.isNew) {
-                // If photo is new, delete it from storage immediately
-                // TODO: delete photo immediately right here
+                // If photo is new, delete it from photo list and Cloud Storage immediately
+                photoList.removeAt(index)
+                repo.deleteOfferPhotoFromStorage(deletePhotoUid)
+
             } else {
                 // Otherwise just mark photo as deleted,
                 // so that it will be deleted if the user confirms offer changes

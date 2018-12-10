@@ -638,6 +638,8 @@ class Repository(private val context: Context) : Repo {
         )
     }
 
+    override fun deleteOfferPhotoFromStorage(photoUid: String) = deleteImage(photoUid, false)
+
     // === Private methods ===
     // --- User ---
 
