@@ -32,7 +32,9 @@
                 android:contentDescription="@string/close_photos"
                 android:onClick="@{view -> presenter.navigateUp()}"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
