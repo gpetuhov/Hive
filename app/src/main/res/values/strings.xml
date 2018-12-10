@@ -118,6 +118,9 @@
     <string name="new_message_channel_name">New message channel</string>
     <string name="new_message_channel_description">Shows new message notifications</string>
 
+    <!-- PhotoFragment -->
+    <string name="close_photos">Close photos</string>
+
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
