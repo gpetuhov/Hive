@@ -25,7 +25,7 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
 
     @InjectPresenter lateinit var presenter: PhotoFragmentPresenter
 
-    private lateinit var controller: PhotoFullscreenListController
+    private var controller: PhotoFullscreenListController? = null
     private var binding: FragmentPhotoBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,6 +36,7 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         hideBottomNavigationView()
 
         controller = PhotoFullscreenListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo, container, false)
         binding?.presenter = presenter
@@ -45,12 +46,12 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         presenter.photoUid = args.photoUid
 
         val photoRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.photo_recycler_view)
-        photoRecyclerView?.adapter = controller.adapter
+        photoRecyclerView?.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
-            controller.changeUser(user)
+            controller?.changeUser(user)
         })
 
         return binding?.root
@@ -66,7 +67,12 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         presenter.onPause()
     }
 
-    // === PhotoFragmentView ===
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        controller?.onSaveInstanceState(outState)
+    }
+
+// === PhotoFragmentView ===
 
     override fun navigateUp() {
         findNavController().navigateUp()
