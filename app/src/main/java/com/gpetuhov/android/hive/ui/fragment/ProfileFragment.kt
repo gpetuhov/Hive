@@ -35,7 +35,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
 
-    private lateinit var controller: ProfileListController
+    private var controller: ProfileListController? = null
 
     private var usernameDialog: MaterialDialog? = null
     private var descriptionDialog: MaterialDialog? = null
@@ -55,13 +55,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         controller = ProfileListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
 
         val profileRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.profile_recycler_view)
-        profileRecyclerView.adapter = controller.adapter
+        profileRecyclerView.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
         viewModel.currentUser.observe(this, Observer<User> { user ->
-            controller.changeUser(user)
+            controller?.changeUser(user)
         })
 
         return view
@@ -90,23 +91,28 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        controller?.onSaveInstanceState(outState)
+    }
+
     // === ProfileFragmentView ===
 
     override fun showSignOutDialog() = signOutDialog?.show() ?: Unit
 
     override fun dismissSignOutDialog() = signOutDialog?.dismiss() ?: Unit
 
-    override fun enableSignOutButton() = signOutButtonEnabled(true)
+    override fun enableSignOutButton() = signOutButtonEnabled(true) ?: Unit
 
-    override fun disableSignOutButton() = signOutButtonEnabled(false)
+    override fun disableSignOutButton() = signOutButtonEnabled(false) ?: Unit
 
     override fun showDeleteUserDialog() = deleteUserDialog?.show() ?: Unit
 
     override fun dismissDeleteUserDialog() = deleteUserDialog?.dismiss() ?: Unit
 
-    override fun enableDeleteUserButton() = deleteUserButtonEnabled(true)
+    override fun enableDeleteUserButton() = deleteUserButtonEnabled(true) ?: Unit
 
-    override fun disableDeleteUserButton() = deleteUserButtonEnabled(false)
+    override fun disableDeleteUserButton() = deleteUserButtonEnabled(false) ?: Unit
 
     override fun showUsernameDialog() {
         // Prefill dialog with text provided by presenter
@@ -248,7 +254,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissDeletePhotoDialog()
     }
 
-    private fun signOutButtonEnabled(isEnabled: Boolean) = controller.signOutEnabled(isEnabled)
+    private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
 
-    private fun deleteUserButtonEnabled(isEnabled: Boolean) = controller.deleteAccountEnabled(isEnabled)
+    private fun deleteUserButtonEnabled(isEnabled: Boolean) = controller?.deleteAccountEnabled(isEnabled)
 }
