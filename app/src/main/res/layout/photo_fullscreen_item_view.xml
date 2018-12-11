@@ -8,7 +8,7 @@
     <ImageView
             android:id="@+id/photo_fullscreen_item_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:contentDescription="@string/photo_fullscreen"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
