@@ -148,6 +148,14 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
     override fun dismissDeletePhotoDialog() = deletePhotoDialog?.dismiss() ?: Unit
 
+    override fun openPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>) {
+        val photoBundle = Bundle()
+        photoBundle.putStringArrayList(PhotoFragment.PHOTO_URL_LIST_KEY, ArrayList(photoUrlList))
+
+        val action = UpdateOfferFragmentDirections.actionUpdateOfferFragmentToPhotoFragment(selectedPhotoPosition, photoBundle)
+        findNavController().navigate(action)
+    }
+
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {

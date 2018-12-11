@@ -12,6 +12,8 @@ import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.carousel
+import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
+import com.gpetuhov.android.hive.util.epoxy.getSelectedPhotoPosition
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
 
@@ -40,7 +42,7 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
             onSaveButtonClick { presenter.saveOffer() }
         }
 
-        val photoList = presenter.photoList.filter { !it.isDeleted }
+        val photoList = presenter.photoList.filter { !it.isDeleted }.toMutableList()
 
         addPhoto {
             id("addPhoto")
@@ -58,7 +60,7 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        .onClick { /* Do nothing */ }
+                        .onClick { presenter.openPhotos(getSelectedPhotoPosition(it.uid, photoList), getPhotoUrlList(photoList)) }
                         .onLongClick { presenter.showDeletePhotoDialog(it.uid) }
                 }
             }

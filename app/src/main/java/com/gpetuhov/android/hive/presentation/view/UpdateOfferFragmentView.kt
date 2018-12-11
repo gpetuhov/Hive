@@ -74,6 +74,11 @@ interface UpdateOfferFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissDeletePhotoDialog()
 
+    // === Open photos ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>)
+
     // === Common ===
 
     @StateStrategyType(SkipStrategy::class)
