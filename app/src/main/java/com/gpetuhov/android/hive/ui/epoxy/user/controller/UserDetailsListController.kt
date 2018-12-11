@@ -14,10 +14,7 @@ import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.epoxy.carousel
-import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
-import com.gpetuhov.android.hive.util.epoxy.getSelectedPhotoPosition
-import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
+import com.gpetuhov.android.hive.util.epoxy.*
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : EpoxyController() {
@@ -50,12 +47,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 onBind { model, view, position ->
                     if (scrollToSelectedPhoto) {
                         scrollToSelectedPhoto = false
-
-                        var photoPosition = settings.getSelectedPhotoPosition()
-                        if (photoPosition < 0 || photoPosition >= visiblePhotos.size) photoPosition = 0
-
-                        view.scrollToPosition(photoPosition)
-                        settings.setSelectedPhotoPosition(0)
+                        scrollToSavedSelectedPhotoPosition(settings, view, visiblePhotos)
                     }
                 }
 
