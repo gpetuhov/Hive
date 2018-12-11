@@ -189,6 +189,10 @@ class ProfileFragmentPresenter :
         viewState.dismissDeletePhotoDialog()
     }
 
+    // === Open photos ===
+
+    fun openPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>) = viewState.openPhotos(selectedPhotoPosition, photoUrlList)
+
     // === Private methods ===
 
     private fun showToast(message: String) {

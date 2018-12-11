@@ -147,6 +147,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissDeletePhotoDialog() = deletePhotoDialog?.dismiss() ?: Unit
 
+    override fun openPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>) {
+        val photoBundle = Bundle()
+        photoBundle.putStringArrayList(PhotoFragment.PHOTO_URL_LIST_KEY, ArrayList(photoUrlList))
+
+        val action = ProfileFragmentDirections.actionNavigationProfileToPhotoFragment(selectedPhotoPosition, photoBundle)
+        findNavController().navigate(action)
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }

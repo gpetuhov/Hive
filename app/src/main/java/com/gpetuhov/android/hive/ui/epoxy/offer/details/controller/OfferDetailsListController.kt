@@ -52,7 +52,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                             var selectedPhotoPosition = visiblePhotos.indexOfFirst { item -> item.uid == it.uid }
                             if (selectedPhotoPosition < 0) selectedPhotoPosition = 0
 
-                            presenter.openPhotos(visiblePhotoUrls, selectedPhotoPosition)
+                            presenter.openPhotos(selectedPhotoPosition, visiblePhotoUrls)
                         }
                         .onLongClick { /* Do nothing */ }
                 }

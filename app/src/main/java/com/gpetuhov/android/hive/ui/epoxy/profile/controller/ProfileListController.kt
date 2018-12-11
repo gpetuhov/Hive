@@ -39,6 +39,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
         }
 
         if (!photoList.isEmpty()) {
+            val photoUrls = photoList.map { it.downloadUrl }.toMutableList()
+
             carousel {
                 id("photo_carousel")
 
@@ -48,7 +50,12 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        .onClick { /* Do nothing */ }
+                        .onClick {
+                            var selectedPhotoPosition = photoList.indexOfFirst { item -> item.uid == it.uid }
+                            if (selectedPhotoPosition < 0) selectedPhotoPosition = 0
+
+                            presenter.openPhotos(selectedPhotoPosition, photoUrls)
+                        }
                         .onLongClick { presenter.showDeletePhotoDialog(it.uid) }
                 }
             }

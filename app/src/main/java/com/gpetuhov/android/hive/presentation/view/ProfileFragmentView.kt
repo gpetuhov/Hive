@@ -77,6 +77,11 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissDeletePhotoDialog()
 
+    // === Open photos ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>)
+
     // === Common ===
 
     // We don't need to keep this command in the queue,
