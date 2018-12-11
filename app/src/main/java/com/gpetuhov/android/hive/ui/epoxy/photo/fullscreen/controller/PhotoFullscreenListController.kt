@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller
 
+import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.PhotoFragmentPresenter
@@ -31,7 +32,9 @@ class PhotoFullscreenListController(private val presenter: PhotoFragmentPresente
             carousel {
                 id("photo_carousel")
 
-                paddingDp(0)
+                // This adds spacing between photos
+                val padding = Carousel.Padding.dp(0, 16)
+                padding(padding)
 
                 withModelsFrom(visiblePhotos) {
                     PhotoFullscreenItemModel_()
