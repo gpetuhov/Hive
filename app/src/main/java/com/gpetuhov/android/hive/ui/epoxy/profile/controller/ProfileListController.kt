@@ -14,6 +14,8 @@ import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.carousel
+import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
+import com.gpetuhov.android.hive.util.epoxy.getSelectedPhotoPosition
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
 
@@ -39,8 +41,6 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
         }
 
         if (!photoList.isEmpty()) {
-            val photoUrls = photoList.map { it.downloadUrl }.toMutableList()
-
             carousel {
                 id("photo_carousel")
 
@@ -50,12 +50,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        .onClick {
-                            var selectedPhotoPosition = photoList.indexOfFirst { item -> item.uid == it.uid }
-                            if (selectedPhotoPosition < 0) selectedPhotoPosition = 0
-
-                            presenter.openPhotos(selectedPhotoPosition, photoUrls)
-                        }
+                        .onClick { presenter.openPhotos(getSelectedPhotoPosition(it.uid, photoList), getPhotoUrlList(photoList)) }
                         .onLongClick { presenter.showDeletePhotoDialog(it.uid) }
                 }
             }
