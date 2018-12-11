@@ -2,7 +2,6 @@ package com.gpetuhov.android.hive.repository
 
 import android.content.Context
 import android.net.Uri
-import androidx.core.content.edit
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.*
@@ -16,7 +15,6 @@ import com.gpetuhov.android.hive.managers.LocationManager
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
-import org.jetbrains.anko.defaultSharedPreferences
 import java.lang.Exception
 import android.graphics.Bitmap
 import com.bumptech.glide.Glide
@@ -29,10 +27,11 @@ import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.*
+import com.gpetuhov.android.hive.util.Settings
 import kotlin.collections.HashMap
 
 // Read and write data to remote storage (Firestore)
-class Repository(private val context: Context) : Repo {
+class Repository(private val context: Context, private val settings: Settings) : Repo {
 
     companion object {
         private const val TAG = "Repo"
@@ -86,9 +85,6 @@ class Repository(private val context: Context) : Repo {
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
         private const val CHATROOM_NEW_MESSAGE_COUNT_KEY = "newMessageCount"
-
-        // Shared Preferences
-        private const val UNREAD_MESSAGES_EXIST_KEY = "unreadMessagesExist"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -530,7 +526,7 @@ class Repository(private val context: Context) : Repo {
 
     override fun setUnreadMessagesExist(value: Boolean) {
         unreadMessagesFlag.value = value
-        context.defaultSharedPreferences.edit { putBoolean(UNREAD_MESSAGES_EXIST_KEY, value) }
+        settings.setUnreadMessagesExist(value)
     }
 
     // === User pic ===
@@ -1049,7 +1045,7 @@ class Repository(private val context: Context) : Repo {
     }
 
     private fun initUnreadMessagesFlag() {
-        unreadMessagesFlag.value = context.defaultSharedPreferences.getBoolean(UNREAD_MESSAGES_EXIST_KEY, false)
+        unreadMessagesFlag.value = settings.isUnreadMessagesExist()
     }
 
     // --- Chatroom ---
