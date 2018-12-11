@@ -25,7 +25,7 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: OfferDetailsFragmentPresenter
 
-    private lateinit var controller: OfferDetailsListController
+    private var controller: OfferDetailsListController? = null
     private var binding: FragmentOfferDetailsBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,6 +36,7 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         showBottomNavigationView()
 
         controller = OfferDetailsListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_details, container, false)
         binding?.presenter = presenter
@@ -44,12 +45,12 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         presenter.offerUid = offerUid
 
         val offerDetailsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.offer_details_recycler_view)
-        offerDetailsRecyclerView?.adapter = controller.adapter
+        offerDetailsRecyclerView?.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
-            controller.changeOffer(user, offerUid)
+            controller?.changeOffer(user, offerUid)
         })
 
         return binding?.root
@@ -63,6 +64,11 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
     override fun onPause() {
         super.onPause()
         presenter.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        controller?.onSaveInstanceState(outState)
     }
 
     // === UserDetailsFragmentView ===
