@@ -26,7 +26,7 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
 
     @InjectPresenter lateinit var presenter: UserDetailsFragmentPresenter
 
-    private lateinit var controller: UserDetailsListController
+    private var controller: UserDetailsListController? = null
     private var binding: FragmentUserDetailsBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -37,17 +37,18 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         showBottomNavigationView()
 
         controller = UserDetailsListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_details, container, false)
         binding?.presenter = presenter
 
         val userDetailsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.user_details_recycler_view)
-        userDetailsRecyclerView?.adapter = controller.adapter
+        userDetailsRecyclerView?.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
-            controller.changeUser(user)
+            controller?.changeUser(user)
         })
 
         return binding?.root
@@ -61,6 +62,11 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
     override fun onPause() {
         super.onPause()
         presenter.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        controller?.onSaveInstanceState(outState)
     }
 
     // === UserDetailsFragmentView ===
