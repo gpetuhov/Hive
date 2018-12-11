@@ -11,7 +11,6 @@ import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 
 class PhotoFullscreenListController(private val presenter: PhotoFragmentPresenter) : EpoxyController() {
 
-    private var carousel: Carousel? = null
     private var user: User? = null
 
     override fun buildModels() {
@@ -30,20 +29,16 @@ class PhotoFullscreenListController(private val presenter: PhotoFragmentPresente
             val maxVisiblePhotoCount = if (offerUid != "") Constants.Offer.MAX_VISIBLE_PHOTO_COUNT else Constants.User.MAX_VISIBLE_PHOTO_COUNT
             val visiblePhotos = photoList.filterIndexed { index, item -> index < maxVisiblePhotoCount }
 
+            // Find index of the selected photo
             var initialPhotoPosition = visiblePhotos.indexOfFirst { it.uid == presenter.photoUid }
             if (initialPhotoPosition < 0) initialPhotoPosition = 0
 
             carousel {
                 id("photo_carousel")
 
-                onBind { model, view, position ->
-                    carousel = view
-                    carousel?.scrollToPosition(initialPhotoPosition)
-                }
-
-                onUnbind { model, view ->
-                    carousel = null
-                }
+                // Scroll to the selected photo
+                // (onBind() is called, when models are rebuilt)
+                onBind { model, view, position -> view.scrollToPosition(initialPhotoPosition) }
 
                 // This adds spacing between photos
                 val padding = Carousel.Padding.dp(0, 16)
