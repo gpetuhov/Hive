@@ -161,4 +161,10 @@ class TestRepository : Repo {
 
     override fun addOfferPhoto(selectedImageUri: Uri, onSuccess: (Photo) -> Unit, onError: () -> Unit) {
     }
+
+    override fun deleteOfferPhotoFromStorage(photoUid: String) {
+    }
+
+    override fun cancelPhotoUploadTasks() {
+    }
 }

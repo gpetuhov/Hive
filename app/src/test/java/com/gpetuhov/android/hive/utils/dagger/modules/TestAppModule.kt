@@ -7,6 +7,7 @@ import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.managers.*
+import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.utils.TestAuthManager
 import com.gpetuhov.android.hive.utils.TestNetworkManager
 import com.gpetuhov.android.hive.utils.TestResultMessagesProvider
@@ -27,7 +28,7 @@ class TestAppModule {
 
     @Provides
     @Singleton
-    fun providesLocationManager(context: Context): LocationManager = Mockito.mock(LocationManager::class.java)
+    fun providesLocationManager(): LocationManager = Mockito.mock(LocationManager::class.java)
 
     @Provides
     @Singleton
@@ -48,6 +49,10 @@ class TestAppModule {
     @Provides
     @Singleton
     fun providesResultMessages(): ResultMessages = TestResultMessagesProvider()
+
+    @Provides
+    @Singleton
+    fun providesSettings() = Mockito.mock(Settings::class.java)
 
     @Provides
     @Singleton
