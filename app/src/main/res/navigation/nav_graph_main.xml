@@ -132,9 +132,6 @@
             android:label="PhotoFragment"
             tools:layout="@layout/fragment_photo">
         <argument
-                android:name="selectedPhotoPosition"
-                app:argType="integer"/>
-        <argument
                 android:name="photoBundle"
                 app:argType="Bundle"/>
     </fragment>

@@ -12,12 +12,11 @@ import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
 
-class PhotoFullscreenListController(private val presenter: PhotoFragmentPresenter) : EpoxyController() {
+class PhotoFullscreenListController() : EpoxyController() {
 
     @Inject lateinit var settings: Settings
 
     private var photoUrlList = mutableListOf<String>()
-    private var selectedPhotoPosition = 0
 
     init {
         HiveApp.appComponent.inject(this)
@@ -50,8 +49,7 @@ class PhotoFullscreenListController(private val presenter: PhotoFragmentPresente
 
     // === Public methods ===
 
-    fun setPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>) {
-        this.selectedPhotoPosition = selectedPhotoPosition
+    fun setPhotos(photoUrlList: MutableList<String>) {
         this.photoUrlList = photoUrlList
         requestModelBuild()
     }

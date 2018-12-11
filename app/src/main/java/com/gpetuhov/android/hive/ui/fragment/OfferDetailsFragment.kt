@@ -87,11 +87,11 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun openPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>) {
+    override fun openPhotos(photoUrlList: MutableList<String>) {
         val photoBundle = Bundle()
         photoBundle.putStringArrayList(PhotoFragment.PHOTO_URL_LIST_KEY, ArrayList(photoUrlList))
 
-        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToPhotoFragment(selectedPhotoPosition, photoBundle)
+        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToPhotoFragment(photoBundle)
         findNavController().navigate(action)
     }
 }

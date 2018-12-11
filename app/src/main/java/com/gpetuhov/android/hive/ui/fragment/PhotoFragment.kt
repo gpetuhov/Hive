@@ -35,21 +35,20 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         hideToolbar()
         hideBottomNavigationView()
 
-        controller = PhotoFullscreenListController(presenter)
+        controller = PhotoFullscreenListController()
         controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo, container, false)
         binding?.presenter = presenter
 
         val args = PhotoFragmentArgs.fromBundle(arguments)
-        val selectedPhotoPosition = args.selectedPhotoPosition
         val photoBundle = args.photoBundle
         val photoUrlList = photoBundle.getStringArrayList(PHOTO_URL_LIST_KEY)?.toMutableList() ?: mutableListOf()
 
         val photoRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.photo_recycler_view)
         photoRecyclerView?.adapter = controller?.adapter
 
-        controller?.setPhotos(selectedPhotoPosition, photoUrlList)
+        controller?.setPhotos(photoUrlList)
 
         return binding?.root
     }
