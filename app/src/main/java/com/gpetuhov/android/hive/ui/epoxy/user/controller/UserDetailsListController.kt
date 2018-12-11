@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.controller
 
 import android.content.Context
+import androidx.core.content.edit
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
@@ -17,6 +18,7 @@ import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
 import com.gpetuhov.android.hive.util.epoxy.getSelectedPhotoPosition
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
+import org.jetbrains.anko.defaultSharedPreferences
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : EpoxyController() {
@@ -24,6 +26,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
     @Inject lateinit var context: Context
 
     private var user: User? = null
+    private var scrollToSelectedPhoto = true
 
     init {
         HiveApp.appComponent.inject(this)
@@ -43,6 +46,15 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 id("photo_carousel")
 
                 paddingDp(0)
+
+                onBind { model, view, position ->
+                    if (scrollToSelectedPhoto) {
+                        scrollToSelectedPhoto = false
+                        val photoPosition = context.defaultSharedPreferences.getInt("selectedPhotoPosition", 0)
+                        view.scrollToPosition(photoPosition)
+                        context.defaultSharedPreferences.edit { putInt("selectedPhotoPosition", 0) }
+                    }
+                }
 
                 withModelsFrom(visiblePhotos) {
                     PhotoItemModel_()

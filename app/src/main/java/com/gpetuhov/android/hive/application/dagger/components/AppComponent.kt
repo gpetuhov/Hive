@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.ui.activity.MainActivity
 import com.gpetuhov.android.hive.ui.activity.SplashActivity
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.controller.OfferDetailsListController
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferListController
+import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller.PhotoFullscreenListController
 import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListController
 import com.gpetuhov.android.hive.ui.epoxy.user.controller.UserDetailsListController
 import com.gpetuhov.android.hive.ui.fragment.MapFragment
@@ -69,4 +70,5 @@ interface AppComponent {
     fun inject(userDetailsListController: UserDetailsListController)
     fun inject(updateOfferListController: UpdateOfferListController)
     fun inject(offerDetailsListController: OfferDetailsListController)
+    fun inject(photoFullscreenListController: PhotoFullscreenListController)
 }
