@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsUser
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
 import com.gpetuhov.android.hive.util.epoxy.getSelectedPhotoPosition
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : EpoxyController() {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var settings: Settings
 
     private var user: User? = null
     private var offer: Offer? = null
@@ -49,7 +51,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        .onClick { presenter.openPhotos(getSelectedPhotoPosition(it.uid, visiblePhotos), getPhotoUrlList(visiblePhotos)) }
+                        .onClick { presenter.openPhotos(getSelectedPhotoPosition(settings, it.uid, visiblePhotos), getPhotoUrlList(visiblePhotos)) }
                         .onLongClick { /* Do nothing */ }
                 }
             }

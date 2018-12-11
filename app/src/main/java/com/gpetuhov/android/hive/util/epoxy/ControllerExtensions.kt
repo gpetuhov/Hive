@@ -7,9 +7,10 @@ import com.gpetuhov.android.hive.util.Settings
 
 fun EpoxyController.getPhotoUrlList(photoList: MutableList<Photo>) = photoList.map { it.downloadUrl }.toMutableList()
 
-fun EpoxyController.getSelectedPhotoPosition(selectedPhotoUid: String, photoList: MutableList<Photo>): Int {
+fun EpoxyController.getSelectedPhotoPosition(settings: Settings, selectedPhotoUid: String, photoList: MutableList<Photo>): Int {
     var selectedPhotoPosition = photoList.indexOfFirst { item -> item.uid == selectedPhotoUid }
     if (selectedPhotoPosition < 0) selectedPhotoPosition = 0
+    settings.setSelectedPhotoPosition(selectedPhotoPosition)
     return selectedPhotoPosition
 }
 

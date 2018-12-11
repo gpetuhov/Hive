@@ -32,8 +32,7 @@ class PhotoFullscreenListController(private val presenter: PhotoFragmentPresente
                 // (onBind() is called, when models are rebuilt)
                 onBind { model, view, position ->
                     view.addOnScrollListener(getScrollListener())
-                    view.scrollToPosition(selectedPhotoPosition)
-                    settings.setSelectedPhotoPosition(selectedPhotoPosition)
+                    view.scrollToPosition(settings.getSelectedPhotoPosition())
                 }
 
                 // This adds spacing between photos

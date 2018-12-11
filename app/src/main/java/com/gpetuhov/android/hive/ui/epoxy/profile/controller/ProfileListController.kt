@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
 import com.gpetuhov.android.hive.util.epoxy.getSelectedPhotoPosition
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class ProfileListController(private val presenter: ProfileFragmentPresenter) : EpoxyController() {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var settings: Settings
 
     private var user: User? = null
     private var signOutEnabled = true
@@ -50,7 +52,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        .onClick { presenter.openPhotos(getSelectedPhotoPosition(it.uid, photoList), getPhotoUrlList(photoList)) }
+                        .onClick { presenter.openPhotos(getSelectedPhotoPosition(settings, it.uid, photoList), getPhotoUrlList(photoList)) }
                         .onLongClick { presenter.showDeletePhotoDialog(it.uid) }
                 }
             }
