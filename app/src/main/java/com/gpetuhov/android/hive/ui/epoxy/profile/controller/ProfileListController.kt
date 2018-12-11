@@ -14,10 +14,7 @@ import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.epoxy.carousel
-import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
-import com.gpetuhov.android.hive.util.epoxy.saveSelectedPhotoPosition
-import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
+import com.gpetuhov.android.hive.util.epoxy.*
 import javax.inject.Inject
 
 class ProfileListController(private val presenter: ProfileFragmentPresenter) : EpoxyController() {
@@ -28,6 +25,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
     private var user: User? = null
     private var signOutEnabled = true
     private var deleteAccountEnabled = true
+    private var scrollToSelectedPhoto = true
 
     init {
         HiveApp.appComponent.inject(this)
@@ -47,6 +45,13 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                 id("photo_carousel")
 
                 paddingDp(0)
+
+                onBind { model, view, position ->
+                    if (scrollToSelectedPhoto) {
+                        scrollToSelectedPhoto = false
+                        scrollToSavedSelectedPhotoPosition(settings, view, photoList.size, true)
+                    }
+                }
 
                 withModelsFrom(photoList) {
                     PhotoItemModel_()

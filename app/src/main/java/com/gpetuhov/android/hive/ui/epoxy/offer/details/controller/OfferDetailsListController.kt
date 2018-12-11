@@ -14,10 +14,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsUser
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.epoxy.carousel
-import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
-import com.gpetuhov.android.hive.util.epoxy.saveSelectedPhotoPosition
-import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
+import com.gpetuhov.android.hive.util.epoxy.*
 import javax.inject.Inject
 
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : EpoxyController() {
@@ -27,6 +24,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
     private var user: User? = null
     private var offer: Offer? = null
+    private var scrollToSelectedPhoto = true
 
     init {
         HiveApp.appComponent.inject(this)
@@ -46,6 +44,13 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 id("photo_carousel")
 
                 paddingDp(0)
+
+                onBind { model, view, position ->
+                    if (scrollToSelectedPhoto) {
+                        scrollToSelectedPhoto = false
+                        scrollToSavedSelectedPhotoPosition(settings, view, visiblePhotos.size, true)
+                    }
+                }
 
                 withModelsFrom(visiblePhotos) {
                     PhotoItemModel_()
