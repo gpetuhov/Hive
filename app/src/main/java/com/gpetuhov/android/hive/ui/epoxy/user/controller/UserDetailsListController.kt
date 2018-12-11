@@ -14,6 +14,8 @@ import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.carousel
+import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
+import com.gpetuhov.android.hive.util.epoxy.getSelectedPhotoPosition
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
 
@@ -35,8 +37,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         val photoList = user?.photoList ?: mutableListOf()
         if (!photoList.isEmpty()) {
-            val visiblePhotos = photoList.filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }
-            val visiblePhotoUrls = visiblePhotos.map { it.downloadUrl }.toMutableList()
+            val visiblePhotos = photoList.filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }.toMutableList()
 
             carousel {
                 id("photo_carousel")
@@ -47,12 +48,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        .onClick {
-                            var selectedPhotoPosition = visiblePhotos.indexOfFirst { item -> item.uid == it.uid }
-                            if (selectedPhotoPosition < 0) selectedPhotoPosition = 0
-
-                            presenter.openPhotos(selectedPhotoPosition, visiblePhotoUrls)
-                        }
+                        .onClick { presenter.openPhotos(getSelectedPhotoPosition(it.uid, visiblePhotos), getPhotoUrlList(visiblePhotos)) }
                         .onLongClick { /* Do nothing */ }
                 }
             }
