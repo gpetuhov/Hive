@@ -56,6 +56,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         val view = inflater.inflate(R.layout.fragment_update_offer, container, false)
 
         controller = UpdateOfferListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
 
         val updateOfferRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.update_offer_recycler_view)
         updateOfferRecyclerView.adapter = controller?.adapter
@@ -86,6 +87,11 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
             val selectedImageUri = data?.data
             if (selectedImageUri != null) presenter.addPhoto(selectedImageUri)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        controller?.onSaveInstanceState(outState)
     }
 
     // === UpdateOfferFragmentView ===
