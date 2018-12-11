@@ -1,7 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.controller
 
 import android.content.Context
-import androidx.core.content.edit
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
@@ -14,16 +13,17 @@ import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.getPhotoUrlList
 import com.gpetuhov.android.hive.util.epoxy.getSelectedPhotoPosition
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
-import org.jetbrains.anko.defaultSharedPreferences
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : EpoxyController() {
 
     @Inject lateinit var context: Context
+    @Inject lateinit var settings: Settings
 
     private var user: User? = null
     private var scrollToSelectedPhoto = true
@@ -50,9 +50,9 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 onBind { model, view, position ->
                     if (scrollToSelectedPhoto) {
                         scrollToSelectedPhoto = false
-                        val photoPosition = context.defaultSharedPreferences.getInt("selectedPhotoPosition", 0)
+                        val photoPosition = settings.getSelectedPhotoPosition()
                         view.scrollToPosition(photoPosition)
-                        context.defaultSharedPreferences.edit { putInt("selectedPhotoPosition", 0) }
+                        settings.setSelectedPhotoPosition(0)
                     }
                 }
 

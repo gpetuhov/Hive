@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.repository.Repository
 import com.gpetuhov.android.hive.util.ResultMessagesProvider
+import com.gpetuhov.android.hive.util.Settings
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -42,6 +43,10 @@ class AppModule {
     @Provides
     @Singleton
     fun providesResultMessages(): ResultMessages = ResultMessagesProvider()
+
+    @Provides
+    @Singleton
+    fun providesSettings(context: Context) = Settings(context)
 
     @Provides
     @Singleton
