@@ -36,6 +36,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         val photoList = user?.photoList ?: mutableListOf()
         if (!photoList.isEmpty()) {
             val visiblePhotos = photoList.filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }
+            val visiblePhotoUrls = visiblePhotos.map { it.downloadUrl }.toMutableList()
 
             carousel {
                 id("photo_carousel")
@@ -46,7 +47,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        .onClick { presenter.openPhotos(it.uid) }
+                        .onClick {
+                            var selectedPhotoPosition = visiblePhotos.indexOfFirst { item -> item.uid == it.uid }
+                            if (selectedPhotoPosition < 0) selectedPhotoPosition = 0
+
+                            presenter.openPhotos(selectedPhotoPosition, visiblePhotoUrls)
+                        }
                         .onLongClick { /* Do nothing */ }
                 }
             }

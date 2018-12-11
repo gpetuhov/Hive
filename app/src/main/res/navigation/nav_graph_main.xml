@@ -122,11 +122,11 @@
             android:label="PhotoFragment"
             tools:layout="@layout/fragment_photo">
         <argument
-                android:name="offerUid"
-                app:argType="string"/>
+                android:name="selectedPhotoPosition"
+                app:argType="integer"/>
         <argument
-                android:name="photoUid"
-                app:argType="string"/>
+                android:name="photoBundle"
+                app:argType="Bundle"/>
     </fragment>
 
 </navigation>

@@ -37,6 +37,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
         val photoList = offer?.photoList ?: mutableListOf()
         if (!photoList.isEmpty()) {
             val visiblePhotos = photoList.filterIndexed { index, item -> index < Constants.Offer.MAX_VISIBLE_PHOTO_COUNT }
+            val visiblePhotoUrls = visiblePhotos.map { it.downloadUrl }.toMutableList()
 
             carousel {
                 id("photo_carousel")
@@ -47,7 +48,12 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     PhotoItemModel_()
                         .id(it.uid)
                         .photoUrl(it.downloadUrl)
-                        .onClick { presenter.openPhotos(it.uid) }
+                        .onClick {
+                            var selectedPhotoPosition = visiblePhotos.indexOfFirst { item -> item.uid == it.uid }
+                            if (selectedPhotoPosition < 0) selectedPhotoPosition = 0
+
+                            presenter.openPhotos(visiblePhotoUrls, selectedPhotoPosition)
+                        }
                         .onLongClick { /* Do nothing */ }
                 }
             }

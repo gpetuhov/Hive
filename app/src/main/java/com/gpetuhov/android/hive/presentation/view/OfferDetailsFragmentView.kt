@@ -16,5 +16,5 @@ interface OfferDetailsFragmentView : MvpView {
     fun openUserDetails()
 
     @StateStrategyType(SkipStrategy::class)
-    fun openPhotos(offerUid: String, selectedPhotoUid: String)
+    fun openPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>)
 }

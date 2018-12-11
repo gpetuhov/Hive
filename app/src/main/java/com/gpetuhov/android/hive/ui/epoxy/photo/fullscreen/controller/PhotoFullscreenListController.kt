@@ -2,59 +2,41 @@ package com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller
 
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
-import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.PhotoFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.models.PhotoFullscreenItemModel_
-import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 
 class PhotoFullscreenListController(private val presenter: PhotoFragmentPresenter) : EpoxyController() {
 
-    private var user: User? = null
+    private var photoUrlList = mutableListOf<String>()
+    private var selectedPhotoPosition = 0
 
     override fun buildModels() {
-        val offerUid = presenter.offerUid
-
-        val photoList = if (offerUid != "") {
-            // Show offer photos
-            user?.offerList?.firstOrNull { it.uid == offerUid }?.photoList ?: mutableListOf()
-
-        } else {
-            // Otherwise show user photos
-            user?.photoList ?: mutableListOf()
-        }
-
-        if (!photoList.isEmpty()) {
-            val maxVisiblePhotoCount = if (offerUid != "") Constants.Offer.MAX_VISIBLE_PHOTO_COUNT else Constants.User.MAX_VISIBLE_PHOTO_COUNT
-            val visiblePhotos = photoList.filterIndexed { index, item -> index < maxVisiblePhotoCount }
-
-            // Find index of the selected photo
-            var initialPhotoPosition = visiblePhotos.indexOfFirst { it.uid == presenter.photoUid }
-            if (initialPhotoPosition < 0) initialPhotoPosition = 0
-
+        if (!photoUrlList.isEmpty()) {
             carousel {
                 id("photo_carousel")
 
                 // Scroll to the selected photo
                 // (onBind() is called, when models are rebuilt)
-                onBind { model, view, position -> view.scrollToPosition(initialPhotoPosition) }
+                onBind { model, view, position -> view.scrollToPosition(selectedPhotoPosition) }
 
                 // This adds spacing between photos
                 val padding = Carousel.Padding.dp(0, 16)
                 padding(padding)
 
-                withModelsFrom(visiblePhotos) {
+                withModelsFrom(photoUrlList) {
                     PhotoFullscreenItemModel_()
-                        .id(it.uid)
-                        .photoUrl(it.downloadUrl)
+                        .id(it)
+                        .photoUrl(it)
                 }
             }
         }
     }
 
-    fun changeUser(user: User) {
-        this.user = user
+    fun setPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>) {
+        this.selectedPhotoPosition = selectedPhotoPosition
+        this.photoUrlList = photoUrlList
         requestModelBuild()
     }
 }
