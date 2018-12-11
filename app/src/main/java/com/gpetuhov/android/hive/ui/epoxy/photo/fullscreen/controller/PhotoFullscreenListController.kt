@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller
 
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.application.HiveApp
@@ -14,12 +16,12 @@ class PhotoFullscreenListController(private val presenter: PhotoFragmentPresente
 
     @Inject lateinit var settings: Settings
 
+    private var photoUrlList = mutableListOf<String>()
+    private var selectedPhotoPosition = 0
+
     init {
         HiveApp.appComponent.inject(this)
     }
-
-    private var photoUrlList = mutableListOf<String>()
-    private var selectedPhotoPosition = 0
 
     override fun buildModels() {
         if (!photoUrlList.isEmpty()) {
@@ -29,6 +31,7 @@ class PhotoFullscreenListController(private val presenter: PhotoFragmentPresente
                 // Scroll to the selected photo
                 // (onBind() is called, when models are rebuilt)
                 onBind { model, view, position ->
+                    view.addOnScrollListener(getScrollListener())
                     view.scrollToPosition(selectedPhotoPosition)
                     settings.setSelectedPhotoPosition(selectedPhotoPosition)
                 }
@@ -46,9 +49,26 @@ class PhotoFullscreenListController(private val presenter: PhotoFragmentPresente
         }
     }
 
+    // === Public methods ===
+
     fun setPhotos(selectedPhotoPosition: Int, photoUrlList: MutableList<String>) {
         this.selectedPhotoPosition = selectedPhotoPosition
         this.photoUrlList = photoUrlList
         requestModelBuild()
+    }
+
+    // === Private methods ===
+
+    private fun getScrollListener(): RecyclerView.OnScrollListener {
+        return object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val lastScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    settings.setSelectedPhotoPosition(lastScrollPosition)
+                }
+            }
+        }
     }
 }
