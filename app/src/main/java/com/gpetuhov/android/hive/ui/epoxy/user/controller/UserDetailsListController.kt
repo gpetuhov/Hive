@@ -47,7 +47,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 onBind { model, view, position ->
                     if (scrollToSelectedPhoto) {
                         scrollToSelectedPhoto = false
-                        scrollToSavedSelectedPhotoPosition(settings, view, visiblePhotos)
+                        scrollToSavedSelectedPhotoPosition(settings, view, visiblePhotos.size, true)
                     }
                 }
 

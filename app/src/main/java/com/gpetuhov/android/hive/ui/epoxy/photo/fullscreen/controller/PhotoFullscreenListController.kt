@@ -5,10 +5,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.presentation.presenter.PhotoFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.models.PhotoFullscreenItemModel_
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.carousel
+import com.gpetuhov.android.hive.util.epoxy.scrollToSavedSelectedPhotoPosition
 import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
 import javax.inject.Inject
 
@@ -31,7 +31,7 @@ class PhotoFullscreenListController() : EpoxyController() {
                 // (onBind() is called, when models are rebuilt)
                 onBind { model, view, position ->
                     view.addOnScrollListener(getScrollListener())
-                    view.scrollToPosition(settings.getSelectedPhotoPosition())
+                    scrollToSavedSelectedPhotoPosition(settings, view, photoUrlList.size, false)
                 }
 
                 // This adds spacing between photos

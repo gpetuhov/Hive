@@ -14,10 +14,11 @@ fun EpoxyController.saveSelectedPhotoPosition(settings: Settings, selectedPhotoU
     return selectedPhotoPosition
 }
 
-fun EpoxyController.scrollToSavedSelectedPhotoPosition(settings: Settings, carousel: Carousel, photoList: MutableList<Photo>) {
+fun EpoxyController.scrollToSavedSelectedPhotoPosition(settings: Settings, carousel: Carousel, photoListSize: Int, resetSavedPosition: Boolean) {
     var selectedPhotoPosition = settings.getSelectedPhotoPosition()
-    if (selectedPhotoPosition < 0 || selectedPhotoPosition >= photoList.size) selectedPhotoPosition = 0
+    if (selectedPhotoPosition < 0 || selectedPhotoPosition >= photoListSize) selectedPhotoPosition = 0
 
     carousel.scrollToPosition(selectedPhotoPosition)
-    settings.setSelectedPhotoPosition(0)
+
+    if (resetSavedPosition) settings.setSelectedPhotoPosition(0)
 }
