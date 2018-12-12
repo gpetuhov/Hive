@@ -9,10 +9,10 @@ import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.models.PhotoFullscree
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.scrollToSavedSelectedPhotoPosition
-import com.gpetuhov.android.hive.util.epoxy.withModelsFrom
+import com.gpetuhov.android.hive.util.epoxy.withModelsIndexedFrom
 import javax.inject.Inject
 
-class PhotoFullscreenListController() : EpoxyController() {
+class PhotoFullscreenListController : EpoxyController() {
 
     @Inject lateinit var settings: Settings
 
@@ -38,10 +38,13 @@ class PhotoFullscreenListController() : EpoxyController() {
                 val padding = Carousel.Padding.dp(0, 16)
                 padding(padding)
 
-                withModelsFrom(photoUrlList) {
+                val listSize = photoUrlList.size
+
+                withModelsIndexedFrom(photoUrlList) { index, item ->
                     PhotoFullscreenItemModel_()
-                        .id(it)
-                        .photoUrl(it)
+                        .id(item)
+                        .photoUrl(item)
+                        .position("${index + 1}/$listSize")
                 }
             }
         }

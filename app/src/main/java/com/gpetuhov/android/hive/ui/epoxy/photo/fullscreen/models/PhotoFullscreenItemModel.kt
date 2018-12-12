@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.models
 
 import android.widget.ImageView
+import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -15,6 +16,7 @@ import com.gpetuhov.android.hive.util.getStatusBarHeight
 abstract class PhotoFullscreenItemModel : EpoxyModelWithHolder<PhotoFullscreenItemHolder>() {
 
     @EpoxyAttribute lateinit var photoUrl: String
+    @EpoxyAttribute lateinit var position: String
 
     override fun bind(holder: PhotoFullscreenItemHolder) {
         setImageHeight(holder.photo)
@@ -25,6 +27,8 @@ abstract class PhotoFullscreenItemModel : EpoxyModelWithHolder<PhotoFullscreenIt
                 .apply(RequestOptions.centerInsideTransform())
                 .into(holder.photo)
         }
+
+        holder.position.text = position
     }
 
     private fun setImageHeight(imageView: ImageView) {
@@ -35,4 +39,5 @@ abstract class PhotoFullscreenItemModel : EpoxyModelWithHolder<PhotoFullscreenIt
 
 class PhotoFullscreenItemHolder : KotlinHolder() {
     val photo by bind<ImageView>(R.id.photo_fullscreen_item_image)
+    val position by bind<TextView>(R.id.photo_fullscreen_item_position)
 }
