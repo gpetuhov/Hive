@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
+import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
@@ -102,11 +103,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                         onBind { model, view, position -> view.clipToPadding = true }
 
                         withModelsFrom(visibleOfferPhotos) { photo ->
-                            PhotoItemModel_()
+                            PhotoOfferItemModel_()
                                 .id(photo.uid)
                                 .photoUrl(photo.downloadUrl)
                                 .onClick { presenter.openOffer(offer.uid) }
-                                .onLongClick { /* Do nothing */ }
                         }
                     }
                 }
