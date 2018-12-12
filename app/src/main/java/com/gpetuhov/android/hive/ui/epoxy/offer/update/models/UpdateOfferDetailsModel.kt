@@ -1,8 +1,8 @@
 package com.gpetuhov.android.hive.ui.epoxy.offer.update.models
 
 import android.view.View
+import android.widget.CheckBox
 import android.widget.TextView
-import androidx.appcompat.widget.SwitchCompat
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -27,7 +27,7 @@ abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetails
     override fun bind(holder: UpdateOfferDetailsHolder) {
         holder.active.isChecked = active
         holder.active.isEnabled = activeEnabled
-        holder.active.setOnClickListener { view -> onActiveClick((view as SwitchCompat).isChecked) }
+        holder.active.setOnClickListener { view -> onActiveClick((view as CheckBox).isChecked) }
 
         holder.maxActiveWarning.visibility = if (maxActiveWarningVisible) View.VISIBLE else View.GONE
 
@@ -40,7 +40,7 @@ abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetails
 }
 
 class UpdateOfferDetailsHolder : KotlinHolder() {
-    val active by bind<SwitchCompat>(R.id.update_offer_active)
+    val active by bind<CheckBox>(R.id.update_offer_active)
     val maxActiveWarning by bind<TextView>(R.id.update_offer_active_max_warning)
     val title by bind<TextView>(R.id.update_offer_title)
     val description by bind<TextView>(R.id.update_offer_description)
