@@ -8,7 +8,7 @@ import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
+import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.getScreenHeight
 import com.gpetuhov.android.hive.util.getStatusBarHeight
 

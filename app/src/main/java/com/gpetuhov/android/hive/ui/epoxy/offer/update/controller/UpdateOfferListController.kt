@@ -4,7 +4,7 @@ import android.content.Context
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
-import com.gpetuhov.android.hive.ui.epoxy.base.BaseController
+import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferPrice

@@ -1,10 +1,12 @@
-package com.gpetuhov.android.hive.ui.epoxy.base
+package com.gpetuhov.android.hive.ui.epoxy.base.controller
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.domain.model.Photo
+import com.gpetuhov.android.hive.ui.epoxy.base.carousel
+import com.gpetuhov.android.hive.ui.epoxy.base.withModelsIndexedFrom
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings

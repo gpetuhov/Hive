@@ -8,7 +8,7 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
+import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 
 @EpoxyModelClass(layout = R.layout.offer_item_view)
 abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {

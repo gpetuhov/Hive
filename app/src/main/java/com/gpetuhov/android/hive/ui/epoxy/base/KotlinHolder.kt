@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.ui.epoxy.holder
+package com.gpetuhov.android.hive.ui.epoxy.base
 
 import android.view.View
 import com.airbnb.epoxy.EpoxyHolder

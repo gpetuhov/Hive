@@ -5,7 +5,7 @@ import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
+import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 
 @EpoxyModelClass(layout = R.layout.user_details_description_view)
 abstract class UserDetailsDescriptionModel : EpoxyModelWithHolder<UserDetailsDescriptionHolder>() {

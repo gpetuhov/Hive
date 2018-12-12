@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.ui.epoxy.base
+package com.gpetuhov.android.hive.ui.epoxy.base.controller
 
 import android.content.Context
 import android.os.Bundle
@@ -6,6 +6,8 @@ import com.airbnb.epoxy.Carousel
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.ui.epoxy.base.carousel
+import com.gpetuhov.android.hive.ui.epoxy.base.withModelsIndexedFrom
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.util.Constants

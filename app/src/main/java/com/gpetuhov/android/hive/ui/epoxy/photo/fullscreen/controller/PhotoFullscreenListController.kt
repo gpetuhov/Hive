@@ -2,7 +2,7 @@ package com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller
 
 import com.airbnb.epoxy.Carousel
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.ui.epoxy.base.BaseController
+import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.models.PhotoFullscreenItemModel_
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.ui.epoxy.base.carousel

@@ -6,7 +6,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPresenter
-import com.gpetuhov.android.hive.ui.epoxy.base.BaseController
+import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle

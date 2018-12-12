@@ -3,12 +3,11 @@ package com.gpetuhov.android.hive.ui.epoxy.profile.models
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
+import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.updateUserPic
 
 @EpoxyModelClass(layout = R.layout.profile_details_view)
