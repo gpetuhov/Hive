@@ -6,7 +6,6 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.UserBaseController
-import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
@@ -88,15 +87,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
         }
 
         user?.offerList?.forEach { offer ->
-            offerPhotoCarousel(offer, false) { index ->
-                settings.setSelectedPhotoPosition(index)
-                presenter.updateOffer(offer.uid)
-            }
-
-            offerDetails(context, offer, true) {
-                settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
-                presenter.updateOffer(offer.uid)
-            }
+            offerPhotoCarousel(settings, offer, false) { presenter.updateOffer(offer.uid) }
+            offerDetails(context, settings, offer, true) { presenter.updateOffer(offer.uid) }
         }
 
         addOffer {

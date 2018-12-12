@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.buildScrollListener
 import com.gpetuhov.android.hive.util.epoxy.carousel
 import com.gpetuhov.android.hive.util.epoxy.withModelsIndexedFrom
@@ -33,7 +34,7 @@ abstract class UserBaseController : EpoxyController() {
         if (restored != null) selectedOfferPhotoMap = restored as HashMap<String, Int>
     }
 
-    fun offerPhotoCarousel(offer: Offer, limitVisible: Boolean, onClick: (Int) -> Unit) {
+    fun offerPhotoCarousel(settings: Settings, offer: Offer, limitVisible: Boolean, onClick: () -> Unit) {
         var offerPhotoList = offer.photoList
 
         if (limitVisible) {
@@ -60,13 +61,16 @@ abstract class UserBaseController : EpoxyController() {
                     PhotoOfferItemModel_()
                         .id(photo.uid)
                         .photoUrl(photo.downloadUrl)
-                        .onClick { onClick(index) }
+                        .onClick {
+                            settings.setSelectedPhotoPosition(index)
+                            onClick()
+                        }
                 }
             }
         }
     }
 
-    fun offerDetails(context: Context, offer: Offer, offerActiveVisible: Boolean, onClick: () -> Unit) {
+    fun offerDetails(context: Context, settings: Settings, offer: Offer, offerActiveVisible: Boolean, onClick: () -> Unit) {
         offerItem {
             id(offer.uid)
             active(offer.isActive)
@@ -74,7 +78,10 @@ abstract class UserBaseController : EpoxyController() {
             title(offer.title)
             free(offer.isFree)
             price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
-            onClick { onClick() }
+            onClick {
+                settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
+                onClick()
+            }
         }
     }
 }
