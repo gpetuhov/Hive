@@ -5,10 +5,8 @@ import android.os.Bundle
 import com.airbnb.epoxy.Carousel
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
-import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
-import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
@@ -23,7 +21,6 @@ abstract class UserBaseController : BaseController() {
 
     protected var user: User? = null
 
-    private var scrollToSelectedPhoto = true
     private var selectedOfferPhotoMap = hashMapOf<String, Int>()
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -45,49 +42,6 @@ abstract class UserBaseController : BaseController() {
     }
 
     // === Protected methods ===
-
-    protected fun photoCarousel(
-        settings: Settings,
-        photoListSource: MutableList<Photo>,
-        limitVisible: Boolean,
-        onClick: (MutableList<String>) -> Unit,
-        onLongClick: (String) -> Unit
-    ) {
-        var photoList = mutableListOf<Photo>()
-        photoList.addAll(photoListSource)
-
-        if (limitVisible) {
-           photoList = photoList
-               .filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }
-               .toMutableList()
-        }
-
-        if (!photoList.isEmpty()) {
-            carousel {
-                id("photo_carousel")
-
-                paddingDp(0)
-
-                onBind { model, view, position ->
-                    if (scrollToSelectedPhoto) {
-                        scrollToSelectedPhoto = false
-                        scrollToSavedSelectedPhotoPosition(settings, view, photoList.size, true)
-                    }
-                }
-
-                withModelsIndexedFrom(photoList) { index, item ->
-                    PhotoItemModel_()
-                        .id(item.uid)
-                        .photoUrl(item.downloadUrl)
-                        .onClick {
-                            settings.setSelectedPhotoPosition(index)
-                            onClick(getPhotoUrlList(photoList))
-                        }
-                        .onLongClick { onLongClick(item.uid) }
-                }
-            }
-        }
-    }
 
     protected fun userOfferItem(context: Context, settings: Settings, offer: Offer, isProfile: Boolean, onClick: () -> Unit) {
         offerItemPhotoCarousel(settings, offer, !isProfile, onClick)

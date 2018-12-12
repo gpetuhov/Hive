@@ -5,9 +5,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.domain.model.Photo
+import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.epoxy.carousel
+import com.gpetuhov.android.hive.util.epoxy.withModelsIndexedFrom
 
 abstract class BaseController : EpoxyController() {
+
+    private var scrollToSelectedPhoto = true
 
     // === Protected methods ===
 
@@ -30,6 +36,49 @@ abstract class BaseController : EpoxyController() {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     val lastScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
                     onScroll(lastScrollPosition)
+                }
+            }
+        }
+    }
+
+    protected fun photoCarousel(
+        settings: Settings,
+        photoListSource: MutableList<Photo>,
+        limitVisible: Boolean,
+        isUserPhotos: Boolean,
+        onClick: (MutableList<String>) -> Unit,
+        onLongClick: (String) -> Unit
+    ) {
+        var photoList = mutableListOf<Photo>()
+        photoList.addAll(photoListSource)
+
+        if (limitVisible) {
+            val maxPhotoCount = if (isUserPhotos) Constants.User.MAX_VISIBLE_PHOTO_COUNT else Constants.Offer.MAX_VISIBLE_PHOTO_COUNT
+            photoList = photoList.filterIndexed { index, item -> index < maxPhotoCount }.toMutableList()
+        }
+
+        if (!photoList.isEmpty()) {
+            carousel {
+                id("photo_carousel")
+
+                paddingDp(0)
+
+                onBind { model, view, position ->
+                    if (scrollToSelectedPhoto) {
+                        scrollToSelectedPhoto = false
+                        scrollToSavedSelectedPhotoPosition(settings, view, photoList.size, true)
+                    }
+                }
+
+                withModelsIndexedFrom(photoList) { index, item ->
+                    PhotoItemModel_()
+                        .id(item.uid)
+                        .photoUrl(item.downloadUrl)
+                        .onClick {
+                            settings.setSelectedPhotoPosition(index)
+                            onClick(getPhotoUrlList(photoList))
+                        }
+                        .onLongClick { onLongClick(item.uid) }
                 }
             }
         }

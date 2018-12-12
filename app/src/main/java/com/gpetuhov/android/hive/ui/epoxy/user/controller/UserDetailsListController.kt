@@ -32,6 +32,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             settings,
             photoList,
             true,
+            true,
             { photoUrlList -> presenter.openPhotos(photoUrlList) },
             { /* Do nothing */ }
         )

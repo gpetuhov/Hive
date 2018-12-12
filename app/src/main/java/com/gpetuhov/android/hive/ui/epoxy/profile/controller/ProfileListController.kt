@@ -38,6 +38,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             settings,
             photoList,
             false,
+            true,
             { photoUrlList -> presenter.openPhotos(photoUrlList) },
             { photoUid -> presenter.showDeletePhotoDialog(photoUid) }
         )
