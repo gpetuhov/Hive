@@ -7,6 +7,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.base.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle
@@ -17,7 +18,7 @@ import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.*
 import javax.inject.Inject
 
-class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : EpoxyController() {
+class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : BaseController() {
 
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings

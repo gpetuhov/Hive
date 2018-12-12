@@ -5,6 +5,7 @@ import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.base.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferPrice
@@ -15,7 +16,7 @@ import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.*
 import javax.inject.Inject
 
-class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresenter) : EpoxyController() {
+class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresenter) : BaseController() {
 
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings

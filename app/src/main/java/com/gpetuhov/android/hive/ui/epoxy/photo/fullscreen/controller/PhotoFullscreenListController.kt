@@ -1,17 +1,15 @@
 package com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller
 
 import com.airbnb.epoxy.Carousel
-import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.ui.epoxy.base.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.models.PhotoFullscreenItemModel_
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.epoxy.buildScrollListener
 import com.gpetuhov.android.hive.util.epoxy.carousel
-import com.gpetuhov.android.hive.util.epoxy.scrollToSavedSelectedPhotoPosition
 import com.gpetuhov.android.hive.util.epoxy.withModelsIndexedFrom
 import javax.inject.Inject
 
-class PhotoFullscreenListController : EpoxyController() {
+class PhotoFullscreenListController : BaseController() {
 
     @Inject lateinit var settings: Settings
 

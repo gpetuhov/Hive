@@ -3,7 +3,6 @@ package com.gpetuhov.android.hive.ui.epoxy.base
 import android.content.Context
 import android.os.Bundle
 import com.airbnb.epoxy.Carousel
-import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.Photo
@@ -16,7 +15,7 @@ import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.*
 
 // Base controller for profile and user details
-abstract class UserBaseController : EpoxyController() {
+abstract class UserBaseController : BaseController() {
 
     companion object {
         private const val SELECTED_OFFER_PHOTO_MAP_KEY = "selectedOfferPhotoMap"
