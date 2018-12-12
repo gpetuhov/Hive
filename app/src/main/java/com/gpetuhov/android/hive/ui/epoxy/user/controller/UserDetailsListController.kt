@@ -1,6 +1,8 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.controller
 
 import android.content.Context
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
@@ -26,6 +28,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
     private var user: User? = null
     private var scrollToSelectedPhoto = true
+    private var selectedOfferPhotoMap = mutableMapOf<String, Int>()
 
     init {
         HiveApp.appComponent.inject(this)
@@ -100,7 +103,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                         val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
                         padding(padding)
 
-                        onBind { model, view, position -> view.clipToPadding = true }
+                        onBind { model, view, position ->
+                            view.clipToPadding = true
+                            view.addOnScrollListener(getScrollListener { lastScrollPosition -> selectedOfferPhotoMap[offer.uid] = lastScrollPosition})
+                        }
 
                         withModelsIndexedFrom(visibleOfferPhotos) { index, photo ->
                             PhotoOfferItemModel_()
@@ -122,14 +128,34 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                     title(offer.title)
                     free(offer.isFree)
                     price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
-                    onClick { presenter.openOffer(offer.uid) }
+                    onClick {
+                        settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
+                        presenter.openOffer(offer.uid)
+                    }
                 }
             }
         }
     }
 
+    // === Public methods ===
+
     fun changeUser(user: User) {
         this.user = user
         requestModelBuild()
+    }
+
+    // === Private methods ===
+
+    private fun getScrollListener(onScroll: (Int) -> Unit): RecyclerView.OnScrollListener {
+        return object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    val lastScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                    onScroll(lastScrollPosition)
+                }
+            }
+        }
     }
 }
