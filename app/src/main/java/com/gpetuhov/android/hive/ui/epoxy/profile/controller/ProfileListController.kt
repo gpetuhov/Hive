@@ -28,6 +28,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
     private var signOutEnabled = true
     private var deleteAccountEnabled = true
     private var scrollToSelectedPhoto = true
+    private var selectedOfferPhotoMap = mutableMapOf<String, Int>()
 
     init {
         HiveApp.appComponent.inject(this)
@@ -99,7 +100,12 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                     val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
                     padding(padding)
 
-                    onBind { model, view, position -> view.clipToPadding = true }
+                    onBind { model, view, position ->
+                        view.clipToPadding = true
+                        view.addOnScrollListener(
+                            buildScrollListener { lastScrollPosition -> selectedOfferPhotoMap[offer.uid] = lastScrollPosition}
+                        )
+                    }
 
                     withModelsIndexedFrom(offerPhotoList) { index, photo ->
                         PhotoOfferItemModel_()
@@ -121,7 +127,10 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
                 title(offer.title)
                 free(offer.isFree)
                 price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
-                onClick { presenter.updateOffer(offer.uid) }
+                onClick {
+                    settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
+                    presenter.updateOffer(offer.uid)
+                }
             }
         }
 
