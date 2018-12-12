@@ -5,14 +5,12 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.UserBaseController
-import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.epoxy.*
 import javax.inject.Inject
 
 class ProfileListController(private val presenter: ProfileFragmentPresenter) : UserBaseController() {
@@ -22,7 +20,6 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
     private var signOutEnabled = true
     private var deleteAccountEnabled = true
-    private var scrollToSelectedPhoto = true
 
     init {
         HiveApp.appComponent.inject(this)
@@ -37,31 +34,13 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             maxPhotoWarningVisible(photoList.size >= Constants.User.MAX_VISIBLE_PHOTO_COUNT)
         }
 
-        if (!photoList.isEmpty()) {
-            carousel {
-                id("photo_carousel")
-
-                paddingDp(0)
-
-                onBind { model, view, position ->
-                    if (scrollToSelectedPhoto) {
-                        scrollToSelectedPhoto = false
-                        scrollToSavedSelectedPhotoPosition(settings, view, photoList.size, true)
-                    }
-                }
-
-                withModelsIndexedFrom(photoList) { index, item ->
-                    PhotoItemModel_()
-                        .id(item.uid)
-                        .photoUrl(item.downloadUrl)
-                        .onClick {
-                            settings.setSelectedPhotoPosition(index)
-                            presenter.openPhotos(getPhotoUrlList(photoList))
-                        }
-                        .onLongClick { presenter.showDeletePhotoDialog(item.uid) }
-                }
-            }
-        }
+        photoCarousel(
+            settings,
+            photoList,
+            false,
+            { photoUrlList -> presenter.openPhotos(photoUrlList) },
+            { photoUid -> presenter.showDeletePhotoDialog(photoUid) }
+        )
 
         details {
             id("details")
@@ -85,7 +64,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
         }
 
         user?.offerList?.forEach { offer ->
-            userOffer(context, settings, offer, true) { presenter.updateOffer(offer.uid) }
+            userOfferItem(context, settings, offer, true) { presenter.updateOffer(offer.uid) }
         }
 
         addOffer {

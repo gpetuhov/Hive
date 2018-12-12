@@ -5,22 +5,17 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.UserBaseController
-import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
-import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.epoxy.*
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : UserBaseController() {
 
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings
-
-    private var scrollToSelectedPhoto = true
 
     init {
         HiveApp.appComponent.inject(this)
@@ -33,33 +28,13 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         }
 
         val photoList = user?.photoList ?: mutableListOf()
-        if (!photoList.isEmpty()) {
-            val visiblePhotos = photoList.filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }.toMutableList()
-
-            carousel {
-                id("photo_carousel")
-
-                paddingDp(0)
-
-                onBind { model, view, position ->
-                    if (scrollToSelectedPhoto) {
-                        scrollToSelectedPhoto = false
-                        scrollToSavedSelectedPhotoPosition(settings, view, visiblePhotos.size, true)
-                    }
-                }
-
-                withModelsIndexedFrom(visiblePhotos) { index, item ->
-                    PhotoItemModel_()
-                        .id(item.uid)
-                        .photoUrl(item.downloadUrl)
-                        .onClick {
-                            settings.setSelectedPhotoPosition(index)
-                            presenter.openPhotos(getPhotoUrlList(visiblePhotos))
-                        }
-                        .onLongClick { /* Do nothing */ }
-                }
-            }
-        }
+        photoCarousel(
+            settings,
+            photoList,
+            true,
+            { photoUrlList -> presenter.openPhotos(photoUrlList) },
+            { /* Do nothing */ }
+        )
 
         userDetailsName {
             id("user_details_name")
@@ -84,7 +59,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         user?.offerList?.forEach { offer ->
             // In user details show only active offers
-            if (offer.isActive) userOffer(context, settings, offer, false) { presenter.openOffer(offer.uid) }
+            if (offer.isActive) userOfferItem(context, settings, offer, false) { presenter.openOffer(offer.uid) }
         }
     }
 }
