@@ -85,10 +85,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         }
 
         user?.offerList?.forEach { offer ->
-            if (offer.isActive) {
-                offerPhotoCarousel(settings, offer, true) { presenter.openOffer(offer.uid) }
-                offerDetails(context, settings, offer, false) { presenter.openOffer(offer.uid) }
-            }
+            if (offer.isActive) userOffer(context, settings, offer, false) { presenter.openOffer(offer.uid) }
         }
     }
 

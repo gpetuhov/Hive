@@ -34,6 +34,13 @@ abstract class UserBaseController : EpoxyController() {
         if (restored != null) selectedOfferPhotoMap = restored as HashMap<String, Int>
     }
 
+    // === Public methods ===
+
+    fun userOffer(context: Context, settings: Settings, offer: Offer, isProfile: Boolean, onClick: () -> Unit) {
+        offerPhotoCarousel(settings, offer, !isProfile, onClick)
+        offerDetails(context, settings, offer, isProfile, onClick)
+    }
+
     fun offerPhotoCarousel(settings: Settings, offer: Offer, limitVisible: Boolean, onClick: () -> Unit) {
         var offerPhotoList = offer.photoList
 

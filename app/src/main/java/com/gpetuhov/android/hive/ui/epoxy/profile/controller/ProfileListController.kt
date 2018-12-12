@@ -87,8 +87,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
         }
 
         user?.offerList?.forEach { offer ->
-            offerPhotoCarousel(settings, offer, false) { presenter.updateOffer(offer.uid) }
-            offerDetails(context, settings, offer, true) { presenter.updateOffer(offer.uid) }
+            userOffer(context, settings, offer, true) { presenter.updateOffer(offer.uid) }
         }
 
         addOffer {
