@@ -7,7 +7,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.ui.epoxy.base.carousel
-import com.gpetuhov.android.hive.ui.epoxy.base.withModelsIndexedFrom
+import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.util.Constants
@@ -74,7 +74,7 @@ abstract class UserBaseController : BaseController() {
                     )
                 }
 
-                withModelsIndexedFrom(offerPhotoList) { index, photo ->
+                withModelsFrom(offerPhotoList) { index, photo ->
                     PhotoOfferItemModel_()
                         .id(photo.uid)
                         .photoUrl(photo.downloadUrl)

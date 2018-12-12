@@ -6,7 +6,7 @@ import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.ui.epoxy.base.carousel
-import com.gpetuhov.android.hive.ui.epoxy.base.withModelsIndexedFrom
+import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
@@ -16,8 +16,6 @@ abstract class BaseController : EpoxyController() {
     private var scrollToSelectedPhoto = true
 
     // === Protected methods ===
-
-    protected fun getPhotoUrlList(photoList: MutableList<Photo>) = photoList.map { it.downloadUrl }.toMutableList()
 
     protected fun scrollToSavedSelectedPhotoPosition(settings: Settings, carousel: Carousel, photoListSize: Int, resetSavedPosition: Boolean) {
         var selectedPhotoPosition = settings.getSelectedPhotoPosition()
@@ -70,7 +68,7 @@ abstract class BaseController : EpoxyController() {
                     }
                 }
 
-                withModelsIndexedFrom(photoList) { index, item ->
+                withModelsFrom(photoList) { index, item ->
                     PhotoItemModel_()
                         .id(item.uid)
                         .photoUrl(item.downloadUrl)
@@ -83,4 +81,8 @@ abstract class BaseController : EpoxyController() {
             }
         }
     }
+
+    // === Private methods ===
+
+    private fun getPhotoUrlList(photoList: MutableList<Photo>) = photoList.map { it.downloadUrl }.toMutableList()
 }

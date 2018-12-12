@@ -21,7 +21,7 @@ inline fun EpoxyController.carousel(modelInitializer: CarouselModelBuilder.() ->
  * @param items The items to transform to models
  * @param modelBuilder A function that take an item and returns a new EpoxyModel for that item.
  */
-inline fun <T> CarouselModelBuilder.withModelsIndexedFrom(
+inline fun <T> CarouselModelBuilder.withModelsFrom(
     items: List<T>,
     modelBuilder: (index: Int, T) -> EpoxyModel<*>
 ) {

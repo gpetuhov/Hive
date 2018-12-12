@@ -6,7 +6,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.models.PhotoFullscreenItemModel_
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.ui.epoxy.base.carousel
-import com.gpetuhov.android.hive.ui.epoxy.base.withModelsIndexedFrom
+import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
 import javax.inject.Inject
 
 class PhotoFullscreenListController : BaseController() {
@@ -39,7 +39,7 @@ class PhotoFullscreenListController : BaseController() {
 
                 val listSize = photoUrlList.size
 
-                withModelsIndexedFrom(photoUrlList) { index, item ->
+                withModelsFrom(photoUrlList) { index, item ->
                     PhotoFullscreenItemModel_()
                         .id(item)
                         .photoUrl(item)
