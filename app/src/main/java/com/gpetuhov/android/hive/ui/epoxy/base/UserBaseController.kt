@@ -1,9 +1,12 @@
 package com.gpetuhov.android.hive.ui.epoxy.base
 
+import android.content.Context
 import android.os.Bundle
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
+import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
+import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.epoxy.buildScrollListener
@@ -61,6 +64,17 @@ abstract class UserBaseController : EpoxyController() {
                 }
             }
         }
+    }
 
+    fun offerDetails(context: Context, offer: Offer, offerActiveVisible: Boolean, onClick: () -> Unit) {
+        offerItem {
+            id(offer.uid)
+            active(offer.isActive)
+            activeVisible(offerActiveVisible)
+            title(offer.title)
+            free(offer.isFree)
+            price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
+            onClick { onClick() }
+        }
     }
 }

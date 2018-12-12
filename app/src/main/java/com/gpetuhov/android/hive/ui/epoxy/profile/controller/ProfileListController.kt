@@ -93,17 +93,9 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
                 presenter.updateOffer(offer.uid)
             }
 
-            offerItem {
-                id(offer.uid)
-                active(offer.isActive)
-                activeVisible(true)
-                title(offer.title)
-                free(offer.isFree)
-                price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
-                onClick {
-                    settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
-                    presenter.updateOffer(offer.uid)
-                }
+            offerDetails(context, offer, true) {
+                settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
+                presenter.updateOffer(offer.uid)
             }
         }
 

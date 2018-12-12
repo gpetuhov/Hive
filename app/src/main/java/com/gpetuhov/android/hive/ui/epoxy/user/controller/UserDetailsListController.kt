@@ -92,17 +92,9 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                     presenter.openOffer(offer.uid)
                 }
 
-                offerItem {
-                    id(offer.uid)
-                    active(offer.isActive)
-                    activeVisible(false)
-                    title(offer.title)
-                    free(offer.isFree)
-                    price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
-                    onClick {
-                        settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
-                        presenter.openOffer(offer.uid)
-                    }
+                offerDetails(context, offer, false) {
+                    settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
+                    presenter.openOffer(offer.uid)
                 }
             }
         }
