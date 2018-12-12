@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.util.epoxy
 
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.domain.model.Photo
@@ -14,4 +16,17 @@ fun EpoxyController.scrollToSavedSelectedPhotoPosition(settings: Settings, carou
     carousel.scrollToPosition(selectedPhotoPosition)
 
     if (resetSavedPosition) settings.setSelectedPhotoPosition(0)
+}
+
+fun EpoxyController.buildScrollListener(onScroll: (Int) -> Unit): RecyclerView.OnScrollListener {
+    return object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+
+            if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                val lastScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                onScroll(lastScrollPosition)
+            }
+        }
+    }
 }

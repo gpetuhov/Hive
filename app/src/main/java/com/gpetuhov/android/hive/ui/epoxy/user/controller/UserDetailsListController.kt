@@ -1,8 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.controller
 
 import android.content.Context
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
@@ -105,7 +103,9 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
                         onBind { model, view, position ->
                             view.clipToPadding = true
-                            view.addOnScrollListener(getScrollListener { lastScrollPosition -> selectedOfferPhotoMap[offer.uid] = lastScrollPosition})
+                            view.addOnScrollListener(
+                                buildScrollListener { lastScrollPosition -> selectedOfferPhotoMap[offer.uid] = lastScrollPosition}
+                            )
                         }
 
                         withModelsIndexedFrom(visibleOfferPhotos) { index, photo ->
@@ -137,25 +137,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         }
     }
 
-    // === Public methods ===
-
     fun changeUser(user: User) {
         this.user = user
         requestModelBuild()
-    }
-
-    // === Private methods ===
-
-    private fun getScrollListener(onScroll: (Int) -> Unit): RecyclerView.OnScrollListener {
-        return object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val lastScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    onScroll(lastScrollPosition)
-                }
-            }
-        }
     }
 }
