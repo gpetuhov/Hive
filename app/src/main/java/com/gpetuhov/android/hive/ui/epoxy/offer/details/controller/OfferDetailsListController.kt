@@ -52,12 +52,12 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     }
                 }
 
-                withModelsFrom(visiblePhotos) {
+                withModelsIndexedFrom(visiblePhotos) { index, item ->
                     PhotoItemModel_()
-                        .id(it.uid)
-                        .photoUrl(it.downloadUrl)
+                        .id(item.uid)
+                        .photoUrl(item.downloadUrl)
                         .onClick {
-                            saveSelectedPhotoPosition(settings, it.uid, visiblePhotos)
+                            settings.setSelectedPhotoPosition(index)
                             presenter.openPhotos(getPhotoUrlList(visiblePhotos))
                         }
                         .onLongClick { /* Do nothing */ }

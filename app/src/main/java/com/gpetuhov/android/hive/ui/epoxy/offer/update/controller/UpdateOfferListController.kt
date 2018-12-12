@@ -63,15 +63,15 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
                     }
                 }
 
-                withModelsFrom(photoList) {
+                withModelsIndexedFrom(photoList) { index, item ->
                     PhotoItemModel_()
-                        .id(it.uid)
-                        .photoUrl(it.downloadUrl)
+                        .id(item.uid)
+                        .photoUrl(item.downloadUrl)
                         .onClick {
-                            saveSelectedPhotoPosition(settings, it.uid, photoList)
+                            settings.setSelectedPhotoPosition(index)
                             presenter.openPhotos(getPhotoUrlList(photoList))
                         }
-                        .onLongClick { presenter.showDeletePhotoDialog(it.uid) }
+                        .onLongClick { presenter.showDeletePhotoDialog(item.uid) }
                 }
             }
         }
