@@ -85,16 +85,37 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             offerHeader(if (hasActiveOffer) context.getString(R.string.offers) else context.getString(R.string.no_active_offer))
         }
 
-        user?.offerList?.forEach {
-            if (it.isActive) {
+        user?.offerList?.forEach { offer ->
+            if (offer.isActive) {
+                // Offer photo carousel
+                val offerPhotoList = offer.photoList
+                if (!offerPhotoList.isEmpty()) {
+                    val visibleOfferPhotos = offerPhotoList.filterIndexed { index, item -> index < Constants.Offer.MAX_VISIBLE_PHOTO_COUNT }.toMutableList()
+
+                    carousel {
+                        id("${offer.uid}_photo_carousel")
+
+                        paddingDp(0)
+
+                        withModelsFrom(visibleOfferPhotos) { photo ->
+                            PhotoItemModel_()
+                                .id(photo.uid)
+                                .photoUrl(photo.downloadUrl)
+                                .onClick { presenter.openOffer(offer.uid) }
+                                .onLongClick { /* Do nothing */ }
+                        }
+                    }
+                }
+
+                // Offer details
                 offerItem {
-                    id(it.uid)
-                    active(it.isActive)
+                    id(offer.uid)
+                    active(offer.isActive)
                     activeVisible(false)
-                    title(it.title)
-                    free(it.isFree)
-                    price(if (it.isFree) context.getString(R.string.free_caps) else "${it.price} USD")
-                    onClick { presenter.openOffer(it.uid) }
+                    title(offer.title)
+                    free(offer.isFree)
+                    price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
+                    onClick { presenter.openOffer(offer.uid) }
                 }
             }
         }
