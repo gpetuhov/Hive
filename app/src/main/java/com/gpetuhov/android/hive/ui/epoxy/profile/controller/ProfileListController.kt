@@ -101,11 +101,14 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
 
                     onBind { model, view, position -> view.clipToPadding = true }
 
-                    withModelsFrom(offerPhotoList) { photo ->
+                    withModelsIndexedFrom(offerPhotoList) { index, photo ->
                         PhotoOfferItemModel_()
                             .id(photo.uid)
                             .photoUrl(photo.downloadUrl)
-                            .onClick { presenter.updateOffer(offer.uid) }
+                            .onClick {
+                                settings.setSelectedPhotoPosition(index)
+                                presenter.updateOffer(offer.uid)
+                            }
                     }
                 }
             }

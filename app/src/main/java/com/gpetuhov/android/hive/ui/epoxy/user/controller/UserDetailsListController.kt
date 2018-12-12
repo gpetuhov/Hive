@@ -102,11 +102,14 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
                         onBind { model, view, position -> view.clipToPadding = true }
 
-                        withModelsFrom(visibleOfferPhotos) { photo ->
+                        withModelsIndexedFrom(visibleOfferPhotos) { index, photo ->
                             PhotoOfferItemModel_()
                                 .id(photo.uid)
                                 .photoUrl(photo.downloadUrl)
-                                .onClick { presenter.openOffer(offer.uid) }
+                                .onClick {
+                                    settings.setSelectedPhotoPosition(index)
+                                    presenter.openOffer(offer.uid)
+                                }
                         }
                     }
                 }
