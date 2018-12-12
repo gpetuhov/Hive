@@ -1,13 +1,12 @@
 package com.gpetuhov.android.hive.ui.epoxy.profile.controller
 
 import android.content.Context
-import android.os.Bundle
 import com.airbnb.epoxy.Carousel
-import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.base.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
@@ -20,11 +19,7 @@ import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.epoxy.*
 import javax.inject.Inject
 
-class ProfileListController(private val presenter: ProfileFragmentPresenter) : EpoxyController() {
-
-    companion object {
-        private const val SELECTED_OFFER_PHOTO_MAP_KEY = "selectedOfferPhotoMap"
-    }
+class ProfileListController(private val presenter: ProfileFragmentPresenter) : UserBaseController() {
 
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings
@@ -33,7 +28,6 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
     private var signOutEnabled = true
     private var deleteAccountEnabled = true
     private var scrollToSelectedPhoto = true
-    private var selectedOfferPhotoMap = hashMapOf<String, Int>()
 
     init {
         HiveApp.appComponent.inject(this)
@@ -153,17 +147,6 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : E
             onDeleteAccountClick { presenter.showDeleteUserDialog() }
             deleteAccountEnabled(deleteAccountEnabled)
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putSerializable(SELECTED_OFFER_PHOTO_MAP_KEY, selectedOfferPhotoMap)
-    }
-
-    override fun onRestoreInstanceState(inState: Bundle?) {
-        super.onRestoreInstanceState(inState)
-        val restored = inState?.getSerializable(SELECTED_OFFER_PHOTO_MAP_KEY)
-        if (restored != null) selectedOfferPhotoMap = restored as HashMap<String, Int>
     }
 
     fun changeUser(user: User) {
