@@ -16,7 +16,7 @@
             android:layout_height="1dp"
             android:background="@color/md_grey_300"/>
 
-    <androidx.appcompat.widget.SwitchCompat
+    <CheckBox
             android:id="@+id/update_offer_free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
