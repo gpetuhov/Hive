@@ -1,7 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.controller
 
 import android.content.Context
-import com.airbnb.epoxy.Carousel
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
@@ -9,7 +8,6 @@ import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPrese
 import com.gpetuhov.android.hive.ui.epoxy.base.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
-import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
@@ -89,37 +87,11 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         user?.offerList?.forEach { offer ->
             if (offer.isActive) {
-                // Offer photo carousel
-                val offerPhotoList = offer.photoList
-                if (!offerPhotoList.isEmpty()) {
-                    val visibleOfferPhotos = offerPhotoList.filterIndexed { index, item -> index < Constants.Offer.MAX_VISIBLE_PHOTO_COUNT }.toMutableList()
-
-                    carousel {
-                        id("${offer.uid}_photo_carousel")
-
-                        val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
-                        padding(padding)
-
-                        onBind { model, view, position ->
-                            view.clipToPadding = true
-                            view.addOnScrollListener(
-                                buildScrollListener { lastScrollPosition -> selectedOfferPhotoMap[offer.uid] = lastScrollPosition}
-                            )
-                        }
-
-                        withModelsIndexedFrom(visibleOfferPhotos) { index, photo ->
-                            PhotoOfferItemModel_()
-                                .id(photo.uid)
-                                .photoUrl(photo.downloadUrl)
-                                .onClick {
-                                    settings.setSelectedPhotoPosition(index)
-                                    presenter.openOffer(offer.uid)
-                                }
-                        }
-                    }
+                offerPhotoCarousel(offer, true) { index ->
+                    settings.setSelectedPhotoPosition(index)
+                    presenter.openOffer(offer.uid)
                 }
 
-                // Offer details
                 offerItem {
                     id(offer.uid)
                     active(offer.isActive)
