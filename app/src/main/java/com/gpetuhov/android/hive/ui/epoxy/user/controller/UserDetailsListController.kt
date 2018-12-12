@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.controller
 
 import android.content.Context
+import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
@@ -95,7 +96,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                     carousel {
                         id("${offer.uid}_photo_carousel")
 
-                        paddingDp(0)
+                        val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
+                        padding(padding)
+
+                        onBind { model, view, position -> view.clipToPadding = true }
 
                         withModelsFrom(visibleOfferPhotos) { photo ->
                             PhotoItemModel_()
