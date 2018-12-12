@@ -8,8 +8,6 @@ import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.epoxy.carousel
-import com.gpetuhov.android.hive.util.epoxy.withModelsIndexedFrom
 
 abstract class BaseController : EpoxyController() {
 

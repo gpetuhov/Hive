@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.util.epoxy
+package com.gpetuhov.android.hive.ui.epoxy.base
 
 import com.airbnb.epoxy.CarouselModelBuilder
 import com.airbnb.epoxy.CarouselModel_
@@ -21,14 +21,6 @@ inline fun EpoxyController.carousel(modelInitializer: CarouselModelBuilder.() ->
  * @param items The items to transform to models
  * @param modelBuilder A function that take an item and returns a new EpoxyModel for that item.
  */
-inline fun <T> CarouselModelBuilder.withModelsFrom(
-    items: List<T>,
-    modelBuilder: (T) -> EpoxyModel<*>
-) {
-    models(items.map { modelBuilder(it) })
-}
-
-// Same as above, but with item index
 inline fun <T> CarouselModelBuilder.withModelsIndexedFrom(
     items: List<T>,
     modelBuilder: (index: Int, T) -> EpoxyModel<*>
