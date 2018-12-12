@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.holder.KotlinHolder
 
+// This model is used in offer item photo carousels in user details and profile
 @EpoxyModelClass(layout = R.layout.photo_offer_item_view)
 abstract class PhotoOfferItemModel : EpoxyModelWithHolder<PhotoOfferItemHolder>() {
 
