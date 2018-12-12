@@ -3,7 +3,6 @@ package com.gpetuhov.android.hive.ui.epoxy.profile.controller
 import android.content.Context
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
@@ -21,7 +20,6 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings
 
-    private var user: User? = null
     private var signOutEnabled = true
     private var deleteAccountEnabled = true
     private var scrollToSelectedPhoto = true
@@ -104,11 +102,6 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             onDeleteAccountClick { presenter.showDeleteUserDialog() }
             deleteAccountEnabled(deleteAccountEnabled)
         }
-    }
-
-    fun changeUser(user: User) {
-        this.user = user
-        requestModelBuild()
     }
 
     fun signOutEnabled(isEnabled: Boolean) {

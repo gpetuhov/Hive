@@ -3,7 +3,6 @@ package com.gpetuhov.android.hive.ui.epoxy.user.controller
 import android.content.Context
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
@@ -21,7 +20,6 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings
 
-    private var user: User? = null
     private var scrollToSelectedPhoto = true
 
     init {
@@ -85,12 +83,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         }
 
         user?.offerList?.forEach { offer ->
+            // In user details show only active offers
             if (offer.isActive) userOffer(context, settings, offer, false) { presenter.openOffer(offer.uid) }
         }
-    }
-
-    fun changeUser(user: User) {
-        this.user = user
-        requestModelBuild()
     }
 }

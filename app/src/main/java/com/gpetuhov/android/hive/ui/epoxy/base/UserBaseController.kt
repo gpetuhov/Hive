@@ -6,6 +6,7 @@ import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.util.Constants
@@ -21,7 +22,9 @@ abstract class UserBaseController : EpoxyController() {
         private const val SELECTED_OFFER_PHOTO_MAP_KEY = "selectedOfferPhotoMap"
     }
 
-    protected var selectedOfferPhotoMap = hashMapOf<String, Int>()
+    protected var user: User? = null
+
+    private var selectedOfferPhotoMap = hashMapOf<String, Int>()
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -36,12 +39,21 @@ abstract class UserBaseController : EpoxyController() {
 
     // === Public methods ===
 
-    fun userOffer(context: Context, settings: Settings, offer: Offer, isProfile: Boolean, onClick: () -> Unit) {
+    fun changeUser(user: User) {
+        this.user = user
+        requestModelBuild()
+    }
+
+    // === Protected methods ===
+
+    protected fun userOffer(context: Context, settings: Settings, offer: Offer, isProfile: Boolean, onClick: () -> Unit) {
         offerPhotoCarousel(settings, offer, !isProfile, onClick)
         offerDetails(context, settings, offer, isProfile, onClick)
     }
 
-    fun offerPhotoCarousel(settings: Settings, offer: Offer, limitVisible: Boolean, onClick: () -> Unit) {
+    // === Private methods ===
+
+    private fun offerPhotoCarousel(settings: Settings, offer: Offer, limitVisible: Boolean, onClick: () -> Unit) {
         var offerPhotoList = offer.photoList
 
         if (limitVisible) {
@@ -77,7 +89,7 @@ abstract class UserBaseController : EpoxyController() {
         }
     }
 
-    fun offerDetails(context: Context, settings: Settings, offer: Offer, offerActiveVisible: Boolean, onClick: () -> Unit) {
+    private fun offerDetails(context: Context, settings: Settings, offer: Offer, offerActiveVisible: Boolean, onClick: () -> Unit) {
         offerItem {
             id(offer.uid)
             active(offer.isActive)
