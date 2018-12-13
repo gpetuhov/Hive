@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.base.controller
 
+import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
@@ -13,7 +14,21 @@ import com.gpetuhov.android.hive.util.Settings
 
 abstract class BaseController : EpoxyController() {
 
+    companion object {
+        private const val SCROLL_TO_SELECTED_PHOTO_KEY = "scrollToSelectedPhoto"
+    }
+
     private var scrollToSelectedPhoto = true
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(SCROLL_TO_SELECTED_PHOTO_KEY, scrollToSelectedPhoto)
+    }
+
+    override fun onRestoreInstanceState(inState: Bundle?) {
+        super.onRestoreInstanceState(inState)
+        if (inState != null) scrollToSelectedPhoto = inState.getBoolean(SCROLL_TO_SELECTED_PHOTO_KEY, true)
+    }
 
     // === Protected methods ===
 
