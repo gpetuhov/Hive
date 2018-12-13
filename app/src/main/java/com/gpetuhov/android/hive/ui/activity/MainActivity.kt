@@ -13,7 +13,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
-import com.gpetuhov.android.hive.domain.interactor.SaveOnlineInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
@@ -40,12 +39,6 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var notificationManager: NotificationManager
 
     private lateinit var navController: NavController
-
-    private val saveOnlineInteractor = SaveOnlineInteractor(object : SaveOnlineInteractor.Callback {
-        override fun onSaveOnlineComplete() {
-            // Do nothing
-        }
-    })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +80,6 @@ class MainActivity : AppCompatActivity() {
         repo.setForeground(true)
         auth.startListenAuth()
         notificationManager.onResume()
-        updateUserOnlineStatus(true)
     }
 
     override fun onPause() {
@@ -95,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         repo.setForeground(false)
         auth.stopListenAuth()
         notificationManager.onPause()
-        updateUserOnlineStatus(false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -152,8 +143,6 @@ class MainActivity : AppCompatActivity() {
         startActivity<AuthActivity>()
         finish()
     }
-
-    private fun updateUserOnlineStatus(isOnline: Boolean) = saveOnlineInteractor.saveOnline(isOnline)
 
     private fun updateMessagesIcon(unreadMessagesExist: Boolean) {
         val iconId = if (unreadMessagesExist) R.drawable.ic_mail_unread else R.drawable.ic_mail_read

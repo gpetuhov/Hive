@@ -256,13 +256,6 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun saveUserLocation(newLocation: LatLng) =
         geoFirestore.setLocation(currentUserUid(), GeoPoint(newLocation.latitude, newLocation.longitude))
 
-    override fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[IS_ONLINE_KEY] = newIsOnline
-
-        saveUserDataRemote(data, onComplete, onComplete)
-    }
-
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
             firestore.collection(USERS_COLLECTION).document(currentUserUid())

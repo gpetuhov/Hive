@@ -10,7 +10,6 @@ class TestRepository : Repo {
     var isSuccess = false
     var username = ""
     var description = ""
-    var isOnline = false
     var messageText = ""
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
@@ -61,11 +60,6 @@ class TestRepository : Repo {
     }
 
     override fun saveUserLocation(newLocation: LatLng) {
-    }
-
-    override fun saveUserOnlineStatus(newIsOnline: Boolean, onComplete: () -> Unit) {
-        if (isSuccess) isOnline = newIsOnline
-        onComplete()
     }
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
