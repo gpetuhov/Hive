@@ -3,15 +3,13 @@ package com.gpetuhov.android.hive.ui.epoxy.map.models
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.addSingleMarker
 import com.gpetuhov.android.hive.util.moveCamera
 
 @EpoxyModelClass(layout = R.layout.user_offer_map_view)
@@ -48,13 +46,7 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
 
         if (map != null) {
             map?.moveCamera(location)
-
-            map?.clear()
-            map?.addMarker(
-                MarkerOptions()
-                    .position(location)
-                    .title("")
-            )
+            map?.addSingleMarker(location)
         }
     }
 }

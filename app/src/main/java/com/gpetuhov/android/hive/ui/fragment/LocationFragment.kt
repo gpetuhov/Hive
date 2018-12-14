@@ -113,6 +113,9 @@ class LocationFragment : BaseFragment(), LocationFragmentView {
         // Enable zoom buttons
         googleMap.uiSettings.isZoomControlsEnabled = true
 
+        // Enable toolbar that opens Google Maps App
+        googleMap.uiSettings.isMapToolbarEnabled = true
+
         // Set minimum and maximum zoom
         googleMap.setMinZoomPreference(Constants.Map.MIN_ZOOM)
         googleMap.setMaxZoomPreference(Constants.Map.MAX_ZOOM)
@@ -124,6 +127,7 @@ class LocationFragment : BaseFragment(), LocationFragmentView {
             presenter.updateLocation(user.location)
 
             googleMap.moveCamera(user.location)
+            googleMap.addSingleMarker(user.location)
         })
     }
 }
