@@ -3,14 +3,14 @@ package com.gpetuhov.android.hive.ui.epoxy.user.controller
 import android.content.Context
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
-import com.gpetuhov.android.hive.ui.epoxy.map.models.map
+import com.gpetuhov.android.hive.ui.epoxy.map.models.MapModel_
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
-import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
 
@@ -19,8 +19,16 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings
 
+    private var mapModel: MapModel_
+
     init {
         HiveApp.appComponent.inject(this)
+
+        mapModel = MapModel_()
+            .id("map")
+            .onClick {
+                // TODO: implement
+            }
     }
 
     override fun buildModels() {
@@ -65,12 +73,11 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             if (offer.isActive) userOfferItem(context, settings, offer, false) { presenter.openOffer(offer.uid) }
         }
 
-        map {
-            id("map")
-            location(user?.location ?: Constants.Map.DEFAULT_LOCATION)
-            onClick {
-                // TODO: implement this
-            }
-        }
+        mapModel.addTo(this)
+    }
+
+    override fun changeUser(user: User) {
+        super.changeUser(user)
+        mapModel.updateMap(user.location)
     }
 }

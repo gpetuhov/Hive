@@ -37,7 +37,7 @@ abstract class UserBaseController : BaseController() {
 
     // === Public methods ===
 
-    fun changeUser(user: User) {
+    open fun changeUser(user: User) {
         this.user = user
         requestModelBuild()
     }
