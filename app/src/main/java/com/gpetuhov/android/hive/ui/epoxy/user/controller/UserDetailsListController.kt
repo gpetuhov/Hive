@@ -6,7 +6,6 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
-import com.gpetuhov.android.hive.ui.epoxy.map.models.MapModel_
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
@@ -19,14 +18,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings
 
-    private var mapModel: MapModel_
-
     init {
         HiveApp.appComponent.inject(this)
 
-        mapModel = MapModel_()
-            .id("map")
-            .onClick {
+        mapModel.onClick {
                 // TODO: implement
             }
     }

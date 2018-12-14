@@ -8,6 +8,7 @@ import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.ui.epoxy.base.carousel
 import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
+import com.gpetuhov.android.hive.ui.epoxy.map.models.MapModel_
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
@@ -18,6 +19,7 @@ abstract class BaseController : EpoxyController() {
         private const val SCROLL_TO_SELECTED_PHOTO_KEY = "scrollToSelectedPhoto"
     }
 
+    protected var mapModel: MapModel_ = MapModel_().id("map")
     private var scrollToSelectedPhoto = true
 
     override fun onSaveInstanceState(outState: Bundle) {
