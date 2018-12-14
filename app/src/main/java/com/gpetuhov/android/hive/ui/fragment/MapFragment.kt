@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentMapBinding
 import com.gpetuhov.android.hive.domain.model.User
@@ -20,18 +19,17 @@ import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_map.*
 import android.view.inputmethod.EditorInfo
 import androidx.navigation.fragment.findNavController
-import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.ui.fragment.base.BaseMapFragment
 import com.gpetuhov.android.hive.util.hideSoftKeyboard
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 
 
-class MapFragment : BaseFragment(), MapFragmentView {
+class MapFragment : BaseMapFragment(), MapFragmentView {
 
     @InjectPresenter lateinit var presenter: MapFragmentPresenter
 
-    private var mapView: MapView? = null
     private var binding: FragmentMapBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -44,16 +42,11 @@ class MapFragment : BaseFragment(), MapFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
         binding?.presenter = presenter
 
-        val view = binding?.root
-        mapView = view?.findViewById(R.id.map_view)
-        mapView?.onCreate(savedInstanceState)
-
+        val rootView = binding?.root
+        initMap(rootView, R.id.map_view, savedInstanceState)
         presenter.onCreateView(savedInstanceState)
 
-        // Asynchronously get reference to the map
-        mapView?.getMapAsync(this::onMapReady)
-
-        return view
+        return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,42 +65,33 @@ class MapFragment : BaseFragment(), MapFragmentView {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        mapView?.onStart()
-    }
-
     override fun onResume() {
         super.onResume()
-        mapView?.onResume()
         presenter.search()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView?.onPause()
         presenter.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mapView?.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapView?.onDestroy()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         presenter.onSaveInstanceState(outState)
-        mapView?.onSaveInstanceState(outState)
     }
 
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView?.onLowMemory()
+    // === OnMapReadyCallback ===
+
+    override fun onMapReady(map: GoogleMap) {
+        presenter.initMap(map)
+
+        mapControlsVisible()
+
+        // Start observing result list ViewModel only after map is ready
+        val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
+        viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
+            presenter.updateMarkers(searchResult)
+        })
     }
 
     // === MapFragmentView ===
@@ -160,18 +144,6 @@ class MapFragment : BaseFragment(), MapFragmentView {
     }
 
     // === Private methods ===
-
-    private fun onMapReady(map: GoogleMap) {
-        presenter.initMap(map)
-
-        mapControlsVisible()
-
-        // Start observing result list ViewModel only after map is ready
-        val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
-        viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
-            presenter.updateMarkers(searchResult)
-        })
-    }
 
     private fun buttonsEnabled(isEnabled: Boolean) {
         search_users_button.isEnabled = isEnabled

@@ -49,6 +49,8 @@ abstract class BaseMapFragment : BaseFragment(), OnMapReadyCallback {
     protected fun initMap(rootView: View?, mapViewId: Int, savedInstanceState: Bundle?) {
         mapView = rootView?.findViewById(mapViewId)
         mapView?.onCreate(savedInstanceState)
+
+        // Asynchronously get reference to the map
         mapView?.getMapAsync(this)
     }
 }
