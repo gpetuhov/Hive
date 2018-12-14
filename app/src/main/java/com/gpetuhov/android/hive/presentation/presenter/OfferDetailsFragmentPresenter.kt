@@ -32,6 +32,8 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
 
+    fun openLocation() = viewState.openLocation()
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend

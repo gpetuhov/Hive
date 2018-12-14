@@ -25,10 +25,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
     init {
         HiveApp.appComponent.inject(this)
-
-        mapModel.onClick {
-            // TODO: implement
-        }
+        mapModel.onClick { presenter.openLocation() }
     }
 
     override fun buildModels() {
