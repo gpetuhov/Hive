@@ -52,7 +52,7 @@ interface AppComponent {
     fun inject(chatroomsFragmentPresenter: ChatroomsFragmentPresenter)
     fun inject(updateOfferFragmentPresenter: UpdateOfferFragmentPresenter)
     fun inject(offerDetailsFragmentPresenter: OfferDetailsFragmentPresenter)
-    fun inject(singleMarkerMapFragmentPresenter: SingleMarkerMapFragmentPresenter)
+    fun inject(locationFragmentPresenter: LocationFragmentPresenter)
 
     fun inject(deleteUserInteractor: DeleteUserInteractor)
     fun inject(signOutInteractor: SignOutInteractor)

@@ -4,11 +4,11 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.presentation.view.SingleMarkerMapFragmentView
+import com.gpetuhov.android.hive.presentation.view.LocationFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class SingleMarkerMapFragmentPresenter : MvpPresenter<SingleMarkerMapFragmentView>() {
+class LocationFragmentPresenter : MvpPresenter<LocationFragmentView>() {
 
     @Inject lateinit var repo: Repo
 

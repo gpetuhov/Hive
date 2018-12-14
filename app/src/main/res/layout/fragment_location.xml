@@ -5,7 +5,7 @@
         tools:context=".ui.fragment.MapFragment">
 
     <data>
-        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.SingleMarkerMapFragmentPresenter"/>
+        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.LocationFragmentPresenter"/>
     </data>
 
     <LinearLayout

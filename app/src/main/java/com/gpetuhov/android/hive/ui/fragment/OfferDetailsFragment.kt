@@ -96,7 +96,7 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
     }
 
     override fun openLocation() {
-        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToSingleMarkerMapFragment()
+        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToLocationFragment()
         findNavController().navigate(action)
     }
 }

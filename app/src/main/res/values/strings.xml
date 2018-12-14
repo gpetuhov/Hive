@@ -123,7 +123,7 @@
     <string name="close_photos">Close photos</string>
     <string name="photo_fullscreen">Photo fullscreen</string>
 
-    <!-- SingleMarkerMapFragment -->
+    <!-- LocationFragment -->
     <string name="close_location">Close location</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->

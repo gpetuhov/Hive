@@ -75,8 +75,8 @@
                 app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action android:id="@+id/action_user_details_fragment_to_singleMarkerMapFragment"
-                app:destination="@id/singleMarkerMapFragment"
+        <action android:id="@+id/action_user_details_fragment_to_locationFragment"
+                app:destination="@id/locationFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
@@ -128,8 +128,8 @@
                 app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action android:id="@+id/action_offer_details_fragment_to_singleMarkerMapFragment"
-                app:destination="@id/singleMarkerMapFragment"
+        <action android:id="@+id/action_offer_details_fragment_to_locationFragment"
+                app:destination="@id/locationFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
@@ -144,9 +144,9 @@
                 app:argType="Bundle"/>
     </fragment>
 
-    <fragment android:id="@+id/singleMarkerMapFragment"
-              android:name="com.gpetuhov.android.hive.ui.fragment.SingleMarkerMapFragment"
-              android:label="SingleMarkerMapFragment"
-              tools:layout="@layout/fragment_single_marker_map"/>
+    <fragment android:id="@+id/locationFragment"
+              android:name="com.gpetuhov.android.hive.ui.fragment.LocationFragment"
+              android:label="LocationFragment"
+              tools:layout="@layout/fragment_location"/>
 
 </navigation>
