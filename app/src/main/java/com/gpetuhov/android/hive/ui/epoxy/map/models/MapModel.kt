@@ -19,8 +19,13 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     private var map: GoogleMap? = null
+
+    // If we annotate location with @EpoxyAttribute,
+    // then MapModel will be rebind on every location change.
     private var location = Constants.Map.DEFAULT_LOCATION
 
+    // This is called, when the model is bind to view.
+    // Here we create map and init it with current location.
     override fun bind(holder: MapHolder) {
         // We need to call this for the map to show up
         holder.mapView.onCreate(null)
@@ -33,6 +38,10 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
         }
     }
 
+    // This is needed to prevent rebinding MapModel on every location change
+    // (and so map recreation).
+    // If the map is null (model is not bind yet), just update location,
+    // otherwise update map.
     fun updateMap(location: LatLng) {
         this.location = location
 

@@ -73,11 +73,17 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             if (offer.isActive) userOfferItem(context, settings, offer, false) { presenter.openOffer(offer.uid) }
         }
 
+        // MapModel will be bind here only once (after fragment creation),
+        // because location is not annotated as epoxy attribute.
         mapModel.addTo(this)
     }
 
     override fun changeUser(user: User) {
-        super.changeUser(user)
+        // Manually update MapModel with new location.
+        // If the model is already bind, map will be updated.
+        // Otherwise map will be updated, when the model is bind.
         mapModel.updateMap(user.location)
+
+        super.changeUser(user)
     }
 }
