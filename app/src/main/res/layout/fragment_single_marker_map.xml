@@ -13,6 +13,33 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp">
+
+            <ImageButton
+                    android:id="@+id/location_back_button"
+                    android:layout_width="@dimen/basic_view_size"
+                    android:layout_height="@dimen/basic_view_size"
+                    android:src="@drawable/ic_arrow_back"
+                    android:background="@android:color/transparent"
+                    android:onClick="@{view -> presenter.navigateUp()}"
+                    android:contentDescription="@string/close_location"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/location"
+                    style="@style/titleTextStyle"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
+
+        </LinearLayout>
+
         <com.google.android.gms.maps.MapView
                 android:id="@+id/single_marker_map_view"
                 android:layout_width="match_parent"
