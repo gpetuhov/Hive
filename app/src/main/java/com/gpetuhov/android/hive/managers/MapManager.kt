@@ -22,6 +22,7 @@ import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_ZOOM
 import com.gpetuhov.android.hive.util.Constants.Map.Companion.MIN_ZOOM
+import com.gpetuhov.android.hive.util.moveCamera
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -275,11 +276,7 @@ class MapManager {
 
         } else {
             // Otherwise move camera to current location
-            locationManager.getLastLocation { location ->
-                val zoom = Constants.Map.getZoomForLocation(location)
-                val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
-                moveCamera(cameraPosition)
-            }
+            locationManager.getLastLocation { location -> googleMap.moveCamera(location) }
         }
     }
 

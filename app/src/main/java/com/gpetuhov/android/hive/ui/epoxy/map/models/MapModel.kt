@@ -12,6 +12,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.moveCamera
 
 @EpoxyModelClass(layout = R.layout.user_offer_map_view)
 abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
@@ -46,9 +47,7 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
         this.location = location
 
         if (map != null) {
-            val zoom = Constants.Map.getZoomForLocation(location)
-            val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
-            map?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            map?.moveCamera(location)
 
             map?.clear()
             map?.addMarker(
