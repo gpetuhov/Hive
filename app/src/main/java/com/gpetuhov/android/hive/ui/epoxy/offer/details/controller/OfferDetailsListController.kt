@@ -25,6 +25,10 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
     init {
         HiveApp.appComponent.inject(this)
+
+        mapModel.onClick {
+            // TODO: implement
+        }
     }
 
     override fun buildModels() {
@@ -71,12 +75,17 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 price(if (isFree) context.getString(R.string.free_caps) else "$price USD")
             }
         }
+
+        mapModel.addTo(this)
     }
 
     fun changeOffer(user: User, offerUid: String) {
         this.user = user
         val offerList = user.offerList
         offer = offerList.firstOrNull { it.uid == offerUid }
+
+        mapModel.updateMap(user.location)
+
         requestModelBuild()
     }
 }
