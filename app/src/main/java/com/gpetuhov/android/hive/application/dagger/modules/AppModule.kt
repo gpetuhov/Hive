@@ -30,6 +30,10 @@ class AppModule {
 
     @Provides
     @Singleton
+    fun providesLocationMapManager() = LocationMapManager()
+
+    @Provides
+    @Singleton
     fun providesNotificationManager() = NotificationManager()
 
     @Provides
