@@ -15,6 +15,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
+import com.gpetuhov.android.hive.managers.LocationMapManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.managers.NotificationManager
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
@@ -36,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var locationManager: LocationManager
     @Inject lateinit var auth: Auth
     @Inject lateinit var mapManager: MapManager
+    @Inject lateinit var locationMapManager: LocationMapManager
     @Inject lateinit var notificationManager: NotificationManager
 
     private lateinit var navController: NavController
@@ -103,8 +105,11 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        // This is needed to reset map state if the app is closed by the user
-        if (!isChangingConfigurations) mapManager.resetMapState()
+        // This is needed to reset map states if the app is closed by the user
+        if (!isChangingConfigurations) {
+            mapManager.resetMapState()
+            locationMapManager.resetMapState()
+        }
     }
 
     // === Private methods ===

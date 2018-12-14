@@ -38,8 +38,8 @@ class LocationFragment : BaseMapFragment(), LocationFragmentView {
         presenter.userUid = LocationFragmentArgs.fromBundle(arguments).userUid
 
         val rootView = binding?.root
-
         initMap(rootView, R.id.location_map_view, savedInstanceState)
+        presenter.onCreateView(savedInstanceState)
 
         return rootView
     }
@@ -52,6 +52,11 @@ class LocationFragment : BaseMapFragment(), LocationFragmentView {
     override fun onPause() {
         super.onPause()
         presenter.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        presenter.onSaveInstanceState(outState)
     }
 
     // === LocationFragmentView ===

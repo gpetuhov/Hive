@@ -8,7 +8,7 @@ import com.gpetuhov.android.hive.util.moveCamera
 
 class LocationMapManager : BaseMapManager() {
 
-    fun initMap(map: GoogleMap) = super.initMap(map, true)
+    fun initMap(map: GoogleMap) = super.initMap(null, map, true, false)
 
     fun updateLocation(location: LatLng) {
         googleMap.moveCamera(location)

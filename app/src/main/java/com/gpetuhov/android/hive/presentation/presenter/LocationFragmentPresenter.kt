@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import android.os.Bundle
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.google.android.gms.maps.GoogleMap
@@ -32,7 +33,16 @@ class LocationFragmentPresenter : MvpPresenter<LocationFragmentView>() {
 
     // --- Lifecycle ---
 
+    fun onCreateView(savedInstanceState: Bundle?) {
+        locationMapManager.restoreMapState(savedInstanceState)
+    }
+
     fun onResume() = repo.startGettingSecondUserUpdates(userUid)
 
-    fun onPause() = repo.stopGettingSecondUserUpdates()
+    fun onPause() {
+        locationMapManager.saveMapState("")
+        repo.stopGettingSecondUserUpdates()
+    }
+
+    fun onSaveInstanceState(outState: Bundle) = locationMapManager.saveOutState(outState)
 }

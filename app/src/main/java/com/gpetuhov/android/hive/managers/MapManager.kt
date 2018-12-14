@@ -59,11 +59,9 @@ class MapManager : BaseMapManager() {
     }
 
     fun initMap(callback: Callback, map: GoogleMap) {
+        super.initMap(locationManager, map, false, true)
+
         this.callback = callback
-
-        super.initMap(map, false)
-
-        initCameraPosition()
 
         val topPaddingInPixels = context.resources.getDimensionPixelOffset(R.dimen.map_top_padding)
         googleMap.setPadding(0, topPaddingInPixels, 0, 0)
@@ -166,19 +164,6 @@ class MapManager : BaseMapManager() {
 
     // === Private methods ===
 
-    private fun initCameraPosition() {
-        // If there is saved map state, move camera to saved camera position,
-        // and set saved map type.
-        if (mapState != null) {
-            moveCamera(mapState?.cameraPosition)
-            googleMap.mapType = mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL
-
-        } else {
-            // Otherwise move camera to current location
-            locationManager.getLastLocation { location -> googleMap.moveCamera(location) }
-        }
-    }
-
     private fun checkZoom() {
         val zoom = googleMap.cameraPosition.zoom
 
@@ -188,9 +173,6 @@ class MapManager : BaseMapManager() {
             else -> this.callback.onNormalZoom()
         }
     }
-
-    private fun moveCamera(cameraPosition: CameraPosition?) =
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
     private fun animateCamera(cameraPosition: CameraPosition?) =
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))

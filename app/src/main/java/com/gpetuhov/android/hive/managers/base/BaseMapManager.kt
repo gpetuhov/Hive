@@ -1,10 +1,13 @@
 package com.gpetuhov.android.hive.managers.base
 
 import android.os.Bundle
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.moveCamera
 import timber.log.Timber
 
 open class BaseMapManager {
@@ -82,7 +85,7 @@ open class BaseMapManager {
 
     // === Protected methods ===
 
-    fun initMap(map: GoogleMap, controlsEnabled: Boolean) {
+    fun initMap(locationManager: LocationManager?, map: GoogleMap, controlsEnabled: Boolean, moveToCurrentLocation: Boolean) {
         // When the map is ready, get reference to it
         googleMap = map
 
@@ -109,7 +112,27 @@ open class BaseMapManager {
         // Set minimum and maximum zoom
         googleMap.setMinZoomPreference(Constants.Map.MIN_ZOOM)
         googleMap.setMaxZoomPreference(Constants.Map.MAX_ZOOM)
+
+        initCameraPosition(locationManager, moveToCurrentLocation)
     }
+
+    // === Private methods ===
+
+    private fun initCameraPosition(locationManager: LocationManager?, moveToCurrentLocation: Boolean) {
+        // If there is saved map state, move camera to saved camera position,
+        // and set saved map type.
+        if (mapState != null) {
+            moveCamera(mapState?.cameraPosition)
+            googleMap.mapType = mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL
+
+        } else {
+            // Otherwise move camera to current location
+            if (moveToCurrentLocation) locationManager?.getLastLocation { location -> googleMap.moveCamera(location) }
+        }
+    }
+
+    private fun moveCamera(cameraPosition: CameraPosition?) =
+        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
     // === Inner classes ===
 
