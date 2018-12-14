@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
 
@@ -66,6 +67,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         map {
             id("map")
+            location(user?.location ?: Constants.Map.DEFAULT_LOCATION)
+            onClick {
+                // TODO: implement this
+            }
         }
     }
 }
