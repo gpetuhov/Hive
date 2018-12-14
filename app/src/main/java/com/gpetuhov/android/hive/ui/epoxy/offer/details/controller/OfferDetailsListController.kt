@@ -74,9 +74,9 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 free(isFree)
                 price(if (isFree) context.getString(R.string.free_caps) else "$price USD")
             }
-        }
 
-        mapModel.addTo(this)
+            mapModel.addTo(this)
+        }
     }
 
     fun changeOffer(user: User, offerUid: String) {
