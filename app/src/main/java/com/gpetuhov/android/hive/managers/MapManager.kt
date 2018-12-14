@@ -17,18 +17,15 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.managers.base.BaseMapManager
 import com.gpetuhov.android.hive.util.Constants
-import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LATITUDE
-import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_LONGITUDE
-import com.gpetuhov.android.hive.util.Constants.Map.Companion.DEFAULT_ZOOM
-import com.gpetuhov.android.hive.util.Constants.Map.Companion.MIN_ZOOM
 import com.gpetuhov.android.hive.util.moveCamera
 import timber.log.Timber
 import javax.inject.Inject
 
 
 // Show search results on map
-class MapManager {
+class MapManager : BaseMapManager() {
 
     interface Callback {
         fun onMinZoom()
@@ -56,7 +53,6 @@ class MapManager {
     @Inject lateinit var repo: Repo
 
     private lateinit var callback: Callback
-    private lateinit var googleMap: GoogleMap
     private var mapState: MapState? = null
 
     init {
@@ -74,31 +70,9 @@ class MapManager {
     fun initMap(callback: Callback, map: GoogleMap) {
         this.callback = callback
 
-        // When the map is ready, get reference to it
-        googleMap = map
-
-        try {
-            // Show my location (blue point)
-            googleMap.isMyLocationEnabled = true
-
-        } catch (e: SecurityException) {
-            Timber.tag(TAG).d("Location permission not granted")
-        }
+        super.initMap(map, false)
 
         initCameraPosition()
-
-        // Enable compass (will show on map rotate)
-        googleMap.uiSettings.isCompassEnabled = true
-
-        // Disable my location button
-        googleMap.uiSettings.isMyLocationButtonEnabled = false
-
-        // Disable zoom buttons
-        googleMap.uiSettings.isZoomControlsEnabled = false
-
-        // Set minimum and maximum zoom
-        googleMap.setMinZoomPreference(Constants.Map.MIN_ZOOM)
-        googleMap.setMaxZoomPreference(Constants.Map.MAX_ZOOM)
 
         val topPaddingInPixels = context.resources.getDimensionPixelOffset(R.dimen.map_top_padding)
         googleMap.setPadding(0, topPaddingInPixels, 0, 0)
@@ -190,9 +164,10 @@ class MapManager {
     // Save map state into MapManager
     // (MapManager is alive during the whole app lifecycle)
     fun saveMapState(queryText: String) {
-        if (::googleMap.isInitialized) {
-            mapState = MapState(googleMap.cameraPosition, googleMap.mapType, queryText)
-        }
+        // TODO: uncomment this
+//        if (::googleMap.isInitialized) {
+//            mapState = MapState(googleMap.cameraPosition, googleMap.mapType, queryText)
+//        }
     }
 
     // Save map state into savedInstanceState

@@ -1,12 +1,13 @@
 package com.gpetuhov.android.hive.managers.base
 
 import com.google.android.gms.maps.GoogleMap
+import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.util.Constants
 import timber.log.Timber
 
 open class BaseMapManager {
 
-    protected lateinit var googleMap: GoogleMap
+    protected open lateinit var googleMap: GoogleMap
 
     // === Protected methods ===
 
@@ -38,4 +39,6 @@ open class BaseMapManager {
         googleMap.setMinZoomPreference(Constants.Map.MIN_ZOOM)
         googleMap.setMaxZoomPreference(Constants.Map.MAX_ZOOM)
     }
+
+
 }
