@@ -72,6 +72,7 @@
     <string name="close_details">Close details</string>
     <string name="chat">Chat</string>
     <string name="no_active_offer">No active offers</string>
+    <string name="location">Location</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
