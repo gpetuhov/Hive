@@ -16,6 +16,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.OfferDetailsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.controller.OfferDetailsListController
+import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan

@@ -19,6 +19,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferListController
+import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.*
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_update_offer.*

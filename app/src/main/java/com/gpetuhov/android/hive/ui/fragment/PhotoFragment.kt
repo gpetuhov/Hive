@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.databinding.FragmentPhotoBinding
 import com.gpetuhov.android.hive.presentation.presenter.PhotoFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.PhotoFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller.PhotoFullscreenListController
+import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideBottomNavigationView
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan

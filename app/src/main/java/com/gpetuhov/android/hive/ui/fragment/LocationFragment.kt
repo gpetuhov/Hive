@@ -15,6 +15,7 @@ import com.gpetuhov.android.hive.databinding.FragmentLocationBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.LocationFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.LocationFragmentView
+import com.gpetuhov.android.hive.ui.fragment.base.BaseMapFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.*
 import timber.log.Timber

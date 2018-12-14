@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.ui.fragment
+package com.gpetuhov.android.hive.ui.fragment.base
 
 import android.os.Bundle
 import android.view.View

@@ -17,7 +17,7 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.managers.NotificationManager
-import com.gpetuhov.android.hive.ui.fragment.BaseFragment
+import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UnreadMessagesExistViewModel
 import com.gpetuhov.android.hive.util.checkPermissions
 import com.pawegio.kandroid.startActivity

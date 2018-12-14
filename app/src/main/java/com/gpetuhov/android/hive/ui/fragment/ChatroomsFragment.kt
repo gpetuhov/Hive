@@ -18,6 +18,7 @@ import com.gpetuhov.android.hive.domain.model.Chatroom
 import com.gpetuhov.android.hive.presentation.presenter.ChatroomsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatroomsFragmentView
 import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
+import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.recycler.SimpleItemDecoration
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar

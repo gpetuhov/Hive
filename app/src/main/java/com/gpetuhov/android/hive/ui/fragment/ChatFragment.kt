@@ -18,6 +18,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ChatFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
+import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.ChatMessagesViewModel
 import com.gpetuhov.android.hive.util.*
 import com.pawegio.kandroid.toast
