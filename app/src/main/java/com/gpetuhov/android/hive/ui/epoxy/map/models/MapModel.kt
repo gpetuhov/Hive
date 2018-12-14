@@ -46,14 +46,11 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
         this.location = location
 
         if (map != null) {
-            val zoom =
-                if (location.latitude == Constants.Map.DEFAULT_LATITUDE && location.longitude == Constants.Map.DEFAULT_LONGITUDE) Constants.Map.MIN_ZOOM else Constants.Map.DEFAULT_ZOOM
-
+            val zoom = Constants.Map.getZoomForLocation(location)
             val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
             map?.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
 
             map?.clear()
-
             map?.addMarker(
                 MarkerOptions()
                     .position(location)

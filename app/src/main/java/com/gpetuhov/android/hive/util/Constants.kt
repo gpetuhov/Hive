@@ -15,6 +15,16 @@ class Constants {
             const val DEFAULT_RADIUS = 1.0
             val DEFAULT_LOCATION = LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
             const val MAX_OFFER_TITLE_LENGTH = 30
+
+            fun getZoomForLocation(location: LatLng): Float =
+                if (
+                    location.latitude == DEFAULT_LATITUDE
+                    && location.longitude == DEFAULT_LONGITUDE
+                ) {
+                    Constants.Map.MIN_ZOOM
+                } else {
+                    Constants.Map.DEFAULT_ZOOM
+                }
         }
     }
 

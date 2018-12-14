@@ -276,9 +276,7 @@ class MapManager {
         } else {
             // Otherwise move camera to current location
             locationManager.getLastLocation { location ->
-                val zoom =
-                    if (location.latitude == DEFAULT_LATITUDE && location.longitude == DEFAULT_LONGITUDE) MIN_ZOOM else DEFAULT_ZOOM
-
+                val zoom = Constants.Map.getZoomForLocation(location)
                 val cameraPosition = CameraPosition.Builder().target(location).zoom(zoom).build()
                 moveCamera(cameraPosition)
             }
