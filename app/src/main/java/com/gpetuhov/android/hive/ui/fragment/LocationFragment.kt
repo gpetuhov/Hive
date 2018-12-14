@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentLocationBinding
 import com.gpetuhov.android.hive.domain.model.User
@@ -20,11 +19,10 @@ import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.*
 import timber.log.Timber
 
-class LocationFragment : BaseFragment(), LocationFragmentView {
+class LocationFragment : BaseMapFragment(), LocationFragmentView {
 
     @InjectPresenter lateinit var presenter: LocationFragmentPresenter
 
-    private var mapView: MapView? = null
     private var binding: FragmentLocationBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -39,50 +37,21 @@ class LocationFragment : BaseFragment(), LocationFragmentView {
 
         presenter.userUid = LocationFragmentArgs.fromBundle(arguments).userUid
 
-        val view = binding?.root
-        mapView = view?.findViewById(R.id.location_map_view)
-        mapView?.onCreate(savedInstanceState)
+        val rootView = binding?.root
 
-        mapView?.getMapAsync(this::onMapReady)
+        initMap(rootView, R.id.location_map_view, savedInstanceState)
 
-        return binding?.root
-    }
-
-    override fun onStart() {
-        super.onStart()
-        mapView?.onStart()
+        return rootView
     }
 
     override fun onResume() {
         super.onResume()
-        mapView?.onResume()
         presenter.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        mapView?.onPause()
         presenter.onPause()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        mapView?.onStop()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mapView?.onDestroy()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        mapView?.onSaveInstanceState(outState)
-    }
-
-    override fun onLowMemory() {
-        super.onLowMemory()
-        mapView?.onLowMemory()
     }
 
     // === LocationFragmentView ===
@@ -91,9 +60,9 @@ class LocationFragment : BaseFragment(), LocationFragmentView {
         findNavController().navigateUp()
     }
 
-    // === Private methods ===
+    // === OnMapReadyCallback ===
 
-    private fun onMapReady(googleMap: GoogleMap) {
+    override fun onMapReady(googleMap: GoogleMap) {
         // TODO: refactor this out of fragment
 
         try {
