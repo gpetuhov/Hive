@@ -17,4 +17,7 @@ interface UserDetailsFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun openPhotos(photoUrlList: MutableList<String>)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openLocation()
 }

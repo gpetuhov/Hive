@@ -75,6 +75,10 @@
                 app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action android:id="@+id/action_user_details_fragment_to_singleMarkerMapFragment"
+                app:destination="@id/singleMarkerMapFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
@@ -135,5 +139,10 @@
                 android:name="photoBundle"
                 app:argType="Bundle"/>
     </fragment>
+
+    <fragment android:id="@+id/singleMarkerMapFragment"
+              android:name="com.gpetuhov.android.hive.ui.fragment.SingleMarkerMapFragment"
+              android:label="SingleMarkerMapFragment"
+              tools:layout="@layout/fragment_single_marker_map"/>
 
 </navigation>

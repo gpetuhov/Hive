@@ -92,4 +92,9 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToPhotoFragment(photoBundle)
         findNavController().navigate(action)
     }
+
+    override fun openLocation() {
+        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToSingleMarkerMapFragment()
+        findNavController().navigate(action)
+    }
 }
