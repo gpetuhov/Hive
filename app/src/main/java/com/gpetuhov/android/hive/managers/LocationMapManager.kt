@@ -1,12 +1,20 @@
 package com.gpetuhov.android.hive.managers
 
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.addSingleMarker
+import com.gpetuhov.android.hive.util.moveCamera
 import timber.log.Timber
 
 class LocationMapManager {
 
-    fun initMap(googleMap: GoogleMap) {
+    private lateinit var googleMap: GoogleMap
+
+    fun initMap(map: GoogleMap) {
+        // When the map is ready, get reference to it
+        googleMap = map
+
         try {
             // Show my location (blue point)
             googleMap.isMyLocationEnabled = true
@@ -30,5 +38,10 @@ class LocationMapManager {
         // Set minimum and maximum zoom
         googleMap.setMinZoomPreference(Constants.Map.MIN_ZOOM)
         googleMap.setMaxZoomPreference(Constants.Map.MAX_ZOOM)
+    }
+
+    fun updateLocation(location: LatLng) {
+        googleMap.moveCamera(location)
+        googleMap.addSingleMarker(location)
     }
 }

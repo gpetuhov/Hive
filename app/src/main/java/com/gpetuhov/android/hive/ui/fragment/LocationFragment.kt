@@ -68,10 +68,6 @@ class LocationFragment : BaseMapFragment(), LocationFragmentView {
         val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.updateLocation(user.location)
-
-            // TODO: refactor this out of fragment
-            googleMap.moveCamera(user.location)
-            googleMap.addSingleMarker(user.location)
         })
     }
 }

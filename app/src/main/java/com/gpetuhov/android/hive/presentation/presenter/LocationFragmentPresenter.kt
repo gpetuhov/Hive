@@ -26,9 +26,7 @@ class LocationFragmentPresenter : MvpPresenter<LocationFragmentView>() {
 
     fun initMap(googleMap: GoogleMap) = locationMapManager.initMap(googleMap)
 
-    fun updateLocation(location: LatLng) {
-        // TODO: implement
-    }
+    fun updateLocation(location: LatLng) = locationMapManager.updateLocation(location)
 
     fun navigateUp() = viewState.navigateUp()
 
