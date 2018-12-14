@@ -32,7 +32,7 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
 
-    fun openLocation() = viewState.openLocation()
+    fun openLocation() = viewState.openLocation(userUid)
 
     // --- Lifecycle ---
 

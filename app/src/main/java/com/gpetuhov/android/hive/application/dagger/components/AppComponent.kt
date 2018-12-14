@@ -14,7 +14,6 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferLis
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller.PhotoFullscreenListController
 import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListController
 import com.gpetuhov.android.hive.ui.epoxy.user.controller.UserDetailsListController
-import com.gpetuhov.android.hive.ui.fragment.MapFragment
 import com.gpetuhov.android.hive.ui.viewmodel.*
 import com.gpetuhov.android.hive.util.ResultMessagesProvider
 import dagger.Component
@@ -26,8 +25,6 @@ interface AppComponent {
     fun inject(splashActivity: SplashActivity)
     fun inject(authActivity: AuthActivity)
     fun inject(mainActivity: MainActivity)
-
-    fun inject(mapFragment: MapFragment)
 
     fun inject(locationService: LocationService)
     fun inject(messageService: MessageService)

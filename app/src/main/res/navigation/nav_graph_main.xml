@@ -147,6 +147,10 @@
     <fragment android:id="@+id/locationFragment"
               android:name="com.gpetuhov.android.hive.ui.fragment.LocationFragment"
               android:label="LocationFragment"
-              tools:layout="@layout/fragment_location"/>
+              tools:layout="@layout/fragment_location">
+        <argument
+                android:name="userUid"
+                app:argType="string"/>
+    </fragment>
 
 </navigation>

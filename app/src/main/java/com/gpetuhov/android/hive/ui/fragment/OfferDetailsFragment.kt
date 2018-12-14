@@ -95,8 +95,8 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun openLocation() {
-        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToLocationFragment()
+    override fun openLocation(userUid: String) {
+        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToLocationFragment(userUid)
         findNavController().navigate(action)
     }
 }

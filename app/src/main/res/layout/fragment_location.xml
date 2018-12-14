@@ -41,7 +41,7 @@
         </LinearLayout>
 
         <com.google.android.gms.maps.MapView
-                android:id="@+id/single_marker_map_view"
+                android:id="@+id/location_map_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
