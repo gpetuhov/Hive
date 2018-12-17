@@ -91,7 +91,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Favorites
         private const val FAVORITE_USER_UID_KEY = "userUid"
         private const val FAVORITE_OFFER_UID_KEY = "offerUid"
-        private const val FAVORITE_TIMESTAMP_KEY = "favoriteTimestamp"
+        private const val FAVORITE_TIMESTAMP_KEY = "timestamp"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -674,6 +674,28 @@ class Repository(private val context: Context, private val settings: Settings) :
     // --- Favorites ---
 
     override fun favorites() = favorites
+
+    override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
+        if (isAuthorized) {
+            val data = HashMap<String, Any>()
+            data[FAVORITE_USER_UID_KEY] = userUid
+            data[FAVORITE_OFFER_UID_KEY] = offerUid
+            data[FAVORITE_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
+
+            getMessagesCollectionReference()
+                .add(data)
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("Favorite successfully added")
+                }
+                .addOnFailureListener { error ->
+                    Timber.tag(TAG).d("Error adding favorite")
+                    onError()
+                }
+
+        } else {
+            onError()
+        }
+    }
 
     // === Private methods ===
     // --- User ---
