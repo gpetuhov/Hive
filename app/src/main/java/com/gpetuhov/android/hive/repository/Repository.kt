@@ -689,7 +689,6 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .set(data, SetOptions.merge())
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully added")
-                    restartGettingSecondUserUpdates(userUid)
                 }
                 .addOnFailureListener { error ->
                     Timber.tag(TAG).d("Error adding favorite")
@@ -708,7 +707,6 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully removed")
-                    restartGettingSecondUserUpdates(userUid)
                 }
                 .addOnFailureListener {
                     Timber.tag(TAG).d("Error removing favorite")
@@ -1348,6 +1346,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                         }
 
                         favorites.value = favoritesList
+                        restartGettingSecondUserUpdates()
 
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
@@ -1376,12 +1375,12 @@ class Repository(private val context: Context, private val settings: Settings) :
         return favoriteIndex != -1
     }
 
-    // On add and remove favorites success, restart getting second user updates
+    // On favorites list change, restart getting second user updates
     // (this is needed to update favorite status of the second user).
-    private fun restartGettingSecondUserUpdates(userUid: String) {
-        if (secondUserListenerRegistration != null) {
+    private fun restartGettingSecondUserUpdates() {
+        if (secondUserListenerRegistration != null && secondUserUid() != "") {
             stopGettingSecondUserUpdates()
-            startGettingSecondUserUpdates(userUid)
+            startGettingSecondUserUpdates(secondUserUid())
         }
     }
 }
