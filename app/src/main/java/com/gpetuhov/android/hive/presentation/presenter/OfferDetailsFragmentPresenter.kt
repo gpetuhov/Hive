@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.managers.LocationMapManager
 import com.gpetuhov.android.hive.presentation.view.OfferDetailsFragmentView
 import javax.inject.Inject
 
@@ -11,6 +12,7 @@ import javax.inject.Inject
 class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
 
     @Inject lateinit var repo: Repo
+    @Inject lateinit var locationMapManager: LocationMapManager
 
     var userUid = ""
     var offerUid = ""
@@ -32,7 +34,10 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
 
-    fun openLocation() = viewState.openLocation(userUid)
+    fun openLocation() {
+        locationMapManager.resetMapState()  // This is needed to move camera to location
+        viewState.openLocation(userUid)
+    }
 
     // --- Lifecycle ---
 
