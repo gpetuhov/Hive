@@ -276,7 +276,6 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully deleted")
                     onSuccess()
-
                 }
                 .addOnFailureListener {
                     Timber.tag(TAG).d("Error deleting user data")
@@ -682,13 +681,32 @@ class Repository(private val context: Context, private val settings: Settings) :
             data[FAVORITE_OFFER_UID_KEY] = offerUid
             data[FAVORITE_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
 
-            getMessagesCollectionReference()
-                .add(data)
+            getFavoritesCollectionReference()
+                .document("$userUid$offerUid")
+                .set(data, SetOptions.merge())
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully added")
                 }
                 .addOnFailureListener { error ->
                     Timber.tag(TAG).d("Error adding favorite")
+                    onError()
+                }
+
+        } else {
+            onError()
+        }
+    }
+
+    override fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
+        if (isAuthorized) {
+            getFavoritesCollectionReference()
+                .document("$userUid$offerUid")
+                .delete()
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("Favorite successfully removed")
+                }
+                .addOnFailureListener {
+                    Timber.tag(TAG).d("Error removing favorite")
                     onError()
                 }
 

@@ -11,12 +11,15 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 abstract class UserDetailsHeaderModel : EpoxyModelWithHolder<UserDetailsHeaderHolder>() {
 
     @EpoxyAttribute lateinit var onBackButtonClick: () -> Unit
+    @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
 
     override fun bind(holder: UserDetailsHeaderHolder) {
         holder.backButton.setOnClickListener { onBackButtonClick() }
+        holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
     }
 }
 
 class UserDetailsHeaderHolder : KotlinHolder() {
     val backButton by bind<ImageButton>(R.id.user_details_back_button)
+    val favoriteButton by bind<ImageButton>(R.id.user_details_favorite_button)
 }

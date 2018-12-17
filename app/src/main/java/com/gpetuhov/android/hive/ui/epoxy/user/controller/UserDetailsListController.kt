@@ -27,6 +27,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         userDetailsHeader {
             id("user_details_header")
             onBackButtonClick { presenter.navigateUp() }
+            onFavoriteButtonClick { presenter.favorite() }
         }
 
         val photoList = user?.photoList ?: mutableListOf()

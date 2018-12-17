@@ -38,6 +38,12 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
         viewState.openLocation(userUid)
     }
 
+    fun favorite() {
+        // TODO: move this into interactor
+        // TODO: handle error (show toast)
+        repo.addFavorite(userUid, "") { /* Do nothing */ }
+    }
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend
