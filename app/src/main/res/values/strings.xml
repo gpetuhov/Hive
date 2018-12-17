@@ -17,6 +17,7 @@
 
     <!-- MainActivity -->
     <string name="search">Search</string>
+    <string name="favorite">Favorite</string>
     <string name="messages">Messages</string>
     <string name="profile">Profile</string>
     <string name="play_services_unavailable">Hive won\'t run without Google Play Services, which are not supported by

@@ -12,6 +12,11 @@
         android:title="@string/search"/>
 
     <item
+        android:id="@+id/navigation_favorite"
+        android:icon="@drawable/ic_star_border_white"
+        android:title="@string/favorite"/>
+
+    <item
         android:id="@+id/navigation_messages"
         android:icon="@drawable/ic_mail_unread"
         android:title="@string/messages"/>

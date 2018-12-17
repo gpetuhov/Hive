@@ -56,7 +56,7 @@ class TestAppModule {
 
     @Provides
     @Singleton
-    fun providesSettings() = Mockito.mock(Settings::class.java)
+    fun providesSettings(): Settings = Mockito.mock(Settings::class.java)
 
     @Provides
     @Singleton
