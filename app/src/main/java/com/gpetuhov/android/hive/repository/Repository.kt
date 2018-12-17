@@ -291,7 +291,10 @@ class Repository(private val context: Context, private val settings: Settings) :
         secondUserListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
     }
 
-    override fun stopGettingSecondUserUpdates() = secondUserListenerRegistration?.remove() ?: Unit
+    override fun stopGettingSecondUserUpdates() {
+        secondUserListenerRegistration?.remove()
+        secondUserListenerRegistration = null
+    }
 
     // --- Search ---
 
@@ -674,7 +677,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun favorites() = favorites
 
-    override fun addFavorite(userUid: String, offerUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
         if (isAuthorized) {
             val data = HashMap<String, Any>()
             data[FAVORITE_USER_UID_KEY] = userUid
@@ -686,7 +689,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .set(data, SetOptions.merge())
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully added")
-                    onSuccess()
+                    restartGettingSecondUserUpdates(userUid)
                 }
                 .addOnFailureListener { error ->
                     Timber.tag(TAG).d("Error adding favorite")
@@ -698,14 +701,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
-    override fun removeFavorite(userUid: String, offerUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
         if (isAuthorized) {
             getFavoritesCollectionReference()
                 .document("$userUid$offerUid")
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully removed")
-                    onSuccess()
+                    restartGettingSecondUserUpdates(userUid)
                 }
                 .addOnFailureListener {
                     Timber.tag(TAG).d("Error removing favorite")
@@ -1371,5 +1374,14 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun isFavorite(userUid: String, offerUid: String): Boolean {
         val favoriteIndex = favorites.value?.indexOfFirst { it.userUid == userUid && it.offerUid == offerUid } ?: -1
         return favoriteIndex != -1
+    }
+
+    // On add and remove favorites success, restart getting second user updates
+    // (this is needed to update favorite status of the second user).
+    private fun restartGettingSecondUserUpdates(userUid: String) {
+        if (secondUserListenerRegistration != null) {
+            stopGettingSecondUserUpdates()
+            startGettingSecondUserUpdates(userUid)
+        }
     }
 }

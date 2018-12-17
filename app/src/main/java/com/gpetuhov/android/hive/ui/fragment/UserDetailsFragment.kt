@@ -49,6 +49,7 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
+            presenter.userIsFavorite = user.isFavorite
             controller?.changeUser(user)
         })
 

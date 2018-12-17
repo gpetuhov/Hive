@@ -11,10 +11,14 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 abstract class UserDetailsHeaderModel : EpoxyModelWithHolder<UserDetailsHeaderHolder>() {
 
     @EpoxyAttribute lateinit var onBackButtonClick: () -> Unit
+
+    @EpoxyAttribute var favorite = false
     @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
 
     override fun bind(holder: UserDetailsHeaderHolder) {
         holder.backButton.setOnClickListener { onBackButtonClick() }
+
+        holder.favoriteButton.setImageResource(if (favorite) R.drawable.ic_star else R.drawable.ic_star_border)
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
     }
 }

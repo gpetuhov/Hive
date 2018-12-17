@@ -27,6 +27,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         userDetailsHeader {
             id("user_details_header")
             onBackButtonClick { presenter.navigateUp() }
+            favorite(user?.isFavorite ?: false)
             onFavoriteButtonClick { presenter.favorite() }
         }
 

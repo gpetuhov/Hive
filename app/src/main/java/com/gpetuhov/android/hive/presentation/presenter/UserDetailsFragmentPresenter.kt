@@ -15,6 +15,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
     @Inject lateinit var locationMapManager: LocationMapManager
 
     var userUid = ""
+    var userIsFavorite = false
 
     init {
         HiveApp.appComponent.inject(this)
@@ -41,17 +42,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
     fun favorite() {
         // TODO: move this into interactor
         // TODO: handle error (show toast)
-        repo.addFavorite(
-            userUid,
-            "",
-            {
-                // On add favorites success, restart getting second user updates
-                // (this is needed to update favorite status of the second user).
-                onPause()
-                onResume()
-            },
-            { /* Do nothing */ }
-        )
+        repo.addFavorite(userUid, "") { /* Do nothing */ }
     }
 
     // --- Lifecycle ---
