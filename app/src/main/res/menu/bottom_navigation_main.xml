@@ -12,7 +12,7 @@
         android:title="@string/search"/>
 
     <item
-        android:id="@+id/navigation_favorite"
+        android:id="@+id/navigation_favorites"
         android:icon="@drawable/ic_star_border_white"
         android:title="@string/favorite"/>
 

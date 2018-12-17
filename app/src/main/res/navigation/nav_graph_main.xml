@@ -26,6 +26,13 @@
     </fragment>
 
     <fragment
+            android:id="@+id/navigation_favorites"
+            android:name="com.gpetuhov.android.hive.ui.fragment.FavoritesFragment"
+            android:label="FavoritesFragment"
+            tools:layout="@layout/fragment_favorites" >
+    </fragment>
+
+    <fragment
             android:id="@+id/navigation_messages"
             android:name="com.gpetuhov.android.hive.ui.fragment.ChatroomsFragment"
             android:label="ChatroomsFragment"
