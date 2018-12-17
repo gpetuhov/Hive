@@ -37,8 +37,21 @@ class FavoritesInteractorTest {
         testFavoritesInteractor(false, false)
     }
 
+    @Test
+    fun removeFavoriteSuccess() {
+        testFavoritesInteractor(true, true)
+    }
+
+    @Test
+    fun removeFavoriteError() {
+        testFavoritesInteractor(true, false)
+    }
+
     private fun testFavoritesInteractor(isFavorite: Boolean, isSuccess: Boolean) {
         (repo as TestRepository).isSuccess = isSuccess
+
+        val favoriteList = (repo as TestRepository).favoriteList
+        if (isFavorite) favoriteList.add(Constants.DUMMY_FAVORITE)
 
         var errorCounter = 0
 
@@ -50,9 +63,14 @@ class FavoritesInteractorTest {
         }
 
         val interactor = FavoritesInteractor(callback)
-        interactor.favorite(isFavorite, "5g2kj54", "")
+        interactor.favorite(isFavorite, Constants.DUMMY_FAVORITE.userUid, Constants.DUMMY_FAVORITE.offerUid)
 
-        assertEquals(isSuccess, !(repo as TestRepository).favoriteList.isEmpty())
+        if (isFavorite) {
+            assertEquals(isSuccess, (repo as TestRepository).favoriteList.isEmpty())
+        } else {
+            assertEquals(isSuccess, !(repo as TestRepository).favoriteList.isEmpty())
+        }
+
         assertEquals(if (isSuccess) 0 else 1, errorCounter)
     }
 }
