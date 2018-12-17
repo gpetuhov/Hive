@@ -36,6 +36,10 @@ class TestAppModule {
 
     @Provides
     @Singleton
+    fun providesLocationMapManager(): LocationMapManager = Mockito.mock(LocationMapManager::class.java)
+
+    @Provides
+    @Singleton
     fun providesNotificationManager(): NotificationManager = Mockito.mock(NotificationManager::class.java)
 
     @Provides
