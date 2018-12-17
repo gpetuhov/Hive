@@ -21,6 +21,7 @@ import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.pawegio.kandroid.toast
 
 // Shows user details on map marker click
 class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
@@ -98,5 +99,9 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
     override fun openLocation(userUid: String) {
         val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToLocationFragment(userUid)
         findNavController().navigate(action)
+    }
+
+    override fun showToast(message: String) {
+        toast(message)
     }
 }

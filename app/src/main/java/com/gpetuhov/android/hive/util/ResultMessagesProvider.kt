@@ -46,5 +46,9 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getDeletePhotoErrorMessage(): String = getString(R.string.delete_photo_error)
 
+    override fun getAddFavoriteErrorMessage(): String = getString(R.string.add_favorite_error)
+
+    override fun getRemoveFavoriteErrorMessage(): String = getString(R.string.remove_favorite_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

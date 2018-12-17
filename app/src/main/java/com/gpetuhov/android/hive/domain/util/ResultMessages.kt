@@ -17,4 +17,6 @@ interface ResultMessages {
     fun getDeleteOfferErrorMessage(): String
     fun getAddPhotoErrorMessage(): String
     fun getDeletePhotoErrorMessage(): String
+    fun getAddFavoriteErrorMessage(): String
+    fun getRemoveFavoriteErrorMessage(): String
 }

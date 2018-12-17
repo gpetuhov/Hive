@@ -3,13 +3,14 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.FavoritesInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationMapManager
 import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
+class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), FavoritesInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var locationMapManager: LocationMapManager
@@ -17,9 +18,15 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
     var userUid = ""
     var userIsFavorite = false
 
+    private var favoritesInteractor = FavoritesInteractor(this)
+
     init {
         HiveApp.appComponent.inject(this)
     }
+
+    // === FavoritesInteractor.Callback ===
+
+    override fun onFavoritesError(errorMessage: String) = viewState.showToast(errorMessage)
 
     // === Public methods ===
 
@@ -39,15 +46,11 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
         viewState.openLocation(userUid)
     }
 
-    fun favorite() {
-        // TODO: move this into interactor
-        // TODO: handle error (show toast)
-        if (userIsFavorite) {
-            repo.removeFavorite(userUid, "") { /* Do nothing */ }
-        } else {
-            repo.addFavorite(userUid, "") { /* Do nothing */ }
-        }
-    }
+    // Sequence:
+    // 1. Interactor forces repo to update favorites list (add or remove user from favorites)
+    // 2. On favorite list change, second user is updates (favorites status is changed)
+    // 3. On second user change, view model forces UI to change
+    fun favorite() = favoritesInteractor.favorite(userIsFavorite, userUid, "")
 
     // --- Lifecycle ---
 
