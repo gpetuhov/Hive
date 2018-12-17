@@ -34,6 +34,9 @@ class Constants {
 
         const val DELETE_PHOTO_ERROR = "Delete photo error"
 
+        const val ADD_FAVORITE_ERROR = "Add favorite error"
+        const val REMOVE_FAVORITE_ERROR = "Remove favorite error"
+
         private fun getDummyOffer(): Offer {
             val offer = Offer("2g5g2g", "dfgfdg", "ddsfdfs", 0.0, false, true)
             offer.photoList.add(DUMMY_PHOTO)

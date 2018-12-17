@@ -13,6 +13,7 @@ class TestRepository : Repo {
     var messageText = ""
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
+    var favoriteList = mutableListOf<Favorite>()
 
     override fun isForeground() = false
 
@@ -160,5 +161,24 @@ class TestRepository : Repo {
     }
 
     override fun cancelPhotoUploadTasks() {
+    }
+
+    override fun favorites(): MutableLiveData<MutableList<Favorite>> = MutableLiveData()
+
+    override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
+        if (isSuccess) {
+            favoriteList.add(Favorite(userUid, offerUid))
+        } else {
+            onError()
+        }
+    }
+
+    override fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
+        if (isSuccess) {
+            val index = favoriteList.indexOfFirst { it.userUid == userUid && it.offerUid == offerUid }
+            if (index >= 0 && index < favoriteList.size) favoriteList.removeAt(index)
+        } else {
+            onError()
+        }
     }
 }

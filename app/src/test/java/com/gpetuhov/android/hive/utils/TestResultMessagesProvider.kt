@@ -34,4 +34,8 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getDeletePhotoErrorMessage(): String = Constants.DELETE_PHOTO_ERROR
 
     override fun getChangeUserPicErrorMessage(): String = ""
+
+    override fun getAddFavoriteErrorMessage(): String = Constants.ADD_FAVORITE_ERROR
+
+    override fun getRemoveFavoriteErrorMessage(): String = Constants.REMOVE_FAVORITE_ERROR
 }
