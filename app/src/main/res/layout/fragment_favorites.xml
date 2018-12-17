@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".ui.fragment.OfferDetailsFragment">
+        tools:context=".ui.fragment.FavoritesFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <data>
-        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.FavoritesFragmentPresenter"/>
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.tabs.TabLayout
+            android:id="@+id/favorites_tabs"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" />
 
-        <TextView
-                android:id="@+id/favorites_empty_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_favorites"
-                style="@style/basicTextStyle"
-                tools:text="Empty view"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"/>
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/favorites_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--<TextView-->
+            <!--android:id="@+id/favorites_empty_view"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/no_favorites"-->
+            <!--style="@style/basicTextStyle"-->
+            <!--tools:text="Empty view"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:layout_marginLeft="8dp"-->
+            <!--android:layout_marginStart="8dp"-->
+            <!--android:layout_marginEnd="8dp"-->
+            <!--android:layout_marginRight="8dp"-->
+            <!--android:layout_marginBottom="8dp"/>-->
 
-</layout>
+</LinearLayout>
