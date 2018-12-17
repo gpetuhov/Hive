@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.models
 
 import com.gpetuhov.android.hive.domain.model.Favorite
+import com.gpetuhov.android.hive.utils.Constants
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -11,7 +12,7 @@ class FavoriteTest {
 
     @Before
     fun initUser() {
-        favorite = Favorite("dskjfg254h", "")
+        favorite = Constants.DUMMY_FAVORITE
     }
 
     @Test

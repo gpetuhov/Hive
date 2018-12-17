@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.utils
 
+import com.gpetuhov.android.hive.domain.model.Favorite
 import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.domain.model.Offer
 
@@ -36,6 +37,8 @@ class Constants {
 
         const val ADD_FAVORITE_ERROR = "Add favorite error"
         const val REMOVE_FAVORITE_ERROR = "Remove favorite error"
+
+        val DUMMY_FAVORITE get() = Favorite("8934g2", "")
 
         private fun getDummyOffer(): Offer {
             val offer = Offer("2g5g2g", "dfgfdg", "ddsfdfs", 0.0, false, true)
