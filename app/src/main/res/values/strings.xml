@@ -131,8 +131,13 @@
     <string name="close_location">Close location</string>
 
     <!-- FavoritesFragment -->
-    <string name="no_favorites">You have no favorites yet</string>
     <string name="users">Users</string>
+
+    <!-- FavoriteUsersFragment -->
+    <string name="no_favorite_users">You have no favorite users</string>
+
+    <!-- FavoriteOffersFragment -->
+    <string name="no_favorite_offers">You have no favorite offers</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
