@@ -34,6 +34,7 @@ class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
 
         val adapter = FavoritesAdapter(context, fragmentManager)
         favorites_viewpager.adapter = adapter
+        favorites_viewpager.setOnTouchListener { v, event -> true }
         favorites_tabs.setupWithViewPager(favorites_viewpager)
     }
 }
