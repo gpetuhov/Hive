@@ -42,7 +42,11 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
     fun favorite() {
         // TODO: move this into interactor
         // TODO: handle error (show toast)
-        repo.addFavorite(userUid, "") { /* Do nothing */ }
+        if (userIsFavorite) {
+            repo.removeFavorite(userUid, "") { /* Do nothing */ }
+        } else {
+            repo.addFavorite(userUid, "") { /* Do nothing */ }
+        }
     }
 
     // --- Lifecycle ---
