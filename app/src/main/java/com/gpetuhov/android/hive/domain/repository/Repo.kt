@@ -72,4 +72,7 @@ interface Repo {
     fun addOfferPhoto(selectedImageUri: Uri, onSuccess: (Photo) -> Unit, onError: () -> Unit)
     fun deleteOfferPhotoFromStorage(photoUid: String)
     fun cancelPhotoUploadTasks()
+
+    // Favorites
+    fun favorites(): MutableLiveData<MutableList<Favorite>>
 }

@@ -42,6 +42,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val MESSAGES_COLLECTION = "messages"
         private const val USER_CHATROOMS_COLLECTION = "userChatrooms"
         private const val CHATROOMS_OF_USER_COLLECTION = "chatroomsOfUser"
+        private const val USER_FAVORITES_COLLECTION = "userFavorites"
+        private const val FAVORITES_OF_USER_COLLECTION = "favoritesOfUser"
 
         // User
         private const val NAME_KEY = "name"
@@ -85,6 +87,11 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
         private const val CHATROOM_NEW_MESSAGE_COUNT_KEY = "newMessageCount"
+
+        // Favorites
+        private const val FAVORITE_USER_UID_KEY = "userUid"
+        private const val FAVORITE_OFFER_UID_KEY = "offerUid"
+        private const val FAVORITE_TIMESTAMP_KEY = "favoriteTimestamp"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -119,6 +126,9 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // Chatrooms of the current user
     private val chatrooms = MutableLiveData<MutableList<Chatroom>>()
+
+    // Favorites of the current user
+    private val favorites = MutableLiveData<MutableList<Favorite>>()
 
     private var isAppInForeground = false
 
@@ -157,6 +167,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private var secondUserListenerRegistration: ListenerRegistration? = null
     private var messagesListenerRegistration: ListenerRegistration? = null
     private var chatroomsListenerRegistration: ListenerRegistration? = null
+    private var favoritesListenerRegistration: ListenerRegistration? = null
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -211,6 +222,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             tempUser.uid = user.uid
             currentUser.value = tempUser
             startGettingCurrentUserUpdates()
+            startGettingFavoritesUpdates()
 
             // Current user's name and email initially come from Firebase Auth,
             // so after successful sign in we must write them to Firestore.
@@ -222,6 +234,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         if (isAuthorized) {
             isAuthorized = false
             stopGettingCurrentUserUpdates()
+            stopGettingFavoritesUpdates()
             stopGettingSearchResultUpdates()
             resetCurrentUser()
         }
@@ -657,6 +670,10 @@ class Repository(private val context: Context, private val settings: Settings) :
         uploadTasks.forEach { it.cancel() }
         uploadTasks.clear()
     }
+
+    // --- Favorites ---
+
+    override fun favorites() = favorites
 
     // === Private methods ===
     // --- User ---
@@ -1260,5 +1277,51 @@ class Repository(private val context: Context, private val settings: Settings) :
         for (photoUid in photoUidsToDeleteFromStorage) {
             deleteImage(photoUid, false)
         }
+    }
+
+    // --- Favorites ---
+
+    private fun startGettingFavoritesUpdates() {
+        if (isAuthorized) {
+            favoritesListenerRegistration = getFavoritesCollectionReference()
+                .orderBy(FAVORITE_TIMESTAMP_KEY, Query.Direction.ASCENDING)
+                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        Timber.tag(TAG).d("Listen success")
+
+                        val favoritesList = mutableListOf<Favorite>()
+
+                        if (querySnapshot != null) {
+                            for (doc in querySnapshot.documents) {
+                                val favorite = getFavoriteFromDocumentSnapshot(doc)
+                                favoritesList.add(favorite)
+                            }
+
+                        } else {
+                            Timber.tag(TAG).d("Listen failed")
+                        }
+
+                        favorites.value = favoritesList
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+        }
+    }
+
+    private fun stopGettingFavoritesUpdates() = favoritesListenerRegistration?.remove() ?: Unit
+
+    private fun getFavoritesCollectionReference(): CollectionReference {
+        return firestore
+            .collection(USER_FAVORITES_COLLECTION).document(currentUserUid())
+            .collection(FAVORITES_OF_USER_COLLECTION)
+    }
+
+    private fun getFavoriteFromDocumentSnapshot(doc: DocumentSnapshot): Favorite {
+        return Favorite(
+            userUid = doc.getString(FAVORITE_USER_UID_KEY) ?: "",
+            offerUid = doc.getString(FAVORITE_OFFER_UID_KEY) ?: ""
+        )
     }
 }
