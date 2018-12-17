@@ -13,7 +13,8 @@ data class User(
     var description: String,
     var isOnline: Boolean,
     var location: LatLng,
-    var offerSearchResultIndex: Int = -1    // index of the offer that corresponds to search query text
+    var offerSearchResultIndex: Int = -1,    // index of the offer that corresponds to search query text
+    var isFavorite: Boolean = false
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()

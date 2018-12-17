@@ -75,6 +75,6 @@ interface Repo {
 
     // Favorites
     fun favorites(): MutableLiveData<MutableList<Favorite>>
-    fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit)
-    fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit)
+    fun addFavorite(userUid: String, offerUid: String, onSuccess: () -> Unit, onError: () -> Unit)
+    fun removeFavorite(userUid: String, offerUid: String, onSuccess: () -> Unit, onError: () -> Unit)
 }

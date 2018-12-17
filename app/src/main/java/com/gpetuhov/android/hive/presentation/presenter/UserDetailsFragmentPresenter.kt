@@ -41,7 +41,17 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>() {
     fun favorite() {
         // TODO: move this into interactor
         // TODO: handle error (show toast)
-        repo.addFavorite(userUid, "") { /* Do nothing */ }
+        repo.addFavorite(
+            userUid,
+            "",
+            {
+                // On add favorites success, restart getting second user updates
+                // (this is needed to update favorite status of the second user).
+                onPause()
+                onResume()
+            },
+            { /* Do nothing */ }
+        )
     }
 
     // --- Lifecycle ---

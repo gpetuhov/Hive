@@ -674,7 +674,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun favorites() = favorites
 
-    override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
+    override fun addFavorite(userUid: String, offerUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
             val data = HashMap<String, Any>()
             data[FAVORITE_USER_UID_KEY] = userUid
@@ -686,6 +686,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .set(data, SetOptions.merge())
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully added")
+                    onSuccess()
                 }
                 .addOnFailureListener { error ->
                     Timber.tag(TAG).d("Error adding favorite")
@@ -697,13 +698,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
-    override fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
+    override fun removeFavorite(userUid: String, offerUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
             getFavoritesCollectionReference()
                 .document("$userUid$offerUid")
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully removed")
+                    onSuccess()
                 }
                 .addOnFailureListener {
                     Timber.tag(TAG).d("Error removing favorite")
@@ -876,7 +878,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             userPicUrl = doc.getString(USER_PIC_URL_KEY) ?: "",
             description = doc.getString(DESCRIPTION_KEY) ?: "",
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
-            location = location
+            location = location,
+            isFavorite = isFavorite(doc.id, "")
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc)
@@ -1363,5 +1366,10 @@ class Repository(private val context: Context, private val settings: Settings) :
             userUid = doc.getString(FAVORITE_USER_UID_KEY) ?: "",
             offerUid = doc.getString(FAVORITE_OFFER_UID_KEY) ?: ""
         )
+    }
+
+    private fun isFavorite(userUid: String, offerUid: String): Boolean {
+        val favoriteIndex = favorites.value?.indexOfFirst { it.userUid == userUid && it.offerUid == offerUid } ?: -1
+        return favoriteIndex != -1
     }
 }
