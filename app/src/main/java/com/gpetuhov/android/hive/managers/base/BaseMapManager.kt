@@ -85,7 +85,7 @@ open class BaseMapManager {
 
     // === Protected methods ===
 
-    fun initMap(locationManager: LocationManager?, map: GoogleMap, controlsEnabled: Boolean, moveToCurrentLocation: Boolean) {
+    protected fun initMap(locationManager: LocationManager?, map: GoogleMap, controlsEnabled: Boolean, moveToCurrentLocation: Boolean) {
         // When the map is ready, get reference to it
         googleMap = map
 
