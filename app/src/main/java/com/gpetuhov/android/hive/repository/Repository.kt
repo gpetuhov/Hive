@@ -306,24 +306,28 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun startGettingSecondUserUpdates(uid: String) {
+        stopGettingSecondUserUpdates()
         secondUserListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
     }
 
     override fun stopGettingSecondUserUpdates() = secondUserListenerRegistration?.remove() ?: Unit
 
     override fun startGettingSecondUserOfferUpdates(uid: String) {
+        stopGettingSecondUserOfferUpdates()
         secondUserOfferListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
     }
 
     override fun stopGettingSecondUserOfferUpdates() = secondUserOfferListenerRegistration?.remove() ?: Unit
 
     override fun startGettingSecondUserLocationUpdates(uid: String) {
+        stopGettingSecondUserLocationUpdates()
         secondUserLocationListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
     }
 
     override fun stopGettingSecondUserLocationUpdates() = secondUserLocationListenerRegistration?.remove() ?: Unit
 
     override fun startGettingSecondUserChatUpdates(uid: String) {
+        stopGettingSecondUserChatUpdates()
         secondUserChatListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
     }
 
