@@ -18,5 +18,8 @@ class FavoritesFragmentPresenter : MvpPresenter<FavoritesFragmentView>() {
 
     // === Public methods ===
 
-    fun refreshFavorites() = repo.loadFavorites()
+    fun refreshFavorites() {
+        viewState.showProgress()
+        repo.loadFavorites { viewState.hideProgress() }
+    }
 }

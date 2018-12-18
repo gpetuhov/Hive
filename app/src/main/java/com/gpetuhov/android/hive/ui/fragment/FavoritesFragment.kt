@@ -39,4 +39,16 @@ class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
         favorites_viewpager.scrollable = false
         favorites_tabs.setupWithViewPager(favorites_viewpager)
     }
+
+    // === FavoritesFragmentView ===
+
+    override fun showProgress() = progressVisible(true)
+
+    override fun hideProgress() = progressVisible(false)
+
+    // === Private methods ===
+
+    private fun progressVisible(isVisible: Boolean) {
+        favorites_load_progress.visibility = if (isVisible) View.VISIBLE else View.GONE
+    }
 }

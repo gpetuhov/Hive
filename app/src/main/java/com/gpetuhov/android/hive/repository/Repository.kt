@@ -732,7 +732,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     // (both for favorite users and offers, but without duplicates)
     // 2. From the loaded user list select those that are favorite - into favorite users list
     // 3. From the loaded user list select favorite offers - into favorite offers list
-    override fun loadFavorites() {
+    override fun loadFavorites(onComplete: () -> Unit) {
         loadedUsersList.clear()
         loadedUsersCounter = 0
 
@@ -754,8 +754,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         userUidsToLoad.forEach { userUid ->
             loadUser(
                 userUid,
-                { user -> addLoadedUser(user, userUidsToLoadSize, favoriteUsersList, favoriteOffersList) },
-                { addLoadedUser(null, userUidsToLoadSize, favoriteUsersList, favoriteOffersList) }
+                { user -> addLoadedUser(user, userUidsToLoadSize, favoriteUsersList, favoriteOffersList, onComplete) },
+                { addLoadedUser(null, userUidsToLoadSize, favoriteUsersList, favoriteOffersList, onComplete) }
             )
         }
     }
@@ -1392,7 +1392,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                         favorites.clear()
                         favorites.addAll(favoritesList)
 
-                        loadFavorites()
+                        loadFavorites { /* Do nothing */ }
                         restartGettingSecondUserUpdates()
 
                     } else {
@@ -1473,10 +1473,15 @@ class Repository(private val context: Context, private val settings: Settings) :
         favoriteOffers.value = currentFavoriteOffers
     }
 
-    private fun addLoadedUser(user: User?, maxUserCount: Int, favoriteUsersList: MutableList<Favorite>, favoriteOffersList: MutableList<Favorite>) {
+    private fun addLoadedUser(user: User?, maxUserCount: Int, favoriteUsersList: MutableList<Favorite>, favoriteOffersList: MutableList<Favorite>, onComplete: () -> Unit) {
         loadedUsersCounter++
+
         if (user != null) loadedUsersList.add(user)
-        if (loadedUsersCounter >= maxUserCount) onFavoritesLoadComplete(favoriteUsersList, favoriteOffersList)
+
+        if (loadedUsersCounter >= maxUserCount) {
+            onFavoritesLoadComplete(favoriteUsersList, favoriteOffersList)
+            onComplete()
+        }
     }
 
     private fun onFavoritesLoadComplete(favoriteUsersList: MutableList<Favorite>, favoriteOffersList: MutableList<Favorite>) {
