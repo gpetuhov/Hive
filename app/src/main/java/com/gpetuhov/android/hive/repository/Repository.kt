@@ -91,7 +91,6 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Favorites
         private const val FAVORITE_USER_UID_KEY = "userUid"
         private const val FAVORITE_OFFER_UID_KEY = "offerUid"
-        private const val FAVORITE_TIMESTAMP_KEY = "timestamp"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -692,7 +691,6 @@ class Repository(private val context: Context, private val settings: Settings) :
             val data = HashMap<String, Any>()
             data[FAVORITE_USER_UID_KEY] = userUid
             data[FAVORITE_OFFER_UID_KEY] = offerUid
-            data[FAVORITE_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
 
             getFavoritesCollectionReference()
                 .document("$userUid$offerUid")
@@ -1372,7 +1370,6 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun startGettingFavoritesUpdates() {
         if (isAuthorized) {
             favoritesListenerRegistration = getFavoritesCollectionReference()
-                .orderBy(FAVORITE_TIMESTAMP_KEY, Query.Direction.ASCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
                         Timber.tag(TAG).d("Listen success")
