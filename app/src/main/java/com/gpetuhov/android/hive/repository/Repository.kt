@@ -883,7 +883,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             isFavorite = isFavorite(doc.id, "")
         )
 
-        user.offerList = getOfferListFromDocumentSnapshot(doc)
+        user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
         user.photoList = getPhotoListFromDocumentSnapshot(doc)
 
         return user
@@ -901,7 +901,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
-    private fun getOfferListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Offer> {
+    private fun getOfferListFromDocumentSnapshot(userUid: String, doc: DocumentSnapshot): MutableList<Offer> {
         val offerSnapshotList = doc.get(OFFER_LIST_KEY) as List<*>?
 
         val offerList = mutableListOf<Offer>()
@@ -928,7 +928,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                     && offerFree != null
                     && offerPrice != null
                 ) {
-                    val offer = Offer(offerUid, offerTitle, offerDescription, offerPrice, offerFree, offerActive)
+                    val offer = Offer(offerUid, offerTitle, offerDescription, offerPrice, offerFree, offerActive, isFavorite(userUid, offerUid))
 
                     val offerPhotoList = getPhotoListFromPhotoSnapshotList(offerMap[OFFER_PHOTO_LIST_KEY] as List<*>?)
                     offer.photoList = offerPhotoList
