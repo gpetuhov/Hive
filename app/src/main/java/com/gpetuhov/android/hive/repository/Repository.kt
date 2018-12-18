@@ -897,6 +897,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun startGettingCurrentUserUpdates() {
+        stopGettingCurrentUserUpdates()
         currentUserListenerRegistration = startGettingUserUpdates(currentUserUid()) { user ->
             // If current user has active offer, start sharing location,
             // otherwise stop sharing.
@@ -1406,6 +1407,8 @@ class Repository(private val context: Context, private val settings: Settings) :
     // --- Favorites ---
 
     private fun startGettingFavoritesUpdates() {
+        stopGettingFavoritesUpdates()
+
         if (isAuthorized) {
             favoritesListenerRegistration = getFavoritesCollectionReference()
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
