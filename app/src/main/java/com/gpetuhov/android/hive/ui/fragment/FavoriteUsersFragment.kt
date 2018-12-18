@@ -26,7 +26,7 @@ class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
     private var binding: FragmentFavoriteUsersBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        controller = UserFavoriteListController()
+        controller = UserFavoriteListController(presenter)
         controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_users, container, false)
@@ -46,5 +46,11 @@ class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         controller?.onSaveInstanceState(outState)
+    }
+
+    // === FavoriteUsersFragmentView ===
+
+    override fun showUserDetails(userUid: String) {
+        // TODO: implement this
     }
 }

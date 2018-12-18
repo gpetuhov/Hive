@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.item.model
 
+import android.view.View
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -10,13 +11,16 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 @EpoxyModelClass(layout = R.layout.user_item_view)
 abstract class UserItemModel : EpoxyModelWithHolder<UserItemHolder>() {
 
+    @EpoxyAttribute lateinit var onClick: () -> Unit
     @EpoxyAttribute lateinit var username: String
 
     override fun bind(holder: UserItemHolder) {
+        holder.rootView.setOnClickListener { onClick() }
         holder.username.text = username
     }
 }
 
 class UserItemHolder : KotlinHolder() {
+    val rootView by bind<View>(R.id.user_item_root)
     val username by bind<TextView>(R.id.user_item_username)
 }

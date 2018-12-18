@@ -86,4 +86,5 @@ interface Repo {
     fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit)
     fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit)
     fun loadFavorites(onComplete: () -> Unit)
+    fun initUserDetailsFromFavorites(uid: String)
 }

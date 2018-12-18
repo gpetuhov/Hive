@@ -799,6 +799,12 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
+    override fun initUserDetailsFromFavorites(uid: String) {
+        // Get first update of user details from the favorite user list, which is already available
+        val user = favoriteUsers.value?.firstOrNull { it.uid == uid }
+        if (user != null) secondUser.value = user
+    }
+
     // === Private methods ===
     // --- User ---
 

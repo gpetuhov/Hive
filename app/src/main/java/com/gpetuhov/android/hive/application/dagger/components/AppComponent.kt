@@ -54,6 +54,7 @@ interface AppComponent {
     fun inject(offerDetailsFragmentPresenter: OfferDetailsFragmentPresenter)
     fun inject(locationFragmentPresenter: LocationFragmentPresenter)
     fun inject(favoritesFragmentPresenter: FavoritesFragmentPresenter)
+    fun inject(favoriteUsersFragmentPresenter: FavoriteUsersFragmentPresenter)
 
     fun inject(deleteUserInteractor: DeleteUserInteractor)
     fun inject(signOutInteractor: SignOutInteractor)
