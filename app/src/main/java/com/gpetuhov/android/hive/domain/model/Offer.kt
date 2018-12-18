@@ -7,7 +7,8 @@ data class Offer(
     var description: String,
     var price: Double,
     var isFree: Boolean,
-    var isActive: Boolean
+    var isActive: Boolean,
+    var isFavorite: Boolean = false
 ) {
     var photoList = mutableListOf<Photo>()
 }

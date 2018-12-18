@@ -32,6 +32,8 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
         offerDetailsHeader {
             id("offer_details_header")
             onBackButtonClick { presenter.navigateUp() }
+            favorite(offer?.isFavorite ?: false)
+            onFavoriteButtonClick { presenter.favorite() }
         }
 
         val photoList = offer?.photoList ?: mutableListOf()
