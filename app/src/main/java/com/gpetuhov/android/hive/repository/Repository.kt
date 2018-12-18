@@ -310,28 +310,28 @@ class Repository(private val context: Context, private val settings: Settings) :
         secondUserListenerRegistration = startSecondUserUpdates(uid)
     }
 
-    override fun stopGettingSecondUserUpdates() = secondUserListenerRegistration?.remove() ?: Unit
+    override fun stopGettingSecondUserUpdates() = removeListener(secondUserListenerRegistration)
 
     override fun startGettingSecondUserOfferUpdates(uid: String) {
         stopGettingSecondUserOfferUpdates()
         secondUserOfferListenerRegistration = startSecondUserUpdates(uid)
     }
 
-    override fun stopGettingSecondUserOfferUpdates() = secondUserOfferListenerRegistration?.remove() ?: Unit
+    override fun stopGettingSecondUserOfferUpdates() = removeListener(secondUserOfferListenerRegistration)
 
     override fun startGettingSecondUserLocationUpdates(uid: String) {
         stopGettingSecondUserLocationUpdates()
         secondUserLocationListenerRegistration = startSecondUserUpdates(uid)
     }
 
-    override fun stopGettingSecondUserLocationUpdates() = secondUserLocationListenerRegistration?.remove() ?: Unit
+    override fun stopGettingSecondUserLocationUpdates() = removeListener(secondUserLocationListenerRegistration)
 
     override fun startGettingSecondUserChatUpdates(uid: String) {
         stopGettingSecondUserChatUpdates()
         secondUserChatListenerRegistration = startSecondUserUpdates(uid)
     }
 
-    override fun stopGettingSecondUserChatUpdates() = secondUserChatListenerRegistration?.remove() ?: Unit
+    override fun stopGettingSecondUserChatUpdates() = removeListener(secondUserChatListenerRegistration)
 
     // --- Search ---
 
@@ -937,6 +937,8 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun updateSecondUser(user: User) {
         secondUser.value = user
     }
+
+    private fun removeListener(listenerRegistration: ListenerRegistration?) = listenerRegistration?.remove() ?: Unit
 
     private fun getUserFromDocumentSnapshot(doc: DocumentSnapshot) = getUserFromDocumentSnapshot(doc, null)
 
