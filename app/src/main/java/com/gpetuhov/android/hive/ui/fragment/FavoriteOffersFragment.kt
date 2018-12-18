@@ -10,11 +10,11 @@ import androidx.lifecycle.ViewModelProviders
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentFavoriteOffersBinding
-import com.gpetuhov.android.hive.domain.model.Favorite
+import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.presentation.presenter.FavoriteOffersFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.FavoriteOffersFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
-import com.gpetuhov.android.hive.ui.viewmodel.FavoritesViewModel
+import com.gpetuhov.android.hive.ui.viewmodel.FavoriteOffersViewModel
 
 class FavoriteOffersFragment : BaseFragment(), FavoriteOffersFragmentView {
 
@@ -25,9 +25,8 @@ class FavoriteOffersFragment : BaseFragment(), FavoriteOffersFragmentView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_offers, container, false)
 
-        val viewModel = ViewModelProviders.of(this).get(FavoritesViewModel::class.java)
-        viewModel.favorites.observe(this, Observer<MutableList<Favorite>> { favoritesList ->
-            val favoriteOffersList = favoritesList.filter { it.isOffer() }
+        val viewModel = ViewModelProviders.of(this).get(FavoriteOffersViewModel::class.java)
+        viewModel.favoriteOffers.observe(this, Observer<MutableList<Offer>> { favoriteOffersList ->
             binding?.favoriteOffersListEmpty = favoriteOffersList.isEmpty()
         })
 
