@@ -1061,7 +1061,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun updateSearchResult() {
-        searchResult.value = tempSearchResult
+        val tempResult = mutableMapOf<String, User>()
+        tempResult.putAll(tempSearchResult)
+        searchResult.value = tempResult
     }
 
     // --- Message ---
@@ -1395,12 +1397,17 @@ class Repository(private val context: Context, private val settings: Settings) :
         tempFavoriteUsers.clear()
         favoriteUsersLoadCounter = 0
 
+        // Filter favorites that are users
         val favoriteUsersList = favoritesList.filter { !it.isOffer() }.toMutableList()
+
+        // Remove duplicates
         val userUidsToLoad = getUserUidsToLoad(favoriteUsersList)
         val userUidsToLoadSize = userUidsToLoad.size
 
+        // First, remove those users, that are not favorite any more
         removeNonFavoriteUsers(userUidsToLoad)
 
+        // Then load and add those users, that are now favorite
         userUidsToLoad.forEach { userUid ->
             loadUser(
                 userUid,
@@ -1440,6 +1447,8 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun updateFavoriteUsers() {
-        favoriteUsers.value = tempFavoriteUsers
+        val tempList = mutableListOf<User>()
+        tempList.addAll(tempFavoriteUsers)
+        favoriteUsers.value = tempList
     }
 }
