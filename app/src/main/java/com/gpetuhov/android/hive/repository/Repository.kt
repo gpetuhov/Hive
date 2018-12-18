@@ -173,12 +173,13 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Firestore listeners
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
-    // These three are needed because offer details fragment onResume
+    // These four are needed because offer details fragment onResume
     // is called BEFORE user details fragment onPause
-    // (so we need separate listener registrations for user details, offer details and location fragments).
+    // (so we need separate listener registrations for user details, offer details, location and chat fragments).
     private var secondUserListenerRegistration: ListenerRegistration? = null
     private var secondUserOfferListenerRegistration: ListenerRegistration? = null
     private var secondUserLocationListenerRegistration: ListenerRegistration? = null
+    private var secondUserChatListenerRegistration: ListenerRegistration? = null
 
     private var messagesListenerRegistration: ListenerRegistration? = null
     private var chatroomsListenerRegistration: ListenerRegistration? = null
@@ -321,6 +322,12 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun stopGettingSecondUserLocationUpdates() = secondUserLocationListenerRegistration?.remove() ?: Unit
+
+    override fun startGettingSecondUserChatUpdates(uid: String) {
+        secondUserChatListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
+    }
+
+    override fun stopGettingSecondUserChatUpdates() = secondUserChatListenerRegistration?.remove() ?: Unit
 
     // --- Search ---
 

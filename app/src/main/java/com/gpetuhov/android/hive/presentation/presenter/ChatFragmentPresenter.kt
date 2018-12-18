@@ -81,13 +81,13 @@ class ChatFragmentPresenter :
     fun onResume() {
         repo.setChatroomOpen(true)
         repo.startGettingMessagesUpdates()
-        repo.startGettingSecondUserUpdates(secondUserUid)
+        repo.startGettingSecondUserChatUpdates(secondUserUid)
     }
 
     fun onPause() {
         repo.setChatroomOpen(false)
         repo.stopGettingMessagesUpdates()
-        repo.stopGettingSecondUserUpdates()
+        repo.stopGettingSecondUserChatUpdates()
     }
 
     // === Private methods ===
