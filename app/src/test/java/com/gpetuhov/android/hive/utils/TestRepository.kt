@@ -40,6 +40,8 @@ class TestRepository : Repo {
 
     override fun secondUser(): MutableLiveData<User> = MutableLiveData()
 
+    override fun currentUserUid() = ""
+
     override fun currentUserUsername() = username
 
     override fun currentUserDescription() = ""
@@ -163,7 +165,12 @@ class TestRepository : Repo {
     override fun cancelPhotoUploadTasks() {
     }
 
-    override fun favorites(): MutableLiveData<MutableList<Favorite>> = MutableLiveData()
+    override fun favoriteUsers(): MutableLiveData<MutableList<User>> = MutableLiveData()
+
+    override fun favoriteOffers(): MutableLiveData<MutableList<Offer>> = MutableLiveData()
+
+    override fun loadFavorites(onComplete: () -> Unit) {
+    }
 
     override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
         if (isSuccess) {
