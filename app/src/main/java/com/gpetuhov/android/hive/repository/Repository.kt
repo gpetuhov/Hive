@@ -1399,18 +1399,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         val userUidsToLoad = getUserUidsToLoad(favoriteUsersList)
         val userUidsToLoadSize = userUidsToLoad.size
 
-        if (userUidsToLoadSize > 0) {
-            userUidsToLoad.forEach { userUid ->
-                loadUser(
-                    userUid,
-                    { user -> addFavoriteUser(user, userUidsToLoadSize) },
-                    { favoriteUsersLoadCounter++ }
-                )
-            }
+        removeNonFavoriteUsers(userUidsToLoad)
 
-        } else {
-            // This is needed to clear favorite users list if there are no favorites
-            updateFavoriteUsers()
+        userUidsToLoad.forEach { userUid ->
+            loadUser(
+                userUid,
+                { user -> addFavoriteUser(user, userUidsToLoadSize) },
+                { addFavoriteUser(null, userUidsToLoadSize) }
+            )
         }
     }
 
@@ -1422,10 +1418,24 @@ class Repository(private val context: Context, private val settings: Settings) :
         return userUidsToLoad.toMutableList()
     }
 
-    private fun addFavoriteUser(user: User, maxUserCount: Int) {
-        favoriteUsersLoadCounter++
-        tempFavoriteUsers.add(user)
+    private fun removeNonFavoriteUsers(userUidsToLoad: MutableList<String>) {
+        val currentFavoriteUsers = mutableListOf<User>()
+        currentFavoriteUsers.addAll(favoriteUsers.value ?: mutableListOf())
 
+        val iterator = currentFavoriteUsers.listIterator()
+        while (iterator.hasNext()) {
+            val user = iterator.next()
+            if (!userUidsToLoad.contains(user.uid)) {
+                iterator.remove()
+            }
+        }
+
+        favoriteUsers.value = currentFavoriteUsers
+    }
+
+    private fun addFavoriteUser(user: User?, maxUserCount: Int) {
+        favoriteUsersLoadCounter++
+        if (user != null) tempFavoriteUsers.add(user)
         if (favoriteUsersLoadCounter >= maxUserCount) updateFavoriteUsers()
     }
 
