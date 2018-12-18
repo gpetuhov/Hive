@@ -170,6 +170,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Keeps Storage upload tasks for cancellation if needed
     private var uploadTasks = mutableListOf<UploadTask>()
 
+    private var isUserDetailsActive = false
+    private var isOfferDetailsActive = false
+
     // Firestore listeners
     private var currentUserListenerRegistration: ListenerRegistration? = null
 
@@ -308,16 +311,24 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun startGettingSecondUserUpdates(uid: String) {
         stopGettingSecondUserUpdates()
         secondUserListenerRegistration = startSecondUserUpdates(uid)
+        isUserDetailsActive = true
     }
 
-    override fun stopGettingSecondUserUpdates() = removeListener(secondUserListenerRegistration)
+    override fun stopGettingSecondUserUpdates() {
+        isUserDetailsActive = false
+        removeListener(secondUserListenerRegistration)
+    }
 
     override fun startGettingSecondUserOfferUpdates(uid: String) {
         stopGettingSecondUserOfferUpdates()
         secondUserOfferListenerRegistration = startSecondUserUpdates(uid)
+        isOfferDetailsActive = true
     }
 
-    override fun stopGettingSecondUserOfferUpdates() = removeListener(secondUserOfferListenerRegistration)
+    override fun stopGettingSecondUserOfferUpdates() {
+        isOfferDetailsActive = false
+        removeListener(secondUserOfferListenerRegistration)
+    }
 
     override fun startGettingSecondUserLocationUpdates(uid: String) {
         stopGettingSecondUserLocationUpdates()
@@ -1463,7 +1474,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     // On favorites list change, reload second user
     // (this is needed to update favorite status of the second user and its offers).
     private fun reloadSecondUser() {
-        if (secondUserUid() != "") {
+        if (shouldReloadSecondUser()) {
             loadUser(
                 secondUserUid(),
                 { user -> updateSecondUser(user) },
@@ -1471,6 +1482,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             )
         }
     }
+
+    private fun shouldReloadSecondUser() = secondUserUid() != "" && (isUserDetailsActive || isOfferDetailsActive)
 
     private fun getUserUidsToLoad(favoriteList: MutableList<Favorite>): MutableList<String> {
         // This is needed to remove duplicates
