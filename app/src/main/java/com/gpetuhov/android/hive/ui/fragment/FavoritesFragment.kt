@@ -26,6 +26,8 @@ class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
         hideToolbar()
         showBottomNavigationView()
 
+        presenter.refreshFavorites()
+
         return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
 

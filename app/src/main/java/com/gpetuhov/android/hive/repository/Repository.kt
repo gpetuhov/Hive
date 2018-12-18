@@ -728,6 +728,38 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
+    // 1. Load all users that are in favorites list
+    // (both for favorite users and offers, but without duplicates)
+    // 2. From the loaded user list select those that are favorite - into favorite users list
+    // 3. From the loaded user list select favorite offers - into favorite offers list
+    override fun loadFavorites() {
+        loadedUsersList.clear()
+        loadedUsersCounter = 0
+
+        // Get user uids to load without duplicates
+        val userUidsToLoad = getUserUidsToLoad(favorites)
+        val userUidsToLoadSize = userUidsToLoad.size
+
+        // Filter favorites that are users
+        val favoriteUsersList = favorites.filter { !it.isOffer() }.toMutableList()
+
+        // Filter favorites that are offers
+        val favoriteOffersList = favorites.filter { it.isOffer() }.toMutableList()
+
+        // Remove those users and offers, that are not favorite any more
+        removeNonFavoriteUsers(favoriteUsersList)
+        removeNonFavoriteOffers(favoriteOffersList)
+
+        // Load users for favorite users and offers
+        userUidsToLoad.forEach { userUid ->
+            loadUser(
+                userUid,
+                { user -> addLoadedUser(user, userUidsToLoadSize, favoriteUsersList, favoriteOffersList) },
+                { addLoadedUser(null, userUidsToLoadSize, favoriteUsersList, favoriteOffersList) }
+            )
+        }
+    }
+
     // === Private methods ===
     // --- User ---
 
@@ -1360,7 +1392,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                         favorites.clear()
                         favorites.addAll(favoritesList)
 
-                        loadFavorites(favoritesList)
+                        loadFavorites()
                         restartGettingSecondUserUpdates()
 
                     } else {
@@ -1396,38 +1428,6 @@ class Repository(private val context: Context, private val settings: Settings) :
         if (secondUserUid() != "") {
             stopGettingSecondUserUpdates()
             startGettingSecondUserUpdates(secondUserUid())
-        }
-    }
-
-    // 1. Load all users that are in favorites list
-    // (both for favorite users and offers, but without duplicates)
-    // 2. From the loaded user list select those that are favorite - into favorite users list
-    // 3. From the loaded user list select favorite offers - into favorite offers list
-    private fun loadFavorites(favoritesList: MutableList<Favorite>) {
-        loadedUsersList.clear()
-        loadedUsersCounter = 0
-
-        // Get user uids to load without duplicates
-        val userUidsToLoad = getUserUidsToLoad(favoritesList)
-        val userUidsToLoadSize = userUidsToLoad.size
-
-        // Filter favorites that are users
-        val favoriteUsersList = favoritesList.filter { !it.isOffer() }.toMutableList()
-
-        // Filter favorites that are offers
-        val favoriteOffersList = favoritesList.filter { it.isOffer() }.toMutableList()
-
-        // Remove those users and offers, that are not favorite any more
-        removeNonFavoriteUsers(favoriteUsersList)
-        removeNonFavoriteOffers(favoriteOffersList)
-
-        // Load users for favorite users and offers
-        userUidsToLoad.forEach { userUid ->
-            loadUser(
-                userUid,
-                { user -> addLoadedUser(user, userUidsToLoadSize, favoriteUsersList, favoriteOffersList) },
-                { addLoadedUser(null, userUidsToLoadSize, favoriteUsersList, favoriteOffersList) }
-            )
         }
     }
 
