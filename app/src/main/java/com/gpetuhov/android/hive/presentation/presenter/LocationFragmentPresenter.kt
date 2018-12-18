@@ -37,11 +37,11 @@ class LocationFragmentPresenter : MvpPresenter<LocationFragmentView>() {
         locationMapManager.restoreMapState(savedInstanceState)
     }
 
-    fun onResume() = repo.startGettingSecondUserUpdates(userUid)
+    fun onResume() = repo.startGettingSecondUserLocationUpdates(userUid)
 
     fun onPause() {
         locationMapManager.saveMapState("")
-        repo.stopGettingSecondUserUpdates()
+        repo.stopGettingSecondUserLocationUpdates()
     }
 
     fun onSaveInstanceState(outState: Bundle) = locationMapManager.saveOutState(outState)

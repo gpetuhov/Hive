@@ -52,7 +52,7 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>(), 
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend
-    fun onResume() = repo.startGettingSecondUserUpdates(userUid)
+    fun onResume() = repo.startGettingSecondUserOfferUpdates(userUid)
 
-    fun onPause() = repo.stopGettingSecondUserUpdates()
+    fun onPause() = repo.stopGettingSecondUserOfferUpdates()
 }
