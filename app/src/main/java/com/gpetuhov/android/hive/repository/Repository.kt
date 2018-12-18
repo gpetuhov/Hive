@@ -1504,7 +1504,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             val user = loadedUsersList.firstOrNull { it.uid == favorite.userUid }
             val offer = user?.getOffer(favorite.offerUid)
 
-            if (offer != null) tempFavoriteOffers.add(offer)
+            if (offer != null && offer.isActive) tempFavoriteOffers.add(offer)
         }
 
         tempFavoriteOffers.sortBy { it.title }

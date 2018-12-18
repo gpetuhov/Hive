@@ -4,7 +4,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.user.item.model.userItem
 
-class UserFavoriteListController() : BaseController() {
+class UserFavoriteListController : BaseController() {
 
     private var favoriteUsersList = mutableListOf<User>()
 
