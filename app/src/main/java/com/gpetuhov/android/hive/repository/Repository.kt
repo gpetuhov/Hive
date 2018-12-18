@@ -291,10 +291,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         secondUserListenerRegistration = startGettingUserUpdates(uid) { user -> secondUser.value = user }
     }
 
-    override fun stopGettingSecondUserUpdates() {
-        secondUserListenerRegistration?.remove()
-        secondUserListenerRegistration = null
-    }
+    override fun stopGettingSecondUserUpdates() = secondUserListenerRegistration?.remove() ?: Unit
 
     // --- Search ---
 
@@ -1378,7 +1375,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     // On favorites list change, restart getting second user updates
     // (this is needed to update favorite status of the second user).
     private fun restartGettingSecondUserUpdates() {
-        if (secondUserListenerRegistration != null && secondUserUid() != "") {
+        if (secondUserUid() != "") {
             stopGettingSecondUserUpdates()
             startGettingSecondUserUpdates(secondUserUid())
         }
