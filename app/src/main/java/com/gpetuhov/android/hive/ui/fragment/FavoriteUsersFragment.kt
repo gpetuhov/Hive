@@ -7,23 +7,36 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.airbnb.epoxy.EpoxyRecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentFavoriteUsersBinding
 import com.gpetuhov.android.hive.domain.model.Favorite
+import com.gpetuhov.android.hive.ui.epoxy.user.favorite.controller.UserFavoriteListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.FavoritesViewModel
 
 class FavoriteUsersFragment : BaseFragment() {
 
+    private var controller: UserFavoriteListController? = null
     private var binding: FragmentFavoriteUsersBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        controller = UserFavoriteListController()
+        controller?.onRestoreInstanceState(savedInstanceState)
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_users, container, false)
+
+        val favoriteUsersRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.favorite_users_recycler_view)
+        favoriteUsersRecyclerView?.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(FavoritesViewModel::class.java)
         viewModel.favorites.observe(this, Observer<MutableList<Favorite>> { favoritesList ->
             val favoriteUsersList = favoritesList.filter { !it.isOffer() }
             binding?.favoriteUsersListEmpty = favoriteUsersList.isEmpty()
+
+            // TODO: load all favorite users here
+            // TODO: do it inside Repo and listen to its results through view model
+//            controller?.changeFavoriteUsersList(favoriteUsersList)
         })
 
         return binding?.root
