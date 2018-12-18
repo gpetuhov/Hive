@@ -25,6 +25,7 @@ interface Repo {
     // User
     fun currentUser(): MutableLiveData<User>
     fun secondUser(): MutableLiveData<User>
+    fun currentUserUid(): String
     fun currentUserUsername(): String
     fun currentUserDescription(): String
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
@@ -76,6 +77,7 @@ interface Repo {
     // Favorites
     fun favorites(): MutableLiveData<MutableList<Favorite>>
     fun favoriteUsers(): MutableLiveData<MutableList<User>>
+    fun favoriteOffers(): MutableLiveData<MutableList<Offer>>
     fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit)
     fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit)
 }

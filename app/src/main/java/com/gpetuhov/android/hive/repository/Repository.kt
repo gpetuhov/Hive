@@ -132,8 +132,12 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // Favorite users of the current user
     private val favoriteUsers = MutableLiveData<MutableList<User>>()
-    private val tempFavoriteUsers = mutableListOf<User>()
-    private var favoriteUsersLoadCounter = 0
+
+    // Favorite offers of the current user
+    private val favoriteOffers = MutableLiveData<MutableList<Offer>>()
+
+    private val loadedUsersList = mutableListOf<User>()
+    private var loadedUsersCounter = 0
 
     private var isAppInForeground = false
 
@@ -250,6 +254,8 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun currentUser() = currentUser
 
     override fun secondUser() = secondUser
+
+    override fun currentUserUid() = currentUser.value?.uid ?: ""
 
     override fun currentUserUsername() = currentUser.value?.username ?: ""
 
@@ -681,6 +687,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun favoriteUsers() = favoriteUsers
 
+    override fun favoriteOffers() = favoriteOffers
+
     override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
         if (isAuthorized) {
             val data = HashMap<String, Any>()
@@ -745,8 +753,6 @@ class Repository(private val context: Context, private val settings: Settings) :
             location = Constants.Map.DEFAULT_LOCATION
         )
     }
-
-    private fun currentUserUid() = currentUser.value?.uid ?: ""
 
     private fun secondUserUid() = secondUser.value?.uid ?: ""
 
@@ -934,7 +940,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                     && offerFree != null
                     && offerPrice != null
                 ) {
-                    val offer = Offer(offerUid, offerTitle, offerDescription, offerPrice, offerFree, offerActive, isFavorite(userUid, offerUid))
+                    val offer = Offer(offerUid, userUid, offerTitle, offerDescription, offerPrice, offerFree, offerActive, isFavorite(userUid, offerUid))
 
                     val offerPhotoList = getPhotoListFromPhotoSnapshotList(offerMap[OFFER_PHOTO_LIST_KEY] as List<*>?)
                     offer.photoList = offerPhotoList
@@ -1354,7 +1360,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                         }
 
                         favorites.value = favoritesList
-                        loadFavoriteUsers(favoritesList)
+                        loadFavorites(favoritesList)
                         restartGettingSecondUserUpdates()
 
                     } else {
@@ -1393,26 +1399,34 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
-    private fun loadFavoriteUsers(favoritesList: MutableList<Favorite>) {
-        tempFavoriteUsers.clear()
-        favoriteUsersLoadCounter = 0
+    // 1. Load all users that are in favorites list
+    // (both for favorite users and offers, but without duplicates)
+    // 2. From the loaded user list select those that are favorite - into favorite users list
+    // 3. From the loaded user list select favorite offers - into favorite offers list
+    private fun loadFavorites(favoritesList: MutableList<Favorite>) {
+        loadedUsersList.clear()
+        loadedUsersCounter = 0
+
+        // Get user uids to load without duplicates
+        val userUidsToLoad = getUserUidsToLoad(favoritesList)
+        val userUidsToLoadSize = userUidsToLoad.size
 
         // Filter favorites that are users
         val favoriteUsersList = favoritesList.filter { !it.isOffer() }.toMutableList()
 
-        // Remove duplicates
-        val userUidsToLoad = getUserUidsToLoad(favoriteUsersList)
-        val userUidsToLoadSize = userUidsToLoad.size
+        // Filter favorites that are offers
+        val favoriteOffersList = favoritesList.filter { it.isOffer() }.toMutableList()
 
-        // First, remove those users, that are not favorite any more
-        removeNonFavoriteUsers(userUidsToLoad)
+        // Remove those users and offers, that are not favorite any more
+        removeNonFavoriteUsers(favoriteUsersList)
+        removeNonFavoriteOffers(favoriteOffersList)
 
-        // Then load and add those users, that are now favorite
+        // Load users for favorite users and offers
         userUidsToLoad.forEach { userUid ->
             loadUser(
                 userUid,
-                { user -> addFavoriteUser(user, userUidsToLoadSize) },
-                { addFavoriteUser(null, userUidsToLoadSize) }
+                { user -> addLoadedUser(user, userUidsToLoadSize, favoriteUsersList, favoriteOffersList) },
+                { addLoadedUser(null, userUidsToLoadSize, favoriteUsersList, favoriteOffersList) }
             )
         }
     }
@@ -1425,14 +1439,16 @@ class Repository(private val context: Context, private val settings: Settings) :
         return userUidsToLoad.toMutableList()
     }
 
-    private fun removeNonFavoriteUsers(userUidsToLoad: MutableList<String>) {
+    private fun removeNonFavoriteUsers(favoriteUsersList: MutableList<Favorite>) {
         val currentFavoriteUsers = mutableListOf<User>()
         currentFavoriteUsers.addAll(favoriteUsers.value ?: mutableListOf())
 
         val iterator = currentFavoriteUsers.listIterator()
         while (iterator.hasNext()) {
             val user = iterator.next()
-            if (!userUidsToLoad.contains(user.uid)) {
+            val contains = favoriteUsersList.firstOrNull { it.userUid == user.uid } != null
+
+            if (!contains) {
                 iterator.remove()
             }
         }
@@ -1440,15 +1456,59 @@ class Repository(private val context: Context, private val settings: Settings) :
         favoriteUsers.value = currentFavoriteUsers
     }
 
-    private fun addFavoriteUser(user: User?, maxUserCount: Int) {
-        favoriteUsersLoadCounter++
-        if (user != null) tempFavoriteUsers.add(user)
-        if (favoriteUsersLoadCounter >= maxUserCount) updateFavoriteUsers()
+    private fun removeNonFavoriteOffers(favoriteOffersList: MutableList<Favorite>) {
+        val currentFavoriteOffers = mutableListOf<Offer>()
+        currentFavoriteOffers.addAll(favoriteOffers.value ?: mutableListOf())
+
+        val iterator = currentFavoriteOffers.listIterator()
+        while (iterator.hasNext()) {
+            val offer = iterator.next()
+            val contains = favoriteOffersList.firstOrNull { it.userUid == offer.userUid && it.offerUid == offer.uid } != null
+
+            if (!contains) {
+                iterator.remove()
+            }
+        }
+
+        favoriteOffers.value = currentFavoriteOffers
     }
 
-    private fun updateFavoriteUsers() {
-        val tempList = mutableListOf<User>()
-        tempList.addAll(tempFavoriteUsers)
-        favoriteUsers.value = tempList
+    private fun addLoadedUser(user: User?, maxUserCount: Int, favoriteUsersList: MutableList<Favorite>, favoriteOffersList: MutableList<Favorite>) {
+        loadedUsersCounter++
+        if (user != null) loadedUsersList.add(user)
+        if (loadedUsersCounter >= maxUserCount) onFavoritesLoadComplete(favoriteUsersList, favoriteOffersList)
+    }
+
+    private fun onFavoritesLoadComplete(favoriteUsersList: MutableList<Favorite>, favoriteOffersList: MutableList<Favorite>) {
+        favoriteUsers.value = getFavoriteUsersFromLoaded(favoriteUsersList)
+        favoriteOffers.value = getFavoriteOffersFromLoaded(favoriteOffersList)
+    }
+
+    private fun getFavoriteUsersFromLoaded(favoriteUsersList: MutableList<Favorite>): MutableList<User> {
+        val tempFavoriteUsers = mutableListOf<User>()
+
+        favoriteUsersList.forEach { favorite ->
+            val user = loadedUsersList.firstOrNull { it.uid == favorite.userUid }
+            if (user != null) tempFavoriteUsers.add(user)
+        }
+
+        tempFavoriteUsers.sortBy { it.getUsernameOrName() }
+
+        return tempFavoriteUsers
+    }
+
+    private fun getFavoriteOffersFromLoaded(favoriteOffersList: MutableList<Favorite>): MutableList<Offer> {
+        val tempFavoriteOffers = mutableListOf<Offer>()
+
+        favoriteOffersList.forEach { favorite ->
+            val user = loadedUsersList.firstOrNull { it.uid == favorite.userUid }
+            val offer = user?.getOffer(favorite.offerUid)
+
+            if (offer != null) tempFavoriteOffers.add(offer)
+        }
+
+        tempFavoriteOffers.sortBy { it.title }
+
+        return tempFavoriteOffers
     }
 }

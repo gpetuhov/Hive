@@ -24,6 +24,7 @@ class UpdateOfferFragmentPresenter :
     @Inject lateinit var resultMessages: ResultMessages
 
     var uid = ""
+    var userUid = ""
     var title = ""
     var description = ""
     var active = false
@@ -65,6 +66,8 @@ class UpdateOfferFragmentPresenter :
     // --- Init ---
 
     fun initOffer(offerUid: String) {
+        userUid = repo.currentUserUid()
+
         val offerList = repo.currentUserOfferList()
         val activeOfferCount = offerList.filter { it.isActive }.size
         val activeOfferCountLessThanMax = activeOfferCount < Constants.Offer.MAX_ACTIVE_OFFER_COUNT
@@ -146,7 +149,7 @@ class UpdateOfferFragmentPresenter :
         viewState.disableButtons()
         viewState.showProgress()
 
-        val offer = Offer(uid, title, description, price, free, active)
+        val offer = Offer(uid, userUid, title, description, price, free, active)
         offer.photoList.clear()
         offer.photoList.addAll(photoList)
 

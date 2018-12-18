@@ -55,10 +55,10 @@ class UserTest {
     fun hasActiveOffer() {
         assertEquals(false, user.hasActiveOffer())
 
-        user.offerList.add(Offer("", "pizza", "tasty pizza", 10.0, false, false))
+        user.offerList.add(Offer("", "pizza", "549gj", "tasty pizza", 10.0, false, false))
         assertEquals(false, user.hasActiveOffer())
 
-        user.offerList.add(Offer("", "burger", "yummy burgers", 5.0, false, true))
+        user.offerList.add(Offer("", "burger", "54984g", "yummy burgers", 5.0, false, true))
         assertEquals(true, user.hasActiveOffer())
     }
 
