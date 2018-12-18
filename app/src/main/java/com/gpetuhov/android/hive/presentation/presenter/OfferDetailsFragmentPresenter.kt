@@ -3,23 +3,31 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.FavoritesInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationMapManager
 import com.gpetuhov.android.hive.presentation.view.OfferDetailsFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
+class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>(), FavoritesInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var locationMapManager: LocationMapManager
 
     var userUid = ""
     var offerUid = ""
+    var offerIsFavorite = false
+
+    private var favoritesInteractor = FavoritesInteractor(this)
 
     init {
         HiveApp.appComponent.inject(this)
     }
+
+    // === FavoritesInteractor.Callback ===
+
+    override fun onFavoritesError(errorMessage: String) = viewState.showToast(errorMessage)
 
     // === Public methods ===
 
@@ -39,9 +47,7 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>() {
         viewState.openLocation(userUid)
     }
 
-    fun favorite() {
-        // TODO: implement this
-    }
+    fun favorite() = favoritesInteractor.favorite(offerIsFavorite, userUid, offerUid)
 
     // --- Lifecycle ---
 

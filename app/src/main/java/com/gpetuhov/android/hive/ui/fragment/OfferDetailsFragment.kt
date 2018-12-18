@@ -21,6 +21,7 @@ import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.pawegio.kandroid.toast
 
 class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
 
@@ -51,7 +52,9 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
-            controller?.changeOffer(user, offerUid)
+            val offer = user.getOffer(offerUid)
+            presenter.offerIsFavorite = offer?.isFavorite ?: false
+            controller?.changeOffer(user, offer)
         })
 
         return binding?.root
@@ -99,5 +102,9 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
     override fun openLocation(userUid: String) {
         val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToLocationFragment(userUid)
         findNavController().navigate(action)
+    }
+
+    override fun showToast(message: String) {
+        toast(message)
     }
 }

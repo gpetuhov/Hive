@@ -24,4 +24,6 @@ data class User(
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
+
+    fun getOffer(offerUid: String) = offerList.firstOrNull { it.uid == offerUid }
 }

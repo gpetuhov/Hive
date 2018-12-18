@@ -26,10 +26,10 @@ class FavoritesInteractor(private val callback: Callback) : Interactor {
     override fun execute() {
         if (isFavorite) {
             // If user or offer is currently favorite, remove from favorites
-            repo.removeFavorite(userUid, "") { callback.onFavoritesError(resultMessages.getRemoveFavoriteErrorMessage()) }
+            repo.removeFavorite(userUid, offerUid) { callback.onFavoritesError(resultMessages.getRemoveFavoriteErrorMessage()) }
         } else {
             // Otherwise, add to favorites
-            repo.addFavorite(userUid, "") { callback.onFavoritesError(resultMessages.getAddFavoriteErrorMessage()) }
+            repo.addFavorite(userUid, offerUid) { callback.onFavoritesError(resultMessages.getAddFavoriteErrorMessage()) }
         }
     }
 

@@ -78,10 +78,9 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
         }
     }
 
-    fun changeOffer(user: User, offerUid: String) {
+    fun changeOffer(user: User, offer: Offer?) {
         this.user = user
-        val offerList = user.offerList
-        offer = offerList.firstOrNull { it.uid == offerUid }
+        this.offer = offer
 
         mapModel.updateMap(user.location)
 
