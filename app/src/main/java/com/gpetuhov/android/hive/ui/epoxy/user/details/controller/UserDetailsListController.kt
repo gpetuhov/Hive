@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.ui.epoxy.user.controller
+package com.gpetuhov.android.hive.ui.epoxy.user.details.controller
 
 import android.content.Context
 import com.gpetuhov.android.hive.R
@@ -6,10 +6,10 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
-import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsDescription
-import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsHeader
-import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsName
-import com.gpetuhov.android.hive.ui.epoxy.user.models.userDetailsOfferHeader
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsDescription
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsHeader
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsName
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsOfferHeader
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
 

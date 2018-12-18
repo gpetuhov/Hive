@@ -13,7 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.details.controller.OfferDetailsL
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferListController
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller.PhotoFullscreenListController
 import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListController
-import com.gpetuhov.android.hive.ui.epoxy.user.controller.UserDetailsListController
+import com.gpetuhov.android.hive.ui.epoxy.user.details.controller.UserDetailsListController
 import com.gpetuhov.android.hive.ui.viewmodel.*
 import com.gpetuhov.android.hive.util.ResultMessagesProvider
 import dagger.Component

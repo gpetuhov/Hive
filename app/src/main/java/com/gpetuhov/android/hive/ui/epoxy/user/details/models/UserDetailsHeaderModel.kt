@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.ui.epoxy.user.models
+package com.gpetuhov.android.hive.ui.epoxy.user.details.models
 
 import android.widget.ImageButton
 import com.airbnb.epoxy.EpoxyAttribute
