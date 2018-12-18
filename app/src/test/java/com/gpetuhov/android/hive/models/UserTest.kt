@@ -61,4 +61,14 @@ class UserTest {
         user.offerList.add(Offer("", "burger", "yummy burgers", 5.0, false, true))
         assertEquals(true, user.hasActiveOffer())
     }
+
+    @Test
+    fun getOffer() {
+        val dummyOffer = com.gpetuhov.android.hive.utils.Constants.DUMMY_OFFER
+        assertEquals(null, user.getOffer(dummyOffer.uid))
+
+        user.offerList.add(dummyOffer)
+        assertEquals(dummyOffer, user.getOffer(dummyOffer.uid))
+        assertEquals(null, user.getOffer("98gq"))
+    }
 }
