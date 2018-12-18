@@ -1431,7 +1431,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                         favorites.addAll(favoritesList)
 
                         loadFavorites { /* Do nothing */ }
-                        restartGettingSecondUserUpdates()
+                        reloadSecondUser()
 
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
@@ -1460,12 +1460,15 @@ class Repository(private val context: Context, private val settings: Settings) :
         return favoriteIndex != -1
     }
 
-    // On favorites list change, restart getting second user updates
-    // (this is needed to update favorite status of the second user).
-    private fun restartGettingSecondUserUpdates() {
+    // On favorites list change, reload second user
+    // (this is needed to update favorite status of the second user and its offers).
+    private fun reloadSecondUser() {
         if (secondUserUid() != "") {
-            stopGettingSecondUserUpdates()
-            startGettingSecondUserUpdates(secondUserUid())
+            loadUser(
+                secondUserUid(),
+                { user -> updateSecondUser(user) },
+                { /* Do nothing */ }
+            )
         }
     }
 
