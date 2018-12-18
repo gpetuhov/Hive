@@ -41,7 +41,6 @@ interface AppComponent {
     fun inject(chatMessagesViewModel: ChatMessagesViewModel)
     fun inject(chatroomsViewModel: ChatroomsViewModel)
     fun inject(unreadMessagesExistViewModel: UnreadMessagesExistViewModel)
-    fun inject(favoritesViewModel: FavoritesViewModel)
     fun inject(favoriteUsersViewModel: FavoriteUsersViewModel)
     fun inject(favoriteOffersViewModel: FavoriteOffersViewModel)
 

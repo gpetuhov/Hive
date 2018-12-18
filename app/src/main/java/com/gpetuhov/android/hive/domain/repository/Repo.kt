@@ -75,7 +75,6 @@ interface Repo {
     fun cancelPhotoUploadTasks()
 
     // Favorites
-    fun favorites(): MutableLiveData<MutableList<Favorite>>
     fun favoriteUsers(): MutableLiveData<MutableList<User>>
     fun favoriteOffers(): MutableLiveData<MutableList<Offer>>
     fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit)

@@ -128,7 +128,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private val chatrooms = MutableLiveData<MutableList<Chatroom>>()
 
     // Favorites of the current user
-    private val favorites = MutableLiveData<MutableList<Favorite>>()
+    private val favorites = mutableListOf<Favorite>()
 
     // Favorite users of the current user
     private val favoriteUsers = MutableLiveData<MutableList<User>>()
@@ -682,8 +682,6 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     // --- Favorites ---
-
-    override fun favorites() = favorites
 
     override fun favoriteUsers() = favoriteUsers
 
@@ -1359,7 +1357,9 @@ class Repository(private val context: Context, private val settings: Settings) :
                             Timber.tag(TAG).d("Listen failed")
                         }
 
-                        favorites.value = favoritesList
+                        favorites.clear()
+                        favorites.addAll(favoritesList)
+
                         loadFavorites(favoritesList)
                         restartGettingSecondUserUpdates()
 
@@ -1386,7 +1386,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun isFavorite(userUid: String, offerUid: String): Boolean {
-        val favoriteIndex = favorites.value?.indexOfFirst { it.userUid == userUid && it.offerUid == offerUid } ?: -1
+        val favoriteIndex = favorites.indexOfFirst { it.userUid == userUid && it.offerUid == offerUid }
         return favoriteIndex != -1
     }
 
