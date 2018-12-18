@@ -130,6 +130,11 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Favorites of the current user
     private val favorites = MutableLiveData<MutableList<Favorite>>()
 
+    // Favorite users of the current user
+    private val favoriteUsers = MutableLiveData<MutableList<User>>()
+    private val tempFavoriteUsers = mutableListOf<User>()
+    private var favoriteUsersLoadCounter = 0
+
     private var isAppInForeground = false
 
     private var isUserInChatroomsList = false
@@ -674,6 +679,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun favorites() = favorites
 
+    override fun favoriteUsers() = favoriteUsers
+
     override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
         if (isAuthorized) {
             val data = HashMap<String, Any>()
@@ -761,7 +768,9 @@ class Repository(private val context: Context, private val settings: Settings) :
                 if (user.userPicUrl != "") {
                     // Load existing user data from Firestore to see if it already has user pic set,
                     // and update it with user pic from Auth if not.
-                    loadCurrentUser(
+                    loadUser(
+                        currentUserUid(),
+
                         // On load success, update data with user pic URL if needed
                         { existingUser -> saveUserDataWithUserPicIfNeeded(data, user.userPicUrl, existingUser) },
 
@@ -775,8 +784,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             }
     }
 
-    private fun loadCurrentUser(onSuccess: (User) -> Unit, onError: () -> Unit) {
-        firestore.collection(USERS_COLLECTION).document(currentUserUid()).get()
+    private fun loadUser(userUid: String, onSuccess: (User) -> Unit, onError: () -> Unit) {
+        firestore.collection(USERS_COLLECTION).document(userUid).get()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val document = task.result
@@ -1343,6 +1352,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                         }
 
                         favorites.value = favoritesList
+                        loadFavoriteUsers(favoritesList)
                         restartGettingSecondUserUpdates()
 
                     } else {
@@ -1379,5 +1389,47 @@ class Repository(private val context: Context, private val settings: Settings) :
             stopGettingSecondUserUpdates()
             startGettingSecondUserUpdates(secondUserUid())
         }
+    }
+
+    private fun loadFavoriteUsers(favoritesList: MutableList<Favorite>) {
+        tempFavoriteUsers.clear()
+        favoriteUsersLoadCounter = 0
+
+        val favoriteUsersList = favoritesList.filter { !it.isOffer() }.toMutableList()
+        val userUidsToLoad = getUserUidsToLoad(favoriteUsersList)
+        val userUidsToLoadSize = userUidsToLoad.size
+
+        if (userUidsToLoadSize > 0) {
+            userUidsToLoad.forEach { userUid ->
+                loadUser(
+                    userUid,
+                    { user -> addFavoriteUser(user, userUidsToLoadSize) },
+                    { favoriteUsersLoadCounter++ }
+                )
+            }
+
+        } else {
+            // This is needed to clear favorite users list if there are no favorites
+            updateFavoriteUsers()
+        }
+    }
+
+    private fun getUserUidsToLoad(favoriteList: MutableList<Favorite>): MutableList<String> {
+        // This is needed to remove duplicates
+        // (because favorites may contain equal userUids for different favorite offers)
+        val userUidsToLoad = mutableSetOf<String>()
+        favoriteList.forEach { userUidsToLoad.add(it.userUid) }
+        return userUidsToLoad.toMutableList()
+    }
+
+    private fun addFavoriteUser(user: User, maxUserCount: Int) {
+        favoriteUsersLoadCounter++
+        tempFavoriteUsers.add(user)
+
+        if (favoriteUsersLoadCounter >= maxUserCount) updateFavoriteUsers()
+    }
+
+    private fun updateFavoriteUsers() {
+        favoriteUsers.value = tempFavoriteUsers
     }
 }
