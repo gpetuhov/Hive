@@ -36,24 +36,28 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
             onFavoriteButtonClick { presenter.favorite() }
         }
 
-        val photoList = offer?.photoList ?: mutableListOf()
-        photoCarousel(
-            settings,
-            photoList,
-            true,
-            false,
-            { photoUrlList -> presenter.openPhotos(photoUrlList) },
-            { /* Do nothing */ }
-        )
+        if (offer != null && offer?.isActive == true) {
+            val photoList = offer?.photoList ?: mutableListOf()
+            photoCarousel(
+                settings,
+                photoList,
+                true,
+                false,
+                { photoUrlList -> presenter.openPhotos(photoUrlList) },
+                { /* Do nothing */ }
+            )
+        }
 
         offerDetailsTitle {
             id("offer_details_title")
-            title(offer?.title ?: context.getString(R.string.offer_deleted))
+            val offerDeleted = context.getString(R.string.offer_deleted)
+            val offerTitle = if (offer != null && offer?.isActive == true) offer?.title ?: offerDeleted else offerDeleted
+            title(offerTitle)
         }
 
         // Offer can become null if deleted by offer provider,
         // when we are inside offer details.
-        if (offer != null) {
+        if (offer != null && offer?.isActive == true) {
             offerDetailsUser {
                 id("offer_details_user")
                 onClick { presenter.openUserDetails() }
