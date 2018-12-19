@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -26,7 +27,7 @@ class FavoriteOffersFragment : BaseFragment(), FavoriteOffersFragmentView {
     private var binding: FragmentFavoriteOffersBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        controller = OfferFavoriteListController()
+        controller = OfferFavoriteListController(presenter)
         controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_offers, container, false)
@@ -47,5 +48,12 @@ class FavoriteOffersFragment : BaseFragment(), FavoriteOffersFragmentView {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         controller?.onSaveInstanceState(outState)
+    }
+
+    // === FavoriteOffersFragmentView ===
+
+    override fun showOfferDetails(offerUid: String) {
+        val action = FavoriteOffersFragmentDirections.actionGlobalOfferDetailsFragment(offerUid)
+        findNavController().navigate(action)
     }
 }

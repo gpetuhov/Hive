@@ -154,6 +154,7 @@
     </fragment>
 
     <!-- Nested graph -->
+    <!-- Favorites -->
     <navigation
             android:id="@+id/navigation_favorites"
             app:startDestination="@id/favorites_root">
@@ -182,6 +183,11 @@
         <action
                 android:id="@+id/action_global_user_details_fragment"
                 app:destination="@id/user_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_global_offer_details_fragment"
+                app:destination="@id/offer_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
 

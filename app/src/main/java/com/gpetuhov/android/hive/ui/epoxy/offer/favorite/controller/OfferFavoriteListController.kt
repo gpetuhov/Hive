@@ -4,11 +4,12 @@ import android.content.Context
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Offer
+import com.gpetuhov.android.hive.presentation.presenter.FavoriteOffersFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import javax.inject.Inject
 
-class OfferFavoriteListController : BaseController() {
+class OfferFavoriteListController(private val presenter: FavoriteOffersFragmentPresenter) : BaseController() {
 
     @Inject lateinit var context: Context
 
@@ -27,9 +28,7 @@ class OfferFavoriteListController : BaseController() {
                 title(offer.title)
                 free(offer.isFree)
                 price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
-                onClick {
-                    // TODO: implement this
-                }
+                onClick { presenter.showOfferDetails(offer.userUid, offer.uid) }
             }
         }
     }
