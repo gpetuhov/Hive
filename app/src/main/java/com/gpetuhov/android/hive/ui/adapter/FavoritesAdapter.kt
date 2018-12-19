@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.ui.adapter
 
 import android.content.Context
+import android.os.Parcelable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -15,4 +16,12 @@ class FavoritesAdapter(private val context: Context?, fm: FragmentManager?) : Fr
     override fun getCount() = 2
 
     override fun getPageTitle(position: Int) = if (position == 0) context?.getString(R.string.users) else context?.getString(R.string.offers)
+
+//    override fun saveState(): Parcelable? {
+//        return null
+//    }
+
+//    override fun restoreState(state: Parcelable?, loader: ClassLoader?) {
+////        super.restoreState(state, loader)
+//    }
 }
