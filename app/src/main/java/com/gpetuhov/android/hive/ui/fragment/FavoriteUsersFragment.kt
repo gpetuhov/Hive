@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -50,7 +51,8 @@ class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
 
     // === FavoriteUsersFragmentView ===
 
-    override fun showUserDetails(userUid: String) {
-        // TODO: implement this
+    override fun showUserDetails() {
+        val action = FavoritesFragmentDirections.actionNavigationFavoritesToUserDetailsFragment()
+        findNavController().navigate(action)
     }
 }

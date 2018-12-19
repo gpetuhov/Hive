@@ -7,5 +7,5 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface FavoriteUsersFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
-    fun showUserDetails(userUid: String)
+    fun showUserDetails()
 }

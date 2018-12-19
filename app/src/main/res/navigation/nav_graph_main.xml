@@ -30,6 +30,11 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.FavoritesFragment"
             android:label="FavoritesFragment"
             tools:layout="@layout/fragment_favorites" >
+        <action
+                android:id="@+id/action_navigation_favorites_to_user_details_fragment"
+                app:destination="@id/user_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
