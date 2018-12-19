@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/user_item_root"
         android:orientation="horizontal"
@@ -25,5 +26,13 @@
             android:layout_marginLeft="16dp"
             style="@style/titleTextStyle"
             tools:text="username"/>
+
+    <ImageButton
+            android:id="@+id/user_item_favorite_button"
+            android:layout_width="@dimen/basic_view_size"
+            android:layout_height="@dimen/basic_view_size"
+            android:src="@drawable/ic_star"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/add_to_favorites"/>
 
 </LinearLayout>
