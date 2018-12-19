@@ -34,7 +34,10 @@ class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = FavoritesAdapter(context, fragmentManager)
+        // We must use CHILD FragmentManager here,
+        // so that fragments in the view pager are destroyed
+        // when parent fragment is destroyed.
+        val adapter = FavoritesAdapter(context, childFragmentManager)
         favorites_viewpager.adapter = adapter
         favorites_viewpager.scrollable = false
         favorites_tabs.setupWithViewPager(favorites_viewpager)
