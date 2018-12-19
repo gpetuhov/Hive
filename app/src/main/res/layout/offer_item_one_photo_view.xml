@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/offer_item_one_photo_root"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp">
+
+    <ImageView
+            android:id="@+id/offer_item_one_photo_image"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"/>
+
+    <TextView
+            android:id="@+id/offer_item_one_photo_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/titleTextStyle"
+            tools:text="Offer title"/>
+
+    <TextView
+            android:id="@+id/offer_item_one_photo_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="10 USD"/>
+
+</LinearLayout>
