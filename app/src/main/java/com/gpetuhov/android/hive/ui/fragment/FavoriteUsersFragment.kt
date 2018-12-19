@@ -18,6 +18,7 @@ import com.gpetuhov.android.hive.presentation.view.FavoriteUsersFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.user.favorite.controller.UserFavoriteListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.FavoriteUsersViewModel
+import com.pawegio.kandroid.toast
 
 class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
 
@@ -65,5 +66,9 @@ class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
     override fun showOfferDetails(offerUid: String) {
         val action = FavoriteUsersFragmentDirections.actionGlobalOfferDetailsFragment(offerUid)
         findNavController().navigate(action)
+    }
+
+    override fun showToast(message: String) {
+        toast(message)
     }
 }

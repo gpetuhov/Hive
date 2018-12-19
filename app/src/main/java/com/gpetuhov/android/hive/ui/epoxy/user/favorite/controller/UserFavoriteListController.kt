@@ -1,7 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.favorite.controller
 
 import android.content.Context
-import com.airbnb.epoxy.Carousel
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
@@ -32,6 +31,7 @@ class UserFavoriteListController(private val presenter: FavoriteUsersFragmentPre
                 userPicUrl(user.userPicUrl)
                 onClick { presenter.showUserDetails(user.uid) }
                 username(user.getUsernameOrName())
+                onFavoriteButtonClick { presenter.removeUserFromFavorite(user.uid) }
             }
 
             val activeOfferList = user.offerList.filter { offer -> offer.isActive }
