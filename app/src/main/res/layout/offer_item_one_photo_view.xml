@@ -13,14 +13,14 @@
     <ImageView
             android:id="@+id/offer_item_one_photo_image"
             android:layout_width="wrap_content"
-            android:layout_height="250dp"/>
+            android:layout_height="200dp"/>
 
     <TextView
             android:id="@+id/offer_item_one_photo_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="7"
             android:ellipsize="end"
-            android:ems="10"
             android:lines="1"
             style="@style/titleTextStyle"
             tools:text="Offer title"/>
