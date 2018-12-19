@@ -9,8 +9,8 @@ apply plugin: 'androidx.navigation.safeargs'
 // Firebase Crashlytics
 apply plugin: 'io.fabric'
 
-def appVersionCode = 1031
-def appVersionName = "0.1.31"
+def appVersionCode = 1032
+def appVersionName = "0.1.32"
 
 // Required by Epoxy
 kapt {
