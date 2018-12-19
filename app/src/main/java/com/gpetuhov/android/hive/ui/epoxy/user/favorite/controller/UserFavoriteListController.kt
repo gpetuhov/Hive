@@ -13,6 +13,7 @@ class UserFavoriteListController(private val presenter: FavoriteUsersFragmentPre
         favoriteUsersList.forEach {
             userItem {
                 id(it.uid)
+                userPicUrl(it.userPicUrl)
                 onClick { presenter.showUserDetails(it.uid) }
                 username(it.getUsernameOrName())
             }
