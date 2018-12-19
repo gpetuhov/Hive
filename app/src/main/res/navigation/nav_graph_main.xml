@@ -26,18 +26,6 @@
     </fragment>
 
     <fragment
-            android:id="@+id/navigation_favorites"
-            android:name="com.gpetuhov.android.hive.ui.fragment.FavoritesFragment"
-            android:label="FavoritesFragment"
-            tools:layout="@layout/fragment_favorites" >
-        <action
-                android:id="@+id/action_navigation_favorites_to_user_details_fragment"
-                app:destination="@id/user_details_fragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-    </fragment>
-
-    <fragment
             android:id="@+id/navigation_messages"
             android:name="com.gpetuhov.android.hive.ui.fragment.ChatroomsFragment"
             android:label="ChatroomsFragment"
@@ -164,5 +152,39 @@
                 android:name="userUid"
                 app:argType="string"/>
     </fragment>
+
+    <!-- Nested graph -->
+    <navigation
+            android:id="@+id/navigation_favorites"
+            app:startDestination="@id/favorites_root">
+
+        <fragment
+                android:id="@+id/favorites_root"
+                android:name="com.gpetuhov.android.hive.ui.fragment.FavoritesFragment"
+                android:label="FavoritesFragment"
+                tools:layout="@layout/fragment_favorites">
+        </fragment>
+
+        <fragment
+                android:id="@+id/favorite_offers"
+                android:name="com.gpetuhov.android.hive.ui.fragment.FavoriteOffersFragment"
+                android:label="FavoriteOffersFragment"
+                tools:layout="@layout/fragment_favorite_offers">
+        </fragment>
+
+        <fragment
+                android:id="@+id/favorite_users"
+                android:name="com.gpetuhov.android.hive.ui.fragment.FavoriteUsersFragment"
+                android:label="FavoriteUsersFragment"
+                tools:layout="@layout/fragment_favorite_users">
+        </fragment>
+
+        <action
+                android:id="@+id/action_global_user_details_fragment"
+                app:destination="@id/user_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+
+    </navigation>
 
 </navigation>

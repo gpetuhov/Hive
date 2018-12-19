@@ -52,7 +52,7 @@ class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
     // === FavoriteUsersFragmentView ===
 
     override fun showUserDetails() {
-        val action = FavoritesFragmentDirections.actionNavigationFavoritesToUserDetailsFragment()
+        val action = FavoriteUsersFragmentDirections.actionGlobalUserDetailsFragment()
         findNavController().navigate(action)
     }
 }
