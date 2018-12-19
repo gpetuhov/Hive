@@ -12,7 +12,7 @@
 
     <ImageView
             android:id="@+id/offer_item_one_photo_image"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="200dp"/>
 
     <TextView

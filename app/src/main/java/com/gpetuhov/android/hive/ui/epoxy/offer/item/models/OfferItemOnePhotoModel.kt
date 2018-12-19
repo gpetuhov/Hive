@@ -28,7 +28,7 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
         if (photoUrl != "") {
             Glide.with(holder.photo.context)
                 .load(photoUrl)
-//                .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.centerCropTransform())
                 .into(holder.photo)
         }
 
