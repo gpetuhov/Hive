@@ -19,6 +19,9 @@
             android:id="@+id/offer_item_one_photo_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:ems="10"
+            android:lines="1"
             style="@style/titleTextStyle"
             tools:text="Offer title"/>
 
