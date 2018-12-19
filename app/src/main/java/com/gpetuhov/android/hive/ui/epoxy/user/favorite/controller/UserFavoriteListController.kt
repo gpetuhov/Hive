@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.favorite.controller
 
 import android.content.Context
+import com.airbnb.epoxy.Carousel
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
@@ -39,9 +40,6 @@ class UserFavoriteListController(private val presenter: FavoriteUsersFragmentPre
             if (!activeOfferList.isEmpty()) {
                 carousel {
                     id("${user.uid}_offer_carousel")
-
-//                    val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
-//                    padding(padding)
 
                     withModelsFrom(activeOfferList) { index, offer ->
                         OfferItemOnePhotoModel_()
