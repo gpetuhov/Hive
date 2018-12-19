@@ -8,4 +8,7 @@ interface FavoriteUsersFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun showUserDetails()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showOfferDetails(offerUid: String)
 }

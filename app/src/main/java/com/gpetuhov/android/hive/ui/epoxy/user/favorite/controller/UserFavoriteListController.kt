@@ -50,9 +50,7 @@ class UserFavoriteListController(private val presenter: FavoriteUsersFragmentPre
                             .title(offer.title)
                             .free(offer.isFree)
                             .price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
-                            .onClick {
-                                // TODO: implement
-                            }
+                            .onClick { presenter.showOfferDetails(user.uid, offer.uid) }
                     }
                 }
             }

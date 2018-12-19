@@ -61,4 +61,9 @@ class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
         val action = FavoriteUsersFragmentDirections.actionGlobalUserDetailsFragment()
         findNavController().navigate(action)
     }
+
+    override fun showOfferDetails(offerUid: String) {
+        val action = FavoriteUsersFragmentDirections.actionGlobalOfferDetailsFragment(offerUid)
+        findNavController().navigate(action)
+    }
 }

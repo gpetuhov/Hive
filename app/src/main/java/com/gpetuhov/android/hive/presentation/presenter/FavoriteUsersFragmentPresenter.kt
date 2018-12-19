@@ -23,4 +23,9 @@ class FavoriteUsersFragmentPresenter : MvpPresenter<FavoriteUsersFragmentView>()
         repo.initUserDetailsFromFavorites(userUid)
         viewState.showUserDetails()
     }
+
+    fun showOfferDetails(userUid: String, offerUid: String) {
+        repo.initUserDetailsFromFavorites(userUid)
+        viewState.showOfferDetails(offerUid)
+    }
 }
