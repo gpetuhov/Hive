@@ -789,13 +789,18 @@ class Repository(private val context: Context, private val settings: Settings) :
         removeNonFavoriteUsers(favoriteUsersList)
         removeNonFavoriteOffers(favoriteOffersList)
 
-        // Load users for favorite users and offers
-        userUidsToLoad.forEach { userUid ->
-            loadUser(
-                userUid,
-                { user -> addLoadedUser(user, userUidsToLoadSize, favoriteUsersList, favoriteOffersList, onComplete) },
-                { addLoadedUser(null, userUidsToLoadSize, favoriteUsersList, favoriteOffersList, onComplete) }
-            )
+        if (userUidsToLoadSize > 0) {
+            // Load users for favorite users and offers
+            userUidsToLoad.forEach { userUid ->
+                loadUser(
+                    userUid,
+                    { user -> addLoadedUser(user, userUidsToLoadSize, favoriteUsersList, favoriteOffersList, onComplete) },
+                    { addLoadedUser(null, userUidsToLoadSize, favoriteUsersList, favoriteOffersList, onComplete) }
+                )
+            }
+
+        } else {
+            onComplete()
         }
     }
 
