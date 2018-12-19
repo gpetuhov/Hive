@@ -35,6 +35,7 @@ class FavoriteOffersFragment : BaseFragment(), FavoriteOffersFragmentView {
         favoriteOffersRecyclerView?.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(FavoriteOffersViewModel::class.java)
+        viewModel.favoriteOffers.removeObservers(this)
         viewModel.favoriteOffers.observe(this, Observer<MutableList<Offer>> { favoriteOffersList ->
             binding?.favoriteOffersListEmpty = favoriteOffersList.isEmpty()
             controller?.changeFavoriteOffersList(favoriteOffersList)

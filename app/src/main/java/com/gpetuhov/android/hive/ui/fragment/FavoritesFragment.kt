@@ -19,11 +19,6 @@ class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
 
     @InjectPresenter lateinit var presenter: FavoritesFragmentPresenter
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        retainInstance = true
-//    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -47,21 +42,6 @@ class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
         favorites_viewpager.scrollable = false
         favorites_tabs.setupWithViewPager(favorites_viewpager)
     }
-
-    // TODO: maybe remove child fragments manually
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//
-//        val childFragments = childFragmentManager.fragments
-//        if (childFragments.size > 0) {
-//            for (i in 0 until childFragments.size) {
-//                val fragment = childFragments[i]
-//                if (fragment != null) {
-//                    childFragmentManager.beginTransaction().remove(fragment).commitAllowingStateLoss()
-//                }
-//            }
-//        }
-//    }
 
     // === FavoritesFragmentView ===
 

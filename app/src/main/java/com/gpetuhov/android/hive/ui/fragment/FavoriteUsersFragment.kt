@@ -37,6 +37,9 @@ class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(FavoriteUsersViewModel::class.java)
 
+        // This is needed, because for some reason, there were multiple observers
+        // when opening user details and going back for several times
+        // (maybe because this fragment is inside the view pager of another fragment).
         viewModel.favoriteUsers.removeObservers(this)
 
         viewModel.favoriteUsers.observe(this, Observer<MutableList<User>> { favoriteUsersList ->
