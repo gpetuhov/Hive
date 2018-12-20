@@ -6,6 +6,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.getStarResourceId
 
 @EpoxyModelClass(layout = R.layout.user_details_header_view)
 abstract class UserDetailsHeaderModel : EpoxyModelWithHolder<UserDetailsHeaderHolder>() {
@@ -18,7 +19,7 @@ abstract class UserDetailsHeaderModel : EpoxyModelWithHolder<UserDetailsHeaderHo
     override fun bind(holder: UserDetailsHeaderHolder) {
         holder.backButton.setOnClickListener { onBackButtonClick() }
 
-        holder.favoriteButton.setImageResource(if (favorite) R.drawable.ic_star else R.drawable.ic_star_border)
+        holder.favoriteButton.setImageResource(getStarResourceId(favorite))
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
     }
 }

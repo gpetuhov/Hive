@@ -9,6 +9,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.getStarResourceId
 import com.gpetuhov.android.hive.util.load
 
 @EpoxyModelClass(layout = R.layout.offer_item_one_photo_view)
@@ -35,7 +36,7 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
         val colorId = if (free) R.color.md_red_600 else R.color.md_grey_600
         holder.price.setTextColor(ContextCompat.getColor(holder.price.context, colorId))
 
-        holder.favoriteButton.setImageResource(if (favorite) R.drawable.ic_star else R.drawable.ic_star_border)
+        holder.favoriteButton.setImageResource(getStarResourceId(favorite))
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
 
         holder.rootView.setOnClickListener { onClick() }
