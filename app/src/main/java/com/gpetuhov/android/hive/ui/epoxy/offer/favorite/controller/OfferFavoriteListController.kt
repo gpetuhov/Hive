@@ -27,9 +27,7 @@ class OfferFavoriteListController(private val presenter: FavoriteOffersFragmentP
                 offer,
                 false,
                 true,
-                {
-                    // TODO: implement
-                },
+                { presenter.removeOfferFromFavorite(offer.userUid, offer.uid) },
                 { presenter.showOfferDetails(offer.userUid, offer.uid) }
             )
         }
