@@ -69,6 +69,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val OFFER_FREE_KEY = "offer_free"
         private const val OFFER_PRICE_KEY = "offer_price"
         private const val OFFER_PHOTO_LIST_KEY = "offer_photo_list"
+        private const val OFFER_RATING_KEY = "offer_rating"
+        private const val OFFER_REVIEW_COUNT_KEY = "offer_review_count"
 
         // Message
         private const val SENDER_UID_KEY = "sender_uid"
@@ -1017,6 +1019,8 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offerActive = offerMap[OFFER_ACTIVE_KEY] as Boolean?
                 val offerFree = offerMap[OFFER_FREE_KEY] as Boolean?
                 val offerPrice = offerMap[OFFER_PRICE_KEY] as Double?
+                val offerRating = offerMap[OFFER_RATING_KEY] as Float? ?: 0.0F
+                val offerReviewCount = offerMap[OFFER_REVIEW_COUNT_KEY] as Int? ?: 0
 
                 if (
                     offerUid != null
@@ -1029,7 +1033,18 @@ class Repository(private val context: Context, private val settings: Settings) :
                     && offerFree != null
                     && offerPrice != null
                 ) {
-                    val offer = Offer(offerUid, userUid, offerTitle, offerDescription, offerPrice, offerFree, offerActive, isFavorite(userUid, offerUid))
+                    val offer = Offer(
+                        offerUid,
+                        userUid,
+                        offerTitle,
+                        offerDescription,
+                        offerPrice,
+                        offerFree,
+                        offerActive,
+                        isFavorite(userUid, offerUid),
+                        offerRating,
+                        offerReviewCount
+                    )
 
                     val offerPhotoList = getPhotoListFromPhotoSnapshotList(offerMap[OFFER_PHOTO_LIST_KEY] as List<*>?)
                     offer.photoList = offerPhotoList
