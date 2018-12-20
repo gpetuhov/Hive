@@ -116,6 +116,8 @@ abstract class UserBaseController : BaseController() {
             favorite(offer.isFavorite)
             favoriteButtonVisible(favoriteButtonVisible)
             onFavoriteButtonClick { onFavoriteButtonClick() }
+            rating(offer.rating)
+            reviewCount(offer.reviewCount)
             onClick {
                 settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
                 onClick()
