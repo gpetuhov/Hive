@@ -136,6 +136,7 @@
 
     <!-- FavoriteUsersFragment -->
     <string name="no_favorite_users">You have no favorite users</string>
+    <string name="offer_photo">Offer photo</string>
 
     <!-- FavoriteOffersFragment -->
     <string name="no_favorite_offers">You have no favorite offers</string>

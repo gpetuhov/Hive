@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/offer_item_one_photo_root"
         android:orientation="vertical"
@@ -13,23 +14,46 @@
     <ImageView
             android:id="@+id/offer_item_one_photo_image"
             android:layout_width="300dp"
-            android:layout_height="200dp"/>
+            android:layout_height="200dp"
+            android:contentDescription="@string/offer_photo"/>
 
-    <TextView
-            android:id="@+id/offer_item_one_photo_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="7"
-            android:ellipsize="end"
-            android:lines="1"
-            style="@style/titleTextStyle"
-            tools:text="Offer title"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/offer_item_one_photo_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/basicTextStyle"
-            tools:text="10 USD"/>
+        <TextView
+                android:id="@+id/offer_item_one_photo_title"
+                android:layout_width="252dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                style="@style/titleTextStyle"
+                tools:text="Offer title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+                android:id="@+id/offer_item_one_photo_price"
+                android:layout_width="252dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                style="@style/basicTextStyle"
+                tools:text="10 USD"
+                app:layout_constraintTop_toBottomOf="@+id/offer_item_one_photo_title"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageButton
+                android:id="@+id/offer_item_one_photo_favorite_button"
+                android:layout_width="@dimen/basic_view_size"
+                android:layout_height="@dimen/basic_view_size"
+                android:src="@drawable/ic_star_border"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/add_to_favorites"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
