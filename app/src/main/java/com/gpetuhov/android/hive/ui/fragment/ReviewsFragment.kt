@@ -12,6 +12,9 @@ import com.gpetuhov.android.hive.databinding.FragmentReviewsBinding
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.util.hideToolbar
+import com.gpetuhov.android.hive.util.setActivitySoftInputPan
+import com.gpetuhov.android.hive.util.showBottomNavigationView
 
 class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
@@ -21,10 +24,20 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     private var binding: FragmentReviewsBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
+        setActivitySoftInputPan()
+
+        hideToolbar()
+        showBottomNavigationView()
+
 //        controller = UserFavoriteListController(presenter)
 //        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews, container, false)
+
+        // TODO: remove this
+        binding?.reviewsListEmpty = true
+        binding?.postReviewButtonVisible = true
 
         val reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
 //        reviewsRecyclerView?.adapter = controller?.adapter
