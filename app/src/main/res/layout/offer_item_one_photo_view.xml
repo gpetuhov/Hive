@@ -23,25 +23,27 @@
 
         <TextView
                 android:id="@+id/offer_item_one_photo_title"
-                android:layout_width="252dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
                 style="@style/titleTextStyle"
                 tools:text="Offer title"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/offer_item_one_photo_favorite_button"/>
 
         <TextView
                 android:id="@+id/offer_item_one_photo_price"
-                android:layout_width="252dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:lines="1"
                 style="@style/basicTextStyle"
                 tools:text="10 USD"
                 app:layout_constraintTop_toBottomOf="@+id/offer_item_one_photo_title"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/offer_item_one_photo_favorite_button"/>
 
         <ImageButton
                 android:id="@+id/offer_item_one_photo_favorite_button"
