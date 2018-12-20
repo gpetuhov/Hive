@@ -112,6 +112,7 @@
     <string name="price_usd">Price (USD)</string>
     <string name="offer_price">Offer price</string>
     <string name="enter_price">Enter offer price</string>
+    <string name="no_reviews2">No reviews</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Provided by</string>

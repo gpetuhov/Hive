@@ -32,6 +32,8 @@ class UpdateOfferFragmentPresenter :
     var free = true
     var price = Constants.Offer.DEFAULT_PRICE
     var photoList= mutableListOf<Photo>()
+    var rating = 0.0F
+    var reviewCount = 0
 
     private var tempTitle = ""
     private var tempDescription = ""
@@ -85,6 +87,8 @@ class UpdateOfferFragmentPresenter :
                     free = offer.isFree
                     price = offer.price
                     photoList = copyPhotoList(offer.photoList)
+                    rating = offer.rating
+                    reviewCount = offer.reviewCount
 
                     // For existing offer enable active switch if active offer count is less than max
                     // or if offer is already active (to be able to turn it off)

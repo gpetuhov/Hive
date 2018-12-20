@@ -8,6 +8,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferPrice
+import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferReviews
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
@@ -80,6 +81,21 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
 
             price(presenter.price.toString())
             onPriceClick { presenter.showPriceDialog() }
+        }
+
+        updateOfferReviews {
+            id("update_offer_reviews")
+
+            val reviewCount = presenter.reviewCount
+            val noReviews = reviewCount == 0
+            val allReviews = context.getString(R.string.all_reviews)
+            reviewsActionText(if (noReviews) context.getString(R.string.no_reviews2) else "$allReviews ($reviewCount)")
+
+            rating(presenter.rating)
+
+            onClick {
+                // TODO: implement this
+            }
         }
     }
 
