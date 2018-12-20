@@ -11,9 +11,11 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 abstract class OfferDetailsReviewsModel : EpoxyModelWithHolder<OfferDetailsReviewsHolder>() {
 
     @EpoxyAttribute lateinit var reviewsActionText: String
+    @EpoxyAttribute lateinit var onReviewsActionClick: () -> Unit
 
     override fun bind(holder: OfferDetailsReviewsHolder) {
         holder.reviewsActionText.text = reviewsActionText
+        holder.reviewsActionText.setOnClickListener { onReviewsActionClick() }
     }
 }
 
