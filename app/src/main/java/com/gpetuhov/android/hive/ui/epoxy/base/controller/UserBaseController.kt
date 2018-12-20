@@ -44,9 +44,18 @@ abstract class UserBaseController : BaseController() {
 
     // === Protected methods ===
 
-    protected fun userOfferItem(context: Context, settings: Settings, offer: Offer, isProfile: Boolean, onClick: () -> Unit) {
+    protected fun userOfferItem(
+        context: Context,
+        settings: Settings,
+        offer: Offer,
+        isProfile: Boolean,
+        favoriteButtonVisible: Boolean,
+        onFavoriteButtonClick: () -> Unit,
+        onClick: () -> Unit
+    ) {
+
         offerItemPhotoCarousel(settings, offer, !isProfile, onClick)
-        offerItemDetails(context, settings, offer, isProfile, onClick)
+        offerItemDetails(context, settings, offer, isProfile, favoriteButtonVisible, onFavoriteButtonClick, onClick)
     }
 
     // === Private methods ===
@@ -87,7 +96,16 @@ abstract class UserBaseController : BaseController() {
         }
     }
 
-    private fun offerItemDetails(context: Context, settings: Settings, offer: Offer, offerActiveVisible: Boolean, onClick: () -> Unit) {
+    private fun offerItemDetails(
+        context: Context,
+        settings: Settings,
+        offer: Offer,
+        offerActiveVisible: Boolean,
+        favoriteButtonVisible: Boolean,
+        onFavoriteButtonClick: () -> Unit,
+        onClick: () -> Unit
+    ) {
+
         offerItem {
             id(offer.uid)
             active(offer.isActive)
@@ -95,6 +113,8 @@ abstract class UserBaseController : BaseController() {
             title(offer.title)
             free(offer.isFree)
             price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
+            favoriteButtonVisible(favoriteButtonVisible)
+            onFavoriteButtonClick { onFavoriteButtonClick() }
             onClick {
                 settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
                 onClick()

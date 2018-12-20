@@ -23,6 +23,9 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
 
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
+    @EpoxyAttribute var favoriteButtonVisible = true
+    @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
+
     override fun bind(holder: OfferItemHolder) {
         holder.active.setImageResource(if (active) R.drawable.circle_green else R.drawable.circle_red)
         holder.active.visibility = if (activeVisible) View.VISIBLE else View.GONE
@@ -34,6 +37,9 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
         val colorId = if (free) R.color.md_red_600 else R.color.md_grey_600
         holder.price.setTextColor(ContextCompat.getColor(holder.price.context, colorId))
 
+        holder.favoriteButton.visibility = if (favoriteButtonVisible) View.VISIBLE else View.GONE
+        holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
+
         holder.rootView.setOnClickListener { onClick() }
     }
 }
@@ -43,4 +49,5 @@ class OfferItemHolder : KotlinHolder() {
     val active by bind<ImageView>(R.id.offer_item_active)
     val title by bind<TextView>(R.id.offer_item_title)
     val price by bind<TextView>(R.id.offer_item_price)
+    val favoriteButton by bind<ImageView>(R.id.offer_item_favorite_button)
 }

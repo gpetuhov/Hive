@@ -65,7 +65,15 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
         }
 
         user?.offerList?.forEach { offer ->
-            userOfferItem(context, settings, offer, true) { presenter.updateOffer(offer.uid) }
+            userOfferItem(
+                context,
+                settings,
+                offer,
+                true,
+                false,
+                { /* Do nothing */ },
+                { presenter.updateOffer(offer.uid) }
+            )
         }
 
         addOffer {

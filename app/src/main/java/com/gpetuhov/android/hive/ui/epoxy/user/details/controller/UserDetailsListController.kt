@@ -64,7 +64,19 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         user?.offerList?.forEach { offer ->
             // In user details show only active offers
-            if (offer.isActive) userOfferItem(context, settings, offer, false) { presenter.openOffer(offer.uid) }
+            if (offer.isActive) {
+                userOfferItem(
+                    context,
+                    settings,
+                    offer,
+                    false,
+                    true,
+                    {
+                        // TODO: implement
+                    },
+                    { presenter.openOffer(offer.uid) }
+                )
+            }
         }
 
         // MapModel will be bind here only once (after fragment creation),

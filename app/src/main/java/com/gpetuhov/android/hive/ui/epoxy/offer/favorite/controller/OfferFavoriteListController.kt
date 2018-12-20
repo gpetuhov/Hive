@@ -21,7 +21,17 @@ class OfferFavoriteListController(private val presenter: FavoriteOffersFragmentP
 
     override fun buildModels() {
         favoriteOffersList.forEach { offer ->
-            userOfferItem(context, settings, offer, false) { presenter.showOfferDetails(offer.userUid, offer.uid) }
+            userOfferItem(
+                context,
+                settings,
+                offer,
+                false,
+                true,
+                {
+                    // TODO: implement
+                },
+                { presenter.showOfferDetails(offer.userUid, offer.uid) }
+            )
         }
     }
 
