@@ -13,17 +13,18 @@ import com.gpetuhov.android.hive.util.setVisible
 abstract class OfferDetailsReviewsModel : EpoxyModelWithHolder<OfferDetailsReviewsHolder>() {
 
     @EpoxyAttribute lateinit var reviewsActionText: String
-    @EpoxyAttribute lateinit var onReviewsActionClick: () -> Unit
+    @EpoxyAttribute lateinit var onClick: () -> Unit
 
     @EpoxyAttribute var rating = 0.0F
 
     override fun bind(holder: OfferDetailsReviewsHolder) {
         holder.reviewsActionText.text = reviewsActionText
-        holder.reviewsActionText.setOnClickListener { onReviewsActionClick() }
+        holder.reviewsActionText.setOnClickListener { onClick() }
 
         val ratingBarVisible = rating != 0.0F
         holder.ratingBar.setVisible(ratingBarVisible)
         holder.ratingBar.rating = rating
+        holder.ratingBar.setOnClickListener { onClick() }
     }
 }
 
