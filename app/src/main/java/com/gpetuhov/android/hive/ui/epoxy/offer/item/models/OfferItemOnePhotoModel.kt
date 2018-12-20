@@ -7,10 +7,9 @@ import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.load
 
 @EpoxyModelClass(layout = R.layout.offer_item_one_photo_view)
 abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHolder>() {
@@ -28,12 +27,7 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     override fun bind(holder: OfferItemOnePhotoHolder) {
-        if (photoUrl != "") {
-            Glide.with(holder.photo.context)
-                .load(photoUrl)
-                .apply(RequestOptions.centerCropTransform())
-                .into(holder.photo)
-        }
+        holder.photo.load(photoUrl)
 
         holder.title.text = title
         holder.price.text = price
