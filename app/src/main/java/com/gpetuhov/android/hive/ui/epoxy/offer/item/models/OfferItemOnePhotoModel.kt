@@ -27,7 +27,7 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     override fun bind(holder: OfferItemOnePhotoHolder) {
-        holder.photo.load(photoUrl)
+        holder.photo.load(photoUrl, true)
 
         holder.title.text = title
         holder.price.text = price

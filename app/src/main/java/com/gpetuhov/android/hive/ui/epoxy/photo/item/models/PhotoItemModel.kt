@@ -24,7 +24,7 @@ abstract class PhotoItemModel : EpoxyModelWithHolder<PhotoItemHolder>() {
             true
         }
 
-        holder.photo.load(photoUrl)
+        holder.photo.load(photoUrl, true)
     }
 }
 

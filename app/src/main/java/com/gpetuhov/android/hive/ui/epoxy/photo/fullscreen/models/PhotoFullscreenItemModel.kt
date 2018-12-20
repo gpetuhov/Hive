@@ -5,12 +5,11 @@ import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.getScreenHeight
 import com.gpetuhov.android.hive.util.getStatusBarHeight
+import com.gpetuhov.android.hive.util.load
 
 @EpoxyModelClass(layout = R.layout.photo_fullscreen_item_view)
 abstract class PhotoFullscreenItemModel : EpoxyModelWithHolder<PhotoFullscreenItemHolder>() {
@@ -20,13 +19,7 @@ abstract class PhotoFullscreenItemModel : EpoxyModelWithHolder<PhotoFullscreenIt
 
     override fun bind(holder: PhotoFullscreenItemHolder) {
         setImageHeight(holder.photo)
-
-        if (photoUrl != "") {
-            Glide.with(holder.photo.context)
-                .load(photoUrl)
-                .apply(RequestOptions.centerInsideTransform())
-                .into(holder.photo)
-        }
+        holder.photo.load(photoUrl, false)
 
         holder.position.text = position
     }

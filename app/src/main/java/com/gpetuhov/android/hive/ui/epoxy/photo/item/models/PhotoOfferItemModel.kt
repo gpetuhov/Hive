@@ -16,7 +16,7 @@ abstract class PhotoOfferItemModel : EpoxyModelWithHolder<PhotoOfferItemHolder>(
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     override fun bind(holder: PhotoOfferItemHolder) {
-        holder.photo.load(photoUrl)
+        holder.photo.load(photoUrl, true)
         holder.photo.setOnClickListener { onClick() }
     }
 }
