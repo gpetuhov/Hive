@@ -48,6 +48,8 @@ class UserFavoriteListController(private val presenter: FavoriteUsersFragmentPre
                             .free(offer.isFree)
                             .price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
                             .favorite(offer.isFavorite)
+                            .rating(offer.rating)
+                            .reviewCount(offer.reviewCount)
                             .onFavoriteButtonClick { presenter.favoriteOffer(offer.isFavorite, user.uid, offer.uid) }
                             .onClick { presenter.showOfferDetails(user.uid, offer.uid) }
                     }
