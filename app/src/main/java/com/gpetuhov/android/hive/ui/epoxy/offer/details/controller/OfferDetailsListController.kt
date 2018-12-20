@@ -78,14 +78,15 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
             offerDetailsReviews {
                 id("offer_details_reviews")
 
-                val rating = offer?.rating ?: 0.0F
-                val noReviews = rating == 0.0F
-                reviewsActionText(if (noReviews) context.getString(R.string.no_reviews) else context.getString(R.string.all_reviews))
+                val reviewCount = offer?.reviewCount ?: 0
+                val noReviews = reviewCount == 0
+                val allReviews = context.getString(R.string.all_reviews)
+                reviewsActionText(if (noReviews) context.getString(R.string.no_reviews) else "$allReviews ($reviewCount)")
                 onReviewsActionClick {
                     // TODO: implement this
                 }
 
-                rating(rating)
+                rating(offer?.rating ?: 0.0F)
             }
 
             mapModel.addTo(this)

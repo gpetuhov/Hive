@@ -10,7 +10,8 @@ data class Offer(
     var isFree: Boolean,
     var isActive: Boolean,
     var isFavorite: Boolean = false,
-    var rating: Float = 0.0F
+    var rating: Float = 0.0F,
+    var reviewCount: Int = 0
 ) {
     var photoList = mutableListOf<Photo>()
 }
