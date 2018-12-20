@@ -10,13 +10,13 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 @EpoxyModelClass(layout = R.layout.offer_details_reviews_view)
 abstract class OfferDetailsReviewsModel : EpoxyModelWithHolder<OfferDetailsReviewsHolder>() {
 
-//    @EpoxyAttribute lateinit var title: String
+    @EpoxyAttribute lateinit var reviewsActionText: String
 
     override fun bind(holder: OfferDetailsReviewsHolder) {
-//        holder.title.text = title
+        holder.reviewsActionText.text = reviewsActionText
     }
 }
 
 class OfferDetailsReviewsHolder : KotlinHolder() {
-//    val title by bind<TextView>(R.id.offer_details_title)
+    val reviewsActionText by bind<TextView>(R.id.offer_details_reviews_action_text)
 }

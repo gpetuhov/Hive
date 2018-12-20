@@ -77,6 +77,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
             offerDetailsReviews {
                 id("offer_details_reviews")
+                reviewsActionText(context.getString(R.string.no_reviews))
             }
 
             mapModel.addTo(this)

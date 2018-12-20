@@ -117,6 +117,8 @@
     <string name="provided_by">Provided by</string>
     <string name="offer_deleted">Offer has been deleted</string>
     <string name="reviews">Reviews</string>
+    <string name="no_reviews">No reviews yet. Be the first one to review this offer</string>
+    <string name="all_reviews">All reviews</string>
 
     <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>
