@@ -77,7 +77,11 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
             offerDetailsReviews {
                 id("offer_details_reviews")
-                reviewsActionText(context.getString(R.string.no_reviews))
+
+                val rating = offer?.rating ?: 0.0
+                val noReviews = rating == 0.0
+                reviewsActionText(if (noReviews) context.getString(R.string.no_reviews) else context.getString(R.string.all_reviews))
+
                 onReviewsActionClick {
                     // TODO: implement this
                 }
