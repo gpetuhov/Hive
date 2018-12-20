@@ -113,6 +113,7 @@ abstract class UserBaseController : BaseController() {
             title(offer.title)
             free(offer.isFree)
             price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
+            favorite(offer.isFavorite)
             favoriteButtonVisible(favoriteButtonVisible)
             onFavoriteButtonClick { onFavoriteButtonClick() }
             onClick {
