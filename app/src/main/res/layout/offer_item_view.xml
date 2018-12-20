@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/offer_item_root"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp">
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
 
         <ImageView
                 android:id="@+id/offer_item_active"
@@ -24,30 +20,44 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginLeft="0dp"
                 android:layout_marginRight="16dp"
-                android:visibility="gone"
-                android:src="@drawable/circle_red"/>
+                android:visibility="visible"
+                android:src="@drawable/circle_red"
+                android:contentDescription="@string/active_offer"/>
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
             <TextView
                     android:id="@+id/offer_item_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/titleTextStyle"
-                    tools:text="Offer title"/>
+                    tools:text="Offer title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                     android:id="@+id/offer_item_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/basicTextStyle"
-                    tools:text="10 USD"/>
+                    tools:text="10 USD"
+                    app:layout_constraintTop_toBottomOf="@+id/offer_item_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-        </LinearLayout>
+            <ImageButton
+                    android:id="@+id/offer_item_favorite_button"
+                    android:layout_width="@dimen/basic_view_size"
+                    android:layout_height="@dimen/basic_view_size"
+                    android:src="@drawable/ic_star_border"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/add_to_favorites"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-    </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
