@@ -52,6 +52,8 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
     // 3. On second user change, view model forces UI to change
     fun favorite() = favoritesInteractor.favorite(userIsFavorite, userUid, "")
 
+    fun favoriteOffer(offerIsFavorite: Boolean, offerUid: String) = favoritesInteractor.favorite(offerIsFavorite, userUid, offerUid)
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend
