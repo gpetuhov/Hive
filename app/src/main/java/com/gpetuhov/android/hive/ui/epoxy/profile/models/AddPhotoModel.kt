@@ -6,6 +6,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.setVisible
 
 @EpoxyModelClass(layout = R.layout.profile_add_photo_view)
 abstract class AddPhotoModel : EpoxyModelWithHolder<AddPhotoHolder>() {
@@ -16,7 +17,7 @@ abstract class AddPhotoModel : EpoxyModelWithHolder<AddPhotoHolder>() {
     override fun bind(holder: AddPhotoHolder) {
         holder.addPhotoButton.setOnClickListener { onClick() }
         holder.addPhotoTextView.setOnClickListener { onClick() }
-        holder.maxPhotoWarning.visibility = if (maxPhotoWarningVisible) View.VISIBLE else View.GONE
+        holder.maxPhotoWarning.setVisible(maxPhotoWarningVisible)
     }
 }
 

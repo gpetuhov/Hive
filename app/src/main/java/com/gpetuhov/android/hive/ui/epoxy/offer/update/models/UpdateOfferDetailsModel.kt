@@ -8,6 +8,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.setVisible
 
 @EpoxyModelClass(layout = R.layout.update_offer_details_view)
 abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetailsHolder>() {
@@ -29,7 +30,7 @@ abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetails
         holder.active.isEnabled = activeEnabled
         holder.active.setOnClickListener { view -> onActiveClick((view as CheckBox).isChecked) }
 
-        holder.maxActiveWarning.visibility = if (maxActiveWarningVisible) View.VISIBLE else View.GONE
+        holder.maxActiveWarning.setVisible(maxActiveWarningVisible)
 
         holder.title.text = title
         holder.title.setOnClickListener { onTitleClick() }

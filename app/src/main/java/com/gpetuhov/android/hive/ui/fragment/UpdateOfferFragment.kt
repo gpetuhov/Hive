@@ -319,7 +319,5 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         controller?.deleteButtonEnabled(isEnabled)
     }
 
-    private fun progressVisible(isVisible: Boolean) {
-        update_offer_progress.visibility = if (isVisible) View.VISIBLE else View.GONE
-    }
+    private fun progressVisible(isVisible: Boolean) = update_offer_progress.setVisible(isVisible)
 }

@@ -8,6 +8,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.setVisible
 
 @EpoxyModelClass(layout = R.layout.update_offer_price_view)
 abstract class UpdateOfferPriceModel : EpoxyModelWithHolder<UpdateOfferPriceHolder>() {
@@ -22,7 +23,7 @@ abstract class UpdateOfferPriceModel : EpoxyModelWithHolder<UpdateOfferPriceHold
         holder.free.isChecked = free
         holder.free.setOnClickListener { view -> onFreeClick((view as CheckBox).isChecked) }
 
-        holder.priceWrapper.visibility = if (free) View.GONE else View.VISIBLE
+        holder.priceWrapper.setVisible(!free)
         holder.priceWrapper.setOnClickListener { onPriceClick() }
         holder.price.text = price
     }

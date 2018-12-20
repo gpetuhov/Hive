@@ -86,7 +86,7 @@ private fun Fragment.getToolbarTitle() = activity?.findViewById<TextView>(R.id.t
 private fun Fragment.initToolbar(isVisible: Boolean, title: String, navigationIconId: Int, onNavigationClick: () -> Unit, onClick: () -> Unit) {
     val toolbar = getToolbar()
 
-    toolbar?.visibility = if (isVisible) View.VISIBLE else  View.GONE
+    toolbar?.setVisible(isVisible)
     toolbar?.title = title
 
     if (navigationIconId != 0) {

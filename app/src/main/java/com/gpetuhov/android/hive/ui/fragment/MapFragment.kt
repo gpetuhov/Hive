@@ -20,10 +20,7 @@ import kotlinx.android.synthetic.main.fragment_map.*
 import android.view.inputmethod.EditorInfo
 import androidx.navigation.fragment.findNavController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseMapFragment
-import com.gpetuhov.android.hive.util.hideSoftKeyboard
-import com.gpetuhov.android.hive.util.hideToolbar
-import com.gpetuhov.android.hive.util.setActivitySoftInputPan
-import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.gpetuhov.android.hive.util.*
 
 
 class MapFragment : BaseMapFragment(), MapFragmentView {
@@ -150,9 +147,7 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
         cancel_search_users_button.isEnabled = isEnabled
     }
 
-    private fun progressVisible(isVisible: Boolean) {
-        search_progress.visibility = if (isVisible) View.VISIBLE else View.GONE
-    }
+    private fun progressVisible(isVisible: Boolean) = search_progress.setVisible(isVisible)
 
     private fun mapControlsVisible() {
         my_location_button.visibility = View.VISIBLE

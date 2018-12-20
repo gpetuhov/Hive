@@ -7,6 +7,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.setVisible
 
 @EpoxyModelClass(layout = R.layout.update_offer_header_view)
 abstract class UpdateOfferHeaderModel : EpoxyModelWithHolder<UpdateOfferHeaderHolder>() {
@@ -23,7 +24,7 @@ abstract class UpdateOfferHeaderModel : EpoxyModelWithHolder<UpdateOfferHeaderHo
     override fun bind(holder: UpdateOfferHeaderHolder) {
         holder.backButton.setOnClickListener { onBackButtonClick() }
 
-        holder.deleteButton.visibility = if (deleteButtonVisible) View.VISIBLE else View.GONE
+        holder.deleteButton.setVisible(deleteButtonVisible)
         holder.deleteButton.isEnabled = deleteButtonEnabled
         holder.deleteButton.setOnClickListener { onDeleteButtonClick() }
 

@@ -9,7 +9,9 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.getPriceColorId
 import com.gpetuhov.android.hive.util.getStarResourceId
+import com.gpetuhov.android.hive.util.setVisible
 
 @EpoxyModelClass(layout = R.layout.offer_item_view)
 abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
@@ -30,17 +32,16 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
 
     override fun bind(holder: OfferItemHolder) {
         holder.active.setImageResource(if (active) R.drawable.circle_green else R.drawable.circle_red)
-        holder.active.visibility = if (activeVisible) View.VISIBLE else View.GONE
+        holder.active.setVisible(activeVisible)
 
         holder.title.text = title
 
         holder.price.text = price
 
-        val colorId = if (free) R.color.md_red_600 else R.color.md_grey_600
-        holder.price.setTextColor(ContextCompat.getColor(holder.price.context, colorId))
+        holder.price.setTextColor(ContextCompat.getColor(holder.price.context, getPriceColorId(free)))
 
         holder.favoriteButton.setImageResource(getStarResourceId(favorite))
-        holder.favoriteButton.visibility = if (favoriteButtonVisible) View.VISIBLE else View.GONE
+        holder.favoriteButton.setVisible(favoriteButtonVisible)
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
 
         holder.rootView.setOnClickListener { onClick() }

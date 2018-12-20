@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.gpetuhov.android.hive.ui.adapter.FavoritesAdapter
+import com.gpetuhov.android.hive.util.setVisible
 import kotlinx.android.synthetic.main.fragment_favorites.*
 
 class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
@@ -51,7 +52,5 @@ class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
 
     // === Private methods ===
 
-    private fun progressVisible(isVisible: Boolean) {
-        favorites_load_progress.visibility = if (isVisible) View.VISIBLE else View.GONE
-    }
+    private fun progressVisible(isVisible: Boolean) = favorites_load_progress.setVisible(isVisible)
 }

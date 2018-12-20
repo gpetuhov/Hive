@@ -7,6 +7,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.getPriceColorId
 
 @EpoxyModelClass(layout = R.layout.offer_details_details_view)
 abstract class OfferDetailsDetailsModel : EpoxyModelWithHolder<OfferDetailsDetailsHolder>() {
@@ -19,8 +20,7 @@ abstract class OfferDetailsDetailsModel : EpoxyModelWithHolder<OfferDetailsDetai
         holder.description.text = description
         holder.price.text = price
 
-        val colorId = if (free) R.color.md_red_600 else R.color.md_grey_600
-        holder.price.setTextColor(ContextCompat.getColor(holder.price.context, colorId))
+        holder.price.setTextColor(ContextCompat.getColor(holder.price.context, getPriceColorId(free)))
     }
 }
 
