@@ -74,6 +74,24 @@ class TestRepository : Repo {
     override fun stopGettingSecondUserUpdates() {
     }
 
+    override fun startGettingSecondUserOfferUpdates(uid: String) {
+    }
+
+    override fun stopGettingSecondUserOfferUpdates() {
+    }
+
+    override fun startGettingSecondUserLocationUpdates(uid: String) {
+    }
+
+    override fun stopGettingSecondUserLocationUpdates() {
+    }
+
+    override fun startGettingSecondUserChatUpdates(uid: String) {
+    }
+
+    override fun stopGettingSecondUserChatUpdates() {
+    }
+
     override fun initSecondUser(uid: String, name: String, userPicUrl: String) {
     }
 
@@ -187,5 +205,8 @@ class TestRepository : Repo {
         } else {
             onError()
         }
+    }
+
+    override fun initUserDetailsFromFavorites(uid: String) {
     }
 }
