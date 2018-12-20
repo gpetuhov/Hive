@@ -104,6 +104,11 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun openReviews() {
+        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToReviewsFragment()
+        findNavController().navigate(action)
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }
