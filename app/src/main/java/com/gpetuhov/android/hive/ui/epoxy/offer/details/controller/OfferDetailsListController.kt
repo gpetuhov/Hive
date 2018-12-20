@@ -7,10 +7,7 @@ import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
-import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsDetails
-import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsHeader
-import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsTitle
-import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.offerDetailsUser
+import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.*
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
@@ -76,6 +73,10 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 val price = offer?.price ?: Constants.Offer.DEFAULT_PRICE
                 free(isFree)
                 price(if (isFree) context.getString(R.string.free_caps) else "$price USD")
+            }
+
+            offerDetailsReviews {
+                id("offer_details_reviews")
             }
 
             mapModel.addTo(this)
