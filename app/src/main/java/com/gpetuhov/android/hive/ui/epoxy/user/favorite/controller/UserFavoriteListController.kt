@@ -1,7 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.favorite.controller
 
 import android.content.Context
-import com.airbnb.epoxy.Carousel
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
@@ -48,6 +47,8 @@ class UserFavoriteListController(private val presenter: FavoriteUsersFragmentPre
                             .title(offer.title)
                             .free(offer.isFree)
                             .price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
+                            .favorite(offer.isFavorite)
+                            .onFavoriteButtonClick { presenter.favoriteOffer(offer.isFavorite, user.uid, offer.uid) }
                             .onClick { presenter.showOfferDetails(user.uid, offer.uid) }
                     }
                 }

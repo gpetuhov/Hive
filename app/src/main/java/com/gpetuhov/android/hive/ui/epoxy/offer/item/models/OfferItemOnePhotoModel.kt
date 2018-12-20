@@ -22,6 +22,9 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
     @EpoxyAttribute var free = true
     @EpoxyAttribute lateinit var price: String
 
+    @EpoxyAttribute var favorite = false
+    @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
+
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     override fun bind(holder: OfferItemOnePhotoHolder) {
@@ -38,6 +41,9 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
         val colorId = if (free) R.color.md_red_600 else R.color.md_grey_600
         holder.price.setTextColor(ContextCompat.getColor(holder.price.context, colorId))
 
+        holder.favoriteButton.setImageResource(if (favorite) R.drawable.ic_star else R.drawable.ic_star_border)
+        holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
+
         holder.rootView.setOnClickListener { onClick() }
     }
 }
@@ -47,4 +53,5 @@ class OfferItemOnePhotoHolder : KotlinHolder() {
     val photo by bind<ImageView>(R.id.offer_item_one_photo_image)
     val title by bind<TextView>(R.id.offer_item_one_photo_title)
     val price by bind<TextView>(R.id.offer_item_one_photo_price)
+    val favoriteButton by bind<ImageView>(R.id.offer_item_one_photo_favorite_button)
 }

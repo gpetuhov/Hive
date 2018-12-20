@@ -37,4 +37,6 @@ class FavoriteUsersFragmentPresenter : MvpPresenter<FavoriteUsersFragmentView>()
     }
 
     fun removeUserFromFavorite(userUid: String) = favoritesInteractor.favorite(true, userUid, "")
+
+    fun favoriteOffer(offerIsFavorite: Boolean, userUid: String, offerUid: String) = favoritesInteractor.favorite(offerIsFavorite, userUid, offerUid)
 }
