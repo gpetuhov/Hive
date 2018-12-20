@@ -48,17 +48,38 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/offer_item_favorite_button"/>
 
-            <RatingBar
-                    android:id="@+id/offer_item_rating_bar"
+
+            <LinearLayout
+                    android:id="@+id/offer_item_rating_wrapper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:numStars="5"
-                    android:stepSize="0.1"
-                    android:isIndicator="true"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
                     app:layout_constraintTop_toBottomOf="@+id/offer_item_price"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                <RatingBar
+                        android:id="@+id/offer_item_rating_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:numStars="5"
+                        android:stepSize="0.1"
+                        android:isIndicator="true"/>
+
+                <TextView
+                        android:id="@+id/offer_item_review_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="4dp"
+                        android:paddingLeft="4dp"
+                        android:paddingEnd="0dp"
+                        android:paddingRight="0dp"
+                        style="@style/mediumTextStyle"
+                        tools:text="418"/>
+
+            </LinearLayout>
 
             <ImageButton
                     android:id="@+id/offer_item_favorite_button"
