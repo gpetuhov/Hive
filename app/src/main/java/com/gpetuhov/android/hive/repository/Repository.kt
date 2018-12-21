@@ -44,6 +44,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val CHATROOMS_OF_USER_COLLECTION = "chatroomsOfUser"
         private const val USER_FAVORITES_COLLECTION = "userFavorites"
         private const val FAVORITES_OF_USER_COLLECTION = "favoritesOfUser"
+        private const val REVIEWS_COLLECTION = "reviews"
+        private const val REVIEWS_OF_OFFER_COLLECTION = "reviewsOfOffer"
 
         // User
         private const val NAME_KEY = "name"
@@ -93,6 +95,16 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Favorites
         private const val FAVORITE_USER_UID_KEY = "userUid"
         private const val FAVORITE_OFFER_UID_KEY = "offerUid"
+
+        // Reviews
+        private const val REVIEW_PROVIDER_USER_UID_KEY = "providerUserUid"
+        private const val REVIEW_OFFER_UID_KEY = "offerUid"
+        private const val REVIEW_AUTHOR_UID_KEY = "authorUid"
+        private const val REVIEW_AUTHOR_NAME_KEY = "authorName"
+        private const val REVIEW_AUTHOR_USER_PIC_KEY = "authorUserPicUrl"
+        private const val REVIEW_TEXT_KEY = "text"
+        private const val REVIEW_RATING_KEY = "rating"
+        private const val REVIEW_TIMESTAMP_KEY = "timestamp"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -810,6 +822,40 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Get first update of user details from the loaded users list, which is already available
         val user = loadedUsersList.firstOrNull { it.uid == uid }
         if (user != null) secondUser.value = user
+    }
+
+    // --- Reviews ---
+
+    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isAuthorized) {
+            val data = HashMap<String, Any>()
+
+            data[REVIEW_PROVIDER_USER_UID_KEY] = secondUserUid()
+            data[REVIEW_OFFER_UID_KEY] = offerUid
+            data[REVIEW_AUTHOR_UID_KEY] = currentUserUid()
+            data[REVIEW_AUTHOR_NAME_KEY] = currentUserNameOrUsername()
+            data[REVIEW_AUTHOR_USER_PIC_KEY] = currentUserPicUrl()
+            data[REVIEW_TEXT_KEY] = text
+            data[REVIEW_RATING_KEY] = rating
+            data[REVIEW_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
+
+            val reviewUidToSave = if (reviewUid != "") reviewUid else UUID.randomUUID().toString()
+
+            getReviewsCollectionReference(secondUserUid(), offerUid)
+                .document(reviewUidToSave)
+                .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("Review successfully saved")
+                    onSuccess()
+                }
+                .addOnFailureListener { error ->
+                    Timber.tag(TAG).d("Error saving review")
+                    onError()
+                }
+
+        } else {
+            onError()
+        }
     }
 
     // === Private methods ===
@@ -1595,5 +1641,13 @@ class Repository(private val context: Context, private val settings: Settings) :
         tempFavoriteOffers.sortBy { it.title }
 
         return tempFavoriteOffers
+    }
+
+    // --- Reviews ---
+
+    private fun getReviewsCollectionReference(providerUserUid: String, offerUid: String): CollectionReference {
+        return firestore
+            .collection(REVIEWS_COLLECTION).document("${providerUserUid}_$offerUid")
+            .collection(REVIEWS_OF_OFFER_COLLECTION)
     }
 }
