@@ -13,15 +13,12 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/update_review_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/md_white_1000"
-                android:elevation="2dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:elevation="2dp">
 
             <ImageButton
                     android:id="@+id/update_review_back_button"
@@ -32,7 +29,10 @@
                     android:contentDescription="@string/close_offer_update"
                     android:onClick="@{view -> presenter.navigateUp()}"
                     android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"/>
+                    android:layout_marginLeft="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -40,10 +40,26 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/review"
                     style="@style/titleTextStyle"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/update_review_back_button"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
 
-        </LinearLayout>
+            <ImageButton
+                    android:id="@+id/update_review_save_button"
+                    android:layout_width="@dimen/basic_view_size"
+                    android:layout_height="@dimen/basic_view_size"
+                    android:src="@drawable/ic_check2"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/save_offer"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
                 android:layout_width="match_parent"
