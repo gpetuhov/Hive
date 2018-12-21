@@ -17,6 +17,7 @@ import com.gpetuhov.android.hive.util.hideSoftKeyboard
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import kotlinx.android.synthetic.main.fragment_update_review.*
 
 class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
 
@@ -60,6 +61,18 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
 
     // === UpdateReviewFragmentView ===
 
+    override fun disableButtons() = saveButtonEnabled(false)
+
+    override fun enableButtons() = saveButtonEnabled(true)
+
+    override fun showProgress() {
+        // TODO: implement
+    }
+
+    override fun hideProgress() {
+        // TODO: implement
+    }
+
     override fun showQuitReviewUpdateDialog() = quitDialog?.show() ?: Unit
 
     override fun dismissQuitReviewUpdateDialog() = quitDialog?.dismiss() ?: Unit
@@ -89,5 +102,9 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
 
     private fun dismissDialogs() {
         dismissQuitReviewUpdateDialog()
+    }
+
+    private fun saveButtonEnabled(isEnabled: Boolean) {
+        update_review_save_button.isEnabled = isEnabled
     }
 }

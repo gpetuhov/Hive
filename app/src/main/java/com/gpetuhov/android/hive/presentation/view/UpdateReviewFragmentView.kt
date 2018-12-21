@@ -7,7 +7,21 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 interface UpdateReviewFragmentView : MvpView {
 
-    // === Quit offer update ===
+    // === Save review ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun disableButtons()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun enableButtons()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showProgress()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun hideProgress()
+
+    // === Quit review update ===
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showQuitReviewUpdateDialog()
