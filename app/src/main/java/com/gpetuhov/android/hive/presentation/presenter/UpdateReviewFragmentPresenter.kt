@@ -25,5 +25,24 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>() {
 
     // === Public methods ===
 
-    fun navigateUp() = viewState.navigateUp()
+    // --- Quit offer update
+
+    fun showQuitReviewUpdateDialog() {
+        if (reviewText != "") {
+            viewState.showQuitReviewUpdateDialog()
+        } else {
+            navigateUp()
+        }
+    }
+
+    fun quitReviewUpdate() {
+        viewState.dismissQuitReviewUpdateDialog()
+        navigateUp()
+    }
+
+    fun quitReviewUpdateCancel() = viewState.dismissQuitReviewUpdateDialog()
+
+    // === Private methods ===
+
+    private fun navigateUp() = viewState.navigateUp()
 }

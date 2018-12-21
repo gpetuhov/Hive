@@ -27,7 +27,7 @@
                     android:src="@drawable/ic_arrow_back"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/close_offer_update"
-                    android:onClick="@{view -> presenter.navigateUp()}"
+                    android:onClick="@{view -> presenter.showQuitReviewUpdateDialog()}"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     app:layout_constraintStart_toStartOf="parent"

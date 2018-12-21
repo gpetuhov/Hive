@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentUpdateReviewBinding
 import com.gpetuhov.android.hive.presentation.presenter.UpdateReviewFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UpdateReviewFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.util.hideSoftKeyboard
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -21,6 +23,8 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
     @InjectPresenter lateinit var presenter: UpdateReviewFragmentPresenter
 
     private var binding: FragmentUpdateReviewBinding? = null
+
+    private var quitDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -35,9 +39,19 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
         return binding?.root
     }
 
+    override fun onBackPressed(): Boolean {
+        presenter.showQuitReviewUpdateDialog()
+        return true
+    }
+
     // === UpdateReviewFragmentView ===
+
+    override fun showQuitReviewUpdateDialog() = quitDialog?.show() ?: Unit
+
+    override fun dismissQuitReviewUpdateDialog() = quitDialog?.dismiss() ?: Unit
 
     override fun navigateUp() {
         findNavController().navigateUp()
+        hideSoftKeyboard()
     }
 }
