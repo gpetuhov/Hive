@@ -62,40 +62,60 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <LinearLayout
-                    android:orientation="vertical"
+            <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-                <RatingBar
-                        android:id="@+id/update_review_rating_bar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:rating="@={presenter.rating}"
-                        android:numStars="5"
-                        android:stepSize="1"/>
-
-                <EditText
-                        android:id="@+id/update_review_text"
+                <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@={presenter.reviewText}"
-                        android:hint="@string/add_review"
-                        android:inputType="textMultiLine"
-                        android:background="@android:color/transparent"
-                        style="@style/basicTextStyle"
-                        android:importantForAutofill="no"/>
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp">
 
-            </LinearLayout>
+                    <RatingBar
+                            android:id="@+id/update_review_rating_bar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:rating="@={presenter.rating}"
+                            android:numStars="5"
+                            android:stepSize="1"/>
 
-        </ScrollView>
+                    <EditText
+                            android:id="@+id/update_review_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@={presenter.reviewText}"
+                            android:hint="@string/add_review"
+                            android:inputType="textMultiLine"
+                            android:background="@android:color/transparent"
+                            style="@style/basicTextStyle"
+                            android:importantForAutofill="no"/>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+            <ProgressBar
+                    android:id="@+id/update_review_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
