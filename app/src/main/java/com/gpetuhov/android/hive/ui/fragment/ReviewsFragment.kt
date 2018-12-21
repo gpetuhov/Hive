@@ -12,6 +12,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentReviewsBinding
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
+import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
@@ -21,7 +22,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     @InjectPresenter lateinit var presenter: ReviewsFragmentPresenter
 
-//    private var controller: ReviewsListController? = null
+    private var controller: ReviewsListController? = null
     private var binding: FragmentReviewsBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -31,8 +32,8 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         hideToolbar()
         showBottomNavigationView()
 
-//        controller = UserFavoriteListController(presenter)
-//        controller?.onRestoreInstanceState(savedInstanceState)
+        controller = ReviewsListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews, container, false)
         binding?.presenter = presenter
@@ -45,7 +46,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         presenter.offerUid = offerUid
 
         val reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
-//        reviewsRecyclerView?.adapter = controller?.adapter
+        reviewsRecyclerView?.adapter = controller?.adapter
 
 //        val viewModel = ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
 //        viewModel.reviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
@@ -56,10 +57,10 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         return binding?.root
     }
 
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        controller?.onSaveInstanceState(outState)
-//    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        controller?.onSaveInstanceState(outState)
+    }
 
     // === ReviewsFragmentView ===
 
