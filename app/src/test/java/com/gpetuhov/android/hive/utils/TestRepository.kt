@@ -214,7 +214,7 @@ class TestRepository : Repo {
 
     override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isSuccess) {
-            this.reviewText = reviewText
+            this.reviewText = text
             this.rating = rating
             onSuccess()
         } else {

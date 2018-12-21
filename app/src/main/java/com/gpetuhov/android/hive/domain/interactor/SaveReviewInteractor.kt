@@ -45,7 +45,7 @@ class SaveReviewInteractor(private val callback: Callback) : Interactor {
     }
 
     // Call this method to save review
-    fun saveOffer(reviewUid: String, offerUid: String, reviewText: String, rating: Float) {
+    fun saveReview(reviewUid: String, offerUid: String, reviewText: String, rating: Float) {
         this.reviewUid = reviewUid
         this.offerUid = offerUid
         this.reviewText = reviewText

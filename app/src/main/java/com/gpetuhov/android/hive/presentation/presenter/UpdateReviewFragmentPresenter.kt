@@ -49,7 +49,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
         viewState.disableButtons()
         viewState.showProgress()
 
-        saveReviewInteractor.saveOffer(reviewUid, offerUid, reviewText, rating)
+        saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating)
     }
 
     // --- Quit offer update
