@@ -28,6 +28,7 @@ class FavoriteOffersFragmentPresenter : MvpPresenter<FavoriteOffersFragmentView>
     fun showOfferDetails(userUid: String, offerUid: String) {
         // This is needed to get user details immediately from the already available favorite user list
         repo.initUserDetailsFromFavorites(userUid)
+        repo.clearReviews()
         viewState.showOfferDetails(offerUid)
     }
 

@@ -37,7 +37,10 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
         viewState.openChat()
     }
 
-    fun openOffer(offerUid: String) = viewState.openOffer(offerUid)
+    fun openOffer(offerUid: String) {
+        repo.clearReviews()
+        viewState.openOffer(offerUid)
+    }
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
 
