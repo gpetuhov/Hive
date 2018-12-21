@@ -15,7 +15,7 @@ class UpdateReviewListController(private val presenter: UpdateReviewFragmentPres
             }
 
             rating(0.0F)
-            onRatingClick {
+            onRatingChange {
                 // TODO: implement
             }
         }

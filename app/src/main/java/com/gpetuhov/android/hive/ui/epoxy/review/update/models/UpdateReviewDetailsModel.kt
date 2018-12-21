@@ -15,14 +15,14 @@ abstract class UpdateReviewDetailsModel : EpoxyModelWithHolder<UpdateReviewDetai
     @EpoxyAttribute lateinit var onReviewTextClick: () -> Unit
 
     @EpoxyAttribute var rating = 0.0F
-    @EpoxyAttribute lateinit var onRatingClick: (Float) -> Unit
+    @EpoxyAttribute lateinit var onRatingChange: (Float) -> Unit
 
     override fun bind(holder: UpdateReviewDetailsHolder) {
         holder.reviewText.text = reviewText
         holder.reviewText.setOnClickListener { onReviewTextClick() }
 
         holder.ratingBar.rating = rating
-        holder.ratingBar.setOnClickListener { view -> onRatingClick((view as RatingBar).rating) }
+        holder.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser -> if (fromUser) onRatingChange(rating) }
     }
 }
 
