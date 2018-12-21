@@ -7,7 +7,7 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface ReviewsFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
-    fun postReview()
+    fun postReview(offerUid: String)
 
     @StateStrategyType(SkipStrategy::class)
     fun navigateUp()

@@ -38,6 +38,9 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_review, container, false)
         binding?.presenter = presenter
 
+        val offerUid = UpdateReviewFragmentArgs.fromBundle(arguments).offerUid
+        presenter.offerUid = offerUid
+
         return binding?.root
     }
 

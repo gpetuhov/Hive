@@ -104,13 +104,13 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun openReviews() {
-        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToReviewsFragment()
+    override fun openReviews(offerUid: String) {
+        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToReviewsFragment(offerUid)
         findNavController().navigate(action)
     }
 
-    override fun postReview() {
-        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToUpdateReviewFragment()
+    override fun postReview(offerUid: String) {
+        val action = OfferDetailsFragmentDirections.actionOfferDetailsFragmentToUpdateReviewFragment(offerUid)
         findNavController().navigate(action)
     }
 

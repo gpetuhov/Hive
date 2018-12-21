@@ -208,6 +208,9 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.ReviewsFragment"
             android:label="ReviewsFragment"
             tools:layout="@layout/fragment_reviews">
+        <argument
+                android:name="offerUid"
+                app:argType="string"/>
         <action
                 android:id="@+id/action_reviewsFragment_to_updateReviewFragment"
                 app:destination="@id/updateReviewFragment"
@@ -219,6 +222,10 @@
             android:id="@+id/updateReviewFragment"
             android:name="com.gpetuhov.android.hive.ui.fragment.UpdateReviewFragment"
             android:label="UpdateReviewFragment"
-            tools:layout="@layout/fragment_update_review"/>
+            tools:layout="@layout/fragment_update_review">
+        <argument
+                android:name="offerUid"
+                app:argType="string"/>
+    </fragment>
 
 </navigation>

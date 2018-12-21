@@ -41,6 +41,9 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         binding?.reviewsListEmpty = true
         binding?.postReviewButtonVisible = true
 
+        val offerUid = ReviewsFragmentArgs.fromBundle(arguments).offerUid
+        presenter.offerUid = offerUid
+
         val reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
 //        reviewsRecyclerView?.adapter = controller?.adapter
 
@@ -60,8 +63,8 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     // === ReviewsFragmentView ===
 
-    override fun postReview() {
-        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment()
+    override fun postReview(offerUid: String) {
+        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid)
         findNavController().navigate(action)
     }
 
