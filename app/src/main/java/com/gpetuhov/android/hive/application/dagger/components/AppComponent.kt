@@ -69,6 +69,7 @@ interface AppComponent {
     fun inject(deleteOfferInteractor: DeleteOfferInteractor)
     fun inject(deleteUserPhotoInteractor: DeleteUserPhotoInteractor)
     fun inject(favoritesInteractor: FavoritesInteractor)
+    fun inject(saveReviewInteractor: SaveReviewInteractor)
 
     fun inject(resultMessagesProvider: ResultMessagesProvider)
 

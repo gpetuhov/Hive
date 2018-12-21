@@ -14,6 +14,7 @@ import com.gpetuhov.android.hive.presentation.presenter.UpdateReviewFragmentPres
 import com.gpetuhov.android.hive.presentation.view.UpdateReviewFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.*
+import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_update_review.*
 
 class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
@@ -69,6 +70,10 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
     override fun showQuitReviewUpdateDialog() = quitDialog?.show() ?: Unit
 
     override fun dismissQuitReviewUpdateDialog() = quitDialog?.dismiss() ?: Unit
+
+    override fun showToast(message: String) {
+        toast(message)
+    }
 
     override fun navigateUp() {
         findNavController().navigateUp()

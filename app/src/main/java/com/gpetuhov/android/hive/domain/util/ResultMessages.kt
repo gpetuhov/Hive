@@ -19,4 +19,7 @@ interface ResultMessages {
     fun getDeletePhotoErrorMessage(): String
     fun getAddFavoriteErrorMessage(): String
     fun getRemoveFavoriteErrorMessage(): String
+    fun getReviewEmptyTextErrorMessage(): String
+    fun getReviewZeroRatingErrorMessage(): String
+    fun getSaveReviewErrorMessage(): String
 }

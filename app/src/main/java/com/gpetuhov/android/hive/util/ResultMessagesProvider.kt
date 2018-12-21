@@ -50,5 +50,11 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getRemoveFavoriteErrorMessage(): String = getString(R.string.remove_favorite_error)
 
+    override fun getReviewEmptyTextErrorMessage(): String = getString(R.string.review_text_empty_error)
+
+    override fun getReviewZeroRatingErrorMessage(): String = getString(R.string.review_zero_rating_error)
+
+    override fun getSaveReviewErrorMessage(): String = getString(R.string.save_review_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

@@ -3,13 +3,14 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.SaveReviewInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.UpdateReviewFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>() {
+class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), SaveReviewInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -21,8 +22,23 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>() {
 
     private var tempReviewText = ""
 
+    private var saveReviewInteractor = SaveReviewInteractor(this)
+
     init {
         HiveApp.appComponent.inject(this)
+    }
+
+    // === SaveReviewInteractor.Callback ===
+    override fun onSaveReviewSuccess() {
+        viewState.enableButtons()
+        viewState.hideProgress()
+        navigateUp()
+    }
+
+    override fun onSaveReviewError(errorMessage: String) {
+        viewState.enableButtons()
+        viewState.hideProgress()
+        viewState.showToast(errorMessage)
     }
 
     // === Public methods ===
@@ -33,23 +49,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>() {
         viewState.disableButtons()
         viewState.showProgress()
 
-        // TODO: refactor this into interactor
-        // TODO: handle on success and on error
-        repo.saveReview(
-            reviewUid,
-            offerUid,
-            reviewText,
-            rating,
-            {
-                viewState.enableButtons()
-                viewState.hideProgress()
-                navigateUp()
-            },
-            {
-                viewState.enableButtons()
-                viewState.hideProgress()
-            }
-        )
+        saveReviewInteractor.saveOffer(reviewUid, offerUid, reviewText, rating)
     }
 
     // --- Quit offer update
