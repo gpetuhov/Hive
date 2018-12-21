@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/offer_item_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:id="@+id/review_item_user_pic"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/user_picture"/>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="0dp">
+
+            <TextView
+                    android:id="@+id/review_item_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textStyle="bold"
+                    style="@style/mediumTextStyle"
+                    tools:text="User name"/>
+
+            <TextView
+                    android:id="@+id/review_item_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    style="@style/smallTextStyle"
+                    tools:text="2018-11-7 12:29"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/review_item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/mediumTextStyle"
+            android:layout_marginTop="8dp"
+            tools:text="Review text"/>
+
+    <RatingBar
+            android:id="@+id/review_item_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_marginBottom="16dp"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:isIndicator="true"/>
+
+</LinearLayout>

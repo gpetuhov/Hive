@@ -85,7 +85,9 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
                 rating(offer?.rating ?: 0.0F)
 
-                onClick { if (reviewCount != 0) presenter.openReviews() else presenter.postReview() }
+                // TODO: restore this line
+//                onClick { if (reviewCount != 0) presenter.openReviews() else presenter.postReview() }
+                onClick { presenter.openReviews() }
             }
 
             mapModel.addTo(this)
