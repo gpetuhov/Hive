@@ -145,6 +145,9 @@
     <!-- FavoriteOffersFragment -->
     <string name="no_favorite_offers">You have no favorite offers</string>
 
+    <!-- UpdateReviewFragment -->
+    <string name="review">Review</string>
+
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
