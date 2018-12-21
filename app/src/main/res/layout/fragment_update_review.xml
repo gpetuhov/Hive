@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context=".ui.fragment.FavoriteUsersFragment">
+        tools:context=".ui.fragment.UpdateReviewFragment">
 
     <data>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.UpdateReviewFragmentPresenter"/>
@@ -67,11 +67,12 @@
 
                 <EditText
                         android:id="@+id/update_review_text"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@={presenter.reviewText}"
                         android:hint="@string/add_review"
-                        android:inputType="text"
+                        android:inputType="textMultiLine"
+                        android:background="@android:color/transparent"
                         style="@style/basicTextStyle"
                         android:importantForAutofill="no"/>
 
