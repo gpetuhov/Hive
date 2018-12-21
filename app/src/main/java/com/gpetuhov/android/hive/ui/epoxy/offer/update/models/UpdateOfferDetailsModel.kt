@@ -1,6 +1,5 @@
 package com.gpetuhov.android.hive.ui.epoxy.offer.update.models
 
-import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute

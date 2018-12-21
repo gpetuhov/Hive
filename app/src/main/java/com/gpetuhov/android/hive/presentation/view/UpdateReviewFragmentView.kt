@@ -7,5 +7,8 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface UpdateReviewFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
+    fun updateUI()
+
+    @StateStrategyType(SkipStrategy::class)
     fun navigateUp()
 }
