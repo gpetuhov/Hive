@@ -26,14 +26,10 @@ class SaveReviewInteractor(private val callback: Callback) : Interactor {
 
     // Do not call this directly!
     override fun execute() {
-        if (reviewText == "") {
-            callback.onSaveReviewError(resultMessages.getReviewEmptyTextErrorMessage())
-
-        } else if (rating == 0.0F) {
-            callback.onSaveReviewError(resultMessages.getReviewZeroRatingErrorMessage())
-
-        } else {
-            repo.saveReview(
+        when {
+            reviewText.trim { it <= ' ' }.isEmpty() -> callback.onSaveReviewError(resultMessages.getReviewEmptyTextErrorMessage())
+            rating == 0.0F -> callback.onSaveReviewError(resultMessages.getReviewZeroRatingErrorMessage())
+            else -> repo.saveReview(
                 reviewUid,
                 offerUid,
                 reviewText,
