@@ -8,6 +8,7 @@
         <import type="android.view.View"/>
         <variable name="postReviewButtonVisible" type="boolean"/>
         <variable name="reviewsListEmpty" type="boolean"/>
+        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,6 +32,7 @@
                     android:src="@drawable/ic_arrow_back"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/close_offer_update"
+                    android:onClick="@{view -> presenter.navigateUp()}"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"/>
 

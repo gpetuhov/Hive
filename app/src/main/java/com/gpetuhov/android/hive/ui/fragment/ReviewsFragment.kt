@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -34,6 +35,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 //        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews, container, false)
+        binding?.presenter = presenter
 
         // TODO: remove this
         binding?.reviewsListEmpty = true
@@ -56,4 +58,9 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 //        controller?.onSaveInstanceState(outState)
 //    }
 
+    // === ReviewsFragmentView ===
+
+    override fun navigateUp() {
+        findNavController().navigateUp()
+    }
 }
