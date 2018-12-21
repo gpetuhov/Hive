@@ -14,6 +14,8 @@ class TestRepository : Repo {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
     var favoriteList = mutableListOf<Favorite>()
+    var reviewText = ""
+    var rating = 0.0F
 
     override fun isForeground() = false
 
@@ -208,5 +210,15 @@ class TestRepository : Repo {
     }
 
     override fun initUserDetailsFromFavorites(uid: String) {
+    }
+
+    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isSuccess) {
+            this.reviewText = reviewText
+            this.rating = rating
+            onSuccess()
+        } else {
+            onError()
+        }
     }
 }

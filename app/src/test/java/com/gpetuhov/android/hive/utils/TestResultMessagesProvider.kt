@@ -38,4 +38,10 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getAddFavoriteErrorMessage(): String = Constants.ADD_FAVORITE_ERROR
 
     override fun getRemoveFavoriteErrorMessage(): String = Constants.REMOVE_FAVORITE_ERROR
+
+    override fun getReviewEmptyTextErrorMessage(): String = Constants.SAVE_REVIEW_TEXT_ERROR
+
+    override fun getReviewZeroRatingErrorMessage(): String = Constants.SAVE_REVIEW_RATING_ERROR
+
+    override fun getSaveReviewErrorMessage(): String = Constants.SAVE_REVIEW_ERROR
 }
