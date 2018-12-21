@@ -6,9 +6,13 @@ import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
 import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
 
-class ReviewsListController(private val presenter: ReviewsFragmentPresenter) : EpoxyController() {
+class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onModelBuild: () -> Unit) : EpoxyController() {
 
     private var reviewsList = mutableListOf<Review>()
+
+    init {
+        addModelBuildListener { onModelBuild() }
+    }
 
     override fun buildModels() {
         reviewsList.forEach { review ->

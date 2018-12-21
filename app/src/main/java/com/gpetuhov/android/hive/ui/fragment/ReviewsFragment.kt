@@ -36,9 +36,6 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         hideToolbar()
         showBottomNavigationView()
 
-        controller = ReviewsListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews, container, false)
         binding?.presenter = presenter
 
@@ -49,6 +46,11 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         presenter.offerUid = offerUid
 
         val reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
+
+        // Scroll to top on every reviews list update
+        controller = ReviewsListController(presenter) { reviewsRecyclerView?.scrollToPosition(0) }
+        controller?.onRestoreInstanceState(savedInstanceState)
+
         reviewsRecyclerView?.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
