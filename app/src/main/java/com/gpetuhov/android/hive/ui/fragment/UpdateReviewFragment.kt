@@ -13,10 +13,7 @@ import com.gpetuhov.android.hive.databinding.FragmentUpdateReviewBinding
 import com.gpetuhov.android.hive.presentation.presenter.UpdateReviewFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UpdateReviewFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
-import com.gpetuhov.android.hive.util.hideSoftKeyboard
-import com.gpetuhov.android.hive.util.hideToolbar
-import com.gpetuhov.android.hive.util.setActivitySoftInputPan
-import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.gpetuhov.android.hive.util.*
 import kotlinx.android.synthetic.main.fragment_update_review.*
 
 class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
@@ -65,13 +62,9 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
 
     override fun enableButtons() = saveButtonEnabled(true)
 
-    override fun showProgress() {
-        // TODO: implement
-    }
+    override fun showProgress() = progressVisible(true)
 
-    override fun hideProgress() {
-        // TODO: implement
-    }
+    override fun hideProgress() = progressVisible(false)
 
     override fun showQuitReviewUpdateDialog() = quitDialog?.show() ?: Unit
 
@@ -107,4 +100,6 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
     private fun saveButtonEnabled(isEnabled: Boolean) {
         update_review_save_button.isEnabled = isEnabled
     }
+
+    private fun progressVisible(isVisible: Boolean) = update_review_progress.setVisible(isVisible)
 }
