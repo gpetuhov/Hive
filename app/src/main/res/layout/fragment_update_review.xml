@@ -44,6 +44,16 @@
 
         </LinearLayout>
 
+        <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/update_review_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/update_review_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
