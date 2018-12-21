@@ -60,6 +60,11 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     // === ReviewsFragmentView ===
 
+    override fun postReview() {
+        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment()
+        findNavController().navigate(action)
+    }
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }

@@ -202,6 +202,18 @@
             android:id="@+id/reviewsFragment"
             android:name="com.gpetuhov.android.hive.ui.fragment.ReviewsFragment"
             android:label="ReviewsFragment"
-            tools:layout="@layout/fragment_reviews"/>
+            tools:layout="@layout/fragment_reviews">
+        <action
+                android:id="@+id/action_reviewsFragment_to_updateReviewFragment"
+                app:destination="@id/updateReviewFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/updateReviewFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.UpdateReviewFragment"
+            android:label="UpdateReviewFragment"
+            tools:layout="@layout/fragment_update_review"/>
 
 </navigation>

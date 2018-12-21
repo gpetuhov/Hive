@@ -9,5 +9,7 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
 
     // === Public methods ===
 
+    fun postReview() = viewState.postReview()
+
     fun navigateUp() = viewState.navigateUp()
 }

@@ -82,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_edit"
                 android:visibility="@{postReviewButtonVisible ? View.VISIBLE : View.GONE}"
+                android:onClick="@{view -> presenter.postReview()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
