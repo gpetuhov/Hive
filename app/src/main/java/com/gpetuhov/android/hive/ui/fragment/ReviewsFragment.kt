@@ -5,15 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentReviewsBinding
+import com.gpetuhov.android.hive.domain.model.Review
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.ui.viewmodel.ReviewsViewModel
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -39,7 +43,6 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         binding?.presenter = presenter
 
         // TODO: remove this
-        binding?.reviewsListEmpty = true
         binding?.postReviewButtonVisible = true
 
         val offerUid = ReviewsFragmentArgs.fromBundle(arguments).offerUid
@@ -48,13 +51,23 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         val reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
         reviewsRecyclerView?.adapter = controller?.adapter
 
-//        val viewModel = ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
-//        viewModel.reviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
-//            binding?.reviewsListEmpty = reviewsList.isEmpty()
-//            controller?.changeReviewsList(reviewsList)
-//        })
+        val viewModel = ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
+        viewModel.reviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
+            binding?.reviewsListEmpty = reviewsList.isEmpty()
+            controller?.changeReviewsList(reviewsList)
+        })
 
         return binding?.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

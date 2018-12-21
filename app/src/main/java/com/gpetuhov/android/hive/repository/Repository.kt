@@ -152,6 +152,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     private val loadedUsersList = mutableListOf<User>()
     private var loadedUsersCounter = 0
 
+    // Reviews of the current offer
+    private val reviews = MutableLiveData<MutableList<Review>>()
+
     private var isAppInForeground = false
 
     private var isUserInChatroomsList = false
@@ -201,6 +204,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private var messagesListenerRegistration: ListenerRegistration? = null
     private var chatroomsListenerRegistration: ListenerRegistration? = null
     private var favoritesListenerRegistration: ListenerRegistration? = null
+    private var reviewsListenerRegistration: ListenerRegistration? = null
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -826,6 +830,39 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // --- Reviews ---
 
+    override fun reviews(): MutableLiveData<MutableList<Review>> = reviews
+
+    override fun startGettingReviewsUpdates(offerUid: String) {
+        if (isAuthorized && offerUid != "") {
+            reviewsListenerRegistration = getReviewsCollectionReference(secondUserUid(), offerUid)
+                .orderBy(REVIEW_TIMESTAMP_KEY, Query.Direction.DESCENDING)
+                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        Timber.tag(TAG).d("Reviews listen success")
+
+                        val reviewsList = mutableListOf<Review>()
+
+                        if (querySnapshot != null) {
+                            for (doc in querySnapshot.documents) {
+                                val review = getReviewFromDocumentSnapshot(doc)
+                                reviewsList.add(review)
+                            }
+
+                        } else {
+                            Timber.tag(TAG).d("Reviews listen failed")
+                        }
+
+                        reviews.value = reviewsList
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+        }
+    }
+
+    override fun stopGettingReviewsUpdates() = reviewsListenerRegistration?.remove() ?: Unit
+
     override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
             val data = HashMap<String, Any>()
@@ -856,6 +893,10 @@ class Repository(private val context: Context, private val settings: Settings) :
         } else {
             onError()
         }
+    }
+
+    override fun clearReviews() {
+        reviews.value = mutableListOf()
     }
 
     // === Private methods ===
@@ -1649,5 +1690,19 @@ class Repository(private val context: Context, private val settings: Settings) :
         return firestore
             .collection(REVIEWS_COLLECTION).document("${providerUserUid}_$offerUid")
             .collection(REVIEWS_OF_OFFER_COLLECTION)
+    }
+
+    private fun getReviewFromDocumentSnapshot(doc: DocumentSnapshot): Review {
+        return Review(
+            uid = doc.id,
+            providerUserUid = doc.getString(REVIEW_PROVIDER_USER_UID_KEY) ?: "",
+            offerUid = doc.getString(REVIEW_OFFER_UID_KEY) ?: "",
+            authorUid = doc.getString(REVIEW_AUTHOR_UID_KEY) ?: "",
+            authorName = doc.getString(REVIEW_AUTHOR_NAME_KEY) ?: "",
+            authorUserPicUrl = doc.getString(REVIEW_AUTHOR_USER_PIC_KEY) ?: "",
+            text = doc.getString(REVIEW_TEXT_KEY) ?: "",
+            rating = doc.getDouble(REVIEW_RATING_KEY)?.toFloat() ?: 0.0F,
+            timestamp = getTimestampFromDocumentSnapshot(doc, REVIEW_TIMESTAMP_KEY)
+        )
     }
 }

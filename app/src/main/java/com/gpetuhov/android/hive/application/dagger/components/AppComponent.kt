@@ -45,6 +45,7 @@ interface AppComponent {
     fun inject(unreadMessagesExistViewModel: UnreadMessagesExistViewModel)
     fun inject(favoriteUsersViewModel: FavoriteUsersViewModel)
     fun inject(favoriteOffersViewModel: FavoriteOffersViewModel)
+    fun inject(reviewsViewModel: ReviewsViewModel)
 
     fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
     fun inject(mapFragmentPresenter: MapFragmentPresenter)
@@ -58,6 +59,7 @@ interface AppComponent {
     fun inject(favoriteUsersFragmentPresenter: FavoriteUsersFragmentPresenter)
     fun inject(favoriteOffersFragmentPresenter: FavoriteOffersFragmentPresenter)
     fun inject(updateReviewFragmentPresenter: UpdateReviewFragmentPresenter)
+    fun inject(reviewsFragmentPresenter: ReviewsFragmentPresenter)
 
     fun inject(deleteUserInteractor: DeleteUserInteractor)
     fun inject(signOutInteractor: SignOutInteractor)
