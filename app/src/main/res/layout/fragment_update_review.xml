@@ -8,9 +8,10 @@
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.UpdateReviewFragmentPresenter"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <LinearLayout
                 android:id="@+id/update_review_header"
@@ -44,17 +45,38 @@
 
         </LinearLayout>
 
-        <com.airbnb.epoxy.EpoxyRecyclerView
-                android:id="@+id/update_review_recycler_view"
+        <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:paddingTop="16dp"
-                app:layout_constraintTop_toBottomOf="@+id/update_review_header"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp">
+
+                <TextView
+                        android:id="@+id/update_review_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        style="@style/basicTextStyle"
+                        tools:text="Review text"/>
+
+                <RatingBar
+                        android:id="@+id/update_review_rating_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:numStars="5"
+                        android:stepSize="1"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 
 </layout>
 
