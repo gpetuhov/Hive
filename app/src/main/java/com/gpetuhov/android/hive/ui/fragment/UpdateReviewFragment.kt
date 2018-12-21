@@ -33,10 +33,21 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
         hideToolbar()
         showBottomNavigationView()
 
+        initDialogs()
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_review, container, false)
         binding?.presenter = presenter
 
         return binding?.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // This is needed to prevent memory leaks.
+        // Here we intentially dismiss dialogs directly, not via the presenter,
+        // so that Moxy command queue doesn't change.
+        dismissDialogs()
     }
 
     override fun onBackPressed(): Boolean {
@@ -53,5 +64,27 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
     override fun navigateUp() {
         findNavController().navigateUp()
         hideSoftKeyboard()
+    }
+
+    // === Private methods ===
+
+    private fun initDialogs() {
+        initQuitDialog()
+    }
+
+    private fun initQuitDialog() {
+        if (context != null) {
+            quitDialog = MaterialDialog(context!!)
+                .title(R.string.quit)
+                .message(R.string.quit_review_update_prompt)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton { presenter.quitReviewUpdate() }
+                .negativeButton { presenter.quitReviewUpdateCancel() }
+        }
+    }
+
+    private fun dismissDialogs() {
+        dismissQuitReviewUpdateDialog()
     }
 }
