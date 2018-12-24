@@ -54,7 +54,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val DESCRIPTION_KEY = "description"
         private const val USER_PIC_URL_KEY = "userPicUrl"
         private const val OFFER_LIST_KEY = "offerList"
-        private const val OFFER_RATING_LIST_KEY = "offer_rating_list"
+        private const val OFFER_RATING_LIST_KEY = "offerRatingList"
         private const val PHOTO_LIST_KEY = "photoList"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
@@ -1203,16 +1203,8 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offerRating = longOrDoubleToFloat(offerRatingMap[OFFER_RATING_KEY])
                 val offerReviewCount = (offerRatingMap[OFFER_REVIEW_COUNT_KEY] as Long? ?: 0).toInt()
 
-                if (
-                    offerUid != null
-                    && offerUid != ""
-                ) {
-                    val rating = Rating(
-                        offerUid,
-                        offerRating,
-                        offerReviewCount
-                    )
-
+                if (offerUid != null && offerUid != "") {
+                    val rating = Rating(offerUid, offerRating, offerReviewCount)
                     offerRatingList.add(rating)
                 }
             }
