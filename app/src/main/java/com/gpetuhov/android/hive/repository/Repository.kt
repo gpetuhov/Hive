@@ -1492,6 +1492,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             offerForSaving[OFFER_FREE_KEY] = offerItem.isFree
             offerForSaving[OFFER_PRICE_KEY] = offerItem.price
             offerForSaving[OFFER_PHOTO_LIST_KEY] = getPhotoListForSaving(offerItem.photoList)
+            offerForSaving[OFFER_RATING_KEY] = offerItem.rating
+            offerForSaving[OFFER_REVIEW_COUNT_KEY] = offerItem.reviewCount
 
             offerListForSaving.add(offerForSaving)
         }
