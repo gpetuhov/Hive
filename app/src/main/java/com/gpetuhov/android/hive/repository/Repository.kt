@@ -1106,7 +1106,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offerActive = offerMap[OFFER_ACTIVE_KEY] as Boolean?
                 val offerFree = offerMap[OFFER_FREE_KEY] as Boolean?
                 val offerPrice = offerMap[OFFER_PRICE_KEY] as Double?
-                val offerRating = (offerMap[OFFER_RATING_KEY] as Double? ?: 0.0).toFloat()
+                val offerRating = longOrDoubleToFloat(offerMap[OFFER_RATING_KEY])
                 val offerReviewCount = (offerMap[OFFER_REVIEW_COUNT_KEY] as Long? ?: 0).toInt()
 
                 if (
@@ -1701,8 +1701,22 @@ class Repository(private val context: Context, private val settings: Settings) :
             authorName = doc.getString(REVIEW_AUTHOR_NAME_KEY) ?: "",
             authorUserPicUrl = doc.getString(REVIEW_AUTHOR_USER_PIC_KEY) ?: "",
             text = doc.getString(REVIEW_TEXT_KEY) ?: "",
-            rating = doc.getDouble(REVIEW_RATING_KEY)?.toFloat() ?: 0.0F,
+            rating = longOrDoubleToFloat(doc.getDouble(REVIEW_RATING_KEY)),
             timestamp = getTimestampFromDocumentSnapshot(doc, REVIEW_TIMESTAMP_KEY)
         )
+    }
+
+    private fun longOrDoubleToFloat(number: Any?): Float {
+        var result = 0.0F
+
+        if (number != null) {
+            if (number is Long) {
+                result = number.toFloat()
+            } else if (number is Double) {
+                result = number.toFloat()
+            }
+        }
+
+        return result
     }
 }
