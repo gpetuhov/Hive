@@ -1105,7 +1105,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offerDescription = offerMap[OFFER_DESCRIPTION_KEY] as String?
                 val offerActive = offerMap[OFFER_ACTIVE_KEY] as Boolean?
                 val offerFree = offerMap[OFFER_FREE_KEY] as Boolean?
-                val offerPrice = offerMap[OFFER_PRICE_KEY] as Double?
+                val offerPrice = longOrDoubleToDouble(offerMap[OFFER_PRICE_KEY])
                 val offerRating = longOrDoubleToFloat(offerMap[OFFER_RATING_KEY])
                 val offerReviewCount = (offerMap[OFFER_REVIEW_COUNT_KEY] as Long? ?: 0).toInt()
 
@@ -1118,7 +1118,6 @@ class Repository(private val context: Context, private val settings: Settings) :
                     && offerDescription != ""
                     && offerActive != null
                     && offerFree != null
-                    && offerPrice != null
                 ) {
                     val offer = Offer(
                         offerUid,
@@ -1714,6 +1713,20 @@ class Repository(private val context: Context, private val settings: Settings) :
                 result = number.toFloat()
             } else if (number is Double) {
                 result = number.toFloat()
+            }
+        }
+
+        return result
+    }
+
+    private fun longOrDoubleToDouble(number: Any?): Double {
+        var result = 0.0
+
+        if (number != null) {
+            if (number is Long) {
+                result = number.toDouble()
+            } else if (number is Double) {
+                result = number
             }
         }
 
