@@ -54,6 +54,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val DESCRIPTION_KEY = "description"
         private const val USER_PIC_URL_KEY = "userPicUrl"
         private const val OFFER_LIST_KEY = "offerList"
+        private const val OFFER_RATING_LIST_KEY = "offer_rating_list"
         private const val PHOTO_LIST_KEY = "photoList"
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
@@ -71,6 +72,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val OFFER_FREE_KEY = "offer_free"
         private const val OFFER_PRICE_KEY = "offer_price"
         private const val OFFER_PHOTO_LIST_KEY = "offer_photo_list"
+
+        // Offer rating
         private const val OFFER_RATING_KEY = "offer_rating"
         private const val OFFER_REVIEW_COUNT_KEY = "offer_review_count"
 
@@ -1076,6 +1079,12 @@ class Repository(private val context: Context, private val settings: Settings) :
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
         user.photoList = getPhotoListFromDocumentSnapshot(doc)
 
+        // Offer ratings are stored in a separate list in user, not inside offer list.
+        // This is needed to prevent overwriting offer ratings when updating offers.
+        // Here we copy ratings from offer rating list to the corresponding offers
+        // for convenient use.
+        updateOfferRatings(user, doc)
+
         return user
     }
 
@@ -1106,8 +1115,6 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offerActive = offerMap[OFFER_ACTIVE_KEY] as Boolean?
                 val offerFree = offerMap[OFFER_FREE_KEY] as Boolean?
                 val offerPrice = longOrDoubleToDouble(offerMap[OFFER_PRICE_KEY])
-                val offerRating = longOrDoubleToFloat(offerMap[OFFER_RATING_KEY])
-                val offerReviewCount = (offerMap[OFFER_REVIEW_COUNT_KEY] as Long? ?: 0).toInt()
 
                 if (
                     offerUid != null
@@ -1127,9 +1134,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                         offerPrice,
                         offerFree,
                         offerActive,
-                        isFavorite(userUid, offerUid),
-                        offerRating,
-                        offerReviewCount
+                        isFavorite(userUid, offerUid)
                     )
 
                     val offerPhotoList = getPhotoListFromPhotoSnapshotList(offerMap[OFFER_PHOTO_LIST_KEY] as List<*>?)
@@ -1169,6 +1174,51 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
 
         return photoList
+    }
+
+    private fun updateOfferRatings(user: User, doc: DocumentSnapshot) {
+        val offerRatingList = getOfferRatingListFromDocumentSnapshot(doc)
+        val offerList = user.offerList
+
+        offerRatingList.forEach { rating ->
+            val offer = offerList.firstOrNull { offerItem -> offerItem.uid == rating.offerUid }
+
+            if (offer != null) {
+                offer.rating = rating.rating
+                offer.reviewCount = rating.reviewCount
+            }
+        }
+    }
+
+    private fun getOfferRatingListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Rating> {
+        val offerRatingSnapshotList = doc.get(OFFER_RATING_LIST_KEY) as List<*>?
+
+        val offerRatingList = mutableListOf<Rating>()
+
+        if (offerRatingSnapshotList != null) {
+            for (offerRatingSnapshot in offerRatingSnapshotList) {
+                val offerRatingMap = offerRatingSnapshot as HashMap<*, *>
+
+                val offerUid = offerRatingMap[OFFER_UID_KEY] as String?
+                val offerRating = longOrDoubleToFloat(offerRatingMap[OFFER_RATING_KEY])
+                val offerReviewCount = (offerRatingMap[OFFER_REVIEW_COUNT_KEY] as Long? ?: 0).toInt()
+
+                if (
+                    offerUid != null
+                    && offerUid != ""
+                ) {
+                    val rating = Rating(
+                        offerUid,
+                        offerRating,
+                        offerReviewCount
+                    )
+
+                    offerRatingList.add(rating)
+                }
+            }
+        }
+
+        return offerRatingList
     }
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""
@@ -1492,8 +1542,6 @@ class Repository(private val context: Context, private val settings: Settings) :
             offerForSaving[OFFER_FREE_KEY] = offerItem.isFree
             offerForSaving[OFFER_PRICE_KEY] = offerItem.price
             offerForSaving[OFFER_PHOTO_LIST_KEY] = getPhotoListForSaving(offerItem.photoList)
-            offerForSaving[OFFER_RATING_KEY] = offerItem.rating
-            offerForSaving[OFFER_REVIEW_COUNT_KEY] = offerItem.reviewCount
 
             offerListForSaving.add(offerForSaving)
         }

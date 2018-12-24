@@ -153,7 +153,7 @@ class UpdateOfferFragmentPresenter :
         viewState.disableButtons()
         viewState.showProgress()
 
-        val offer = Offer(uid, userUid, title, description, price, free, active, false, rating, reviewCount)
+        val offer = Offer(uid, userUid, title, description, price, free, active)
         offer.photoList.clear()
         offer.photoList.addAll(photoList)
 
