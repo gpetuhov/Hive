@@ -1106,8 +1106,8 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offerActive = offerMap[OFFER_ACTIVE_KEY] as Boolean?
                 val offerFree = offerMap[OFFER_FREE_KEY] as Boolean?
                 val offerPrice = offerMap[OFFER_PRICE_KEY] as Double?
-                val offerRating = offerMap[OFFER_RATING_KEY] as Float? ?: 0.0F
-                val offerReviewCount = offerMap[OFFER_REVIEW_COUNT_KEY] as Int? ?: 0
+                val offerRating = (offerMap[OFFER_RATING_KEY] as Double? ?: 0.0).toFloat()
+                val offerReviewCount = (offerMap[OFFER_REVIEW_COUNT_KEY] as Long? ?: 0).toInt()
 
                 if (
                     offerUid != null
