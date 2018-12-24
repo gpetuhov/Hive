@@ -30,7 +30,7 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
         setActivitySoftInputPan()
 
         hideToolbar()
-        showBottomNavigationView()
+        hideBottomNavigationView()
 
         initDialogs()
 
