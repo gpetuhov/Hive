@@ -20,7 +20,7 @@ fun ImageView.load(photoUrl: String, crop: Boolean) {
         Glide.with(context)
             .load(photoUrl)
             .apply(
-                if (crop) RequestOptions.centerCropTransform() else RequestOptions.centerInsideTransform()
+                (if (crop) RequestOptions.centerCropTransform() else RequestOptions.centerInsideTransform()).placeholder(R.drawable.ic_photo)
             )
             .into(this)
     }
