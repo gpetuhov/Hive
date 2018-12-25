@@ -18,6 +18,7 @@ import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.ReviewsViewModel
+import com.gpetuhov.android.hive.util.hideBottomNavigationView
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -32,21 +33,22 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
-
         hideToolbar()
-        showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews, container, false)
         binding?.presenter = presenter
-
-        // TODO: remove this
-        binding?.postReviewButtonVisible = true
 
         val args = ReviewsFragmentArgs.fromBundle(arguments)
         val offerUid = args.offerUid
         val isCurrentUser = args.isCurrentUser
         presenter.offerUid = offerUid
         presenter.isCurrentUser = isCurrentUser
+
+        // Hide post review button for current user
+        binding?.postReviewButtonVisible = !isCurrentUser
+
+        // Hide bottom nav view for current user
+        if (isCurrentUser) hideBottomNavigationView() else showBottomNavigationView()
 
         val reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
 
