@@ -18,6 +18,7 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
     var reviewsList = mutableListOf<Review>()
     var reviewCount = 0
     var rating = 0.0F
+    var postReviewEnabled = true
 
     init {
         HiveApp.appComponent.inject(this)
@@ -29,11 +30,21 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
         this.reviewsList = reviewsList
         this.reviewCount = reviewsList.size
 
+        postReviewEnabled = true
+
         if (reviewCount == 0) {
             rating = 0.0F
         } else {
             var ratingSum = 0.0F
-            reviewsList.forEach { ratingSum += it.rating }
+
+            reviewsList.forEach {
+                ratingSum += it.rating
+
+                if (it.authorUid == repo.currentUserUid()) {
+                    postReviewEnabled = false
+                }
+            }
+
             rating = ratingSum / reviewCount
         }
 
