@@ -20,7 +20,6 @@ import android.graphics.Bitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.Timestamp
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -693,10 +692,11 @@ class Repository(private val context: Context, private val settings: Settings) :
                     // If offer list successfully updated in Firestore,
                     // remove deleted photos from Cloud Storage.
                     removeOfferPhotosFromStorage(photoUidsToDeleteFromStorage)
-                    onSuccess()
                 },
                 onError
             )
+
+            onSuccess()
 
         } else {
             onError()
