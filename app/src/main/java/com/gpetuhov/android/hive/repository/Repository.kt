@@ -20,6 +20,7 @@ import android.graphics.Bitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.Timestamp
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -76,6 +77,10 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Offer rating
         private const val OFFER_RATING_KEY = "offer_rating"
         private const val OFFER_REVIEW_COUNT_KEY = "offer_review_count"
+        private const val OFFER_LAST_REVIEW_AUTHOR_NAME_KEY = "offer_last_review_author_name"
+        private const val OFFER_LAST_REVIEW_AUTHOR_PIC_URL_KEY = "offer_last_review_author_pic"
+        private const val OFFER_LAST_REVIEW_TEXT_KEY = "offer_last_review_text"
+        private const val OFFER_LAST_REVIEW_TIME_KEY = "offer_last_review_timestamp"
 
         // Message
         private const val SENDER_UID_KEY = "sender_uid"
@@ -1202,9 +1207,22 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offerUid = offerRatingMap[OFFER_UID_KEY] as String?
                 val offerRating = longOrDoubleToFloat(offerRatingMap[OFFER_RATING_KEY])
                 val offerReviewCount = (offerRatingMap[OFFER_REVIEW_COUNT_KEY] as Long? ?: 0).toInt()
+                val offerLastReviewAuthorName = offerRatingMap[OFFER_LAST_REVIEW_AUTHOR_NAME_KEY] as String? ?: ""
+                val offerLastReviewAuthorUserPicUrl = offerRatingMap[OFFER_LAST_REVIEW_AUTHOR_PIC_URL_KEY] as String? ?: ""
+                val offerLastReviewText = offerRatingMap[OFFER_LAST_REVIEW_TEXT_KEY] as String? ?: ""
+                val offerLastReviewTimestamp = (offerRatingMap[OFFER_LAST_REVIEW_TIME_KEY] as Date?)?.time ?: (System.currentTimeMillis() / 1000)
 
                 if (offerUid != null && offerUid != "") {
-                    val rating = Rating(offerUid, offerRating, offerReviewCount)
+                    val rating = Rating(
+                        offerUid,
+                        offerRating,
+                        offerReviewCount,
+                        offerLastReviewAuthorName,
+                        offerLastReviewAuthorUserPicUrl,
+                        offerLastReviewText,
+                        offerLastReviewTimestamp
+                    )
+
                     offerRatingList.add(rating)
                 }
             }
