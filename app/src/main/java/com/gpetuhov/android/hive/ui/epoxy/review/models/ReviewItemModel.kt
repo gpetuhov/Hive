@@ -1,8 +1,8 @@
 package com.gpetuhov.android.hive.ui.epoxy.review.models
 
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRatingBar
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -40,5 +40,5 @@ class ReviewItemHolder : KotlinHolder() {
     val username by bind<TextView>(R.id.review_item_user_name)
     val time by bind<TextView>(R.id.review_item_time)
     val reviewText by bind<TextView>(R.id.review_item_text)
-    val ratingBar by bind<RatingBar>(R.id.review_item_rating_bar)
+    val ratingBar by bind<AppCompatRatingBar>(R.id.review_item_rating_bar)
 }

@@ -1,7 +1,7 @@
 package com.gpetuhov.android.hive.ui.epoxy.offer.update.models
 
-import android.widget.RatingBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRatingBar
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -30,5 +30,5 @@ abstract class UpdateOfferReviewsModel : EpoxyModelWithHolder<UpdateOfferReviews
 
 class UpdateOfferReviewsHolder : KotlinHolder() {
     val reviewsActionText by bind<TextView>(R.id.update_offer_reviews_action_text)
-    val ratingBar by bind<RatingBar>(R.id.update_offer_rating_bar)
+    val ratingBar by bind<AppCompatRatingBar>(R.id.update_offer_rating_bar)
 }

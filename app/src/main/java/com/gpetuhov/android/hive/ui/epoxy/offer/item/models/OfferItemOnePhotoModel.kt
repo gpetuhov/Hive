@@ -2,8 +2,8 @@ package com.gpetuhov.android.hive.ui.epoxy.offer.item.models
 
 import android.view.View
 import android.widget.ImageView
-import android.widget.RatingBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.core.content.ContextCompat
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
@@ -60,6 +60,6 @@ class OfferItemOnePhotoHolder : KotlinHolder() {
     val price by bind<TextView>(R.id.offer_item_one_photo_price)
     val favoriteButton by bind<ImageView>(R.id.offer_item_one_photo_favorite_button)
     val ratingWrapper by bind<View>(R.id.offer_item_one_photo_rating_wrapper)
-    val ratingBar by bind<RatingBar>(R.id.offer_item_one_photo_rating_bar)
+    val ratingBar by bind<AppCompatRatingBar>(R.id.offer_item_one_photo_rating_bar)
     val reviewCount by bind<TextView>(R.id.offer_item_one_photo_review_count)
 }
