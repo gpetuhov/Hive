@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.ui.epoxy.review.controller
 
 import android.content.Context
 import com.airbnb.epoxy.EpoxyController
+import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
@@ -21,8 +22,8 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
     override fun buildModels() {
         reviewTotals {
             id("review_totals")
-            totalReviews("Total reviews: ${presenter.reviewCount}")
-            averageRating("Average rating: ${presenter.rating}")
+            totalReviews("${context.getString(R.string.total_reviews)}: ${presenter.reviewCount}")
+            averageRating("${context.getString(R.string.average_rating)}: ${presenter.rating}")
             rating(presenter.rating)
         }
 

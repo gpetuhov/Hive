@@ -145,6 +145,10 @@
     <!-- FavoriteOffersFragment -->
     <string name="no_favorite_offers">You have no favorite offers</string>
 
+    <!-- ReviewsFragment -->
+    <string name="total_reviews">Total reviews</string>
+    <string name="average_rating">Average rating</string>
+
     <!-- UpdateReviewFragment -->
     <string name="review">Review</string>
     <string name="add_review">Add review</string>
