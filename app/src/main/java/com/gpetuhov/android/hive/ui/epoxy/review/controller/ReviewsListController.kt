@@ -3,7 +3,6 @@ package com.gpetuhov.android.hive.ui.epoxy.review.controller
 import android.content.Context
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.model.Review
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewTotals
@@ -14,8 +13,6 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
 
     @Inject lateinit var context: Context
 
-    private var reviewsList = mutableListOf<Review>()
-
     init {
         HiveApp.appComponent.inject(this)
         addModelBuildListener { onModelBuild() }
@@ -24,12 +21,12 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
     override fun buildModels() {
         reviewTotals {
             id("review_totals")
-            totalReviews("Total reviews: ")
-            averageRating("Average rating: ")
-            rating(0.0F)
+            totalReviews("Total reviews: ${presenter.reviewCount}")
+            averageRating("Average rating: ${presenter.rating}")
+            rating(presenter.rating)
         }
 
-        reviewsList.forEach { review ->
+        presenter.reviewsList.forEach { review ->
             reviewItem {
                 id(review.uid)
                 userPicUrl(review.authorUserPicUrl)
@@ -40,10 +37,5 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
                 ratingVisible(true)
             }
         }
-    }
-
-    fun changeReviewsList(reviewsList: MutableList<Review>) {
-        this.reviewsList = reviewsList
-        requestModelBuild()
     }
 }

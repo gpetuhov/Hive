@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.model.Review
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
 import javax.inject.Inject
@@ -14,12 +15,30 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
 
     var offerUid = ""
     var isCurrentUser = false
+    var reviewsList = mutableListOf<Review>()
+    var reviewCount = 0
+    var rating = 0.0F
 
     init {
         HiveApp.appComponent.inject(this)
     }
 
     // === Public methods ===
+
+    fun changeReviewsList(reviewsList: MutableList<Review>) {
+        this.reviewsList = reviewsList
+        this.reviewCount = reviewsList.size
+
+        if (reviewCount == 0) {
+            rating = 0.0F
+        } else {
+            var ratingSum = 0.0F
+            reviewsList.forEach { ratingSum += it.rating }
+            rating = ratingSum / reviewCount
+        }
+
+        viewState.updateUI()
+    }
 
     fun postReview() = viewState.postReview(offerUid)
 

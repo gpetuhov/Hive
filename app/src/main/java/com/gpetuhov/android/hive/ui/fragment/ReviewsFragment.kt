@@ -61,7 +61,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         val viewModel = ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
         viewModel.reviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
             binding?.reviewsListEmpty = reviewsList.isEmpty()
-            controller?.changeReviewsList(reviewsList)
+            presenter.changeReviewsList(reviewsList)
         })
 
         return binding?.root
@@ -83,6 +83,8 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     }
 
     // === ReviewsFragmentView ===
+
+    override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun postReview(offerUid: String) {
         val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid)
