@@ -79,6 +79,11 @@ interface UpdateOfferFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun openPhotos(photoUrlList: MutableList<String>)
 
+    // === Open reviews ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openReviews(offerUid: String)
+
     // === Common ===
 
     @StateStrategyType(SkipStrategy::class)

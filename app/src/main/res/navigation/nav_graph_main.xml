@@ -105,6 +105,10 @@
                 app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action android:id="@+id/action_update_offer_fragment_to_reviewsFragment"
+                app:destination="@id/reviewsFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment android:id="@+id/offer_details_fragment"

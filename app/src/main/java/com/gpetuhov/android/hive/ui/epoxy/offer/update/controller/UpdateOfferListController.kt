@@ -93,9 +93,7 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
 
             rating(presenter.rating)
 
-            onClick {
-                // TODO: implement this
-            }
+            onClick { if (!noReviews) presenter.openReviews() }
         }
     }
 

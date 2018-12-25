@@ -280,6 +280,12 @@ class UpdateOfferFragmentPresenter :
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
 
+    // --- Open reviews ---
+
+    fun openReviews() {
+        if (uid != "") viewState.openReviews(uid)
+    }
+
     // === Private methods ===
 
     private fun updateUI() = viewState.updateUI()
