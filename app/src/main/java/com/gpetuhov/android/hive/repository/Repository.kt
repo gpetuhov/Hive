@@ -212,7 +212,6 @@ class Repository(private val context: Context, private val settings: Settings) :
     private var chatroomsListenerRegistration: ListenerRegistration? = null
     private var favoritesListenerRegistration: ListenerRegistration? = null
     private var reviewsListenerRegistration: ListenerRegistration? = null
-    private var saveReviewListenerRegistration: ListenerRegistration? = null
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -696,6 +695,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 onError
             )
 
+            // Do not wait for save offer to the server success, just call onSuccess()
             onSuccess()
 
         } else {
@@ -722,10 +722,12 @@ class Repository(private val context: Context, private val settings: Settings) :
                     // If offer list successfully updated in Firestore,
                     // remove photos of the deleted offer from Cloud Storage.
                     removeOfferPhotosFromStorage(photoUidsToDeleteFromStorage)
-                    onSuccess()
                 },
                 onError
             )
+
+            // Do not wait for delete offer from the server success, just call onSuccess()
+            onSuccess()
 
         } else {
             onError()
@@ -887,31 +889,6 @@ class Repository(private val context: Context, private val settings: Settings) :
 
             val reviewUidToSave = if (reviewUid != "") reviewUid else UUID.randomUUID().toString()
 
-            // This is needed to confirm, that the review has been written to Firestore
-            // (at least to local cache when offline).
-            saveReviewListenerRegistration = getReviewsCollectionReference(secondUserUid(), offerUid)
-                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                    if (firebaseFirestoreException == null) {
-                        Timber.tag(TAG).d("Save reviews listen success")
-
-                        if (querySnapshot != null) {
-                            for (doc in querySnapshot.documents) {
-                                if (doc.id == reviewUidToSave) {
-                                    saveReviewListenerRegistration?.remove()
-                                    onSuccess()
-                                    break
-                                }
-                            }
-
-                        } else {
-                            Timber.tag(TAG).d("Save reviews listen failed")
-                        }
-
-                    } else {
-                        Timber.tag(TAG).d(firebaseFirestoreException)
-                    }
-                }
-
             // Write review to Firestore
             getReviewsCollectionReference(secondUserUid(), offerUid)
                 .document(reviewUidToSave)
@@ -925,6 +902,9 @@ class Repository(private val context: Context, private val settings: Settings) :
                     Timber.tag(TAG).d("Error saving review")
                     onError()
                 }
+
+            // Do not wait for save review to the server success, just call onSuccess()
+            onSuccess()
 
         } else {
             onError()
