@@ -23,7 +23,10 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
         reviewTotals {
             id("review_totals")
             totalReviews("${context.getString(R.string.total_reviews)}: ${presenter.reviewCount}")
-            averageRating("${context.getString(R.string.average_rating)}: ${presenter.rating}")
+
+            val ratingText = "%.2f".format(presenter.rating)
+            averageRating("${context.getString(R.string.average_rating)}: $ratingText")
+
             rating(presenter.rating)
         }
 
