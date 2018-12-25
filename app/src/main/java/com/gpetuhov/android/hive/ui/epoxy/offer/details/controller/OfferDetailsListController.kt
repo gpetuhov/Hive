@@ -78,17 +78,8 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 price(if (isFree) context.getString(R.string.free_caps) else "$price USD")
             }
 
-            offerDetailsReviews {
-                id("offer_details_reviews")
-
-                val reviewCount = offer?.reviewCount ?: 0
-                val noReviews = reviewCount == 0
-                val allReviews = context.getString(R.string.all_reviews)
-                reviewsActionText(if (noReviews) context.getString(R.string.no_reviews) else "$allReviews ($reviewCount)")
-
-                rating(offer?.rating ?: 0.0F)
-
-                onClick { if (reviewCount != 0) presenter.openReviews() else presenter.postReview() }
+            offerDetailsReviewsHeader {
+                id("offer_details_reviews_header")
             }
 
             val lastReviewAuthorName = offer?.lastReviewAuthorName ?: ""
@@ -103,7 +94,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 && lastReviewTimestamp != 0L
             ) {
                 reviewItem {
-                    id("last_review")
+                    id("offer_last_review")
                     userPicUrl(lastReviewAuthorPicUrl)
                     username(lastReviewAuthorName)
                     time(getDateTimeFromTimestampInMilliseconds(lastReviewTimestamp))
@@ -111,6 +102,19 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     rating(0.0F)
                     ratingVisible(false)
                 }
+            }
+
+            offerDetailsReviews {
+                id("offer_details_reviews")
+
+                val reviewCount = offer?.reviewCount ?: 0
+                val noReviews = reviewCount == 0
+                val allReviews = context.getString(R.string.all_reviews)
+                reviewsActionText(if (noReviews) context.getString(R.string.no_reviews) else "$allReviews ($reviewCount)")
+
+                rating(offer?.rating ?: 0.0F)
+
+                onClick { if (reviewCount != 0) presenter.openReviews() else presenter.postReview() }
             }
 
             mapModel.addTo(this)
