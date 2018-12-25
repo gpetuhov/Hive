@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/offer_item_root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp">
+
+    <TextView
+            android:id="@+id/review_totals_review_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/titleTextStyle"
+            tools:text="Total reviews: 48"/>
+
+    <TextView
+            android:id="@+id/review_totals_average_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/titleTextStyle"
+            tools:text="Average rating: 4.5"/>
+
+    <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/review_totals_rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:numStars="5"
+            android:stepSize="0.1"
+            android:isIndicator="true"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/md_grey_300"/>
+
+</LinearLayout>

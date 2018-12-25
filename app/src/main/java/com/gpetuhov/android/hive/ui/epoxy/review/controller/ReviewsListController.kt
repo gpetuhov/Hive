@@ -1,20 +1,34 @@
 package com.gpetuhov.android.hive.ui.epoxy.review.controller
 
+import android.content.Context
 import com.airbnb.epoxy.EpoxyController
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Review
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewTotals
 import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
+import javax.inject.Inject
 
 class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onModelBuild: () -> Unit) : EpoxyController() {
+
+    @Inject lateinit var context: Context
 
     private var reviewsList = mutableListOf<Review>()
 
     init {
+        HiveApp.appComponent.inject(this)
         addModelBuildListener { onModelBuild() }
     }
 
     override fun buildModels() {
+        reviewTotals {
+            id("review_totals")
+            totalReviews("Total reviews: ")
+            averageRating("Average rating: ")
+            rating(0.0F)
+        }
+
         reviewsList.forEach { review ->
             reviewItem {
                 id(review.uid)
