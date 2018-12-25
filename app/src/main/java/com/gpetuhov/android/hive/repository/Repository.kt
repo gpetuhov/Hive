@@ -213,6 +213,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private var chatroomsListenerRegistration: ListenerRegistration? = null
     private var favoritesListenerRegistration: ListenerRegistration? = null
     private var reviewsListenerRegistration: ListenerRegistration? = null
+    private var saveReviewListenerRegistration: ListenerRegistration? = null
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -886,14 +887,41 @@ class Repository(private val context: Context, private val settings: Settings) :
 
             val reviewUidToSave = if (reviewUid != "") reviewUid else UUID.randomUUID().toString()
 
+            // This is needed to confirm, that the review has been written to Firestore
+            // (at least to local cache when offline).
+            saveReviewListenerRegistration = getReviewsCollectionReference(secondUserUid(), offerUid)
+                .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                    if (firebaseFirestoreException == null) {
+                        Timber.tag(TAG).d("Save reviews listen success")
+
+                        if (querySnapshot != null) {
+                            for (doc in querySnapshot.documents) {
+                                if (doc.id == reviewUidToSave) {
+                                    saveReviewListenerRegistration?.remove()
+                                    onSuccess()
+                                    break
+                                }
+                            }
+
+                        } else {
+                            Timber.tag(TAG).d("Save reviews listen failed")
+                        }
+
+                    } else {
+                        Timber.tag(TAG).d(firebaseFirestoreException)
+                    }
+                }
+
+            // Write review to Firestore
             getReviewsCollectionReference(secondUserUid(), offerUid)
                 .document(reviewUidToSave)
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {
+                    // This is called only in ONLINE
                     Timber.tag(TAG).d("Review successfully saved")
-                    onSuccess()
                 }
                 .addOnFailureListener { error ->
+                    // This is called only in ONLINE
                     Timber.tag(TAG).d("Error saving review")
                     onError()
                 }
