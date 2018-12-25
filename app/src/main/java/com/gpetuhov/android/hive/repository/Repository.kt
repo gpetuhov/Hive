@@ -39,6 +39,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Collections
         private const val USERS_COLLECTION = "users"
         private const val CHATROOMS_COLLECTION = "chatrooms"
+        private const val USER_NAME_AND_PIC_COLLECTION = "userNameAndPic"
         private const val MESSAGES_COLLECTION = "messages"
         private const val USER_CHATROOMS_COLLECTION = "userChatrooms"
         private const val CHATROOMS_OF_USER_COLLECTION = "chatroomsOfUser"
@@ -301,7 +302,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[USERNAME_KEY] = newUsername
 
         // Save user name.
-        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+        saveUserDataRemote(data, { triggerChatroomUpdates() }, onError)
     }
 
     override fun saveUserDescription(newDescription: String, onError: () -> Unit) {
@@ -1253,7 +1254,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         val data = HashMap<String, Any>()
         data[USER_PIC_URL_KEY] = newUserPicUrl
 
-        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        saveUserDataRemote(data, { triggerChatroomUpdates() }, { /* Do nothing */ })
     }
 
     private fun saveUserPhotoUrl(photoUid: String, photoDownloadUrl: String) {
@@ -1416,6 +1417,26 @@ class Repository(private val context: Context, private val settings: Settings) :
             lastMessageTimestamp = getTimestampFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
             newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
         )
+    }
+
+    // Calling this will write data to a special collection,
+    // which in turn will trigger Cloud Function that updates chatrooms
+    // (this is needed to update chatrooms on username and userpic change).
+    private fun triggerChatroomUpdates() {
+        if (isAuthorized) {
+            val data = HashMap<String, Any>()
+            data[USERNAME_KEY] = currentUserNameOrUsername()
+            data[USER_PIC_URL_KEY] = currentUserPicUrl()
+
+            firestore.collection(USER_NAME_AND_PIC_COLLECTION).document(currentUserUid())
+                .set(data, SetOptions.merge())
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("userNameAndPic successfully written")
+                }
+                .addOnFailureListener { error ->
+                    Timber.tag(TAG).d("Error writing userNameAndPic")
+                }
+        }
     }
 
     // --- Photo ---
