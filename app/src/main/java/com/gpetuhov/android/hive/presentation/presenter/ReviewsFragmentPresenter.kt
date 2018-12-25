@@ -13,6 +13,7 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
     @Inject lateinit var repo: Repo
 
     var offerUid = ""
+    var isCurrentUser = false
 
     init {
         HiveApp.appComponent.inject(this)
@@ -26,7 +27,7 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
 
     // --- Lifecycle ---
 
-    fun onResume() = repo.startGettingReviewsUpdates(offerUid)
+    fun onResume() = repo.startGettingReviewsUpdates(offerUid, isCurrentUser)
 
     fun onPause() = repo.stopGettingReviewsUpdates()
 }

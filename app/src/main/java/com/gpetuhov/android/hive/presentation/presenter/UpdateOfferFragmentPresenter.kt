@@ -283,7 +283,10 @@ class UpdateOfferFragmentPresenter :
     // --- Open reviews ---
 
     fun openReviews() {
-        if (uid != "") viewState.openReviews(uid)
+        if (uid != "") {
+            repo.clearReviews()
+            viewState.openReviews(uid)
+        }
     }
 
     // === Private methods ===

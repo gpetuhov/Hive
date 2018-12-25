@@ -844,9 +844,10 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun reviews(): MutableLiveData<MutableList<Review>> = reviews
 
-    override fun startGettingReviewsUpdates(offerUid: String) {
+    override fun startGettingReviewsUpdates(offerUid: String, isCurrentUser: Boolean) {
         if (isAuthorized && offerUid != "") {
-            reviewsListenerRegistration = getReviewsCollectionReference(secondUserUid(), offerUid)
+            val userUid = if (isCurrentUser) currentUserUid() else secondUserUid()
+            reviewsListenerRegistration = getReviewsCollectionReference(userUid, offerUid)
                 .orderBy(REVIEW_TIMESTAMP_KEY, Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {

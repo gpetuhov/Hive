@@ -42,8 +42,11 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         // TODO: remove this
         binding?.postReviewButtonVisible = true
 
-        val offerUid = ReviewsFragmentArgs.fromBundle(arguments).offerUid
+        val args = ReviewsFragmentArgs.fromBundle(arguments)
+        val offerUid = args.offerUid
+        val isCurrentUser = args.isCurrentUser
         presenter.offerUid = offerUid
+        presenter.isCurrentUser = isCurrentUser
 
         val reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
 

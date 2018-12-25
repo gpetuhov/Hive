@@ -215,6 +215,9 @@
         <argument
                 android:name="offerUid"
                 app:argType="string"/>
+        <argument
+                android:name="isCurrentUser"
+                app:argType="boolean"/>
         <action
                 android:id="@+id/action_reviewsFragment_to_updateReviewFragment"
                 app:destination="@id/updateReviewFragment"
