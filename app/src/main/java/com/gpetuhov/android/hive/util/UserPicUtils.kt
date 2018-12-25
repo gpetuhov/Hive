@@ -19,6 +19,6 @@ private fun update(glideManager: RequestManager, userPicUrl: String, destination
     val glideBuilder = if (userPicUrl != "") glideManager.load(userPicUrl) else glideManager.load(R.drawable.ic_account_circle)
 
     glideBuilder
-        .apply(RequestOptions.circleCropTransform())
+        .apply(RequestOptions.circleCropTransform().placeholder(R.drawable.ic_account_circle))
         .into(destinationView)
 }
