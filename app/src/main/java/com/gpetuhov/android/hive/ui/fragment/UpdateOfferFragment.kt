@@ -7,6 +7,8 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.WhichButton
@@ -16,10 +18,12 @@ import com.afollestad.materialdialogs.input.input
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.controller.UpdateOfferListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.util.*
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_update_offer.*
@@ -63,6 +67,11 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         updateOfferRecyclerView.adapter = controller?.adapter
 
         updateUI()
+
+        val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
+        viewModel.currentUser.observe(this, Observer<User> { user ->
+            presenter.updateReviews(user)
+        })
 
         return view
     }

@@ -8,6 +8,7 @@ import com.gpetuhov.android.hive.domain.interactor.DeleteOfferInteractor
 import com.gpetuhov.android.hive.domain.interactor.SaveOfferInteractor
 import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.domain.model.Offer
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
@@ -286,6 +287,19 @@ class UpdateOfferFragmentPresenter :
         if (uid != "") {
             repo.clearReviews()
             viewState.openReviews(uid)
+        }
+    }
+
+    // --- Update reviews ---
+
+    fun updateReviews(user: User) {
+        val offerList = user.offerList
+        val offer = offerList.firstOrNull { it.uid == uid }
+
+        if (offer != null) {
+            rating = offer.rating
+            reviewCount = offer.reviewCount
+            updateUI()
         }
     }
 
