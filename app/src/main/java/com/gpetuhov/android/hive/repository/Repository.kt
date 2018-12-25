@@ -302,7 +302,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[USERNAME_KEY] = newUsername
 
         // Save user name.
-        saveUserDataRemote(data, { triggerChatroomUpdates() }, onError)
+        saveUserDataRemote(data, { updateUserNameAndPicCollection() }, onError)
     }
 
     override fun saveUserDescription(newDescription: String, onError: () -> Unit) {
@@ -1000,11 +1000,11 @@ class Repository(private val context: Context, private val settings: Settings) :
         // update it with user pic from Firebase Auth
         if (existingUser.userPicUrl == "") data[USER_PIC_URL_KEY] = userPicUrl
 
-        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        saveUserDataRemote(data, { updateUserNameAndPicCollection() }, { /* Do nothing */ })
     }
 
     private fun saveUserDataWithoutUserPic(data: HashMap<String, Any>) =
-        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        saveUserDataRemote(data, { updateUserNameAndPicCollection() }, { /* Do nothing */ })
 
     private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
@@ -1254,7 +1254,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         val data = HashMap<String, Any>()
         data[USER_PIC_URL_KEY] = newUserPicUrl
 
-        saveUserDataRemote(data, { triggerChatroomUpdates() }, { /* Do nothing */ })
+        saveUserDataRemote(data, { updateUserNameAndPicCollection() }, { /* Do nothing */ })
     }
 
     private fun saveUserPhotoUrl(photoUid: String, photoDownloadUrl: String) {
@@ -1422,10 +1422,11 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Calling this will write data to a special collection,
     // which in turn will trigger Cloud Function that updates chatrooms
     // (this is needed to update chatrooms on username and userpic change).
-    private fun triggerChatroomUpdates() {
+    private fun updateUserNameAndPicCollection() {
         if (isAuthorized) {
             val data = HashMap<String, Any>()
-            data[USERNAME_KEY] = currentUserNameOrUsername()
+            data[NAME_KEY] = currentUser.value?.name ?: ""
+            data[USERNAME_KEY] = currentUser.value?.username ?: ""
             data[USER_PIC_URL_KEY] = currentUserPicUrl()
 
             firestore.collection(USER_NAME_AND_PIC_COLLECTION).document(currentUserUid())
