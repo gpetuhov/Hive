@@ -224,7 +224,7 @@ class TestRepository : Repo {
 
     override fun reviews(): MutableLiveData<MutableList<Review>> = MutableLiveData()
 
-    override fun startGettingReviewsUpdates(offerUid: String) {
+    override fun startGettingReviewsUpdates(offerUid: String, isCurrentUser: Boolean) {
     }
 
     override fun stopGettingReviewsUpdates() {
