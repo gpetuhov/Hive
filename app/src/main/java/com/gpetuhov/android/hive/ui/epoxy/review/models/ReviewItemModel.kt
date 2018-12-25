@@ -8,6 +8,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.setVisible
 import com.gpetuhov.android.hive.util.updateUserPic
 
 @EpoxyModelClass(layout = R.layout.review_item_view)
@@ -21,13 +22,16 @@ abstract class ReviewItemModel : EpoxyModelWithHolder<ReviewItemHolder>() {
     @EpoxyAttribute lateinit var reviewText: String
 
     @EpoxyAttribute var rating = 0.0F
+    @EpoxyAttribute var ratingVisible = true
 
     override fun bind(holder: ReviewItemHolder) {
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.username.text = username
         holder.reviewText.text = reviewText
         holder.time.text = time
+
         holder.ratingBar.rating = rating
+        holder.ratingBar.setVisible(ratingVisible)
     }
 }
 

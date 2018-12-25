@@ -23,6 +23,7 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
                 time(getDateTimeFromTimestamp(review.timestamp))
                 reviewText(review.text)
                 rating(review.rating)
+                ratingVisible(true)
             }
         }
     }

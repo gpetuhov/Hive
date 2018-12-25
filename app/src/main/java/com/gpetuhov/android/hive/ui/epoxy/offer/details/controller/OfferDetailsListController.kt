@@ -8,8 +8,11 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.*
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
+import com.gpetuhov.android.hive.util.getDateTimeFromTimestampInMilliseconds
 import javax.inject.Inject
 
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : BaseController() {
@@ -86,6 +89,28 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 rating(offer?.rating ?: 0.0F)
 
                 onClick { if (reviewCount != 0) presenter.openReviews() else presenter.postReview() }
+            }
+
+            val lastReviewAuthorName = offer?.lastReviewAuthorName ?: ""
+            val lastReviewAuthorPicUrl = offer?.lastReviewAuthorUserPicUrl ?: ""
+            val lastReviewText = offer?.lastReviewText ?: ""
+            val lastReviewTimestamp = offer?.lastReviewTimestamp ?: 0
+
+            if (
+                lastReviewAuthorName != ""
+                && lastReviewAuthorPicUrl != ""
+                && lastReviewText != ""
+                && lastReviewTimestamp != 0L
+            ) {
+                reviewItem {
+                    id("last_review")
+                    userPicUrl(lastReviewAuthorPicUrl)
+                    username(lastReviewAuthorName)
+                    time(getDateTimeFromTimestampInMilliseconds(lastReviewTimestamp))
+                    reviewText(lastReviewText)
+                    rating(0.0F)
+                    ratingVisible(false)
+                }
             }
 
             mapModel.addTo(this)

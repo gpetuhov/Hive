@@ -1191,6 +1191,10 @@ class Repository(private val context: Context, private val settings: Settings) :
             if (offer != null) {
                 offer.rating = rating.rating
                 offer.reviewCount = rating.reviewCount
+                offer.lastReviewAuthorName = rating.lastReviewAuthorName
+                offer.lastReviewAuthorUserPicUrl = rating.lastReviewAuthorUserPicUrl
+                offer.lastReviewText = rating.lastReviewText
+                offer.lastReviewTimestamp = rating.lastReviewTimestamp
             }
         }
     }
