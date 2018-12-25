@@ -13,7 +13,6 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.getPriceColorId
 import com.gpetuhov.android.hive.util.getStarResourceId
 import com.gpetuhov.android.hive.util.load
-import com.gpetuhov.android.hive.util.setVisible
 
 @EpoxyModelClass(layout = R.layout.offer_item_one_photo_view)
 abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHolder>() {
@@ -45,7 +44,7 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
 
         val ratingVisible = reviewCount != 0
-        holder.ratingWrapper.setVisible(ratingVisible)
+        holder.ratingWrapper.visibility = if (ratingVisible) View.VISIBLE else View.INVISIBLE   // Use invisible for proper carousel height
         holder.ratingBar.rating = rating
         holder.reviewCount.text = reviewCount.toString()
 
