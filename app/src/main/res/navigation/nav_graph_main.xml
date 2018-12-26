@@ -115,35 +115,32 @@
               android:name="com.gpetuhov.android.hive.ui.fragment.OfferDetailsFragment"
               android:label="OfferDetailsFragment"
               tools:layout="@layout/fragment_offer_details">
+        <argument
+                android:name="offerUid"
+                app:argType="string"/>
         <action
                 android:id="@+id/action_offer_details_fragment_to_chat_fragment"
                 app:destination="@id/chat_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action android:id="@+id/action_offer_details_fragment_to_user_details_fragment"
+        <action
+                android:id="@+id/action_offer_details_fragment_to_user_details_fragment"
                 app:destination="@id/user_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <argument
-                android:name="offerUid"
-                app:argType="string"/>
         <action
                 android:id="@+id/action_offer_details_fragment_to_photoFragment"
                 app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action android:id="@+id/action_offer_details_fragment_to_locationFragment"
+        <action
+                android:id="@+id/action_offer_details_fragment_to_locationFragment"
                 app:destination="@id/locationFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
         <action
                 android:id="@+id/action_offer_details_fragment_to_reviewsFragment"
                 app:destination="@id/reviewsFragment"
-                app:enterAnim="@anim/nav_default_enter_anim"
-                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action
-                android:id="@+id/action_offer_details_fragment_to_updateReviewFragment"
-                app:destination="@id/updateReviewFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
