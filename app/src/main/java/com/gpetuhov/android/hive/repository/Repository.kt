@@ -90,12 +90,9 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val MESSAGE_IS_READ_KEY = "isRead"
 
         // Chatroom
-        private const val CHATROOM_USER_UID_1_KEY = "userUid1"
-        private const val CHATROOM_USER_UID_2_KEY = "userUid2"
-        private const val CHATROOM_USER_NAME_1_KEY = "userName1"
-        private const val CHATROOM_USER_NAME_2_KEY = "userName2"
-        private const val CHATROOM_USER_PIC_URL_1_KEY = "userPicUrl1"
-        private const val CHATROOM_USER_PIC_URL_2_KEY = "userPicUrl2"
+        private const val CHATROOM_SECOND_USER_UID_KEY = "secondUserUid"
+        private const val CHATROOM_SECOND_USER_NAME_KEY = "secondUserName"
+        private const val CHATROOM_SECOND_USER_PIC_URL_KEY = "secondUserPicUrl"
         private const val CHATROOM_LAST_MESSAGE_TEXT_KEY = "lastMessageText"
         private const val CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY = "lastMessageTimestamp"
         private const val CHATROOM_NEW_MESSAGE_COUNT_KEY = "newMessageCount"
@@ -560,7 +557,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
             chatroomsUpdateCounter = 0
 
-            chatroomsListenerRegistration = getChatroomsCollectionReference(currentUserUid())
+            chatroomsListenerRegistration = getChatroomsCollectionReference()
                 .orderBy(CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY, Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
@@ -1386,34 +1383,17 @@ class Repository(private val context: Context, private val settings: Settings) :
         chatrooms.value = mutableListOf()
     }
 
-    private fun getChatroomsCollectionReference(userUid: String): CollectionReference {
+    private fun getChatroomsCollectionReference(): CollectionReference {
         return firestore
-            .collection(USER_CHATROOMS_COLLECTION).document(userUid)
+            .collection(USER_CHATROOMS_COLLECTION).document(currentUserUid())
             .collection(CHATROOMS_OF_USER_COLLECTION)
     }
 
     private fun getChatroomFromDocumentSnapshot(doc: DocumentSnapshot): Chatroom {
-        // Get both user uids and names from document snapshot
-        val userUid1 = doc.getString(CHATROOM_USER_UID_1_KEY) ?: ""
-        val userUid2 = doc.getString(CHATROOM_USER_UID_2_KEY) ?: ""
-        val userName1 = doc.getString(CHATROOM_USER_NAME_1_KEY) ?: ""
-        val userName2 = doc.getString(CHATROOM_USER_NAME_2_KEY) ?: ""
-        val userPicUrl1 = doc.getString(CHATROOM_USER_PIC_URL_1_KEY) ?: ""
-        val userPicUrl2 = doc.getString(CHATROOM_USER_PIC_URL_2_KEY) ?: ""
-
-        // Second user uid is the one, that is not equal to current user uid
-        val secondUserUid = if (userUid1 != currentUserUid()) userUid1 else userUid2
-
-        // Second user name is the one, that is not equal to current user name
-        val secondUserName = if (userName1 != currentUserNameOrUsername()) userName1 else userName2
-
-        // Second user pic URL is the one, that is not equal to current user pic URL
-        val secondUserPicUrl = if (userPicUrl1 != currentUserPicUrl()) userPicUrl1 else userPicUrl2
-
         return Chatroom(
-            secondUserUid = secondUserUid,
-            secondUserName = secondUserName,
-            secondUserPicUrl = secondUserPicUrl,
+            secondUserUid = doc.getString(CHATROOM_SECOND_USER_UID_KEY) ?: "",
+            secondUserName = doc.getString(CHATROOM_SECOND_USER_NAME_KEY) ?: "",
+            secondUserPicUrl = doc.getString(CHATROOM_SECOND_USER_PIC_URL_KEY) ?: "",
             lastMessageText = doc.getString(CHATROOM_LAST_MESSAGE_TEXT_KEY) ?: "",
             lastMessageTimestamp = getTimestampFromDocumentSnapshot(doc, CHATROOM_LAST_MESSAGE_TIMESTAMP_KEY),
             newMessageCount = doc.getLong(CHATROOM_NEW_MESSAGE_COUNT_KEY) ?: 0
