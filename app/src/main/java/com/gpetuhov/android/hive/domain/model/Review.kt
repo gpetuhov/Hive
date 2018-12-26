@@ -9,6 +9,7 @@ data class Review(
     var authorUserPicUrl: String,
     var text: String,
     var rating: Float,
-    var timestamp: Long
+    var timestamp: Long,
+    var isFromCurrentUser: Boolean
 ) {
 }

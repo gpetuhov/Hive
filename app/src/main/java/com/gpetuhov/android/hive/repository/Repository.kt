@@ -1767,16 +1767,19 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun getReviewFromDocumentSnapshot(doc: DocumentSnapshot): Review {
+        val authorUid = doc.getString(REVIEW_AUTHOR_UID_KEY) ?: ""
+
         return Review(
             uid = doc.id,
             providerUserUid = doc.getString(REVIEW_PROVIDER_USER_UID_KEY) ?: "",
             offerUid = doc.getString(REVIEW_OFFER_UID_KEY) ?: "",
-            authorUid = doc.getString(REVIEW_AUTHOR_UID_KEY) ?: "",
+            authorUid = authorUid,
             authorName = doc.getString(REVIEW_AUTHOR_NAME_KEY) ?: "",
             authorUserPicUrl = doc.getString(REVIEW_AUTHOR_USER_PIC_KEY) ?: "",
             text = doc.getString(REVIEW_TEXT_KEY) ?: "",
             rating = longOrDoubleToFloat(doc.getDouble(REVIEW_RATING_KEY)),
-            timestamp = getTimestampFromDocumentSnapshot(doc, REVIEW_TIMESTAMP_KEY)
+            timestamp = getTimestampFromDocumentSnapshot(doc, REVIEW_TIMESTAMP_KEY),
+            isFromCurrentUser = authorUid == currentUserUid()
         )
     }
 
