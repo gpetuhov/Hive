@@ -39,6 +39,15 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
                 reviewText(review.text)
                 rating(review.rating)
                 ratingVisible(true)
+                controlsVisible(review.isFromCurrentUser)
+
+                onEditClick {
+                    // TODO: implement
+                }
+
+                onDeleteClick {
+                    // TODO: implement
+                }
             }
         }
     }

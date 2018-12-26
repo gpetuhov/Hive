@@ -1,8 +1,10 @@
 package com.gpetuhov.android.hive.ui.epoxy.review.models
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
+import androidx.core.view.marginBottom
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -24,6 +26,10 @@ abstract class ReviewItemModel : EpoxyModelWithHolder<ReviewItemHolder>() {
     @EpoxyAttribute var rating = 0.0F
     @EpoxyAttribute var ratingVisible = true
 
+    @EpoxyAttribute var controlsVisible = false
+    @EpoxyAttribute lateinit var onEditClick: () -> Unit
+    @EpoxyAttribute lateinit var onDeleteClick: () -> Unit
+
     override fun bind(holder: ReviewItemHolder) {
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.username.text = username
@@ -32,6 +38,10 @@ abstract class ReviewItemModel : EpoxyModelWithHolder<ReviewItemHolder>() {
 
         holder.ratingBar.rating = rating
         holder.ratingBar.setVisible(ratingVisible)
+
+        holder.controlsWrapper.setVisible(controlsVisible)
+        holder.edit.setOnClickListener { onEditClick() }
+        holder.delete.setOnClickListener { onDeleteClick() }
     }
 }
 
@@ -41,4 +51,7 @@ class ReviewItemHolder : KotlinHolder() {
     val time by bind<TextView>(R.id.review_item_time)
     val reviewText by bind<TextView>(R.id.review_item_text)
     val ratingBar by bind<AppCompatRatingBar>(R.id.review_item_rating_bar)
+    val controlsWrapper by bind<View>(R.id.review_item_controls_wrapper)
+    val edit by bind<TextView>(R.id.review_item_edit)
+    val delete by bind<TextView>(R.id.review_item_delete)
 }

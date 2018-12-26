@@ -101,6 +101,9 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     reviewText(lastReviewText)
                     rating(0.0F)
                     ratingVisible(false)
+                    controlsVisible(false)
+                    onEditClick { /* Do nothing */ }
+                    onDeleteClick { /* Do nothing */ }
                 }
             }
 
