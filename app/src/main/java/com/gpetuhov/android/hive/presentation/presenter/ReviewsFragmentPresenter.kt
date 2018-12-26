@@ -26,6 +26,8 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
 
     // === Public methods ===
 
+    // --- Init ---
+
     fun changeReviewsList(reviewsList: MutableList<Review>) {
         this.reviewsList = reviewsList
         this.reviewCount = reviewsList.size
@@ -56,7 +58,33 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
         viewState.updateUI()
     }
 
+    // --- Edit review ---
+
+    fun editReview(reviewUid: String) {
+        // TODO: implement
+    }
+
+    // --- Delete review ---
+
+    fun showDeleteReviewDialog(reviewUid: String) {
+        // TODO: implement
+//        viewState.showDeleteReviewDialog()
+    }
+
+    fun deleteReview() {
+//        viewState.dismissDeleteReviewDialog()
+//        deleteReviewInteractor.deleteReview(reviewUid)
+    }
+
+    fun deleteReviewCancel() {
+//        viewState.dismissDeleteOfferDialog()
+    }
+
+    // --- Post review ---
+
     fun postReview() = viewState.postReview(offerUid)
+
+    // --- Navigation ---
 
     fun navigateUp() = viewState.navigateUp()
 

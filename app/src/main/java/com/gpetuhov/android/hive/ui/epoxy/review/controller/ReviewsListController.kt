@@ -40,14 +40,8 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
                 rating(review.rating)
                 ratingVisible(true)
                 controlsVisible(review.isFromCurrentUser)
-
-                onEditClick {
-                    // TODO: implement
-                }
-
-                onDeleteClick {
-                    // TODO: implement
-                }
+                onEditClick { presenter.editReview(review.uid) }
+                onDeleteClick { presenter.showDeleteReviewDialog(review.uid) }
             }
         }
     }
