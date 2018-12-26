@@ -44,9 +44,6 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         presenter.offerUid = offerUid
         presenter.isCurrentUser = isCurrentUser
 
-        // Hide post review button for current user
-        binding?.postReviewButtonVisible = !isCurrentUser
-
         // Hide bottom nav view for current user
         if (isCurrentUser) hideBottomNavigationView() else showBottomNavigationView()
 
@@ -84,7 +81,10 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     // === ReviewsFragmentView ===
 
-    override fun updateUI() = controller?.requestModelBuild() ?: Unit
+    override fun updateUI() {
+        binding?.postReviewButtonVisible = presenter.postReviewEnabled
+        controller?.requestModelBuild() ?: Unit
+    }
 
     override fun postReview(offerUid: String) {
         val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid)

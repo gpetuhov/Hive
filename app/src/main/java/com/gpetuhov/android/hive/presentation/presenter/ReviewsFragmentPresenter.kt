@@ -31,6 +31,7 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
         this.reviewCount = reviewsList.size
 
         postReviewEnabled = true
+        var reviewFromCurrentUserExist = false
 
         if (reviewCount == 0) {
             rating = 0.0F
@@ -41,12 +42,16 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
                 ratingSum += it.rating
 
                 if (it.authorUid == repo.currentUserUid()) {
-                    postReviewEnabled = false
+                    reviewFromCurrentUserExist = true
                 }
             }
 
             rating = ratingSum / reviewCount
         }
+
+        // Hide post review button if current offer belongs to current user
+        // or if current user has already posted review on the current offer.
+        postReviewEnabled = !(isCurrentUser || reviewFromCurrentUserExist)
 
         viewState.updateUI()
     }
