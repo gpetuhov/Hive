@@ -39,6 +39,8 @@ abstract class ReviewItemModel : EpoxyModelWithHolder<ReviewItemHolder>() {
         holder.ratingBar.rating = rating
         holder.ratingBar.setVisible(ratingVisible)
 
+        holder.separator.setVisible(!controlsVisible && ratingVisible)
+
         holder.controlsWrapper.setVisible(controlsVisible)
         holder.edit.setOnClickListener { onEditClick() }
         holder.delete.setOnClickListener { onDeleteClick() }
@@ -51,6 +53,7 @@ class ReviewItemHolder : KotlinHolder() {
     val time by bind<TextView>(R.id.review_item_time)
     val reviewText by bind<TextView>(R.id.review_item_text)
     val ratingBar by bind<AppCompatRatingBar>(R.id.review_item_rating_bar)
+    val separator by bind<View>(R.id.review_item_separator)
     val controlsWrapper by bind<View>(R.id.review_item_controls_wrapper)
     val edit by bind<TextView>(R.id.review_item_edit)
     val delete by bind<TextView>(R.id.review_item_delete)

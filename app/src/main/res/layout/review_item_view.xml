@@ -77,11 +77,17 @@
             android:stepSize="0.1"
             android:isIndicator="true"/>
 
+    <View
+            android:id="@+id/review_item_separator"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"/>
+
     <LinearLayout
             android:id="@+id/review_item_controls_wrapper"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:gravity="center_vertical"
             android:visibility="gone">
@@ -91,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/edit"
-                style="@style/titleTextStyle"/>
+                style="@style/basicTextStyle"/>
 
         <TextView
                 android:id="@+id/review_item_delete"
@@ -100,7 +106,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:text="@string/delete"
-                style="@style/titleTextStyle"/>
+                style="@style/basicTextStyle"/>
 
     </LinearLayout>
 
