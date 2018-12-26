@@ -148,6 +148,8 @@
     <!-- ReviewsFragment -->
     <string name="total_reviews">Total reviews</string>
     <string name="average_rating">Average rating</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
     <!-- UpdateReviewFragment -->
     <string name="review">Review</string>

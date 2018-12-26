@@ -78,4 +78,31 @@
             android:stepSize="0.1"
             android:isIndicator="true"/>
 
+    <LinearLayout
+            android:id="@+id/review_item_controls_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+        <TextView
+                android:id="@+id/review_item_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit"
+                style="@style/titleTextStyle"/>
+
+        <TextView
+                android:id="@+id/review_item_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/delete"
+                style="@style/titleTextStyle"/>
+
+    </LinearLayout>
+
 </LinearLayout>
