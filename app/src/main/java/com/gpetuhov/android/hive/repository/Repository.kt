@@ -875,40 +875,20 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun stopGettingReviewsUpdates() = reviewsListenerRegistration?.remove() ?: Unit
 
     override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit) {
-        if (isAuthorized) {
-            val data = HashMap<String, Any>()
+        val data = HashMap<String, Any>()
 
-            data[REVIEW_PROVIDER_USER_UID_KEY] = secondUserUid()
-            data[REVIEW_OFFER_UID_KEY] = offerUid
-            data[REVIEW_AUTHOR_UID_KEY] = currentUserUid()
-            data[REVIEW_AUTHOR_NAME_KEY] = currentUserNameOrUsername()
-            data[REVIEW_AUTHOR_USER_PIC_KEY] = currentUserPicUrl()
-            data[REVIEW_TEXT_KEY] = text
-            data[REVIEW_RATING_KEY] = rating
-            data[REVIEW_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
+        data[REVIEW_PROVIDER_USER_UID_KEY] = secondUserUid()
+        data[REVIEW_OFFER_UID_KEY] = offerUid
+        data[REVIEW_AUTHOR_UID_KEY] = currentUserUid()
+        data[REVIEW_AUTHOR_NAME_KEY] = currentUserNameOrUsername()
+        data[REVIEW_AUTHOR_USER_PIC_KEY] = currentUserPicUrl()
+        data[REVIEW_TEXT_KEY] = text
+        data[REVIEW_RATING_KEY] = rating
+        data[REVIEW_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
 
-            val reviewUidToSave = if (reviewUid != "") reviewUid else UUID.randomUUID().toString()
+        val reviewUidToSave = if (reviewUid != "") reviewUid else UUID.randomUUID().toString()
 
-            // Write review to Firestore
-            getReviewsCollectionReference(secondUserUid(), offerUid)
-                .document(reviewUidToSave)
-                .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
-                .addOnSuccessListener {
-                    // This is called only in ONLINE
-                    Timber.tag(TAG).d("Review successfully saved")
-                }
-                .addOnFailureListener { error ->
-                    // This is called only in ONLINE
-                    Timber.tag(TAG).d("Error saving review")
-                    onError()
-                }
-
-            // Do not wait for save review to the server success, just call onSuccess()
-            onSuccess()
-
-        } else {
-            onError()
-        }
+        saveReviewData(secondUserUid(), offerUid, reviewUidToSave, data, onSuccess, onError)
     }
 
     override fun clearReviews() {
@@ -932,6 +912,13 @@ class Repository(private val context: Context, private val settings: Settings) :
         } else {
             onError()
         }
+    }
+
+    override fun saveComment(reviewUid: String, offerUid: String, commentText: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[REVIEW_COMMENT_KEY] = commentText
+
+        saveReviewData(currentUserUid(), offerUid, reviewUid, data, onSuccess, onError)
     }
 
     // === Private methods ===
@@ -1830,5 +1817,29 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
 
         return result
+    }
+
+    private fun saveReviewData(userUid: String, offerUid: String, reviewUid: String, data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isAuthorized && reviewUid != "" && offerUid != "") {
+            // Write review to Firestore
+            getReviewsCollectionReference(userUid, offerUid)
+                .document(reviewUid)
+                .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
+                .addOnSuccessListener {
+                    // This is called only in ONLINE
+                    Timber.tag(TAG).d("Review successfully saved")
+                }
+                .addOnFailureListener { error ->
+                    // This is called only in ONLINE
+                    Timber.tag(TAG).d("Error saving review")
+                    onError()
+                }
+
+            // Do not wait for save review to the server success, just call onSuccess()
+            onSuccess()
+
+        } else {
+            onError()
+        }
     }
 }

@@ -43,8 +43,11 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
         viewState.disableButtons()
         viewState.showProgress()
 
+        // TODO: refactor this into interactor
+        // TODO: handle errors
         // TODO: add save comment interactor ???
         // TODO: or user save review interactor
+        repo.saveComment(reviewUid, offerUid, commentText, { navigateUp() }, { navigateUp() })
     }
 
     // --- Quit comment update
