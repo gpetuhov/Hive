@@ -28,22 +28,22 @@ class SaveReviewInteractorTest {
 
     @Test
     fun saveReviewSuccess() {
-        testSaveReviewInteractor(Constants.DUMMY_REVIEW, Constants.DUMMY_RATING, true)
+        testSaveReviewInteractor(Constants.DUMMY_REVIEW.text, Constants.DUMMY_REVIEW.rating, true)
     }
 
     @Test
     fun saveReviewError() {
-        testSaveReviewInteractor(Constants.DUMMY_REVIEW, Constants.DUMMY_RATING, false)
+        testSaveReviewInteractor(Constants.DUMMY_REVIEW.text, Constants.DUMMY_REVIEW.rating, false)
     }
 
     @Test
     fun saveReviewEmptyText() {
-        testSaveReviewInteractor("", Constants.DUMMY_RATING, true)
+        testSaveReviewInteractor("", Constants.DUMMY_REVIEW.rating, true)
     }
 
     @Test
     fun saveReviewZeroRating() {
-        testSaveReviewInteractor(Constants.DUMMY_REVIEW, 0.0F, true)
+        testSaveReviewInteractor(Constants.DUMMY_REVIEW.text, 0.0F, true)
     }
 
     private fun testSaveReviewInteractor(reviewText: String, rating: Float, isSuccess: Boolean) {
@@ -76,8 +76,8 @@ class SaveReviewInteractorTest {
         val finalSuccess = isSuccess && reviewText != "" && rating != 0.0F
 
         if (finalSuccess) {
-            assertEquals(Constants.DUMMY_REVIEW, (repo as TestRepository).reviewText)
-            assertEquals(Constants.DUMMY_RATING, (repo as TestRepository).rating)
+            assertEquals(Constants.DUMMY_REVIEW.text, (repo as TestRepository).reviewText)
+            assertEquals(Constants.DUMMY_REVIEW.rating, (repo as TestRepository).rating)
         }
 
         assertEquals(if (finalSuccess) 1 else 0, successCounter)

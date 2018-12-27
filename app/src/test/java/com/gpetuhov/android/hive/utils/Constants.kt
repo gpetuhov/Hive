@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.utils
 import com.gpetuhov.android.hive.domain.model.Favorite
 import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.domain.model.Offer
+import com.gpetuhov.android.hive.domain.model.Review
 
 class Constants {
     companion object {
@@ -44,13 +45,28 @@ class Constants {
         const val SAVE_REVIEW_TEXT_ERROR = "Save review text error"
         const val SAVE_REVIEW_RATING_ERROR = "Save review rating error"
 
-        const val DUMMY_REVIEW = "594igh25894g589h"
-        const val DUMMY_RATING = 4.0F
+        const val DELETE_REVIEW_ERROR = "Delete review error"
+
+        val DUMMY_REVIEW = getDummyReview()
 
         private fun getDummyOffer(): Offer {
             val offer = Offer("2g5g2g", "5894gh5489","dfgfdg", "ddsfdfs", 0.0, false, true)
             offer.photoList.add(DUMMY_PHOTO)
             return offer
         }
+
+        private fun getDummyReview() =
+            Review(
+                "2g5434g34",
+                "25g54g",
+                "g254g54g54",
+                "489gh394g",
+                "Uncle Bob",
+                "",
+                "oioigjo9i",
+                4F,
+                0,
+                false
+            )
     }
 }

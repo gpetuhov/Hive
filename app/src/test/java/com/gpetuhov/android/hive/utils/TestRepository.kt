@@ -16,6 +16,7 @@ class TestRepository : Repo {
     var favoriteList = mutableListOf<Favorite>()
     var reviewText = ""
     var rating = 0.0F
+    var reviewList = mutableListOf<Review>()
 
     override fun isForeground() = false
 
@@ -102,7 +103,13 @@ class TestRepository : Repo {
 
     override fun searchResult(): MutableLiveData<MutableMap<String, User>> = MutableLiveData()
 
-    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) = onComplete()
+    override fun search(
+        queryLatitude: Double,
+        queryLongitude: Double,
+        queryRadius: Double,
+        queryText: String,
+        onComplete: () -> Unit
+    ) = onComplete()
 
     override fun stopGettingSearchResultUpdates() {
     }
@@ -212,7 +219,14 @@ class TestRepository : Repo {
     override fun initUserDetailsFromFavorites(uid: String) {
     }
 
-    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun saveReview(
+        reviewUid: String,
+        offerUid: String,
+        text: String,
+        rating: Float,
+        onSuccess: () -> Unit,
+        onError: () -> Unit
+    ) {
         if (isSuccess) {
             this.reviewText = text
             this.rating = rating
@@ -231,5 +245,14 @@ class TestRepository : Repo {
     }
 
     override fun clearReviews() {
+    }
+
+    override fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isSuccess) {
+            reviewList.clear()
+            onSuccess()
+        } else {
+            onError()
+        }
     }
 }
