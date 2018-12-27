@@ -17,6 +17,7 @@ class TestRepository : Repo {
     var reviewText = ""
     var rating = 0.0F
     var reviewList = mutableListOf<Review>()
+    var commentText = ""
 
     override fun isForeground() = false
 
@@ -257,5 +258,11 @@ class TestRepository : Repo {
     }
 
     override fun saveComment(reviewUid: String, offerUid: String, commentText: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isSuccess) {
+            this.commentText = commentText
+            onSuccess()
+        } else {
+            onError()
+        }
     }
 }

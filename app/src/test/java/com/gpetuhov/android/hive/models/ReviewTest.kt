@@ -17,6 +17,7 @@ class ReviewTest {
 
     @Test
     fun hasComment() {
+        review.comment = ""
         assertEquals(false, review.hasComment())
         review.comment = "5489g28954gh"
         assertEquals(true, review.hasComment())
