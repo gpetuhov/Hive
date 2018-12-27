@@ -86,7 +86,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:theme="@style/ratingBarStyle"
                             android:rating="@={presenter.rating}"
                             android:numStars="5"
                             android:stepSize="1"/>

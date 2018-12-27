@@ -53,10 +53,4 @@
         <item name="android:textSize">@dimen/basic_text_size</item>
     </style>
 
-    <!-- Rating bar style -->
-    <style name="ratingBarStyle" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/md_grey_600</item>
-        <item name="colorControlActivated">@color/colorAccent</item>
-    </style>
-
 </resources>
