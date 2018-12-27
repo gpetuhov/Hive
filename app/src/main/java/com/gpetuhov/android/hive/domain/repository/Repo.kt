@@ -94,4 +94,5 @@ interface Repo {
     fun stopGettingReviewsUpdates()
     fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit)
     fun clearReviews()
+    fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit)
 }

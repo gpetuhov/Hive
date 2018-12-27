@@ -914,6 +914,25 @@ class Repository(private val context: Context, private val settings: Settings) :
         reviews.value = mutableListOf()
     }
 
+    override fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isAuthorized && offerUid != "" && reviewUid != "") {
+            getReviewsCollectionReference(secondUserUid(), offerUid)
+                .document(reviewUid)
+                .delete()
+                .addOnSuccessListener {
+                    Timber.tag(TAG).d("Review successfully deleted")
+                    onSuccess()
+                }
+                .addOnFailureListener {
+                    Timber.tag(TAG).d("Error deleting review")
+                    onError()
+                }
+
+        } else {
+            onError()
+        }
+    }
+
     // === Private methods ===
     // --- User ---
 

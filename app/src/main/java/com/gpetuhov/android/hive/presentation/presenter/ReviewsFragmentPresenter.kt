@@ -75,7 +75,10 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
     fun deleteReview() {
         viewState.dismissDeleteReviewDialog()
 
-        // TODO: implement interactor
+        // TODO: refactor this into interactor
+        // TODO: handle on success and on error
+        repo.deleteReview(offerUid, deleteReviewUid, {}, {})
+
 //        deleteReviewInteractor.deleteReview(deleteReviewUid)
     }
 
