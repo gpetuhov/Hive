@@ -49,6 +49,9 @@ class Constants {
 
         val DUMMY_REVIEW = getDummyReview()
 
+        const val SAVE_COMMENT_ERROR = "Save comment error"
+        const val SAVE_COMMENT_TEXT_ERROR = "Save comment text error"
+
         private fun getDummyOffer(): Offer {
             val offer = Offer("2g5g2g", "5894gh5489","dfgfdg", "ddsfdfs", 0.0, false, true)
             offer.photoList.add(DUMMY_PHOTO)

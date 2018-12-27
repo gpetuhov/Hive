@@ -46,4 +46,8 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveReviewErrorMessage(): String = Constants.SAVE_REVIEW_ERROR
 
     override fun getDeleteReviewErrorMessage(): String = Constants.DELETE_REVIEW_ERROR
+
+    override fun getSaveCommentErrorMessage(): String = Constants.SAVE_COMMENT_ERROR
+
+    override fun getCommentEmptyTextErrorMessage(): String = Constants.SAVE_COMMENT_TEXT_ERROR
 }

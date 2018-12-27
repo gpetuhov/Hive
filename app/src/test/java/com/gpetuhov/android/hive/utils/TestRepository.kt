@@ -255,4 +255,7 @@ class TestRepository : Repo {
             onError()
         }
     }
+
+    override fun saveComment(reviewUid: String, offerUid: String, commentText: String, onSuccess: () -> Unit, onError: () -> Unit) {
+    }
 }
