@@ -93,6 +93,11 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>(), DeleteRevi
 
     fun postReview() = viewState.postReview(offerUid)
 
+    // --- Edit comment ---
+
+    fun editComment(reviewUid: String, commentText: String) =
+        viewState.editComment(offerUid, reviewUid, commentText)
+
     // --- Navigation ---
 
     fun navigateUp() = viewState.navigateUp()

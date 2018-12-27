@@ -220,6 +220,11 @@
                 app:destination="@id/updateReviewFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_reviewsFragment_to_updateCommentFragment"
+                app:destination="@id/updateCommentFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
@@ -239,6 +244,22 @@
         <argument
                 android:name="rating"
                 app:argType="float"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/updateCommentFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.UpdateCommentFragment"
+            android:label="UpdateCommentFragment"
+            tools:layout="@layout/fragment_update_comment">
+        <argument
+                android:name="offerUid"
+                app:argType="string"/>
+        <argument
+                android:name="reviewUid"
+                app:argType="string"/>
+        <argument
+                android:name="commentText"
+                app:argType="string"/>
     </fragment>
 
 </navigation>

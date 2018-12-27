@@ -25,6 +25,11 @@ interface ReviewsFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissDeleteReviewDialog()
 
+    // === Edit comment ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun editComment(offerUid: String, reviewUid: String, commentText: String)
+
     // === Update UI ===
 
     @StateStrategyType(SkipStrategy::class)
