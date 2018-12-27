@@ -20,8 +20,6 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     var reviewText = ""
     var rating = 0.0F
 
-    private var tempReviewText = ""
-
     private var saveReviewInteractor = SaveReviewInteractor(this)
 
     init {
@@ -29,6 +27,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     }
 
     // === SaveReviewInteractor.Callback ===
+
     override fun onSaveReviewSuccess() {
         viewState.enableButtons()
         viewState.hideProgress()
@@ -55,11 +54,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     // --- Quit offer update
 
     fun showQuitReviewUpdateDialog() {
-        if (reviewText != "") {
-            viewState.showQuitReviewUpdateDialog()
-        } else {
-            navigateUp()
-        }
+        viewState.showQuitReviewUpdateDialog()
     }
 
     fun quitReviewUpdate() {

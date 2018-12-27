@@ -100,7 +100,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     }
 
     override fun postReview(offerUid: String) {
-        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid)
+        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid, "", "", 0.0F)
         findNavController().navigate(action)
     }
 

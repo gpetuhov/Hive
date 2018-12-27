@@ -230,6 +230,15 @@
         <argument
                 android:name="offerUid"
                 app:argType="string"/>
+        <argument
+                android:name="reviewUid"
+                app:argType="string"/>
+        <argument
+                android:name="reviewText"
+                app:argType="string"/>
+        <argument
+                android:name="rating"
+                app:argType="float"/>
     </fragment>
 
 </navigation>
