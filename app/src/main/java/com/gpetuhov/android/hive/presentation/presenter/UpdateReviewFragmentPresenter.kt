@@ -76,7 +76,13 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     // --- Quit offer update
 
     fun showQuitReviewUpdateDialog() {
-        viewState.showQuitReviewUpdateDialog()
+        val editStarted = reviewText != initialReviewText || rating != initialRating
+
+        if (editStarted) {
+            viewState.showQuitReviewUpdateDialog()
+        } else {
+            navigateUp()
+        }
     }
 
     fun quitReviewUpdate() {
