@@ -104,6 +104,11 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun editReview(offerUid: String, reviewUid: String, reviewText: String, rating: Float) {
+        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid, reviewUid, reviewText, rating)
+        findNavController().navigate(action)
+    }
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }

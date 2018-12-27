@@ -40,7 +40,7 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
                 rating(review.rating)
                 ratingVisible(true)
                 controlsVisible(review.isFromCurrentUser)
-                onEditClick { presenter.editReview(review.uid) }
+                onEditClick { presenter.editReview(review.uid, review.text, review.rating) }
                 onDeleteClick { presenter.showDeleteReviewDialog(review.uid) }
             }
         }

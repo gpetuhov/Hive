@@ -74,9 +74,8 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>(), DeleteRevi
 
     // --- Edit review ---
 
-    fun editReview(reviewUid: String) {
-        // TODO: implement
-    }
+    fun editReview(reviewUid: String, reviewText: String, rating: Float) =
+        viewState.editReview(offerUid, reviewUid, reviewText, rating)
 
     // --- Delete review ---
 
