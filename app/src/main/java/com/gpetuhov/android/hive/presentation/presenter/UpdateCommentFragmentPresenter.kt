@@ -3,13 +3,14 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.SaveCommentInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.UpdateCommentFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>() {
+class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>(), SaveCommentInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -20,8 +21,24 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
 
     private var initialCommentText= ""
 
+    private var saveCommentInteractor = SaveCommentInteractor(this)
+
     init {
         HiveApp.appComponent.inject(this)
+    }
+
+    // === SaveCommentInteractor.Callback ===
+
+    override fun onSaveCommentSuccess() {
+        viewState.enableButtons()
+        viewState.hideProgress()
+        navigateUp()
+    }
+
+    override fun onSaveCommentError(errorMessage: String) {
+        viewState.enableButtons()
+        viewState.hideProgress()
+        viewState.showToast(errorMessage)
     }
 
     // === Public methods ===
@@ -43,11 +60,7 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
         viewState.disableButtons()
         viewState.showProgress()
 
-        // TODO: refactor this into interactor
-        // TODO: handle errors
-        // TODO: add save comment interactor ???
-        // TODO: or user save review interactor
-        repo.saveComment(reviewUid, offerUid, commentText, { navigateUp() }, { navigateUp() })
+        saveCommentInteractor.saveComment(reviewUid, offerUid, commentText)
     }
 
     // --- Quit comment update

@@ -167,6 +167,8 @@
     <!--  UpdateCommentFragment -->
     <string name="add_comment">Add comment</string>
     <string name="save_comment">Save comment</string>
+    <string name="comment_text_empty_error">Please, add comment</string>
+    <string name="save_comment_error">Error saving comment</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
