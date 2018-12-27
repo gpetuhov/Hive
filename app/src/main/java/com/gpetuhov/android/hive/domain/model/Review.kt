@@ -10,6 +10,7 @@ data class Review(
     var text: String,
     var rating: Float,
     var timestamp: Long,
-    var isFromCurrentUser: Boolean
+    var isFromCurrentUser: Boolean,
+    var comment: String
 ) {
 }

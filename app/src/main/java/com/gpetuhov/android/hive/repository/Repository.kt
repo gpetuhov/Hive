@@ -110,6 +110,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val REVIEW_TEXT_KEY = "text"
         private const val REVIEW_RATING_KEY = "rating"
         private const val REVIEW_TIMESTAMP_KEY = "timestamp"
+        private const val REVIEW_COMMENT_KEY = "comment"
     }
 
     // Firestore is the single source of truth for the currentUser property.
@@ -1798,7 +1799,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             text = doc.getString(REVIEW_TEXT_KEY) ?: "",
             rating = longOrDoubleToFloat(doc.getDouble(REVIEW_RATING_KEY)),
             timestamp = getTimestampFromDocumentSnapshot(doc, REVIEW_TIMESTAMP_KEY),
-            isFromCurrentUser = authorUid == currentUserUid()
+            isFromCurrentUser = authorUid == currentUserUid(),
+            comment = doc.getString(REVIEW_COMMENT_KEY) ?: ""
         )
     }
 
