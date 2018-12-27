@@ -150,6 +150,9 @@
     <string name="average_rating">Average rating</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="delete_review">Delete review</string>
+    <string name="prompt_delete_review">Do you really want to delete your review?</string>
+
 
     <!-- UpdateReviewFragment -->
     <string name="review">Review</string>

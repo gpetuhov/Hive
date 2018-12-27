@@ -66,7 +66,7 @@ interface UpdateOfferFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun choosePhoto()
 
-    // === Delete user ===
+    // === Delete photo ===
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showDeletePhotoDialog()

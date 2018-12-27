@@ -19,6 +19,7 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
     var reviewCount = 0
     var rating = 0.0F
     var postReviewEnabled = true
+    var deleteReviewUid = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -67,18 +68,18 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
     // --- Delete review ---
 
     fun showDeleteReviewDialog(reviewUid: String) {
-        // TODO: implement
-//        viewState.showDeleteReviewDialog()
+        deleteReviewUid = reviewUid
+        viewState.showDeleteReviewDialog()
     }
 
     fun deleteReview() {
-//        viewState.dismissDeleteReviewDialog()
-//        deleteReviewInteractor.deleteReview(reviewUid)
+        viewState.dismissDeleteReviewDialog()
+
+        // TODO: implement interactor
+//        deleteReviewInteractor.deleteReview(deleteReviewUid)
     }
 
-    fun deleteReviewCancel() {
-//        viewState.dismissDeleteOfferDialog()
-    }
+    fun deleteReviewCancel() = viewState.dismissDeleteReviewDialog()
 
     // --- Post review ---
 

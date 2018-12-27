@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -29,11 +30,14 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     private var controller: ReviewsListController? = null
     private var binding: FragmentReviewsBinding? = null
+    private var deleteReviewDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
         hideToolbar()
+
+        initDialogs()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews, container, false)
         binding?.presenter = presenter
@@ -79,7 +83,16 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         controller?.onSaveInstanceState(outState)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        dismissDialogs()
+    }
+
     // === ReviewsFragmentView ===
+
+    override fun showDeleteReviewDialog() = deleteReviewDialog?.show() ?: Unit
+
+    override fun dismissDeleteReviewDialog() = deleteReviewDialog?.dismiss() ?: Unit
 
     override fun updateUI() {
         binding?.postReviewButtonVisible = presenter.postReviewEnabled
@@ -93,5 +106,27 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
+    }
+
+    // === Private methods ===
+
+    private fun initDialogs() {
+        initDeleteReviewDialog()
+    }
+
+    private fun initDeleteReviewDialog() {
+        if (context != null) {
+            deleteReviewDialog = MaterialDialog(context!!)
+                .title(R.string.delete_review)
+                .message(R.string.prompt_delete_review)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton { presenter.deleteReview() }
+                .negativeButton { presenter.deleteReviewCancel() }
+        }
+    }
+
+    private fun dismissDialogs() {
+        dismissDeleteReviewDialog()
     }
 }
