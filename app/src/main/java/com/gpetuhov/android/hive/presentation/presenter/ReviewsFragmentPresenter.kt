@@ -31,12 +31,10 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>(), DeleteRevi
     // === DeleteReviewInteractor.Callback ===
 
     override fun onDeleteReviewSuccess() {
-        // TODO
+        // Do nothing
     }
 
-    override fun onDeleteReviewError(errorMessage: String) {
-        // TODO
-    }
+    override fun onDeleteReviewError(errorMessage: String) = viewState.showToast(errorMessage)
 
     // === Public methods ===
 

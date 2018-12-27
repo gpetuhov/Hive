@@ -30,8 +30,11 @@ interface ReviewsFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun updateUI()
 
-    // === Navigate ===
+    // === Common ===
 
     @StateStrategyType(SkipStrategy::class)
     fun navigateUp()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showToast(message: String)
 }

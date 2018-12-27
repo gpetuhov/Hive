@@ -23,6 +23,7 @@ import com.gpetuhov.android.hive.util.hideBottomNavigationView
 import com.gpetuhov.android.hive.util.hideToolbar
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.pawegio.kandroid.toast
 
 class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
@@ -111,6 +112,10 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
+    }
+
+    override fun showToast(message: String) {
+        toast(message)
     }
 
     // === Private methods ===
