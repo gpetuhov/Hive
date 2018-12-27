@@ -60,7 +60,7 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
         viewState.disableButtons()
         viewState.showProgress()
 
-        saveCommentInteractor.saveComment(reviewUid, offerUid, commentText)
+        saveCommentInteractor.saveComment(reviewUid, offerUid, commentText, true)
     }
 
     // --- Quit comment update

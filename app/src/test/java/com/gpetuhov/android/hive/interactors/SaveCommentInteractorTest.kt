@@ -65,7 +65,7 @@ class SaveCommentInteractorTest {
         }
 
         val interactor = SaveCommentInteractor(callback)
-        interactor.saveComment("", "54gh254", commentText)
+        interactor.saveComment("", "54gh254", commentText, true)
 
         val finalSuccess = isSuccess && commentText != ""
 

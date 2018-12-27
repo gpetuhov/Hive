@@ -4,13 +4,17 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.DeleteReviewInteractor
+import com.gpetuhov.android.hive.domain.interactor.SaveCommentInteractor
 import com.gpetuhov.android.hive.domain.model.Review
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>(), DeleteReviewInteractor.Callback {
+class ReviewsFragmentPresenter :
+    MvpPresenter<ReviewsFragmentView>(),
+    DeleteReviewInteractor.Callback,
+    SaveCommentInteractor.Callback {
 
     @Inject lateinit var repo: Repo
 
@@ -23,6 +27,7 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>(), DeleteRevi
     var deleteReviewUid = ""
 
     private val deleteReviewInteractor = DeleteReviewInteractor(this)
+    private var saveCommentInteractor = SaveCommentInteractor(this)
 
     init {
         HiveApp.appComponent.inject(this)
@@ -35,6 +40,14 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>(), DeleteRevi
     }
 
     override fun onDeleteReviewError(errorMessage: String) = viewState.showToast(errorMessage)
+
+    // === SaveCommentInteractor.Callback ===
+
+    override fun onSaveCommentSuccess() {
+        // Do nothing
+    }
+
+    override fun onSaveCommentError(errorMessage: String) =  viewState.showToast(errorMessage)
 
     // === Public methods ===
 
@@ -95,8 +108,11 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>(), DeleteRevi
 
     // --- Edit comment ---
 
-    fun editComment(reviewUid: String, commentText: String) =
-        viewState.editComment(offerUid, reviewUid, commentText)
+    fun editComment(reviewUid: String, commentText: String) = viewState.editComment(offerUid, reviewUid, commentText)
+
+    // --- Delete comment ---
+
+    fun deleteComment(reviewUid: String) = saveCommentInteractor.saveComment(reviewUid, offerUid, "", false)
 
     // --- Navigation ---
 

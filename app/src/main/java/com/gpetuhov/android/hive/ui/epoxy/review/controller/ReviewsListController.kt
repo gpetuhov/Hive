@@ -48,10 +48,7 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
                 commentText(review.comment)
                 commentControlsVisible(presenter.isCurrentUser && review.hasComment())
                 onCommentEditClick { presenter.editComment(review.uid, review.comment) }
-
-                onCommentDeleteClick {
-                    // TODO
-                }
+                onCommentDeleteClick { presenter.deleteComment(review.uid) }
             }
         }
     }
