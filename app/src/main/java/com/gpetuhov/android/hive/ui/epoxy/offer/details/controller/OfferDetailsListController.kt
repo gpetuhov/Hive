@@ -108,6 +108,9 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     onCommentClick { /* Do nothing */ }
                     commentTextVisible(false)
                     commentText("")
+                    commentControlsVisible(false)
+                    onCommentEditClick { /* Do nothing */ }
+                    onCommentDeleteClick { /* Do nothing */ }
                 }
             }
 

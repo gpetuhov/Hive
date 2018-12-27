@@ -128,7 +128,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:gravity="center_vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
         <TextView
                 android:layout_width="wrap_content"
@@ -143,6 +143,33 @@
                 android:layout_height="wrap_content"
                 style="@style/mediumTextStyle"
                 tools:text="Comment text"/>
+
+        <LinearLayout
+                android:id="@+id/review_item_comment_controls_wrapper"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+            <TextView
+                    android:id="@+id/review_item_comment_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit"
+                    style="@style/basicTextStyle"/>
+
+            <TextView
+                    android:id="@+id/review_item_comment_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/delete"
+                    style="@style/basicTextStyle"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
