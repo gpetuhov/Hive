@@ -15,10 +15,13 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
 
-    var reviewUid = ""
     var offerUid = ""
+    var reviewUid = ""
     var reviewText = ""
     var rating = 0.0F
+
+    private var initialReviewText= ""
+    private var initialRating = 0.0F
 
     private var saveReviewInteractor = SaveReviewInteractor(this)
 
@@ -41,6 +44,25 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     }
 
     // === Public methods ===
+    // --- Init ---
+
+    fun init(offerUid: String, reviewUid: String, reviewText: String, rating: Float) {
+        // Do not init presenter if already initialized or changed
+        if (
+            this.reviewText == ""
+            && this.rating == 0.0F
+            && this.initialReviewText == ""
+            && this.initialRating == 0.0F
+        ) {
+            this.offerUid = offerUid
+            this.reviewUid = reviewUid
+            this.reviewText = reviewText
+            this.rating = rating
+
+            this.initialReviewText = reviewText
+            this.initialRating = rating
+        }
+    }
 
     // --- Save review ---
 
