@@ -73,7 +73,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
         saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating)
     }
 
-    // --- Quit offer update
+    // --- Quit review update
 
     fun showQuitReviewUpdateDialog() {
         val editStarted = reviewText != initialReviewText || rating != initialRating
