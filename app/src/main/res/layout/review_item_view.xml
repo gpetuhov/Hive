@@ -119,4 +119,31 @@
             android:visibility="gone"
             style="@style/basicTextStyle"/>
 
+    <LinearLayout
+            android:id="@+id/review_item_comment_text_wrapper"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:gravity="center_vertical"
+            android:visibility="visible">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/provider_comment"
+                android:textStyle="bold"
+                style="@style/mediumTextStyle"/>
+
+        <TextView
+                android:id="@+id/review_item_comment_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/mediumTextStyle"
+                tools:text="Comment text"/>
+
+    </LinearLayout>
+
 </LinearLayout>

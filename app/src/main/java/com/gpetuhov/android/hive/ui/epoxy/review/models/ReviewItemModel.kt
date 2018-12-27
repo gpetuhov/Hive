@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
-import androidx.core.view.marginBottom
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -33,6 +32,9 @@ abstract class ReviewItemModel : EpoxyModelWithHolder<ReviewItemHolder>() {
     @EpoxyAttribute var commentVisible = false
     @EpoxyAttribute lateinit var onCommentClick: () -> Unit
 
+    @EpoxyAttribute var commentTextVisible = false
+    @EpoxyAttribute lateinit var commentText: String
+
     override fun bind(holder: ReviewItemHolder) {
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.username.text = username
@@ -50,6 +52,9 @@ abstract class ReviewItemModel : EpoxyModelWithHolder<ReviewItemHolder>() {
 
         holder.comment.setVisible(commentVisible)
         holder.comment.setOnClickListener { onCommentClick() }
+
+        holder.commentTextWrapper.setVisible(commentTextVisible)
+        holder.commentText.text = commentText
     }
 }
 
@@ -64,4 +69,6 @@ class ReviewItemHolder : KotlinHolder() {
     val edit by bind<TextView>(R.id.review_item_edit)
     val delete by bind<TextView>(R.id.review_item_delete)
     val comment by bind<TextView>(R.id.review_item_comment)
+    val commentTextWrapper by bind<View>(R.id.review_item_comment_text_wrapper)
+    val commentText by bind<TextView>(R.id.review_item_comment_text)
 }
