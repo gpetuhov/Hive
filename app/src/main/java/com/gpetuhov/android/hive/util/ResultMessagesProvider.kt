@@ -56,5 +56,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveReviewErrorMessage(): String = getString(R.string.save_review_error)
 
+    override fun getDeleteReviewErrorMessage(): String = getString(R.string.delete_review_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

@@ -152,7 +152,7 @@
     <string name="delete">Delete</string>
     <string name="delete_review">Delete review</string>
     <string name="prompt_delete_review">Do you really want to delete your review?</string>
-
+    <string name="delete_review_error">Error deleting review</string>
 
     <!-- UpdateReviewFragment -->
     <string name="review">Review</string>

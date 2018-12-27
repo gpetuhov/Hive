@@ -22,4 +22,5 @@ interface ResultMessages {
     fun getReviewEmptyTextErrorMessage(): String
     fun getReviewZeroRatingErrorMessage(): String
     fun getSaveReviewErrorMessage(): String
+    fun getDeleteReviewErrorMessage(): String
 }

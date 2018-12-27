@@ -3,13 +3,14 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.DeleteReviewInteractor
 import com.gpetuhov.android.hive.domain.model.Review
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
 import javax.inject.Inject
 
 @InjectViewState
-class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
+class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>(), DeleteReviewInteractor.Callback {
 
     @Inject lateinit var repo: Repo
 
@@ -21,8 +22,20 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
     var postReviewEnabled = true
     var deleteReviewUid = ""
 
+    private val deleteReviewInteractor = DeleteReviewInteractor(this)
+
     init {
         HiveApp.appComponent.inject(this)
+    }
+
+    // === DeleteReviewInteractor.Callback ===
+
+    override fun onDeleteReviewSuccess() {
+        // TODO
+    }
+
+    override fun onDeleteReviewError(errorMessage: String) {
+        // TODO
     }
 
     // === Public methods ===
@@ -74,12 +87,7 @@ class ReviewsFragmentPresenter : MvpPresenter<ReviewsFragmentView>() {
 
     fun deleteReview() {
         viewState.dismissDeleteReviewDialog()
-
-        // TODO: refactor this into interactor
-        // TODO: handle on success and on error
-        repo.deleteReview(offerUid, deleteReviewUid, {}, {})
-
-//        deleteReviewInteractor.deleteReview(deleteReviewUid)
+        deleteReviewInteractor.deleteReview(offerUid, deleteReviewUid)
     }
 
     fun deleteReviewCancel() = viewState.dismissDeleteReviewDialog()
