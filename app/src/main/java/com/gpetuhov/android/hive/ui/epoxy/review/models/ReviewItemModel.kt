@@ -30,6 +30,9 @@ abstract class ReviewItemModel : EpoxyModelWithHolder<ReviewItemHolder>() {
     @EpoxyAttribute lateinit var onEditClick: () -> Unit
     @EpoxyAttribute lateinit var onDeleteClick: () -> Unit
 
+    @EpoxyAttribute var commentVisible = false
+    @EpoxyAttribute lateinit var onCommentClick: () -> Unit
+
     override fun bind(holder: ReviewItemHolder) {
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.username.text = username
@@ -39,11 +42,14 @@ abstract class ReviewItemModel : EpoxyModelWithHolder<ReviewItemHolder>() {
         holder.ratingBar.rating = rating
         holder.ratingBar.setVisible(ratingVisible)
 
-        holder.separator.setVisible(!controlsVisible && ratingVisible)
+        holder.separator.setVisible(!(controlsVisible || commentVisible) && ratingVisible)
 
         holder.controlsWrapper.setVisible(controlsVisible)
         holder.edit.setOnClickListener { onEditClick() }
         holder.delete.setOnClickListener { onDeleteClick() }
+
+        holder.comment.setVisible(commentVisible)
+        holder.comment.setOnClickListener { onCommentClick() }
     }
 }
 
@@ -57,4 +63,5 @@ class ReviewItemHolder : KotlinHolder() {
     val controlsWrapper by bind<View>(R.id.review_item_controls_wrapper)
     val edit by bind<TextView>(R.id.review_item_edit)
     val delete by bind<TextView>(R.id.review_item_delete)
+    val comment by bind<TextView>(R.id.review_item_comment)
 }

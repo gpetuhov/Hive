@@ -13,4 +13,5 @@ data class Review(
     var isFromCurrentUser: Boolean,
     var comment: String
 ) {
+    fun hasComment() = comment != ""
 }
