@@ -32,14 +32,12 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     // === SaveReviewInteractor.Callback ===
 
     override fun onSaveReviewSuccess() {
-        viewState.enableButtons()
-        viewState.hideProgress()
+        onOperationComplete()
         navigateUp()
     }
 
     override fun onSaveReviewError(errorMessage: String) {
-        viewState.enableButtons()
-        viewState.hideProgress()
+        onOperationComplete()
         viewState.showToast(errorMessage)
     }
 
@@ -95,4 +93,9 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     // === Private methods ===
 
     private fun navigateUp() = viewState.navigateUp()
+
+    private fun onOperationComplete() {
+        viewState.enableButtons()
+        viewState.hideProgress()
+    }
 }
