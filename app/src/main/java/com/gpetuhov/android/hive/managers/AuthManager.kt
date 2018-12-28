@@ -140,7 +140,8 @@ open class AuthManager : Auth {
             userPicUrl = firebaseUser.photoUrl?.toString() ?: "",
             description = "",
             isOnline = false,
-            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE),
+            creationTimestamp = firebaseUser.metadata?.creationTimestamp ?: 0
         )
     }
 

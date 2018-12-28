@@ -60,6 +60,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val IS_ONLINE_KEY = "is_online"
         private const val LOCATION_KEY = "l"
         private const val FCM_TOKEN_KEY = "fcm_token"
+        private const val CREATION_TIMESTAMP_KEY = "creationTimestamp"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -960,6 +961,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 data[NAME_KEY] = user.name
                 data[EMAIL_KEY] = user.email
                 data[FCM_TOKEN_KEY] = token
+                data[CREATION_TIMESTAMP_KEY] = user.creationTimestamp
 
                 // If user from Firebase Auth has user pic
                 if (user.userPicUrl != "") {
