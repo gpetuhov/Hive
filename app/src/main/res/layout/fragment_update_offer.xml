@@ -5,6 +5,7 @@
         tools:context=".ui.fragment.UpdateOfferFragment">
 
     <data>
+        <import type="android.view.View"/>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter"/>
     </data>
 
@@ -56,7 +57,7 @@
                     android:src="@drawable/ic_delete"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/delete_offer"
-                    android:visibility="gone"
+                    android:visibility="@{presenter.isDeleteButtonVisible ? View.VISIBLE : View.GONE}"
                     android:onClick="@{view -> presenter.showDeleteOfferDialog()}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

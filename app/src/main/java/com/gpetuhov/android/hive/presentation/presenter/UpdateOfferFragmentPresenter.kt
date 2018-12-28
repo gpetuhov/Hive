@@ -36,6 +36,8 @@ class UpdateOfferFragmentPresenter :
     var rating = 0.0F
     var reviewCount = 0
 
+    var isDeleteButtonVisible = false
+
     private var tempTitle = ""
     private var tempDescription = ""
     private var tempPrice = Constants.Offer.DEFAULT_PRICE
@@ -102,6 +104,8 @@ class UpdateOfferFragmentPresenter :
             active = activeOfferCountLessThanMax
             activeEnabled = activeOfferCountLessThanMax
         }
+
+        isDeleteButtonVisible = uid != ""
     }
 
     // --- Change title ---
