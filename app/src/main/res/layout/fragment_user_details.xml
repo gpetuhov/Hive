@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/user_details_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -22,49 +22,45 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+            <ImageButton
+                    android:id="@+id/user_details_back_button"
+                    android:layout_width="@dimen/basic_view_size"
+                    android:layout_height="@dimen/basic_view_size"
+                    android:src="@drawable/ic_arrow_back"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/close_offer_update"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/user_details"
+                    style="@style/titleTextStyle"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/user_details_back_button"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
 
-                <ImageButton
-                        android:id="@+id/user_details_back_button"
-                        android:layout_width="@dimen/basic_view_size"
-                        android:layout_height="@dimen/basic_view_size"
-                        android:src="@drawable/ic_arrow_back"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="@string/close_offer_update"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+            <ImageButton
+                    android:id="@+id/user_details_favorite_button"
+                    android:layout_width="@dimen/basic_view_size"
+                    android:layout_height="@dimen/basic_view_size"
+                    android:src="@drawable/ic_star_border"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/add_to_favorites"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"/>
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="@string/user_details"
-                        style="@style/titleTextStyle"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/user_details_back_button"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginStart="16dp"/>
-
-                <ImageButton
-                        android:id="@+id/user_details_favorite_button"
-                        android:layout_width="@dimen/basic_view_size"
-                        android:layout_height="@dimen/basic_view_size"
-                        android:src="@drawable/ic_star_border"
-                        android:background="@android:color/transparent"
-                        android:contentDescription="@string/add_to_favorites"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.airbnb.epoxy.EpoxyRecyclerView
                 android:id="@+id/user_details_recycler_view"
