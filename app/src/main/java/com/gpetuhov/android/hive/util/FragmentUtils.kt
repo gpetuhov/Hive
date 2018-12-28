@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
@@ -34,20 +35,12 @@ fun Fragment.hideBottomNavigationView() {
     getBottomNavigationView()?.visibility = View.GONE
 }
 
-fun Fragment.showToolbar(titleId: Int) {
-    showToolbar(getString(titleId))
-}
-
-fun Fragment.showToolbar(title: String) {
-    initToolbar(true, title, 0, { /* Do nothing */ }, { /* Do nothing */ })
-}
-
-fun Fragment.showToolbar(title: String, navigationIconId: Int, onNavigationClick: () -> Unit, onClick: () -> Unit) {
-    initToolbar(true, title, navigationIconId, onNavigationClick, onClick)
+fun Fragment.showToolbar(onNavigationClick: () -> Unit, onClick: () -> Unit) {
+    initToolbar(true, onNavigationClick, onClick)
 }
 
 fun Fragment.hideToolbar() {
-    initToolbar(false, "", 0, { /* Do nothing */ }, { /* Do nothing */ })
+    initToolbar(false, { /* Do nothing */ }, { /* Do nothing */ })
 }
 
 fun Fragment.setToolbarUserPic(user: User) {
@@ -77,24 +70,18 @@ private fun Fragment.setActivitySoftInput(isResize: Boolean) {
 
 private fun Fragment.getBottomNavigationView() = activity?.findViewById<BottomNavigationView>(R.id.navigation_view)
 
-private fun Fragment.getToolbar() = activity?.findViewById<Toolbar>(R.id.toolbar)
+private fun Fragment.getToolbar() = activity?.findViewById<View>(R.id.toolbar)
 
 private fun Fragment.getToolbarImage() = activity?.findViewById(R.id.toolbar_image) ?: ImageView(context)
 
 private fun Fragment.getToolbarTitle() = activity?.findViewById<TextView>(R.id.toolbar_title)
 
-private fun Fragment.initToolbar(isVisible: Boolean, title: String, navigationIconId: Int, onNavigationClick: () -> Unit, onClick: () -> Unit) {
+private fun Fragment.initToolbar(isVisible: Boolean, onNavigationClick: () -> Unit, onClick: () -> Unit) {
     val toolbar = getToolbar()
 
     toolbar?.setVisible(isVisible)
-    toolbar?.title = title
 
-    if (navigationIconId != 0) {
-        toolbar?.setNavigationIcon(navigationIconId)
-    } else {
-        toolbar?.navigationIcon = null
-    }
-
-    toolbar?.setNavigationOnClickListener { onNavigationClick() }
+    val backButton = toolbar?.findViewById<ImageButton>(R.id.toolbar_back_button)
+    backButton?.setOnClickListener { onNavigationClick() }
     toolbar?.setOnClickListener { onClick() }
 }

@@ -8,40 +8,54 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <LinearLayout
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:minHeight="56dp"
+            android:layout_height="@dimen/basic_view_size"
             android:background="@color/md_white_1000"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:elevation="2dp"
             android:visibility="gone"
-            app:titleTextAppearance="@style/toolbarTitleStyle"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageButton
+                android:id="@+id/toolbar_back_button"
+                android:layout_width="@dimen/basic_view_size"
+                android:layout_height="@dimen/basic_view_size"
+                android:src="@drawable/ic_arrow_back"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/close_offer_update"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"/>
 
         <ImageView
                 android:id="@+id/toolbar_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:contentDescription="@string/user_picture"/>
 
         <!-- Separates image from title -->
         <!-- This is needed, because for some reason
         simple margins didn't work on Oreo -->
-        <View
-                android:layout_width="8dp"
-                android:layout_height="match_parent"/>
+        <!--<View-->
+                <!--android:layout_width="8dp"-->
+                <!--android:layout_height="match_parent"/>-->
 
         <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/toolbarTitleStyle"
+                style="@style/titleTextStyle"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 tools:text="User name"/>
 
-    </androidx.appcompat.widget.Toolbar>
+    </LinearLayout>
 
     <fragment
             android:id="@+id/nav_host"

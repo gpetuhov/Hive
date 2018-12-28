@@ -42,8 +42,6 @@ class ChatFragment : BaseFragment(), ChatFragmentView {
         setActivitySoftInputResize()
 
         showToolbar(
-            "",
-            R.drawable.ic_arrow_back,
             { presenter.navigateUp() },
             { presenter.openUserDetails() }
         )
