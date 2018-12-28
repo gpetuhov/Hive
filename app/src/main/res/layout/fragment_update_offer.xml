@@ -1,94 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         tools:context=".ui.fragment.UpdateOfferFragment">
 
+    <data>
+        <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter"/>
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/update_offer_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/md_white_1000"
-            android:elevation="2dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_height="match_parent">
 
-        <ImageButton
-                android:id="@+id/update_offer_back_button"
-                android:layout_width="@dimen/basic_view_size"
-                android:layout_height="@dimen/basic_view_size"
-                android:src="@drawable/ic_arrow_back"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/close_offer_update"
-                app:layout_constraintStart_toStartOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/update_offer_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/md_white_1000"
+                android:elevation="2dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
+            <ImageButton
+                    android:id="@+id/update_offer_back_button"
+                    android:layout_width="@dimen/basic_view_size"
+                    android:layout_height="@dimen/basic_view_size"
+                    android:src="@drawable/ic_arrow_back"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/close_offer_update"
+                    android:onClick="@{view -> presenter.showQuitOfferUpdateDialog()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/offer"
+                    style="@style/titleTextStyle"
+                    android:id="@+id/textView2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/update_offer_back_button"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
+
+            <ImageButton
+                    android:id="@+id/update_offer_delete_button"
+                    android:layout_width="@dimen/basic_view_size"
+                    android:layout_height="@dimen/basic_view_size"
+                    android:src="@drawable/ic_delete"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/delete_offer"
+                    android:visibility="gone"
+                    android:onClick="@{view -> presenter.showDeleteOfferDialog()}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/update_offer_save_button"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"/>
+
+            <ImageButton
+                    android:id="@+id/update_offer_save_button"
+                    android:layout_width="@dimen/basic_view_size"
+                    android:layout_height="@dimen/basic_view_size"
+                    android:src="@drawable/ic_check2"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/save_offer"
+                    android:onClick="@{view -> presenter.saveOffer()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/update_offer_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/update_offer_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ProgressBar
+                android:id="@+id/update_offer_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/offer"
-                style="@style/titleTextStyle"
-                android:id="@+id/textView2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/update_offer_back_button"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"/>
-
-        <ImageButton
-                android:id="@+id/update_offer_delete_button"
-                android:layout_width="@dimen/basic_view_size"
-                android:layout_height="@dimen/basic_view_size"
-                android:src="@drawable/ic_delete"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/delete_offer"
                 android:visibility="gone"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/update_offer_save_button"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"/>
-
-        <ImageButton
-                android:id="@+id/update_offer_save_button"
-                android:layout_width="@dimen/basic_view_size"
-                android:layout_height="@dimen/basic_view_size"
-                android:src="@drawable/ic_check2"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/save_offer"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/update_offer_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/update_offer_header"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <ProgressBar
-            android:id="@+id/update_offer_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

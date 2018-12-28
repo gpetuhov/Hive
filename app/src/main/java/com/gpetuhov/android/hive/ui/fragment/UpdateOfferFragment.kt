@@ -7,6 +7,7 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import com.afollestad.materialdialogs.input.input
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.databinding.FragmentUpdateOfferBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UpdateOfferFragmentView
@@ -37,6 +39,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     @InjectPresenter lateinit var presenter: UpdateOfferFragmentPresenter
 
     private var controller: UpdateOfferListController? = null
+    private var binding: FragmentUpdateOfferBinding? = null
 
     private var titleDialog: MaterialDialog? = null
     private var descriptionDialog: MaterialDialog? = null
@@ -58,13 +61,14 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
         presenter.initOffer(UpdateOfferFragmentArgs.fromBundle(arguments).offerUid)
 
-        val view = inflater.inflate(R.layout.fragment_update_offer, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_offer, container, false)
+        binding?.presenter = presenter
 
         controller = UpdateOfferListController(presenter)
         controller?.onRestoreInstanceState(savedInstanceState)
 
-        val updateOfferRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.update_offer_recycler_view)
-        updateOfferRecyclerView.adapter = controller?.adapter
+        val updateOfferRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.update_offer_recycler_view)
+        updateOfferRecyclerView?.adapter = controller?.adapter
 
         updateUI()
 
@@ -73,7 +77,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
             presenter.updateReviews(user)
         })
 
-        return view
+        return binding?.root
     }
 
     override fun onDestroyView() {
