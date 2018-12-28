@@ -62,5 +62,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getCommentEmptyTextErrorMessage(): String = getString(R.string.comment_text_empty_error)
 
+    override fun getDeleteCommentErrorMessage(): String = getString(R.string.delete_comment_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

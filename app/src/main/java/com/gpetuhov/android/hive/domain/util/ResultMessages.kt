@@ -25,4 +25,5 @@ interface ResultMessages {
     fun getDeleteReviewErrorMessage(): String
     fun getSaveCommentErrorMessage(): String
     fun getCommentEmptyTextErrorMessage(): String
+    fun getDeleteCommentErrorMessage(): String
 }

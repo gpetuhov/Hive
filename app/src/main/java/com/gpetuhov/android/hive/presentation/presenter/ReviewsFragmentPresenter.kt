@@ -3,8 +3,8 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.DeleteCommentInteractor
 import com.gpetuhov.android.hive.domain.interactor.DeleteReviewInteractor
-import com.gpetuhov.android.hive.domain.interactor.SaveCommentInteractor
 import com.gpetuhov.android.hive.domain.model.Review
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
@@ -14,7 +14,7 @@ import javax.inject.Inject
 class ReviewsFragmentPresenter :
     MvpPresenter<ReviewsFragmentView>(),
     DeleteReviewInteractor.Callback,
-    SaveCommentInteractor.Callback {
+    DeleteCommentInteractor.Callback {
 
     @Inject lateinit var repo: Repo
 
@@ -29,7 +29,7 @@ class ReviewsFragmentPresenter :
     private var deleteCommentReviewUid = ""
 
     private val deleteReviewInteractor = DeleteReviewInteractor(this)
-    private var saveCommentInteractor = SaveCommentInteractor(this)
+    private var deleteCommentInteractor = DeleteCommentInteractor(this)
 
     init {
         HiveApp.appComponent.inject(this)
@@ -43,13 +43,13 @@ class ReviewsFragmentPresenter :
 
     override fun onDeleteReviewError(errorMessage: String) = viewState.showToast(errorMessage)
 
-    // === SaveCommentInteractor.Callback ===
+    // === DeleteCommentInteractor.Callback ===
 
-    override fun onSaveCommentSuccess() {
+    override fun onDeleteCommentSuccess() {
         // Do nothing
     }
 
-    override fun onSaveCommentError(errorMessage: String) =  viewState.showToast(errorMessage)
+    override fun onDeleteCommentError(errorMessage: String) =  viewState.showToast(errorMessage)
 
     // === Public methods ===
 
@@ -121,7 +121,7 @@ class ReviewsFragmentPresenter :
 
     fun deleteComment() {
         viewState.dismissDeleteCommentDialog()
-        saveCommentInteractor.saveComment(deleteCommentReviewUid, offerUid, "", false)
+        deleteCommentInteractor.deleteComment(deleteCommentReviewUid, offerUid)
     }
 
     fun deleteCommentCancel() = viewState.dismissDeleteCommentDialog()
