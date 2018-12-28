@@ -7,7 +7,6 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsDescription
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsOfferHeader
 import com.gpetuhov.android.hive.util.Settings
@@ -24,13 +23,6 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
     }
 
     override fun buildModels() {
-        userDetailsHeader {
-            id("user_details_header")
-            onBackButtonClick { presenter.navigateUp() }
-            favorite(user?.isFavorite ?: false)
-            onFavoriteButtonClick { presenter.favorite() }
-        }
-
         val photoList = user?.photoList ?: mutableListOf()
         photoCarousel(
             settings,
