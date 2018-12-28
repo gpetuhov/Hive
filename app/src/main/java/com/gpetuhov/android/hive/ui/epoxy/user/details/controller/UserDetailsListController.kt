@@ -50,9 +50,13 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             creationDate("${context.getString(R.string.user_creation_date)} $creationDate")
             creationDateVisible(creationTimestamp != 0L)
 
-            // TODO: calculate these
-            activeOffersCount("${context.getString(R.string.user_active_offers_count)}: 0")
-            totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: 0")
+            val activeOfferList = user?.offerList?.filter { it.isActive }
+            val activeOffersCount = activeOfferList?.size ?: 0
+            activeOffersCount("${context.getString(R.string.user_active_offers_count)}: $activeOffersCount")
+
+            var totalReviewsCount = 0
+            activeOfferList?.forEach { totalReviewsCount += it.reviewCount }
+            totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: $totalReviewsCount")
         }
 
         val hasDescription = user?.hasDescription ?: false
