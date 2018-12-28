@@ -55,18 +55,25 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
     // --- Save review ---
 
     fun saveComment() {
-        viewState.disableButtons()
-        viewState.showProgress()
+        val shouldQuit = commentText != "" && !editStarted()
 
-        saveCommentInteractor.saveComment(reviewUid, offerUid, commentText)
+        if (shouldQuit) {
+            // If comment text is not empty and didn't change, just quit
+            navigateUp()
+
+        } else {
+            // Otherwise try to save comment
+            // (if comment text is empty, show error in interactor's callback).
+            viewState.disableButtons()
+            viewState.showProgress()
+            saveCommentInteractor.saveComment(reviewUid, offerUid, commentText)
+        }
     }
 
     // --- Quit comment update
 
     fun showQuitCommentUpdateDialog() {
-        val editStarted = commentText != initialCommentText
-
-        if (editStarted) {
+        if (editStarted()) {
             viewState.showQuitCommentUpdateDialog()
         } else {
             navigateUp()
@@ -88,4 +95,6 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
         viewState.enableButtons()
         viewState.hideProgress()
     }
+
+    private fun editStarted() = commentText != initialCommentText
 }
