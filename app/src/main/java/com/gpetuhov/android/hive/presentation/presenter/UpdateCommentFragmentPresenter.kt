@@ -30,14 +30,12 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
     // === SaveCommentInteractor.Callback ===
 
     override fun onSaveCommentSuccess() {
-        viewState.enableButtons()
-        viewState.hideProgress()
+        onOperationComplete()
         navigateUp()
     }
 
     override fun onSaveCommentError(errorMessage: String) {
-        viewState.enableButtons()
-        viewState.hideProgress()
+        onOperationComplete()
         viewState.showToast(errorMessage)
     }
 
@@ -85,4 +83,9 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
     // === Private methods ===
 
     private fun navigateUp() = viewState.navigateUp()
+
+    private fun onOperationComplete() {
+        viewState.enableButtons()
+        viewState.hideProgress()
+    }
 }
