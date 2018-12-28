@@ -65,18 +65,26 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     // --- Save review ---
 
     fun saveReview() {
-        viewState.disableButtons()
-        viewState.showProgress()
+        val shouldQuit = reviewText != "" && rating != 0.0F && !editStarted()
 
-        saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating)
+        if (shouldQuit) {
+            // If review text is not empty and rating is not zero
+            // and edit not started, just quit.
+            navigateUp()
+
+        } else {
+            // Otherwise try to save review
+            // (if review text is empty or rating is zero, show error in interactor's callback).
+            viewState.disableButtons()
+            viewState.showProgress()
+            saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating)
+        }
     }
 
     // --- Quit review update
 
     fun showQuitReviewUpdateDialog() {
-        val editStarted = reviewText != initialReviewText || rating != initialRating
-
-        if (editStarted) {
+        if (editStarted()) {
             viewState.showQuitReviewUpdateDialog()
         } else {
             navigateUp()
@@ -98,4 +106,6 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
         viewState.enableButtons()
         viewState.hideProgress()
     }
+
+    private fun editStarted() = reviewText != initialReviewText || rating != initialRating
 }
