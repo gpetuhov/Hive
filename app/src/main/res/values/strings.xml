@@ -155,6 +155,9 @@
     <string name="delete_review_error">Error deleting review</string>
     <string name="comment">Comment</string>
     <string name="provider_comment">Offer provider\'s comment:</string>
+    <string name="delete_comment">Delete comment</string>
+    <string name="prompt_delete_comment">Do you really want to delete your comment?</string>
+    <string name="delete_comment_error">Error deleting comment</string>
 
     <!-- UpdateReviewFragment -->
     <string name="review">Review</string>

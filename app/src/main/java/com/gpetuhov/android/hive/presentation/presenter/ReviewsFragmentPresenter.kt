@@ -24,7 +24,9 @@ class ReviewsFragmentPresenter :
     var reviewCount = 0
     var rating = 0.0F
     var postReviewEnabled = true
-    var deleteReviewUid = ""
+
+    private var deleteReviewUid = ""
+    private var deleteCommentReviewUid = ""
 
     private val deleteReviewInteractor = DeleteReviewInteractor(this)
     private var saveCommentInteractor = SaveCommentInteractor(this)
@@ -112,7 +114,17 @@ class ReviewsFragmentPresenter :
 
     // --- Delete comment ---
 
-    fun deleteComment(reviewUid: String) = saveCommentInteractor.saveComment(reviewUid, offerUid, "", false)
+    fun showDeleteCommentDialog(reviewUid: String) {
+        deleteCommentReviewUid = reviewUid
+        viewState.showDeleteCommentDialog()
+    }
+
+    fun deleteComment() {
+        viewState.dismissDeleteCommentDialog()
+        saveCommentInteractor.saveComment(deleteCommentReviewUid, offerUid, "", false)
+    }
+
+    fun deleteCommentCancel() = viewState.dismissDeleteCommentDialog()
 
     // --- Navigation ---
 

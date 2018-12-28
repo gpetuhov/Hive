@@ -32,6 +32,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     private var controller: ReviewsListController? = null
     private var binding: FragmentReviewsBinding? = null
     private var deleteReviewDialog: MaterialDialog? = null
+    private var deleteCommentDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -95,6 +96,10 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     override fun dismissDeleteReviewDialog() = deleteReviewDialog?.dismiss() ?: Unit
 
+    override fun showDeleteCommentDialog() = deleteCommentDialog?.show() ?: Unit
+
+    override fun dismissDeleteCommentDialog() = deleteCommentDialog?.dismiss() ?: Unit
+
     override fun updateUI() {
         binding?.postReviewButtonVisible = presenter.postReviewEnabled
         controller?.requestModelBuild() ?: Unit
@@ -127,6 +132,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     private fun initDialogs() {
         initDeleteReviewDialog()
+        initDeleteCommentDialog()
     }
 
     private fun initDeleteReviewDialog() {
@@ -141,7 +147,20 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         }
     }
 
+    private fun initDeleteCommentDialog() {
+        if (context != null) {
+            deleteCommentDialog = MaterialDialog(context!!)
+                .title(R.string.delete_comment)
+                .message(R.string.prompt_delete_comment)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton { presenter.deleteComment() }
+                .negativeButton { presenter.deleteCommentCancel() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissDeleteReviewDialog()
+        dismissDeleteCommentDialog()
     }
 }
