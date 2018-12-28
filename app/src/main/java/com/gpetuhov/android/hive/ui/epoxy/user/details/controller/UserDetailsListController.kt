@@ -47,12 +47,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             val creationTimestamp = user?.creationTimestamp ?: 0
             val creationDate = getDateFromTimestampInMilliseconds(creationTimestamp)
 
-            // TODO: extract string resources
-            creationDate("In Hive since $creationDate")
+            creationDate("${context.getString(R.string.user_creation_date)} $creationDate")
             creationDateVisible(creationTimestamp != 0L)
 
-            activeOffersCount("Active offers: ")
-            totalReviewsCount("Total reviews: ")
+            // TODO: calculate these
+            activeOffersCount("${context.getString(R.string.user_active_offers_count)}: 0")
+            totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: 0")
         }
 
         val hasDescription = user?.hasDescription ?: false
