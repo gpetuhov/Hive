@@ -80,6 +80,7 @@
     <string name="remove_favorite_error">Error removing from favorites</string>
     <string name="summary">Summary</string>
     <string name="user_creation_date">In Hive since</string>
+    <string name="user_first_offer_creation_date">First offer published</string>
     <string name="user_active_offers_count">Active offers</string>
     <string name="user_total_reviews_count">Total reviews</string>
 

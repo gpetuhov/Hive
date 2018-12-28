@@ -50,6 +50,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             creationDate("${context.getString(R.string.user_creation_date)} $creationDate")
             creationDateVisible(creationTimestamp != 0L)
 
+            // TODO: implement this
+            firstOfferCreationDate("${context.getString(R.string.user_first_offer_creation_date)} ")
+            firstOfferCreationDateVisible(false)
+
             val activeOfferList = user?.offerList?.filter { it.isActive }
             val activeOffersCount = activeOfferList?.size ?: 0
             activeOffersCount("${context.getString(R.string.user_active_offers_count)}: $activeOffersCount")
