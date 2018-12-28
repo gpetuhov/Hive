@@ -54,6 +54,7 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
             presenter.userUid = user.uid
             val offer = user.getOffer(offerUid)
             presenter.offerIsFavorite = offer?.isFavorite ?: false
+            binding?.offerIsFavorite = presenter.offerIsFavorite
             controller?.changeOffer(user, offer)
         })
 

@@ -120,6 +120,7 @@
     <string name="reviews">Reviews</string>
     <string name="no_reviews">No reviews yet. Be the first one to review this offer</string>
     <string name="all_reviews">All reviews</string>
+    <string name="close_offer_details">Close offer details</string>
 
     <!-- NotificationManager -->
     <string name="location_sharing_enabled">Location sharing enabled</string>
