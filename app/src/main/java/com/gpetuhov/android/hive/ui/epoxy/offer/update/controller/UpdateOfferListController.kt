@@ -6,7 +6,6 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.UpdateOfferFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferDetails
-import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferHeader
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferPrice
 import com.gpetuhov.android.hive.ui.epoxy.offer.update.models.updateOfferReviews
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
@@ -19,27 +18,11 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings
 
-    private var saveButtonEnabled = true
-    private var deleteButtonEnabled = true
-
     init {
         HiveApp.appComponent.inject(this)
     }
 
     override fun buildModels() {
-        updateOfferHeader {
-            id("update_offer_header")
-
-            onBackButtonClick { presenter.showQuitOfferUpdateDialog() }
-
-            deleteButtonVisible(presenter.uid != "")
-            deleteButtonEnabled(deleteButtonEnabled)
-            onDeleteButtonClick { presenter.showDeleteOfferDialog() }
-
-            saveButtonEnabled(saveButtonEnabled)
-            onSaveButtonClick { presenter.saveOffer() }
-        }
-
         val photoList = presenter.photoList.filter { !it.isDeleted }.toMutableList()
 
         addPhoto {
@@ -95,15 +78,5 @@ class UpdateOfferListController(private val presenter: UpdateOfferFragmentPresen
 
             onClick { if (!noReviews) presenter.openReviews() }
         }
-    }
-
-    fun saveButtonEnabled(isEnabled: Boolean) {
-        saveButtonEnabled = isEnabled
-        requestModelBuild()
-    }
-
-    fun deleteButtonEnabled(isEnabled: Boolean) {
-        deleteButtonEnabled = isEnabled
-        requestModelBuild()
     }
 }

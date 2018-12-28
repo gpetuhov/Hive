@@ -333,8 +333,8 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     }
 
     private fun saveDeleteButtonsEnabled(isEnabled: Boolean) {
-        controller?.saveButtonEnabled(isEnabled)
-        controller?.deleteButtonEnabled(isEnabled)
+        update_offer_save_button.isEnabled = isEnabled
+        update_offer_delete_button.isEnabled = isEnabled
     }
 
     private fun progressVisible(isVisible: Boolean) = update_offer_progress.setVisible(isVisible)
