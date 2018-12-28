@@ -11,7 +11,6 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.*
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
 import com.gpetuhov.android.hive.util.getDateTimeFromTimestampInMilliseconds
 import javax.inject.Inject
 
@@ -29,13 +28,6 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
     }
 
     override fun buildModels() {
-        offerDetailsHeader {
-            id("offer_details_header")
-            onBackButtonClick { presenter.navigateUp() }
-            favorite(offer?.isFavorite ?: false)
-            onFavoriteButtonClick { presenter.favorite() }
-        }
-
         if (offer != null && offer?.isActive == true) {
             val photoList = offer?.photoList ?: mutableListOf()
             photoCarousel(
