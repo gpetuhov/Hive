@@ -48,6 +48,7 @@ open class AuthManager : Auth {
                 Timber.tag(TAG).d("User name = ${firebaseUser.displayName}")
                 Timber.tag(TAG).d("User email = ${firebaseUser.email}")
                 Timber.tag(TAG).d("User pic URL = ${firebaseUser.photoUrl}")
+                Timber.tag(TAG).d("User created at = ${firebaseUser.metadata?.creationTimestamp}")
 
                 repo.onSignIn(convertFirebaseUser(firebaseUser))
                 onSignIn()

@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.ui.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -105,4 +107,19 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
     override fun showToast(message: String) {
         toast(message)
     }
+
+    // === Private methods ===
+
+//    private fun phoneCallAndEmail() {
+//        // Make phone call
+//        val intent = Intent(Intent.ACTION_DIAL)
+//        intent.data = Uri.parse("tel:" + "+93845943")
+//        startActivity(intent)
+//
+//        // Send email
+//        val intent2 = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "email@email.com", null))
+//        intent2.putExtra(Intent.EXTRA_SUBJECT, "Email from Hive")
+//        intent2.putExtra(Intent.EXTRA_TEXT, "Hello, dude!")
+//        startActivity(intent)
+//    }
 }
