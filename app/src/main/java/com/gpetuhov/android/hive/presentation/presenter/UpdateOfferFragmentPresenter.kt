@@ -151,14 +151,21 @@ class UpdateOfferFragmentPresenter :
     // --- Save offer ---
 
     fun saveOffer() {
-        viewState.disableButtons()
-        viewState.showProgress()
+        if (shouldQuit()) {
+            // If title, description and photo list are not empty and edit not started, just quit
+            navigateUp()
 
-        val offer = Offer(uid, userUid, title, description, price, free, active)
-        offer.photoList.clear()
-        offer.photoList.addAll(photoList)
+        } else {
+            // Otherwise try to save offer
+            viewState.disableButtons()
+            viewState.showProgress()
 
-        saveOfferInteractor.saveOffer(offer)
+            val offer = Offer(uid, userUid, title, description, price, free, active)
+            offer.photoList.clear()
+            offer.photoList.addAll(photoList)
+
+            saveOfferInteractor.saveOffer(offer)
+        }
     }
 
     // --- Delete offer ---
@@ -379,5 +386,12 @@ class UpdateOfferFragmentPresenter :
     private fun cancelPhotoUploads() {
         isOfferEditStopped = true
         repo.cancelPhotoUploadTasks()
+    }
+
+    private fun shouldQuit(): Boolean {
+        // Count photos that are NOT marked as deleted
+        val photoCount = photoList.filter { !it.isDeleted }.size
+
+        return title != "" && description != "" && photoCount != 0 && !editStarted
     }
 }
