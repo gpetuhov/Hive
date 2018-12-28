@@ -11,7 +11,7 @@ import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsOfferHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsSummary
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.getDateTimeFromTimestampInMilliseconds
+import com.gpetuhov.android.hive.util.getDateFromTimestampInMilliseconds
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : UserBaseController() {
@@ -45,7 +45,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             id("user_details_summary")
 
             val creationTimestamp = user?.creationTimestamp ?: 0
-            val creationDate = getDateTimeFromTimestampInMilliseconds(creationTimestamp)
+            val creationDate = getDateFromTimestampInMilliseconds(creationTimestamp)
 
             // TODO: extract string resources
             creationDate("In Hive since $creationDate")
