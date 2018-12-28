@@ -9,7 +9,9 @@ import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsDescription
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsName
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsOfferHeader
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsSummary
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.getDateTimeFromTimestampInMilliseconds
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : UserBaseController() {
@@ -37,6 +39,20 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             id("user_details_name")
             userPicUrl(user?.userPicUrl ?: "")
             username(user?.getUsernameOrName() ?: "")
+        }
+
+        userDetailsSummary {
+            id("user_details_summary")
+
+            val creationTimestamp = user?.creationTimestamp ?: 0
+            val creationDate = getDateTimeFromTimestampInMilliseconds(creationTimestamp)
+
+            // TODO: extract string resources
+            creationDate("In Hive since $creationDate")
+            creationDateVisible(creationTimestamp != 0L)
+
+            activeOffersCount("Active offers: ")
+            totalReviewsCount("Total reviews: ")
         }
 
         val hasDescription = user?.hasDescription ?: false

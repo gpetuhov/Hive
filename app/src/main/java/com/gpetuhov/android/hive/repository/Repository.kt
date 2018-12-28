@@ -1094,7 +1094,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             description = doc.getString(DESCRIPTION_KEY) ?: "",
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location,
-            isFavorite = isFavorite(doc.id, "")
+            isFavorite = isFavorite(doc.id, ""),
+            creationTimestamp = doc.getLong(CREATION_TIMESTAMP_KEY) ?: 0
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
