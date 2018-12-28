@@ -6,6 +6,7 @@
 
     <data>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter"/>
+        <variable name="user" type="com.gpetuhov.android.hive.domain.model.User"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +30,7 @@
                     android:src="@drawable/ic_arrow_back"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/close_offer_update"
+                    android:onClick="@{view -> presenter.navigateUp()}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -51,9 +53,10 @@
                     android:id="@+id/user_details_favorite_button"
                     android:layout_width="@dimen/basic_view_size"
                     android:layout_height="@dimen/basic_view_size"
-                    android:src="@drawable/ic_star_border"
+                    android:src="@{user.isFavorite ? @drawable/ic_star : @drawable/ic_star_border}"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/add_to_favorites"
+                    android:onClick="@{view -> presenter.favorite()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

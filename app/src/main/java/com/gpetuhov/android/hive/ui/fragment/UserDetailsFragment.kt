@@ -51,6 +51,7 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
             presenter.userIsFavorite = user.isFavorite
+            binding?.user = user
             controller?.changeUser(user)
         })
 
