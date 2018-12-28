@@ -48,7 +48,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
-        hideToolbar()
+        hideMainHeader()
         showBottomNavigationView()
 
         initDialogs()

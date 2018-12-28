@@ -9,7 +9,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.presentation.presenter.FavoritesFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.FavoritesFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
-import com.gpetuhov.android.hive.util.hideToolbar
+import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.gpetuhov.android.hive.ui.adapter.FavoritesAdapter
@@ -24,7 +24,7 @@ class FavoritesFragment : BaseFragment(), FavoritesFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
-        hideToolbar()
+        hideMainHeader()
         showBottomNavigationView()
 
         presenter.refreshFavorites()

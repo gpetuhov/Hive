@@ -18,7 +18,7 @@ import com.gpetuhov.android.hive.presentation.view.OfferDetailsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.controller.OfferDetailsListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
-import com.gpetuhov.android.hive.util.hideToolbar
+import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
@@ -34,7 +34,7 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
-        hideToolbar()
+        hideMainHeader()
         showBottomNavigationView()
 
         controller = OfferDetailsListController(presenter)

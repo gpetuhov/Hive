@@ -8,7 +8,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.gpetuhov.android.hive.R
@@ -35,20 +34,20 @@ fun Fragment.hideBottomNavigationView() {
     getBottomNavigationView()?.visibility = View.GONE
 }
 
-fun Fragment.showToolbar(onNavigationClick: () -> Unit, onClick: () -> Unit) {
-    initToolbar(true, onNavigationClick, onClick)
+fun Fragment.showMainHeader(onNavigationClick: () -> Unit, onClick: () -> Unit) {
+    initMainHeader(true, onNavigationClick, onClick)
 }
 
-fun Fragment.hideToolbar() {
-    initToolbar(false, { /* Do nothing */ }, { /* Do nothing */ })
+fun Fragment.hideMainHeader() {
+    initMainHeader(false, { /* Do nothing */ }, { /* Do nothing */ })
 }
 
-fun Fragment.setToolbarUserPic(user: User) {
-    updateUserPic(this, user, getToolbarImage())
+fun Fragment.setMainHeaderUserPic(user: User) {
+    updateUserPic(this, user, getMainHeaderImage())
 }
 
-fun Fragment.setToolbarTitle(title: String) {
-    getToolbarTitle()?.text = title
+fun Fragment.setMainHeaderTitle(title: String) {
+    getMainHeaderTitle()?.text = title
 }
 
 fun Fragment.startPhotoPicker(requestCode: Int) {
@@ -70,18 +69,17 @@ private fun Fragment.setActivitySoftInput(isResize: Boolean) {
 
 private fun Fragment.getBottomNavigationView() = activity?.findViewById<BottomNavigationView>(R.id.navigation_view)
 
-private fun Fragment.getToolbar() = activity?.findViewById<View>(R.id.toolbar)
+private fun Fragment.getMainHeader() = activity?.findViewById<View>(R.id.header)
 
-private fun Fragment.getToolbarImage() = activity?.findViewById(R.id.toolbar_image) ?: ImageView(context)
+private fun Fragment.getMainHeaderImage() = activity?.findViewById(R.id.header_image) ?: ImageView(context)
 
-private fun Fragment.getToolbarTitle() = activity?.findViewById<TextView>(R.id.toolbar_title)
+private fun Fragment.getMainHeaderTitle() = activity?.findViewById<TextView>(R.id.header_title)
 
-private fun Fragment.initToolbar(isVisible: Boolean, onNavigationClick: () -> Unit, onClick: () -> Unit) {
-    val toolbar = getToolbar()
+private fun Fragment.initMainHeader(isVisible: Boolean, onNavigationClick: () -> Unit, onClick: () -> Unit) {
+    val mainHeader = getMainHeader()
+    mainHeader?.setVisible(isVisible)
+    mainHeader?.setOnClickListener { onClick() }
 
-    toolbar?.setVisible(isVisible)
-
-    val backButton = toolbar?.findViewById<ImageButton>(R.id.toolbar_back_button)
+    val backButton = mainHeader?.findViewById<ImageButton>(R.id.header_back_button)
     backButton?.setOnClickListener { onNavigationClick() }
-    toolbar?.setOnClickListener { onClick() }
 }

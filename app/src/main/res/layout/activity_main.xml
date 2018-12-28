@@ -8,8 +8,9 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.MainActivity">
 
+    <!-- This header is used in ChatFragment to prevent toolbar with username hiding on keyboard show -->
     <LinearLayout
-            android:id="@+id/toolbar"
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="@dimen/basic_view_size"
             android:background="@color/md_white_1000"
@@ -22,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
-                android:id="@+id/toolbar_back_button"
+                android:id="@+id/header_back_button"
                 android:layout_width="@dimen/basic_view_size"
                 android:layout_height="@dimen/basic_view_size"
                 android:src="@drawable/ic_arrow_back"
@@ -32,22 +33,15 @@
                 android:layout_marginStart="16dp"/>
 
         <ImageView
-                android:id="@+id/toolbar_image"
+                android:id="@+id/header_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/user_picture"/>
 
-        <!-- Separates image from title -->
-        <!-- This is needed, because for some reason
-        simple margins didn't work on Oreo -->
-        <!--<View-->
-                <!--android:layout_width="8dp"-->
-                <!--android:layout_height="match_parent"/>-->
-
         <TextView
-                android:id="@+id/toolbar_title"
+                android:id="@+id/header_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/titleTextStyle"
@@ -67,7 +61,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:navGraph="@navigation/nav_graph_main"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+            app:layout_constraintTop_toBottomOf="@+id/header"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigation_view"

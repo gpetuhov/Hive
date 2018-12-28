@@ -52,7 +52,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
-        hideToolbar()
+        hideMainHeader()
 
         // Hide bottom navigation view, so that user can't quit without quit dialog
         hideBottomNavigationView()

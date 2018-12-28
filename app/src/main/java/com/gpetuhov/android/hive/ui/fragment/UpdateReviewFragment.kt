@@ -29,7 +29,7 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
-        hideToolbar()
+        hideMainHeader()
         hideBottomNavigationView()
 
         initDialogs()

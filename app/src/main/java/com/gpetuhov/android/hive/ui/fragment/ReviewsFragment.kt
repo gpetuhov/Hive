@@ -20,7 +20,7 @@ import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsListControlle
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.ReviewsViewModel
 import com.gpetuhov.android.hive.util.hideBottomNavigationView
-import com.gpetuhov.android.hive.util.hideToolbar
+import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
@@ -37,7 +37,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
-        hideToolbar()
+        hideMainHeader()
 
         initDialogs()
 

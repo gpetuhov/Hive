@@ -18,7 +18,7 @@ import com.gpetuhov.android.hive.presentation.view.UserDetailsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.user.details.controller.UserDetailsListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UserDetailsViewModel
-import com.gpetuhov.android.hive.util.hideToolbar
+import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
@@ -35,7 +35,7 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
-        hideToolbar()
+        hideMainHeader()
         showBottomNavigationView()
 
         controller = UserDetailsListController(presenter)

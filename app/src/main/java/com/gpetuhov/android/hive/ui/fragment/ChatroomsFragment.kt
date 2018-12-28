@@ -21,7 +21,7 @@ import com.gpetuhov.android.hive.ui.adapter.ChatroomsAdapter
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.recycler.SimpleItemDecoration
 import com.gpetuhov.android.hive.ui.viewmodel.ChatroomsViewModel
-import com.gpetuhov.android.hive.util.hideToolbar
+import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import kotlinx.android.synthetic.main.fragment_chatrooms.*
@@ -37,7 +37,7 @@ class ChatroomsFragment : BaseFragment(), ChatroomsFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
-        hideToolbar()
+        hideMainHeader()
         showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chatrooms, container, false)

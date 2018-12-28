@@ -41,7 +41,7 @@ class ChatFragment : BaseFragment(), ChatFragmentView {
         // so that the recycler view will scroll to previously shown position after keyboard is shown.
         setActivitySoftInputResize()
 
-        showToolbar(
+        showMainHeader(
             { presenter.navigateUp() },
             { presenter.openUserDetails() }
         )
@@ -70,8 +70,8 @@ class ChatFragment : BaseFragment(), ChatFragmentView {
         })
         viewModel.secondUser.observe(this, Observer<User> { secondUser ->
             presenter.secondUserUid = secondUser.uid
-            setToolbarUserPic(secondUser)
-            setToolbarTitle(secondUser.getUsernameOrName())
+            setMainHeaderUserPic(secondUser)
+            setMainHeaderTitle(secondUser.getUsernameOrName())
         })
     }
 

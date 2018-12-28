@@ -15,7 +15,7 @@ import com.gpetuhov.android.hive.presentation.view.PhotoFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller.PhotoFullscreenListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideBottomNavigationView
-import com.gpetuhov.android.hive.util.hideToolbar
+import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 
 class PhotoFragment : BaseFragment(), PhotoFragmentView {
@@ -33,7 +33,7 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
-        hideToolbar()
+        hideMainHeader()
         hideBottomNavigationView()
 
         controller = PhotoFullscreenListController()
