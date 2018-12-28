@@ -50,4 +50,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveCommentErrorMessage(): String = Constants.SAVE_COMMENT_ERROR
 
     override fun getCommentEmptyTextErrorMessage(): String = Constants.SAVE_COMMENT_TEXT_ERROR
+
+    override fun getDeleteCommentErrorMessage(): String = Constants.DELETE_COMMENT_ERROR
 }
