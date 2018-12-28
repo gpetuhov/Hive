@@ -18,7 +18,6 @@ class SaveCommentInteractor(private val callback: Callback) : Interactor {
     private var reviewUid = ""
     private var offerUid = ""
     private var commentText = ""
-    private var checkValidity = true
 
     init {
         HiveApp.appComponent.inject(this)
@@ -26,7 +25,7 @@ class SaveCommentInteractor(private val callback: Callback) : Interactor {
 
     // Do not call this directly!
     override fun execute() {
-        if (checkValidity && commentText.trim { it <= ' ' }.isEmpty()) {
+        if (commentText.trim { it <= ' ' }.isEmpty()) {
             callback.onSaveCommentError(resultMessages.getCommentEmptyTextErrorMessage())
 
         } else {
@@ -41,11 +40,10 @@ class SaveCommentInteractor(private val callback: Callback) : Interactor {
     }
 
     // Call this method to save comment
-    fun saveComment(reviewUid: String, offerUid: String, commentText: String, checkValidity: Boolean) {
+    fun saveComment(reviewUid: String, offerUid: String, commentText: String) {
         this.reviewUid = reviewUid
         this.offerUid = offerUid
         this.commentText = commentText
-        this.checkValidity = checkValidity
         execute()
     }
 }
