@@ -56,6 +56,16 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
         summary(context)
 
+        profileContacts {
+            id("profile_contacts")
+
+            // TODO: implement
+            phone("34895493587")
+            onPhoneClick {
+                // TODO
+            }
+        }
+
         profileAbout {
             id("profile_about")
 

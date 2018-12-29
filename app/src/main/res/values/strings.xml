@@ -59,6 +59,7 @@
     <string name="prompt_delete_photo">Do you really want to delete this photo?</string>
     <string name="no_active_offers_warning">You are not visible in search results, because you have no active offers</string>
     <string name="active_offer">Active offer</string>
+    <string name="contacts">Contacts</string>
 
         <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
