@@ -110,22 +110,14 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         startActivity(intent)
     }
 
+    override fun sendEmail(email: String) {
+        val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null))
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Email from Hive")
+        intent.putExtra(Intent.EXTRA_TEXT, "Hello, dude!")
+        startActivity(intent)
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }
-
-    // === Private methods ===
-
-//    private fun phoneCallAndEmail() {
-//        // Make phone call
-//        val intent = Intent(Intent.ACTION_DIAL)
-//        intent.data = Uri.parse("tel:" + "+93845943")
-//        startActivity(intent)
-//
-//        // Send email
-//        val intent2 = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "email@email.com", null))
-//        intent2.putExtra(Intent.EXTRA_SUBJECT, "Email from Hive")
-//        intent2.putExtra(Intent.EXTRA_TEXT, "Hello, dude!")
-//        startActivity(intent)
-//    }
 }

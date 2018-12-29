@@ -25,5 +25,8 @@ interface UserDetailsFragmentView : MvpView {
     fun dialPhone(phone: String)
 
     @StateStrategyType(SkipStrategy::class)
+    fun sendEmail(email: String)
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 }

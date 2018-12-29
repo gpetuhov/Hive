@@ -54,10 +54,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 val email = user?.visibleEmail ?: ""
                 email(email)
                 emailVisible(hasVisibleEmail)
-
-                onEmailClick {
-                    // TODO: implement
-                }
+                onEmailClick { presenter.sendEmail(email) }
             }
         }
 
