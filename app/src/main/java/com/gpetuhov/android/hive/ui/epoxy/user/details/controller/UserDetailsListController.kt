@@ -40,7 +40,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         summary(context)
 
         val hasPhone = user?.hasPhone ?: false
-        val hasContacts = hasPhone
+        val hasVisibleEmail = user?.hasVisibleEmail ?: false
+        val hasContacts = hasPhone || hasVisibleEmail
         if (hasContacts) {
             userDetailsContacts {
                 id("user_details_contacts")
@@ -48,6 +49,13 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 val phone = user?.phone ?: ""
                 phone(phone)
                 onPhoneClick { presenter.dialPhone(phone) }
+
+                val email = user?.visibleEmail ?: ""
+                email(email)
+
+                onEmailClick {
+                    // TODO: implement
+                }
             }
         }
 
