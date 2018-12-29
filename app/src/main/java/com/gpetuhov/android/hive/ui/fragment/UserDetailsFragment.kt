@@ -112,8 +112,7 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
 
     override fun sendEmail(email: String) {
         val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", email, null))
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Email from Hive")
-        intent.putExtra(Intent.EXTRA_TEXT, "Hello, dude!")
+        intent.putExtra(Intent.EXTRA_SUBJECT, context?.getString(R.string.email_subject) ?: "")
         startActivity(intent)
     }
 
