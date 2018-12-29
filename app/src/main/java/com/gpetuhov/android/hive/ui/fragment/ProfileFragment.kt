@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Patterns.PHONE
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -284,6 +285,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     private fun initPhoneDialog() {
         if (context != null) {
+            val phoneErrorMessage = context?.getString(R.string.phone_not_valid) ?: ""
+
             phoneDialog = MaterialDialog(context!!)
                 .title(R.string.phone_number)
                 .noAutoDismiss()
@@ -296,8 +299,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     val inputText = text.toString()
                     presenter.updateTempPhone(inputText)
 
-                    // Always enable positive button to allow phone number clear
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
+                    val phoneEmpty = inputText == ""
+                    val phoneValid = PHONE.matcher(inputText).matches()
+                    val validOrEmpty = phoneEmpty || phoneValid
+
+                    if (!validOrEmpty) dialog.getInputField()?.error = phoneErrorMessage
+
+                    // Enable positive button on empty or valid phone
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, validOrEmpty)
                 }
                 .positiveButton { presenter.savePhone() }
                 .negativeButton { presenter.dismissPhoneDialog() }
@@ -320,9 +329,9 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     val inputText = text.toString()
                     presenter.updateTempEmail(inputText)
 
-                    val emptyMail = inputText == ""
-                    val validEmail = EMAIL_ADDRESS.matcher(inputText).matches()
-                    val validOrEmpty = emptyMail || validEmail
+                    val emailEmpty = inputText == ""
+                    val emailValid = EMAIL_ADDRESS.matcher(inputText).matches()
+                    val validOrEmpty = emailEmpty || emailValid
 
                     if (!validOrEmpty) dialog.getInputField()?.error = emailErrorMessage
 

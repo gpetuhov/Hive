@@ -67,6 +67,7 @@
     <string name="email">Email</string>
     <string name="email_save_error">Error updating email</string>
     <string name="username_not_valid">Must not contain spaces</string>
+    <string name="phone_not_valid">Not a valid phone number</string>
     <string name="email_not_valid">Not a valid email</string>
 
     <!-- MapFragment -->
