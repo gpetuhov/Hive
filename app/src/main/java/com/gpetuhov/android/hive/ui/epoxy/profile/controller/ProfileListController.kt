@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.getDateFromTimestampInMilliseconds
 import javax.inject.Inject
 
 class ProfileListController(private val presenter: ProfileFragmentPresenter) : UserBaseController() {
@@ -55,6 +56,26 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
             name(user?.name ?: "")
             email(user?.email ?: "")
+
+            val creationTimestamp = user?.creationTimestamp ?: 0
+            val creationDate = getDateFromTimestampInMilliseconds(creationTimestamp)
+
+            creationDate("${context.getString(R.string.user_creation_date)} $creationDate")
+            creationDateVisible(creationTimestamp != 0L)
+
+            val firstOfferPublishedTimestamp = user?.firstOfferPublishedTimestamp ?: 0
+            val firstOfferPublishedDate = getDateFromTimestampInMilliseconds(firstOfferPublishedTimestamp)
+
+            firstOfferCreationDate("${context.getString(R.string.user_first_offer_creation_date)} $firstOfferPublishedDate")
+            firstOfferCreationDateVisible(firstOfferPublishedTimestamp != 0L)
+
+            val activeOfferList = user?.offerList?.filter { it.isActive }
+            val activeOffersCount = activeOfferList?.size ?: 0
+            activeOffersCount("${context.getString(R.string.user_active_offers_count)}: $activeOffersCount")
+
+            var totalReviewsCount = 0
+            activeOfferList?.forEach { totalReviewsCount += it.reviewCount }
+            totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: $totalReviewsCount")
 
             val hasDescription = user?.hasDescription ?: false
             description(if (hasDescription) user?.description ?: "" else context.getString(R.string.enter_description))

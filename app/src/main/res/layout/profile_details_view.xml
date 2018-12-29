@@ -75,6 +75,48 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:text="@string/summary"
+            style="@style/titleTextStyle"/>
+
+    <TextView
+            android:id="@+id/user_creation_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="In Hive since 1976"/>
+
+    <TextView
+            android:id="@+id/user_first_offer_creation_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="First offer published 1898"/>
+
+    <TextView
+            android:id="@+id/user_active_offers_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="Active offer: 5"/>
+
+    <TextView
+            android:id="@+id/user_total_reviews_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="Total reviews: 15"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/md_grey_300"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/about_me"
             style="@style/titleTextStyle"/>
 
