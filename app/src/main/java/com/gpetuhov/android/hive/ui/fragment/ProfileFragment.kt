@@ -213,9 +213,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     var positiveButtonEnabled = inputText.length <= Constants.User.MAX_USERNAME_LENGTH
                     presenter.updateTempUsername(inputText)
 
-                    if (inputText.contains(" ")) {
-                        dialog.getInputField()?.error = usernameErrorMessage
+                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
                         positiveButtonEnabled = false
+                        usernameErrorMessage
+                    } else {
+                        null
                     }
 
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
@@ -303,7 +305,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     val phoneValid = PHONE.matcher(inputText).matches()
                     val validOrEmpty = phoneEmpty || phoneValid
 
-                    if (!validOrEmpty) dialog.getInputField()?.error = phoneErrorMessage
+                    dialog.getInputField()?.error = if (!validOrEmpty) phoneErrorMessage else null
 
                     // Enable positive button on empty or valid phone
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, validOrEmpty)
@@ -333,7 +335,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     val emailValid = EMAIL_ADDRESS.matcher(inputText).matches()
                     val validOrEmpty = emailEmpty || emailValid
 
-                    if (!validOrEmpty) dialog.getInputField()?.error = emailErrorMessage
+                    dialog.getInputField()?.error = if (!validOrEmpty) emailErrorMessage else null
 
                     // Enable positive button on empty or valid email
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, validOrEmpty)
