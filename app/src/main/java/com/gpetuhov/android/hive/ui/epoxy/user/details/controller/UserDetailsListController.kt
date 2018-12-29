@@ -44,11 +44,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         if (hasContacts) {
             userDetailsContacts {
                 id("user_details_contacts")
-                phone(user?.phone ?: "")
 
-                onPhoneClick {
-                    // TODO: implement
-                }
+                val phone = user?.phone ?: ""
+                phone(phone)
+                onPhoneClick { presenter.dialPhone(phone) }
             }
         }
 

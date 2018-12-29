@@ -57,6 +57,8 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun favoriteOffer(offerIsFavorite: Boolean, offerUid: String) = favoritesInteractor.favorite(offerIsFavorite, userUid, offerUid)
 
+    fun dialPhone(phone: String) = viewState.dialPhone(phone)
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend
