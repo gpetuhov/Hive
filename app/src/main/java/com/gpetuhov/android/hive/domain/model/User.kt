@@ -17,7 +17,8 @@ data class User(
     var isFavorite: Boolean = false,
     var creationTimestamp: Long = 0,
     var firstOfferPublishedTimestamp: Long = 0,
-    var phone: String = ""
+    var phone: String = "",
+    var visibleEmail: String = ""
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
