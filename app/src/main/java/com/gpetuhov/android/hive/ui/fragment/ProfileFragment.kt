@@ -280,6 +280,9 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                 ) { dialog, text ->
                     val inputText = text.toString()
                     presenter.updateTempPhone(inputText)
+
+                    // Always enable positive button to allow phone number clear
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
                 }
                 .positiveButton { presenter.savePhone() }
                 .negativeButton { presenter.dismissPhoneDialog() }
