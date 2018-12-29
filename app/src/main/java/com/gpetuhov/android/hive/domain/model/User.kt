@@ -25,6 +25,7 @@ data class User(
     val hasUsername get() = username != ""
     val hasDescription get() = description != ""
     val hasPhone get() = phone != ""
+    val hasVisibleEmail get() = visibleEmail != ""
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 

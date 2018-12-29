@@ -46,4 +46,28 @@
 
     </LinearLayout>
 
+    <LinearLayout
+            android:id="@+id/user_visible_email_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_email"/>
+
+        <TextView
+                android:id="@+id/user_visible_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                style="@style/basicTextStyle"
+                tools:text="mail@server.com"/>
+
+    </LinearLayout>
+
 </LinearLayout>

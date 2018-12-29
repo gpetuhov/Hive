@@ -63,6 +63,9 @@
     <string name="enter_phone">Enter phone number</string>
     <string name="phone_number">Phone number</string>
     <string name="phone_save_error">Error updating phone</string>
+    <string name="enter_email">Enter email</string>
+    <string name="email">Email</string>
+    <string name="email_save_error">Error updating email</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

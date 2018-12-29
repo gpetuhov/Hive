@@ -61,8 +61,14 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
             val hasPhone = user?.hasPhone ?: false
             phone(if (hasPhone) user?.phone ?: "" else context.getString(R.string.enter_phone))
-
             onPhoneClick { presenter.showPhoneDialog() }
+
+            val hasVisibleEmail = user?.hasVisibleEmail ?: false
+            email(if (hasVisibleEmail) user?.visibleEmail ?: "" else context.getString(R.string.enter_email))
+            onEmailClick {
+                // TODO: implement
+//                presenter.showEmailDialog()
+            }
         }
 
         profileAbout {
