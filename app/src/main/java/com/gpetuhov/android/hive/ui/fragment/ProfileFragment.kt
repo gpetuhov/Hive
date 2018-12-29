@@ -7,6 +7,7 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.util.PatternsCompat.EMAIL_ADDRESS
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -315,8 +316,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     val inputText = text.toString()
                     presenter.updateTempEmail(inputText)
 
-                    // Always enable positive button to allow visible email clear
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
+                    val emptyMail = inputText == ""
+                    val validEmail = EMAIL_ADDRESS.matcher(inputText).matches()
+
+                    // Enable positive button on empty or valid email
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, emptyMail || validEmail)
                 }
                 .positiveButton { presenter.saveEmail() }
                 .negativeButton { presenter.dismissEmailDialog() }
