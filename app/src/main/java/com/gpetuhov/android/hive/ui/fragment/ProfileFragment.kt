@@ -197,6 +197,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     private fun initUsernameDialog() {
         if (context != null) {
+            val usernameErrorMessage = context?.getString(R.string.username_not_valid)
+
             usernameDialog = MaterialDialog(context!!)
                 .title(R.string.username)
                 .noAutoDismiss()
@@ -211,7 +213,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     presenter.updateTempUsername(inputText)
 
                     if (inputText.contains(" ")) {
-                        dialog.getInputField()?.error = "Must not contain spaces"
+                        dialog.getInputField()?.error = usernameErrorMessage
                         positiveButtonEnabled = false
                     }
 
@@ -304,6 +306,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     private fun initEmailDialog() {
         if (context != null) {
+            val emailErrorMessage = context?.getString(R.string.email_not_valid) ?: ""
+
             emailDialog = MaterialDialog(context!!)
                 .title(R.string.email)
                 .noAutoDismiss()
@@ -318,9 +322,12 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
                     val emptyMail = inputText == ""
                     val validEmail = EMAIL_ADDRESS.matcher(inputText).matches()
+                    val validOrEmpty = emptyMail || validEmail
+
+                    if (!validOrEmpty) dialog.getInputField()?.error = emailErrorMessage
 
                     // Enable positive button on empty or valid email
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, emptyMail || validEmail)
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, validOrEmpty)
                 }
                 .positiveButton { presenter.saveEmail() }
                 .negativeButton { presenter.dismissEmailDialog() }
