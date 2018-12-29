@@ -39,6 +39,19 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         summary(context)
 
+        val hasPhone = user?.hasPhone ?: false
+        val hasContacts = hasPhone
+        if (hasContacts) {
+            userDetailsContacts {
+                id("user_details_contacts")
+                phone(user?.phone ?: "")
+
+                onPhoneClick {
+                    // TODO: implement
+                }
+            }
+        }
+
         val hasDescription = user?.hasDescription ?: false
         if (hasDescription) {
             userDetailsDescription {
