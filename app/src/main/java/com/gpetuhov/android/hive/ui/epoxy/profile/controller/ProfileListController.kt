@@ -5,10 +5,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
-import com.gpetuhov.android.hive.ui.epoxy.profile.models.addOffer
-import com.gpetuhov.android.hive.ui.epoxy.profile.models.addPhoto
-import com.gpetuhov.android.hive.ui.epoxy.profile.models.details
-import com.gpetuhov.android.hive.ui.epoxy.profile.models.settings
+import com.gpetuhov.android.hive.ui.epoxy.profile.models.*
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getDateFromTimestampInMilliseconds
@@ -43,6 +40,20 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             { photoUrlList -> presenter.openPhotos(photoUrlList) },
             { photoUid -> presenter.showDeletePhotoDialog(photoUid) }
         )
+
+        profileUsername {
+            id("profile_username")
+
+            val hasUsername = user?.hasUsername ?: false
+            username(if (hasUsername) user?.username ?: "" else context.getString(R.string.enter_username))
+            onUsernameClick { presenter.showUsernameDialog() }
+
+            userPicUrl(user?.userPicUrl ?: "")
+            onUserPicClick { presenter.chooseUserPic() }
+
+            name(user?.name ?: "")
+            email(user?.email ?: "")
+        }
 
         details {
             id("details")
