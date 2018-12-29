@@ -48,6 +48,9 @@ class ProfileFragmentPresenter :
     // Keeps current text entered in phone dialog
     private var tempPhone = ""
 
+    // Keeps current text entered in email dialog
+    private var tempEmail = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -217,6 +220,28 @@ class ProfileFragmentPresenter :
     fun dismissPhoneDialog() {
         tempPhone = ""
         viewState.dismissPhoneDialog()
+    }
+
+    // --- Change email ---
+
+    fun showEmailDialog() = viewState.showEmailDialog()
+
+    // Prefill email dialog with currently entered text or current email
+    fun getEmailPrefill() = if (tempEmail != "") tempEmail else repo.currentUserVisibleEmail()
+
+    fun updateTempEmail(newTempEmail: String) {
+        tempEmail = newTempEmail
+    }
+
+    fun saveEmail() {
+        // TODO: implement
+//        saveEmailInteractor.saveEmail(tempEmail)
+        dismissEmailDialog()
+    }
+
+    fun dismissEmailDialog() {
+        tempEmail = ""
+        viewState.dismissEmailDialog()
     }
 
     // === Open photos ===

@@ -44,6 +44,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var deleteUserDialog: MaterialDialog? = null
     private var deletePhotoDialog: MaterialDialog? = null
     private var phoneDialog: MaterialDialog? = null
+    private var emailDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -167,6 +168,16 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissPhoneDialog() = phoneDialog?.dismiss() ?: Unit
 
+    override fun showEmailDialog() {
+        // Prefill dialog with text provided by presenter
+        val editText = emailDialog?.getInputField()
+        editText?.setText(presenter.getEmailPrefill())
+        editText?.setSelection(editText.text.length)
+        emailDialog?.show()
+    }
+
+    override fun dismissEmailDialog() = emailDialog?.dismiss() ?: Unit
+
     override fun showToast(message: String) {
         toast(message)
     }
@@ -180,6 +191,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initDeleteUserDialog()
         initDeletePhotoDialog()
         initPhoneDialog()
+        initEmailDialog()
     }
 
     private fun initUsernameDialog() {
@@ -289,6 +301,28 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun initEmailDialog() {
+        if (context != null) {
+            emailDialog = MaterialDialog(context!!)
+                .title(R.string.email)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(
+                    inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+                    hintRes = R.string.enter_email,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    presenter.updateTempEmail(inputText)
+
+                    // Always enable positive button to allow visible email clear
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, true)
+                }
+                .positiveButton { presenter.saveEmail() }
+                .negativeButton { presenter.dismissEmailDialog() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -296,6 +330,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissDeleteUserDialog()
         dismissDeletePhotoDialog()
         dismissPhoneDialog()
+        dismissEmailDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
