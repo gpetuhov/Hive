@@ -27,4 +27,5 @@ interface ResultMessages {
     fun getCommentEmptyTextErrorMessage(): String
     fun getDeleteCommentErrorMessage(): String
     fun getSavePhoneErrorMessage(): String
+    fun getSaveEmailErrorMessage(): String
 }

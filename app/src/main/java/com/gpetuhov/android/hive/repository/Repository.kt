@@ -330,6 +330,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
+    override fun saveUserVisibleEmail(newEmail: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[VISIBLE_EMAIL_KEY] = newEmail
+
+        // Save user visible email
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized) {
             firestore.collection(USERS_COLLECTION).document(currentUserUid())
