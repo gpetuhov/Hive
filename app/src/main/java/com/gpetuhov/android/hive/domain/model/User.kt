@@ -16,12 +16,14 @@ data class User(
     var offerSearchResultIndex: Int = -1,    // index of the offer that corresponds to search query text
     var isFavorite: Boolean = false,
     var creationTimestamp: Long = 0,
-    var firstOfferPublishedTimestamp: Long = 0
+    var firstOfferPublishedTimestamp: Long = 0,
+    var phone: String = ""
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
     val hasUsername get() = username != ""
     val hasDescription get() = description != ""
+    val hasPhone get() = phone != ""
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 

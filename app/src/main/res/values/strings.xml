@@ -60,8 +60,9 @@
     <string name="no_active_offers_warning">You are not visible in search results, because you have no active offers</string>
     <string name="active_offer">Active offer</string>
     <string name="contacts">Contacts</string>
+    <string name="enter_phone">Enter phone number</string>
 
-        <!-- MapFragment -->
+    <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
     <string name="my_location">My location</string>
     <string name="zoom_in">Zoom in</string>

@@ -62,6 +62,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val FCM_TOKEN_KEY = "fcm_token"
         private const val CREATION_TIMESTAMP_KEY = "creationTimestamp"
         private const val FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY = "firstOfferPublishedTimestamp"
+        private const val PHONE_KEY = "phone"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1097,7 +1098,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             location = location,
             isFavorite = isFavorite(doc.id, ""),
             creationTimestamp = doc.getLong(CREATION_TIMESTAMP_KEY) ?: 0,
-            firstOfferPublishedTimestamp = (doc.getTimestamp(FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY)?.seconds ?: 0) * 1000
+            firstOfferPublishedTimestamp = (doc.getTimestamp(FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY)?.seconds ?: 0) * 1000,
+            phone = doc.getString(PHONE_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
