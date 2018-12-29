@@ -59,8 +59,9 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
         profileContacts {
             id("profile_contacts")
 
-            // TODO: implement
-            phone("34895493587")
+            val hasPhone = user?.hasPhone ?: false
+            phone(if (hasPhone) user?.phone ?: "" else context.getString(R.string.enter_phone))
+
             onPhoneClick {
                 // TODO
             }
