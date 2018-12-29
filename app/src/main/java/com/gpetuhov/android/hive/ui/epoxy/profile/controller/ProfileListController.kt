@@ -88,6 +88,13 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             onDescriptionClick { presenter.showDescriptionDialog() }
         }
 
+        profileOffersHeader {
+            id("profile_offers_header")
+
+            val hasActiveOffer = user?.hasActiveOffer() ?: false
+            noActiveOffersWarningVisible(!hasActiveOffer)
+        }
+
         details {
             id("details")
 
