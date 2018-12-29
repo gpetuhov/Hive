@@ -6,10 +6,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsDescription
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsName
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsOfferHeader
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsSummary
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getDateFromTimestampInMilliseconds
 import javax.inject.Inject
@@ -41,7 +38,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             username(user?.getUsernameOrName() ?: "")
         }
 
-        userDetailsSummary {
+        summary {
             id("user_details_summary")
 
             val creationTimestamp = user?.creationTimestamp ?: 0

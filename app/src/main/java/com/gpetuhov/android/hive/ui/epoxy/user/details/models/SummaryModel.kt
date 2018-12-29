@@ -9,7 +9,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.setVisible
 
 @EpoxyModelClass(layout = R.layout.user_details_summary_view)
-abstract class UserDetailsSummaryModel : EpoxyModelWithHolder<UserDetailsSummaryHolder>() {
+abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
 
     @EpoxyAttribute lateinit var creationDate: String
     @EpoxyAttribute var creationDateVisible = false
@@ -20,7 +20,7 @@ abstract class UserDetailsSummaryModel : EpoxyModelWithHolder<UserDetailsSummary
     @EpoxyAttribute lateinit var activeOffersCount: String
     @EpoxyAttribute lateinit var totalReviewsCount: String
 
-    override fun bind(holder: UserDetailsSummaryHolder) {
+    override fun bind(holder: SummaryHolder) {
         holder.creationDate.text = creationDate
         holder.creationDate.setVisible(creationDateVisible)
 
@@ -32,7 +32,7 @@ abstract class UserDetailsSummaryModel : EpoxyModelWithHolder<UserDetailsSummary
     }
 }
 
-class UserDetailsSummaryHolder : KotlinHolder() {
+class SummaryHolder : KotlinHolder() {
     val creationDate by bind<TextView>(R.id.user_details_creation_date)
     val firstOfferCreationDate by bind<TextView>(R.id.user_details_first_offer_creation_date)
     val activeOffersCount by bind<TextView>(R.id.user_details_active_offers_count)
