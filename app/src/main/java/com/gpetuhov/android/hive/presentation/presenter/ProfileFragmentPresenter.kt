@@ -23,7 +23,8 @@ class ProfileFragmentPresenter :
     DeleteUserInteractor.Callback,
     SaveUsernameInteractor.Callback,
     SaveDescriptionInteractor.Callback,
-    DeleteUserPhotoInteractor.Callback {
+    DeleteUserPhotoInteractor.Callback,
+    SavePhoneInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -33,6 +34,7 @@ class ProfileFragmentPresenter :
     private val saveUsernameInteractor = SaveUsernameInteractor(this)
     private val saveDescriptionInteractor = SaveDescriptionInteractor(this)
     private val deleteUserPhotoInteractor = DeleteUserPhotoInteractor(this)
+    private val savePhoneInteractor = SavePhoneInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -77,6 +79,10 @@ class ProfileFragmentPresenter :
     // === DeleteUserPhotoInteractor.Callback ===
 
     override fun onDeletePhotoError(errorMessage: String) = showToast(errorMessage)
+
+    // === SavePhoneInteractor.Callback ===
+
+    override fun onSavePhoneError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -204,8 +210,7 @@ class ProfileFragmentPresenter :
     }
 
     fun savePhone() {
-        // TODO: implement this
-//        savePhoneInteractor.savePhone(tempPhone)
+        savePhoneInteractor.savePhone(tempPhone)
         dismissPhoneDialog()
     }
 

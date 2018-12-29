@@ -64,5 +64,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getDeleteCommentErrorMessage(): String = getString(R.string.delete_comment_error)
 
+    override fun getSavePhoneErrorMessage(): String = getString(R.string.phone_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }
