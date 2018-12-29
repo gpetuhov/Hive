@@ -61,6 +61,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val LOCATION_KEY = "l"
         private const val FCM_TOKEN_KEY = "fcm_token"
         private const val CREATION_TIMESTAMP_KEY = "creationTimestamp"
+        private const val FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY = "firstOfferPublishedTimestamp"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1095,7 +1096,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location,
             isFavorite = isFavorite(doc.id, ""),
-            creationTimestamp = doc.getLong(CREATION_TIMESTAMP_KEY) ?: 0
+            creationTimestamp = doc.getLong(CREATION_TIMESTAMP_KEY) ?: 0,
+            firstOfferPublishedTimestamp = (doc.getTimestamp(FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY)?.seconds ?: 0) * 1000
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
@@ -1583,6 +1585,12 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         val data = HashMap<String, Any>()
         data[OFFER_LIST_KEY] = offerListForSaving
+
+        // If current user has no first offer published timestamp yet, then init it with server timestamp
+        val firstOfferPublishedTimestamp = currentUser.value?.firstOfferPublishedTimestamp ?: 0
+        if (firstOfferPublishedTimestamp == 0L) {
+            data[FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY] = FieldValue.serverTimestamp()
+        }
 
         saveUserDataRemote(data, onSuccess, onError)
     }
