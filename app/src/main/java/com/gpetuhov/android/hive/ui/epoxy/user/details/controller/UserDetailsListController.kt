@@ -48,10 +48,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
                 val phone = user?.phone ?: ""
                 phone(phone)
+                phoneVisible(hasPhone)
                 onPhoneClick { presenter.dialPhone(phone) }
 
                 val email = user?.visibleEmail ?: ""
                 email(email)
+                emailVisible(hasVisibleEmail)
 
                 onEmailClick {
                     // TODO: implement
