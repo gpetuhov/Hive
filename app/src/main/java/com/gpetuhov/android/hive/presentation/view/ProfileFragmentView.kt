@@ -82,6 +82,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun openPhotos(photoUrlList: MutableList<String>)
 
+    // === Change phone ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showPhoneDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissPhoneDialog()
+
     // === Common ===
 
     // We don't need to keep this command in the queue,

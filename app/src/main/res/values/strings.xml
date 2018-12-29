@@ -61,6 +61,7 @@
     <string name="active_offer">Active offer</string>
     <string name="contacts">Contacts</string>
     <string name="enter_phone">Enter phone number</string>
+    <string name="phone_number">Phone number</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

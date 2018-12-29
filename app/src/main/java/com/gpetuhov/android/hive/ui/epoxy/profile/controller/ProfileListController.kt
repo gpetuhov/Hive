@@ -62,9 +62,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             val hasPhone = user?.hasPhone ?: false
             phone(if (hasPhone) user?.phone ?: "" else context.getString(R.string.enter_phone))
 
-            onPhoneClick {
-                // TODO
-            }
+            onPhoneClick { presenter.showPhoneDialog() }
         }
 
         profileAbout {

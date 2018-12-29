@@ -43,6 +43,9 @@ class ProfileFragmentPresenter :
     // Uid of the photo to be deleted
     private var deletePhotoUid = ""
 
+    // Keeps current text entered in phone dialog
+    private var tempPhone = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -187,6 +190,28 @@ class ProfileFragmentPresenter :
     fun deletePhotoCancel() {
         deletePhotoUid = ""
         viewState.dismissDeletePhotoDialog()
+    }
+
+    // --- Change phone ---
+
+    fun showPhoneDialog() = viewState.showPhoneDialog()
+
+    // Prefill phone dialog with currently entered text or current phone
+    fun getPhonePrefill() = if (tempPhone != "") tempPhone else repo.currentUserPhone()
+
+    fun updateTempPhone(newTempPhone: String) {
+        tempPhone = newTempPhone
+    }
+
+    fun savePhone() {
+        // TODO: implement this
+//        savePhoneInteractor.savePhone(tempPhone)
+        dismissPhoneDialog()
+    }
+
+    fun dismissPhoneDialog() {
+        tempPhone = ""
+        viewState.dismissPhoneDialog()
     }
 
     // === Open photos ===

@@ -298,6 +298,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserDescription() = currentUser.value?.description ?: ""
 
+    override fun currentUserPhone() = currentUser.value?.phone ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername

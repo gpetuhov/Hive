@@ -43,6 +43,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var signOutDialog: MaterialDialog? = null
     private var deleteUserDialog: MaterialDialog? = null
     private var deletePhotoDialog: MaterialDialog? = null
+    private var phoneDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -156,6 +157,16 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun showPhoneDialog() {
+        // Prefill dialog with text provided by presenter
+        val editText = phoneDialog?.getInputField()
+        editText?.setText(presenter.getPhonePrefill())
+        editText?.setSelection(editText.text.length)
+        phoneDialog?.show()
+    }
+
+    override fun dismissPhoneDialog() = phoneDialog?.dismiss() ?: Unit
+
     override fun showToast(message: String) {
         toast(message)
     }
@@ -168,6 +179,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initSignOutDialog()
         initDeleteUserDialog()
         initDeletePhotoDialog()
+        initPhoneDialog()
     }
 
     private fun initUsernameDialog() {
@@ -255,12 +267,32 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun initPhoneDialog() {
+        if (context != null) {
+            phoneDialog = MaterialDialog(context!!)
+                .title(R.string.phone_number)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(
+                    inputType = InputType.TYPE_CLASS_PHONE,
+                    hintRes = R.string.enter_phone,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    presenter.updateTempPhone(inputText)
+                }
+                .positiveButton { presenter.savePhone() }
+                .negativeButton { presenter.dismissPhoneDialog() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
         dismissSignOutDialog()
         dismissDeleteUserDialog()
         dismissDeletePhotoDialog()
+        dismissPhoneDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
