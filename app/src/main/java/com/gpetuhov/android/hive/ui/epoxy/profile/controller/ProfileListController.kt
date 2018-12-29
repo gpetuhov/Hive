@@ -80,6 +80,14 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: $totalReviewsCount")
         }
 
+        profileAbout {
+            id("profile_about")
+
+            val hasDescription = user?.hasDescription ?: false
+            description(if (hasDescription) user?.description ?: "" else context.getString(R.string.enter_description))
+            onDescriptionClick { presenter.showDescriptionDialog() }
+        }
+
         details {
             id("details")
 
