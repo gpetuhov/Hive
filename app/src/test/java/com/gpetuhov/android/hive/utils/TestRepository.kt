@@ -87,7 +87,11 @@ class TestRepository : Repo {
     }
 
     override fun saveUserVisibleEmail(newEmail: String, onError: () -> Unit) {
-        // TODO: implement
+        if (isSuccess) {
+            email = newEmail
+        } else {
+            onError()
+        }
     }
 
     override fun startGettingSecondUserUpdates(uid: String) {

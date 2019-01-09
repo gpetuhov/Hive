@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.interactors
 
 import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.SaveEmailInteractor
 import com.gpetuhov.android.hive.domain.interactor.SavePhoneInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.utils.Constants
@@ -12,7 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
-class SavePhoneInteractorTest {
+class SaveEmailInteractorTest {
 
     @Inject lateinit var context: Context
     @Inject lateinit var repo: Repo
@@ -27,31 +28,31 @@ class SavePhoneInteractorTest {
     }
 
     @Test
-    fun savePhoneSuccess() {
-        testSavePhoneInteractor(true)
+    fun saveEmailSuccess() {
+        testSaveEmailInteractor(true)
     }
 
     @Test
-    fun savePhoneError() {
-        testSavePhoneInteractor(false)
+    fun saveEmailError() {
+        testSaveEmailInteractor(false)
     }
 
-    private fun testSavePhoneInteractor(isSuccess: Boolean) {
+    private fun testSaveEmailInteractor(isSuccess: Boolean) {
         (repo as TestRepository).isSuccess = isSuccess
 
         var errorCounter = 0
 
-        val callback = object : SavePhoneInteractor.Callback {
-            override fun onSavePhoneError(errorMessage: String) {
+        val callback = object : SaveEmailInteractor.Callback {
+            override fun onSaveEmailError(errorMessage: String) {
                 errorCounter++
-                assertEquals(Constants.SAVE_PHONE_ERROR, errorMessage)
+                assertEquals(Constants.SAVE_EMAIL_ERROR, errorMessage)
             }
         }
 
-        val interactor = SavePhoneInteractor(callback)
-        interactor.savePhone(Constants.DUMMY_PHONE)
+        val interactor = SaveEmailInteractor(callback)
+        interactor.saveEmail(Constants.DUMMY_EMAIL)
 
-        assertEquals(if (isSuccess) Constants.DUMMY_PHONE else "", (repo as TestRepository).phone)
+        assertEquals(if (isSuccess) Constants.DUMMY_EMAIL else "", (repo as TestRepository).email)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)
     }
 }
