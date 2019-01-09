@@ -1,6 +1,8 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.details.models
 
+import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRatingBar
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -20,6 +22,10 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
     @EpoxyAttribute lateinit var activeOffersCount: String
     @EpoxyAttribute lateinit var totalReviewsCount: String
 
+    @EpoxyAttribute var ratingVisible = false
+    @EpoxyAttribute lateinit var ratingText: String
+    @EpoxyAttribute var rating: Float = 0.0F
+
     override fun bind(holder: SummaryHolder) {
         holder.creationDate.text = creationDate
         holder.creationDate.setVisible(creationDateVisible)
@@ -29,6 +35,10 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
 
         holder.activeOffersCount.text = activeOffersCount
         holder.totalReviewsCount.text = totalReviewsCount
+
+        holder.ratingWrapper.setVisible(ratingVisible)
+        holder.ratingText.text = ratingText
+        holder.ratingBar.rating = rating
     }
 }
 
@@ -37,4 +47,7 @@ class SummaryHolder : KotlinHolder() {
     val firstOfferCreationDate by bind<TextView>(R.id.user_details_first_offer_creation_date)
     val activeOffersCount by bind<TextView>(R.id.user_details_active_offers_count)
     val totalReviewsCount by bind<TextView>(R.id.user_details_total_reviews_count)
+    val ratingWrapper by bind<View>(R.id.user_details_average_rating_wrapper)
+    val ratingText by bind<TextView>(R.id.user_details_average_rating_text)
+    val ratingBar by bind<AppCompatRatingBar>(R.id.user_details_average_rating_bar)
 }

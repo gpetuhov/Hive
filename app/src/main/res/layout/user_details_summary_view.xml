@@ -45,4 +45,29 @@
             style="@style/basicTextStyle"
             tools:text="Total reviews: 15"/>
 
+    <LinearLayout
+            android:id="@+id/user_details_average_rating_wrapper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+        <TextView
+                android:id="@+id/user_details_average_rating_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/basicTextStyle"
+                tools:text="Average rating: 4,67"/>
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/user_details_average_rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?android:attr/ratingBarStyleSmall"
+                android:numStars="5"
+                android:stepSize="0.1"
+                android:isIndicator="true" />
+
+    </LinearLayout>
+
 </LinearLayout>
