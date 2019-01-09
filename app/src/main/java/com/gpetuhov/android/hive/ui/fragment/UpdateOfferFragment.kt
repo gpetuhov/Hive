@@ -59,7 +59,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
         initDialogs()
 
-        presenter.initOffer(UpdateOfferFragmentArgs.fromBundle(arguments).offerUid)
+        presenter.initOffer(UpdateOfferFragmentArgs.fromBundle(arguments!!).offerUid)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_offer, container, false)
         binding?.presenter = presenter

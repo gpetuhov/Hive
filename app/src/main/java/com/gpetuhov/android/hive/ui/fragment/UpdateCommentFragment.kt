@@ -37,7 +37,7 @@ class UpdateCommentFragment : BaseFragment(), UpdateCommentFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_comment, container, false)
         binding?.presenter = presenter
 
-        val args = UpdateCommentFragmentArgs.fromBundle(arguments)
+        val args = UpdateCommentFragmentArgs.fromBundle(arguments!!)
         presenter.init(args.offerUid, args.reviewUid, args.commentText)
 
         return binding?.root

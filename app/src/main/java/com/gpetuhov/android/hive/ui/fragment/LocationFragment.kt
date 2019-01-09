@@ -35,7 +35,7 @@ class LocationFragment : BaseMapFragment(), LocationFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_location, container, false)
         binding?.presenter = presenter
 
-        presenter.userUid = LocationFragmentArgs.fromBundle(arguments).userUid
+        presenter.userUid = LocationFragmentArgs.fromBundle(arguments!!).userUid
 
         val rootView = binding?.root
         initMap(rootView, R.id.location_map_view, savedInstanceState)

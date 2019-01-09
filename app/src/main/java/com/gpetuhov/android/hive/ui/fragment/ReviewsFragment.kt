@@ -44,7 +44,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews, container, false)
         binding?.presenter = presenter
 
-        val args = ReviewsFragmentArgs.fromBundle(arguments)
+        val args = ReviewsFragmentArgs.fromBundle(arguments!!)
         val offerUid = args.offerUid
         val isCurrentUser = args.isCurrentUser
         presenter.offerUid = offerUid

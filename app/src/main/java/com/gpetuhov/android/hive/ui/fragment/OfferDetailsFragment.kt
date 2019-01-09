@@ -43,7 +43,7 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_details, container, false)
         binding?.presenter = presenter
 
-        val offerUid = OfferDetailsFragmentArgs.fromBundle(arguments).offerUid
+        val offerUid = OfferDetailsFragmentArgs.fromBundle(arguments!!).offerUid
         presenter.offerUid = offerUid
 
         val offerDetailsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.offer_details_recycler_view)

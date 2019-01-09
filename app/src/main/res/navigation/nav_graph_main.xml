@@ -152,7 +152,7 @@
             tools:layout="@layout/fragment_photo">
         <argument
                 android:name="photoBundle"
-                app:argType="Bundle"/>
+                app:argType="android.os.Bundle"/>
     </fragment>
 
     <fragment android:id="@+id/locationFragment"

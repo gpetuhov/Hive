@@ -42,7 +42,7 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo, container, false)
         binding?.presenter = presenter
 
-        val args = PhotoFragmentArgs.fromBundle(arguments)
+        val args = PhotoFragmentArgs.fromBundle(arguments!!)
         val photoBundle = args.photoBundle
         val photoUrlList = photoBundle.getStringArrayList(PHOTO_URL_LIST_KEY)?.toMutableList() ?: mutableListOf()
 
