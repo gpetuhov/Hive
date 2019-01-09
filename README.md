@@ -5,8 +5,8 @@ Hive - new way of communication
 Android
 
 ## Requirements
-* Android Studio 3.4 Canary 9
+* Android Studio 3.4 Canary 10
 * Kotlin 1.3.20-eap-52
-* Android Gradle Plugin 3.4.0-alpha09
+* Android Gradle Plugin 3.4.0-alpha10
 * Gradle wrapper 5.1-milestone-1
 * AAPT 2

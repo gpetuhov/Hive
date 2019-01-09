@@ -146,7 +146,7 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.5'
 
     // Data Binding
-    kapt 'androidx.databinding:databinding-compiler:3.4.0-alpha09'
+    kapt 'androidx.databinding:databinding-compiler:3.4.0-alpha10'
 
     // Moxy
     implementation "com.arello-mobile:moxy:$moxyVersion"
