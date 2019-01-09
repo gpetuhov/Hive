@@ -112,7 +112,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.6'
 
     // Firestore
-    implementation 'com.google.firebase:firebase-firestore:17.1.4'
+    implementation 'com.google.firebase:firebase-firestore:17.1.5'
 
     // Firebase Cloud Storage
     implementation 'com.google.firebase:firebase-storage:16.0.5'
@@ -124,7 +124,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
 
     // Firebase Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.7'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
 
     // Firebase Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
