@@ -75,14 +75,14 @@ class UserTest {
     @Test
     fun emptyPhone() {
         assertEquals(false, user.hasPhone)
-        user.phone = "546546"
+        user.phone = com.gpetuhov.android.hive.utils.Constants.DUMMY_PHONE
         assertEquals(true, user.hasPhone)
     }
 
     @Test
     fun emptyVisibleEmail() {
         assertEquals(false, user.hasVisibleEmail)
-        user.visibleEmail = "test@test.com"
+        user.visibleEmail = com.gpetuhov.android.hive.utils.Constants.DUMMY_EMAIL
         assertEquals(true, user.hasVisibleEmail)
     }
 }

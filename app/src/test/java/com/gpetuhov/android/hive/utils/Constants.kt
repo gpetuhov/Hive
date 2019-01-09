@@ -54,8 +54,10 @@ class Constants {
 
         const val DELETE_COMMENT_ERROR = "Delete comment error"
 
+        const val DUMMY_PHONE = "49875496"
         const val SAVE_PHONE_ERROR = "Save phone error"
 
+        const val DUMMY_EMAIL = "test@test.com"
         const val SAVE_EMAIL_ERROR = "Save email error"
 
         private fun getDummyOffer(): Offer {

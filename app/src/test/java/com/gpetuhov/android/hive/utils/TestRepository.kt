@@ -79,7 +79,11 @@ class TestRepository : Repo {
     override fun currentUserVisibleEmail() = email
 
     override fun saveUserPhone(newPhone: String, onError: () -> Unit) {
-        // TODO: implement
+        if (isSuccess) {
+            phone = newPhone
+        } else {
+            onError()
+        }
     }
 
     override fun saveUserVisibleEmail(newEmail: String, onError: () -> Unit) {

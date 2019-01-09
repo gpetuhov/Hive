@@ -25,4 +25,5 @@ interface TestAppComponent : AppComponent {
     fun inject(deleteReviewInteractorTest: DeleteReviewInteractorTest)
     fun inject(saveCommentInteractorTest: SaveCommentInteractorTest)
     fun inject(deleteCommentInteractorTest: DeleteCommentInteractorTest)
+    fun inject(savePhoneInteractorTest: SavePhoneInteractorTest)
 }
