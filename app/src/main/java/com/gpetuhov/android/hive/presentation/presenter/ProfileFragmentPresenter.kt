@@ -249,6 +249,10 @@ class ProfileFragmentPresenter :
         viewState.dismissEmailDialog()
     }
 
+    // === Use registration email ===
+
+    fun saveRegistrationEmailAsVisibleEmail() = saveEmailInteractor.saveEmail(repo.currentUserEmail())
+
     // === Open photos ===
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)

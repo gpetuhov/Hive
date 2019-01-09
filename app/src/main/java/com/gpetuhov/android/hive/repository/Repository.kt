@@ -303,6 +303,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserVisibleEmail() = currentUser.value?.visibleEmail ?: ""
 
+    override fun currentUserEmail() = currentUser.value?.email ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername

@@ -17,12 +17,16 @@ abstract class ProfileContactsModel : EpoxyModelWithHolder<ProfileContactsHolder
     @EpoxyAttribute lateinit var email: String
     @EpoxyAttribute lateinit var onEmailClick: () -> Unit
 
+    @EpoxyAttribute lateinit var onUseRegistrationEmailClick: () -> Unit
+
     override fun bind(holder: ProfileContactsHolder) {
         holder.phone.text = phone
         holder.phoneWrapper.setOnClickListener { onPhoneClick() }
 
         holder.email.text = email
         holder.emailWrapper.setOnClickListener { onEmailClick() }
+
+        holder.useRegistrationEmail.setOnClickListener { onUseRegistrationEmailClick() }
     }
 }
 
@@ -31,4 +35,5 @@ class ProfileContactsHolder : KotlinHolder() {
     val phone by bind<TextView>(R.id.user_phone)
     val emailWrapper by bind<View>(R.id.user_visible_email_wrapper)
     val email by bind<TextView>(R.id.user_visible_email)
+    val useRegistrationEmail by bind<TextView>(R.id.user_use_registration_email)
 }

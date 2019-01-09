@@ -66,6 +66,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             val hasVisibleEmail = user?.hasVisibleEmail ?: false
             email(if (hasVisibleEmail) user?.visibleEmail ?: "" else context.getString(R.string.enter_email))
             onEmailClick { presenter.showEmailDialog() }
+
+            onUseRegistrationEmailClick { presenter.saveRegistrationEmailAsVisibleEmail() }
         }
 
         profileAbout {

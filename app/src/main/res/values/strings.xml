@@ -69,6 +69,7 @@
     <string name="username_not_valid">Must not contain spaces</string>
     <string name="phone_not_valid">Not a valid phone number</string>
     <string name="email_not_valid">Not a valid email</string>
+    <string name="use_registration_email">Use registration email</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

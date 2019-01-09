@@ -30,6 +30,7 @@ interface Repo {
     fun currentUserDescription(): String
     fun currentUserPhone(): String
     fun currentUserVisibleEmail(): String
+    fun currentUserEmail(): String
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
     fun saveUserDescription(newDescription: String, onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)
