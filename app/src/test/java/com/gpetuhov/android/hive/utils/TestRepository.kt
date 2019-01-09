@@ -18,6 +18,8 @@ class TestRepository : Repo {
     var rating = 0.0F
     var reviewList = mutableListOf<Review>()
     var commentText = ""
+    var phone = ""
+    var email = ""
 
     override fun isForeground() = false
 
@@ -70,6 +72,18 @@ class TestRepository : Repo {
     }
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
+    }
+
+    override fun currentUserPhone() = phone
+
+    override fun currentUserVisibleEmail() = email
+
+    override fun saveUserPhone(newPhone: String, onError: () -> Unit) {
+        // TODO: implement
+    }
+
+    override fun saveUserVisibleEmail(newEmail: String, onError: () -> Unit) {
+        // TODO: implement
     }
 
     override fun startGettingSecondUserUpdates(uid: String) {

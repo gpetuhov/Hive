@@ -71,4 +71,18 @@ class UserTest {
         assertEquals(dummyOffer, user.getOffer(dummyOffer.uid))
         assertEquals(null, user.getOffer("98gq"))
     }
+
+    @Test
+    fun emptyPhone() {
+        assertEquals(false, user.hasPhone)
+        user.phone = "546546"
+        assertEquals(true, user.hasPhone)
+    }
+
+    @Test
+    fun emptyVisibleEmail() {
+        assertEquals(false, user.hasVisibleEmail)
+        user.visibleEmail = "test@test.com"
+        assertEquals(true, user.hasVisibleEmail)
+    }
 }
