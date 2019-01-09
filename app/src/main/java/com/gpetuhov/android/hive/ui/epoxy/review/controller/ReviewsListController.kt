@@ -42,7 +42,11 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
                 controlsVisible(review.isFromCurrentUser)
                 onEditClick { presenter.editReview(review.uid, review.text, review.rating) }
                 onDeleteClick { presenter.showDeleteReviewDialog(review.uid) }
-                commentVisible(presenter.isCurrentUser && !review.hasComment())
+
+                // TODO: make this a paid feature
+//                commentVisible(presenter.isCurrentUser && !review.hasComment())
+                commentVisible(false)
+
                 onCommentClick { presenter.editComment(review.uid, review.comment) }
                 commentTextVisible(review.hasComment())
                 commentText(review.comment)
