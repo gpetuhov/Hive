@@ -1138,7 +1138,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             creationTimestamp = doc.getLong(CREATION_TIMESTAMP_KEY) ?: 0,
             firstOfferPublishedTimestamp = (doc.getTimestamp(FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY)?.seconds ?: 0) * 1000,
             phone = doc.getString(PHONE_KEY) ?: "",
-            visibleEmail = doc.getString(VISIBLE_EMAIL_KEY) ?: ""
+            visibleEmail = doc.getString(VISIBLE_EMAIL_KEY) ?: "",
+            skype = doc.getString(SKYPE_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
