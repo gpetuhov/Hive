@@ -20,6 +20,10 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
     @EpoxyAttribute lateinit var onEmailClick: () -> Unit
     @EpoxyAttribute var emailVisible = true
 
+    @EpoxyAttribute lateinit var skype: String
+    @EpoxyAttribute lateinit var onSkypeClick: () -> Unit
+    @EpoxyAttribute var skypeVisible = true
+
     override fun bind(holder: UserDetailsContactsHolder) {
         holder.phone.text = phone
         holder.phoneWrapper.setVisible(phoneVisible)
@@ -29,6 +33,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
         holder.emailWrapper.setVisible(emailVisible)
         holder.emailSeparator.setVisible(emailVisible)
         holder.emailWrapper.setOnClickListener { onEmailClick() }
+
+        holder.skype.text = skype
+        holder.skypeWrapper.setVisible(skypeVisible)
+        holder.skypeSeparator.setVisible(skypeVisible)
+        holder.skypeWrapper.setOnClickListener { onSkypeClick() }
     }
 }
 
@@ -38,4 +47,7 @@ class UserDetailsContactsHolder : KotlinHolder() {
     val emailWrapper by bind<View>(R.id.user_details_visible_email_wrapper)
     val email by bind<TextView>(R.id.user_details_visible_email)
     val emailSeparator by bind<View>(R.id.user_details_email_separator)
+    val skypeWrapper by bind<View>(R.id.user_details_skype_wrapper)
+    val skype by bind<TextView>(R.id.user_details_skype)
+    val skypeSeparator by bind<View>(R.id.user_details_skype_separator)
 }
