@@ -68,6 +68,13 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             onEmailClick { presenter.showEmailDialog() }
 
             onUseRegistrationEmailClick { presenter.saveRegistrationEmailAsVisibleEmail() }
+
+            val hasSkype = user?.hasSkype ?: false
+            skype(if (hasSkype) user?.skype ?: "" else context.getString(R.string.enter_skype))
+            onSkypeClick {
+                // TODO: implement
+//                presenter.showSkypeDialog()
+            }
         }
 
         profileAbout {

@@ -19,6 +19,9 @@ abstract class ProfileContactsModel : EpoxyModelWithHolder<ProfileContactsHolder
 
     @EpoxyAttribute lateinit var onUseRegistrationEmailClick: () -> Unit
 
+    @EpoxyAttribute lateinit var skype: String
+    @EpoxyAttribute lateinit var onSkypeClick: () -> Unit
+
     override fun bind(holder: ProfileContactsHolder) {
         holder.phone.text = phone
         holder.phoneWrapper.setOnClickListener { onPhoneClick() }
@@ -27,6 +30,9 @@ abstract class ProfileContactsModel : EpoxyModelWithHolder<ProfileContactsHolder
         holder.emailWrapper.setOnClickListener { onEmailClick() }
 
         holder.useRegistrationEmail.setOnClickListener { onUseRegistrationEmailClick() }
+
+        holder.skype.text = skype
+        holder.skypeWrapper.setOnClickListener { onSkypeClick() }
     }
 }
 
@@ -36,4 +42,6 @@ class ProfileContactsHolder : KotlinHolder() {
     val emailWrapper by bind<View>(R.id.user_visible_email_wrapper)
     val email by bind<TextView>(R.id.user_visible_email)
     val useRegistrationEmail by bind<TextView>(R.id.user_use_registration_email)
+    val skypeWrapper by bind<View>(R.id.user_skype_wrapper)
+    val skype by bind<TextView>(R.id.user_skype)
 }
