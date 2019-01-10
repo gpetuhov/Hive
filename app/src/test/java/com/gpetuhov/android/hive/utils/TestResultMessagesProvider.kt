@@ -56,4 +56,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSavePhoneErrorMessage(): String = Constants.SAVE_PHONE_ERROR
 
     override fun getSaveEmailErrorMessage(): String = Constants.SAVE_EMAIL_ERROR
+
+    override fun getSaveSkypeErrorMessage(): String = Constants.SAVE_SKYPE_ERROR
 }

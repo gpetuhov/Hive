@@ -20,6 +20,7 @@ class TestRepository : Repo {
     var commentText = ""
     var phone = ""
     var email = ""
+    var skype = ""
 
     override fun isForeground() = false
 
@@ -80,6 +81,8 @@ class TestRepository : Repo {
 
     override fun currentUserEmail() = ""
 
+    override fun currentUserSkype() = skype
+
     override fun saveUserPhone(newPhone: String, onError: () -> Unit) {
         if (isSuccess) {
             phone = newPhone
@@ -91,6 +94,14 @@ class TestRepository : Repo {
     override fun saveUserVisibleEmail(newEmail: String, onError: () -> Unit) {
         if (isSuccess) {
             email = newEmail
+        } else {
+            onError()
+        }
+    }
+
+    override fun saveUserSkype(newSkype: String, onError: () -> Unit) {
+        if (isSuccess) {
+            skype = newSkype
         } else {
             onError()
         }
