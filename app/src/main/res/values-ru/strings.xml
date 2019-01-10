@@ -1,0 +1,207 @@
+<resources>
+    <string name="app_name">Hive</string>
+
+    <!-- PermissionsActivity -->
+    <string name="grant_permissions_text">Пожалуйста, предоставьте разрешения</string>
+    <string name="permissions_description">Hive требует ряд разрешений для функционирования.
+        Без разрешений Hive работать не будет.
+    </string>
+    <string name="permissions_toast">Пожалуйста, предоставьте все требуемые разрешения в настройках системы!
+        Без разрешений Hive работать не будет.
+    </string>
+    <string name="grant_permissions">Предоставить разрешения</string>
+
+    <!-- AuthManager -->
+    <string name="sign_in_error">Ошибка авторизации</string>
+    <string name="sign_in_no_network">Отсутствует интернет соединение. Пожалуйста, включите соединение с сетью и попробуйте снова!</string>
+
+    <!-- MainActivity -->
+    <string name="search">Поиск</string>
+    <string name="favorite">Избранное</string>
+    <string name="messages">Сообщения</string>
+    <string name="profile">Профиль</string>
+    <string name="play_services_unavailable">Hive не будет работать без Google Play Services, которые не поддерживаются
+        Вашим устройством
+    </string>
+
+    <!-- ProfileFragment -->
+    <string name="user_picture">Фото пользователя</string>
+    <string name="complete_action_using">Завершить действие с использованием</string>
+    <string name="change_user_picture_error">Ошибка смены фото пользователя</string>
+    <string name="enter_username">Введите username</string>
+    <string name="about_me">Обо мне</string>
+    <string name="enter_description">Расскажите несколько слов о себе</string>
+    <string name="offers">Офферы</string>
+    <string name="add_offer">Добавить оффер</string>
+    <string name="username">Username</string>
+    <string name="username_save_error">Ошибка обновления username</string>
+    <string name="description_save_error">Ошибка обновления описания пользователя</string>
+    <string name="offer">Оффер</string>
+    <string name="settings">Настройки</string>
+    <string name="sign_out">Выход</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="prompt_sign_out">Вы действительно хотите выйти?</string>
+    <string name="prompt_delete_account">Вы действительно хотите удалить свой аккаунт?
+        Эта операция не может быть отменена!
+    </string>
+    <string name="sign_out_no_network">Отсутствует интернет соединение. Выход невозможен</string>
+    <string name="sign_out_error">Ошибка выхода. Пожалуйста, попробуйте еще раз</string>
+    <string name="delete_account_success">Пользовательский аккаунт успешно удален</string>
+    <string name="delete_account_no_network">Отсутствует интернет соединение. Удаление аккаунта невозможно</string>
+    <string name="delete_account_error">Ошибка удаления пользовательского аккаунта. Пожалуйста, попробуйте еще раз</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="add_photo_error">Ошибка загрузки фото</string>
+    <string name="max_visible_photos">Вы достигли максимального количества видимых фотографий.
+        Все новые добавленные фотографии не будут видны другим пользователям
+    </string>
+    <string name="delete_photo">Удалить фото</string>
+    <string name="delete_photo_error">Ошибка удаления фото</string>
+    <string name="prompt_delete_photo">Вы действительно хотите удалить эту фотографию?</string>
+    <string name="no_active_offers_warning">Вы не видны в результатах поиска, так как у Вас нет ни одного активного оффера</string>
+    <string name="active_offer">Активный оффер</string>
+    <string name="contacts">Контакты</string>
+    <string name="enter_phone">Введите номер телефона</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="phone_save_error">Ошибка обновления номера телефона</string>
+    <string name="enter_email">Введите email</string>
+    <string name="email">Email</string>
+    <string name="email_save_error">Ошибка обновления email</string>
+    <string name="username_not_valid">Поле не должно содержать пробелы</string>
+    <string name="phone_not_valid">Неверный номер телефона</string>
+    <string name="email_not_valid">Неверный email</string>
+    <string name="use_registration_email">Использовать регистрационный email</string>
+    <string name="skype">Skype username</string>
+    <string name="enter_skype">Введите Skype username</string>
+    <string name="skype_save_error">Ошибка обновления Skype username</string>
+
+    <!-- MapFragment -->
+    <string name="cancel_search">Cancel search</string>
+    <string name="my_location">My location</string>
+    <string name="zoom_in">Zoom in</string>
+    <string name="zoom_out">Zoom out</string>
+    <string name="online">online</string>
+    <string name="offline">offline</string>
+
+    <!-- UserDetailsFragment -->
+    <string name="user_details">User details</string>
+    <string name="about">About</string>
+    <string name="close_details">Close details</string>
+    <string name="chat">Chat</string>
+    <string name="no_active_offer">No active offers</string>
+    <string name="location">Location</string>
+    <string name="add_to_favorites">Add to favorites</string>
+    <string name="add_favorite_error">Error adding to favorites</string>
+    <string name="remove_favorite_error">Error removing from favorites</string>
+    <string name="summary">Summary</string>
+    <string name="user_creation_date">In Hive since</string>
+    <string name="user_first_offer_creation_date">First offer published</string>
+    <string name="user_active_offers_count">Active offers</string>
+    <string name="user_total_reviews_count">Total reviews</string>
+    <string name="email_subject">Email from Hive</string>
+    <string name="skype_not_installed">Skype not installed</string>
+
+    <!-- ChatFragment -->
+    <string name="send">Send</string>
+    <string name="enter_message">Enter message</string>
+    <string name="send_message">Send message</string>
+    <string name="send_message_error">Error sending message</string>
+    <string name="message_is_read">Message is read</string>
+
+    <!-- ChatroomsFragment -->
+    <string name="no_messages">You have no messages yet</string>
+
+    <!-- UpdateOfferFragment -->
+    <string name="close_offer_update">Close offer update</string>
+    <string name="delete_offer">Delete offer</string>
+    <string name="save_offer">Save offer</string>
+    <string name="offer_title">Offer title</string>
+    <string name="add_title">Add title</string>
+    <string name="offer_description">Offer description</string>
+    <string name="add_description">Add description</string>
+    <string name="save_offer_error">Error saving offer</string>
+    <string name="title_empty_error">Please, add offer title</string>
+    <string name="description_empty_error">Please, add offer description</string>
+    <string name="photo_list_empty_error">Please, add at least one photo</string>
+    <string name="prompt_delete_offer">Do you really want to delete this offer?</string>
+    <string name="delete_offer_error">Error deleting offer</string>
+    <string name="quit">Quit without saving</string>
+    <string name="quit_offer_update_prompt">Quit updating offer? All changes will be lost</string>
+    <string name="offer_is_active">Offer is active</string>
+    <string name="max_active_offers">You have reached maximum number of active offers</string>
+    <string name="free">Free</string>
+    <string name="free_caps">FREE</string>
+    <string name="price_usd">Price (USD)</string>
+    <string name="offer_price">Offer price</string>
+    <string name="enter_price">Enter offer price</string>
+    <string name="no_reviews2">No reviews</string>
+
+    <!-- OfferDetailsFragment -->
+    <string name="provided_by">Provided by</string>
+    <string name="offer_deleted">Offer has been deleted</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">No reviews yet. Be the first one to review this offer</string>
+    <string name="all_reviews">All reviews</string>
+    <string name="close_offer_details">Close offer details</string>
+
+    <!-- NotificationManager -->
+    <string name="location_sharing_enabled">Location sharing enabled</string>
+    <string name="location_sharing_channel_name">Location sharing channel</string>
+    <string name="location_sharing_channel_description">Shows location sharing notifications</string>
+    <string name="new_message_channel_name">New message channel</string>
+    <string name="new_message_channel_description">Shows new message notifications</string>
+
+    <!-- PhotoFragment -->
+    <string name="close_photos">Close photos</string>
+    <string name="photo_fullscreen">Photo fullscreen</string>
+
+    <!-- LocationFragment -->
+    <string name="close_location">Close location</string>
+
+    <!-- FavoritesFragment -->
+    <string name="users">Users</string>
+
+    <!-- FavoriteUsersFragment -->
+    <string name="no_favorite_users">You have no favorite users</string>
+    <string name="offer_photo">Offer photo</string>
+
+    <!-- FavoriteOffersFragment -->
+    <string name="no_favorite_offers">You have no favorite offers</string>
+
+    <!-- ReviewsFragment -->
+    <string name="total_reviews">Total reviews</string>
+    <string name="average_rating">Average rating</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_review">Delete review</string>
+    <string name="prompt_delete_review">Do you really want to delete your review?</string>
+    <string name="delete_review_error">Error deleting review</string>
+    <string name="comment">Comment</string>
+    <string name="provider_comment">Offer provider\'s comment:</string>
+    <string name="delete_comment">Delete comment</string>
+    <string name="prompt_delete_comment">Do you really want to delete your comment?</string>
+    <string name="delete_comment_error">Error deleting comment</string>
+
+    <!-- UpdateReviewFragment -->
+    <string name="review">Review</string>
+    <string name="add_review">Add review</string>
+    <string name="quit_review_update_prompt">Do you really want to quit? All changes will be lost</string>
+    <string name="save_review">Save review</string>
+    <string name="review_text_empty_error">Please, add review</string>
+    <string name="review_zero_rating_error">Please, add rating</string>
+    <string name="save_review_error">Error saving review</string>
+
+    <!--  UpdateCommentFragment -->
+    <string name="add_comment">Add comment</string>
+    <string name="save_comment">Save comment</string>
+    <string name="comment_text_empty_error">Please, add comment</string>
+    <string name="save_comment_error">Error saving comment</string>
+
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fbYOUR_APP_ID</string>
+
+    <!-- Twitter consumer key and secret -->
+    <string name="twitter_consumer_key" translatable="false">YOUR_CONSUMER_KEY</string>
+    <string name="twitter_consumer_secret" translatable="false">YOUR_CONSUMER_SECRET</string>
+
+</resources>
