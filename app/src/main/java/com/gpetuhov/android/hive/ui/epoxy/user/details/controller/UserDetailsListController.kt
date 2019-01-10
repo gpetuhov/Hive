@@ -62,10 +62,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 skype(skype)
                 skypeVisible(hasSkype)
                 skypeSeparatorVisible(hasSkype && (hasPhone || hasVisibleEmail))
-                onSkypeClick {
-                    // TODO: implement
-//                    presenter.callSkype(skype)
-                }
+                onSkypeClick { presenter.callSkype(skype) }
             }
         }
 

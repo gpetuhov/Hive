@@ -61,6 +61,8 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun sendEmail(email: String) = viewState.sendEmail(email)
 
+    fun callSkype(skype: String) = viewState.callSkype(skype)
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend

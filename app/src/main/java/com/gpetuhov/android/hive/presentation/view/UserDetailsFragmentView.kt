@@ -28,5 +28,8 @@ interface UserDetailsFragmentView : MvpView {
     fun sendEmail(email: String)
 
     @StateStrategyType(SkipStrategy::class)
+    fun callSkype(skype: String)
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 }
