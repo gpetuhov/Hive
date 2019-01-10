@@ -72,6 +72,7 @@
     <string name="use_registration_email">Use registration email</string>
     <string name="skype">Skype username</string>
     <string name="enter_skype">Enter Skype username</string>
+    <string name="skype_save_error">Error updating Skype username</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

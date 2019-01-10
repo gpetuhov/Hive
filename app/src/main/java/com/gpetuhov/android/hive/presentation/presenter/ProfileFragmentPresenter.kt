@@ -25,7 +25,8 @@ class ProfileFragmentPresenter :
     SaveDescriptionInteractor.Callback,
     DeleteUserPhotoInteractor.Callback,
     SavePhoneInteractor.Callback,
-    SaveEmailInteractor.Callback {
+    SaveEmailInteractor.Callback,
+    SaveSkypeInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -37,6 +38,7 @@ class ProfileFragmentPresenter :
     private val deleteUserPhotoInteractor = DeleteUserPhotoInteractor(this)
     private val savePhoneInteractor = SavePhoneInteractor(this)
     private val saveEmailInteractor = SaveEmailInteractor(this)
+    private val saveSkypeInteractor = SaveSkypeInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -95,6 +97,10 @@ class ProfileFragmentPresenter :
     // === SaveEmailInteractor.Callback ===
 
     override fun onSaveEmailError(errorMessage: String) = showToast(errorMessage)
+
+    // === SaveSkypeInteractor.Callback ===
+
+    override fun onSaveSkypeError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -268,9 +274,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveSkype() {
-        // TODO: add save skype interactor and handle callbacks
-//        saveSkypeInteractor.saveSkype(tempSkype)
-        repo.saveUserSkype(tempSkype) { }
+        saveSkypeInteractor.saveSkype(tempSkype)
         dismissSkypeDialog()
     }
 

@@ -28,4 +28,5 @@ interface ResultMessages {
     fun getDeleteCommentErrorMessage(): String
     fun getSavePhoneErrorMessage(): String
     fun getSaveEmailErrorMessage(): String
+    fun getSaveSkypeErrorMessage(): String
 }

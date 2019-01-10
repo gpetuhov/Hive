@@ -68,5 +68,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveEmailErrorMessage(): String = getString(R.string.email_save_error)
 
+    override fun getSaveSkypeErrorMessage(): String = getString(R.string.skype_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }
