@@ -321,8 +321,11 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
-    override fun saveUserLocation(newLocation: LatLng) =
-        geoFirestore.setLocation(currentUserUid(), GeoPoint(newLocation.latitude, newLocation.longitude))
+    override fun saveUserLocation(newLocation: LatLng) {
+        if (isAuthorized && currentUserUid() != "") {
+            geoFirestore.setLocation(currentUserUid(), GeoPoint(newLocation.latitude, newLocation.longitude))
+        }
+    }
 
     override fun saveUserPhone(newPhone: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
@@ -341,7 +344,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
-        if (isAuthorized) {
+        if (isAuthorized && currentUserUid() != "") {
             firestore.collection(USERS_COLLECTION).document(currentUserUid())
                 .delete()
                 .addOnSuccessListener {
@@ -572,7 +575,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun chatrooms() = chatrooms
 
     override fun startGettingChatroomsUpdates() {
-        if (isAuthorized) {
+        if (isAuthorized && currentUserUid() != "") {
             // We keep a collection of chatrooms for every user.
             // This is needed to easily display a list of all chats,
             // that current user participates in.
@@ -782,7 +785,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun favoriteOffers() = favoriteOffers
 
     override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
-        if (isAuthorized) {
+        if (isAuthorized && userUid != "" && offerUid != "" && currentUserUid() != "") {
             val data = HashMap<String, Any>()
             data[FAVORITE_USER_UID_KEY] = userUid
             data[FAVORITE_OFFER_UID_KEY] = offerUid
@@ -804,7 +807,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
-        if (isAuthorized) {
+        if (isAuthorized && userUid != "" && offerUid != "" && currentUserUid() != "") {
             getFavoritesCollectionReference()
                 .document("$userUid$offerUid")
                 .delete()
@@ -869,8 +872,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun reviews(): MutableLiveData<MutableList<Review>> = reviews
 
     override fun startGettingReviewsUpdates(offerUid: String, isCurrentUser: Boolean) {
-        if (isAuthorized && offerUid != "") {
-            val userUid = if (isCurrentUser) currentUserUid() else secondUserUid()
+        val userUid = if (isCurrentUser) currentUserUid() else secondUserUid()
+
+        if (isAuthorized && offerUid != "" && userUid != "") {
             reviewsListenerRegistration = getReviewsCollectionReference(userUid, offerUid)
                 .orderBy(REVIEW_TIMESTAMP_KEY, Query.Direction.DESCENDING)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
@@ -922,7 +926,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
-        if (isAuthorized && offerUid != "" && reviewUid != "") {
+        if (isAuthorized && offerUid != "" && reviewUid != "" && secondUserUid() != "") {
             getReviewsCollectionReference(secondUserUid(), offerUid)
                 .document(reviewUid)
                 .delete()
@@ -1039,7 +1043,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveUserDataRemote(data, { updateUserNameAndPicCollection() }, { /* Do nothing */ })
 
     private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
-        if (isAuthorized) {
+        if (isAuthorized && currentUserUid() != "") {
             firestore.collection(USERS_COLLECTION).document(currentUserUid())
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {
@@ -1072,7 +1076,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun startGettingUserUpdates(uid: String, onSuccess: (User) -> Unit): ListenerRegistration? {
         var listenerRegistration: ListenerRegistration? = null
 
-        if (isAuthorized) {
+        if (isAuthorized && uid != "") {
             listenerRegistration = firestore.collection(USERS_COLLECTION).document(uid)
                 .addSnapshotListener { snapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
@@ -1395,7 +1399,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun markMessageAsRead(messageUid: String) {
-        if (isAuthorized && currentChatRoomUid != "") {
+        if (isAuthorized && currentChatRoomUid != "" && messageUid != "") {
             val data = HashMap<String, Any>()
             data[MESSAGE_IS_READ_KEY] = true
 
@@ -1442,7 +1446,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     // which in turn will trigger Cloud Function that updates chatrooms
     // (this is needed to update chatrooms on username and userpic change).
     private fun updateUserNameAndPicCollection() {
-        if (isAuthorized) {
+        if (isAuthorized && currentUserUid() != "") {
             val data = HashMap<String, Any>()
             data[NAME_KEY] = currentUser.value?.name ?: ""
             data[USERNAME_KEY] = currentUser.value?.username ?: ""
@@ -1651,7 +1655,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun startGettingFavoritesUpdates() {
         stopGettingFavoritesUpdates()
 
-        if (isAuthorized) {
+        if (isAuthorized && currentUserUid() != "") {
             favoritesListenerRegistration = getFavoritesCollectionReference()
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
@@ -1857,7 +1861,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun saveReviewData(userUid: String, offerUid: String, reviewUid: String, data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
-        if (isAuthorized && reviewUid != "" && offerUid != "") {
+        if (isAuthorized && reviewUid != "" && offerUid != "" && userUid != "") {
             // Write review to Firestore
             getReviewsCollectionReference(userUid, offerUid)
                 .document(reviewUid)
