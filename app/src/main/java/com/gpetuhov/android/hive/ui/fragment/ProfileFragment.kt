@@ -47,6 +47,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var deletePhotoDialog: MaterialDialog? = null
     private var phoneDialog: MaterialDialog? = null
     private var emailDialog: MaterialDialog? = null
+    private var skypeDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -180,6 +181,16 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissEmailDialog() = emailDialog?.dismiss() ?: Unit
 
+    override fun showSkypeDialog() {
+        // Prefill dialog with text provided by presenter
+        val editText = skypeDialog?.getInputField()
+        editText?.setText(presenter.getSkypePrefill())
+        editText?.setSelection(editText.text.length)
+        skypeDialog?.show()
+    }
+
+    override fun dismissSkypeDialog() = skypeDialog?.dismiss() ?: Unit
+
     override fun showToast(message: String) {
         toast(message)
     }
@@ -194,6 +205,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initDeletePhotoDialog()
         initPhoneDialog()
         initEmailDialog()
+        initSkypeDialog()
     }
 
     private fun initUsernameDialog() {
@@ -345,6 +357,36 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun initSkypeDialog() {
+        if (context != null) {
+            val skypeErrorMessage = context?.getString(R.string.username_not_valid)
+
+            skypeDialog = MaterialDialog(context!!)
+                .title(R.string.skype)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(
+                    hintRes = R.string.enter_skype,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    var positiveButtonEnabled = true
+                    presenter.updateTempSkype(inputText)
+
+                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
+                        positiveButtonEnabled = false
+                        skypeErrorMessage
+                    } else {
+                        null
+                    }
+
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
+                }
+                .positiveButton { presenter.saveSkype() }
+                .negativeButton { presenter.dismissSkypeDialog() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -353,6 +395,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissDeletePhotoDialog()
         dismissPhoneDialog()
         dismissEmailDialog()
+        dismissSkypeDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)

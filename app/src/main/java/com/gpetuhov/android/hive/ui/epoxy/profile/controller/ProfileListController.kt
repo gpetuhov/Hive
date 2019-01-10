@@ -71,10 +71,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
             val hasSkype = user?.hasSkype ?: false
             skype(if (hasSkype) user?.skype ?: "" else context.getString(R.string.enter_skype))
-            onSkypeClick {
-                // TODO: implement
-//                presenter.showSkypeDialog()
-            }
+            onSkypeClick { presenter.showSkypeDialog() }
         }
 
         profileAbout {

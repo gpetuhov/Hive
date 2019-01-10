@@ -53,6 +53,9 @@ class ProfileFragmentPresenter :
     // Keeps current text entered in email dialog
     private var tempEmail = ""
 
+    // Keeps current text entered in Skype dialog
+    private var tempSkype = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -252,6 +255,29 @@ class ProfileFragmentPresenter :
     // === Use registration email ===
 
     fun saveRegistrationEmailAsVisibleEmail() = saveEmailInteractor.saveEmail(repo.currentUserEmail())
+
+    // --- Change Skype ---
+
+    fun showSkypeDialog() = viewState.showSkypeDialog()
+
+    // Prefill Skype dialog with currently entered text or current email
+    fun getSkypePrefill() = if (tempSkype != "") tempSkype else repo.currentUserSkype()
+
+    fun updateTempSkype(newTempSkype: String) {
+        tempSkype = newTempSkype
+    }
+
+    fun saveSkype() {
+        // TODO: add save skype interactor and handle callbacks
+//        saveSkypeInteractor.saveSkype(tempSkype)
+        repo.saveUserSkype(tempSkype) { }
+        dismissSkypeDialog()
+    }
+
+    fun dismissSkypeDialog() {
+        tempSkype = ""
+        viewState.dismissSkypeDialog()
+    }
 
     // === Open photos ===
 

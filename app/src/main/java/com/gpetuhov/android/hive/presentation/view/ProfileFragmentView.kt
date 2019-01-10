@@ -98,6 +98,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissEmailDialog()
 
+    // === Change Skype ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showSkypeDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissSkypeDialog()
+
     // === Common ===
 
     // We don't need to keep this command in the queue,

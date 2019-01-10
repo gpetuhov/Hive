@@ -64,6 +64,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY = "firstOfferPublishedTimestamp"
         private const val PHONE_KEY = "phone"
         private const val VISIBLE_EMAIL_KEY = "visibleEmail"
+        private const val SKYPE_KEY = "skype"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -305,6 +306,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserEmail() = currentUser.value?.email ?: ""
 
+    override fun currentUserSkype() = currentUser.value?.skype ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -340,6 +343,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[VISIBLE_EMAIL_KEY] = newEmail
 
         // Save user visible email
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserSkype(newSkype: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[SKYPE_KEY] = newSkype
+
+        // Save user Skype
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 

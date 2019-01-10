@@ -31,11 +31,13 @@ interface Repo {
     fun currentUserPhone(): String
     fun currentUserVisibleEmail(): String
     fun currentUserEmail(): String
+    fun currentUserSkype(): String
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
     fun saveUserDescription(newDescription: String, onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)
     fun saveUserPhone(newPhone: String, onError: () -> Unit)
     fun saveUserVisibleEmail(newEmail: String, onError: () -> Unit)
+    fun saveUserSkype(newSkype: String, onError: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
     fun startGettingSecondUserUpdates(uid: String)
     fun stopGettingSecondUserUpdates()
