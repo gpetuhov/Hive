@@ -119,4 +119,17 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
     override fun showToast(message: String) {
         toast(message)
     }
+
+    // TODO: uncomment this to call Skype
+//    private fun callSkype(username: String) {
+//        val intent = Intent(Intent.ACTION_VIEW)
+//        intent.data = Uri.parse("skype:$username")
+//
+//        val packageManager = activity?.packageManager
+//        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+//            startActivity(intent)
+//        } else {
+//            showToast(context?.getString(R.string.skype_not_installed) ?: "")
+//        }
+//    }
 }

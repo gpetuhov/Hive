@@ -95,6 +95,7 @@
     <string name="user_active_offers_count">Active offers</string>
     <string name="user_total_reviews_count">Total reviews</string>
     <string name="email_subject">Email from Hive</string>
+    <string name="skype_not_installed">Skype not installed</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
