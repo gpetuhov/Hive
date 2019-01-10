@@ -9,6 +9,9 @@ apply plugin: 'androidx.navigation.safeargs'
 // Firebase Crashlytics
 apply plugin: 'io.fabric'
 
+// Firebase Performance
+apply plugin: 'com.google.firebase.firebase-perf'
+
 def appVersionCode = 1040
 def appVersionName = "0.1.40"
 
@@ -128,6 +131,9 @@ dependencies {
 
     // Firebase Cloud Messaging
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
+    // Firebase Performance
+    implementation 'com.google.firebase:firebase-perf:16.2.3'
 
     // Facebook (required for FirebaseUI)
     implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
