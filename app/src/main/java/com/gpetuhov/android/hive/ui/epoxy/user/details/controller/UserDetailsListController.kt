@@ -55,11 +55,13 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 val email = user?.visibleEmail ?: ""
                 email(email)
                 emailVisible(hasVisibleEmail)
+                emailSeparatorVisible(hasVisibleEmail && hasPhone)
                 onEmailClick { presenter.sendEmail(email) }
 
                 val skype = user?.skype ?: ""
                 skype(skype)
                 skypeVisible(hasSkype)
+                skypeSeparatorVisible(hasSkype && (hasPhone || hasVisibleEmail))
                 onSkypeClick {
                     // TODO: implement
 //                    presenter.callSkype(skype)

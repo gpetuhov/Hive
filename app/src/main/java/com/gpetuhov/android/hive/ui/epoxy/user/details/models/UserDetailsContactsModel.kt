@@ -19,10 +19,12 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
     @EpoxyAttribute lateinit var email: String
     @EpoxyAttribute lateinit var onEmailClick: () -> Unit
     @EpoxyAttribute var emailVisible = true
+    @EpoxyAttribute var emailSeparatorVisible = true
 
     @EpoxyAttribute lateinit var skype: String
     @EpoxyAttribute lateinit var onSkypeClick: () -> Unit
     @EpoxyAttribute var skypeVisible = true
+    @EpoxyAttribute var skypeSeparatorVisible = true
 
     override fun bind(holder: UserDetailsContactsHolder) {
         holder.phone.text = phone
@@ -31,12 +33,12 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
 
         holder.email.text = email
         holder.emailWrapper.setVisible(emailVisible)
-        holder.emailSeparator.setVisible(emailVisible)
+        holder.emailSeparator.setVisible(emailSeparatorVisible)
         holder.emailWrapper.setOnClickListener { onEmailClick() }
 
         holder.skype.text = skype
         holder.skypeWrapper.setVisible(skypeVisible)
-        holder.skypeSeparator.setVisible(skypeVisible)
+        holder.skypeSeparator.setVisible(skypeSeparatorVisible)
         holder.skypeWrapper.setOnClickListener { onSkypeClick() }
     }
 }
