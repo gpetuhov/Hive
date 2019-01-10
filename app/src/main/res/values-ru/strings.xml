@@ -70,131 +70,131 @@
     <string name="phone_not_valid">Неверный номер телефона</string>
     <string name="email_not_valid">Неверный email</string>
     <string name="use_registration_email">Использовать регистрационный email</string>
-    <string name="skype">Skype username</string>
-    <string name="enter_skype">Введите Skype username</string>
-    <string name="skype_save_error">Ошибка обновления Skype username</string>
+    <string name="skype">Имя пользователя Skype</string>
+    <string name="enter_skype">Введите имя пользователя Skype</string>
+    <string name="skype_save_error">Ошибка обновления имени пользователя Skype</string>
 
     <!-- MapFragment -->
-    <string name="cancel_search">Cancel search</string>
-    <string name="my_location">My location</string>
-    <string name="zoom_in">Zoom in</string>
-    <string name="zoom_out">Zoom out</string>
-    <string name="online">online</string>
-    <string name="offline">offline</string>
+    <string name="cancel_search">Отменить поиск</string>
+    <string name="my_location">Мое местоположение</string>
+    <string name="zoom_in">Приблизить</string>
+    <string name="zoom_out">Отдалить</string>
+    <string name="online">онлайн</string>
+    <string name="offline">оффлайн</string>
 
     <!-- UserDetailsFragment -->
-    <string name="user_details">User details</string>
-    <string name="about">About</string>
-    <string name="close_details">Close details</string>
-    <string name="chat">Chat</string>
-    <string name="no_active_offer">No active offers</string>
-    <string name="location">Location</string>
-    <string name="add_to_favorites">Add to favorites</string>
-    <string name="add_favorite_error">Error adding to favorites</string>
-    <string name="remove_favorite_error">Error removing from favorites</string>
-    <string name="summary">Summary</string>
-    <string name="user_creation_date">In Hive since</string>
-    <string name="user_first_offer_creation_date">First offer published</string>
-    <string name="user_active_offers_count">Active offers</string>
-    <string name="user_total_reviews_count">Total reviews</string>
-    <string name="email_subject">Email from Hive</string>
-    <string name="skype_not_installed">Skype not installed</string>
+    <string name="user_details">Сведения о пользователе</string>
+    <string name="about">Описание</string>
+    <string name="close_details">Закрыть сведения</string>
+    <string name="chat">Чат</string>
+    <string name="no_active_offer">Нет активных офферов</string>
+    <string name="location">Местоположение</string>
+    <string name="add_to_favorites">Добавить в избранное</string>
+    <string name="add_favorite_error">Ошибка добавления в избранное</string>
+    <string name="remove_favorite_error">Ошибка удаления из избранного</string>
+    <string name="summary">Сводка</string>
+    <string name="user_creation_date">Дата регистрации</string>
+    <string name="user_first_offer_creation_date">Первый оффер опубликован</string>
+    <string name="user_active_offers_count">Активные офферы</string>
+    <string name="user_total_reviews_count">Количество отзывов</string>
+    <string name="email_subject">Письмо из Hive</string>
+    <string name="skype_not_installed">Skype не установлен</string>
 
     <!-- ChatFragment -->
-    <string name="send">Send</string>
-    <string name="enter_message">Enter message</string>
-    <string name="send_message">Send message</string>
-    <string name="send_message_error">Error sending message</string>
-    <string name="message_is_read">Message is read</string>
+    <string name="send">Отправить</string>
+    <string name="enter_message">Введите сообщение</string>
+    <string name="send_message">Отправить сообщение</string>
+    <string name="send_message_error">Ошибка отправки сообщения</string>
+    <string name="message_is_read">Сообщение прочитано</string>
 
     <!-- ChatroomsFragment -->
-    <string name="no_messages">You have no messages yet</string>
+    <string name="no_messages">У Вас пока нет сообщений</string>
 
     <!-- UpdateOfferFragment -->
-    <string name="close_offer_update">Close offer update</string>
-    <string name="delete_offer">Delete offer</string>
-    <string name="save_offer">Save offer</string>
-    <string name="offer_title">Offer title</string>
-    <string name="add_title">Add title</string>
-    <string name="offer_description">Offer description</string>
-    <string name="add_description">Add description</string>
-    <string name="save_offer_error">Error saving offer</string>
-    <string name="title_empty_error">Please, add offer title</string>
-    <string name="description_empty_error">Please, add offer description</string>
-    <string name="photo_list_empty_error">Please, add at least one photo</string>
-    <string name="prompt_delete_offer">Do you really want to delete this offer?</string>
-    <string name="delete_offer_error">Error deleting offer</string>
-    <string name="quit">Quit without saving</string>
-    <string name="quit_offer_update_prompt">Quit updating offer? All changes will be lost</string>
-    <string name="offer_is_active">Offer is active</string>
-    <string name="max_active_offers">You have reached maximum number of active offers</string>
-    <string name="free">Free</string>
-    <string name="free_caps">FREE</string>
-    <string name="price_usd">Price (USD)</string>
-    <string name="offer_price">Offer price</string>
-    <string name="enter_price">Enter offer price</string>
-    <string name="no_reviews2">No reviews</string>
+    <string name="close_offer_update">Закрыть обновление оффера</string>
+    <string name="delete_offer">Удалить оффер</string>
+    <string name="save_offer">Сохранить оффер</string>
+    <string name="offer_title">Название оффера</string>
+    <string name="add_title">Добавьте название</string>
+    <string name="offer_description">Описание оффера</string>
+    <string name="add_description">Добавьте описание</string>
+    <string name="save_offer_error">Ошибка сохранения оффера</string>
+    <string name="title_empty_error">Пожалуйста, добавьте название оффера</string>
+    <string name="description_empty_error">Пожалуйста, добавьте описание оффера</string>
+    <string name="photo_list_empty_error">Пожалуйста, добавьте хотя бы одно фото</string>
+    <string name="prompt_delete_offer">Вы действительно хотите удалить этот оффер?</string>
+    <string name="delete_offer_error">Ошибка удаления оффера</string>
+    <string name="quit">Выйти без сохранения</string>
+    <string name="quit_offer_update_prompt">Отменить обновление оффера? Все изменения будут потеряны</string>
+    <string name="offer_is_active">Оффер активен</string>
+    <string name="max_active_offers">Вы достигли максимального количества активных офферов</string>
+    <string name="free">Бесплатно</string>
+    <string name="free_caps">БЕСПЛАТНО</string>
+    <string name="price_usd">Стоимость (USD)</string>
+    <string name="offer_price">Стоимость оффера</string>
+    <string name="enter_price">Введите стоимость оффера</string>
+    <string name="no_reviews2">Нет отзывов</string>
 
     <!-- OfferDetailsFragment -->
-    <string name="provided_by">Provided by</string>
-    <string name="offer_deleted">Offer has been deleted</string>
-    <string name="reviews">Reviews</string>
-    <string name="no_reviews">No reviews yet. Be the first one to review this offer</string>
-    <string name="all_reviews">All reviews</string>
-    <string name="close_offer_details">Close offer details</string>
+    <string name="provided_by">Предоставлен</string>
+    <string name="offer_deleted">Оффер был удален</string>
+    <string name="reviews">Отзывы</string>
+    <string name="no_reviews">Отзывы отсутствуют. Напишите первый отзыв на этот оффер</string>
+    <string name="all_reviews">Все отзывы</string>
+    <string name="close_offer_details">Закрыть сведения об оффере</string>
 
     <!-- NotificationManager -->
-    <string name="location_sharing_enabled">Location sharing enabled</string>
-    <string name="location_sharing_channel_name">Location sharing channel</string>
-    <string name="location_sharing_channel_description">Shows location sharing notifications</string>
-    <string name="new_message_channel_name">New message channel</string>
-    <string name="new_message_channel_description">Shows new message notifications</string>
+    <string name="location_sharing_enabled">Публикация местоположения включена</string>
+    <string name="location_sharing_channel_name">Канал публикации местоположения</string>
+    <string name="location_sharing_channel_description">Отображает уведомление о публикации местоположения</string>
+    <string name="new_message_channel_name">Канал новых сообщений</string>
+    <string name="new_message_channel_description">Отображает уведомления о новых сообщениях</string>
 
     <!-- PhotoFragment -->
-    <string name="close_photos">Close photos</string>
-    <string name="photo_fullscreen">Photo fullscreen</string>
+    <string name="close_photos">Закрыть фото</string>
+    <string name="photo_fullscreen">Полноэкранное фото</string>
 
     <!-- LocationFragment -->
-    <string name="close_location">Close location</string>
+    <string name="close_location">Закрыть местоположение</string>
 
     <!-- FavoritesFragment -->
-    <string name="users">Users</string>
+    <string name="users">Пользователи</string>
 
     <!-- FavoriteUsersFragment -->
-    <string name="no_favorite_users">You have no favorite users</string>
-    <string name="offer_photo">Offer photo</string>
+    <string name="no_favorite_users">У Вас нет избранных пользователей</string>
+    <string name="offer_photo">Фото оффера</string>
 
     <!-- FavoriteOffersFragment -->
-    <string name="no_favorite_offers">You have no favorite offers</string>
+    <string name="no_favorite_offers">У Вас нет избранных офферов</string>
 
     <!-- ReviewsFragment -->
-    <string name="total_reviews">Total reviews</string>
-    <string name="average_rating">Average rating</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    <string name="delete_review">Delete review</string>
-    <string name="prompt_delete_review">Do you really want to delete your review?</string>
-    <string name="delete_review_error">Error deleting review</string>
-    <string name="comment">Comment</string>
-    <string name="provider_comment">Offer provider\'s comment:</string>
-    <string name="delete_comment">Delete comment</string>
-    <string name="prompt_delete_comment">Do you really want to delete your comment?</string>
-    <string name="delete_comment_error">Error deleting comment</string>
+    <string name="total_reviews">Количество отзывов</string>
+    <string name="average_rating">Средняя оценка</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="delete_review">Удалить отзыв</string>
+    <string name="prompt_delete_review">Вы действительно хотите удалить Ваш отзыв?</string>
+    <string name="delete_review_error">Ошибка удаления отзыва</string>
+    <string name="comment">Комментировать</string>
+    <string name="provider_comment">Комментарий провайдера оффера:</string>
+    <string name="delete_comment">Удалить комментарий</string>
+    <string name="prompt_delete_comment">Вы действительно хотите удалить Ваш комментарий?</string>
+    <string name="delete_comment_error">Ошибка удаления комментария</string>
 
     <!-- UpdateReviewFragment -->
-    <string name="review">Review</string>
-    <string name="add_review">Add review</string>
-    <string name="quit_review_update_prompt">Do you really want to quit? All changes will be lost</string>
-    <string name="save_review">Save review</string>
-    <string name="review_text_empty_error">Please, add review</string>
-    <string name="review_zero_rating_error">Please, add rating</string>
-    <string name="save_review_error">Error saving review</string>
+    <string name="review">Отзыв</string>
+    <string name="add_review">Добавьте отзыв</string>
+    <string name="quit_review_update_prompt">Вы действительно хотите выйти? Все изменения будут потеряны</string>
+    <string name="save_review">Сохранить отзыв</string>
+    <string name="review_text_empty_error">Пожалуйста, добавьте отзыв</string>
+    <string name="review_zero_rating_error">Пожалуйста, добавьте оценку</string>
+    <string name="save_review_error">Ошибка сохранения отзыва</string>
 
     <!--  UpdateCommentFragment -->
-    <string name="add_comment">Add comment</string>
-    <string name="save_comment">Save comment</string>
-    <string name="comment_text_empty_error">Please, add comment</string>
-    <string name="save_comment_error">Error saving comment</string>
+    <string name="add_comment">Добавьте комментарий</string>
+    <string name="save_comment">Сохранить комментарий</string>
+    <string name="comment_text_empty_error">Пожалуйста, добавьте комментарий</string>
+    <string name="save_comment_error">Ошибка сохранения комментария</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">YOUR_APP_ID</string>
