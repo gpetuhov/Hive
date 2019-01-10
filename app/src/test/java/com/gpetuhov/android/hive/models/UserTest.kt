@@ -85,4 +85,11 @@ class UserTest {
         user.visibleEmail = com.gpetuhov.android.hive.utils.Constants.DUMMY_EMAIL
         assertEquals(true, user.hasVisibleEmail)
     }
+
+    @Test
+    fun emptySkype() {
+        assertEquals(false, user.hasSkype)
+        user.skype = com.gpetuhov.android.hive.utils.Constants.DUMMY_SKYPE
+        assertEquals(true, user.hasSkype)
+    }
 }

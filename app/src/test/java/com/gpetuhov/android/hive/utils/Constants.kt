@@ -60,6 +60,9 @@ class Constants {
         const val DUMMY_EMAIL = "test@test.com"
         const val SAVE_EMAIL_ERROR = "Save email error"
 
+        const val DUMMY_SKYPE = "bla_bla_name"
+        const val SAVE_SKYPE_ERROR = "Save skype error"
+
         private fun getDummyOffer(): Offer {
             val offer = Offer("2g5g2g", "5894gh5489","dfgfdg", "ddsfdfs", 0.0, false, true)
             offer.photoList.add(DUMMY_PHOTO)
