@@ -73,6 +73,7 @@
     <string name="skype">Skype username</string>
     <string name="enter_skype">Enter Skype username</string>
     <string name="skype_save_error">Error updating Skype username</string>
+    <string name="app_version">App version</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

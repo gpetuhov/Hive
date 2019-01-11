@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.ui.epoxy.profile.controller
 
 import android.content.Context
+import com.gpetuhov.android.hive.BuildConfig
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
@@ -114,6 +115,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
             onDeleteAccountClick { presenter.showDeleteUserDialog() }
             deleteAccountEnabled(deleteAccountEnabled)
+
+            appVersion("${context.getString(R.string.app_version)}: ${BuildConfig.VERSION_NAME}")
         }
     }
 

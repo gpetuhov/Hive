@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,31 +22,29 @@
             android:text="@string/settings"
             style="@style/titleTextStyle"/>
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <TextView
+            android:id="@+id/signout_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_out"
+            style="@style/basicTextStyle"/>
 
-        <Button
-                android:id="@+id/signout_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_out"
-                android:textColor="@color/md_black_1000"
-                style="?android:attr/buttonBarButtonStyle"/>
+    <TextView
+            android:id="@+id/delete_user_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/delete_account"
+            android:textColor="@color/md_red_600"
+            style="@style/basicTextStyle"/>
 
-        <Button
-                android:id="@+id/delete_user_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="0dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="0dp"
-                android:text="@string/delete_account"
-                android:textColor="@color/md_red_600"
-                style="?android:attr/buttonBarButtonStyle"/>
-
-    </LinearLayout>
+    <TextView
+            android:id="@+id/app_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            style="@style/basicTextStyle"
+            tools:text="App version: 0.1.0"/>
 
 </LinearLayout>

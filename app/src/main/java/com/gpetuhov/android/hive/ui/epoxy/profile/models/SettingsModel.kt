@@ -1,6 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.profile.models
 
-import android.widget.Button
+import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -16,16 +16,21 @@ abstract class SettingsModel : EpoxyModelWithHolder<SettingsHolder>() {
     @EpoxyAttribute var deleteAccountEnabled = true
     @EpoxyAttribute lateinit var onDeleteAccountClick: () -> Unit
 
+    @EpoxyAttribute lateinit var appVersion: String
+
     override fun bind(holder: SettingsHolder) {
         holder.signOut.setOnClickListener { onSignOutClick() }
         holder.signOut.isEnabled = signOutEnabled
 
         holder.deleteAccount.setOnClickListener { onDeleteAccountClick() }
         holder.deleteAccount.isEnabled = deleteAccountEnabled
+
+        holder.appVersion.text = appVersion
     }
 }
 
 class SettingsHolder : KotlinHolder() {
-    val signOut by bind<Button>(R.id.signout_button)
-    val deleteAccount by bind<Button>(R.id.delete_user_button)
+    val signOut by bind<TextView>(R.id.signout_button)
+    val deleteAccount by bind<TextView>(R.id.delete_user_button)
+    val appVersion by bind<TextView>(R.id.app_version)
 }
