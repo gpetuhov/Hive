@@ -106,6 +106,11 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissSkypeDialog()
 
+    // === Open privacy policy ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openPrivacyPolicy()
+
     // === Common ===
 
     // We don't need to keep this command in the queue,

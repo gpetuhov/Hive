@@ -287,6 +287,10 @@ class ProfileFragmentPresenter :
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
 
+    // === Open privacy policy ===
+
+    fun openPrivacyPolicy() = viewState.openPrivacyPolicy()
+
     // === Private methods ===
 
     private fun showToast(message: String) {

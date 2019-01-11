@@ -191,6 +191,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissSkypeDialog() = skypeDialog?.dismiss() ?: Unit
 
+    override fun openPrivacyPolicy() {
+        val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
+        findNavController().navigate(action)
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }

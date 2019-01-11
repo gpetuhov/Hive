@@ -51,6 +51,11 @@
                 app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_navigation_profile_to_privacyPolicyFragment"
+                app:destination="@id/privacyPolicyFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <!-- Secondary fragments -->
@@ -260,6 +265,13 @@
         <argument
                 android:name="commentText"
                 app:argType="string"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/privacyPolicyFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.PrivacyPolicyFragment"
+            android:label="PrivacyPolicyFragment"
+            tools:layout="@layout/fragment_privacy_policy">
     </fragment>
 
 </navigation>
