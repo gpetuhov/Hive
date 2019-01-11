@@ -15,6 +15,7 @@ import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import kotlinx.android.synthetic.main.fragment_privacy_policy.*
 
 class PrivacyPolicyFragment : BaseFragment(), PrivacyPolicyFragmentView {
 
@@ -38,7 +39,7 @@ class PrivacyPolicyFragment : BaseFragment(), PrivacyPolicyFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO: load policy into webview here
+        privacy_policy_webview.loadUrl("file:///android_asset/privacy_policy.html")
     }
 
     // === PrivacyPolicyFragmentView ===
