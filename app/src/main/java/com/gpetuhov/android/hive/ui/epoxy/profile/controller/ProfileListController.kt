@@ -116,6 +116,10 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             onDeleteAccountClick { presenter.showDeleteUserDialog() }
             deleteAccountEnabled(deleteAccountEnabled)
 
+            onPrivacyPolicyClick {
+                // TODO: implement
+            }
+
             appVersion("${context.getString(R.string.app_version)}: ${BuildConfig.VERSION_NAME}")
         }
     }

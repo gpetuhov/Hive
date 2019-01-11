@@ -39,12 +39,20 @@
             style="@style/basicTextStyle"/>
 
     <TextView
+            android:id="@+id/privacy_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/privacy_policy"
+            style="@style/basicTextStyle"/>
+
+    <TextView
             android:id="@+id/app_version"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            style="@style/basicTextStyle"
+            style="@style/mediumTextStyle"
             tools:text="App version: 0.1.0"/>
 
 </LinearLayout>

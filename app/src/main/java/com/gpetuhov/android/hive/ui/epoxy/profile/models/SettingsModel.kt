@@ -16,6 +16,8 @@ abstract class SettingsModel : EpoxyModelWithHolder<SettingsHolder>() {
     @EpoxyAttribute var deleteAccountEnabled = true
     @EpoxyAttribute lateinit var onDeleteAccountClick: () -> Unit
 
+    @EpoxyAttribute lateinit var onPrivacyPolicyClick: () -> Unit
+
     @EpoxyAttribute lateinit var appVersion: String
 
     override fun bind(holder: SettingsHolder) {
@@ -25,6 +27,8 @@ abstract class SettingsModel : EpoxyModelWithHolder<SettingsHolder>() {
         holder.deleteAccount.setOnClickListener { onDeleteAccountClick() }
         holder.deleteAccount.isEnabled = deleteAccountEnabled
 
+        holder.privacyPolicy.setOnClickListener { onPrivacyPolicyClick() }
+
         holder.appVersion.text = appVersion
     }
 }
@@ -32,5 +36,6 @@ abstract class SettingsModel : EpoxyModelWithHolder<SettingsHolder>() {
 class SettingsHolder : KotlinHolder() {
     val signOut by bind<TextView>(R.id.signout_button)
     val deleteAccount by bind<TextView>(R.id.delete_user_button)
+    val privacyPolicy by bind<TextView>(R.id.privacy_policy)
     val appVersion by bind<TextView>(R.id.app_version)
 }
