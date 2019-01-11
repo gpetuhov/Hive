@@ -71,7 +71,7 @@ class NotificationManager {
         val builder = NotificationCompat.Builder(context, LOCATION_SHARING_CHANNEL)
             .setContentTitle(context.getString(R.string.app_name))
             .setContentText(context.getString(R.string.location_sharing_enabled))
-            .setSmallIcon(R.drawable.notification_icon)
+            .setSmallIcon(R.drawable.ic_notification_icon)
             .setContentIntent(getMainActivityPendingIntent())
 
         return builder.build()
@@ -243,7 +243,7 @@ class NotificationManager {
         val builder = NotificationCompat.Builder(context, NEW_MESSAGE_CHANNEL)
             .setContentTitle(notificationInfo.senderName)
             .setContentText(notificationInfo.messageText)
-            .setSmallIcon(R.drawable.notification_icon)
+            .setSmallIcon(R.drawable.ic_notification_icon)
             .setLargeIcon(userPic)
             .setContentIntent(getMainActivityPendingIntent())
             .setAutoCancel(true)
