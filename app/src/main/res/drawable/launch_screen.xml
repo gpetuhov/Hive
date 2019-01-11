@@ -4,7 +4,7 @@
     <item android:drawable="@color/md_white_1000"/>
     <item>
         <bitmap
-                android:src="@drawable/android_round"
+                android:src="@drawable/launch_screen_icon"
                 android:gravity="center"
                 android:filter="false"
                 android:antialias="false"/>
