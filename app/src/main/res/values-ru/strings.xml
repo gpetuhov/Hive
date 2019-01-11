@@ -83,7 +83,7 @@
     <string name="offline">оффлайн</string>
 
     <!-- UserDetailsFragment -->
-    <string name="user_details">Сведения о пользователе</string>
+    <string name="user_details">Пользователь</string>
     <string name="about">Описание</string>
     <string name="close_details">Закрыть сведения</string>
     <string name="chat">Чат</string>
