@@ -39,7 +39,16 @@ class PrivacyPolicyFragment : BaseFragment(), PrivacyPolicyFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        privacy_policy_webview.loadUrl("file:///android_asset/privacy_policy.html")
+        if (savedInstanceState != null) {
+            privacy_policy_webview.restoreState(savedInstanceState)
+        } else {
+            privacy_policy_webview.loadUrl("file:///android_asset/privacy_policy.html")
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        privacy_policy_webview.saveState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     // === PrivacyPolicyFragmentView ===
