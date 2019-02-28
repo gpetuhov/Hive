@@ -21,5 +21,6 @@ Android
 * Firebase Cloud Functions (code in HiveCloud repo) for backend data handling
 * Data Binding (in some views)
 * Jetpack Navigation
+* AndroidX
 * AirBnb Epoxy for complex screens (with carousels)
 * Dependency injection with Dagger 2
