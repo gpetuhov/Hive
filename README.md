@@ -1,5 +1,5 @@
 # Hive
-Hive - new way of communication
+Hive - new way of communication. Beta-test link: https://play.google.com/apps/testing/com.gpetuhov.android.hive
 
 ## Platform
 Android
