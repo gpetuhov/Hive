@@ -797,7 +797,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun favoriteOffers() = favoriteOffers
 
     override fun addFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
-        if (isAuthorized && userUid != "" && offerUid != "" && currentUserUid() != "") {
+        if (isAuthorized && userUid != "" && currentUserUid() != "") {  // offerUid CAN be empty!
             val data = HashMap<String, Any>()
             data[FAVORITE_USER_UID_KEY] = userUid
             data[FAVORITE_OFFER_UID_KEY] = offerUid
@@ -819,7 +819,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun removeFavorite(userUid: String, offerUid: String, onError: () -> Unit) {
-        if (isAuthorized && userUid != "" && offerUid != "" && currentUserUid() != "") {
+        if (isAuthorized && userUid != "" && currentUserUid() != "") {  // offerUid CAN be empty!
             getFavoritesCollectionReference()
                 .document("$userUid$offerUid")
                 .delete()
