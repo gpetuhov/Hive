@@ -8,7 +8,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.fragment.FavoriteOffersFragment
 import com.gpetuhov.android.hive.ui.fragment.FavoriteUsersFragment
 
-class FavoritesAdapter(private val context: Context?, fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
+class FavoritesAdapter(private val context: Context?, fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment = if (position == 0) FavoriteUsersFragment() else FavoriteOffersFragment()
 
