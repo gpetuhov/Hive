@@ -20,6 +20,7 @@ import android.graphics.Bitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.Timestamp
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -1275,7 +1276,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offerLastReviewAuthorName = offerRatingMap[OFFER_LAST_REVIEW_AUTHOR_NAME_KEY] as String? ?: ""
                 val offerLastReviewAuthorUserPicUrl = offerRatingMap[OFFER_LAST_REVIEW_AUTHOR_PIC_URL_KEY] as String? ?: ""
                 val offerLastReviewText = offerRatingMap[OFFER_LAST_REVIEW_TEXT_KEY] as String? ?: ""
-                val offerLastReviewTimestamp = (offerRatingMap[OFFER_LAST_REVIEW_TIME_KEY] as Date?)?.time ?: (System.currentTimeMillis() / 1000)
+                val offerLastReviewTimestamp = (offerRatingMap[OFFER_LAST_REVIEW_TIME_KEY] as Timestamp?)?.seconds ?: (System.currentTimeMillis() / 1000)
 
                 if (offerUid != null && offerUid != "") {
                     val rating = Rating(

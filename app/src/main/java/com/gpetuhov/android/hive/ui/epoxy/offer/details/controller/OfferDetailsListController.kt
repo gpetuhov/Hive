@@ -11,7 +11,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.*
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
-import com.gpetuhov.android.hive.util.getDateTimeFromTimestampInMilliseconds
+import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
 import javax.inject.Inject
 
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : BaseController() {
@@ -89,7 +89,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     id("offer_last_review")
                     userPicUrl(lastReviewAuthorPicUrl)
                     username(lastReviewAuthorName)
-                    time(getDateTimeFromTimestampInMilliseconds(lastReviewTimestamp))
+                    time(getDateTimeFromTimestamp(lastReviewTimestamp))
                     reviewText(lastReviewText)
                     rating(0.0F)
                     ratingVisible(false)

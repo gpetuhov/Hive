@@ -112,28 +112,28 @@ dependencies {
     kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Firebase core
-    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-core:16.0.8'
 
     // Firestore
-    implementation 'com.google.firebase:firebase-firestore:17.1.5'
+    implementation 'com.google.firebase:firebase-firestore:18.2.0'
 
     // Firebase Cloud Storage
-    implementation 'com.google.firebase:firebase-storage:16.0.5'
+    implementation 'com.google.firebase:firebase-storage:16.1.0'
 
     // This must be explicitly set, otherwise the app will crash (used by FirebaseUI)
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.1'
 
     // FirebaseUI for Firebase Auth
     implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
 
     // Firebase Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.8'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
 
     // Firebase Cloud Messaging
-    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+    implementation 'com.google.firebase:firebase-messaging:17.6.0'
 
     // Firebase Performance
-    implementation 'com.google.firebase:firebase-perf:16.2.3'
+    implementation 'com.google.firebase:firebase-perf:16.2.5'
 
     // Facebook (required for FirebaseUI)
     implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
@@ -165,7 +165,7 @@ dependencies {
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0-RC1"
 
     // GeoFirestore
-    implementation 'com.github.imperiumlabs:GeoFirestore-Android:v1.1.1'
+    implementation 'com.github.imperiumlabs:GeoFirestore-Android:v1.2.1'
 
     // Android Lifecycle
     // Without this there will be "Unresolved reference: ViewModelProviders"
