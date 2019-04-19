@@ -60,6 +60,11 @@ android {
     dataBinding {
         enabled = true
     }
+
+    // This is needed after updating Kotlin Coroutines to 1.2.0
+    packagingOptions {
+        pickFirst("META-INF/atomicfu.kotlin_module")
+    }
 }
 
 dependencies {
