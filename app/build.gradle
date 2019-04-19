@@ -97,8 +97,8 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
 
     // Google Play Services
-    implementation "com.google.android.gms:play-services-maps:$playServicesVersion"
-    implementation "com.google.android.gms:play-services-location:$playServicesVersion"
+    implementation "com.google.android.gms:play-services-maps:16.1.0"
+    implementation "com.google.android.gms:play-services-location:16.0.0"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
@@ -139,7 +139,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.37.0'
 
     // Twitter (required for FirebaseUI)
-    implementation 'com.twitter.sdk.android:twitter-core:3.1.1'
+    implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
 
     // Multidex (is required by Firebase)
     implementation 'com.android.support:multidex:1.0.3'
@@ -170,7 +170,6 @@ dependencies {
     // Android Lifecycle
     // Without this there will be "Unresolved reference: ViewModelProviders"
     implementation "android.arch.lifecycle:extensions:1.1.1"
-    kapt "android.arch.lifecycle:compiler:1.1.1"
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:2.2.4"
