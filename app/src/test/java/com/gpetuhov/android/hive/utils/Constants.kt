@@ -1,9 +1,6 @@
 package com.gpetuhov.android.hive.utils
 
-import com.gpetuhov.android.hive.domain.model.Favorite
-import com.gpetuhov.android.hive.domain.model.Photo
-import com.gpetuhov.android.hive.domain.model.Offer
-import com.gpetuhov.android.hive.domain.model.Review
+import com.gpetuhov.android.hive.domain.model.*
 
 class Constants {
     companion object {
@@ -62,6 +59,8 @@ class Constants {
 
         const val DUMMY_SKYPE = "bla_bla_name"
         const val SAVE_SKYPE_ERROR = "Save skype error"
+
+        val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 
         private fun getDummyOffer(): Offer {
             val offer = Offer("2g5g2g", "5894gh5489","dfgfdg", "ddsfdfs", 0.0, false, true)
