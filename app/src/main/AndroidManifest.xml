@@ -19,9 +19,15 @@
             android:name=".application.HiveApp"
             tools:ignore="GoogleAppIndexingWarning">
 
+        <!-- Google Maps App ID -->
         <meta-data
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyDvvwYjIUfP7si-5gclnuNFO5WreCkiJXQ"/>
+
+        <!-- Facebook App ID -->
+        <meta-data
+                android:name="com.facebook.sdk.ApplicationId"
+                android:value="@string/facebook_application_id"/>
 
         <activity
                 android:name=".ui.activity.SplashActivity"
