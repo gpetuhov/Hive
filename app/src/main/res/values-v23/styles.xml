@@ -19,9 +19,11 @@
     </style>
 
     <!-- FirebaseUI for Auth theme -->
-    <!-- Needed to change status bar color back to dark -->
     <style name="AuthTheme" parent="FirebaseUI">
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/md_white_1000</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 
 </resources>

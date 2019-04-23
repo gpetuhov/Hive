@@ -13,8 +13,9 @@
     </style>
 
     <!-- FirebaseUI for Auth theme -->
-    <!-- Here does nothing. Changes are present only in styles v23 -->
     <style name="AuthTheme" parent="FirebaseUI">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <!-- Basic text style -->
