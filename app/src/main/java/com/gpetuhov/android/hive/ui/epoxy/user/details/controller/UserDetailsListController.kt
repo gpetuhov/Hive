@@ -103,7 +103,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             id("user_details_reviews_header")
         }
 
-        user?.offerList?.forEachWithIndex { index, offer ->
+        user?.offerList?.sortedByDescending { it.lastReviewTimestamp }?.forEachWithIndex { index, offer ->
             if (offer.isActive) {
                 val lastReviewAuthorName = offer.lastReviewAuthorName
                 val lastReviewAuthorPicUrl = offer.lastReviewAuthorUserPicUrl
