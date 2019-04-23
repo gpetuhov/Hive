@@ -8,6 +8,27 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+    <LinearLayout
+            android:id="@+id/favorites_title"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/basic_view_size"
+            android:background="@color/md_white_1000"
+            android:gravity="center_vertical"
+            android:elevation="2dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/favorite"
+                style="@style/titleTextStyle"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"/>
+
+    </LinearLayout>
+
     <com.google.android.material.tabs.TabLayout
             android:id="@+id/favorites_tabs"
             android:layout_width="match_parent"
@@ -15,7 +36,7 @@
             app:tabGravity="fill"
             app:tabMaxWidth="0dp"
             app:tabMode="scrollable"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/favorites_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginLeft="16dp"
