@@ -6,9 +6,6 @@ import com.gpetuhov.android.hive.application.dagger.components.DaggerAppComponen
 import com.gpetuhov.android.hive.util.CrashlyticsTree
 import timber.log.Timber
 
-// This is NEEDED! Do not remove!
-import com.facebook.FacebookSdk
-
 // Class is open so that it can be mocked in tests by Mockito
 open class HiveApp : MultiDexApplication() {
 

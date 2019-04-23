@@ -67,9 +67,9 @@ open class AuthManager : Auth {
         if (network.isOnline()) {
             val providers = arrayListOf(
                 AuthUI.IdpConfig.EmailBuilder().build(),
-                AuthUI.IdpConfig.GoogleBuilder().build()
+                AuthUI.IdpConfig.GoogleBuilder().build(),
+                AuthUI.IdpConfig.FacebookBuilder().build()
 //                    AuthUI.IdpConfig.PhoneBuilder().build(),
-//                    AuthUI.IdpConfig.FacebookBuilder().build(),
 //                    AuthUI.IdpConfig.TwitterBuilder().build()
             )
 
