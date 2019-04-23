@@ -4,13 +4,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
+import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.ui.epoxy.base.carousel
 import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
 import com.gpetuhov.android.hive.ui.epoxy.map.models.MapModel_
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
 
 abstract class BaseController : EpoxyController() {
 
@@ -80,6 +83,40 @@ abstract class BaseController : EpoxyController() {
                         }
                         .onLongClick { onLongClick(item.uid) }
                 }
+            }
+        }
+    }
+
+    protected fun lastOfferReview(offer: Offer?, offerIndex: Int) {
+        val lastReviewAuthorName = offer?.lastReviewAuthorName ?: ""
+        val lastReviewAuthorPicUrl = offer?.lastReviewAuthorUserPicUrl ?: ""
+        val lastReviewText = offer?.lastReviewText ?: ""
+        val lastReviewTimestamp = offer?.lastReviewTimestamp ?: 0
+
+        if (
+            lastReviewAuthorName != ""
+            && lastReviewAuthorPicUrl != ""
+            && lastReviewText != ""
+            && lastReviewTimestamp != 0L
+        ) {
+            reviewItem {
+                id("offer_last_review_$offerIndex")
+                userPicUrl(lastReviewAuthorPicUrl)
+                username(lastReviewAuthorName)
+                time(getDateTimeFromTimestamp(lastReviewTimestamp))
+                reviewText(lastReviewText)
+                rating(0.0F)
+                ratingVisible(false)
+                controlsVisible(false)
+                onEditClick { /* Do nothing */ }
+                onDeleteClick { /* Do nothing */ }
+                commentVisible(false)
+                onCommentClick { /* Do nothing */ }
+                commentTextVisible(false)
+                commentText("")
+                commentControlsVisible(false)
+                onCommentEditClick { /* Do nothing */ }
+                onCommentDeleteClick { /* Do nothing */ }
             }
         }
     }
