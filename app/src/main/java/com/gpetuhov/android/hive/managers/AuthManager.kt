@@ -3,6 +3,8 @@ package com.gpetuhov.android.hive.managers
 import android.app.Activity
 import android.content.Context
 import com.afollestad.materialdialogs.MaterialDialog
+import com.facebook.AccessToken
+import com.facebook.login.LoginManager
 import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.FirebaseAuth
@@ -99,6 +101,15 @@ open class AuthManager : Auth {
             .signOut(context)
             .addOnSuccessListener {
                 Timber.tag(TAG).d("Sign out successful")
+
+                // Clear Facebook access token to be able
+                // to sign in with Facebook as different person.
+                // On some devices this does not help,
+                // so to sign in with Facebook as different person,
+                // first clear Chrome browser cache.
+                AccessToken.setCurrentAccessToken(null)
+                LoginManager.getInstance()?.logOut()
+
                 onSuccess()
             }
             .addOnFailureListener {
