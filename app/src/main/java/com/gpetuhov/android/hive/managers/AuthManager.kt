@@ -79,6 +79,7 @@ open class AuthManager : Auth {
                     .setIsSmartLockEnabled(true)
                     .setAvailableProviders(providers)
                     .setTheme(R.style.AuthTheme)
+                    .setLogo(R.drawable.hive_icon_transparent)
                     .build(),
                 resultCode
             )
