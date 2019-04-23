@@ -6,8 +6,11 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
+import org.jetbrains.anko.collections.forEachWithIndex
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : UserBaseController() {
@@ -93,6 +96,46 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                     { presenter.favoriteOffer(offer.isFavorite, offer.uid) },
                     { presenter.openOffer(offer.uid) }
                 )
+            }
+        }
+
+        userDetailsReviewsHeader {
+            id("user_details_reviews_header")
+        }
+
+        user?.offerList?.forEachWithIndex { index, offer ->
+            if (offer.isActive) {
+                val lastReviewAuthorName = offer.lastReviewAuthorName
+                val lastReviewAuthorPicUrl = offer.lastReviewAuthorUserPicUrl
+                val lastReviewText = offer.lastReviewText
+                val lastReviewTimestamp = offer.lastReviewTimestamp
+
+                if (
+                    lastReviewAuthorName != ""
+                    && lastReviewAuthorPicUrl != ""
+                    && lastReviewText != ""
+                    && lastReviewTimestamp != 0L
+                ) {
+                    reviewItem {
+                        id("offer_last_review_$index")
+                        userPicUrl(lastReviewAuthorPicUrl)
+                        username(lastReviewAuthorName)
+                        time(getDateTimeFromTimestamp(lastReviewTimestamp))
+                        reviewText(lastReviewText)
+                        rating(0.0F)
+                        ratingVisible(false)
+                        controlsVisible(false)
+                        onEditClick { /* Do nothing */ }
+                        onDeleteClick { /* Do nothing */ }
+                        commentVisible(false)
+                        onCommentClick { /* Do nothing */ }
+                        commentTextVisible(false)
+                        commentText("")
+                        commentControlsVisible(false)
+                        onCommentEditClick { /* Do nothing */ }
+                        onCommentDeleteClick { /* Do nothing */ }
+                    }
+                }
             }
         }
 
