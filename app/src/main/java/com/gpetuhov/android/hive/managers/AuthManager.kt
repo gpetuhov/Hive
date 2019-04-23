@@ -68,11 +68,9 @@ open class AuthManager : Auth {
     override fun showLoginScreen(activity: Activity, resultCode: Int) {
         if (network.isOnline()) {
             val providers = arrayListOf(
-                AuthUI.IdpConfig.EmailBuilder().build(),
+                AuthUI.IdpConfig.FacebookBuilder().build(),
                 AuthUI.IdpConfig.GoogleBuilder().build(),
-                AuthUI.IdpConfig.FacebookBuilder().build()
-//                    AuthUI.IdpConfig.PhoneBuilder().build(),
-//                    AuthUI.IdpConfig.TwitterBuilder().build()
+                AuthUI.IdpConfig.EmailBuilder().build()
             )
 
             activity.startActivityForResult(
