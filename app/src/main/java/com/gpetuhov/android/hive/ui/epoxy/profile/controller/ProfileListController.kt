@@ -107,6 +107,10 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             onClick { presenter.updateOffer("") }
         }
 
+        reviewsHeader()
+
+        reviewsSummary(context)
+
         settings {
             id("settings")
 
