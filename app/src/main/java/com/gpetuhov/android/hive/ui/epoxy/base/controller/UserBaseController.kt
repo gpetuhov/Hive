@@ -23,6 +23,8 @@ abstract class UserBaseController : BaseController() {
     }
 
     protected var user: User? = null
+    protected var totalReviewsCount = 0
+    protected var averageRating = 0.0F
 
     private var selectedOfferPhotoMap = hashMapOf<String, Int>()
 
@@ -80,11 +82,11 @@ abstract class UserBaseController : BaseController() {
             val activeOffersCount = activeOfferList?.size ?: 0
             activeOffersCount("${context.getString(R.string.user_active_offers_count)}: $activeOffersCount")
 
-            var totalReviewsCount = 0
+            totalReviewsCount = 0
             activeOfferList?.forEach { totalReviewsCount += it.reviewCount }
             totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: $totalReviewsCount")
 
-            var averageRating = 0.0F
+            averageRating = 0.0F
             val activeOfferWithReviewsList = activeOfferList?.filter { it.reviewCount > 0 }
             activeOfferWithReviewsList?.forEach { averageRating += it.rating }
             val activeOfferWithReviewsCount = activeOfferWithReviewsList?.size ?: 0
