@@ -183,6 +183,9 @@
     <string name="prompt_delete_comment">Вы действительно хотите удалить Ваш комментарий?</string>
     <string name="delete_comment_error">Ошибка удаления комментария</string>
 
+    <!-- ReviewsAllFragment -->
+    <string name="reviews_all">Отзывы о пользователе</string>
+
     <!-- UpdateReviewFragment -->
     <string name="review">Отзыв</string>
     <string name="add_review">Добавьте отзыв</string>

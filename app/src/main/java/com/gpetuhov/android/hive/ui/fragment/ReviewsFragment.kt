@@ -25,6 +25,7 @@ import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
 
+// Shows reviews of one offer
 class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     @InjectPresenter lateinit var presenter: ReviewsFragmentPresenter

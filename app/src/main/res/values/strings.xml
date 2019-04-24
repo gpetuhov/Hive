@@ -183,6 +183,9 @@
     <string name="prompt_delete_comment">Do you really want to delete your comment?</string>
     <string name="delete_comment_error">Error deleting comment</string>
 
+    <!-- ReviewsAllFragment -->
+    <string name="reviews_all">All user reviews</string>
+
     <!-- UpdateReviewFragment -->
     <string name="review">Review</string>
     <string name="add_review">Add review</string>
