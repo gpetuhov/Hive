@@ -55,7 +55,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             email(user?.email ?: "")
         }
 
-        summary(context)
+        summary(context, true)
 
         profileContacts {
             id("profile_contacts")
@@ -109,7 +109,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
         reviewsHeader()
 
-        reviewsSummary(context)
+        reviewsSummary(context, true)
 
         settings {
             id("settings")

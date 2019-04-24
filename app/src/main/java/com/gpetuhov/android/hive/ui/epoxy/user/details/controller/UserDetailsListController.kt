@@ -38,7 +38,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             username(user?.getUsernameOrName() ?: "")
         }
 
-        summary(context)
+        summary(context, false)
 
         val hasPhone = user?.hasPhone ?: false
         val hasVisibleEmail = user?.hasVisibleEmail ?: false
@@ -103,7 +103,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             if (offer.isActive) lastOfferReview(offer, index)
         }
 
-        reviewsSummary(context)
+        reviewsSummary(context, false)
 
         // MapModel will be bind here only once (after fragment creation),
         // because location is not annotated as epoxy attribute.

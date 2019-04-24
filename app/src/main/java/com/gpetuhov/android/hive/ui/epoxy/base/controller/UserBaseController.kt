@@ -25,10 +25,11 @@ abstract class UserBaseController : BaseController() {
     }
 
     protected var user: User? = null
-    protected var totalReviewsCount = 0
-    protected var averageRating = 0.0F
 
     private var selectedOfferPhotoMap = hashMapOf<String, Int>()
+    private var totalReviewsCount = 0
+    private var averageRating = 0.0F
+    private var isRatingVisible = false
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -64,7 +65,7 @@ abstract class UserBaseController : BaseController() {
         offerItemDetails(context, settings, offer, isProfile, favoriteButtonVisible, onFavoriteButtonClick, onClick)
     }
 
-    protected fun summary(context: Context) {
+    protected fun summary(context: Context, forceShowRating: Boolean) {
         summary {
             id("summary")
 
@@ -93,7 +94,8 @@ abstract class UserBaseController : BaseController() {
             activeOfferWithReviewsList?.forEach { averageRating += it.rating }
             val activeOfferWithReviewsCount = activeOfferWithReviewsList?.size ?: 0
             if (activeOfferWithReviewsCount > 0) averageRating /= activeOfferWithReviewsCount
-            ratingVisible(totalReviewsCount >= Constants.User.VISIBLE_RATING_REVIEW_COUNT && averageRating > 0.0F)
+            isRatingVisible = totalReviewsCount >= Constants.User.VISIBLE_RATING_REVIEW_COUNT && averageRating > 0.0F
+            ratingVisible(isRatingVisible || forceShowRating)
             val ratingText = "%.2f".format(averageRating)
             ratingText("${context.getString(R.string.average_rating)}: $ratingText")
             rating(averageRating)
@@ -107,7 +109,7 @@ abstract class UserBaseController : BaseController() {
     }
 
     // This should be called after summary() method has been called
-    protected fun reviewsSummary(context: Context) {
+    protected fun reviewsSummary(context: Context, forceShowRating: Boolean) {
         reviewsSummary {
             id("reviews_summary")
 
@@ -117,6 +119,7 @@ abstract class UserBaseController : BaseController() {
             reviewsActionText(if (noReviews) context.getString(R.string.no_reviews2) else "$allReviews ($reviewCount)")
 
             rating(averageRating)
+            ratingVisible(isRatingVisible || forceShowRating)
 
             onClick {
                 // TODO: implement

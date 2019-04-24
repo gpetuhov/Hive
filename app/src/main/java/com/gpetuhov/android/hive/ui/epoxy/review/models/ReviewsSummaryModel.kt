@@ -16,13 +16,13 @@ abstract class ReviewsSummaryModel : EpoxyModelWithHolder<ReviewsSummaryHolder>(
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     @EpoxyAttribute var rating = 0.0F
+    @EpoxyAttribute var ratingVisible = false
 
     override fun bind(holder: ReviewsSummaryHolder) {
         holder.reviewsActionText.text = reviewsActionText
         holder.reviewsActionText.setOnClickListener { onClick() }
 
-        val ratingBarVisible = rating != 0.0F
-        holder.ratingBar.setVisible(ratingBarVisible)
+        holder.ratingBar.setVisible(ratingVisible)
         holder.ratingBar.rating = rating
         holder.ratingBar.setOnClickListener { onClick() }
     }

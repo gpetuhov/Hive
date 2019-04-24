@@ -84,7 +84,9 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 val allReviews = context.getString(R.string.all_reviews)
                 reviewsActionText(if (noReviews) context.getString(R.string.no_reviews) else "$allReviews ($reviewCount)")
 
-                rating(offer?.rating ?: 0.0F)
+                val offerRating = offer?.rating ?: 0.0F
+                rating(offerRating)
+                ratingVisible(offerRating != 0.0F)
 
                 onClick { presenter.openReviews() }
             }
