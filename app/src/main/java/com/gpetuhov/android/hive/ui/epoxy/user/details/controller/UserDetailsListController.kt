@@ -6,6 +6,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
 import com.gpetuhov.android.hive.util.Settings
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -97,7 +98,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             }
         }
 
-        userDetailsReviewsHeader {
+        reviewsHeader {
             id("user_details_reviews_header")
         }
 

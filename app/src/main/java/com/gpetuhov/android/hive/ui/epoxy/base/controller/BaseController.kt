@@ -87,6 +87,7 @@ abstract class BaseController : EpoxyController() {
         }
     }
 
+    // Add ReviewItemModel for the last review of the offer
     protected fun lastOfferReview(offer: Offer?, offerIndex: Int) {
         val lastReviewAuthorName = offer?.lastReviewAuthorName ?: ""
         val lastReviewAuthorPicUrl = offer?.lastReviewAuthorUserPicUrl ?: ""

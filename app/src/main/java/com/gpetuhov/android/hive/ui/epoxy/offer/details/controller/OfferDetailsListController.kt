@@ -8,6 +8,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.*
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
@@ -68,7 +69,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 price(if (isFree) context.getString(R.string.free_caps) else "$price USD")
             }
 
-            offerDetailsReviewsHeader {
+            reviewsHeader {
                 id("offer_details_reviews_header")
             }
 
