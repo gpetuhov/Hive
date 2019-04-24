@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.carousel
 import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.summary
 import com.gpetuhov.android.hive.util.Constants
@@ -99,10 +100,16 @@ abstract class UserBaseController : BaseController() {
         }
     }
 
+    protected fun reviewsHeader() {
+        reviewsHeader {
+            id("reviews_header")
+        }
+    }
+
     // This should be called after summary() method has been called
     protected fun reviewsSummary(context: Context) {
         reviewsSummary {
-            id("user_details_reviews_summary")
+            id("reviews_summary")
 
             val reviewCount = totalReviewsCount
             val noReviews = reviewCount == 0
