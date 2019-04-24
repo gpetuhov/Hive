@@ -7,7 +7,6 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
-import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
 import com.gpetuhov.android.hive.util.Settings
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -107,21 +106,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             if (offer.isActive) lastOfferReview(offer, index)
         }
 
-        reviewsSummary {
-            id("user_details_reviews_summary")
-
-            val reviewCount = totalReviewsCount
-            val noReviews = reviewCount == 0
-            val allReviews = context.getString(R.string.all_reviews)
-            reviewsActionText(if (noReviews) context.getString(R.string.no_reviews2) else "$allReviews ($reviewCount)")
-
-            rating(averageRating)
-
-            onClick {
-                // TODO: implement
-                // TODO: open all reviews, if reviewCount > 0
-            }
-        }
+        reviewsSummary(context)
 
         // MapModel will be bind here only once (after fragment creation),
         // because location is not annotated as epoxy attribute.

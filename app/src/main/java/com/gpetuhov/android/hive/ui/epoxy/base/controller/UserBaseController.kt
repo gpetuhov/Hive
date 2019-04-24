@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.carousel
 import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.summary
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
@@ -95,6 +96,25 @@ abstract class UserBaseController : BaseController() {
             val ratingText = "%.2f".format(averageRating)
             ratingText("${context.getString(R.string.average_rating)}: $ratingText")
             rating(averageRating)
+        }
+    }
+
+    // This should be called after summary() method has been called
+    protected fun reviewsSummary(context: Context) {
+        reviewsSummary {
+            id("user_details_reviews_summary")
+
+            val reviewCount = totalReviewsCount
+            val noReviews = reviewCount == 0
+            val allReviews = context.getString(R.string.all_reviews)
+            reviewsActionText(if (noReviews) context.getString(R.string.no_reviews2) else "$allReviews ($reviewCount)")
+
+            rating(averageRating)
+
+            onClick {
+                // TODO: implement
+                // TODO: open all reviews, if reviewCount > 0
+            }
         }
     }
 
