@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPres
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.*
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
@@ -75,8 +76,8 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
             lastOfferReview(offer, 0)
 
-            offerDetailsReviews {
-                id("offer_details_reviews")
+            reviewsSummary {
+                id("offer_details_reviews_summary")
 
                 val reviewCount = offer?.reviewCount ?: 0
                 val noReviews = reviewCount == 0

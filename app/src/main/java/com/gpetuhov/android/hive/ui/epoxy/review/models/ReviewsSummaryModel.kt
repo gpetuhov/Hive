@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.ui.epoxy.offer.details.models
+package com.gpetuhov.android.hive.ui.epoxy.review.models
 
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
@@ -9,15 +9,15 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.setVisible
 
-@EpoxyModelClass(layout = R.layout.offer_details_reviews_view)
-abstract class OfferDetailsReviewsModel : EpoxyModelWithHolder<OfferDetailsReviewsHolder>() {
+@EpoxyModelClass(layout = R.layout.reviews_summary_view)
+abstract class ReviewsSummaryModel : EpoxyModelWithHolder<ReviewsSummaryHolder>() {
 
     @EpoxyAttribute lateinit var reviewsActionText: String
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     @EpoxyAttribute var rating = 0.0F
 
-    override fun bind(holder: OfferDetailsReviewsHolder) {
+    override fun bind(holder: ReviewsSummaryHolder) {
         holder.reviewsActionText.text = reviewsActionText
         holder.reviewsActionText.setOnClickListener { onClick() }
 
@@ -28,7 +28,7 @@ abstract class OfferDetailsReviewsModel : EpoxyModelWithHolder<OfferDetailsRevie
     }
 }
 
-class OfferDetailsReviewsHolder : KotlinHolder() {
+class ReviewsSummaryHolder : KotlinHolder() {
     val reviewsActionText by bind<TextView>(R.id.offer_details_reviews_action_text)
     val ratingBar by bind<AppCompatRatingBar>(R.id.offer_details_rating_bar)
 }
