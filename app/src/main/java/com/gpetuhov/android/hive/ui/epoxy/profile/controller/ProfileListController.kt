@@ -109,9 +109,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
         reviewsHeader()
 
-        reviewsSummary(context, true) {
-            // TODO: implement
-        }
+        reviewsSummary(context, true) { presenter.openAllReviews() }
 
         settings {
             id("settings")

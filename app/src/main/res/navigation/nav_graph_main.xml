@@ -42,7 +42,8 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.ProfileFragment"
             android:label="ProfileFragment"
             tools:layout="@layout/fragment_profile" >
-        <action android:id="@+id/action_navigation_profile_to_update_offer_fragment"
+        <action
+                android:id="@+id/action_navigation_profile_to_update_offer_fragment"
                 app:destination="@id/update_offer_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
@@ -54,6 +55,11 @@
         <action
                 android:id="@+id/action_navigation_profile_to_privacyPolicyFragment"
                 app:destination="@id/privacyPolicyFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_navigation_profile_to_reviewsAllFragment"
+                app:destination="@id/reviewsAllFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
@@ -80,11 +86,13 @@
                 app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action android:id="@+id/action_user_details_fragment_to_locationFragment"
+        <action
+                android:id="@+id/action_user_details_fragment_to_locationFragment"
                 app:destination="@id/locationFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action android:id="@+id/action_user_details_fragment_to_reviewsAllFragment"
+        <action
+                android:id="@+id/action_user_details_fragment_to_reviewsAllFragment"
                 app:destination="@id/reviewsAllFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
@@ -114,7 +122,8 @@
                 app:destination="@id/photoFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
-        <action android:id="@+id/action_update_offer_fragment_to_reviewsFragment"
+        <action
+                android:id="@+id/action_update_offer_fragment_to_reviewsFragment"
                 app:destination="@id/reviewsFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>

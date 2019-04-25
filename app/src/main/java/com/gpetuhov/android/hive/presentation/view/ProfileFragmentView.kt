@@ -111,6 +111,11 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun openPrivacyPolicy()
 
+    // === Open all reviews ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openAllReviews()
+
     // === Common ===
 
     // We don't need to keep this command in the queue,

@@ -283,13 +283,17 @@ class ProfileFragmentPresenter :
         viewState.dismissSkypeDialog()
     }
 
-    // === Open photos ===
+    // --- Open photos ---
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
 
-    // === Open privacy policy ===
+    // --- Open privacy policy ---
 
     fun openPrivacyPolicy() = viewState.openPrivacyPolicy()
+
+    // --- Open all reviews ---
+
+    fun openAllReviews() = viewState.openAllReviews()
 
     // === Private methods ===
 

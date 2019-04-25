@@ -49,9 +49,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
         viewState.openLocation(userUid)
     }
 
-    fun openAllReviews() {
-        viewState.openAllReviews()
-    }
+    fun openAllReviews() = viewState.openAllReviews()
 
     // Sequence:
     // 1. Interactor forces repo to update favorites list (add or remove user from favorites)
