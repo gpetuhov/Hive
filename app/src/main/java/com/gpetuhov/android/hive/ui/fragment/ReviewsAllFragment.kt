@@ -20,7 +20,9 @@ import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.ReviewsAllViewModel
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
+import com.gpetuhov.android.hive.util.setVisible
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import kotlinx.android.synthetic.main.fragment_reviews_all.*
 
 // Shows reviews on all active offers of the user
 class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
@@ -48,8 +50,12 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
         // TODO: get isCurrentUser from the args
         viewModel.getAllReviews(false)
         presenter.changeRating(viewModel.user)
+        presenter.showProgress()
         viewModel.allReviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
             presenter.changeReviewsList(reviewsList)
+
+            // TODO: move this into presenter
+            presenter.hideProgress()
         })
 
         return binding?.root
@@ -62,9 +68,17 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
 
     // === ReviewsAllFragmentView ===
 
+    override fun showProgress() = progressVisible(true)
+
+    override fun hideProgress() = progressVisible(false)
+
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {
         findNavController().navigateUp()
     }
+
+    // === Private methods ===
+
+    private fun progressVisible(isVisible: Boolean) = reviews_all_progress.setVisible(isVisible)
 }

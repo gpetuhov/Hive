@@ -44,6 +44,10 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
         viewState.updateUI()
     }
 
+    fun showProgress() = viewState.showProgress()
+
+    fun hideProgress() = viewState.hideProgress()
+
     // --- Navigation ---
 
     fun navigateUp() = viewState.navigateUp()
