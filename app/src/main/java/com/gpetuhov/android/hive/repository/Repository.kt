@@ -963,6 +963,26 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveReviewData(currentUserUid(), offerUid, reviewUid, data, onSuccess, onError)
     }
 
+    override fun getAllUserReviews(isCurrentUser: Boolean, onComplete: (MutableList<Review>) -> Unit) {
+        val offerList = if (isCurrentUser) currentUserOfferList() else secondUserOfferList()
+
+        val activeOfferWithReviewList = offerList.filter { it.isActive && (it.reviewCount > 0) }
+        val activeOfferWithReviewCount = activeOfferWithReviewList.size
+        var loadedOfferReviewCount = 0
+        val allReviewList = mutableListOf<Review>()
+
+        activeOfferWithReviewList.forEach { offer ->
+            getOfferReviews(offer) { reviewList ->
+                loadedOfferReviewCount++
+                allReviewList.addAll(reviewList)
+                if (loadedOfferReviewCount >= activeOfferWithReviewCount) {
+                    allReviewList.sortByDescending { it.timestamp }
+                    onComplete(allReviewList)
+                }
+            }
+        }
+    }
+
     // === Private methods ===
     // --- User ---
 
@@ -1602,6 +1622,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // --- Offer ---
 
+    private fun secondUserOfferList() = secondUser.value?.offerList ?: mutableListOf()
+
     private fun updateOfferList(offerList: MutableList<Offer>, offerUid: String, update: (Int) -> Unit) {
         val offerIndex = offerList.indexOfFirst { it.uid == offerUid }
 
@@ -1894,6 +1916,25 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         } else {
             onError()
+        }
+    }
+
+    private fun getOfferReviews(offer: Offer, onComplete: (MutableList<Review>) -> Unit) {
+        if (isAuthorized ) {
+
+            getReviewsCollectionReference(offer.userUid, offer.uid).get()
+                .addOnSuccessListener { documents ->
+                    val reviewList = mutableListOf<Review>()
+
+                    for (document in documents) {
+                        reviewList.add(getReviewFromDocumentSnapshot(document))
+                    }
+
+                    onComplete(reviewList)
+                }
+                .addOnFailureListener { exception ->
+                    onComplete(mutableListOf())
+                }
         }
     }
 }

@@ -20,12 +20,14 @@ class ReviewsAllListController(private val presenter: ReviewsAllFragmentPresente
         // TODO: refactor this
         reviewTotals {
             id("review_all_totals")
-            totalReviews("${context.getString(R.string.total_reviews)}: ${presenter.reviewCount}")
+            totalReviews("${context.getString(R.string.total_reviews)}: ${presenter.allReviewCount}")
 
-            val ratingText = "%.2f".format(presenter.rating)
+            val ratingText = "%.2f".format(presenter.allRating)
             averageRating("${context.getString(R.string.average_rating)}: $ratingText")
 
-            rating(presenter.rating)
+            rating(presenter.allRating)
         }
+
+        // TODO: show reviews
     }
 }

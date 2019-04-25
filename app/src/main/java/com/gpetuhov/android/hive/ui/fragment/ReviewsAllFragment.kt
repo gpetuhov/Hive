@@ -39,12 +39,16 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
         controller = ReviewsAllListController(presenter)
         controller?.onRestoreInstanceState(savedInstanceState)
         reviewsAllRecyclerView?.adapter = controller?.adapter
-        controller?.requestModelBuild()
+
+        // TODO: get isCurrentUser from the args
+        presenter.getAllReviews(false)
 
         return binding?.root
     }
 
     // === ReviewsAllFragmentView ===
+
+    override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun navigateUp() {
         findNavController().navigateUp()

@@ -6,6 +6,13 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 interface ReviewsAllFragmentView : MvpView {
 
+    // === Update UI ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun updateUI()
+
+    // === Common ===
+
     @StateStrategyType(SkipStrategy::class)
     fun navigateUp()
 }
