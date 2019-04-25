@@ -18,7 +18,6 @@ import com.gpetuhov.android.hive.presentation.view.ReviewsAllFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsAllListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.ReviewsAllViewModel
-import com.gpetuhov.android.hive.ui.viewmodel.ReviewsViewModel
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -46,11 +45,12 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
         reviewsAllRecyclerView?.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(ReviewsAllViewModel::class.java)
+        // TODO: get isCurrentUser from the args
+        viewModel.getAllReviews(false)
+        presenter.changeRating(viewModel.user)
         viewModel.allReviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
             presenter.changeReviewsList(reviewsList)
         })
-        // TODO: get isCurrentUser from the args
-        viewModel.getAllReviews(false)
 
         return binding?.root
     }

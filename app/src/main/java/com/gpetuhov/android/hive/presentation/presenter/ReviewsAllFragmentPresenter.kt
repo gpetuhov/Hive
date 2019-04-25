@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.domain.model.Review
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.view.ReviewsAllFragmentView
 
 @InjectViewState
@@ -18,7 +19,23 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
         allReviews = reviewList
         allReviewCount = allReviews.size
 
-        calculateRating()
+        viewState.updateUI()
+    }
+
+    // We calculate rating based on user.offerList instead of all reviews,
+    // because the result is slightly different,
+    // and we need it to be the same as in user details.
+    fun changeRating(user: User?) {
+        allRating = 0.0F
+
+        if (user != null) {
+            val offerList = user.offerList
+            val activeOfferList = offerList.filter { it.isActive }
+            val activeOfferWithReviewsList = activeOfferList.filter { it.reviewCount > 0 }
+            activeOfferWithReviewsList.forEach { allRating += it.rating }
+            val activeOfferWithReviewsCount = activeOfferWithReviewsList.size
+            if (activeOfferWithReviewsCount > 0) allRating /= activeOfferWithReviewsCount
+        }
 
         viewState.updateUI()
     }
@@ -26,20 +43,4 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
     // --- Navigation ---
 
     fun navigateUp() = viewState.navigateUp()
-
-    // === Private methods ===
-
-    private fun calculateRating() {
-        if (allReviewCount == 0) {
-            allRating = 0.0F
-        } else {
-            var ratingSum = 0.0F
-
-            allReviews.forEach {
-                ratingSum += it.rating
-            }
-
-            allRating = ratingSum / allReviewCount
-        }
-    }
 }
