@@ -22,7 +22,7 @@ buildscript {
         maven { url "http://dl.bintray.com/kotlin/kotlin-eap" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0-alpha12'
+        classpath 'com.android.tools.build:gradle:3.5.0-alpha13'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         // Needed for Firebase
