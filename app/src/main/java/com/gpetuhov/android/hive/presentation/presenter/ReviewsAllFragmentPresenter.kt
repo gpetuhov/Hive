@@ -7,6 +7,9 @@ import com.gpetuhov.android.hive.presentation.view.ReviewsAllFragmentView
 @InjectViewState
 class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
 
+    var reviewCount = 0
+    var rating = 0.0F
+
     // === Public methods ===
 
     // --- Navigation ---
