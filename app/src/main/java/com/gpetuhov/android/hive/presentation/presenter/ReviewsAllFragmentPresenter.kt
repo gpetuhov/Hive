@@ -18,7 +18,7 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
         allReviews = reviewList
         allReviewCount = allReviews.size
 
-        // TODO: calculate rating
+        calculateRating()
 
         viewState.updateUI()
     }
@@ -26,4 +26,20 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
     // --- Navigation ---
 
     fun navigateUp() = viewState.navigateUp()
+
+    // === Private methods ===
+
+    private fun calculateRating() {
+        if (allReviewCount == 0) {
+            allRating = 0.0F
+        } else {
+            var ratingSum = 0.0F
+
+            allReviews.forEach {
+                ratingSum += it.rating
+            }
+
+            allRating = ratingSum / allReviewCount
+        }
+    }
 }
