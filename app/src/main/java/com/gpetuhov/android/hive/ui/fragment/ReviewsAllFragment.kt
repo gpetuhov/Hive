@@ -5,15 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentReviewsAllBinding
+import com.gpetuhov.android.hive.domain.model.Review
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsAllFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ReviewsAllFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsAllListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.ui.viewmodel.ReviewsAllViewModel
+import com.gpetuhov.android.hive.ui.viewmodel.ReviewsViewModel
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -40,10 +45,19 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
         controller?.onRestoreInstanceState(savedInstanceState)
         reviewsAllRecyclerView?.adapter = controller?.adapter
 
+        val viewModel = ViewModelProviders.of(this).get(ReviewsAllViewModel::class.java)
+        viewModel.allReviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
+            presenter.changeReviewsList(reviewsList)
+        })
         // TODO: get isCurrentUser from the args
-        presenter.getAllReviews(false)
+        viewModel.getAllReviews(false)
 
         return binding?.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        controller?.onSaveInstanceState(outState)
     }
 
     // === ReviewsAllFragmentView ===
