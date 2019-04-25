@@ -1,16 +1,13 @@
 package com.gpetuhov.android.hive.ui.epoxy.review.controller
 
 import android.content.Context
-import com.airbnb.epoxy.EpoxyController
-import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
-import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewTotals
 import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
 import javax.inject.Inject
 
-class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onModelBuild: () -> Unit) : EpoxyController() {
+class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onModelBuild: () -> Unit) : ReviewsBaseController() {
 
     @Inject lateinit var context: Context
 
@@ -20,15 +17,7 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
     }
 
     override fun buildModels() {
-        reviewTotals {
-            id("review_totals")
-            totalReviews("${context.getString(R.string.total_reviews)}: ${presenter.reviewCount}")
-
-            val ratingText = "%.2f".format(presenter.rating)
-            averageRating("${context.getString(R.string.average_rating)}: $ratingText")
-
-            rating(presenter.rating)
-        }
+        reviewTotals(context, presenter.reviewCount, presenter.rating)
 
         presenter.reviewsList.forEach { review ->
             reviewItem {
