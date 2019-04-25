@@ -84,6 +84,10 @@
                 app:destination="@id/locationFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action android:id="@+id/action_user_details_fragment_to_reviewsAllFragment"
+                app:destination="@id/reviewsAllFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
@@ -272,6 +276,13 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.PrivacyPolicyFragment"
             android:label="PrivacyPolicyFragment"
             tools:layout="@layout/fragment_privacy_policy">
+    </fragment>
+
+    <fragment
+            android:id="@+id/reviewsAllFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.ReviewsAllFragment"
+            android:label="ReviewsAllFragment"
+            tools:layout="@layout/fragment_reviews_all">
     </fragment>
 
 </navigation>

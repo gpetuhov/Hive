@@ -103,7 +103,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             if (offer.isActive) lastOfferReview(offer, index)
         }
 
-        reviewsSummary(context, false)
+        reviewsSummary(context, false) { presenter.openAllReviews() }
 
         // MapModel will be bind here only once (after fragment creation),
         // because location is not annotated as epoxy attribute.

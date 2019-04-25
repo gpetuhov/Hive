@@ -22,6 +22,9 @@ interface UserDetailsFragmentView : MvpView {
     fun openLocation(userUid: String)
 
     @StateStrategyType(SkipStrategy::class)
+    fun openAllReviews()
+
+    @StateStrategyType(SkipStrategy::class)
     fun dialPhone(phone: String)
 
     @StateStrategyType(SkipStrategy::class)

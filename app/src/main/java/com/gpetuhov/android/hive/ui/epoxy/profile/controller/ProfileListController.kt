@@ -109,7 +109,9 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
         reviewsHeader()
 
-        reviewsSummary(context, true)
+        reviewsSummary(context, true) {
+            // TODO: implement
+        }
 
         settings {
             id("settings")

@@ -109,7 +109,7 @@ abstract class UserBaseController : BaseController() {
     }
 
     // This should be called after summary() method has been called
-    protected fun reviewsSummary(context: Context, forceShowRating: Boolean) {
+    protected fun reviewsSummary(context: Context, forceShowRating: Boolean, onClick: () -> Unit) {
         reviewsSummary {
             id("reviews_summary")
 
@@ -121,10 +121,7 @@ abstract class UserBaseController : BaseController() {
             rating(averageRating)
             ratingVisible(isRatingVisible || forceShowRating)
 
-            onClick {
-                // TODO: implement
-                // TODO: open all reviews, if reviewCount > 0
-            }
+            onClick { if (totalReviewsCount > 0) onClick() }
         }
     }
 

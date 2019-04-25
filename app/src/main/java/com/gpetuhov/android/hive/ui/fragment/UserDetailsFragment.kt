@@ -104,6 +104,11 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun openAllReviews() {
+        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToReviewsAllFragment()
+        findNavController().navigate(action)
+    }
+
     override fun dialPhone(phone: String) {
         val intent = Intent(Intent.ACTION_DIAL)
         intent.data = Uri.parse("tel:$phone")
