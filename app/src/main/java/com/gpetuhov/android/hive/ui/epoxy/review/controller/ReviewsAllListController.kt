@@ -5,7 +5,9 @@ import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsAllFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewTotals
+import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
 import javax.inject.Inject
 
 class ReviewsAllListController(private val presenter: ReviewsAllFragmentPresenter) : EpoxyController() {
@@ -28,6 +30,28 @@ class ReviewsAllListController(private val presenter: ReviewsAllFragmentPresente
             rating(presenter.allRating)
         }
 
-        // TODO: show reviews
+        presenter.allReviews.forEach { review ->
+            reviewItem {
+                id(review.uid)
+                userPicUrl(review.authorUserPicUrl)
+                username(review.authorName)
+                time(getDateTimeFromTimestamp(review.timestamp))
+                reviewText(review.text)
+                rating(review.rating)
+                ratingVisible(true)
+                controlsVisible(false)
+                onEditClick { /* Do nothing */ }
+                onDeleteClick { /* Do nothing */ }
+
+                commentVisible(false)
+
+                onCommentClick { /* Do nothing */ }
+                commentTextVisible(review.hasComment())
+                commentText(review.comment)
+                commentControlsVisible(false )
+                onCommentEditClick { /* Do nothing */ }
+                onCommentDeleteClick { /* Do nothing */ }
+            }
+        }
     }
 }
