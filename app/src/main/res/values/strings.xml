@@ -76,6 +76,9 @@
     <string name="facebook">Facebook username</string>
     <string name="enter_facebook">Enter Facebook username</string>
     <string name="facebook_save_error">Error updating Facebook username</string>
+    <string name="twitter">Twitter username</string>
+    <string name="enter_twitter">Enter Twitter username</string>
+    <string name="twitter_save_error">Error updating Twitter username</string>
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>
 

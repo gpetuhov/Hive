@@ -76,6 +76,9 @@
     <string name="facebook">Имя пользователя Facebook</string>
     <string name="enter_facebook">Введите имя пользователя Facebook</string>
     <string name="facebook_save_error">Ошибка обновления имени пользователя Facebook</string>
+    <string name="twitter">Имя пользователя Twitter</string>
+    <string name="enter_twitter">Введите имя пользователя Twitter</string>
+    <string name="twitter_save_error">Ошибка обновления имени пользователя Twitter</string>
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 
