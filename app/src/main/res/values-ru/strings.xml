@@ -184,7 +184,7 @@
     <string name="delete_comment_error">Ошибка удаления комментария</string>
 
     <!-- ReviewsAllFragment -->
-    <string name="reviews_all">Отзывы о пользователе</string>
+    <string name="reviews_all">Все отзывы</string>
     <string name="show_offer">Показать оффер</string>
 
     <!-- UpdateReviewFragment -->

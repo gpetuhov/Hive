@@ -184,7 +184,7 @@
     <string name="delete_comment_error">Error deleting comment</string>
 
     <!-- ReviewsAllFragment -->
-    <string name="reviews_all">All user reviews</string>
+    <string name="reviews_all">All reviews</string>
     <string name="show_offer">Show offer</string>
 
     <!-- UpdateReviewFragment -->
