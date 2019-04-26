@@ -48,6 +48,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var phoneDialog: MaterialDialog? = null
     private var emailDialog: MaterialDialog? = null
     private var skypeDialog: MaterialDialog? = null
+    private var facebookDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -192,12 +193,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun dismissSkypeDialog() = skypeDialog?.dismiss() ?: Unit
 
     override fun showFacebookDialog() {
-        // TODO: implement
+        // Prefill dialog with text provided by presenter
+        val editText = facebookDialog?.getInputField()
+        editText?.setText(presenter.getFacebookPrefill())
+        editText?.setSelection(editText.text.length)
+        facebookDialog?.show()
     }
 
-    override fun dismissFacebookDialog() {
-        // TODO: implement
-    }
+    override fun dismissFacebookDialog() = facebookDialog?.dismiss() ?: Unit
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
@@ -224,6 +227,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initPhoneDialog()
         initEmailDialog()
         initSkypeDialog()
+        initFacebookDialog()
     }
 
     private fun initUsernameDialog() {
@@ -405,6 +409,36 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun initFacebookDialog() {
+        if (context != null) {
+            val facebookErrorMessage = context?.getString(R.string.username_not_valid)
+
+            facebookDialog = MaterialDialog(context!!)
+                .title(R.string.facebook)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(
+                    hintRes = R.string.enter_facebook,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    var positiveButtonEnabled = true
+                    presenter.updateTempFacebook(inputText)
+
+                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
+                        positiveButtonEnabled = false
+                        facebookErrorMessage
+                    } else {
+                        null
+                    }
+
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
+                }
+                .positiveButton { presenter.saveFacebook() }
+                .negativeButton { presenter.dismissFacebookDialog() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -414,6 +448,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissPhoneDialog()
         dismissEmailDialog()
         dismissSkypeDialog()
+        dismissFacebookDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
