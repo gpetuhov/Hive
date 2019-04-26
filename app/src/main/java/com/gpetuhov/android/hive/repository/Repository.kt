@@ -66,6 +66,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val PHONE_KEY = "phone"
         private const val VISIBLE_EMAIL_KEY = "visibleEmail"
         private const val SKYPE_KEY = "skype"
+        private const val FACEBOOK_KEY = "facebook"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1168,7 +1169,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             firstOfferPublishedTimestamp = (doc.getTimestamp(FIRST_OFFER_PUBLISHED_TIMESTAMP_KEY)?.seconds ?: 0) * 1000,
             phone = doc.getString(PHONE_KEY) ?: "",
             visibleEmail = doc.getString(VISIBLE_EMAIL_KEY) ?: "",
-            skype = doc.getString(SKYPE_KEY) ?: ""
+            skype = doc.getString(SKYPE_KEY) ?: "",
+            facebook = doc.getString(FACEBOOK_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
