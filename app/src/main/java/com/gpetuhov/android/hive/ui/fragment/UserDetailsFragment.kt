@@ -158,4 +158,27 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
             startActivity(intent)
         }
     }
+
+    // TODO: use this
+    // TODO: refactor this with openFacebook
+    private fun openTwitter(twitter: String) {
+        val packageManager = activity?.packageManager
+        val url = "https://twitter.com/$twitter"
+        var uri = Uri.parse(url)
+        try {
+            val applicationInfo = packageManager?.getApplicationInfo("com.twitter.android", 0)
+            if (applicationInfo?.enabled == true) {
+                // Twitter application installed. Change url to be opened in Twitter app
+                uri = Uri.parse("twitter://user?screen_name=$twitter")
+            }
+        } catch (ignored: PackageManager.NameNotFoundException) {
+            // Do nothing. Twitter application not installed. Url will be opened in browser
+        }
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+
+        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
 }
