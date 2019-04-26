@@ -29,4 +29,5 @@ interface TestAppComponent : AppComponent {
     fun inject(saveEmailInteractorTest: SaveEmailInteractorTest)
     fun inject(saveSkypeInteractorTest: SaveSkypeInteractorTest)
     fun inject(saveFacebookInteractorTest: SaveFacebookInteractorTest)
+    fun inject(saveTwitterInteractorTest: SaveTwitterInteractorTest)
 }

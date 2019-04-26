@@ -22,6 +22,7 @@ class TestRepository : Repo {
     var email = ""
     var skype = ""
     var facebook = ""
+    var twitter = ""
 
     override fun isForeground() = false
 
@@ -310,6 +311,16 @@ class TestRepository : Repo {
     override fun saveUserFacebook(newFacebook: String, onError: () -> Unit) {
         if (isSuccess) {
             facebook = newFacebook
+        } else {
+            onError()
+        }
+    }
+
+    override fun currentUserTwitter(): String = twitter
+
+    override fun saveUserTwitter(newTwitter: String, onError: () -> Unit) {
+        if (isSuccess) {
+            twitter = newTwitter
         } else {
             onError()
         }
