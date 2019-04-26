@@ -96,4 +96,32 @@
 
     </LinearLayout>
 
+    <View
+            android:id="@+id/user_details_facebook_separator"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+
+    <LinearLayout
+            android:id="@+id/user_details_facebook_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/facebook"/>
+
+        <TextView
+                android:id="@+id/user_details_facebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                style="@style/basicTextStyle"
+                tools:text="facebook_username"/>
+
+    </LinearLayout>
+
 </LinearLayout>
