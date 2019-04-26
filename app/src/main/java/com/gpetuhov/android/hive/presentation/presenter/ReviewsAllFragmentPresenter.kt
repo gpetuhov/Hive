@@ -17,6 +17,7 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
     var allReviewCount = 0
     var allRating = 0.0F
     var allReviews = mutableListOf<Review>()
+    var isCurrentUser = false
 
     private var hasData = false
 
@@ -26,7 +27,7 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
 
     // === Public methods ===
 
-    fun getAllReviews(isCurrentUser: Boolean) {
+    fun getAllReviews() {
         // This is needed to prevent loading reviews on every screen rotate
         if (!hasData) {
             hasData = true

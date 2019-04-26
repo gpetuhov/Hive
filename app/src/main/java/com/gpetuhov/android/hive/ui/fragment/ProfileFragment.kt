@@ -197,7 +197,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     override fun openAllReviews() {
-        val action = ProfileFragmentDirections.actionNavigationProfileToReviewsAllFragment()
+        val action = ProfileFragmentDirections.actionNavigationProfileToReviewsAllFragment(true)
         findNavController().navigate(action)
     }
 

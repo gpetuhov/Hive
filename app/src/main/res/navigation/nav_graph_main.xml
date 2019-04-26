@@ -292,6 +292,9 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.ReviewsAllFragment"
             android:label="ReviewsAllFragment"
             tools:layout="@layout/fragment_reviews_all">
+        <argument
+                android:name="isCurrentUser"
+                app:argType="boolean"/>
     </fragment>
 
 </navigation>

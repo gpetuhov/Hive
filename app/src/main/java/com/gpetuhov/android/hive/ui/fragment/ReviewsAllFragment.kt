@@ -14,10 +14,7 @@ import com.gpetuhov.android.hive.presentation.presenter.ReviewsAllFragmentPresen
 import com.gpetuhov.android.hive.presentation.view.ReviewsAllFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsAllListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
-import com.gpetuhov.android.hive.util.hideMainHeader
-import com.gpetuhov.android.hive.util.setActivitySoftInputPan
-import com.gpetuhov.android.hive.util.setVisible
-import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.gpetuhov.android.hive.util.*
 import kotlinx.android.synthetic.main.fragment_reviews_all.*
 
 // Shows reviews on all active offers of the user
@@ -32,18 +29,23 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
         hideMainHeader()
-        showBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews_all, container, false)
         binding?.presenter = presenter
+
+        val args = ReviewsAllFragmentArgs.fromBundle(arguments!!)
+        val isCurrentUser = args.isCurrentUser
+        presenter.isCurrentUser = isCurrentUser
+
+        // Hide bottom nav view for current user
+        if (isCurrentUser) hideBottomNavigationView() else showBottomNavigationView()
 
         val reviewsAllRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_all_recycler_view)
         controller = ReviewsAllListController(presenter)
         controller?.onRestoreInstanceState(savedInstanceState)
         reviewsAllRecyclerView?.adapter = controller?.adapter
 
-        // TODO: get isCurrentUser from the args
-        presenter.getAllReviews(false)
+        presenter.getAllReviews()
 
         // This is needed to show already loaded reviews after screen rotate
         updateUI()

@@ -105,7 +105,7 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
     }
 
     override fun openAllReviews() {
-        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToReviewsAllFragment()
+        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToReviewsAllFragment(false)
         findNavController().navigate(action)
     }
 
