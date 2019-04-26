@@ -46,9 +46,9 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
         }
     }
 
-    // --- Navigation ---
-
     fun navigateUp() = viewState.navigateUp()
+
+    fun showOffer(offerUid: String) = if (isCurrentUser) viewState.updateOffer(offerUid) else viewState.openOffer(offerUid)
 
     // === Private methods ===
 

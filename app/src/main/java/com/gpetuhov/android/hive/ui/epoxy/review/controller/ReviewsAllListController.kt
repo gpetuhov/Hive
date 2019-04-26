@@ -38,9 +38,7 @@ class ReviewsAllListController(private val presenter: ReviewsAllFragmentPresente
                 onCommentEditClick { /* Do nothing */ }
                 onCommentDeleteClick { /* Do nothing */ }
                 showOfferVisible(true)
-                onShowOfferClick {
-                    // TODO: implement
-                }
+                onShowOfferClick { presenter.showOffer(review.offerUid) }
             }
         }
     }

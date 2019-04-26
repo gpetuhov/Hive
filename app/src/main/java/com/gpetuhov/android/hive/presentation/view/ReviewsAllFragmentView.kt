@@ -20,6 +20,14 @@ interface ReviewsAllFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun updateUI()
 
+    // === Show offer ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openOffer(offerUid: String)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun updateOffer(offerUid: String)
+
     // === Common ===
 
     @StateStrategyType(SkipStrategy::class)

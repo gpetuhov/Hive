@@ -295,6 +295,16 @@
         <argument
                 android:name="isCurrentUser"
                 app:argType="boolean"/>
+        <action
+                android:id="@+id/action_reviewsAllFragment_to_offer_details_fragment"
+                app:destination="@id/offer_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_reviewsAllFragment_to_update_offer_fragment"
+                app:destination="@id/update_offer_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
 </navigation>

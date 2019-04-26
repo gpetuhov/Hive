@@ -66,6 +66,16 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
 
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
+    override fun openOffer(offerUid: String) {
+        val action = ReviewsAllFragmentDirections.actionReviewsAllFragmentToOfferDetailsFragment(offerUid)
+        findNavController().navigate(action)
+    }
+
+    override fun updateOffer(offerUid: String) {
+        val action = ReviewsAllFragmentDirections.actionReviewsAllFragmentToUpdateOfferFragment(offerUid)
+        findNavController().navigate(action)
+    }
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }
