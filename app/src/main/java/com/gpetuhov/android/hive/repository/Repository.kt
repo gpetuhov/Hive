@@ -67,6 +67,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val VISIBLE_EMAIL_KEY = "visibleEmail"
         private const val SKYPE_KEY = "skype"
         private const val FACEBOOK_KEY = "facebook"
+        private const val TWITTER_KEY = "twitter"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1180,7 +1181,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             phone = doc.getString(PHONE_KEY) ?: "",
             visibleEmail = doc.getString(VISIBLE_EMAIL_KEY) ?: "",
             skype = doc.getString(SKYPE_KEY) ?: "",
-            facebook = doc.getString(FACEBOOK_KEY) ?: ""
+            facebook = doc.getString(FACEBOOK_KEY) ?: "",
+            twitter = doc.getString(TWITTER_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
