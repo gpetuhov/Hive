@@ -300,4 +300,7 @@ class TestRepository : Repo {
             onError()
         }
     }
+
+    override fun getAllUserReviews(isCurrentUser: Boolean, onComplete: (MutableList<Review>) -> Unit) {
+    }
 }

@@ -92,4 +92,11 @@ class UserTest {
         user.skype = com.gpetuhov.android.hive.utils.Constants.DUMMY_SKYPE
         assertEquals(true, user.hasSkype)
     }
+
+    @Test
+    fun emptyFacebook() {
+        assertEquals(false, user.hasFacebook)
+        user.facebook = com.gpetuhov.android.hive.utils.Constants.DUMMY_FACEBOOK
+        assertEquals(true, user.hasFacebook)
+    }
 }
