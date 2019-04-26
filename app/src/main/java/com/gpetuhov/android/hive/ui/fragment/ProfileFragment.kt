@@ -49,6 +49,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var emailDialog: MaterialDialog? = null
     private var skypeDialog: MaterialDialog? = null
     private var facebookDialog: MaterialDialog? = null
+    private var twitterDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -203,12 +204,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun dismissFacebookDialog() = facebookDialog?.dismiss() ?: Unit
 
     override fun showTwitterDialog() {
-        // TODO: implement
+        // Prefill dialog with text provided by presenter
+        val editText = twitterDialog?.getInputField()
+        editText?.setText(presenter.getTwitterPrefill())
+        editText?.setSelection(editText.text.length)
+        twitterDialog?.show()
     }
 
-    override fun dismissTwitterDialog() {
-        // TODO: implement
-    }
+    override fun dismissTwitterDialog() = twitterDialog?.dismiss() ?: Unit
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
@@ -236,6 +239,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initEmailDialog()
         initSkypeDialog()
         initFacebookDialog()
+        initTwitterDialog()
     }
 
     private fun initUsernameDialog() {
@@ -447,6 +451,36 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun initTwitterDialog() {
+        if (context != null) {
+            val twitterErrorMessage = context?.getString(R.string.username_not_valid)
+
+            twitterDialog = MaterialDialog(context!!)
+                .title(R.string.twitter)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(
+                    hintRes = R.string.enter_twitter,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    var positiveButtonEnabled = true
+                    presenter.updateTempTwitter(inputText)
+
+                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
+                        positiveButtonEnabled = false
+                        twitterErrorMessage
+                    } else {
+                        null
+                    }
+
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
+                }
+                .positiveButton { presenter.saveTwitter() }
+                .negativeButton { presenter.dismissTwitterDialog() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -457,6 +491,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissEmailDialog()
         dismissSkypeDialog()
         dismissFacebookDialog()
+        dismissTwitterDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
