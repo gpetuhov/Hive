@@ -65,7 +65,7 @@ abstract class UserBaseController : BaseController() {
         offerItemDetails(context, settings, offer, isProfile, favoriteButtonVisible, onFavoriteButtonClick, onClick)
     }
 
-    protected fun summary(context: Context, forceShowRating: Boolean) {
+    protected fun summary(context: Context, forceShowRating: Boolean, onReviewsClick: () -> Unit) {
         summary {
             id("summary")
 
@@ -99,6 +99,8 @@ abstract class UserBaseController : BaseController() {
             val ratingText = "%.2f".format(averageRating)
             ratingText("${context.getString(R.string.average_rating)}: $ratingText")
             rating(averageRating)
+
+            onReviewsClick(onReviewsClick)
         }
     }
 

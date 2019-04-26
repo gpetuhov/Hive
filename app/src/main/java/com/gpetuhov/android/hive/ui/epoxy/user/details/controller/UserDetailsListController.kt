@@ -38,7 +38,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             username(user?.getUsernameOrName() ?: "")
         }
 
-        summary(context, false)
+        summary(context, false) { presenter.openAllReviews() }
 
         val hasPhone = user?.hasPhone ?: false
         val hasVisibleEmail = user?.hasVisibleEmail ?: false

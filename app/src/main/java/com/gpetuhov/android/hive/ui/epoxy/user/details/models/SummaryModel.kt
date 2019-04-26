@@ -26,6 +26,8 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
     @EpoxyAttribute lateinit var ratingText: String
     @EpoxyAttribute var rating: Float = 0.0F
 
+    @EpoxyAttribute lateinit var onReviewsClick: () -> Unit
+
     override fun bind(holder: SummaryHolder) {
         holder.creationDate.text = creationDate
         holder.creationDate.setVisible(creationDateVisible)
@@ -35,8 +37,10 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
 
         holder.activeOffersCount.text = activeOffersCount
         holder.totalReviewsCount.text = totalReviewsCount
+        holder.totalReviewsCount.setOnClickListener { onReviewsClick() }
 
         holder.ratingWrapper.setVisible(ratingVisible)
+        holder.ratingWrapper.setOnClickListener { onReviewsClick() }
         holder.ratingText.text = ratingText
         holder.ratingBar.rating = rating
     }

@@ -55,7 +55,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             email(user?.email ?: "")
         }
 
-        summary(context, true)
+        summary(context, true) { presenter.openAllReviews() }
 
         profileContacts {
             id("profile_contacts")
