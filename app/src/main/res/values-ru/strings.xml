@@ -185,6 +185,7 @@
 
     <!-- ReviewsAllFragment -->
     <string name="reviews_all">Отзывы о пользователе</string>
+    <string name="show_offer">Показать оффер</string>
 
     <!-- UpdateReviewFragment -->
     <string name="review">Отзыв</string>

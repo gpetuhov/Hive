@@ -119,6 +119,16 @@
             android:visibility="gone"
             style="@style/basicTextStyle"/>
 
+    <TextView
+            android:id="@+id/review_item_show_offer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/show_offer"
+            android:visibility="gone"
+            style="@style/basicTextStyle"/>
+
     <LinearLayout
             android:id="@+id/review_item_comment_text_wrapper"
             android:orientation="vertical"

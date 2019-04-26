@@ -30,15 +30,17 @@ class ReviewsAllListController(private val presenter: ReviewsAllFragmentPresente
                 controlsVisible(false)
                 onEditClick { /* Do nothing */ }
                 onDeleteClick { /* Do nothing */ }
-
                 commentVisible(false)
-
                 onCommentClick { /* Do nothing */ }
                 commentTextVisible(review.hasComment())
                 commentText(review.comment)
                 commentControlsVisible(false )
                 onCommentEditClick { /* Do nothing */ }
                 onCommentDeleteClick { /* Do nothing */ }
+                showOfferVisible(true)
+                onShowOfferClick {
+                    // TODO: implement
+                }
             }
         }
     }

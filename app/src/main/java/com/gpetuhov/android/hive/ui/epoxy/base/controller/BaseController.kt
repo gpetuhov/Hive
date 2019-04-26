@@ -118,6 +118,8 @@ abstract class BaseController : EpoxyController() {
                 commentControlsVisible(false)
                 onCommentEditClick { /* Do nothing */ }
                 onCommentDeleteClick { /* Do nothing */ }
+                showOfferVisible(false)
+                onShowOfferClick { /* Do nothing */ }
             }
         }
     }
