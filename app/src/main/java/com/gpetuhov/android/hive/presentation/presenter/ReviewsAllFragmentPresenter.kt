@@ -36,6 +36,7 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
             val user = if (isCurrentUser) repo.currentUser().value else repo.secondUser().value
             calculateRating(user)
 
+            // Notice, that we just load all user reviews WITHOUT listening to updates.
             repo.getAllUserReviews(isCurrentUser) { reviewList ->
                 allReviews = reviewList
                 viewState.hideProgress()

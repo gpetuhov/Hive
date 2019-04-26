@@ -963,6 +963,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveReviewData(currentUserUid(), offerUid, reviewUid, data, onSuccess, onError)
     }
 
+    // Get all user reviews.
+    // Just load them, WITHOUT listening to updates.
     override fun getAllUserReviews(isCurrentUser: Boolean, onComplete: (MutableList<Review>) -> Unit) {
         val offerList = if (isCurrentUser) currentUserOfferList() else secondUserOfferList()
 
@@ -971,10 +973,15 @@ class Repository(private val context: Context, private val settings: Settings) :
         var loadedOfferReviewCount = 0
         val allReviewList = mutableListOf<Review>()
 
+        // To get all user reviews we have to load reviews for all active offers of the user
         activeOfferWithReviewList.forEach { offer ->
             getOfferReviews(offer) { reviewList ->
+                // On offer reviews load complete, increment counter and add loaded reviews to overall list
                 loadedOfferReviewCount++
                 allReviewList.addAll(reviewList)
+
+                // If loaded reviews for all active offers of the user, sort overall review list
+                // and call onComplete()
                 if (loadedOfferReviewCount >= activeOfferWithReviewCount) {
                     allReviewList.sortByDescending { it.timestamp }
                     onComplete(allReviewList)
