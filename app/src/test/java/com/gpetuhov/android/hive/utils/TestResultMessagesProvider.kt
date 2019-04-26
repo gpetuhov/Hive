@@ -58,4 +58,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveEmailErrorMessage(): String = Constants.SAVE_EMAIL_ERROR
 
     override fun getSaveSkypeErrorMessage(): String = Constants.SAVE_SKYPE_ERROR
+
+    override fun getSaveFacebookErrorMessage(): String = Constants.SAVE_FACEBOOK_ERROR
 }

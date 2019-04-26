@@ -21,6 +21,7 @@ class TestRepository : Repo {
     var phone = ""
     var email = ""
     var skype = ""
+    var facebook = ""
 
     override fun isForeground() = false
 
@@ -302,5 +303,15 @@ class TestRepository : Repo {
     }
 
     override fun getAllUserReviews(isCurrentUser: Boolean, onComplete: (MutableList<Review>) -> Unit) {
+    }
+
+    override fun currentUserFacebook() = facebook
+
+    override fun saveUserFacebook(newFacebook: String, onError: () -> Unit) {
+        if (isSuccess) {
+            facebook = newFacebook
+        } else {
+            onError()
+        }
     }
 }

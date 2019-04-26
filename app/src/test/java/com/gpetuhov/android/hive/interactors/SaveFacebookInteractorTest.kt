@@ -2,7 +2,7 @@ package com.gpetuhov.android.hive.interactors
 
 import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.interactor.SaveSkypeInteractor
+import com.gpetuhov.android.hive.domain.interactor.SaveFacebookInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
-class SaveSkypeInteractorTest {
+class SaveFacebookInteractorTest {
 
     @Inject lateinit var context: Context
     @Inject lateinit var repo: Repo
@@ -27,31 +27,31 @@ class SaveSkypeInteractorTest {
     }
 
     @Test
-    fun saveSkypeSuccess() {
-        testSaveSkypeInteractor(true)
+    fun saveFacebookSuccess() {
+        testSaveFacebookInteractor(true)
     }
 
     @Test
-    fun saveSkypeError() {
-        testSaveSkypeInteractor(false)
+    fun saveFacebookError() {
+        testSaveFacebookInteractor(false)
     }
 
-    private fun testSaveSkypeInteractor(isSuccess: Boolean) {
+    private fun testSaveFacebookInteractor(isSuccess: Boolean) {
         (repo as TestRepository).isSuccess = isSuccess
 
         var errorCounter = 0
 
-        val callback = object : SaveSkypeInteractor.Callback {
-            override fun onSaveSkypeError(errorMessage: String) {
+        val callback = object : SaveFacebookInteractor.Callback {
+            override fun onSaveFacebookError(errorMessage: String) {
                 errorCounter++
-                assertEquals(Constants.SAVE_SKYPE_ERROR, errorMessage)
+                assertEquals(Constants.SAVE_FACEBOOK_ERROR, errorMessage)
             }
         }
 
-        val interactor = SaveSkypeInteractor(callback)
-        interactor.saveSkype(Constants.DUMMY_SKYPE)
+        val interactor = SaveFacebookInteractor(callback)
+        interactor.saveFacebook(Constants.DUMMY_FACEBOOK)
 
-        assertEquals(if (isSuccess) Constants.DUMMY_SKYPE else "", (repo as TestRepository).skype)
+        assertEquals(if (isSuccess) Constants.DUMMY_FACEBOOK else "", (repo as TestRepository).facebook)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)
     }
 }

@@ -61,6 +61,7 @@ class Constants {
         const val SAVE_SKYPE_ERROR = "Save skype error"
 
         const val DUMMY_FACEBOOK = "facebook_name"
+        const val SAVE_FACEBOOK_ERROR = "Save facebook error"
 
         val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 
