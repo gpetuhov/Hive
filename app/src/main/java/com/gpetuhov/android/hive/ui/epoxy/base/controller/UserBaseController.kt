@@ -100,7 +100,7 @@ abstract class UserBaseController : BaseController() {
             ratingText("${context.getString(R.string.average_rating)}: $ratingText")
             rating(averageRating)
 
-            onReviewsClick(onReviewsClick)
+            onReviewsClick { if (totalReviewsCount > 0) onReviewsClick() }
         }
     }
 
