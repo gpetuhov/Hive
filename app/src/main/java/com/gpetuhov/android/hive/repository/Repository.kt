@@ -978,7 +978,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             getOfferReviews(offer) { reviewList ->
                 // On offer reviews load complete, increment counter and add loaded reviews to overall list
                 loadedOfferReviewCount++
-                allReviewList.addAll(reviewList)
+                // Do not add to list reviews with empty fields
+                allReviewList.addAll(reviewList.filter { it.offerUid != "" && it.authorUid != "" && it.providerUserUid != "" && it.authorName != "" })
 
                 // If loaded reviews for all active offers of the user, sort overall review list
                 // and call onComplete()
