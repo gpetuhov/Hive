@@ -138,10 +138,9 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         }
     }
 
-    // TODO: use this
-    private fun openFacebook() {
+    override fun openFacebook(facebook: String) {
         val packageManager = activity?.packageManager
-        val url = "https://www.facebook.com/gpetuhov"
+        val url = "https://www.facebook.com/$facebook"
         var uri = Uri.parse(url)
         try {
             val applicationInfo = packageManager?.getApplicationInfo("com.facebook.katana", 0)

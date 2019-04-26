@@ -65,9 +65,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun callSkype(skype: String) = viewState.callSkype(skype)
 
-    fun openFacebook(facebook: String) {
-        // TODO: implement this
-    }
+    fun openFacebook(facebook: String) = viewState.openFacebook(facebook)
 
     // --- Lifecycle ---
 

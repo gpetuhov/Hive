@@ -34,5 +34,8 @@ interface UserDetailsFragmentView : MvpView {
     fun callSkype(skype: String)
 
     @StateStrategyType(SkipStrategy::class)
+    fun openFacebook(facebook: String)
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 }
