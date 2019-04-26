@@ -37,5 +37,8 @@ interface UserDetailsFragmentView : MvpView {
     fun openFacebook(facebook: String)
 
     @StateStrategyType(SkipStrategy::class)
+    fun openTwitter(twitter: String)
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 }

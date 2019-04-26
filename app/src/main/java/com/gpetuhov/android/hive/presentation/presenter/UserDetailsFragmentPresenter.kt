@@ -67,9 +67,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openFacebook(facebook: String) = viewState.openFacebook(facebook)
 
-    fun openTwitter(twitter: String) {
-        // TODO: implement
-    }
+    fun openTwitter(twitter: String) = viewState.openTwitter(twitter)
 
     // --- Lifecycle ---
 

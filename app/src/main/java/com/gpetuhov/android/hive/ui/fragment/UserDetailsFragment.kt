@@ -159,9 +159,8 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         }
     }
 
-    // TODO: use this
     // TODO: refactor this with openFacebook
-    private fun openTwitter(twitter: String) {
+    override fun openTwitter(twitter: String) {
         val packageManager = activity?.packageManager
         val url = "https://twitter.com/$twitter"
         var uri = Uri.parse(url)
