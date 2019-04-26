@@ -313,6 +313,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserFacebook() = currentUser.value?.facebook ?: ""
 
+    override fun currentUserTwitter() = currentUser.value?.twitter ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -364,6 +366,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[FACEBOOK_KEY] = newFacebook
 
         // Save user Facebook
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserTwitter(newTwitter: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[TWITTER_KEY] = newTwitter
+
+        // Save user Twitter
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 

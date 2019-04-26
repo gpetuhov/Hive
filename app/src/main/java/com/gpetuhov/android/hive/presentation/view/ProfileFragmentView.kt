@@ -114,6 +114,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissFacebookDialog()
 
+    // === Change Twitter ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showTwitterDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissTwitterDialog()
+
     // === Open privacy policy ===
 
     @StateStrategyType(SkipStrategy::class)

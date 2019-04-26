@@ -83,6 +83,7 @@ interface AppComponent {
     fun inject(saveEmailInteractor: SaveEmailInteractor)
     fun inject(saveSkypeInteractor: SaveSkypeInteractor)
     fun inject(saveFacebookInteractor: SaveFacebookInteractor)
+    fun inject(saveTwitterInteractor: SaveTwitterInteractor)
 
     fun inject(resultMessagesProvider: ResultMessagesProvider)
 

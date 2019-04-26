@@ -72,5 +72,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveFacebookErrorMessage(): String = getString(R.string.facebook_save_error)
 
+    override fun getSaveTwitterErrorMessage(): String = getString(R.string.twitter_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

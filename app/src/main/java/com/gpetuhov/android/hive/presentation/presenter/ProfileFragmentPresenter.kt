@@ -27,7 +27,8 @@ class ProfileFragmentPresenter :
     SavePhoneInteractor.Callback,
     SaveEmailInteractor.Callback,
     SaveSkypeInteractor.Callback,
-    SaveFacebookInteractor.Callback {
+    SaveFacebookInteractor.Callback,
+    SaveTwitterInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -41,6 +42,7 @@ class ProfileFragmentPresenter :
     private val saveEmailInteractor = SaveEmailInteractor(this)
     private val saveSkypeInteractor = SaveSkypeInteractor(this)
     private val saveFacebookInteractor = SaveFacebookInteractor(this)
+    private val saveTwitterInteractor = SaveTwitterInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -62,6 +64,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in Facebook dialog
     private var tempFacebook = ""
+
+    // Keeps current text entered in Twitter dialog
+    private var tempTwitter = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -110,6 +115,10 @@ class ProfileFragmentPresenter :
     // === SaveFacebookInteractor.Callback ===
 
     override fun onSaveFacebookError(errorMessage: String) = showToast(errorMessage)
+
+    // === SaveTwitterInteractor.Callback ===
+
+    override fun onSaveTwitterError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -315,8 +324,23 @@ class ProfileFragmentPresenter :
 
     // --- Change Twitter ---
 
-    fun showTwitterDialog() {
-        // TODO: implement
+    fun showTwitterDialog() = viewState.showTwitterDialog()
+
+    // Prefill Twitter dialog with currently entered text or current value
+    fun getTwitterPrefill() = if (tempTwitter != "") tempTwitter else repo.currentUserTwitter()
+
+    fun updateTempTwitter(newTempTwitter: String) {
+        tempTwitter = newTempTwitter
+    }
+
+    fun saveTwitter() {
+        saveTwitterInteractor.saveTwitter(tempTwitter)
+        dismissTwitterDialog()
+    }
+
+    fun dismissTwitterDialog() {
+        tempTwitter = ""
+        viewState.dismissTwitterDialog()
     }
 
     // --- Open photos ---
