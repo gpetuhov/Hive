@@ -24,6 +24,7 @@ import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
+import android.content.pm.PackageManager
 
 // Shows user details on map marker click
 class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
@@ -134,6 +135,28 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
             startActivity(intent)
         } else {
             showToast(context?.getString(R.string.skype_not_installed) ?: "")
+        }
+    }
+
+    // TODO: use this
+    private fun openFacebook() {
+        val packageManager = activity?.packageManager
+        val url = "https://www.facebook.com/gpetuhov"
+        var uri = Uri.parse(url)
+        try {
+            val applicationInfo = packageManager?.getApplicationInfo("com.facebook.katana", 0)
+            if (applicationInfo?.enabled == true) {
+                // Facebook application installed. Change url to be opened in Facebook app
+                uri = Uri.parse("fb://facewebmodal/f?href=$url")
+            }
+        } catch (ignored: PackageManager.NameNotFoundException) {
+            // Do nothing. Facebook application not installed. Url will be opened in browser
+        }
+
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+
+        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
         }
     }
 }
