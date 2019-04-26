@@ -63,6 +63,9 @@ class Constants {
         const val DUMMY_FACEBOOK = "facebook_name"
         const val SAVE_FACEBOOK_ERROR = "Save facebook error"
 
+        const val DUMMY_TWITTER = "twitter_name"
+        const val SAVE_TWITTER_ERROR = "Save twitter error"
+
         val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 
         private fun getDummyOffer(): Offer {

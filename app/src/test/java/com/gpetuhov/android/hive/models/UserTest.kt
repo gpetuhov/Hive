@@ -99,4 +99,11 @@ class UserTest {
         user.facebook = com.gpetuhov.android.hive.utils.Constants.DUMMY_FACEBOOK
         assertEquals(true, user.hasFacebook)
     }
+
+    @Test
+    fun emptyTwitter() {
+        assertEquals(false, user.hasTwitter)
+        user.twitter = com.gpetuhov.android.hive.utils.Constants.DUMMY_TWITTER
+        assertEquals(true, user.hasTwitter)
+    }
 }
