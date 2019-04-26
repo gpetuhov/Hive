@@ -73,6 +73,10 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             val hasSkype = user?.hasSkype ?: false
             skype(if (hasSkype) user?.skype ?: "" else context.getString(R.string.enter_skype))
             onSkypeClick { presenter.showSkypeDialog() }
+
+            val hasFacebook = user?.hasFacebook ?: false
+            facebook(if (hasFacebook) user?.facebook ?: "" else context.getString(R.string.enter_facebook))
+            onFacebookClick { presenter.showFacebookDialog() }
         }
 
         profileAbout {
