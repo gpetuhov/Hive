@@ -29,4 +29,5 @@ interface ResultMessages {
     fun getSavePhoneErrorMessage(): String
     fun getSaveEmailErrorMessage(): String
     fun getSaveSkypeErrorMessage(): String
+    fun getSaveFacebookErrorMessage(): String
 }

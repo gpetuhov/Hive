@@ -191,6 +191,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissSkypeDialog() = skypeDialog?.dismiss() ?: Unit
 
+    override fun showFacebookDialog() {
+        // TODO: implement
+    }
+
+    override fun dismissFacebookDialog() {
+        // TODO: implement
+    }
+
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
         findNavController().navigate(action)

@@ -26,7 +26,8 @@ class ProfileFragmentPresenter :
     DeleteUserPhotoInteractor.Callback,
     SavePhoneInteractor.Callback,
     SaveEmailInteractor.Callback,
-    SaveSkypeInteractor.Callback {
+    SaveSkypeInteractor.Callback,
+    SaveFacebookInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -39,6 +40,7 @@ class ProfileFragmentPresenter :
     private val savePhoneInteractor = SavePhoneInteractor(this)
     private val saveEmailInteractor = SaveEmailInteractor(this)
     private val saveSkypeInteractor = SaveSkypeInteractor(this)
+    private val saveFacebookInteractor = SaveFacebookInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -57,6 +59,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in Skype dialog
     private var tempSkype = ""
+
+    // Keeps current text entered in Facebook dialog
+    private var tempFacebook = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -101,6 +106,10 @@ class ProfileFragmentPresenter :
     // === SaveSkypeInteractor.Callback ===
 
     override fun onSaveSkypeError(errorMessage: String) = showToast(errorMessage)
+
+    // === SaveFacebookInteractor.Callback ===
+
+    override fun onSaveFacebookError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -241,7 +250,7 @@ class ProfileFragmentPresenter :
 
     fun showEmailDialog() = viewState.showEmailDialog()
 
-    // Prefill email dialog with currently entered text or current email
+    // Prefill email dialog with currently entered text or current value
     fun getEmailPrefill() = if (tempEmail != "") tempEmail else repo.currentUserVisibleEmail()
 
     fun updateTempEmail(newTempEmail: String) {
@@ -266,7 +275,7 @@ class ProfileFragmentPresenter :
 
     fun showSkypeDialog() = viewState.showSkypeDialog()
 
-    // Prefill Skype dialog with currently entered text or current email
+    // Prefill Skype dialog with currently entered text or current value
     fun getSkypePrefill() = if (tempSkype != "") tempSkype else repo.currentUserSkype()
 
     fun updateTempSkype(newTempSkype: String) {
@@ -285,8 +294,23 @@ class ProfileFragmentPresenter :
 
     // --- Change Facebook ---
 
-    fun showFacebookDialog() {
-        // TODO: implement
+    fun showFacebookDialog() = viewState.showFacebookDialog()
+
+    // Prefill Facebook dialog with currently entered text or current value
+    fun getFacebookPrefill() = if (tempFacebook != "") tempFacebook else repo.currentUserFacebook()
+
+    fun updateTempFacebook(newTempFacebook: String) {
+        tempFacebook = newTempFacebook
+    }
+
+    fun saveFacebook() {
+        saveFacebookInteractor.saveFacebook(tempFacebook)
+        dismissFacebookDialog()
+    }
+
+    fun dismissFacebookDialog() {
+        tempFacebook = ""
+        viewState.dismissFacebookDialog()
     }
 
     // --- Open photos ---

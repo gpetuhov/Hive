@@ -74,6 +74,7 @@
     <string name="enter_skype">Введите имя пользователя Skype</string>
     <string name="skype_save_error">Ошибка обновления имени пользователя Skype</string>
     <string name="enter_facebook">Введите имя пользователя Facebook</string>
+    <string name="facebook_save_error">Ошибка обновления имени пользователя Facebook</string>
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 

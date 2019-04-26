@@ -70,5 +70,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveSkypeErrorMessage(): String = getString(R.string.skype_save_error)
 
+    override fun getSaveFacebookErrorMessage(): String = getString(R.string.facebook_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

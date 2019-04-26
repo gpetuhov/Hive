@@ -106,6 +106,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissSkypeDialog()
 
+    // === Change Facebook ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showFacebookDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissFacebookDialog()
+
     // === Open privacy policy ===
 
     @StateStrategyType(SkipStrategy::class)
