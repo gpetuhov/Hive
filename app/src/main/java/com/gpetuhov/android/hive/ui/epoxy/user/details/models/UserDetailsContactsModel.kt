@@ -26,6 +26,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
     @EpoxyAttribute var skypeVisible = true
     @EpoxyAttribute var skypeSeparatorVisible = true
 
+    @EpoxyAttribute lateinit var facebook: String
+    @EpoxyAttribute lateinit var onFacebookClick: () -> Unit
+    @EpoxyAttribute var facebookVisible = true
+    @EpoxyAttribute var facebookSeparatorVisible = true
+
     override fun bind(holder: UserDetailsContactsHolder) {
         holder.phone.text = phone
         holder.phoneWrapper.setVisible(phoneVisible)
@@ -40,6 +45,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
         holder.skypeWrapper.setVisible(skypeVisible)
         holder.skypeSeparator.setVisible(skypeSeparatorVisible)
         holder.skypeWrapper.setOnClickListener { onSkypeClick() }
+
+        holder.facebook.text = facebook
+        holder.facebookWrapper.setVisible(facebookVisible)
+        holder.facebookSeparator.setVisible(facebookSeparatorVisible)
+        holder.facebookWrapper.setOnClickListener { onFacebookClick() }
     }
 }
 
@@ -52,4 +62,7 @@ class UserDetailsContactsHolder : KotlinHolder() {
     val skypeWrapper by bind<View>(R.id.user_details_skype_wrapper)
     val skype by bind<TextView>(R.id.user_details_skype)
     val skypeSeparator by bind<View>(R.id.user_details_skype_separator)
+    val facebookWrapper by bind<View>(R.id.user_details_facebook_wrapper)
+    val facebook by bind<TextView>(R.id.user_details_facebook)
+    val facebookSeparator by bind<View>(R.id.user_details_facebook_separator)
 }

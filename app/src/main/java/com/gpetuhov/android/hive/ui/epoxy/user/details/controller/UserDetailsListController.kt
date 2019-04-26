@@ -43,7 +43,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         val hasPhone = user?.hasPhone ?: false
         val hasVisibleEmail = user?.hasVisibleEmail ?: false
         val hasSkype = user?.hasSkype ?: false
-        val hasContacts = hasPhone || hasVisibleEmail || hasSkype
+        val hasFacebook = user?.hasFacebook ?: false
+        val hasContacts = hasPhone || hasVisibleEmail || hasSkype || hasFacebook
         if (hasContacts) {
             userDetailsContacts {
                 id("user_details_contacts")
@@ -64,6 +65,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 skypeVisible(hasSkype)
                 skypeSeparatorVisible(hasSkype && (hasPhone || hasVisibleEmail))
                 onSkypeClick { presenter.callSkype(skype) }
+
+                val facebook = user?.facebook ?: ""
+                facebook(facebook)
+                facebookVisible(hasFacebook)
+                facebookSeparatorVisible(hasFacebook && (hasPhone || hasVisibleEmail || hasSkype))
+                onFacebookClick { presenter.openFacebook(facebook) }
             }
         }
 

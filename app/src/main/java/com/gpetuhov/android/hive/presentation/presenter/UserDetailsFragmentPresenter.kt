@@ -65,6 +65,10 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun callSkype(skype: String) = viewState.callSkype(skype)
 
+    fun openFacebook(facebook: String) {
+        // TODO: implement this
+    }
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend
