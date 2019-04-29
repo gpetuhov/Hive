@@ -270,7 +270,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         titleId: Int,
         hintId: Int,
         errorMessageId: Int = R.string.username_not_valid,
-        shouldShowError: Boolean = true,
         maxLength: Int? = null,
         inputType: Int = InputType.TYPE_CLASS_TEXT,
         onInputChange: (String) -> Unit,
@@ -295,11 +294,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     val inputText = text.toString()
                     onInputChange(inputText)
 
-                    val valid = isInputValid(inputText)
-                    if (shouldShowError) { dialog.getInputField()?.error = if (!valid) errorMessage else null }
+                    val inputValid = isInputValid(inputText)
+                    dialog.getInputField()?.error = if (!inputValid) errorMessage else null
 
-                    // Enable positive button if input is valid
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, valid)
+                    val lengthValid = if (maxLength != null) inputText.length <= maxLength else true
+
+                    // Enable positive button if input text and length is valid
+                    // (for invalid length we do not show any error message).
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputValid && lengthValid)
                 }
                 .positiveButton { onPositive() }
                 .negativeButton { onNegative() }
@@ -322,23 +324,20 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         )
     }
 
-    private fun isHiveUsernameValid(username: String) = username == "" || (username.length <= Constants.User.MAX_USERNAME_LENGTH && !username.contains(" "))
+    private fun isHiveUsernameValid(username: String) = username == "" || !username.contains(" ")
 
     private fun initDescriptionDialog() {
         descriptionDialog = getInputDialog(
             titleId = R.string.about_me,
             hintId = R.string.enter_description,
-            shouldShowError = false,
             maxLength = Constants.User.MAX_DESCRIPTION_LENGTH,
             inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE,
             onInputChange = { inputText -> presenter.updateTempDescription(inputText) },
-            isInputValid = { inputText -> isDescriptionValid(inputText) },
+            isInputValid = { true },
             onPositive = { presenter.saveDescription() },
             onNegative = { presenter.dismissDescriptionDialog() }
         )
     }
-
-    private fun isDescriptionValid(description: String) = description.length <= Constants.User.MAX_DESCRIPTION_LENGTH
 
     private fun initSignOutDialog() {
         if (context != null) {
