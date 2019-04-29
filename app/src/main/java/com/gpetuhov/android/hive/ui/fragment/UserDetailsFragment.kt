@@ -181,9 +181,8 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         }
     }
 
-    // TODO: use this
     // TODO: refactor this with openFacebook
-    private fun openInstagram(instagram: String) {
+    override fun openInstagram(instagram: String) {
         val packageManager = activity?.packageManager
         val url = "http://instagram.com/$instagram"
         var uri = Uri.parse(url)
