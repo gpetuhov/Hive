@@ -69,6 +69,10 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openTwitter(twitter: String) = viewState.openTwitter(twitter)
 
+    fun openInstagram(instagram: String) {
+        // TODO: implement this
+    }
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend

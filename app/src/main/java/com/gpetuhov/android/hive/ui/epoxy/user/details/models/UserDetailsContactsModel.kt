@@ -36,6 +36,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
     @EpoxyAttribute var twitterVisible = true
     @EpoxyAttribute var twitterSeparatorVisible = true
 
+    @EpoxyAttribute lateinit var instagram: String
+    @EpoxyAttribute lateinit var onInstagramClick: () -> Unit
+    @EpoxyAttribute var instagramVisible = true
+    @EpoxyAttribute var instagramSeparatorVisible = true
+
     override fun bind(holder: UserDetailsContactsHolder) {
         holder.phone.text = phone
         holder.phoneWrapper.setVisible(phoneVisible)
@@ -60,6 +65,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
         holder.twitterWrapper.setVisible(twitterVisible)
         holder.twitterSeparator.setVisible(twitterSeparatorVisible)
         holder.twitterWrapper.setOnClickListener { onTwitterClick() }
+
+        holder.instagram.text = instagram
+        holder.instagramWrapper.setVisible(instagramVisible)
+        holder.instagramSeparator.setVisible(instagramSeparatorVisible)
+        holder.instagramWrapper.setOnClickListener { onInstagramClick() }
     }
 }
 
@@ -78,4 +88,7 @@ class UserDetailsContactsHolder : KotlinHolder() {
     val twitterWrapper by bind<View>(R.id.user_details_twitter_wrapper)
     val twitter by bind<TextView>(R.id.user_details_twitter)
     val twitterSeparator by bind<View>(R.id.user_details_twitter_separator)
+    val instagramWrapper by bind<View>(R.id.user_details_instagram_wrapper)
+    val instagram by bind<TextView>(R.id.user_details_instagram)
+    val instagramSeparator by bind<View>(R.id.user_details_instagram_separator)
 }

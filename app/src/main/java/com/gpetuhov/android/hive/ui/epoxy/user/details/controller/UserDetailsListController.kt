@@ -45,7 +45,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         val hasSkype = user?.hasSkype ?: false
         val hasFacebook = user?.hasFacebook ?: false
         val hasTwitter = user?.hasTwitter ?: false
-        val hasContacts = hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter
+        val hasInstagram = user?.hasInstagram ?: false
+        val hasContacts = hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram
         if (hasContacts) {
             userDetailsContacts {
                 id("user_details_contacts")
@@ -78,6 +79,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 twitterVisible(hasTwitter)
                 twitterSeparatorVisible(hasTwitter && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook))
                 onTwitterClick { presenter.openTwitter(twitter) }
+
+                val instagram = user?.instagram ?: ""
+                instagram(instagram)
+                instagramVisible(hasInstagram)
+                instagramSeparatorVisible(hasInstagram && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter))
+                onInstagramClick { presenter.openInstagram(instagram) }
             }
         }
 
