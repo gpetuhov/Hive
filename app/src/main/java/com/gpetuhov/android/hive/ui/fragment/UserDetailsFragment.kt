@@ -180,4 +180,29 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
             startActivity(intent)
         }
     }
+
+    // TODO: use this
+    // TODO: refactor this with openFacebook
+    private fun openInstagram(instagram: String) {
+        val packageManager = activity?.packageManager
+        val url = "http://instagram.com/$instagram"
+        var uri = Uri.parse(url)
+        var intent = Intent(Intent.ACTION_VIEW, uri)
+
+        try {
+            val applicationInfo = packageManager?.getApplicationInfo("com.instagram.android", 0)
+            if (applicationInfo?.enabled == true) {
+                // Instagram application installed. Change url to be opened in Instagram app
+                uri = Uri.parse("http://instagram.com/_u/$instagram")
+                intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.setPackage("com.instagram.android")
+            }
+        } catch (ignored: PackageManager.NameNotFoundException) {
+            // Do nothing. Instagram application not installed. Url will be opened in browser
+        }
+
+        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
 }
