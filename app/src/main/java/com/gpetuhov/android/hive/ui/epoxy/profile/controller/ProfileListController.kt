@@ -85,6 +85,10 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             val hasInstagram = user?.hasInstagram ?: false
             instagram(if (hasInstagram) user?.instagram ?: "" else context.getString(R.string.enter_instagram))
             onInstagramClick { presenter.showInstagramDialog() }
+
+            val hasYouTube= user?.hasYouTube ?: false
+            youTube(if (hasYouTube) user?.youTube ?: "" else context.getString(R.string.enter_youtube))
+            onYouTubeClick { presenter.showYouTubeDialog() }
         }
 
         profileAbout {

@@ -31,6 +31,9 @@ abstract class ProfileContactsModel : EpoxyModelWithHolder<ProfileContactsHolder
     @EpoxyAttribute lateinit var instagram: String
     @EpoxyAttribute lateinit var onInstagramClick: () -> Unit
 
+    @EpoxyAttribute lateinit var youTube: String
+    @EpoxyAttribute lateinit var onYouTubeClick: () -> Unit
+
     override fun bind(holder: ProfileContactsHolder) {
         holder.phone.text = phone
         holder.phoneWrapper.setOnClickListener { onPhoneClick() }
@@ -51,6 +54,9 @@ abstract class ProfileContactsModel : EpoxyModelWithHolder<ProfileContactsHolder
 
         holder.instagram.text = instagram
         holder.instagramWrapper.setOnClickListener { onInstagramClick() }
+
+        holder.youTube.text = youTube
+        holder.youTubeWrapper.setOnClickListener { onYouTubeClick() }
     }
 }
 
@@ -68,4 +74,6 @@ class ProfileContactsHolder : KotlinHolder() {
     val twitter by bind<TextView>(R.id.user_twitter)
     val instagramWrapper by bind<View>(R.id.user_instagram_wrapper)
     val instagram by bind<TextView>(R.id.user_instagram)
+    val youTubeWrapper by bind<View>(R.id.user_youtube_wrapper)
+    val youTube by bind<TextView>(R.id.user_youtube)
 }

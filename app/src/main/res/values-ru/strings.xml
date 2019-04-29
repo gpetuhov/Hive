@@ -82,6 +82,9 @@
     <string name="instagram">Имя пользователя Instagram</string>
     <string name="enter_instagram">Введите имя пользователя Instagram</string>
     <string name="instagram_save_error">Ошибка обновления имени пользователя Instagram</string>
+    <string name="youtube">Имя пользователя YouTube</string>
+    <string name="enter_youtube">Введите имя пользователя YouTube</string>
+    <string name="youtube_save_error">Ошибка обновления имени пользователя YouTube</string>
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 

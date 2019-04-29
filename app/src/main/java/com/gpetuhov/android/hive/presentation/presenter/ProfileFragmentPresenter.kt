@@ -373,6 +373,12 @@ class ProfileFragmentPresenter :
         viewState.dismissInstagramDialog()
     }
 
+    // --- Change YouTube ---
+
+    fun showYouTubeDialog() {
+        // TODO: implement this
+    }
+
     // --- Open photos ---
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)

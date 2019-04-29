@@ -82,6 +82,9 @@
     <string name="instagram">Instagram username</string>
     <string name="enter_instagram">Enter Instagram username</string>
     <string name="instagram_save_error">Error updating Instagram username</string>
+    <string name="youtube">YouTube username</string>
+    <string name="enter_youtube">Enter YouTube username</string>
+    <string name="youtube_save_error">Error updating YouTube username</string>
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>
 
