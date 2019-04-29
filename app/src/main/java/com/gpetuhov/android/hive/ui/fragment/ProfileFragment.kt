@@ -415,6 +415,45 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun getSocialUsernameInputDialog(
+        titleId: Int,
+        hintId: Int,
+        onInputChange: (String) -> Unit,
+        onPositive: () -> Unit,
+        onNegative: () -> Unit
+    ): MaterialDialog? {
+
+        if (context != null) {
+            val errorMessage = context?.getString(R.string.username_not_valid)
+
+            return MaterialDialog(context!!)
+                .title(titleId)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(
+                    hintRes = hintId,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    onInputChange(inputText)
+
+                    val empty = inputText == ""
+                    val valid = !inputText.contains(" ")
+                    val validOrEmpty = empty || valid
+
+                    dialog.getInputField()?.error = if (!validOrEmpty) errorMessage else null
+
+                    // Enable positive button on empty or valid input text
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, validOrEmpty)
+                }
+                .positiveButton { onPositive() }
+                .negativeButton { onNegative() }
+
+        } else {
+            return null
+        }
+    }
+
     private fun initSkypeDialog() {
         skypeDialog = getSocialUsernameInputDialog(
             R.string.skype,
@@ -463,46 +502,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             { presenter.saveYouTube() },
             { presenter.dismissYouTubeDialog() }
         )
-    }
-
-    private fun getSocialUsernameInputDialog(
-        titleId: Int,
-        hintId: Int,
-        onInputChange: (String) -> Unit,
-        onPositive: () -> Unit,
-        onNegative: () -> Unit
-    ): MaterialDialog? {
-
-        if (context != null) {
-            val errorMessage = context?.getString(R.string.username_not_valid)
-
-            return MaterialDialog(context!!)
-                .title(titleId)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    hintRes = hintId,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    var positiveButtonEnabled = true
-                    onInputChange(inputText)
-
-                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
-                        positiveButtonEnabled = false
-                        errorMessage
-                    } else {
-                        null
-                    }
-
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
-                }
-                .positiveButton { onPositive() }
-                .negativeButton { onNegative() }
-
-        } else {
-            return null
-        }
     }
 
     private fun dismissDialogs() {
