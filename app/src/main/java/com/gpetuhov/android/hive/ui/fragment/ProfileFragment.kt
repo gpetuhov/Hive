@@ -50,6 +50,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var skypeDialog: MaterialDialog? = null
     private var facebookDialog: MaterialDialog? = null
     private var twitterDialog: MaterialDialog? = null
+    private var instagramDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -213,6 +214,16 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissTwitterDialog() = twitterDialog?.dismiss() ?: Unit
 
+    override fun showInstagramDialog() {
+        // Prefill dialog with text provided by presenter
+        val editText = instagramDialog?.getInputField()
+        editText?.setText(presenter.getInstagramPrefill())
+        editText?.setSelection(editText.text.length)
+        instagramDialog?.show()
+    }
+
+    override fun dismissInstagramDialog() = instagramDialog?.dismiss() ?: Unit
+
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
         findNavController().navigate(action)
@@ -240,6 +251,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initSkypeDialog()
         initFacebookDialog()
         initTwitterDialog()
+        initInstagramDialog()
     }
 
     private fun initUsernameDialog() {
@@ -481,6 +493,36 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun initInstagramDialog() {
+        if (context != null) {
+            val instagramErrorMessage = context?.getString(R.string.username_not_valid)
+
+            instagramDialog = MaterialDialog(context!!)
+                .title(R.string.instagram)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(
+                    hintRes = R.string.enter_instagram,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    var positiveButtonEnabled = true
+                    presenter.updateTempInstagram(inputText)
+
+                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
+                        positiveButtonEnabled = false
+                        instagramErrorMessage
+                    } else {
+                        null
+                    }
+
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
+                }
+                .positiveButton { presenter.saveInstagram() }
+                .negativeButton { presenter.dismissInstagramDialog() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -492,6 +534,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissSkypeDialog()
         dismissFacebookDialog()
         dismissTwitterDialog()
+        dismissInstagramDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)

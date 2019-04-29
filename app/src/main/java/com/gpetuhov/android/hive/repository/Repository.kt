@@ -1203,7 +1203,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             visibleEmail = doc.getString(VISIBLE_EMAIL_KEY) ?: "",
             skype = doc.getString(SKYPE_KEY) ?: "",
             facebook = doc.getString(FACEBOOK_KEY) ?: "",
-            twitter = doc.getString(TWITTER_KEY) ?: ""
+            twitter = doc.getString(TWITTER_KEY) ?: "",
+            instagram = doc.getString(INSTAGRAM_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)

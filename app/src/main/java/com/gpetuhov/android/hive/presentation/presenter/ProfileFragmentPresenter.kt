@@ -28,7 +28,8 @@ class ProfileFragmentPresenter :
     SaveEmailInteractor.Callback,
     SaveSkypeInteractor.Callback,
     SaveFacebookInteractor.Callback,
-    SaveTwitterInteractor.Callback {
+    SaveTwitterInteractor.Callback,
+    SaveInstagramInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -43,6 +44,7 @@ class ProfileFragmentPresenter :
     private val saveSkypeInteractor = SaveSkypeInteractor(this)
     private val saveFacebookInteractor = SaveFacebookInteractor(this)
     private val saveTwitterInteractor = SaveTwitterInteractor(this)
+    private val saveInstagramInteractor = SaveInstagramInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -67,6 +69,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in Twitter dialog
     private var tempTwitter = ""
+
+    // Keeps current text entered in Instagram dialog
+    private var tempInstagram = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -119,6 +124,10 @@ class ProfileFragmentPresenter :
     // === SaveTwitterInteractor.Callback ===
 
     override fun onSaveTwitterError(errorMessage: String) = showToast(errorMessage)
+
+    // === SaveInstagramInteractor.Callback ===
+
+    override fun onSaveInstagramError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -345,8 +354,23 @@ class ProfileFragmentPresenter :
 
     // --- Change Instagram ---
 
-    fun showInstagramDialog() {
-        // TODO: implement this
+    fun showInstagramDialog() = viewState.showInstagramDialog()
+
+    // Prefill Instagram dialog with currently entered text or current value
+    fun getInstagramPrefill() = if (tempInstagram != "") tempInstagram else repo.currentUserInstagram()
+
+    fun updateTempInstagram(newTempInstagram: String) {
+        tempInstagram = newTempInstagram
+    }
+
+    fun saveInstagram() {
+        saveInstagramInteractor.saveInstagram(tempInstagram)
+        dismissInstagramDialog()
+    }
+
+    fun dismissInstagramDialog() {
+        tempInstagram = ""
+        viewState.dismissInstagramDialog()
     }
 
     // --- Open photos ---
