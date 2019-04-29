@@ -64,4 +64,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveTwitterErrorMessage(): String = Constants.SAVE_TWITTER_ERROR
 
     override fun getSaveInstagramErrorMessage(): String = Constants.SAVE_INSTAGRAM_ERROR
+
+    override fun getSaveYouTubeErrorMessage(): String = Constants.SAVE_YOUTUBE_ERROR
 }
