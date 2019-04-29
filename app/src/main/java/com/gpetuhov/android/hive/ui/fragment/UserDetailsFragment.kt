@@ -206,9 +206,8 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         }
     }
 
-    // TODO: use this
     // TODO: refactor this with openFacebook
-    private fun openYouTube(youTube: String) {
+    override fun openYouTube(youTube: String) {
         val packageManager = activity?.packageManager
         val url = "https://www.youtube.com/user/$youTube"
         val uri = Uri.parse(url)

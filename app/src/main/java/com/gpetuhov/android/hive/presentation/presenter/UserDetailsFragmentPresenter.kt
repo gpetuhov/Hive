@@ -71,9 +71,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openInstagram(instagram: String) = viewState.openInstagram(instagram)
 
-    fun openYouTube(youTube: String) {
-        // TODO: implement this
-    }
+    fun openYouTube(youTube: String) = viewState.openYouTube(youTube)
 
     // --- Lifecycle ---
 
