@@ -536,32 +536,52 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     private fun initYouTubeDialog() {
-        if (context != null) {
-            val youTubeErrorMessage = context?.getString(R.string.username_not_valid)
+        youTubeDialog = getSocialUsernameInputDialog(
+            R.string.youtube,
+            R.string.enter_youtube,
+            { inputText -> presenter.updateTempYouTube(inputText) },
+            { presenter.saveYouTube() },
+            { presenter.dismissYouTubeDialog() }
+        )
+    }
 
-            youTubeDialog = MaterialDialog(context!!)
-                .title(R.string.youtube)
+    private fun getSocialUsernameInputDialog(
+        titleId: Int,
+        hintId: Int,
+        onInputChange: (String) -> Unit,
+        onPositive: () -> Unit,
+        onNegative: () -> Unit
+    ): MaterialDialog? {
+
+        if (context != null) {
+            val errorMessage = context?.getString(R.string.username_not_valid)
+
+            return MaterialDialog(context!!)
+                .title(titleId)
                 .noAutoDismiss()
                 .cancelable(false)
                 .input(
-                    hintRes = R.string.enter_youtube,
+                    hintRes = hintId,
                     waitForPositiveButton = false
                 ) { dialog, text ->
                     val inputText = text.toString()
                     var positiveButtonEnabled = true
-                    presenter.updateTempYouTube(inputText)
+                    onInputChange(inputText)
 
                     dialog.getInputField()?.error = if (inputText.contains(" ")) {
                         positiveButtonEnabled = false
-                        youTubeErrorMessage
+                        errorMessage
                     } else {
                         null
                     }
 
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
                 }
-                .positiveButton { presenter.saveYouTube() }
-                .negativeButton { presenter.dismissYouTubeDialog() }
+                .positiveButton { onPositive() }
+                .negativeButton { onNegative() }
+
+        } else {
+            return null
         }
     }
 
