@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive.domain.interactor
+package com.gpetuhov.android.hive.domain.interactor.base
 
 // Each interactor implements only one single use case.
 // Interactors know nothing of the Android specific classes.

@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.domain.interactor
 
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
+import com.gpetuhov.android.hive.domain.interactor.base.Interactor
 import com.gpetuhov.android.hive.domain.network.Network
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import javax.inject.Inject

@@ -5,6 +5,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.*
+import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
@@ -21,7 +22,7 @@ class ProfileFragmentPresenter :
     MvpPresenter<ProfileFragmentView>(),
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
-    SaveUsernameInteractor.Callback,
+    SaveUserPropertyInteractor.Callback,
     SaveDescriptionInteractor.Callback,
     DeleteUserPhotoInteractor.Callback,
     SavePhoneInteractor.Callback,
@@ -98,9 +99,9 @@ class ProfileFragmentPresenter :
         viewState.enableDeleteUserButton()
     }
 
-    // === SaveUsernameInteractor.Callback ===
+    // === SaveUserPropertyInteractor.Callback ===
 
-    override fun onSaveUsernameError(errorMessage: String) = showToast(errorMessage)
+    override fun onSaveError(errorMessage: String) = showToast(errorMessage)
 
     // === SaveDescriptionInteractor.Callback ===
 

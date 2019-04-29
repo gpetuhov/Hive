@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.domain.interactor
 
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.base.Interactor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.util.Constants
 import javax.inject.Inject
