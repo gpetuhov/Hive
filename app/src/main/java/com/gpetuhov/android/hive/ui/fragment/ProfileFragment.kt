@@ -359,7 +359,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         titleId: Int,
         hintId: Int,
         errorMessageId: Int,
-        inputType: Int,
+        inputType: Int = InputType.TYPE_CLASS_TEXT,
         onInputChange: (String) -> Unit,
         isInputValid: (String) -> Boolean,
         onPositive: () -> Unit,
@@ -397,14 +397,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     private fun initPhoneDialog() {
         phoneDialog = getInputDialog(
-            R.string.phone_number,
-            R.string.enter_phone,
-            R.string.phone_not_valid,
-            InputType.TYPE_CLASS_PHONE,
-            { inputText -> presenter.updateTempPhone(inputText) },
-            { inputText -> isPhoneValid(inputText) },
-            { presenter.savePhone() },
-            { presenter.dismissPhoneDialog() }
+            titleId = R.string.phone_number,
+            hintId = R.string.enter_phone,
+            errorMessageId = R.string.phone_not_valid,
+            inputType = InputType.TYPE_CLASS_PHONE,
+            onInputChange = { inputText -> presenter.updateTempPhone(inputText) },
+            isInputValid = { inputText -> isPhoneValid(inputText) },
+            onPositive = { presenter.savePhone() },
+            onNegative = { presenter.dismissPhoneDialog() }
         )
     }
 
@@ -412,14 +412,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     private fun initEmailDialog() {
         emailDialog = getInputDialog(
-            R.string.email,
-            R.string.enter_email,
-            R.string.email_not_valid,
-            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
-            { inputText -> presenter.updateTempEmail(inputText) },
-            { inputText -> isEmailValid(inputText) },
-            { presenter.saveEmail() },
-            { presenter.dismissEmailDialog() }
+            titleId = R.string.email,
+            hintId = R.string.enter_email,
+            errorMessageId = R.string.email_not_valid,
+            inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+            onInputChange = { inputText -> presenter.updateTempEmail(inputText) },
+            isInputValid = { inputText -> isEmailValid(inputText) },
+            onPositive = { presenter.saveEmail() },
+            onNegative = { presenter.dismissEmailDialog() }
         )
     }
 
@@ -429,66 +429,61 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     private fun initSkypeDialog() {
         skypeDialog = getInputDialog(
-            R.string.skype,
-            R.string.enter_skype,
-            R.string.username_not_valid,
-            InputType.TYPE_CLASS_TEXT,
-            { inputText -> presenter.updateTempSkype(inputText) },
-            { inputText -> isUsernameValid(inputText) },
-            { presenter.saveSkype() },
-            { presenter.dismissSkypeDialog() }
+            titleId = R.string.skype,
+            hintId = R.string.enter_skype,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempSkype(inputText) },
+            isInputValid = { inputText -> isUsernameValid(inputText) },
+            onPositive = { presenter.saveSkype() },
+            onNegative = { presenter.dismissSkypeDialog() }
         )
     }
 
     private fun initFacebookDialog() {
         facebookDialog = getInputDialog(
-            R.string.facebook,
-            R.string.enter_facebook,
-            R.string.username_not_valid,
-            InputType.TYPE_CLASS_TEXT,
-            { inputText -> presenter.updateTempFacebook(inputText) },
-            { inputText -> isUsernameValid(inputText) },
-            { presenter.saveFacebook() },
-            { presenter.dismissFacebookDialog() }
+            titleId = R.string.facebook,
+            hintId = R.string.enter_facebook,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempFacebook(inputText) },
+            isInputValid = { inputText -> isUsernameValid(inputText) },
+            onPositive = { presenter.saveFacebook() },
+            onNegative = { presenter.dismissFacebookDialog() }
         )
     }
 
     private fun initTwitterDialog() {
         twitterDialog = getInputDialog(
-            R.string.twitter,
-            R.string.enter_twitter,
-            R.string.username_not_valid,
-            InputType.TYPE_CLASS_TEXT,
-            { inputText -> presenter.updateTempTwitter(inputText) },
-            { inputText -> isUsernameValid(inputText) },
-            { presenter.saveTwitter() },
-            { presenter.dismissTwitterDialog() }
+            titleId = R.string.twitter,
+            hintId = R.string.enter_twitter,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempTwitter(inputText) },
+            isInputValid = { inputText -> isUsernameValid(inputText) },
+            onPositive = { presenter.saveTwitter() },
+            onNegative = { presenter.dismissTwitterDialog() }
         )
     }
 
     private fun initInstagramDialog() {
         instagramDialog = getInputDialog(
-            R.string.instagram,
-            R.string.enter_instagram,
-            R.string.username_not_valid,
-            InputType.TYPE_CLASS_TEXT,
-            { inputText -> presenter.updateTempInstagram(inputText) },
-            { inputText -> isUsernameValid(inputText) },
-            { presenter.saveInstagram() },
-            { presenter.dismissInstagramDialog() }
+            titleId = R.string.instagram,
+            hintId = R.string.enter_instagram,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempInstagram(inputText) },
+            isInputValid = { inputText -> isUsernameValid(inputText) },
+            onPositive = { presenter.saveInstagram() },
+            onNegative = { presenter.dismissInstagramDialog() }
         )
     }
 
     private fun initYouTubeDialog() {
         youTubeDialog = getInputDialog(
-            R.string.youtube,
-            R.string.enter_youtube,
-            R.string.username_not_valid,
-            InputType.TYPE_CLASS_TEXT,
-            { inputText -> presenter.updateTempYouTube(inputText) },
-            { inputText -> isUsernameValid(inputText) },
-            { presenter.saveYouTube() },
-            { presenter.dismissYouTubeDialog() }
+            titleId = R.string.youtube,
+            hintId = R.string.enter_youtube,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempYouTube(inputText) },
+            isInputValid = { inputText -> isUsernameValid(inputText) },
+            onPositive = { presenter.saveYouTube() },
+            onNegative = { presenter.dismissYouTubeDialog() }
         )
     }
 
