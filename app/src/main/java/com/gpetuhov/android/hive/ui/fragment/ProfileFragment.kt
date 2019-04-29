@@ -416,123 +416,43 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     private fun initSkypeDialog() {
-        if (context != null) {
-            val skypeErrorMessage = context?.getString(R.string.username_not_valid)
-
-            skypeDialog = MaterialDialog(context!!)
-                .title(R.string.skype)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    hintRes = R.string.enter_skype,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    var positiveButtonEnabled = true
-                    presenter.updateTempSkype(inputText)
-
-                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
-                        positiveButtonEnabled = false
-                        skypeErrorMessage
-                    } else {
-                        null
-                    }
-
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
-                }
-                .positiveButton { presenter.saveSkype() }
-                .negativeButton { presenter.dismissSkypeDialog() }
-        }
+        skypeDialog = getSocialUsernameInputDialog(
+            R.string.skype,
+            R.string.enter_skype,
+            { inputText -> presenter.updateTempSkype(inputText) },
+            { presenter.saveSkype() },
+            { presenter.dismissSkypeDialog() }
+        )
     }
 
     private fun initFacebookDialog() {
-        if (context != null) {
-            val facebookErrorMessage = context?.getString(R.string.username_not_valid)
-
-            facebookDialog = MaterialDialog(context!!)
-                .title(R.string.facebook)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    hintRes = R.string.enter_facebook,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    var positiveButtonEnabled = true
-                    presenter.updateTempFacebook(inputText)
-
-                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
-                        positiveButtonEnabled = false
-                        facebookErrorMessage
-                    } else {
-                        null
-                    }
-
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
-                }
-                .positiveButton { presenter.saveFacebook() }
-                .negativeButton { presenter.dismissFacebookDialog() }
-        }
+        facebookDialog = getSocialUsernameInputDialog(
+            R.string.facebook,
+            R.string.enter_facebook,
+            { inputText -> presenter.updateTempFacebook(inputText) },
+            { presenter.saveFacebook() },
+            { presenter.dismissFacebookDialog() }
+        )
     }
 
     private fun initTwitterDialog() {
-        if (context != null) {
-            val twitterErrorMessage = context?.getString(R.string.username_not_valid)
-
-            twitterDialog = MaterialDialog(context!!)
-                .title(R.string.twitter)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    hintRes = R.string.enter_twitter,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    var positiveButtonEnabled = true
-                    presenter.updateTempTwitter(inputText)
-
-                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
-                        positiveButtonEnabled = false
-                        twitterErrorMessage
-                    } else {
-                        null
-                    }
-
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
-                }
-                .positiveButton { presenter.saveTwitter() }
-                .negativeButton { presenter.dismissTwitterDialog() }
-        }
+        twitterDialog = getSocialUsernameInputDialog(
+            R.string.twitter,
+            R.string.enter_twitter,
+            { inputText -> presenter.updateTempTwitter(inputText) },
+            { presenter.saveTwitter() },
+            { presenter.dismissTwitterDialog() }
+        )
     }
 
     private fun initInstagramDialog() {
-        if (context != null) {
-            val instagramErrorMessage = context?.getString(R.string.username_not_valid)
-
-            instagramDialog = MaterialDialog(context!!)
-                .title(R.string.instagram)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    hintRes = R.string.enter_instagram,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    var positiveButtonEnabled = true
-                    presenter.updateTempInstagram(inputText)
-
-                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
-                        positiveButtonEnabled = false
-                        instagramErrorMessage
-                    } else {
-                        null
-                    }
-
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
-                }
-                .positiveButton { presenter.saveInstagram() }
-                .negativeButton { presenter.dismissInstagramDialog() }
-        }
+        instagramDialog = getSocialUsernameInputDialog(
+            R.string.instagram,
+            R.string.enter_instagram,
+            { inputText -> presenter.updateTempInstagram(inputText) },
+            { presenter.saveInstagram() },
+            { presenter.dismissInstagramDialog() }
+        )
     }
 
     private fun initYouTubeDialog() {
