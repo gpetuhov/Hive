@@ -189,12 +189,13 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         var intent = Intent(Intent.ACTION_VIEW, uri)
 
         try {
-            val applicationInfo = packageManager?.getApplicationInfo("com.instagram.android", 0)
+            val instagramPackageName = "com.instagram.android"
+            val applicationInfo = packageManager?.getApplicationInfo(instagramPackageName, 0)
             if (applicationInfo?.enabled == true) {
                 // Instagram application installed. Change url to be opened in Instagram app
                 uri = Uri.parse("http://instagram.com/_u/$instagram")
                 intent = Intent(Intent.ACTION_VIEW, uri)
-                intent.setPackage("com.instagram.android")
+                intent.setPackage(instagramPackageName)
             }
         } catch (ignored: PackageManager.NameNotFoundException) {
             // Do nothing. Instagram application not installed. Url will be opened in browser
@@ -214,10 +215,11 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         val intent = Intent(Intent.ACTION_VIEW, uri)
 
         try {
-            val applicationInfo = packageManager?.getApplicationInfo("com.google.android.youtube", 0)
+            val youTubePackageName = "com.google.android.youtube"
+            val applicationInfo = packageManager?.getApplicationInfo(youTubePackageName, 0)
             if (applicationInfo?.enabled == true) {
                 // YoutTube application installed. Set intent package to be opened in YouTube app
-                intent.setPackage("com.google.android.youtube")
+                intent.setPackage(youTubePackageName)
             }
         } catch (ignored: PackageManager.NameNotFoundException) {
             // Do nothing. YouTube application not installed. Url will be opened in browser
