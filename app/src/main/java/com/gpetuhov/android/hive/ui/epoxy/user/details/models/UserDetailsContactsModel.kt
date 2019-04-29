@@ -41,6 +41,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
     @EpoxyAttribute var instagramVisible = true
     @EpoxyAttribute var instagramSeparatorVisible = true
 
+    @EpoxyAttribute lateinit var youTube: String
+    @EpoxyAttribute lateinit var onYouTubeClick: () -> Unit
+    @EpoxyAttribute var youTubeVisible = true
+    @EpoxyAttribute var youTubeSeparatorVisible = true
+
     override fun bind(holder: UserDetailsContactsHolder) {
         holder.phone.text = phone
         holder.phoneWrapper.setVisible(phoneVisible)
@@ -70,6 +75,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
         holder.instagramWrapper.setVisible(instagramVisible)
         holder.instagramSeparator.setVisible(instagramSeparatorVisible)
         holder.instagramWrapper.setOnClickListener { onInstagramClick() }
+
+        holder.youTube.text = youTube
+        holder.youTubeWrapper.setVisible(youTubeVisible)
+        holder.youTubeSeparator.setVisible(youTubeSeparatorVisible)
+        holder.youTubeWrapper.setOnClickListener { onYouTubeClick() }
     }
 }
 
@@ -91,4 +101,7 @@ class UserDetailsContactsHolder : KotlinHolder() {
     val instagramWrapper by bind<View>(R.id.user_details_instagram_wrapper)
     val instagram by bind<TextView>(R.id.user_details_instagram)
     val instagramSeparator by bind<View>(R.id.user_details_instagram_separator)
+    val youTubeWrapper by bind<View>(R.id.user_details_youtube_wrapper)
+    val youTube by bind<TextView>(R.id.user_details_youtube)
+    val youTubeSeparator by bind<View>(R.id.user_details_youtube_separator)
 }
