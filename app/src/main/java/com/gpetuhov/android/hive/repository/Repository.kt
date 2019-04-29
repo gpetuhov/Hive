@@ -68,6 +68,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val SKYPE_KEY = "skype"
         private const val FACEBOOK_KEY = "facebook"
         private const val TWITTER_KEY = "twitter"
+        private const val INSTAGRAM_KEY = "instagram"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -315,6 +316,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserTwitter() = currentUser.value?.twitter ?: ""
 
+    override fun currentUserInstagram() = currentUser.value?.instagram ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -374,6 +377,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[TWITTER_KEY] = newTwitter
 
         // Save user Twitter
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserInstagram(newInstagram: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[INSTAGRAM_KEY] = newInstagram
+
+        // Save user Instagram
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
