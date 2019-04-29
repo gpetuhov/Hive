@@ -343,6 +343,12 @@ class ProfileFragmentPresenter :
         viewState.dismissTwitterDialog()
     }
 
+    // --- Change Instagram ---
+
+    fun showInstagramDialog() {
+        // TODO: implement this
+    }
+
     // --- Open photos ---
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
