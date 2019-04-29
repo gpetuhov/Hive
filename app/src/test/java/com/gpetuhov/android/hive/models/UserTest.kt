@@ -113,4 +113,11 @@ class UserTest {
         user.instagram = com.gpetuhov.android.hive.utils.Constants.DUMMY_INSTAGRAM
         assertEquals(true, user.hasInstagram)
     }
+
+    @Test
+    fun emptyYouTube() {
+        assertEquals(false, user.hasYouTube)
+        user.youTube = com.gpetuhov.android.hive.utils.Constants.DUMMY_YOUTUBE
+        assertEquals(true, user.hasYouTube)
+    }
 }
