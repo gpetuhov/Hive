@@ -204,4 +204,27 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
             startActivity(intent)
         }
     }
+
+    // TODO: use this
+    // TODO: refactor this with openFacebook
+    private fun openYouTube(youTube: String) {
+        val packageManager = activity?.packageManager
+        val url = "https://www.youtube.com/user/$youTube"
+        val uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+
+        try {
+            val applicationInfo = packageManager?.getApplicationInfo("com.google.android.youtube", 0)
+            if (applicationInfo?.enabled == true) {
+                // YoutTube application installed. Set intent package to be opened in YouTube app
+                intent.setPackage("com.google.android.youtube")
+            }
+        } catch (ignored: PackageManager.NameNotFoundException) {
+            // Do nothing. YouTube application not installed. Url will be opened in browser
+        }
+
+        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
 }
