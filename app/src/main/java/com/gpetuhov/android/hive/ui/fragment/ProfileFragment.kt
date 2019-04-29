@@ -51,6 +51,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var facebookDialog: MaterialDialog? = null
     private var twitterDialog: MaterialDialog? = null
     private var instagramDialog: MaterialDialog? = null
+    private var youTubeDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -225,12 +226,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun dismissInstagramDialog() = instagramDialog?.dismiss() ?: Unit
 
     override fun showYouTubeDialog() {
-        // TODO: implement this
+        // Prefill dialog with text provided by presenter
+        val editText = youTubeDialog?.getInputField()
+        editText?.setText(presenter.getYouTubePrefill())
+        editText?.setSelection(editText.text.length)
+        youTubeDialog?.show()
     }
 
-    override fun dismissYouTubeDialog() {
-        // TODO: implement this
-    }
+    override fun dismissYouTubeDialog() = youTubeDialog?.dismiss() ?: Unit
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
@@ -260,6 +263,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initFacebookDialog()
         initTwitterDialog()
         initInstagramDialog()
+        initYouTubeDialog()
     }
 
     private fun initUsernameDialog() {
@@ -531,6 +535,36 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun initYouTubeDialog() {
+        if (context != null) {
+            val youTubeErrorMessage = context?.getString(R.string.username_not_valid)
+
+            youTubeDialog = MaterialDialog(context!!)
+                .title(R.string.youtube)
+                .noAutoDismiss()
+                .cancelable(false)
+                .input(
+                    hintRes = R.string.enter_youtube,
+                    waitForPositiveButton = false
+                ) { dialog, text ->
+                    val inputText = text.toString()
+                    var positiveButtonEnabled = true
+                    presenter.updateTempYouTube(inputText)
+
+                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
+                        positiveButtonEnabled = false
+                        youTubeErrorMessage
+                    } else {
+                        null
+                    }
+
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
+                }
+                .positiveButton { presenter.saveYouTube() }
+                .negativeButton { presenter.dismissYouTubeDialog() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -543,6 +577,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissFacebookDialog()
         dismissTwitterDialog()
         dismissInstagramDialog()
+        dismissYouTubeDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
