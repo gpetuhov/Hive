@@ -355,36 +355,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
-    private fun initPhoneDialog() {
-        if (context != null) {
-            val phoneErrorMessage = context?.getString(R.string.phone_not_valid) ?: ""
-
-            phoneDialog = MaterialDialog(context!!)
-                .title(R.string.phone_number)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    inputType = InputType.TYPE_CLASS_PHONE,
-                    hintRes = R.string.enter_phone,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    presenter.updateTempPhone(inputText)
-
-                    val phoneEmpty = inputText == ""
-                    val phoneValid = PHONE.matcher(inputText).matches()
-                    val validOrEmpty = phoneEmpty || phoneValid
-
-                    dialog.getInputField()?.error = if (!validOrEmpty) phoneErrorMessage else null
-
-                    // Enable positive button on empty or valid phone
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, validOrEmpty)
-                }
-                .positiveButton { presenter.savePhone() }
-                .negativeButton { presenter.dismissPhoneDialog() }
-        }
-    }
-
     private fun getInputDialog(
         titleId: Int,
         hintId: Int,
@@ -424,6 +394,21 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             return null
         }
     }
+
+    private fun initPhoneDialog() {
+        phoneDialog = getInputDialog(
+            R.string.phone_number,
+            R.string.enter_phone,
+            R.string.phone_not_valid,
+            InputType.TYPE_CLASS_PHONE,
+            { inputText -> presenter.updateTempPhone(inputText) },
+            { inputText -> isPhoneValid(inputText) },
+            { presenter.savePhone() },
+            { presenter.dismissPhoneDialog() }
+        )
+    }
+
+    private fun isPhoneValid(phone: String) = phone == "" || PHONE.matcher(phone).matches()
 
     private fun initEmailDialog() {
         emailDialog = getInputDialog(
