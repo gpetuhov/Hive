@@ -266,37 +266,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initYouTubeDialog()
     }
 
-    private fun initUsernameDialog() {
-        if (context != null) {
-            val usernameErrorMessage = context?.getString(R.string.username_not_valid)
-
-            usernameDialog = MaterialDialog(context!!)
-                .title(R.string.username)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    maxLength = Constants.User.MAX_USERNAME_LENGTH,
-                    hintRes = R.string.enter_username,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    var positiveButtonEnabled = inputText.length <= Constants.User.MAX_USERNAME_LENGTH
-                    presenter.updateTempUsername(inputText)
-
-                    dialog.getInputField()?.error = if (inputText.contains(" ")) {
-                        positiveButtonEnabled = false
-                        usernameErrorMessage
-                    } else {
-                        null
-                    }
-
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
-                }
-                .positiveButton { presenter.saveUsername() }
-                .negativeButton { presenter.dismissUsernameDialog() }
-        }
-    }
-
     private fun getInputDialog(
         titleId: Int,
         hintId: Int,
@@ -339,6 +308,21 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             return null
         }
     }
+
+    private fun initUsernameDialog() {
+        usernameDialog = getInputDialog(
+            titleId = R.string.username,
+            hintId = R.string.enter_username,
+            errorMessageId = R.string.username_not_valid,
+            maxLength = Constants.User.MAX_USERNAME_LENGTH,
+            onInputChange = { inputText -> presenter.updateTempUsername(inputText) },
+            isInputValid = { inputText -> isHiveUsernameValid(inputText) },
+            onPositive = { presenter.saveUsername() },
+            onNegative = { presenter.dismissUsernameDialog() }
+        )
+    }
+
+    private fun isHiveUsernameValid(username: String) = username == "" || (username.length <= Constants.User.MAX_USERNAME_LENGTH && !username.contains(" "))
 
     private fun initDescriptionDialog() {
         descriptionDialog = getInputDialog(
@@ -422,7 +406,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     private fun isEmailValid(email: String) = email == "" || EMAIL_ADDRESS.matcher(email).matches()
 
-    private fun isUsernameValid(username: String) = username == "" || !username.contains(" ")
+    private fun isSocialUsernameValid(username: String) = username == "" || !username.contains(" ")
 
     private fun initSkypeDialog() {
         skypeDialog = getInputDialog(
@@ -430,7 +414,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             hintId = R.string.enter_skype,
             errorMessageId = R.string.username_not_valid,
             onInputChange = { inputText -> presenter.updateTempSkype(inputText) },
-            isInputValid = { inputText -> isUsernameValid(inputText) },
+            isInputValid = { inputText -> isSocialUsernameValid(inputText) },
             onPositive = { presenter.saveSkype() },
             onNegative = { presenter.dismissSkypeDialog() }
         )
@@ -442,7 +426,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             hintId = R.string.enter_facebook,
             errorMessageId = R.string.username_not_valid,
             onInputChange = { inputText -> presenter.updateTempFacebook(inputText) },
-            isInputValid = { inputText -> isUsernameValid(inputText) },
+            isInputValid = { inputText -> isSocialUsernameValid(inputText) },
             onPositive = { presenter.saveFacebook() },
             onNegative = { presenter.dismissFacebookDialog() }
         )
@@ -454,7 +438,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             hintId = R.string.enter_twitter,
             errorMessageId = R.string.username_not_valid,
             onInputChange = { inputText -> presenter.updateTempTwitter(inputText) },
-            isInputValid = { inputText -> isUsernameValid(inputText) },
+            isInputValid = { inputText -> isSocialUsernameValid(inputText) },
             onPositive = { presenter.saveTwitter() },
             onNegative = { presenter.dismissTwitterDialog() }
         )
@@ -466,7 +450,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             hintId = R.string.enter_instagram,
             errorMessageId = R.string.username_not_valid,
             onInputChange = { inputText -> presenter.updateTempInstagram(inputText) },
-            isInputValid = { inputText -> isUsernameValid(inputText) },
+            isInputValid = { inputText -> isSocialUsernameValid(inputText) },
             onPositive = { presenter.saveInstagram() },
             onNegative = { presenter.dismissInstagramDialog() }
         )
@@ -478,7 +462,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             hintId = R.string.enter_youtube,
             errorMessageId = R.string.username_not_valid,
             onInputChange = { inputText -> presenter.updateTempYouTube(inputText) },
-            isInputValid = { inputText -> isUsernameValid(inputText) },
+            isInputValid = { inputText -> isSocialUsernameValid(inputText) },
             onPositive = { presenter.saveYouTube() },
             onNegative = { presenter.dismissYouTubeDialog() }
         )
