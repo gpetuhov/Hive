@@ -385,39 +385,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
-    private fun initEmailDialog() {
-        if (context != null) {
-            val emailErrorMessage = context?.getString(R.string.email_not_valid) ?: ""
-
-            emailDialog = MaterialDialog(context!!)
-                .title(R.string.email)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
-                    hintRes = R.string.enter_email,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    presenter.updateTempEmail(inputText)
-
-                    val emailEmpty = inputText == ""
-                    val emailValid = EMAIL_ADDRESS.matcher(inputText).matches()
-                    val validOrEmpty = emailEmpty || emailValid
-
-                    dialog.getInputField()?.error = if (!validOrEmpty) emailErrorMessage else null
-
-                    // Enable positive button on empty or valid email
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, validOrEmpty)
-                }
-                .positiveButton { presenter.saveEmail() }
-                .negativeButton { presenter.dismissEmailDialog() }
-        }
-    }
-
-    private fun getSocialUsernameInputDialog(
+    private fun getInputDialog(
         titleId: Int,
         hintId: Int,
+        errorMessageId: Int,
+        inputType: Int,
         onInputChange: (String) -> Unit,
         isInputValid: (String) -> Boolean,
         onPositive: () -> Unit,
@@ -425,13 +397,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     ): MaterialDialog? {
 
         if (context != null) {
-            val errorMessage = context?.getString(R.string.username_not_valid)
+            val errorMessage = context?.getString(errorMessageId)
 
             return MaterialDialog(context!!)
                 .title(titleId)
                 .noAutoDismiss()
                 .cancelable(false)
                 .input(
+                    inputType = inputType,
                     hintRes = hintId,
                     waitForPositiveButton = false
                 ) { dialog, text ->
@@ -440,6 +413,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
                     val valid = isInputValid(inputText)
                     dialog.getInputField()?.error = if (!valid) errorMessage else null
+
+                    // Enable positive button if input is valid
                     dialog.setActionButtonEnabled(WhichButton.POSITIVE, valid)
                 }
                 .positiveButton { onPositive() }
@@ -450,58 +425,83 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
-    private fun emptyOrNoSpaces(inputText: String) = inputText == "" || !inputText.contains(" ")
+    private fun initEmailDialog() {
+        emailDialog = getInputDialog(
+            R.string.email,
+            R.string.enter_email,
+            R.string.email_not_valid,
+            InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
+            { inputText -> presenter.updateTempEmail(inputText) },
+            { inputText -> isEmailValid(inputText) },
+            { presenter.saveEmail() },
+            { presenter.dismissEmailDialog() }
+        )
+    }
+
+    private fun isEmailValid(email: String) = email == "" || EMAIL_ADDRESS.matcher(email).matches()
+
+    private fun isUsernameValid(username: String) = username == "" || !username.contains(" ")
 
     private fun initSkypeDialog() {
-        skypeDialog = getSocialUsernameInputDialog(
+        skypeDialog = getInputDialog(
             R.string.skype,
             R.string.enter_skype,
+            R.string.username_not_valid,
+            InputType.TYPE_CLASS_TEXT,
             { inputText -> presenter.updateTempSkype(inputText) },
-            { inputText -> emptyOrNoSpaces(inputText) },
+            { inputText -> isUsernameValid(inputText) },
             { presenter.saveSkype() },
             { presenter.dismissSkypeDialog() }
         )
     }
 
     private fun initFacebookDialog() {
-        facebookDialog = getSocialUsernameInputDialog(
+        facebookDialog = getInputDialog(
             R.string.facebook,
             R.string.enter_facebook,
+            R.string.username_not_valid,
+            InputType.TYPE_CLASS_TEXT,
             { inputText -> presenter.updateTempFacebook(inputText) },
-            { inputText -> emptyOrNoSpaces(inputText) },
+            { inputText -> isUsernameValid(inputText) },
             { presenter.saveFacebook() },
             { presenter.dismissFacebookDialog() }
         )
     }
 
     private fun initTwitterDialog() {
-        twitterDialog = getSocialUsernameInputDialog(
+        twitterDialog = getInputDialog(
             R.string.twitter,
             R.string.enter_twitter,
+            R.string.username_not_valid,
+            InputType.TYPE_CLASS_TEXT,
             { inputText -> presenter.updateTempTwitter(inputText) },
-            { inputText -> emptyOrNoSpaces(inputText) },
+            { inputText -> isUsernameValid(inputText) },
             { presenter.saveTwitter() },
             { presenter.dismissTwitterDialog() }
         )
     }
 
     private fun initInstagramDialog() {
-        instagramDialog = getSocialUsernameInputDialog(
+        instagramDialog = getInputDialog(
             R.string.instagram,
             R.string.enter_instagram,
+            R.string.username_not_valid,
+            InputType.TYPE_CLASS_TEXT,
             { inputText -> presenter.updateTempInstagram(inputText) },
-            { inputText -> emptyOrNoSpaces(inputText) },
+            { inputText -> isUsernameValid(inputText) },
             { presenter.saveInstagram() },
             { presenter.dismissInstagramDialog() }
         )
     }
 
     private fun initYouTubeDialog() {
-        youTubeDialog = getSocialUsernameInputDialog(
+        youTubeDialog = getInputDialog(
             R.string.youtube,
             R.string.enter_youtube,
+            R.string.username_not_valid,
+            InputType.TYPE_CLASS_TEXT,
             { inputText -> presenter.updateTempYouTube(inputText) },
-            { inputText -> emptyOrNoSpaces(inputText) },
+            { inputText -> isUsernameValid(inputText) },
             { presenter.saveYouTube() },
             { presenter.dismissYouTubeDialog() }
         )
