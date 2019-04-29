@@ -29,7 +29,8 @@ class ProfileFragmentPresenter :
     SaveSkypeInteractor.Callback,
     SaveFacebookInteractor.Callback,
     SaveTwitterInteractor.Callback,
-    SaveInstagramInteractor.Callback {
+    SaveInstagramInteractor.Callback,
+    SaveYouTubeInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -45,6 +46,7 @@ class ProfileFragmentPresenter :
     private val saveFacebookInteractor = SaveFacebookInteractor(this)
     private val saveTwitterInteractor = SaveTwitterInteractor(this)
     private val saveInstagramInteractor = SaveInstagramInteractor(this)
+    private val saveYouTubeInteractor = SaveYouTubeInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -72,6 +74,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in Instagram dialog
     private var tempInstagram = ""
+
+    // Keeps current text entered in YouTube dialog
+    private var tempYouTube = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -128,6 +133,10 @@ class ProfileFragmentPresenter :
     // === SaveInstagramInteractor.Callback ===
 
     override fun onSaveInstagramError(errorMessage: String) = showToast(errorMessage)
+
+    // === SaveYouTubeInteractor.Callback ===
+
+    override fun onSaveYouTubeError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
@@ -375,8 +384,23 @@ class ProfileFragmentPresenter :
 
     // --- Change YouTube ---
 
-    fun showYouTubeDialog() {
-        // TODO: implement this
+    fun showYouTubeDialog() = viewState.showYouTubeDialog()
+
+    // Prefill YouTube dialog with currently entered text or current value
+    fun getYouTubePrefill() = if (tempYouTube != "") tempYouTube else repo.currentUserYouTube()
+
+    fun updateTempYouTube(newTempYouTube: String) {
+        tempYouTube = newTempYouTube
+    }
+
+    fun saveYouTube() {
+        saveYouTubeInteractor.saveYouTube(tempYouTube)
+        dismissYouTubeDialog()
+    }
+
+    fun dismissYouTubeDialog() {
+        tempYouTube = ""
+        viewState.dismissYouTubeDialog()
     }
 
     // --- Open photos ---

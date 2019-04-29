@@ -224,6 +224,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissInstagramDialog() = instagramDialog?.dismiss() ?: Unit
 
+    override fun showYouTubeDialog() {
+        // TODO: implement this
+    }
+
+    override fun dismissYouTubeDialog() {
+        // TODO: implement this
+    }
+
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
         findNavController().navigate(action)

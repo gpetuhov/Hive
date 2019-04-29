@@ -130,6 +130,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissInstagramDialog()
 
+    // === Change YouTube ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showYouTubeDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissYouTubeDialog()
+
     // === Open privacy policy ===
 
     @StateStrategyType(SkipStrategy::class)
