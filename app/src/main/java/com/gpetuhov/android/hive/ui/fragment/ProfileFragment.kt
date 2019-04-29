@@ -419,6 +419,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         titleId: Int,
         hintId: Int,
         onInputChange: (String) -> Unit,
+        isInputValid: (String) -> Boolean,
         onPositive: () -> Unit,
         onNegative: () -> Unit
     ): MaterialDialog? {
@@ -437,14 +438,9 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                     val inputText = text.toString()
                     onInputChange(inputText)
 
-                    val empty = inputText == ""
-                    val valid = !inputText.contains(" ")
-                    val validOrEmpty = empty || valid
-
-                    dialog.getInputField()?.error = if (!validOrEmpty) errorMessage else null
-
-                    // Enable positive button on empty or valid input text
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, validOrEmpty)
+                    val valid = isInputValid(inputText)
+                    dialog.getInputField()?.error = if (!valid) errorMessage else null
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, valid)
                 }
                 .positiveButton { onPositive() }
                 .negativeButton { onNegative() }
@@ -454,11 +450,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    private fun emptyOrNoSpaces(inputText: String) = inputText == "" || !inputText.contains(" ")
+
     private fun initSkypeDialog() {
         skypeDialog = getSocialUsernameInputDialog(
             R.string.skype,
             R.string.enter_skype,
             { inputText -> presenter.updateTempSkype(inputText) },
+            { inputText -> emptyOrNoSpaces(inputText) },
             { presenter.saveSkype() },
             { presenter.dismissSkypeDialog() }
         )
@@ -469,6 +468,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             R.string.facebook,
             R.string.enter_facebook,
             { inputText -> presenter.updateTempFacebook(inputText) },
+            { inputText -> emptyOrNoSpaces(inputText) },
             { presenter.saveFacebook() },
             { presenter.dismissFacebookDialog() }
         )
@@ -479,6 +479,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             R.string.twitter,
             R.string.enter_twitter,
             { inputText -> presenter.updateTempTwitter(inputText) },
+            { inputText -> emptyOrNoSpaces(inputText) },
             { presenter.saveTwitter() },
             { presenter.dismissTwitterDialog() }
         )
@@ -489,6 +490,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             R.string.instagram,
             R.string.enter_instagram,
             { inputText -> presenter.updateTempInstagram(inputText) },
+            { inputText -> emptyOrNoSpaces(inputText) },
             { presenter.saveInstagram() },
             { presenter.dismissInstagramDialog() }
         )
@@ -499,6 +501,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             R.string.youtube,
             R.string.enter_youtube,
             { inputText -> presenter.updateTempYouTube(inputText) },
+            { inputText -> emptyOrNoSpaces(inputText) },
             { presenter.saveYouTube() },
             { presenter.dismissYouTubeDialog() }
         )
