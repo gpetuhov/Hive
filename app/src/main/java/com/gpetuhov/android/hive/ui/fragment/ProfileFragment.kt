@@ -297,27 +297,64 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
-    private fun initDescriptionDialog() {
+    private fun getInputDialog(
+        titleId: Int,
+        hintId: Int,
+        errorMessageId: Int = R.string.username_not_valid,
+        shouldShowError: Boolean = true,
+        maxLength: Int? = null,
+        inputType: Int = InputType.TYPE_CLASS_TEXT,
+        onInputChange: (String) -> Unit,
+        isInputValid: (String) -> Boolean,
+        onPositive: () -> Unit,
+        onNegative: () -> Unit
+    ): MaterialDialog? {
+
         if (context != null) {
-            descriptionDialog = MaterialDialog(context!!)
-                .title(R.string.about_me)
+            val errorMessage = context?.getString(errorMessageId)
+
+            return MaterialDialog(context!!)
+                .title(titleId)
                 .noAutoDismiss()
                 .cancelable(false)
                 .input(
-                    maxLength = Constants.User.MAX_DESCRIPTION_LENGTH,
-                    inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE,
-                    hintRes = R.string.enter_description,
+                    maxLength = maxLength,
+                    inputType = inputType,
+                    hintRes = hintId,
                     waitForPositiveButton = false
                 ) { dialog, text ->
                     val inputText = text.toString()
-                    val positiveButtonEnabled = inputText.length <= Constants.User.MAX_DESCRIPTION_LENGTH
-                    presenter.updateTempDescription(inputText)
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, positiveButtonEnabled)
+                    onInputChange(inputText)
+
+                    val valid = isInputValid(inputText)
+                    if (shouldShowError) { dialog.getInputField()?.error = if (!valid) errorMessage else null }
+
+                    // Enable positive button if input is valid
+                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, valid)
                 }
-                .positiveButton { presenter.saveDescription() }
-                .negativeButton { presenter.dismissDescriptionDialog() }
+                .positiveButton { onPositive() }
+                .negativeButton { onNegative() }
+
+        } else {
+            return null
         }
     }
+
+    private fun initDescriptionDialog() {
+        descriptionDialog = getInputDialog(
+            titleId = R.string.about_me,
+            hintId = R.string.enter_description,
+            shouldShowError = false,
+            maxLength = Constants.User.MAX_DESCRIPTION_LENGTH,
+            inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_MULTI_LINE,
+            onInputChange = { inputText -> presenter.updateTempDescription(inputText) },
+            isInputValid = { inputText -> isDescriptionValid(inputText) },
+            onPositive = { presenter.saveDescription() },
+            onNegative = { presenter.dismissDescriptionDialog() }
+        )
+    }
+
+    private fun isDescriptionValid(description: String) = description.length <= Constants.User.MAX_DESCRIPTION_LENGTH
 
     private fun initSignOutDialog() {
         if (context != null) {
@@ -352,46 +389,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
                 .cancelable(false)
                 .positiveButton { presenter.deletePhoto() }
                 .negativeButton { presenter.deletePhotoCancel() }
-        }
-    }
-
-    private fun getInputDialog(
-        titleId: Int,
-        hintId: Int,
-        errorMessageId: Int,
-        inputType: Int = InputType.TYPE_CLASS_TEXT,
-        onInputChange: (String) -> Unit,
-        isInputValid: (String) -> Boolean,
-        onPositive: () -> Unit,
-        onNegative: () -> Unit
-    ): MaterialDialog? {
-
-        if (context != null) {
-            val errorMessage = context?.getString(errorMessageId)
-
-            return MaterialDialog(context!!)
-                .title(titleId)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    inputType = inputType,
-                    hintRes = hintId,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    onInputChange(inputText)
-
-                    val valid = isInputValid(inputText)
-                    dialog.getInputField()?.error = if (!valid) errorMessage else null
-
-                    // Enable positive button if input is valid
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, valid)
-                }
-                .positiveButton { onPositive() }
-                .negativeButton { onNegative() }
-
-        } else {
-            return null
         }
     }
 
