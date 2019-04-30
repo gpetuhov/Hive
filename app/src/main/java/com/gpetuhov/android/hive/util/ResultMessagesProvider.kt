@@ -80,5 +80,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveWebsiteErrorMessage(): String = getString(R.string.website_save_error)
 
+    override fun getSaveResidenceErrorMessage(): String = getString(R.string.residence_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

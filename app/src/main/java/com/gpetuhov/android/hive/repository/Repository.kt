@@ -325,6 +325,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserWebsite() = currentUser.value?.website ?: ""
 
+    override fun currentUserResidence() = currentUser.value?.residence ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -408,6 +410,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[WEBSITE_KEY] = newWebsite
 
         // Save user Website
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserResidence(newResidence: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[RESIDENCE_KEY] = newResidence
+
+        // Save user residence
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 

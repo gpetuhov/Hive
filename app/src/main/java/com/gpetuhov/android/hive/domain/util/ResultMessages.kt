@@ -34,4 +34,5 @@ interface ResultMessages {
     fun getSaveInstagramErrorMessage(): String
     fun getSaveYouTubeErrorMessage(): String
     fun getSaveWebsiteErrorMessage(): String
+    fun getSaveResidenceErrorMessage(): String
 }
