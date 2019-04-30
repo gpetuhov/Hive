@@ -89,6 +89,10 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             val hasYouTube= user?.hasYouTube ?: false
             youTube(if (hasYouTube) user?.youTube ?: "" else context.getString(R.string.enter_youtube))
             onYouTubeClick { presenter.showYouTubeDialog() }
+
+            val hasWebsite= user?.hasWebsite ?: false
+            website(if (hasWebsite) user?.website ?: "" else context.getString(R.string.enter_website))
+            onWebsiteClick { presenter.showWebsiteDialog() }
         }
 
         profileAbout {
