@@ -98,7 +98,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 weblink(weblink)
                 weblinkVisible(hasWeblink)
                 weblinkSeparatorVisible(hasWeblink && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram || hasYouTube))
-                onWeblinkClick { presenter.openYouTube(youTube) }
+                onWeblinkClick { presenter.openWeblink(weblink) }
             }
         }
 

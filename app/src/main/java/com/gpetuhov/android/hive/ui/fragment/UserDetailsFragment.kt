@@ -186,4 +186,14 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
             startActivity(intent)
         }
     }
+
+    override fun openWeblink(weblink: String) {
+        val packageManager = activity?.packageManager
+        val uri = Uri.parse(weblink)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+
+        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
 }

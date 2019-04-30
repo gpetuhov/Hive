@@ -46,5 +46,8 @@ interface UserDetailsFragmentView : MvpView {
     fun openYouTube(youTube: String)
 
     @StateStrategyType(SkipStrategy::class)
+    fun openWeblink(weblink: String)
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 }

@@ -73,9 +73,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openYouTube(youTube: String) = viewState.openYouTube(youTube)
 
-    fun openWeblink(weblink: String) {
-        // TODO: implement this
-    }
+    fun openWeblink(weblink: String) = viewState.openWeblink(weblink)
 
     // --- Lifecycle ---
 
