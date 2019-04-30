@@ -110,6 +110,19 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             }
         }
 
+        val hasResidence = user?.hasResidence ?: false
+        val hasInformation = hasResidence
+        if (hasInformation) {
+            userDetailsInformation {
+                id("user_details_information")
+
+                val residencePrefix = context.getString(R.string.residence)
+                val residence = "$residencePrefix: ${user?.residence ?: ""}"
+                residence(residence)
+                residenceVisible(hasResidence)
+            }
+        }
+
         userDetailsOfferHeader {
             id("user_details_offer_header")
 

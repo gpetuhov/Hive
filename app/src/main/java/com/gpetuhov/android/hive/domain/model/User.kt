@@ -24,7 +24,8 @@ data class User(
     var twitter: String = "",
     var instagram: String = "",
     var youTube: String = "",
-    var website: String = ""
+    var website: String = "",
+    var residence: String = ""
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
@@ -38,6 +39,7 @@ data class User(
     val hasInstagram get() = instagram != ""
     val hasYouTube get() = youTube != ""
     val hasWebsite get() = website != ""
+    val hasResidence get() = residence != ""
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 

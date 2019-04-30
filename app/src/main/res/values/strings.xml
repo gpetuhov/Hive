@@ -89,6 +89,7 @@
     <string name="enter_website">Enter website address</string>
     <string name="website_save_error">Error updating website address</string>
     <string name="website_not_valid">Not a valid website address</string>
+    <string name="residence">Place of residence</string>
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>
 
