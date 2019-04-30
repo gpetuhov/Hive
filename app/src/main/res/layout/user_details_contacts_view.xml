@@ -208,4 +208,32 @@
 
     </LinearLayout>
 
+    <View
+            android:id="@+id/user_details_weblink_separator"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+
+    <LinearLayout
+            android:id="@+id/user_details_weblink_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/weblink"/>
+
+        <TextView
+                android:id="@+id/user_details_weblink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                style="@style/basicTextStyle"
+                tools:text="http://www.mysite.com"/>
+
+    </LinearLayout>
+
 </LinearLayout>

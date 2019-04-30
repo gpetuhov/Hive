@@ -47,7 +47,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         val hasTwitter = user?.hasTwitter ?: false
         val hasInstagram = user?.hasInstagram ?: false
         val hasYouTube = user?.hasYouTube ?: false
-        val hasContacts = hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram || hasYouTube
+        val hasWeblink = user?.hasWeblink ?: false
+        val hasContacts = hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram || hasYouTube || hasWeblink
         if (hasContacts) {
             userDetailsContacts {
                 id("user_details_contacts")
@@ -92,6 +93,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 youTubeVisible(hasYouTube)
                 youTubeSeparatorVisible(hasYouTube && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram))
                 onYouTubeClick { presenter.openYouTube(youTube) }
+
+                val weblink = user?.weblink ?: ""
+                weblink(weblink)
+                weblinkVisible(hasWeblink)
+                weblinkSeparatorVisible(hasWeblink && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram || hasYouTube))
+                onWeblinkClick { presenter.openYouTube(youTube) }
             }
         }
 

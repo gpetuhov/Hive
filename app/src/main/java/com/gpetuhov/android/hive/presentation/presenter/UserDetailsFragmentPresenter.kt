@@ -73,6 +73,10 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openYouTube(youTube: String) = viewState.openYouTube(youTube)
 
+    fun openWeblink(weblink: String) {
+        // TODO: implement this
+    }
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend

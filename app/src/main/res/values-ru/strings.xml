@@ -113,6 +113,7 @@
     <string name="user_total_reviews_count">Количество отзывов</string>
     <string name="email_subject">Письмо из Hive</string>
     <string name="skype_not_installed">Skype не установлен</string>
+    <string name="information">Информация</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>

@@ -46,6 +46,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
     @EpoxyAttribute var youTubeVisible = true
     @EpoxyAttribute var youTubeSeparatorVisible = true
 
+    @EpoxyAttribute lateinit var weblink: String
+    @EpoxyAttribute lateinit var onWeblinkClick: () -> Unit
+    @EpoxyAttribute var weblinkVisible = true
+    @EpoxyAttribute var weblinkSeparatorVisible = true
+
     override fun bind(holder: UserDetailsContactsHolder) {
         holder.phone.text = phone
         holder.phoneWrapper.setVisible(phoneVisible)
@@ -80,6 +85,11 @@ abstract class UserDetailsContactsModel : EpoxyModelWithHolder<UserDetailsContac
         holder.youTubeWrapper.setVisible(youTubeVisible)
         holder.youTubeSeparator.setVisible(youTubeSeparatorVisible)
         holder.youTubeWrapper.setOnClickListener { onYouTubeClick() }
+
+        holder.weblink.text = weblink
+        holder.weblinkWrapper.setVisible(weblinkVisible)
+        holder.weblinkSeparator.setVisible(weblinkSeparatorVisible)
+        holder.weblinkWrapper.setOnClickListener { onWeblinkClick() }
     }
 }
 
@@ -104,4 +114,7 @@ class UserDetailsContactsHolder : KotlinHolder() {
     val youTubeWrapper by bind<View>(R.id.user_details_youtube_wrapper)
     val youTube by bind<TextView>(R.id.user_details_youtube)
     val youTubeSeparator by bind<View>(R.id.user_details_youtube_separator)
+    val weblinkWrapper by bind<View>(R.id.user_details_weblink_wrapper)
+    val weblink by bind<TextView>(R.id.user_details_weblink)
+    val weblinkSeparator by bind<View>(R.id.user_details_weblink_separator)
 }
