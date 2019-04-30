@@ -27,6 +27,7 @@ class TestRepository : Repo {
     var youtube = ""
     var website = ""
     var residence = ""
+    var language = ""
 
     override fun isForeground() = false
 
@@ -365,6 +366,16 @@ class TestRepository : Repo {
     override fun saveUserResidence(newResidence: String, onError: () -> Unit) {
         if (isSuccess) {
             residence = newResidence
+        } else {
+            onError()
+        }
+    }
+
+    override fun currentUserLanguage(): String = language
+
+    override fun saveUserLanguage(newLanguage: String, onError: () -> Unit) {
+        if (isSuccess) {
+            language = newLanguage
         } else {
             onError()
         }
