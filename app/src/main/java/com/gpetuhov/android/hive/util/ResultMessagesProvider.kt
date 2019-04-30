@@ -78,7 +78,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveYouTubeErrorMessage(): String = getString(R.string.youtube_save_error)
 
-    override fun getSaveWeblinkErrorMessage(): String = getString(R.string.weblink_save_error)
+    override fun getSaveWebsiteErrorMessage(): String = getString(R.string.website_save_error)
 
     private fun getString(stringId: Int) = context.getString(stringId)
 }

@@ -70,7 +70,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val TWITTER_KEY = "twitter"
         private const val INSTAGRAM_KEY = "instagram"
         private const val YOUTUBE_KEY = "youtube"
-        private const val WEBLINK_KEY = "weblink"
+        private const val WEBSITE_KEY = "website"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -322,7 +322,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserYouTube() = currentUser.value?.youTube ?: ""
 
-    override fun currentUserWeblink() = currentUser.value?.weblink ?: ""
+    override fun currentUserWebsite() = currentUser.value?.website ?: ""
 
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
@@ -402,11 +402,11 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
-    override fun saveUserWeblink(newWeblink: String, onError: () -> Unit) {
+    override fun saveUserWebsite(newWebsite: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
-        data[WEBLINK_KEY] = newWeblink
+        data[WEBSITE_KEY] = newWebsite
 
-        // Save user Weblink
+        // Save user Website
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
@@ -1228,7 +1228,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             twitter = doc.getString(TWITTER_KEY) ?: "",
             instagram = doc.getString(INSTAGRAM_KEY) ?: "",
             youTube = doc.getString(YOUTUBE_KEY) ?: "",
-            weblink = doc.getString(WEBLINK_KEY) ?: ""
+            website = doc.getString(WEBSITE_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)

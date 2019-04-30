@@ -209,12 +209,12 @@
     </LinearLayout>
 
     <View
-            android:id="@+id/user_details_weblink_separator"
+            android:id="@+id/user_details_website_separator"
             android:layout_width="match_parent"
             android:layout_height="8dp"/>
 
     <LinearLayout
-            android:id="@+id/user_details_weblink_wrapper"
+            android:id="@+id/user_details_website_wrapper"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -223,10 +223,10 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/weblink"/>
+                android:src="@drawable/website"/>
 
         <TextView
-                android:id="@+id/user_details_weblink"
+                android:id="@+id/user_details_website"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

@@ -25,7 +25,7 @@ class TestRepository : Repo {
     var twitter = ""
     var instagram = ""
     var youtube = ""
-    var weblink = ""
+    var website = ""
 
     override fun isForeground() = false
 
@@ -349,11 +349,11 @@ class TestRepository : Repo {
         }
     }
 
-    override fun currentUserWeblink(): String = weblink
+    override fun currentUserWebsite(): String = website
 
-    override fun saveUserWeblink(newWeblink: String, onError: () -> Unit) {
+    override fun saveUserWebsite(newWebsite: String, onError: () -> Unit) {
         if (isSuccess) {
-            weblink = newWeblink
+            website = newWebsite
         } else {
             onError()
         }

@@ -72,8 +72,8 @@ class Constants {
         const val DUMMY_YOUTUBE = "youtube_name"
         const val SAVE_YOUTUBE_ERROR = "Save youtube error"
 
-        const val DUMMY_WEBLINK = "mysite.com"
-        const val SAVE_WEBLINK_ERROR = "Save weblink error"
+        const val DUMMY_WEBSITE = "mysite.com"
+        const val SAVE_WEBSITE_ERROR = "Save website error"
 
         val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 

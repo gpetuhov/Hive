@@ -32,5 +32,5 @@ interface TestAppComponent : AppComponent {
     fun inject(saveTwitterInteractorTest: SaveTwitterInteractorTest)
     fun inject(saveInstagramInteractorTest: SaveInstagramInteractorTest)
     fun inject(saveYouTubeInteractorTest: SaveYouTubeInteractorTest)
-    fun inject(saveWeblinkInteractorTest: SaveWeblinkInteractorTest)
+    fun inject(saveWeblinkInteractorTest: SaveWebsiteInteractorTest)
 }

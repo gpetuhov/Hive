@@ -187,9 +187,9 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         }
     }
 
-    override fun openWeblink(weblink: String) {
+    override fun openWebsite(website: String) {
         val packageManager = activity?.packageManager
-        val uri = Uri.parse(weblink)
+        val uri = Uri.parse(website)
         val intent = Intent(Intent.ACTION_VIEW, uri)
 
         if (packageManager != null && intent.resolveActivity(packageManager) != null) {

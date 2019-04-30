@@ -122,9 +122,9 @@ class UserTest {
     }
 
     @Test
-    fun emptyWeblink() {
-        assertEquals(false, user.hasWeblink)
-        user.weblink = com.gpetuhov.android.hive.utils.Constants.DUMMY_WEBLINK
-        assertEquals(true, user.hasWeblink)
+    fun emptyWebsite() {
+        assertEquals(false, user.hasWebsite)
+        user.website = com.gpetuhov.android.hive.utils.Constants.DUMMY_WEBSITE
+        assertEquals(true, user.hasWebsite)
     }
 }

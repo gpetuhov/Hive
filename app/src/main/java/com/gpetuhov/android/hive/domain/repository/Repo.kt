@@ -36,7 +36,7 @@ interface Repo {
     fun currentUserTwitter(): String
     fun currentUserInstagram(): String
     fun currentUserYouTube(): String
-    fun currentUserWeblink(): String
+    fun currentUserWebsite(): String
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
     fun saveUserDescription(newDescription: String, onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)
@@ -47,7 +47,7 @@ interface Repo {
     fun saveUserTwitter(newTwitter: String, onError: () -> Unit)
     fun saveUserInstagram(newInstagram: String, onError: () -> Unit)
     fun saveUserYouTube(newYouTube: String, onError: () -> Unit)
-    fun saveUserWeblink(newWeblink: String, onError: () -> Unit)
+    fun saveUserWebsite(newWebsite: String, onError: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
     fun startGettingSecondUserUpdates(uid: String)
     fun stopGettingSecondUserUpdates()
