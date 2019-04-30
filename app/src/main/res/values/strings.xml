@@ -85,6 +85,9 @@
     <string name="youtube">YouTube username</string>
     <string name="enter_youtube">Enter YouTube username</string>
     <string name="youtube_save_error">Error updating YouTube username</string>
+    <string name="weblink">Website address</string>
+    <string name="enter_weblink">Enter website address</string>
+    <string name="weblink_save_error">Error updating website address</string>
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>
 

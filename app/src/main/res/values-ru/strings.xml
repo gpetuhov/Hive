@@ -85,6 +85,9 @@
     <string name="youtube">Имя пользователя YouTube</string>
     <string name="enter_youtube">Введите имя пользователя YouTube</string>
     <string name="youtube_save_error">Ошибка обновления имени пользователя YouTube</string>
+    <string name="weblink">Адрес вебсайта</string>
+    <string name="enter_weblink">Введите адрес вебсайта</string>
+    <string name="weblink_save_error">Ошибка обновления адреса вебсайта</string>
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 

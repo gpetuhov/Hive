@@ -322,6 +322,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserYouTube() = currentUser.value?.youTube ?: ""
 
+    override fun currentUserWeblink() = currentUser.value?.weblink ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -397,6 +399,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[YOUTUBE_KEY] = newYouTube
 
         // Save user YouTube
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserWeblink(newWeblink: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[WEBLINK_KEY] = newWeblink
+
+        // Save user Weblink
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
