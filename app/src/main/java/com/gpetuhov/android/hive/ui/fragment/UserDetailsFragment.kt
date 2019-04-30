@@ -142,17 +142,20 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         val packageManager = activity?.packageManager
         val url = "https://www.facebook.com/$facebook"
         var uri = Uri.parse(url)
+        var intent = Intent(Intent.ACTION_VIEW, uri)
+
         try {
-            val applicationInfo = packageManager?.getApplicationInfo("com.facebook.katana", 0)
+            val facebookPackageName = "com.facebook.katana"
+            val applicationInfo = packageManager?.getApplicationInfo(facebookPackageName, 0)
             if (applicationInfo?.enabled == true) {
                 // Facebook application installed. Change url to be opened in Facebook app
                 uri = Uri.parse("fb://facewebmodal/f?href=$url")
+                intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.setPackage(facebookPackageName)
             }
         } catch (ignored: PackageManager.NameNotFoundException) {
             // Do nothing. Facebook application not installed. Url will be opened in browser
         }
-
-        val intent = Intent(Intent.ACTION_VIEW, uri)
 
         if (packageManager != null && intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
@@ -164,17 +167,20 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         val packageManager = activity?.packageManager
         val url = "https://twitter.com/$twitter"
         var uri = Uri.parse(url)
+        var intent = Intent(Intent.ACTION_VIEW, uri)
+
         try {
-            val applicationInfo = packageManager?.getApplicationInfo("com.twitter.android", 0)
+            val twitterPackageName = "com.twitter.android"
+            val applicationInfo = packageManager?.getApplicationInfo(twitterPackageName, 0)
             if (applicationInfo?.enabled == true) {
                 // Twitter application installed. Change url to be opened in Twitter app
                 uri = Uri.parse("twitter://user?screen_name=$twitter")
+                intent = Intent(Intent.ACTION_VIEW, uri)
+                intent.setPackage(twitterPackageName)
             }
         } catch (ignored: PackageManager.NameNotFoundException) {
             // Do nothing. Twitter application not installed. Url will be opened in browser
         }
-
-        val intent = Intent(Intent.ACTION_VIEW, uri)
 
         if (packageManager != null && intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
