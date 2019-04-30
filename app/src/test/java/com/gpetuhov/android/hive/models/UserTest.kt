@@ -120,4 +120,11 @@ class UserTest {
         user.youTube = com.gpetuhov.android.hive.utils.Constants.DUMMY_YOUTUBE
         assertEquals(true, user.hasYouTube)
     }
+
+    @Test
+    fun emptyWeblink() {
+        assertEquals(false, user.hasWeblink)
+        user.weblink = com.gpetuhov.android.hive.utils.Constants.DUMMY_WEBLINK
+        assertEquals(true, user.hasWeblink)
+    }
 }
