@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.interactors
 import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SaveFacebookInteractor
+import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
@@ -41,8 +42,8 @@ class SaveFacebookInteractorTest {
 
         var errorCounter = 0
 
-        val callback = object : SaveFacebookInteractor.Callback {
-            override fun onSaveFacebookError(errorMessage: String) {
+        val callback = object : SaveUserPropertyInteractor.Callback {
+            override fun onSaveError(errorMessage: String) {
                 errorCounter++
                 assertEquals(Constants.SAVE_FACEBOOK_ERROR, errorMessage)
             }

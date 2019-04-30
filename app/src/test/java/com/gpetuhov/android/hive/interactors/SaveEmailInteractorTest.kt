@@ -3,7 +3,7 @@ package com.gpetuhov.android.hive.interactors
 import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SaveEmailInteractor
-import com.gpetuhov.android.hive.domain.interactor.SavePhoneInteractor
+import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
@@ -42,8 +42,8 @@ class SaveEmailInteractorTest {
 
         var errorCounter = 0
 
-        val callback = object : SaveEmailInteractor.Callback {
-            override fun onSaveEmailError(errorMessage: String) {
+        val callback = object : SaveUserPropertyInteractor.Callback {
+            override fun onSaveError(errorMessage: String) {
                 errorCounter++
                 assertEquals(Constants.SAVE_EMAIL_ERROR, errorMessage)
             }

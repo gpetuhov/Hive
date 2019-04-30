@@ -3,7 +3,7 @@ package com.gpetuhov.android.hive.interactors
 import android.content.Context
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SaveDescriptionInteractor
-import com.gpetuhov.android.hive.domain.interactor.SaveUsernameInteractor
+import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
@@ -42,8 +42,8 @@ class SaveDescriptionInteractorTest {
 
         var errorCounter = 0
 
-        val callback = object : SaveDescriptionInteractor.Callback {
-            override fun onSaveDescriptionError(errorMessage: String) {
+        val callback = object : SaveUserPropertyInteractor.Callback {
+            override fun onSaveError(errorMessage: String) {
                 errorCounter++
                 assertEquals(Constants.SAVE_DESCRIPTION_ERROR, errorMessage)
             }
