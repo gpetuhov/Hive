@@ -1,16 +1,12 @@
 package com.gpetuhov.android.hive.domain.interactor
 
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.interactor.base.Interactor
+import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteractor
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import javax.inject.Inject
 
-class SaveTwitterInteractor(private val callback: Callback) : Interactor {
-
-    interface Callback {
-        fun onSaveTwitterError(errorMessage: String)
-    }
+class SaveTwitterInteractor(private val callback: Callback) : SaveUserPropertyInteractor() {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -23,7 +19,7 @@ class SaveTwitterInteractor(private val callback: Callback) : Interactor {
 
     // Do not call this directly!
     override fun execute() {
-        repo.saveUserTwitter(newTwitter) { callback.onSaveTwitterError(resultMessages.getSaveTwitterErrorMessage()) }
+        repo.saveUserTwitter(newTwitter) { callback.onSaveError(resultMessages.getSaveTwitterErrorMessage()) }
     }
 
     // Call this method to save new Twitter

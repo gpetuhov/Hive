@@ -22,16 +22,7 @@ class ProfileFragmentPresenter :
     MvpPresenter<ProfileFragmentView>(),
     SignOutInteractor.Callback,
     DeleteUserInteractor.Callback,
-    SaveUserPropertyInteractor.Callback,
-    SaveDescriptionInteractor.Callback,
-    DeleteUserPhotoInteractor.Callback,
-    SavePhoneInteractor.Callback,
-    SaveEmailInteractor.Callback,
-    SaveSkypeInteractor.Callback,
-    SaveFacebookInteractor.Callback,
-    SaveTwitterInteractor.Callback,
-    SaveInstagramInteractor.Callback,
-    SaveYouTubeInteractor.Callback {
+    SaveUserPropertyInteractor.Callback {
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
@@ -102,42 +93,6 @@ class ProfileFragmentPresenter :
     // === SaveUserPropertyInteractor.Callback ===
 
     override fun onSaveError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveDescriptionInteractor.Callback ===
-
-    override fun onSaveDescriptionError(errorMessage: String) = showToast(errorMessage)
-
-    // === DeleteUserPhotoInteractor.Callback ===
-
-    override fun onDeletePhotoError(errorMessage: String) = showToast(errorMessage)
-
-    // === SavePhoneInteractor.Callback ===
-
-    override fun onSavePhoneError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveEmailInteractor.Callback ===
-
-    override fun onSaveEmailError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveSkypeInteractor.Callback ===
-
-    override fun onSaveSkypeError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveFacebookInteractor.Callback ===
-
-    override fun onSaveFacebookError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveTwitterInteractor.Callback ===
-
-    override fun onSaveTwitterError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveInstagramInteractor.Callback ===
-
-    override fun onSaveInstagramError(errorMessage: String) = showToast(errorMessage)
-
-    // === SaveYouTubeInteractor.Callback ===
-
-    override fun onSaveYouTubeError(errorMessage: String) = showToast(errorMessage)
 
     // === Public methods ===
     // --- Sign out ---
