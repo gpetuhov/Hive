@@ -21,7 +21,7 @@ abstract class ProfileInformationModel : EpoxyModelWithHolder<ProfileInformation
         holder.residence.setOnClickListener { onResidenceClick() }
 
         holder.language.text = language
-        holder.language.setOnClickListener { onLanguageClick }
+        holder.language.setOnClickListener { onLanguageClick() }
     }
 }
 

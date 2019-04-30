@@ -55,6 +55,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var youTubeDialog: MaterialDialog? = null
     private var websiteDialog: MaterialDialog? = null
     private var residenceDialog: MaterialDialog? = null
+    private var languageDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -259,12 +260,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun dismissResidenceDialog() = residenceDialog?.dismiss() ?: Unit
 
     override fun showLanguageDialog() {
-        // TODO
+        // Prefill dialog with text provided by presenter
+        val editText = languageDialog?.getInputField()
+        editText?.setText(presenter.getLanguagePrefill())
+        editText?.setSelection(editText.text.length)
+        languageDialog?.show()
     }
 
-    override fun dismissLanguageDialog() {
-        // TODO
-    }
+    override fun dismissLanguageDialog() = languageDialog?.dismiss() ?: Unit
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
@@ -297,6 +300,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initYouTubeDialog()
         initWebsiteDialog()
         initResidenceDialog()
+        initLanguageDialog()
     }
 
     private fun getInputDialog(
@@ -529,6 +533,18 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         )
     }
 
+    private fun initLanguageDialog() {
+        languageDialog = getInputDialog(
+            titleId = R.string.language,
+            hintId = R.string.enter_language,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempLanguage(inputText) },
+            isInputValid = { true },
+            onPositive = { presenter.saveLanguage() },
+            onNegative = { presenter.dismissLanguageDialog() }
+        )
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -544,6 +560,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissYouTubeDialog()
         dismissWebsiteDialog()
         dismissResidenceDialog()
+        dismissLanguageDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
