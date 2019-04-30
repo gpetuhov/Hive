@@ -26,6 +26,7 @@ class TestRepository : Repo {
     var instagram = ""
     var youtube = ""
     var website = ""
+    var residence = ""
 
     override fun isForeground() = false
 
@@ -354,6 +355,16 @@ class TestRepository : Repo {
     override fun saveUserWebsite(newWebsite: String, onError: () -> Unit) {
         if (isSuccess) {
             website = newWebsite
+        } else {
+            onError()
+        }
+    }
+
+    override fun currentUserResidence(): String = residence
+
+    override fun saveUserResidence(newResidence: String, onError: () -> Unit) {
+        if (isSuccess) {
+            residence = newResidence
         } else {
             onError()
         }

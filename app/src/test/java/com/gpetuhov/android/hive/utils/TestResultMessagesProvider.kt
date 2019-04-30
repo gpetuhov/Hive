@@ -68,4 +68,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveYouTubeErrorMessage(): String = Constants.SAVE_YOUTUBE_ERROR
 
     override fun getSaveWebsiteErrorMessage(): String = Constants.SAVE_WEBSITE_ERROR
+
+    override fun getSaveResidenceErrorMessage(): String = Constants.SAVE_RESIDENCE_ERROR
 }
