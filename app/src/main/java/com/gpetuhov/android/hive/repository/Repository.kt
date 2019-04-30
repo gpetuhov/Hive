@@ -71,6 +71,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val INSTAGRAM_KEY = "instagram"
         private const val YOUTUBE_KEY = "youtube"
         private const val WEBSITE_KEY = "website"
+        private const val RESIDENCE_KEY = "residence"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1228,7 +1229,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             twitter = doc.getString(TWITTER_KEY) ?: "",
             instagram = doc.getString(INSTAGRAM_KEY) ?: "",
             youTube = doc.getString(YOUTUBE_KEY) ?: "",
-            website = doc.getString(WEBSITE_KEY) ?: ""
+            website = doc.getString(WEBSITE_KEY) ?: "",
+            residence = doc.getString(RESIDENCE_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
