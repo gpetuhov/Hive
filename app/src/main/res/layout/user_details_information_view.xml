@@ -24,4 +24,16 @@
             style="@style/basicTextStyle"
             tools:text="Place of residence"/>
 
+    <View
+            android:id="@+id/user_details_language_separator"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+
+    <TextView
+            android:id="@+id/user_details_language"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="Language"/>
+
 </LinearLayout>

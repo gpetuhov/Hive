@@ -92,6 +92,9 @@
     <string name="residence">Place of residence</string>
     <string name="enter_residence">Enter place of residence</string>
     <string name="residence_save_error">Error updating place of residence</string>
+    <string name="language">Language</string>
+    <string name="enter_language">Enter language</string>
+    <string name="language_save_error">Error updating language</string>
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>
 
