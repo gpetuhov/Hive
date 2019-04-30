@@ -50,7 +50,7 @@ class SaveFacebookInteractorTest {
         }
 
         val interactor = SaveFacebookInteractor(callback)
-        interactor.saveFacebook(Constants.DUMMY_FACEBOOK)
+        interactor.save(Constants.DUMMY_FACEBOOK)
 
         assertEquals(if (isSuccess) Constants.DUMMY_FACEBOOK else "", (repo as TestRepository).facebook)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

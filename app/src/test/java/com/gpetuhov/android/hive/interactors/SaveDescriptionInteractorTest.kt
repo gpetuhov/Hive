@@ -50,7 +50,7 @@ class SaveDescriptionInteractorTest {
         }
 
         val interactor = SaveDescriptionInteractor(callback)
-        interactor.saveDescription(Constants.DUMMY_DESCRIPTION)
+        interactor.save(Constants.DUMMY_DESCRIPTION)
 
         assertEquals(if (isSuccess) Constants.DUMMY_DESCRIPTION else "", (repo as TestRepository).description)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

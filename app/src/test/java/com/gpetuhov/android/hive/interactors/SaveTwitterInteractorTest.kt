@@ -50,7 +50,7 @@ class SaveTwitterInteractorTest {
         }
 
         val interactor = SaveTwitterInteractor(callback)
-        interactor.saveTwitter(Constants.DUMMY_TWITTER)
+        interactor.save(Constants.DUMMY_TWITTER)
 
         assertEquals(if (isSuccess) Constants.DUMMY_TWITTER else "", (repo as TestRepository).twitter)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

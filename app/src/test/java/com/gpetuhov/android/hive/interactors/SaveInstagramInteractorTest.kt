@@ -50,7 +50,7 @@ class SaveInstagramInteractorTest {
         }
 
         val interactor = SaveInstagramInteractor(callback)
-        interactor.saveInstagram(Constants.DUMMY_INSTAGRAM)
+        interactor.save(Constants.DUMMY_INSTAGRAM)
 
         assertEquals(if (isSuccess) Constants.DUMMY_INSTAGRAM else "", (repo as TestRepository).instagram)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

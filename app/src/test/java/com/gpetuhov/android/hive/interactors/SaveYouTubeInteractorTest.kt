@@ -50,7 +50,7 @@ class SaveYouTubeInteractorTest {
         }
 
         val interactor = SaveYouTubeInteractor(callback)
-        interactor.saveYouTube(Constants.DUMMY_YOUTUBE)
+        interactor.save(Constants.DUMMY_YOUTUBE)
 
         assertEquals(if (isSuccess) Constants.DUMMY_YOUTUBE else "", (repo as TestRepository).youtube)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

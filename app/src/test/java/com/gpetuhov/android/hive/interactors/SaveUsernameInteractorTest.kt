@@ -50,7 +50,7 @@ class SaveUsernameInteractorTest {
         }
 
         val interactor = SaveUsernameInteractor(callback)
-        interactor.saveUsername(Constants.DUMMY_USERNAME)
+        interactor.save(Constants.DUMMY_USERNAME)
 
         assertEquals(if (isSuccess) Constants.DUMMY_USERNAME else "", (repo as TestRepository).username)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

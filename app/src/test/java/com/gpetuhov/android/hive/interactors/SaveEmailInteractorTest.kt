@@ -50,7 +50,7 @@ class SaveEmailInteractorTest {
         }
 
         val interactor = SaveEmailInteractor(callback)
-        interactor.saveEmail(Constants.DUMMY_EMAIL)
+        interactor.save(Constants.DUMMY_EMAIL)
 
         assertEquals(if (isSuccess) Constants.DUMMY_EMAIL else "", (repo as TestRepository).email)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

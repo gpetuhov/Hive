@@ -50,7 +50,7 @@ class SaveSkypeInteractorTest {
         }
 
         val interactor = SaveSkypeInteractor(callback)
-        interactor.saveSkype(Constants.DUMMY_SKYPE)
+        interactor.save(Constants.DUMMY_SKYPE)
 
         assertEquals(if (isSuccess) Constants.DUMMY_SKYPE else "", (repo as TestRepository).skype)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)

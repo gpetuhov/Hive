@@ -50,7 +50,7 @@ class SavePhoneInteractorTest {
         }
 
         val interactor = SavePhoneInteractor(callback)
-        interactor.savePhone(Constants.DUMMY_PHONE)
+        interactor.save(Constants.DUMMY_PHONE)
 
         assertEquals(if (isSuccess) Constants.DUMMY_PHONE else "", (repo as TestRepository).phone)
         assertEquals(if (isSuccess) 0 else 1, errorCounter)
