@@ -139,95 +139,47 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
     }
 
     override fun openFacebook(facebook: String) {
-        val packageManager = activity?.packageManager
-        val url = "https://www.facebook.com/$facebook"
-        var uri = Uri.parse(url)
-        var intent = Intent(Intent.ACTION_VIEW, uri)
-
-        try {
-            val facebookPackageName = "com.facebook.katana"
-            val applicationInfo = packageManager?.getApplicationInfo(facebookPackageName, 0)
-            if (applicationInfo?.enabled == true) {
-                // Facebook application installed. Change url to be opened in Facebook app
-                uri = Uri.parse("fb://facewebmodal/f?href=$url")
-                intent = Intent(Intent.ACTION_VIEW, uri)
-                intent.setPackage(facebookPackageName)
-            }
-        } catch (ignored: PackageManager.NameNotFoundException) {
-            // Do nothing. Facebook application not installed. Url will be opened in browser
-        }
-
-        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        }
+        val webUrl = "https://www.facebook.com/$facebook"
+        val appUri = "fb://facewebmodal/f?href=$webUrl"
+        openSocialAccount("com.facebook.katana", webUrl, appUri)
     }
 
-    // TODO: refactor this with openFacebook
     override fun openTwitter(twitter: String) {
-        val packageManager = activity?.packageManager
-        val url = "https://twitter.com/$twitter"
-        var uri = Uri.parse(url)
-        var intent = Intent(Intent.ACTION_VIEW, uri)
-
-        try {
-            val twitterPackageName = "com.twitter.android"
-            val applicationInfo = packageManager?.getApplicationInfo(twitterPackageName, 0)
-            if (applicationInfo?.enabled == true) {
-                // Twitter application installed. Change url to be opened in Twitter app
-                uri = Uri.parse("twitter://user?screen_name=$twitter")
-                intent = Intent(Intent.ACTION_VIEW, uri)
-                intent.setPackage(twitterPackageName)
-            }
-        } catch (ignored: PackageManager.NameNotFoundException) {
-            // Do nothing. Twitter application not installed. Url will be opened in browser
-        }
-
-        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        }
+        openSocialAccount(
+            "com.twitter.android",
+            "https://twitter.com/$twitter",
+            "twitter://user?screen_name=$twitter"
+        )
     }
 
-    // TODO: refactor this with openFacebook
     override fun openInstagram(instagram: String) {
+        openSocialAccount(
+            "com.instagram.android",
+            "http://instagram.com/$instagram",
+            "http://instagram.com/_u/$instagram"
+        )
+    }
+
+    override fun openYouTube(youTube: String) {
+        val url = "https://www.youtube.com/user/$youTube"
+        openSocialAccount("com.google.android.youtube", url, url)
+    }
+
+    private fun openSocialAccount(appPackageName: String, webUrl: String, appUri: String) {
         val packageManager = activity?.packageManager
-        val url = "http://instagram.com/$instagram"
-        var uri = Uri.parse(url)
+        var uri = Uri.parse(webUrl)
         var intent = Intent(Intent.ACTION_VIEW, uri)
 
         try {
-            val instagramPackageName = "com.instagram.android"
-            val applicationInfo = packageManager?.getApplicationInfo(instagramPackageName, 0)
+            val applicationInfo = packageManager?.getApplicationInfo(appPackageName, 0)
             if (applicationInfo?.enabled == true) {
-                // Instagram application installed. Change url to be opened in Instagram app
-                uri = Uri.parse("http://instagram.com/_u/$instagram")
+                // Social application installed. Change url to be opened in the app
+                uri = Uri.parse(appUri)
                 intent = Intent(Intent.ACTION_VIEW, uri)
-                intent.setPackage(instagramPackageName)
+                intent.setPackage(appPackageName)
             }
         } catch (ignored: PackageManager.NameNotFoundException) {
-            // Do nothing. Instagram application not installed. Url will be opened in browser
-        }
-
-        if (packageManager != null && intent.resolveActivity(packageManager) != null) {
-            startActivity(intent)
-        }
-    }
-
-    // TODO: refactor this with openFacebook
-    override fun openYouTube(youTube: String) {
-        val packageManager = activity?.packageManager
-        val url = "https://www.youtube.com/user/$youTube"
-        val uri = Uri.parse(url)
-        val intent = Intent(Intent.ACTION_VIEW, uri)
-
-        try {
-            val youTubePackageName = "com.google.android.youtube"
-            val applicationInfo = packageManager?.getApplicationInfo(youTubePackageName, 0)
-            if (applicationInfo?.enabled == true) {
-                // YoutTube application installed. Set intent package to be opened in YouTube app
-                intent.setPackage(youTubePackageName)
-            }
-        } catch (ignored: PackageManager.NameNotFoundException) {
-            // Do nothing. YouTube application not installed. Url will be opened in browser
+            // Do nothing. Social application not installed. Url will be opened in browser
         }
 
         if (packageManager != null && intent.resolveActivity(packageManager) != null) {
