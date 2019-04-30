@@ -111,6 +111,12 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             val residence = "$residencePrefix: ${user?.residence ?: ""}"
             residence(if (hasResidence) residence else context.getString(R.string.enter_residence))
             onResidenceClick { presenter.showResidenceDialog() }
+
+            val hasLanguage= user?.hasLanguage ?: false
+            val languagePrefix = context.getString(R.string.language)
+            val language = "$languagePrefix: ${user?.language ?: ""}"
+            language(if (hasLanguage) language else context.getString(R.string.enter_language))
+            onLanguageClick { presenter.showLanguageDialog() }
         }
 
         profileOffersHeader {

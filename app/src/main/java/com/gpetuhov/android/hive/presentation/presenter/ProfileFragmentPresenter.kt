@@ -409,6 +409,12 @@ class ProfileFragmentPresenter :
         viewState.dismissResidenceDialog()
     }
 
+    // --- Change language ---
+
+    fun showLanguageDialog() {
+        // TODO: implement
+    }
+
     // --- Open photos ---
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
