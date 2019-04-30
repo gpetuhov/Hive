@@ -127,4 +127,11 @@ class UserTest {
         user.website = com.gpetuhov.android.hive.utils.Constants.DUMMY_WEBSITE
         assertEquals(true, user.hasWebsite)
     }
+
+    @Test
+    fun emptyResidence() {
+        assertEquals(false, user.hasResidence)
+        user.residence = com.gpetuhov.android.hive.utils.Constants.DUMMY_RESIDENCE
+        assertEquals(true, user.hasResidence)
+    }
 }

@@ -75,6 +75,9 @@ class Constants {
         const val DUMMY_WEBSITE = "mysite.com"
         const val SAVE_WEBSITE_ERROR = "Save website error"
 
+        const val DUMMY_RESIDENCE = "New York"
+        const val SAVE_RESIDENCE_ERROR = "Save residence error"
+
         val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 
         private fun getDummyOffer(): Offer {
