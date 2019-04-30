@@ -39,6 +39,7 @@ class ProfileFragmentPresenter :
     private val saveTwitterInteractor = SaveTwitterInteractor(this)
     private val saveInstagramInteractor = SaveInstagramInteractor(this)
     private val saveYouTubeInteractor = SaveYouTubeInteractor(this)
+    private val saveWebsiteInteractor = SaveWebsiteInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -69,6 +70,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in YouTube dialog
     private var tempYouTube = ""
+
+    // Keeps current text entered in website dialog
+    private var tempWebsite = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -361,8 +365,23 @@ class ProfileFragmentPresenter :
 
     // --- Change website ---
 
-    fun showWebsiteDialog() {
-        // TODO: implement
+    fun showWebsiteDialog() = viewState.showWebsiteDialog()
+
+    // Prefill website dialog with currently entered text or current value
+    fun getwebsitePrefill() = if (tempWebsite != "") tempWebsite else repo.currentUserWebsite()
+
+    fun updateTempWebsite(newTempWebsite: String) {
+        tempWebsite = newTempWebsite
+    }
+
+    fun saveWebsite() {
+        saveWebsiteInteractor.save(tempWebsite)
+        dismissWebsiteDialog()
+    }
+
+    fun dismissWebsiteDialog() {
+        tempWebsite = ""
+        viewState.dismissWebsiteDialog()
     }
 
     // --- Open photos ---

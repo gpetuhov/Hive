@@ -138,6 +138,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissYouTubeDialog()
 
+    // === Change website ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showWebsiteDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissWebsiteDialog()
+
     // === Open privacy policy ===
 
     @StateStrategyType(SkipStrategy::class)

@@ -235,6 +235,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissYouTubeDialog() = youTubeDialog?.dismiss() ?: Unit
 
+    override fun showWebsiteDialog() {
+        // TODO
+    }
+
+    override fun dismissWebsiteDialog() {
+        // TODO
+    }
+
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
         findNavController().navigate(action)
