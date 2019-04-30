@@ -134,4 +134,11 @@ class UserTest {
         user.residence = com.gpetuhov.android.hive.utils.Constants.DUMMY_RESIDENCE
         assertEquals(true, user.hasResidence)
     }
+
+    @Test
+    fun emptyLanguage() {
+        assertEquals(false, user.hasLanguage)
+        user.language = com.gpetuhov.android.hive.utils.Constants.DUMMY_LANGUAGE
+        assertEquals(true, user.hasLanguage)
+    }
 }
