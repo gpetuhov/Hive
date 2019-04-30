@@ -54,6 +54,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var instagramDialog: MaterialDialog? = null
     private var youTubeDialog: MaterialDialog? = null
     private var websiteDialog: MaterialDialog? = null
+    private var residenceDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -248,12 +249,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun dismissWebsiteDialog() = websiteDialog?.dismiss() ?: Unit
 
     override fun showResidenceDialog() {
-        // TODO
+        // Prefill dialog with text provided by presenter
+        val editText = residenceDialog?.getInputField()
+        editText?.setText(presenter.getResidencePrefill())
+        editText?.setSelection(editText.text.length)
+        residenceDialog?.show()
     }
 
-    override fun dismissResidenceDialog() {
-        // TODO
-    }
+    override fun dismissResidenceDialog() = residenceDialog?.dismiss() ?: Unit
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
@@ -285,6 +288,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initInstagramDialog()
         initYouTubeDialog()
         initWebsiteDialog()
+        initResidenceDialog()
     }
 
     private fun getInputDialog(
@@ -505,6 +509,18 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         return website == "" || (startsWithHttp && Patterns.WEB_URL.matcher(website).matches())
     }
 
+    private fun initResidenceDialog() {
+        residenceDialog = getInputDialog(
+            titleId = R.string.residence,
+            hintId = R.string.enter_residence,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempResidence(inputText) },
+            isInputValid = { true },
+            onPositive = { presenter.saveResidence() },
+            onNegative = { presenter.dismissResidenceDialog() }
+        )
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -519,6 +535,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissInstagramDialog()
         dismissYouTubeDialog()
         dismissWebsiteDialog()
+        dismissResidenceDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
