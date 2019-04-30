@@ -52,6 +52,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var twitterDialog: MaterialDialog? = null
     private var instagramDialog: MaterialDialog? = null
     private var youTubeDialog: MaterialDialog? = null
+    private var websiteDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -236,12 +237,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun dismissYouTubeDialog() = youTubeDialog?.dismiss() ?: Unit
 
     override fun showWebsiteDialog() {
-        // TODO
+        // Prefill dialog with text provided by presenter
+        val editText = websiteDialog?.getInputField()
+        editText?.setText(presenter.getwebsitePrefill())
+        editText?.setSelection(editText.text.length)
+        websiteDialog?.show()
     }
 
-    override fun dismissWebsiteDialog() {
-        // TODO
-    }
+    override fun dismissWebsiteDialog() = websiteDialog?.dismiss() ?: Unit
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
@@ -272,6 +275,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initTwitterDialog()
         initInstagramDialog()
         initYouTubeDialog()
+        initWebsiteDialog()
     }
 
     private fun getInputDialog(
@@ -475,6 +479,18 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         )
     }
 
+    private fun initWebsiteDialog() {
+        websiteDialog = getInputDialog(
+            titleId = R.string.website,
+            hintId = R.string.enter_website,
+            errorMessageId = R.string.username_not_valid,   // TODO: change
+            onInputChange = { inputText -> presenter.updateTempWebsite(inputText) },
+            isInputValid = { inputText -> true },   // TODO: change
+            onPositive = { presenter.saveWebsite() },
+            onNegative = { presenter.dismissWebsiteDialog() }
+        )
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -488,6 +504,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissTwitterDialog()
         dismissInstagramDialog()
         dismissYouTubeDialog()
+        dismissWebsiteDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
