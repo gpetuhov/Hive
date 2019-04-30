@@ -1,58 +1,28 @@
 package com.gpetuhov.android.hive.interactors
 
-import android.content.Context
-import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SaveInstagramInteractor
-import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteractor
-import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.interactors.base.SaveUserPropertyInteractorTest
 import com.gpetuhov.android.hive.utils.Constants
 import com.gpetuhov.android.hive.utils.TestRepository
-import com.gpetuhov.android.hive.utils.dagger.components.DaggerTestAppComponent
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import javax.inject.Inject
 
-class SaveInstagramInteractorTest {
-
-    @Inject lateinit var context: Context
-    @Inject lateinit var repo: Repo
+class SaveInstagramInteractorTest : SaveUserPropertyInteractorTest() {
 
     @Before
-    fun init() {
-        val testAppComponent = DaggerTestAppComponent.builder().build()
-        testAppComponent.inject(this)
-
-        HiveApp.application = context as HiveApp
-        HiveApp.appComponent = testAppComponent
-    }
+    fun init() = initTest { it.inject(this) }
 
     @Test
-    fun saveInstagramSuccess() {
-        testSaveInstagramInteractor(true)
-    }
+    fun saveInstagramSuccess() = testSaveInstagramInteractor(true)
 
     @Test
-    fun saveInstagramError() {
-        testSaveInstagramInteractor(false)
-    }
+    fun saveInstagramError() = testSaveInstagramInteractor(false)
 
     private fun testSaveInstagramInteractor(isSuccess: Boolean) {
-        (repo as TestRepository).isSuccess = isSuccess
-
-        var errorCounter = 0
-
-        val callback = object : SaveUserPropertyInteractor.Callback {
-            override fun onSaveError(errorMessage: String) {
-                errorCounter++
-                assertEquals(Constants.SAVE_INSTAGRAM_ERROR, errorMessage)
-            }
-        }
-
-        val interactor = SaveInstagramInteractor(callback)
-        interactor.save(Constants.DUMMY_INSTAGRAM)
-
-        assertEquals(if (isSuccess) Constants.DUMMY_INSTAGRAM else "", (repo as TestRepository).instagram)
-        assertEquals(if (isSuccess) 0 else 1, errorCounter)
+        testInteractor(
+            SaveInstagramInteractor(getCallback(Constants.SAVE_INSTAGRAM_ERROR)),
+            Constants.DUMMY_INSTAGRAM,
+            isSuccess
+        ) { (repo as TestRepository).instagram }
     }
 }
