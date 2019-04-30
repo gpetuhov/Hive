@@ -240,12 +240,20 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun showWebsiteDialog() {
         // Prefill dialog with text provided by presenter
         val editText = websiteDialog?.getInputField()
-        editText?.setText(presenter.getwebsitePrefill())
+        editText?.setText(presenter.getWebsitePrefill())
         editText?.setSelection(editText.text.length)
         websiteDialog?.show()
     }
 
     override fun dismissWebsiteDialog() = websiteDialog?.dismiss() ?: Unit
+
+    override fun showResidenceDialog() {
+        // TODO
+    }
+
+    override fun dismissResidenceDialog() {
+        // TODO
+    }
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()

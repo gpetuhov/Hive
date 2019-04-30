@@ -146,6 +146,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissWebsiteDialog()
 
+    // === Change residence ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showResidenceDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissResidenceDialog()
+
     // === Open privacy policy ===
 
     @StateStrategyType(SkipStrategy::class)

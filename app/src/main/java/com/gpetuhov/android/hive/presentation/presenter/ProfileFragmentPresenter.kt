@@ -40,6 +40,7 @@ class ProfileFragmentPresenter :
     private val saveInstagramInteractor = SaveInstagramInteractor(this)
     private val saveYouTubeInteractor = SaveYouTubeInteractor(this)
     private val saveWebsiteInteractor = SaveWebsiteInteractor(this)
+    private val saveResidenceInteractor = SaveResidenceInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -73,6 +74,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in website dialog
     private var tempWebsite = ""
+
+    // Keeps current text entered in residence dialog
+    private var tempResidence = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -368,7 +372,7 @@ class ProfileFragmentPresenter :
     fun showWebsiteDialog() = viewState.showWebsiteDialog()
 
     // Prefill website dialog with currently entered text or current value
-    fun getwebsitePrefill() = if (tempWebsite != "") tempWebsite else repo.currentUserWebsite()
+    fun getWebsitePrefill() = if (tempWebsite != "") tempWebsite else repo.currentUserWebsite()
 
     fun updateTempWebsite(newTempWebsite: String) {
         tempWebsite = newTempWebsite
@@ -386,8 +390,23 @@ class ProfileFragmentPresenter :
 
     // --- Change residence ---
 
-    fun showResidenceDialog() {
-        // TODO: implement
+    fun showResidenceDialog() = viewState.showResidenceDialog()
+
+    // Prefill residence dialog with currently entered text or current value
+    fun getResidencePrefill() = if (tempResidence != "") tempResidence else repo.currentUserResidence()
+
+    fun updateTempResidence(newTempResidence: String) {
+        tempResidence = newTempResidence
+    }
+
+    fun saveResidence() {
+        saveResidenceInteractor.save(tempResidence)
+        dismissResidenceDialog()
+    }
+
+    fun dismissResidenceDialog() {
+        tempResidence = ""
+        viewState.dismissResidenceDialog()
     }
 
     // --- Open photos ---
