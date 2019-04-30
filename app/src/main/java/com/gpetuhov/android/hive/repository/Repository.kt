@@ -72,6 +72,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val YOUTUBE_KEY = "youtube"
         private const val WEBSITE_KEY = "website"
         private const val RESIDENCE_KEY = "residence"
+        private const val LANGUAGE_KEY = "language"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -327,6 +328,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserResidence() = currentUser.value?.residence ?: ""
 
+    override fun currentUserLanguage() = currentUser.value?.language ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -418,6 +421,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[RESIDENCE_KEY] = newResidence
 
         // Save user residence
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserLanguage(newLanguage: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[LANGUAGE_KEY] = newLanguage
+
+        // Save user language
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
@@ -1240,7 +1251,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             instagram = doc.getString(INSTAGRAM_KEY) ?: "",
             youTube = doc.getString(YOUTUBE_KEY) ?: "",
             website = doc.getString(WEBSITE_KEY) ?: "",
-            residence = doc.getString(RESIDENCE_KEY) ?: ""
+            residence = doc.getString(RESIDENCE_KEY) ?: "",
+            language = doc.getString(LANGUAGE_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)

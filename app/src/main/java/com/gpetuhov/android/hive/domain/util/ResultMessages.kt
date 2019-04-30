@@ -35,4 +35,5 @@ interface ResultMessages {
     fun getSaveYouTubeErrorMessage(): String
     fun getSaveWebsiteErrorMessage(): String
     fun getSaveResidenceErrorMessage(): String
+    fun getSaveLanguageErrorMessage(): String
 }

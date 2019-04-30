@@ -82,5 +82,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveResidenceErrorMessage(): String = getString(R.string.residence_save_error)
 
+    override fun getSaveLanguageErrorMessage(): String = getString(R.string.language_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }
