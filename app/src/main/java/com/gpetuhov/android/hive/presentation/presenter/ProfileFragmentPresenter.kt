@@ -144,7 +144,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveUsername() {
-        saveUsernameInteractor.saveUsername(tempUsername)
+        saveUsernameInteractor.save(tempUsername)
         dismissUsernameDialog()
     }
 
@@ -165,7 +165,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveDescription() {
-        saveDescriptionInteractor.saveDescription(tempDescription)
+        saveDescriptionInteractor.save(tempDescription)
         dismissDescriptionDialog()
     }
 
@@ -220,7 +220,7 @@ class ProfileFragmentPresenter :
     }
 
     fun savePhone() {
-        savePhoneInteractor.savePhone(tempPhone)
+        savePhoneInteractor.save(tempPhone)
         dismissPhoneDialog()
     }
 
@@ -241,7 +241,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveEmail() {
-        saveEmailInteractor.saveEmail(tempEmail)
+        saveEmailInteractor.save(tempEmail)
         dismissEmailDialog()
     }
 
@@ -252,7 +252,7 @@ class ProfileFragmentPresenter :
 
     // === Use registration email ===
 
-    fun saveRegistrationEmailAsVisibleEmail() = saveEmailInteractor.saveEmail(repo.currentUserEmail())
+    fun saveRegistrationEmailAsVisibleEmail() = saveEmailInteractor.save(repo.currentUserEmail())
 
     // --- Change Skype ---
 
@@ -266,7 +266,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveSkype() {
-        saveSkypeInteractor.saveSkype(tempSkype)
+        saveSkypeInteractor.save(tempSkype)
         dismissSkypeDialog()
     }
 
@@ -287,7 +287,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveFacebook() {
-        saveFacebookInteractor.saveFacebook(tempFacebook)
+        saveFacebookInteractor.save(tempFacebook)
         dismissFacebookDialog()
     }
 
@@ -308,7 +308,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveTwitter() {
-        saveTwitterInteractor.saveTwitter(tempTwitter)
+        saveTwitterInteractor.save(tempTwitter)
         dismissTwitterDialog()
     }
 
@@ -329,7 +329,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveInstagram() {
-        saveInstagramInteractor.saveInstagram(tempInstagram)
+        saveInstagramInteractor.save(tempInstagram)
         dismissInstagramDialog()
     }
 
@@ -350,7 +350,7 @@ class ProfileFragmentPresenter :
     }
 
     fun saveYouTube() {
-        saveYouTubeInteractor.saveYouTube(tempYouTube)
+        saveYouTubeInteractor.save(tempYouTube)
         dismissYouTubeDialog()
     }
 

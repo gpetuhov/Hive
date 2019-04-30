@@ -2,14 +2,8 @@ package com.gpetuhov.android.hive.domain.interactor
 
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteractor
-import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.domain.util.ResultMessages
-import javax.inject.Inject
 
 class DeleteUserPhotoInteractor(private val callback: Callback) : SaveUserPropertyInteractor() {
-
-    @Inject lateinit var repo: Repo
-    @Inject lateinit var resultMessages: ResultMessages
 
     private var photoUid = ""
 
