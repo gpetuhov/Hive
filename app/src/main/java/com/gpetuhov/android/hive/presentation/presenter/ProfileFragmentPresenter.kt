@@ -384,6 +384,12 @@ class ProfileFragmentPresenter :
         viewState.dismissWebsiteDialog()
     }
 
+    // --- Change residence ---
+
+    fun showResidenceDialog() {
+        // TODO: implement
+    }
+
     // --- Open photos ---
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)

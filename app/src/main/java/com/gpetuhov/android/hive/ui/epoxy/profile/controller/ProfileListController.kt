@@ -103,6 +103,16 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             onDescriptionClick { presenter.showDescriptionDialog() }
         }
 
+        profileInformation {
+            id("profile_information")
+
+            val hasResidence= user?.hasResidence ?: false
+            val residencePrefix = context.getString(R.string.residence)
+            val residence = "$residencePrefix: ${user?.residence ?: ""}"
+            residence(if (hasResidence) residence else context.getString(R.string.enter_residence))
+            onResidenceClick { presenter.showResidenceDialog() }
+        }
+
         profileOffersHeader {
             id("profile_offers_header")
 
