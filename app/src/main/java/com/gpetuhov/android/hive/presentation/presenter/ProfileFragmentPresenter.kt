@@ -41,6 +41,7 @@ class ProfileFragmentPresenter :
     private val saveYouTubeInteractor = SaveYouTubeInteractor(this)
     private val saveWebsiteInteractor = SaveWebsiteInteractor(this)
     private val saveResidenceInteractor = SaveResidenceInteractor(this)
+    private val saveLanguageInteractor = SaveLanguageInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -77,6 +78,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in residence dialog
     private var tempResidence = ""
+
+    // Keeps current text entered in language dialog
+    private var tempLanguage = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -411,8 +415,23 @@ class ProfileFragmentPresenter :
 
     // --- Change language ---
 
-    fun showLanguageDialog() {
-        // TODO: implement
+    fun showLanguageDialog() = viewState.showLanguageDialog()
+
+    // Prefill language dialog with currently entered text or current value
+    fun getLanguagePrefill() = if (tempLanguage != "") tempLanguage else repo.currentUserLanguage()
+
+    fun updateTempLanguage(newTempLanguage: String) {
+        tempLanguage = newTempLanguage
+    }
+
+    fun saveLanguage() {
+        saveLanguageInteractor.save(tempLanguage)
+        dismissLanguageDialog()
+    }
+
+    fun dismissLanguageDialog() {
+        tempLanguage = ""
+        viewState.dismissLanguageDialog()
     }
 
     // --- Open photos ---

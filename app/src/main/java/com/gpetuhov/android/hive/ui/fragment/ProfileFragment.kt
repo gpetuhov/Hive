@@ -258,6 +258,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissResidenceDialog() = residenceDialog?.dismiss() ?: Unit
 
+    override fun showLanguageDialog() {
+        // TODO
+    }
+
+    override fun dismissLanguageDialog() {
+        // TODO
+    }
+
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
         findNavController().navigate(action)
