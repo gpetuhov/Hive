@@ -88,6 +88,7 @@
     <string name="website">Адрес вебсайта</string>
     <string name="enter_website">Введите адрес вебсайта</string>
     <string name="website_save_error">Ошибка обновления адреса вебсайта</string>
+    <string name="website_not_valid">Неверный адрес вебсайта</string>
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 

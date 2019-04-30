@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Patterns
 import android.util.Patterns.PHONE
 import android.view.LayoutInflater
 import android.view.View
@@ -483,12 +484,17 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         websiteDialog = getInputDialog(
             titleId = R.string.website,
             hintId = R.string.enter_website,
-            errorMessageId = R.string.username_not_valid,   // TODO: change
+            errorMessageId = R.string.website_not_valid,
             onInputChange = { inputText -> presenter.updateTempWebsite(inputText) },
-            isInputValid = { inputText -> true },   // TODO: change
+            isInputValid = { inputText -> isWebsiteValid(inputText) },
             onPositive = { presenter.saveWebsite() },
             onNegative = { presenter.dismissWebsiteDialog() }
         )
+    }
+
+    private fun isWebsiteValid(website: String): Boolean {
+        val startsWithHttp = website.startsWith("http://") || website.startsWith("https://")
+        return website == "" || (startsWithHttp && Patterns.WEB_URL.matcher(website).matches())
     }
 
     private fun dismissDialogs() {
