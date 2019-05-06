@@ -261,6 +261,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
                 .cancelable(false)
                 .positiveButton(R.string.yes) { presenter.saveOfferFromQuitDialog() }
                 .negativeButton(R.string.no) { presenter.quitOfferUpdate() }
+                .neutralButton(R.string.cancel) { presenter.quitOfferUpdateCancel() }
         }
     }
 

@@ -170,6 +170,7 @@
     <string name="no_reviews2">Нет отзывов</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="cancel">Отмена</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Предоставлен</string>
