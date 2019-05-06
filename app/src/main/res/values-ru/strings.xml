@@ -158,8 +158,8 @@
     <string name="photo_list_empty_error">Пожалуйста, добавьте хотя бы одно фото</string>
     <string name="prompt_delete_offer">Вы действительно хотите удалить этот оффер?</string>
     <string name="delete_offer_error">Ошибка удаления оффера</string>
-    <string name="quit">Выйти без сохранения</string>
-    <string name="quit_offer_update_prompt">Отменить обновление оффера? Все изменения будут потеряны</string>
+    <string name="quit">Сохранение изменений</string>
+    <string name="quit_offer_update_prompt">Вы хотите сохранить изменения?</string>
     <string name="offer_is_active">Оффер активен</string>
     <string name="max_active_offers">Вы достигли максимального количества активных офферов</string>
     <string name="free">Бесплатно</string>
@@ -168,6 +168,8 @@
     <string name="offer_price">Стоимость оффера</string>
     <string name="enter_price">Введите стоимость оффера</string>
     <string name="no_reviews2">Нет отзывов</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Предоставлен</string>

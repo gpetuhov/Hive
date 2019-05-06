@@ -208,7 +208,10 @@ class UpdateOfferFragmentPresenter :
         navigateUp()
     }
 
-    fun quitOfferUpdateCancel() = viewState.dismissQuitOfferUpdateDialog()
+    fun saveOfferFromQuitDialog() {
+        viewState.dismissQuitOfferUpdateDialog()
+        saveOffer()
+    }
 
     // --- Offer is active ---
 

@@ -158,8 +158,8 @@
     <string name="photo_list_empty_error">Please, add at least one photo</string>
     <string name="prompt_delete_offer">Do you really want to delete this offer?</string>
     <string name="delete_offer_error">Error deleting offer</string>
-    <string name="quit">Quit without saving</string>
-    <string name="quit_offer_update_prompt">Quit updating offer? All changes will be lost</string>
+    <string name="quit">Save changes</string>
+    <string name="quit_offer_update_prompt">Do you want to save changes?</string>
     <string name="offer_is_active">Offer is active</string>
     <string name="max_active_offers">You have reached maximum number of active offers</string>
     <string name="free">Free</string>
@@ -168,6 +168,8 @@
     <string name="offer_price">Offer price</string>
     <string name="enter_price">Enter offer price</string>
     <string name="no_reviews2">No reviews</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Provided by</string>
