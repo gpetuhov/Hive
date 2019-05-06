@@ -56,6 +56,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var websiteDialog: MaterialDialog? = null
     private var residenceDialog: MaterialDialog? = null
     private var languageDialog: MaterialDialog? = null
+    private var educationDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -270,12 +271,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     override fun dismissLanguageDialog() = languageDialog?.dismiss() ?: Unit
 
     override fun showEducationDialog() {
-        // TODO
+        // Prefill dialog with text provided by presenter
+        val editText = educationDialog?.getInputField()
+        editText?.setText(presenter.getEducationPrefill())
+        editText?.setSelection(editText.text.length)
+        educationDialog?.show()
     }
 
-    override fun dismissEducationDialog() {
-        // TODO
-    }
+    override fun dismissEducationDialog() = educationDialog?.dismiss() ?: Unit
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
@@ -309,6 +312,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initWebsiteDialog()
         initResidenceDialog()
         initLanguageDialog()
+        initEducationDialog()
     }
 
     private fun getInputDialog(
@@ -553,6 +557,18 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         )
     }
 
+    private fun initEducationDialog() {
+        educationDialog = getInputDialog(
+            titleId = R.string.education,
+            hintId = R.string.enter_education,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempEducation(inputText) },
+            isInputValid = { true },
+            onPositive = { presenter.saveEducation() },
+            onNegative = { presenter.dismissEducationDialog() }
+        )
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -569,6 +585,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissWebsiteDialog()
         dismissResidenceDialog()
         dismissLanguageDialog()
+        dismissEducationDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
