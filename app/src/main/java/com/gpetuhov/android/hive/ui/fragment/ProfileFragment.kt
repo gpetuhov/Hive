@@ -57,6 +57,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var residenceDialog: MaterialDialog? = null
     private var languageDialog: MaterialDialog? = null
     private var educationDialog: MaterialDialog? = null
+    private var workDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -202,13 +203,9 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissEducationDialog() = educationDialog?.dismiss() ?: Unit
 
-    override fun showWorkDialog() {
-        // TODO
-    }
+    override fun showWorkDialog() = showDialog(workDialog, presenter.getWorkPrefill())
 
-    override fun dismissWorkDialog() {
-        // TODO
-    }
+    override fun dismissWorkDialog() = workDialog?.dismiss() ?: Unit
 
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
@@ -243,6 +240,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initResidenceDialog()
         initLanguageDialog()
         initEducationDialog()
+        initWorkDialog()
     }
 
     private fun getInputDialog(
@@ -499,6 +497,18 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         )
     }
 
+    private fun initWorkDialog() {
+        workDialog = getInputDialog(
+            titleId = R.string.work,
+            hintId = R.string.enter_work,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempWork(inputText) },
+            isInputValid = { true },
+            onPositive = { presenter.saveWork() },
+            onNegative = { presenter.dismissWorkDialog() }
+        )
+    }
+
     private fun showDialog(dialog: MaterialDialog?, prefill: String) {
         // Prefill dialog corresponding prefill text (provided by presenter)
         val editText = dialog?.getInputField()
@@ -524,6 +534,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissResidenceDialog()
         dismissLanguageDialog()
         dismissEducationDialog()
+        dismissWorkDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
