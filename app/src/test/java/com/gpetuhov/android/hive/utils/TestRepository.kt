@@ -29,6 +29,7 @@ class TestRepository : Repo {
     var residence = ""
     var language = ""
     var education = ""
+    var work = ""
 
     override fun isForeground() = false
 
@@ -387,6 +388,16 @@ class TestRepository : Repo {
     override fun saveUserEducation(newEducation: String, onError: () -> Unit) {
         if (isSuccess) {
             education = newEducation
+        } else {
+            onError()
+        }
+    }
+
+    override fun currentUserWork(): String = work
+
+    override fun saveUserWork(newWork: String, onError: () -> Unit) {
+        if (isSuccess) {
+            work = newWork
         } else {
             onError()
         }

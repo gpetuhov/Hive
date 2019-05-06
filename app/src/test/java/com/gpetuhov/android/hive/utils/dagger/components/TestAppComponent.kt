@@ -36,4 +36,5 @@ interface TestAppComponent : AppComponent {
     fun inject(saveResidenceInteractorTest: SaveResidenceInteractorTest)
     fun inject(saveLanguageInteractorTest: SaveLanguageInteractorTest)
     fun inject(saveEducationInteractorTest: SaveEducationInteractorTest)
+    fun inject(saveWorkInteractorTest: SaveWorkInteractorTest)
 }
