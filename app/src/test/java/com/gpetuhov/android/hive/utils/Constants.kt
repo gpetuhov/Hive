@@ -81,6 +81,9 @@ class Constants {
         const val DUMMY_LANGUAGE = "English"
         const val SAVE_LANGUAGE_ERROR = "Save language error"
 
+        const val DUMMY_EDUCATION = "MIT"
+        const val SAVE_EDUCATION_ERROR = "Save education error"
+
         val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 
         private fun getDummyOffer(): Offer {
