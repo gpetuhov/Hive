@@ -75,6 +75,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val LANGUAGE_KEY = "language"
         private const val EDUCATION_KEY = "education"
         private const val WORK_KEY = "work"
+        private const val INTERESTS_KEY = "interests"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -336,6 +337,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserWork() = currentUser.value?.work ?: ""
 
+    override fun currentUserInterests() = currentUser.value?.interests ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -451,6 +454,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[WORK_KEY] = newWork
 
         // Save user work
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserInterests(newInterests: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[INTERESTS_KEY] = newInterests
+
+        // Save user interests
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
@@ -1276,7 +1287,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             residence = doc.getString(RESIDENCE_KEY) ?: "",
             language = doc.getString(LANGUAGE_KEY) ?: "",
             education = doc.getString(EDUCATION_KEY) ?: "",
-            work = doc.getString(WORK_KEY) ?: ""
+            work = doc.getString(WORK_KEY) ?: "",
+            interests = doc.getString(INTERESTS_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)

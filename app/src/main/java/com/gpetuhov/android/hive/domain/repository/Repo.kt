@@ -41,6 +41,7 @@ interface Repo {
     fun currentUserLanguage(): String
     fun currentUserEducation(): String
     fun currentUserWork(): String
+    fun currentUserInterests(): String
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
     fun saveUserDescription(newDescription: String, onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)
@@ -56,6 +57,7 @@ interface Repo {
     fun saveUserLanguage(newLanguage: String, onError: () -> Unit)
     fun saveUserEducation(newEducation: String, onError: () -> Unit)
     fun saveUserWork(newWork: String, onError: () -> Unit)
+    fun saveUserInterests(newInterests: String, onError: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
     fun startGettingSecondUserUpdates(uid: String)
     fun stopGettingSecondUserUpdates()

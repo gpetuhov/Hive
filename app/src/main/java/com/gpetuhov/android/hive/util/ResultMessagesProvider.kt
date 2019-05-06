@@ -88,5 +88,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveWorkErrorMessage(): String = getString(R.string.work_save_error)
 
+    override fun getSaveInterestsErrorMessage(): String = getString(R.string.interests_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }
