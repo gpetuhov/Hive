@@ -43,6 +43,7 @@ class ProfileFragmentPresenter :
     private val saveResidenceInteractor = SaveResidenceInteractor(this)
     private val saveLanguageInteractor = SaveLanguageInteractor(this)
     private val saveEducationInteractor = SaveEducationInteractor(this)
+    private val saveWorkInteractor = SaveWorkInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -85,6 +86,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in education dialog
     private var tempEducation = ""
+
+    // Keeps current text entered in work dialog
+    private var tempWork = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -461,8 +465,23 @@ class ProfileFragmentPresenter :
 
     // --- Change work ---
 
-    fun showWorkDialog() {
-        // TODO
+    fun showWorkDialog() = viewState.showWorkDialog()
+
+    // Prefill work dialog with currently entered text or current value
+    fun getWorkPrefill() = if (tempWork != "") tempWork else repo.currentUserWork()
+
+    fun updateTempWork(newTempWork: String) {
+        tempWork = newTempWork
+    }
+
+    fun saveWork() {
+        saveWorkInteractor.save(tempWork)
+        dismissWorkDialog()
+    }
+
+    fun dismissWorkDialog() {
+        tempWork = ""
+        viewState.dismissWorkDialog()
     }
 
     // --- Open photos ---

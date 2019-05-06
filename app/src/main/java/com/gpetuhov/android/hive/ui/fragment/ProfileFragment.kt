@@ -202,6 +202,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissEducationDialog() = educationDialog?.dismiss() ?: Unit
 
+    override fun showWorkDialog() {
+        // TODO
+    }
+
+    override fun dismissWorkDialog() {
+        // TODO
+    }
+
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
         findNavController().navigate(action)
