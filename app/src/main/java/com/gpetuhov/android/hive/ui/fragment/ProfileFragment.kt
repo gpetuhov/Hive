@@ -129,23 +129,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun disableDeleteUserButton() = deleteUserButtonEnabled(false) ?: Unit
 
-    override fun showUsernameDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = usernameDialog?.getInputField()
-        editText?.setText(presenter.getUsernamePrefill())
-        editText?.setSelection(editText.text.length)
-        usernameDialog?.show()
-    }
+    override fun showUsernameDialog() = showDialog(usernameDialog, presenter.getUsernamePrefill())
 
     override fun dismissUsernameDialog() = usernameDialog?.dismiss() ?: Unit
 
-    override fun showDescriptionDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = descriptionDialog?.getInputField()
-        editText?.setText(presenter.getDescriptionPrefill())
-        editText?.setSelection(editText.text.length)
-        descriptionDialog?.show()
-    }
+    override fun showDescriptionDialog() = showDialog(descriptionDialog, presenter.getDescriptionPrefill())
 
     override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
 
@@ -170,113 +158,47 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun showPhoneDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = phoneDialog?.getInputField()
-        editText?.setText(presenter.getPhonePrefill())
-        editText?.setSelection(editText.text.length)
-        phoneDialog?.show()
-    }
+    override fun showPhoneDialog() = showDialog(phoneDialog, presenter.getPhonePrefill())
 
     override fun dismissPhoneDialog() = phoneDialog?.dismiss() ?: Unit
 
-    override fun showEmailDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = emailDialog?.getInputField()
-        editText?.setText(presenter.getEmailPrefill())
-        editText?.setSelection(editText.text.length)
-        emailDialog?.show()
-    }
+    override fun showEmailDialog() = showDialog(emailDialog, presenter.getEmailPrefill())
 
     override fun dismissEmailDialog() = emailDialog?.dismiss() ?: Unit
 
-    override fun showSkypeDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = skypeDialog?.getInputField()
-        editText?.setText(presenter.getSkypePrefill())
-        editText?.setSelection(editText.text.length)
-        skypeDialog?.show()
-    }
+    override fun showSkypeDialog() = showDialog(skypeDialog, presenter.getSkypePrefill())
 
     override fun dismissSkypeDialog() = skypeDialog?.dismiss() ?: Unit
 
-    override fun showFacebookDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = facebookDialog?.getInputField()
-        editText?.setText(presenter.getFacebookPrefill())
-        editText?.setSelection(editText.text.length)
-        facebookDialog?.show()
-    }
+    override fun showFacebookDialog() = showDialog(facebookDialog, presenter.getFacebookPrefill())
 
     override fun dismissFacebookDialog() = facebookDialog?.dismiss() ?: Unit
 
-    override fun showTwitterDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = twitterDialog?.getInputField()
-        editText?.setText(presenter.getTwitterPrefill())
-        editText?.setSelection(editText.text.length)
-        twitterDialog?.show()
-    }
+    override fun showTwitterDialog() = showDialog(twitterDialog, presenter.getTwitterPrefill())
 
     override fun dismissTwitterDialog() = twitterDialog?.dismiss() ?: Unit
 
-    override fun showInstagramDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = instagramDialog?.getInputField()
-        editText?.setText(presenter.getInstagramPrefill())
-        editText?.setSelection(editText.text.length)
-        instagramDialog?.show()
-    }
+    override fun showInstagramDialog() = showDialog(instagramDialog, presenter.getInstagramPrefill())
 
     override fun dismissInstagramDialog() = instagramDialog?.dismiss() ?: Unit
 
-    override fun showYouTubeDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = youTubeDialog?.getInputField()
-        editText?.setText(presenter.getYouTubePrefill())
-        editText?.setSelection(editText.text.length)
-        youTubeDialog?.show()
-    }
+    override fun showYouTubeDialog() = showDialog(youTubeDialog, presenter.getYouTubePrefill())
 
     override fun dismissYouTubeDialog() = youTubeDialog?.dismiss() ?: Unit
 
-    override fun showWebsiteDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = websiteDialog?.getInputField()
-        editText?.setText(presenter.getWebsitePrefill())
-        editText?.setSelection(editText.text.length)
-        websiteDialog?.show()
-    }
+    override fun showWebsiteDialog() = showDialog(websiteDialog, presenter.getWebsitePrefill())
 
     override fun dismissWebsiteDialog() = websiteDialog?.dismiss() ?: Unit
 
-    override fun showResidenceDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = residenceDialog?.getInputField()
-        editText?.setText(presenter.getResidencePrefill())
-        editText?.setSelection(editText.text.length)
-        residenceDialog?.show()
-    }
+    override fun showResidenceDialog() = showDialog(residenceDialog, presenter.getResidencePrefill())
 
     override fun dismissResidenceDialog() = residenceDialog?.dismiss() ?: Unit
 
-    override fun showLanguageDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = languageDialog?.getInputField()
-        editText?.setText(presenter.getLanguagePrefill())
-        editText?.setSelection(editText.text.length)
-        languageDialog?.show()
-    }
+    override fun showLanguageDialog() = showDialog(languageDialog, presenter.getLanguagePrefill())
 
     override fun dismissLanguageDialog() = languageDialog?.dismiss() ?: Unit
 
-    override fun showEducationDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = educationDialog?.getInputField()
-        editText?.setText(presenter.getEducationPrefill())
-        editText?.setSelection(editText.text.length)
-        educationDialog?.show()
-    }
+    override fun showEducationDialog() = showDialog(educationDialog, presenter.getEducationPrefill())
 
     override fun dismissEducationDialog() = educationDialog?.dismiss() ?: Unit
 
@@ -567,6 +489,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             onPositive = { presenter.saveEducation() },
             onNegative = { presenter.dismissEducationDialog() }
         )
+    }
+
+    private fun showDialog(dialog: MaterialDialog?, prefill: String) {
+        // Prefill dialog corresponding prefill text (provided by presenter)
+        val editText = dialog?.getInputField()
+        editText?.setText(prefill)
+        editText?.setSelection(editText.text.length)
+        dialog?.show()
     }
 
     private fun dismissDialogs() {
