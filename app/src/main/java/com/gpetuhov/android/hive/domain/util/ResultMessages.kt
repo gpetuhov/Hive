@@ -36,4 +36,5 @@ interface ResultMessages {
     fun getSaveWebsiteErrorMessage(): String
     fun getSaveResidenceErrorMessage(): String
     fun getSaveLanguageErrorMessage(): String
+    fun getSaveEducationErrorMessage(): String
 }

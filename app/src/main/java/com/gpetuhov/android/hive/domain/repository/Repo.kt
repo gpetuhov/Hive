@@ -39,6 +39,7 @@ interface Repo {
     fun currentUserWebsite(): String
     fun currentUserResidence(): String
     fun currentUserLanguage(): String
+    fun currentUserEducation(): String
     fun saveUserUsername(newUsername: String, onError: () -> Unit)
     fun saveUserDescription(newDescription: String, onError: () -> Unit)
     fun saveUserLocation(newLocation: LatLng)
@@ -52,6 +53,7 @@ interface Repo {
     fun saveUserWebsite(newWebsite: String, onError: () -> Unit)
     fun saveUserResidence(newResidence: String, onError: () -> Unit)
     fun saveUserLanguage(newLanguage: String, onError: () -> Unit)
+    fun saveUserEducation(newEducation: String, onError: () -> Unit)
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
     fun startGettingSecondUserUpdates(uid: String)
     fun stopGettingSecondUserUpdates()

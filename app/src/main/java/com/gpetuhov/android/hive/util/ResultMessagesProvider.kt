@@ -84,5 +84,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveLanguageErrorMessage(): String = getString(R.string.language_save_error)
 
+    override fun getSaveEducationErrorMessage(): String = getString(R.string.education_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

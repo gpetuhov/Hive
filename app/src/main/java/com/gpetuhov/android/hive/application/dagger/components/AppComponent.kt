@@ -89,6 +89,7 @@ interface AppComponent {
     fun inject(saveWebsiteInteractor: SaveWebsiteInteractor)
     fun inject(saveResidenceInteractor: SaveResidenceInteractor)
     fun inject(saveLanguageInteractor: SaveLanguageInteractor)
+    fun inject(saveEducationInteractor: SaveEducationInteractor)
 
     fun inject(resultMessagesProvider: ResultMessagesProvider)
 

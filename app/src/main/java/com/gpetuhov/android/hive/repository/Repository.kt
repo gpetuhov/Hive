@@ -331,6 +331,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserLanguage() = currentUser.value?.language ?: ""
 
+    override fun currentUserEducation() = currentUser.value?.education ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -430,6 +432,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[LANGUAGE_KEY] = newLanguage
 
         // Save user language
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserEducation(newEducation: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[EDUCATION_KEY] = newEducation
+
+        // Save user education
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
