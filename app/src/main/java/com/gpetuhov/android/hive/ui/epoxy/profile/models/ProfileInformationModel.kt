@@ -22,6 +22,9 @@ abstract class ProfileInformationModel : EpoxyModelWithHolder<ProfileInformation
     @EpoxyAttribute lateinit var work: String
     @EpoxyAttribute lateinit var onWorkClick: () -> Unit
 
+    @EpoxyAttribute lateinit var interests: String
+    @EpoxyAttribute lateinit var onInterestsClick: () -> Unit
+
     override fun bind(holder: ProfileInformationHolder) {
         holder.residence.text = residence
         holder.residence.setOnClickListener { onResidenceClick() }
@@ -34,6 +37,9 @@ abstract class ProfileInformationModel : EpoxyModelWithHolder<ProfileInformation
 
         holder.work.text = work
         holder.work.setOnClickListener { onWorkClick() }
+
+        holder.interests.text = interests
+        holder.interests.setOnClickListener { onInterestsClick() }
     }
 }
 
@@ -42,4 +48,5 @@ class ProfileInformationHolder : KotlinHolder() {
     val language by bind<TextView>(R.id.user_language)
     val education by bind<TextView>(R.id.user_education)
     val work by bind<TextView>(R.id.user_work)
+    val interests by bind<TextView>(R.id.user_interests)
 }

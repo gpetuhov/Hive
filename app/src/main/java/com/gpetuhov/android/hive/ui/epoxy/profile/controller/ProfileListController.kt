@@ -106,29 +106,35 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
         profileInformation {
             id("profile_information")
 
-            val hasResidence= user?.hasResidence ?: false
+            val hasResidence = user?.hasResidence ?: false
             val residencePrefix = context.getString(R.string.residence)
             val residence = "$residencePrefix: ${user?.residence ?: ""}"
             residence(if (hasResidence) residence else context.getString(R.string.enter_residence))
             onResidenceClick { presenter.showResidenceDialog() }
 
-            val hasLanguage= user?.hasLanguage ?: false
+            val hasLanguage = user?.hasLanguage ?: false
             val languagePrefix = context.getString(R.string.language)
             val language = "$languagePrefix: ${user?.language ?: ""}"
             language(if (hasLanguage) language else context.getString(R.string.enter_language))
             onLanguageClick { presenter.showLanguageDialog() }
 
-            val hasEducation= user?.hasEducation ?: false
+            val hasEducation = user?.hasEducation ?: false
             val educationPrefix = context.getString(R.string.education)
             val education = "$educationPrefix: ${user?.education ?: ""}"
             education(if (hasEducation) education else context.getString(R.string.enter_education))
             onEducationClick { presenter.showEducationDialog() }
 
-            val hasWork= user?.hasWork ?: false
+            val hasWork = user?.hasWork ?: false
             val workPrefix = context.getString(R.string.work)
             val work = "$workPrefix: ${user?.work ?: ""}"
             work(if (hasWork) work else context.getString(R.string.enter_work))
             onWorkClick { presenter.showWorkDialog() }
+
+            val hasInterests = user?.hasInterests ?: false
+            val interestsPrefix  = context.getString(R.string.interests)
+            val interests = "$interestsPrefix: ${user?.interests ?: ""}"
+            interests(if (hasInterests) interests else context.getString(R.string.enter_interests))
+            onInterestsClick { presenter.showInterestsDialog() }
         }
 
         profileOffersHeader {
