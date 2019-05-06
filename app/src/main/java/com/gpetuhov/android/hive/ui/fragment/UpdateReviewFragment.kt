@@ -95,6 +95,7 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
                 .cancelable(false)
                 .positiveButton(R.string.yes) { presenter.saveFromQuitDialog() }
                 .negativeButton(R.string.no) { presenter.quitReviewUpdate() }
+                .neutralButton(R.string.cancel) { presenter.quitReviewUpdateCancel() }
         }
     }
 
