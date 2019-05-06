@@ -162,6 +162,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissLanguageDialog()
 
+    // === Change education ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showEducationDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissEducationDialog()
+
     // === Open privacy policy ===
 
     @StateStrategyType(SkipStrategy::class)

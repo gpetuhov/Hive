@@ -42,6 +42,7 @@ class ProfileFragmentPresenter :
     private val saveWebsiteInteractor = SaveWebsiteInteractor(this)
     private val saveResidenceInteractor = SaveResidenceInteractor(this)
     private val saveLanguageInteractor = SaveLanguageInteractor(this)
+    private val saveEducationInteractor = SaveEducationInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -81,6 +82,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in language dialog
     private var tempLanguage = ""
+
+    // Keeps current text entered in education dialog
+    private var tempEducation = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -436,8 +440,23 @@ class ProfileFragmentPresenter :
 
     // --- Change education ---
 
-    fun showEducationDialog() {
-        // TODO: implement
+    fun showEducationDialog() = viewState.showEducationDialog()
+
+    // Prefill education dialog with currently entered text or current value
+    fun getEducationPrefill() = if (tempEducation != "") tempEducation else repo.currentUserEducation()
+
+    fun updateTempEducation(newTempEducation: String) {
+        tempEducation = newTempEducation
+    }
+
+    fun saveEducation() {
+        saveEducationInteractor.save(tempEducation)
+        dismissEducationDialog()
+    }
+
+    fun dismissEducationDialog() {
+        tempEducation = ""
+        viewState.dismissEducationDialog()
     }
 
     // --- Open photos ---

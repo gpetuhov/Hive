@@ -269,6 +269,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissLanguageDialog() = languageDialog?.dismiss() ?: Unit
 
+    override fun showEducationDialog() {
+        // TODO
+    }
+
+    override fun dismissEducationDialog() {
+        // TODO
+    }
+
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
         findNavController().navigate(action)
