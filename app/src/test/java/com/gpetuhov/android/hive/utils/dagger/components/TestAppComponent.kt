@@ -35,4 +35,5 @@ interface TestAppComponent : AppComponent {
     fun inject(saveWeblinkInteractorTest: SaveWebsiteInteractorTest)
     fun inject(saveResidenceInteractorTest: SaveResidenceInteractorTest)
     fun inject(saveLanguageInteractorTest: SaveLanguageInteractorTest)
+    fun inject(saveEducationInteractorTest: SaveEducationInteractorTest)
 }

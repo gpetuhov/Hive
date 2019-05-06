@@ -72,4 +72,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveResidenceErrorMessage(): String = Constants.SAVE_RESIDENCE_ERROR
 
     override fun getSaveLanguageErrorMessage(): String = Constants.SAVE_LANGUAGE_ERROR
+
+    override fun getSaveEducationErrorMessage(): String = Constants.SAVE_EDUCATION_ERROR
 }
