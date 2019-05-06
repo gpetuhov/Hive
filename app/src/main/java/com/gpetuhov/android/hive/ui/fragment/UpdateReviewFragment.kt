@@ -93,8 +93,8 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
                 .message(R.string.quit_review_update_prompt)
                 .noAutoDismiss()
                 .cancelable(false)
-                .positiveButton { presenter.quitReviewUpdate() }
-                .negativeButton { presenter.quitReviewUpdateCancel() }
+                .positiveButton(R.string.yes) { presenter.saveFromQuitDialog() }
+                .negativeButton(R.string.no) { presenter.quitReviewUpdate() }
         }
     }
 

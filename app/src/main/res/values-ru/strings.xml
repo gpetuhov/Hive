@@ -224,7 +224,7 @@
     <!-- UpdateReviewFragment -->
     <string name="review">Отзыв</string>
     <string name="add_review">Добавьте отзыв</string>
-    <string name="quit_review_update_prompt">Вы действительно хотите выйти? Все изменения будут потеряны</string>
+    <string name="quit_review_update_prompt">Вы хотите сохранить изменения?</string>
     <string name="save_review">Сохранить отзыв</string>
     <string name="review_text_empty_error">Пожалуйста, добавьте отзыв</string>
     <string name="review_zero_rating_error">Пожалуйста, добавьте оценку</string>

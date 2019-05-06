@@ -96,7 +96,10 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
         navigateUp()
     }
 
-    fun quitReviewUpdateCancel() = viewState.dismissQuitReviewUpdateDialog()
+    fun saveFromQuitDialog() {
+        viewState.dismissQuitReviewUpdateDialog()
+        saveReview()
+    }
 
     // === Private methods ===
 
