@@ -76,4 +76,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveEducationErrorMessage(): String = Constants.SAVE_EDUCATION_ERROR
 
     override fun getSaveWorkErrorMessage(): String = Constants.SAVE_WORK_ERROR
+
+    override fun getSaveInterestsErrorMessage(): String = Constants.SAVE_INTERESTS_ERROR
 }
