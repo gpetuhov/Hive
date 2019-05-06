@@ -73,6 +73,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val WEBSITE_KEY = "website"
         private const val RESIDENCE_KEY = "residence"
         private const val LANGUAGE_KEY = "language"
+        private const val EDUCATION_KEY = "education"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1252,7 +1253,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             youTube = doc.getString(YOUTUBE_KEY) ?: "",
             website = doc.getString(WEBSITE_KEY) ?: "",
             residence = doc.getString(RESIDENCE_KEY) ?: "",
-            language = doc.getString(LANGUAGE_KEY) ?: ""
+            language = doc.getString(LANGUAGE_KEY) ?: "",
+            education = doc.getString(EDUCATION_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
