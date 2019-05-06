@@ -95,6 +95,9 @@
     <string name="language">Язык</string>
     <string name="enter_language">Введите язык</string>
     <string name="language_save_error">Ошибка обновления языка</string>
+    <string name="education">Образование</string>
+    <string name="enter_education">Введите образование</string>
+    <string name="education_save_error">Ошибка обновления образования</string>
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 

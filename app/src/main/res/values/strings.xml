@@ -95,6 +95,9 @@
     <string name="language">Language</string>
     <string name="enter_language">Enter language</string>
     <string name="language_save_error">Error updating language</string>
+    <string name="education">Education</string>
+    <string name="enter_education">Enter education</string>
+    <string name="education_save_error">Error updating education</string>
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>
 
