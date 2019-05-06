@@ -37,4 +37,12 @@
             style="@style/basicTextStyle"
             tools:text="Language"/>
 
+    <TextView
+            android:id="@+id/user_education"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"
+            tools:text="Education"/>
+
 </LinearLayout>

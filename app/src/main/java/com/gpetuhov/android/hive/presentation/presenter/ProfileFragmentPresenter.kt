@@ -434,6 +434,12 @@ class ProfileFragmentPresenter :
         viewState.dismissLanguageDialog()
     }
 
+    // --- Change education ---
+
+    fun showEducationDialog() {
+        // TODO: implement
+    }
+
     // --- Open photos ---
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
