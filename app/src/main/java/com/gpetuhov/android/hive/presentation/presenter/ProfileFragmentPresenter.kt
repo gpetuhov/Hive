@@ -459,6 +459,12 @@ class ProfileFragmentPresenter :
         viewState.dismissEducationDialog()
     }
 
+    // --- Change work ---
+
+    fun showWorkDialog() {
+        // TODO
+    }
+
     // --- Open photos ---
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)

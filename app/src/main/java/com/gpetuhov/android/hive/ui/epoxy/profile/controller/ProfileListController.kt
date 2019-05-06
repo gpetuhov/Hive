@@ -123,6 +123,12 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             val education = "$educationPrefix: ${user?.education ?: ""}"
             education(if (hasEducation) education else context.getString(R.string.enter_education))
             onEducationClick { presenter.showEducationDialog() }
+
+            val hasWork= user?.hasWork ?: false
+            val workPrefix = context.getString(R.string.work)
+            val work = "$workPrefix: ${user?.work ?: ""}"
+            work(if (hasWork) work else context.getString(R.string.enter_work))
+            onWorkClick { presenter.showWorkDialog() }
         }
 
         profileOffersHeader {
