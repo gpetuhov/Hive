@@ -44,6 +44,7 @@ class ProfileFragmentPresenter :
     private val saveLanguageInteractor = SaveLanguageInteractor(this)
     private val saveEducationInteractor = SaveEducationInteractor(this)
     private val saveWorkInteractor = SaveWorkInteractor(this)
+    private val saveInterestsInteractor = SaveInterestsInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -89,6 +90,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in work dialog
     private var tempWork = ""
+
+    // Keeps current text entered in interests dialog
+    private var tempInterests = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -486,8 +490,23 @@ class ProfileFragmentPresenter :
 
     // --- Change interests ---
 
-    fun showInterestsDialog() {
-        // TODO
+    fun showInterestsDialog() = viewState.showInterestsDialog()
+
+    // Prefill interests dialog with currently entered text or current value
+    fun getInterestsPrefill() = if (tempInterests != "") tempInterests else repo.currentUserInterests()
+
+    fun updateTempInterests(newTempInterests: String) {
+        tempInterests = newTempInterests
+    }
+
+    fun saveInterests() {
+        saveInterestsInteractor.save(tempInterests)
+        dismissInterestsDialog()
+    }
+
+    fun dismissInterestsDialog() {
+        tempInterests = ""
+        viewState.dismissInterestsDialog()
     }
 
     // --- Open photos ---
