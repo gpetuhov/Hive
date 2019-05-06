@@ -334,6 +334,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserEducation() = currentUser.value?.education ?: ""
 
+    override fun currentUserWork() = currentUser.value?.work ?: ""
+
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
         val data = HashMap<String, Any>()
         data[USERNAME_KEY] = newUsername
@@ -441,6 +443,14 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[EDUCATION_KEY] = newEducation
 
         // Save user education
+        saveUserDataRemote(data, { /* Do nothing */ }, onError)
+    }
+
+    override fun saveUserWork(newWork: String, onError: () -> Unit) {
+        val data = HashMap<String, Any>()
+        data[WORK_KEY] = newWork
+
+        // Save user work
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
