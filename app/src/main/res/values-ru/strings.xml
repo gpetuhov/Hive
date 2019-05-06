@@ -101,6 +101,9 @@
     <string name="work">Место работы</string>
     <string name="enter_work">Введите место работы</string>
     <string name="work_save_error">Ошибка обновления места работы</string>
+    <string name="interests">Интересы</string>
+    <string name="enter_interests">Введите интересы</string>
+    <string name="interests_save_error">Ошибка обновления интересов</string>
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 
