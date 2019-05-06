@@ -98,6 +98,9 @@
     <string name="education">Education</string>
     <string name="enter_education">Enter education</string>
     <string name="education_save_error">Error updating education</string>
+    <string name="work">Work</string>
+    <string name="enter_work">Enter work</string>
+    <string name="work_save_error">Error updating work</string>
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>
 

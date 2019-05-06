@@ -23,6 +23,10 @@ abstract class UserDetailsInformationModel : EpoxyModelWithHolder<UserDetailsInf
     @EpoxyAttribute var educationVisible = true
     @EpoxyAttribute var educationSeparatorVisible = true
 
+    @EpoxyAttribute lateinit var work: String
+    @EpoxyAttribute var workVisible = true
+    @EpoxyAttribute var workSeparatorVisible = true
+
     override fun bind(holder: UserDetailsInformationHolder) {
         holder.residence.text = residence
         holder.residence.setVisible(residenceVisible)
@@ -34,6 +38,10 @@ abstract class UserDetailsInformationModel : EpoxyModelWithHolder<UserDetailsInf
         holder.education.text = education
         holder.education.setVisible(educationVisible)
         holder.educationSeparator.setVisible(educationSeparatorVisible)
+
+        holder.work.text = work
+        holder.work.setVisible(workVisible)
+        holder.workSeparator.setVisible(workSeparatorVisible)
     }
 }
 
@@ -43,4 +51,6 @@ class UserDetailsInformationHolder : KotlinHolder() {
     val languageSeparator by bind<View>(R.id.user_details_language_separator)
     val education by bind<TextView>(R.id.user_details_education)
     val educationSeparator by bind<View>(R.id.user_details_education_separator)
+    val work by bind<TextView>(R.id.user_details_work)
+    val workSeparator by bind<View>(R.id.user_details_work_separator)
 }

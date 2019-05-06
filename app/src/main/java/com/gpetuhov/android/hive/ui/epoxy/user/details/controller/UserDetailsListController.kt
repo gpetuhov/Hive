@@ -113,7 +113,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         val hasResidence = user?.hasResidence ?: false
         val hasLanguage = user?.hasLanguage ?: false
         val hasEducation = user?.hasEducation ?: false
-        val hasInformation = hasResidence || hasLanguage || hasEducation
+        val hasWork = user?.hasWork ?: false
+        val hasInformation = hasResidence || hasLanguage || hasEducation || hasWork
         if (hasInformation) {
             userDetailsInformation {
                 id("user_details_information")
@@ -134,6 +135,12 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 education(education)
                 educationVisible(hasEducation)
                 educationSeparatorVisible(hasEducation && (hasLanguage || hasResidence))
+
+                val workPrefix = context.getString(R.string.work)
+                val work = "$workPrefix: ${user?.work ?: ""}"
+                work(work)
+                workVisible(hasWork)
+                workSeparatorVisible(hasWork && (hasLanguage || hasResidence || hasEducation))
             }
         }
 

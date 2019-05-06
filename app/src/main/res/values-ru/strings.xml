@@ -98,6 +98,9 @@
     <string name="education">Образование</string>
     <string name="enter_education">Введите образование</string>
     <string name="education_save_error">Ошибка обновления образования</string>
+    <string name="work">Место работы</string>
+    <string name="enter_work">Введите место работы</string>
+    <string name="work_save_error">Ошибка обновления места работы</string>
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
 
