@@ -148,4 +148,11 @@ class UserTest {
         user.education = com.gpetuhov.android.hive.utils.Constants.DUMMY_EDUCATION
         assertEquals(true, user.hasEducation)
     }
+
+    @Test
+    fun emptyWork() {
+        assertEquals(false, user.hasWork)
+        user.work = com.gpetuhov.android.hive.utils.Constants.DUMMY_WORK
+        assertEquals(true, user.hasWork)
+    }
 }
