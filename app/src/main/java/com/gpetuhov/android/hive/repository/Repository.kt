@@ -340,18 +340,14 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun currentUserInterests() = currentUser.value?.interests ?: ""
 
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[USERNAME_KEY] = newUsername
-
-        // Save user name.
+        // Save user name
+        val data = getSingleValueHashMap(USERNAME_KEY, newUsername)
         saveUserDataRemote(data, { updateUserNameAndPicCollection() }, onError)
     }
 
     override fun saveUserDescription(newDescription: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[DESCRIPTION_KEY] = newDescription
-
         // Save user description.
+        val data = getSingleValueHashMap(DESCRIPTION_KEY, newDescription)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
@@ -362,106 +358,80 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun saveUserPhone(newPhone: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[PHONE_KEY] = newPhone
-
         // Save user phone
+        val data = getSingleValueHashMap(PHONE_KEY, newPhone)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserVisibleEmail(newEmail: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[VISIBLE_EMAIL_KEY] = newEmail
-
         // Save user visible email
+        val data = getSingleValueHashMap(VISIBLE_EMAIL_KEY, newEmail)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserSkype(newSkype: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[SKYPE_KEY] = newSkype
-
         // Save user Skype
+        val data = getSingleValueHashMap(SKYPE_KEY, newSkype)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserFacebook(newFacebook: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[FACEBOOK_KEY] = newFacebook
-
         // Save user Facebook
+        val data = getSingleValueHashMap(FACEBOOK_KEY, newFacebook)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserTwitter(newTwitter: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[TWITTER_KEY] = newTwitter
-
         // Save user Twitter
+        val data = getSingleValueHashMap(TWITTER_KEY, newTwitter)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserInstagram(newInstagram: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[INSTAGRAM_KEY] = newInstagram
-
         // Save user Instagram
+        val data = getSingleValueHashMap(INSTAGRAM_KEY, newInstagram)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserYouTube(newYouTube: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[YOUTUBE_KEY] = newYouTube
-
         // Save user YouTube
+        val data = getSingleValueHashMap(YOUTUBE_KEY, newYouTube)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserWebsite(newWebsite: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[WEBSITE_KEY] = newWebsite
-
         // Save user Website
+        val data = getSingleValueHashMap(WEBSITE_KEY, newWebsite)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserResidence(newResidence: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[RESIDENCE_KEY] = newResidence
-
         // Save user residence
+        val data = getSingleValueHashMap(RESIDENCE_KEY, newResidence)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserLanguage(newLanguage: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[LANGUAGE_KEY] = newLanguage
-
         // Save user language
+        val data = getSingleValueHashMap(LANGUAGE_KEY, newLanguage)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserEducation(newEducation: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[EDUCATION_KEY] = newEducation
-
         // Save user education
+        val data = getSingleValueHashMap(EDUCATION_KEY, newEducation)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserWork(newWork: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[WORK_KEY] = newWork
-
         // Save user work
+        val data = getSingleValueHashMap(WORK_KEY, newWork)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
     override fun saveUserInterests(newInterests: String, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[INTERESTS_KEY] = newInterests
-
         // Save user interests
+        val data = getSingleValueHashMap(INTERESTS_KEY, newInterests)
         saveUserDataRemote(data, { /* Do nothing */ }, onError)
     }
 
@@ -600,9 +570,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun saveFcmToken(token: String) {
-        val data = HashMap<String, Any>()
-        data[FCM_TOKEN_KEY] = token
-
+        val data = getSingleValueHashMap(FCM_TOKEN_KEY, token)
         saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
@@ -1067,9 +1035,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun saveComment(reviewUid: String, offerUid: String, commentText: String, onSuccess: () -> Unit, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[REVIEW_COMMENT_KEY] = commentText
-
+        val data = getSingleValueHashMap(REVIEW_COMMENT_KEY, commentText)
         saveReviewData(currentUserUid(), offerUid, reviewUid, data, onSuccess, onError)
     }
 
@@ -1452,9 +1418,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun currentUserPicUrl() = currentUser.value?.userPicUrl ?: ""
 
     private fun saveUserPicUrl(newUserPicUrl: String) {
-        val data = HashMap<String, Any>()
-        data[USER_PIC_URL_KEY] = newUserPicUrl
-
+        val data = getSingleValueHashMap(USER_PIC_URL_KEY, newUserPicUrl)
         saveUserDataRemote(data, { updateUserNameAndPicCollection() }, { /* Do nothing */ })
     }
 
@@ -1469,10 +1433,14 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun saveUserPhotoList(photoList: MutableList<Photo>, onSuccess: () -> Unit, onError: () -> Unit) {
-        val data = HashMap<String, Any>()
-        data[PHOTO_LIST_KEY] = getPhotoListForSaving(photoList)
-
+        val data = getSingleValueHashMap(PHOTO_LIST_KEY, getPhotoListForSaving(photoList))
         saveUserDataRemote(data, onSuccess, onError)
+    }
+
+    private fun getSingleValueHashMap(key: String, value: Any): HashMap<String, Any> {
+        val data = HashMap<String, Any>()
+        data[key] = value
+        return data
     }
 
     // --- Search ---
@@ -1561,8 +1529,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private fun markMessageAsRead(messageUid: String) {
         if (isAuthorized && currentChatRoomUid != "" && messageUid != "") {
-            val data = HashMap<String, Any>()
-            data[MESSAGE_IS_READ_KEY] = true
+            val data = getSingleValueHashMap(MESSAGE_IS_READ_KEY, true)
 
             getMessagesCollectionReference()
                 .document(messageUid)
@@ -1776,8 +1743,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             offerListForSaving.add(offerForSaving)
         }
 
-        val data = HashMap<String, Any>()
-        data[OFFER_LIST_KEY] = offerListForSaving
+        val data = getSingleValueHashMap(OFFER_LIST_KEY, offerListForSaving)
 
         // If current user has no first offer published timestamp yet, then init it with server timestamp
         val firstOfferPublishedTimestamp = currentUser.value?.firstOfferPublishedTimestamp ?: 0
