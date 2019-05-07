@@ -17,16 +17,43 @@
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/user_picture"/>
 
-    <TextView
-            android:id="@+id/user_details_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="0dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
-            android:layout_gravity="center_vertical"
-            style="@style/titleTextStyle"
-            tools:text="username"/>
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+        <TextView
+                android:id="@+id/user_details_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                style="@style/titleTextStyle"
+                tools:text="username"/>
+
+        <TextView
+                android:id="@+id/user_details_online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/online"
+                android:textColor="@color/md_green_600"
+                style="@style/mediumTextStyle"
+                android:visibility="gone"/>
+
+        <TextView
+                android:id="@+id/user_details_last_seen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                style="@style/mediumTextStyle"
+                android:visibility="gone"
+                tools:text="last seen moments ago"/>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -1,7 +1,6 @@
 package com.gpetuhov.android.hive.domain.model
 
 import com.google.android.gms.maps.model.LatLng
-import com.google.firebase.Timestamp
 import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
 
 // Represents data both for the current user and search results.

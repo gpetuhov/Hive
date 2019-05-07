@@ -113,8 +113,8 @@
     <string name="my_location">Мое местоположение</string>
     <string name="zoom_in">Приблизить</string>
     <string name="zoom_out">Отдалить</string>
-    <string name="online">онлайн</string>
-    <string name="offline">оффлайн</string>
+    <string name="online">online</string>
+    <string name="offline">offline</string>
 
     <!-- UserDetailsFragment -->
     <string name="user_details">Пользователь</string>

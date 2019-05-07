@@ -36,6 +36,11 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             id("user_details_name")
             userPicUrl(user?.userPicUrl ?: "")
             username(user?.getUsernameOrName() ?: "")
+
+            val isOnline = user?.isOnline ?: false
+            onlineVisible(isOnline)
+            lastSeen(user?.getLastSeenTime() ?: "")
+            lastSeenVisible(!isOnline)
         }
 
         summary(context, false) { presenter.openAllReviews() }
