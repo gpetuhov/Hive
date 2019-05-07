@@ -78,6 +78,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val EDUCATION_KEY = "education"
         private const val WORK_KEY = "work"
         private const val INTERESTS_KEY = "interests"
+        private const val LAST_SEEN_KEY = "last_seen"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -416,8 +417,10 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveUserSingleDataRemote(IS_ONLINE_KEY, true, { /* Do nothing */ }, { /* Do nothing */ })
 
     override fun setUserOffline() {
-        // TODO: add last seen feature and update Firestore in one update
-        saveUserSingleDataRemote(IS_ONLINE_KEY, false, { /* Do nothing */ }, { /* Do nothing */ })
+        val data = HashMap<String, Any>()
+        data[IS_ONLINE_KEY] = false
+        data[LAST_SEEN_KEY] = FieldValue.serverTimestamp()
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
@@ -1270,7 +1273,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             language = doc.getString(LANGUAGE_KEY) ?: "",
             education = doc.getString(EDUCATION_KEY) ?: "",
             work = doc.getString(WORK_KEY) ?: "",
-            interests = doc.getString(INTERESTS_KEY) ?: ""
+            interests = doc.getString(INTERESTS_KEY) ?: "",
+            lastSeen = getTimestampFromDocumentSnapshot(doc, LAST_SEEN_KEY)
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)

@@ -1,6 +1,8 @@
 package com.gpetuhov.android.hive.domain.model
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.Timestamp
+import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
 
 // Represents data both for the current user and search results.
 // Models at domain layer are just POJOs for keeping data.
@@ -29,7 +31,8 @@ data class User(
     var language: String = "",
     var education: String = "",
     var work: String = "",
-    var interests: String = ""
+    var interests: String = "",
+    var lastSeen: Long = System.currentTimeMillis() / 1000
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
@@ -54,4 +57,6 @@ data class User(
     fun getUsernameOrName() = if (hasUsername) username else name
 
     fun getOffer(offerUid: String) = offerList.firstOrNull { it.uid == offerUid }
+
+    fun getLastSeenTime() = getDateTimeFromTimestamp(lastSeen)
 }
