@@ -12,7 +12,7 @@
     <LinearLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/basic_view_size"
+            android:layout_height="@dimen/toolbar_height"
             android:background="@color/md_white_1000"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -40,14 +40,41 @@
                 android:layout_marginStart="16dp"
                 android:contentDescription="@string/user_picture"/>
 
-        <TextView
-                android:id="@+id/header_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/titleTextStyle"
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
-                tools:text="User name"/>
+                android:orientation="vertical"
+                android:gravity="center_vertical">
+
+            <TextView
+                    android:id="@+id/header_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/basicTextStyleBold"
+                    tools:text="User name"/>
+
+            <TextView
+                    android:id="@+id/header_online"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/online"
+                    android:textColor="@color/md_green_600"
+                    android:visibility="gone"
+                    style="@style/mediumTextStyle"/>
+
+            <TextView
+                    android:id="@+id/header_last_seen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    style="@style/mediumTextStyle"
+                    android:visibility="gone"
+                    tools:text="last seen moments ago"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 

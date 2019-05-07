@@ -27,6 +27,13 @@
         <item name="android:textSize">@dimen/basic_text_size</item>
     </style>
 
+    <!-- Basic text style bold -->
+    <style name="basicTextStyleBold">
+        <item name="android:textColor">@color/md_grey_600</item>
+        <item name="android:textSize">@dimen/basic_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- Medium text style -->
     <style name="mediumTextStyle">
         <item name="android:textColor">@color/md_grey_600</item>

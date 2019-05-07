@@ -9,4 +9,5 @@
     <dimen name="map_top_padding">56dp</dimen>
     <dimen name="message_big_padding">50dp</dimen>
     <dimen name="message_no_padding">0dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
 </resources>

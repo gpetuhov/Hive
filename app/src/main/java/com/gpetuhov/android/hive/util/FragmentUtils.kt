@@ -50,6 +50,15 @@ fun Fragment.setMainHeaderTitle(title: String) {
     getMainHeaderTitle()?.text = title
 }
 
+fun Fragment.setMainHeaderOnlineAndLastSeen(isOnline: Boolean, lastSeen: String) {
+    getMainHeaderOnline()?.setVisible(isOnline)
+    getMainHeaderLastSeen()?.setVisible(!isOnline)
+
+    val lastSeenPrefix = context?.getString(R.string.last_seen) ?: ""
+    val lastSeenText = "$lastSeenPrefix $lastSeen"
+    getMainHeaderLastSeen()?.text = lastSeenText
+}
+
 fun Fragment.startPhotoPicker(requestCode: Int) {
     val intent = Intent(Intent.ACTION_GET_CONTENT)
     intent.type = Constants.FileTypes.IMAGE
@@ -74,6 +83,10 @@ private fun Fragment.getMainHeader() = activity?.findViewById<View>(R.id.header)
 private fun Fragment.getMainHeaderImage() = activity?.findViewById(R.id.header_image) ?: ImageView(context)
 
 private fun Fragment.getMainHeaderTitle() = activity?.findViewById<TextView>(R.id.header_title)
+
+private fun Fragment.getMainHeaderOnline() = activity?.findViewById<TextView>(R.id.header_online)
+
+private fun Fragment.getMainHeaderLastSeen() = activity?.findViewById<TextView>(R.id.header_last_seen)
 
 private fun Fragment.initMainHeader(isVisible: Boolean, onNavigationClick: () -> Unit, onClick: () -> Unit) {
     val mainHeader = getMainHeader()
