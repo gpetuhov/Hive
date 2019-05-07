@@ -58,6 +58,14 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 val providedBy = context.getString(R.string.provided_by)
                 val username = user?.getUsernameOrName() ?: ""
                 username("$providedBy $username")
+
+                val isOnline = user?.isOnline ?: false
+                onlineVisible(isOnline)
+
+                val lastSeenPrefix = context.getString(R.string.last_seen)
+                val lastSeen = user?.getLastSeenTime() ?: ""
+                lastSeen("$lastSeenPrefix $lastSeen")
+                lastSeenVisible(!isOnline)
             }
 
             offerDetailsDetails {
