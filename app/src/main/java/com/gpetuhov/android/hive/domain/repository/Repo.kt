@@ -124,4 +124,8 @@ interface Repo {
     fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit)
     fun saveComment(reviewUid: String, offerUid: String, commentText: String, onSuccess: () -> Unit, onError: () -> Unit)
     fun getAllUserReviews(isCurrentUser: Boolean, onComplete: (MutableList<Review>) -> Unit)
+
+    // Connection State
+    fun startGettingConnectionStateUpdates(onChange: (Boolean) -> Unit)
+    fun stopGettingConnectionStateUpdates()
 }

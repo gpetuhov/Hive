@@ -122,6 +122,9 @@ dependencies {
     // Firestore
     implementation 'com.google.firebase:firebase-firestore:18.2.0'
 
+    // Firebase
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+
     // Firebase Cloud Storage
     implementation 'com.google.firebase:firebase-storage:16.1.0'
 

@@ -82,6 +82,10 @@ class MainActivity : AppCompatActivity() {
         repo.setForeground(true)
         auth.startListenAuth()
         notificationManager.onResume()
+
+        repo.startGettingConnectionStateUpdates {
+            // TODO: implement
+        }
     }
 
     override fun onPause() {
@@ -89,6 +93,8 @@ class MainActivity : AppCompatActivity() {
         repo.setForeground(false)
         auth.stopListenAuth()
         notificationManager.onPause()
+
+        repo.stopGettingConnectionStateUpdates()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

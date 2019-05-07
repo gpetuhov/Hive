@@ -21,11 +21,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.Timestamp
+import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.*
 import com.gpetuhov.android.hive.util.Settings
@@ -227,6 +229,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     private var chatroomsListenerRegistration: ListenerRegistration? = null
     private var favoritesListenerRegistration: ListenerRegistration? = null
     private var reviewsListenerRegistration: ListenerRegistration? = null
+
+    private var connectedRef: DatabaseReference? = null
+    private lateinit var connectedRefValueListener: ValueEventListener
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -1033,6 +1038,36 @@ class Repository(private val context: Context, private val settings: Settings) :
                 }
             }
         }
+    }
+
+    // --- Connection state ---
+
+    // TODO: add comments
+    override fun startGettingConnectionStateUpdates(onChange: (Boolean) -> Unit) {
+        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected")
+
+        connectedRefValueListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val connected = snapshot.getValue(Boolean::class.java) ?: false
+
+                // TODO: call onChange()
+                if (connected) {
+                    Timber.tag("ConnectionState").d("connected")
+                } else {
+                    Timber.tag("ConnectionState").d("not connected")
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Timber.tag("ConnectionState").d("Listener was cancelled")
+            }
+        }
+
+        connectedRef?.addValueEventListener(connectedRefValueListener)
+    }
+
+    override fun stopGettingConnectionStateUpdates() {
+        connectedRef?.removeEventListener(connectedRefValueListener)
     }
 
     // === Private methods ===
