@@ -21,6 +21,7 @@ import com.gpetuhov.android.hive.managers.NotificationManager
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UnreadMessagesExistViewModel
 import com.gpetuhov.android.hive.util.checkPermissions
+import com.gpetuhov.android.hive.util.setVisible
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
@@ -82,10 +83,7 @@ class MainActivity : AppCompatActivity() {
         repo.setForeground(true)
         auth.startListenAuth()
         notificationManager.onResume()
-
-        repo.startGettingConnectionStateUpdates {
-            // TODO: implement
-        }
+        repo.startGettingConnectionStateUpdates { connected -> offline_wrapper.setVisible(!connected) }
     }
 
     override fun onPause() {
@@ -93,7 +91,6 @@ class MainActivity : AppCompatActivity() {
         repo.setForeground(false)
         auth.stopListenAuth()
         notificationManager.onPause()
-
         repo.stopGettingConnectionStateUpdates()
     }
 

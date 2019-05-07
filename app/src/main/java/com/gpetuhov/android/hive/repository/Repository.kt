@@ -1052,17 +1052,11 @@ class Repository(private val context: Context, private val settings: Settings) :
         connectedRefValueListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val connected = snapshot.getValue(Boolean::class.java) ?: false
-
-                // TODO: call onChange()
-                if (connected) {
-                    Timber.tag("ConnectionState").d("connected")
-                } else {
-                    Timber.tag("ConnectionState").d("not connected")
-                }
+                onChange(connected)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Timber.tag("ConnectionState").d("Listener was cancelled")
+                // Do nothing
             }
         }
 

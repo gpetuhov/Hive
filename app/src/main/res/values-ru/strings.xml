@@ -23,6 +23,7 @@
     <string name="play_services_unavailable">Hive не будет работать без Google Play Services, которые не поддерживаются
         Вашим устройством
     </string>
+    <string name="connecting">Соединение с сетью…</string>
 
     <!-- ProfileFragment -->
     <string name="user_picture">Фото пользователя</string>
