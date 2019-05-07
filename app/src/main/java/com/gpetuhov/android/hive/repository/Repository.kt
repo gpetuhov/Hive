@@ -1046,9 +1046,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // TODO: add comments
     override fun startGettingConnectionStateUpdates(onChange: (Boolean) -> Unit) {
-        val firebase = FirebaseDatabase.getInstance()
-
-        connectedRef = firebase.getReference(".info/connected")
+        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected")
 
         connectedRefValueListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -1069,25 +1067,12 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         connectedRef?.addValueEventListener(connectedRefValueListener)
 
-        keepAliveRef = firebase.getReference("keepalive")
-
-        keepAliveRefValueListener = object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                // Do nothing
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Do nothing
-            }
-        }
-
-        // Without this listener Realtime Database disconnects from the backend after 60 seconds of inactivity
-        keepAliveRef?.addValueEventListener(keepAliveRefValueListener)
+        initKeepAliveListener()
     }
 
     override fun stopGettingConnectionStateUpdates() {
         connectedRef?.removeEventListener(connectedRefValueListener)
-        keepAliveRef?.removeEventListener(keepAliveRefValueListener)
+        removeKeepAliveListener()
     }
 
     // === Private methods ===
@@ -2052,5 +2037,32 @@ class Repository(private val context: Context, private val settings: Settings) :
                     onComplete(mutableListOf())
                 }
         }
+    }
+
+    // --- Connection state ---
+
+    // Without this listener Realtime Database disconnects from the backend after 60 seconds of inactivity,
+    // because the app uses it only to monitor connection state.
+    // For all other purposes the app uses Firestore.
+    private fun initKeepAliveListener() {
+        // The node may even not exist.
+        // But the database rules MUST allow read. Don't forget to configure them in Firebase console.
+        keepAliveRef = FirebaseDatabase.getInstance().getReference("keepalive")
+
+        keepAliveRefValueListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Do nothing
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Do nothing
+            }
+        }
+
+        keepAliveRef?.addValueEventListener(keepAliveRefValueListener)
+    }
+
+    private fun removeKeepAliveListener() {
+        keepAliveRef?.removeEventListener(keepAliveRefValueListener)
     }
 }
