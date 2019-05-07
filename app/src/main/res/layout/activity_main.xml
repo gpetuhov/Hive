@@ -69,6 +69,7 @@
             android:layout_height="@dimen/basic_view_size"
             android:background="@color/md_white_1000"
             android:gravity="center"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/navigation_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">

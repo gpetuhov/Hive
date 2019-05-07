@@ -412,6 +412,14 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun saveUserInterests(newInterests: String, onError: () -> Unit) =
         saveUserSingleDataRemote(INTERESTS_KEY, newInterests, { /* Do nothing */ }, onError)
 
+    override fun setUserOnline() =
+        saveUserSingleDataRemote(IS_ONLINE_KEY, true, { /* Do nothing */ }, { /* Do nothing */ })
+
+    override fun setUserOffline() {
+        // TODO: add last seen feature and update Firestore in one update
+        saveUserSingleDataRemote(IS_ONLINE_KEY, false, { /* Do nothing */ }, { /* Do nothing */ })
+    }
+
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized && currentUserUid() != "") {
             firestore.collection(USERS_COLLECTION).document(currentUserUid())

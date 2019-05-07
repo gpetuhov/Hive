@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         auth.startListenAuth()
         notificationManager.onResume()
         repo.startGettingConnectionStateUpdates { connected -> offline_wrapper.setVisible(!connected) }
+        repo.setUserOnline()
     }
 
     override fun onPause() {
@@ -92,6 +93,7 @@ class MainActivity : AppCompatActivity() {
         auth.stopListenAuth()
         notificationManager.onPause()
         repo.stopGettingConnectionStateUpdates()
+        repo.setUserOffline()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
