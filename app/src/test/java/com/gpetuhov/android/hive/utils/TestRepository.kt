@@ -413,4 +413,10 @@ class TestRepository : Repo {
             onError()
         }
     }
+
+    override fun startGettingConnectionStateUpdates(onChange: (Boolean) -> Unit) {
+    }
+
+    override fun stopGettingConnectionStateUpdates() {
+    }
 }

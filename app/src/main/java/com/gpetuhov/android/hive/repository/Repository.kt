@@ -1044,8 +1044,9 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // --- Connection state ---
 
-    // TODO: add comments
     override fun startGettingConnectionStateUpdates(onChange: (Boolean) -> Unit) {
+        // Firebase Realtime Database provides a special location at /.info/connected
+        // which is updated every time the Firebase Realtime Database client's connection state changes.
         connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected")
 
         connectedRefValueListener = object : ValueEventListener {
@@ -1067,6 +1068,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         connectedRef?.addValueEventListener(connectedRefValueListener)
 
+        // This is needed, because without any other active listeners,
+        // Firebase closes the connection after 60 seconds of inactivity.
         initKeepAliveListener()
     }
 
@@ -2042,11 +2045,11 @@ class Repository(private val context: Context, private val settings: Settings) :
     // --- Connection state ---
 
     // Without this listener Realtime Database disconnects from the backend after 60 seconds of inactivity,
-    // because the app uses it only to monitor connection state.
+    // because the app actually uses it only to monitor connection state.
     // For all other purposes the app uses Firestore.
     private fun initKeepAliveListener() {
-        // The node may even not exist.
-        // But the database rules MUST allow read. Don't forget to configure them in Firebase console.
+        // We may listen to any node, even if it does not exist.
+        // But the database rules MUST allow read. Don't forget to configure them in Firebase console!
         keepAliveRef = FirebaseDatabase.getInstance().getReference("keepalive")
 
         keepAliveRefValueListener = object : ValueEventListener {
