@@ -113,8 +113,6 @@
     <string name="my_location">Мое местоположение</string>
     <string name="zoom_in">Приблизить</string>
     <string name="zoom_out">Отдалить</string>
-    <string name="online">online</string>
-    <string name="offline">offline</string>
 
     <!-- UserDetailsFragment -->
     <string name="user_details">Пользователь</string>
@@ -134,6 +132,9 @@
     <string name="email_subject">Письмо из Hive</string>
     <string name="skype_not_installed">Skype не установлен</string>
     <string name="information">Информация</string>
+    <string name="online">в сети</string>
+    <string name="offline">не в сети</string>
+    <string name="last_seen">был(а)</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>

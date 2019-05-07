@@ -113,8 +113,6 @@
     <string name="my_location">My location</string>
     <string name="zoom_in">Zoom in</string>
     <string name="zoom_out">Zoom out</string>
-    <string name="online">online</string>
-    <string name="offline">offline</string>
 
     <!-- UserDetailsFragment -->
     <string name="user_details">User details</string>
@@ -134,6 +132,9 @@
     <string name="email_subject">Email from Hive</string>
     <string name="skype_not_installed">Skype not installed</string>
     <string name="information">Information</string>
+    <string name="online">online</string>
+    <string name="offline">offline</string>
+    <string name="last_seen">last seen</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>

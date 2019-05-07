@@ -39,7 +39,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
             val isOnline = user?.isOnline ?: false
             onlineVisible(isOnline)
-            lastSeen(user?.getLastSeenTime() ?: "")
+
+            val lastSeenPrefix = context.getString(R.string.last_seen)
+            val lastSeen = user?.getLastSeenTime() ?: ""
+            lastSeen("$lastSeenPrefix $lastSeen")
             lastSeenVisible(!isOnline)
         }
 

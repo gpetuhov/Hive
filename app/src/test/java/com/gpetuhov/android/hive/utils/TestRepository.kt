@@ -419,4 +419,10 @@ class TestRepository : Repo {
 
     override fun stopGettingConnectionStateUpdates() {
     }
+
+    override fun setUserOnline() {
+    }
+
+    override fun setUserOffline() {
+    }
 }
