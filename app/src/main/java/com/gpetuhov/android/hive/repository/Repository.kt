@@ -232,6 +232,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private var connectedRef: DatabaseReference? = null
     private lateinit var connectedRefValueListener: ValueEventListener
+    private var keepAliveRef: DatabaseReference? = null
+    private lateinit var keepAliveRefValueListener: ValueEventListener
 
     init {
         // Offline data caching is enabled by default in Android.
@@ -1044,7 +1046,9 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // TODO: add comments
     override fun startGettingConnectionStateUpdates(onChange: (Boolean) -> Unit) {
-        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected")
+        val firebase = FirebaseDatabase.getInstance()
+
+        connectedRef = firebase.getReference(".info/connected")
 
         connectedRefValueListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -1064,10 +1068,26 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
 
         connectedRef?.addValueEventListener(connectedRefValueListener)
+
+        keepAliveRef = firebase.getReference("keepalive")
+
+        keepAliveRefValueListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Do nothing
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Do nothing
+            }
+        }
+
+        // Without this listener Realtime Database disconnects from the backend after 60 seconds of inactivity
+        keepAliveRef?.addValueEventListener(keepAliveRefValueListener)
     }
 
     override fun stopGettingConnectionStateUpdates() {
         connectedRef?.removeEventListener(connectedRefValueListener)
+        keepAliveRef?.removeEventListener(keepAliveRefValueListener)
     }
 
     // === Private methods ===
