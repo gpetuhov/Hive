@@ -17,9 +17,32 @@ class OnlineStatusManager(var repo: Repo) {
 
     // === Public methods ===
 
-    fun setUserOnline() = userOnlineSub.onNext(true)
+    fun onResume(onConnectionStateChanged: (Boolean) -> Unit) {
+        repo.setForeground(true)
 
-    fun setUserOffline() = userOnlineSub.onNext(false)
+        repo.startGettingConnectionStateUpdates { connected ->
+            onConnectionStateChanged(connected)
+
+            // This is needed to show other users that the user is online,
+            // if the network goes off and back on,
+            // while the user is in MainActivity
+            // (MainActivity onResume state does not change).
+            if (connected) setUserOnline()
+        }
+
+        // Others will see, that this user is online,
+        // only when this user's MainActivity is in onResume state.
+        setUserOnline()
+    }
+
+    fun onPause() {
+        repo.setForeground(false)
+        repo.stopGettingConnectionStateUpdates()
+
+        // As soon, as this user's MainActivity switches in onPause state,
+        // others should see that this user goes offline.
+        setUserOffline()
+    }
 
     // === Private methods ===
 
@@ -36,4 +59,8 @@ class OnlineStatusManager(var repo: Repo) {
                 }
             }
     }
+
+    private fun setUserOnline() = userOnlineSub.onNext(true)
+
+    private fun setUserOffline() = userOnlineSub.onNext(false)
 }

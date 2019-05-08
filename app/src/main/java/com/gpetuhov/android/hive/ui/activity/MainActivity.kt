@@ -13,7 +13,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
-import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UnreadMessagesExistViewModel
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_CHECK_SETTINGS = 101
     }
 
-    @Inject lateinit var repo: Repo
     @Inject lateinit var locationManager: LocationManager
     @Inject lateinit var auth: Auth
     @Inject lateinit var mapManager: MapManager
@@ -78,34 +76,16 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         checkPlayServicesAndPermissions()
-        repo.setForeground(true)
         auth.startListenAuth()
         notificationManager.onResume()
-        repo.startGettingConnectionStateUpdates { connected ->
-            offline_wrapper.setVisible(!connected)
-
-            // This is needed to show other users that the user is online,
-            // if the network goes off and back on,
-            // while the user is in MainActivity
-            // (MainActivity onResume state does not change).
-            if (connected) onlineStatusManager.setUserOnline()
-        }
-
-        // Others will see, that this user is online,
-        // only when this user's MainActivity is in onResume state.
-        onlineStatusManager.setUserOnline()
+        onlineStatusManager.onResume { connected -> offline_wrapper.setVisible(!connected) }
     }
 
     override fun onPause() {
         super.onPause()
-        repo.setForeground(false)
         auth.stopListenAuth()
         notificationManager.onPause()
-        repo.stopGettingConnectionStateUpdates()
-
-        // As soon, as this user's MainActivity switches in onPause state,
-        // others should see that this user goes offline.
-        onlineStatusManager.setUserOffline()
+        onlineStatusManager.onPause()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
