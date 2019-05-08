@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         initNavigation()
         initAuthManager()
+        initOfflineSnackbar()
         checkLocationSettings()
 
         val viewModel = ViewModelProviders.of(this).get(UnreadMessagesExistViewModel::class.java)
@@ -82,20 +83,7 @@ class MainActivity : AppCompatActivity() {
         checkPlayServicesAndPermissions()
         auth.startListenAuth()
         notificationManager.onResume()
-        onlineStatusManager.onResume { connected ->
-            if (connected) {
-                offlineSnackbar?.dismiss()
-            } else {
-                offlineSnackbar = Snackbar.make(coordinator_layout, R.string.connecting, Snackbar.LENGTH_INDEFINITE)
-                val offlineSnackbarView = offlineSnackbar?.view
-                offlineSnackbarView?.setBackgroundColor(ContextCompat.getColor(this, R.color.md_white_1000))
-                offlineSnackbarView?.layoutParams?.width = ViewGroup.LayoutParams.MATCH_PARENT
-                val offlineSnackbarTextView = offlineSnackbarView?.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
-                offlineSnackbarTextView?.setTextColor(ContextCompat.getColor(this, R.color.md_grey_600))
-                offlineSnackbar?.setAction(R.string.close) {offlineSnackbar?.dismiss() }
-                offlineSnackbar?.show()
-            }
-        }
+        onlineStatusManager.onResume { connected -> showHideOfflineSnackbar(!connected) }
     }
 
     override fun onPause() {
@@ -166,5 +154,27 @@ class MainActivity : AppCompatActivity() {
     private fun updateMessagesIcon(unreadMessagesExist: Boolean) {
         val iconId = if (unreadMessagesExist) R.drawable.ic_mail_unread else R.drawable.ic_mail_read
         navigation_view.menu.findItem(R.id.navigation_messages).icon = ContextCompat.getDrawable(this, iconId)
+    }
+
+    private fun initOfflineSnackbar() {
+        // Create snackbar
+        offlineSnackbar = Snackbar.make(coordinator_layout, R.string.connecting, Snackbar.LENGTH_INDEFINITE)
+
+        // Set snackbar action
+        offlineSnackbar?.setAction(R.string.close) {offlineSnackbar?.dismiss() }
+
+        // Change snackbar background color and width
+        val offlineSnackbarView = offlineSnackbar?.view
+        offlineSnackbarView?.setBackgroundColor(ContextCompat.getColor(this, R.color.md_white_1000))
+        offlineSnackbarView?.layoutParams?.width = ViewGroup.LayoutParams.MATCH_PARENT
+
+        // Change snackbar text color
+        val offlineSnackbarTextView = offlineSnackbarView?.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+        offlineSnackbarTextView?.setTextColor(ContextCompat.getColor(this, R.color.md_grey_600))
+    }
+
+    private fun showHideOfflineSnackbar(show: Boolean) {
+        if (show) offlineSnackbar?.show()
+        else offlineSnackbar?.dismiss()
     }
 }
