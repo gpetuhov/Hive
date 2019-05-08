@@ -84,6 +84,9 @@ class MainActivity : AppCompatActivity() {
         auth.startListenAuth()
         notificationManager.onResume()
         repo.startGettingConnectionStateUpdates { connected -> offline_wrapper.setVisible(!connected) }
+
+        // Others will see, that this user is online,
+        // only when this user's MainActivity is in onResume state.
         repo.setUserOnline()
     }
 
@@ -93,6 +96,9 @@ class MainActivity : AppCompatActivity() {
         auth.stopListenAuth()
         notificationManager.onPause()
         repo.stopGettingConnectionStateUpdates()
+
+        // As soon, as this user's MainActivity switches in onPause state,
+        // others should see that this user goes offline.
         repo.setUserOffline()
     }
 

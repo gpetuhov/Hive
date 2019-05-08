@@ -206,6 +206,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     private var geoFirestore: GeoFirestore
     private var geoQuery: GeoQuery? = null
 
+    // Firebase
+    private val firebase = FirebaseDatabase.getInstance()
+
     // Cloud Storage
     private var storage = FirebaseStorage.getInstance()
 
@@ -413,14 +416,41 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun saveUserInterests(newInterests: String, onError: () -> Unit) =
         saveUserSingleDataRemote(INTERESTS_KEY, newInterests, { /* Do nothing */ }, onError)
 
-    override fun setUserOnline() =
+    // Set user online status on the backend for the other users to know, that this user is online
+    override fun setUserOnline() {
+        // Set user online status BOTH in Firebase Database and Firestore
+        // (in Firestore - for others to see,
+        // in Firebase Database - to change from offline,
+        // so that corresponding Cloud Function is triggered,
+        // when the user goes offline again)
         saveUserSingleDataRemote(IS_ONLINE_KEY, true, { /* Do nothing */ }, { /* Do nothing */ })
 
+        val onlineStatusRef = firebase.getReference("online/" + currentUserUid())
+        onlineStatusRef.setValue(true)
+
+        // This will be executed on the BACKEND, when the client disconnects.
+        // This is needed to set user's offline status on the backend for others to see,
+        // when the user terminates the app or the network on user's device shuts down unexpectedly.
+        // Realtime Database will monitor client's connection state and change online value to false,
+        // when there is no connection with the client.
+        // This feature is present ONLY in Firebase Realtime Database. There is no such feature in Firestore.
+        // That's why we have to use Realtime Database here.
+        // Note that here we set online value to false ONLY in Realtime Database.
+        // To set online value to false in Firestore we use corresponding Cloud Function,
+        // which is triggered on every Realtime Database update.
+        onlineStatusRef.onDisconnect().setValue(false)
+    }
+
+    // Set user offline status on the backend for the other users to know, that this user goes offline
     override fun setUserOffline() {
-        val data = HashMap<String, Any>()
-        data[IS_ONLINE_KEY] = false
-        data[LAST_SEEN_KEY] = FieldValue.serverTimestamp()
-        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+        // Set user offline status ONLY in Firebase Database.
+        // This will trigger the corresponding Cloud Function,
+        // which will change user online status to false in Firestore
+        // and update last seen timestamp.
+        // We do not update online status in Firestore directly,
+        // because we have the Cloud Function, that listens to Realtime Database updates,
+        // and will update online status in Firestore for us anyway.
+        firebase.getReference("online/" + currentUserUid()).setValue(false)
     }
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
@@ -1058,7 +1088,10 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun startGettingConnectionStateUpdates(onChange: (Boolean) -> Unit) {
         // Firebase Realtime Database provides a special location at /.info/connected
         // which is updated every time the Firebase Realtime Database client's connection state changes.
-        connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected")
+        // There is no such feature in Firestore.
+        // Note that we use it only to notify CURRENT user, that the app is not connected to the backend.
+        // This is not used to show user's online status for other users.
+        connectedRef = firebase.getReference(".info/connected")
 
         connectedRefValueListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -1073,7 +1106,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         connectedRef?.addValueEventListener(connectedRefValueListener)
 
-        // This is needed, because without any other active listeners,
+        // This is needed, because without any other active listeners (except the above one),
         // Firebase closes the connection after 60 seconds of inactivity.
         initKeepAliveListener()
     }
@@ -2056,7 +2089,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun initKeepAliveListener() {
         // We may listen to any node, even if it does not exist.
         // But the database rules MUST allow read. Don't forget to configure them in Firebase console!
-        keepAliveRef = FirebaseDatabase.getInstance().getReference("keepalive")
+        keepAliveRef = firebase.getReference("keepalive")
 
         keepAliveRefValueListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
