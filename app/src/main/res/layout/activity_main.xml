@@ -98,26 +98,6 @@
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <LinearLayout
-            android:id="@+id/offline_wrapper"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/basic_view_size"
-            android:background="@color/md_white_1000"
-            android:gravity="center"
-            android:visibility="gone"
-            android:alpha="0.8"
-            app:layout_constraintBottom_toTopOf="@id/navigation_view"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/connecting"
-                style="@style/mediumTextStyle"/>
-
-    </LinearLayout>
-
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigation_view"
             android:layout_width="match_parent"

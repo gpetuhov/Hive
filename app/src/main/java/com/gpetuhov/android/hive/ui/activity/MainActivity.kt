@@ -95,8 +95,6 @@ class MainActivity : AppCompatActivity() {
                 offlineSnackbar?.setAction(R.string.close) {offlineSnackbar?.dismiss() }
                 offlineSnackbar?.show()
             }
-
-//            offline_wrapper.setVisible(!connected)
         }
     }
 
