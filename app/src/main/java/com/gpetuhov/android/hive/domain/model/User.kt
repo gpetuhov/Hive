@@ -1,7 +1,7 @@
 package com.gpetuhov.android.hive.domain.model
 
 import com.google.android.gms.maps.model.LatLng
-import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
+import com.gpetuhov.android.hive.util.getLastSeenTimeFromTimestamp
 
 // Represents data both for the current user and search results.
 // Models at domain layer are just POJOs for keeping data.
@@ -57,5 +57,5 @@ data class User(
 
     fun getOffer(offerUid: String) = offerList.firstOrNull { it.uid == offerUid }
 
-    fun getLastSeenTime() = getDateTimeFromTimestamp(lastSeen)
+    fun getLastSeenTime() = getLastSeenTimeFromTimestamp(lastSeen)
 }

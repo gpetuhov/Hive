@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
 import com.gpetuhov.android.hive.util.Settings
 import org.jetbrains.anko.collections.forEachWithIndex
+import java.util.*
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : UserBaseController() {
@@ -44,6 +45,9 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             val lastSeen = user?.getLastSeenTime() ?: ""
             lastSeen("$lastSeenPrefix $lastSeen")
             lastSeenVisible(!isOnline)
+
+            val date = Date()
+            date.year
         }
 
         summary(context, false) { presenter.openAllReviews() }

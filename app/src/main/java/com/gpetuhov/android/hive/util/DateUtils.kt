@@ -31,6 +31,27 @@ fun getDateTimeFromTimestampInMilliseconds(timestamp: Long) = getDateTimeFromTim
     isWithTime = true
 )
 
+fun getLastSeenTimeFromTimestamp(timestamp: Long): String {
+    val timestampInMillis = timestamp * 1000
+    val now = Calendar.getInstance()
+    val timeToCheck = Calendar.getInstance()
+    timeToCheck.timeInMillis = timestampInMillis
+
+    if (now.get(Calendar.YEAR) == timeToCheck.get(Calendar.YEAR)
+        && (now.get(Calendar.DAY_OF_YEAR) == timeToCheck.get(Calendar.DAY_OF_YEAR))) {
+        // If today, then display only time
+
+        val hours = timeToCheck.get(Calendar.HOUR_OF_DAY)
+        val minutes = timeToCheck.get(Calendar.MINUTE)
+
+        return "$hours:$minutes"
+
+    } else {
+        // Otherwise display full date
+        return getDateTimeFromTimestamp(timestamp)
+    }
+}
+
 // === Private ===
 
 private fun getDateTimeFromTimestamp(timestamp: Long, isMillis: Boolean, isWithTime: Boolean): String {
