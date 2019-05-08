@@ -24,6 +24,8 @@ class OnlineStatusManager(var repo: Repo) {
     // === Private methods ===
 
     private fun startUserOnlineSub() {
+        // This debounce is needed to avoid rapid user online status change
+        // on screen rotation (because on screen rotation MainActivity onPause and onResume are triggered).
         userOnlineSubDisposable = userOnlineSub
             .debounce(Constants.User.USER_STATUS_LATENCY, TimeUnit.MILLISECONDS)
             .subscribe { isOnline ->

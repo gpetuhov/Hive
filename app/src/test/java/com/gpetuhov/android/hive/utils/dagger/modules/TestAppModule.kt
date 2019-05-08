@@ -61,4 +61,8 @@ class TestAppModule {
     @Provides
     @Singleton
     fun providesRepo(): Repo = TestRepository()
+
+    @Provides
+    @Singleton
+    fun providesOnlineStatusManager(repo: Repo) = OnlineStatusManager(repo)
 }
