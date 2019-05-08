@@ -1094,13 +1094,6 @@ class Repository(private val context: Context, private val settings: Settings) :
         connectedRefValueListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val connected = snapshot.getValue(Boolean::class.java) ?: false
-
-                // This is needed to show other users that the user is online,
-                // if the network goes off and back on,
-                // while the user is in MainActivity
-                // (MainActivity onResume state does not change).
-                if (connected) setUserOnline()
-
                 onChange(connected)
             }
 

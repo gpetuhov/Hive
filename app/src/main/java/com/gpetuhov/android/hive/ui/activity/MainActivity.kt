@@ -81,7 +81,15 @@ class MainActivity : AppCompatActivity() {
         repo.setForeground(true)
         auth.startListenAuth()
         notificationManager.onResume()
-        repo.startGettingConnectionStateUpdates { connected -> offline_wrapper.setVisible(!connected) }
+        repo.startGettingConnectionStateUpdates { connected ->
+            offline_wrapper.setVisible(!connected)
+
+            // This is needed to show other users that the user is online,
+            // if the network goes off and back on,
+            // while the user is in MainActivity
+            // (MainActivity onResume state does not change).
+            if (connected) onlineStatusManager.setUserOnline()
+        }
 
         // Others will see, that this user is online,
         // only when this user's MainActivity is in onResume state.
