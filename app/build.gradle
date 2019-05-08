@@ -12,8 +12,8 @@ apply plugin: 'io.fabric'
 // Firebase Performance
 apply plugin: 'com.google.firebase.firebase-perf'
 
-def appVersionCode = 1044
-def appVersionName = "0.1.44"
+def appVersionCode = 1045
+def appVersionName = "0.1.45"
 
 // Required by Epoxy
 kapt {
