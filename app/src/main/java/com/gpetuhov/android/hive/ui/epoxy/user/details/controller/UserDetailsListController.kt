@@ -8,8 +8,8 @@ import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPrese
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.getLastSeenText
 import org.jetbrains.anko.collections.forEachWithIndex
-import java.util.*
 import javax.inject.Inject
 
 class UserDetailsListController(private val presenter: UserDetailsFragmentPresenter) : UserBaseController() {
@@ -42,8 +42,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             onlineVisible(isOnline)
 
             val lastSeen = user?.getLastSeenTime() ?: ""
-            val lastSeenPrefix = if (lastSeen.length > 5) context.getString(R.string.last_seen) else context.getString(R.string.last_seen_at)
-            lastSeen("$lastSeenPrefix $lastSeen")
+            lastSeen(getLastSeenText(context, lastSeen))
             lastSeenVisible(!isOnline)
         }
 

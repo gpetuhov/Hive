@@ -1,5 +1,7 @@
 package com.gpetuhov.android.hive.util
 
+import android.content.Context
+import com.gpetuhov.android.hive.R
 import java.text.DateFormat
 import java.util.*
 
@@ -37,19 +39,25 @@ fun getLastSeenTimeFromTimestamp(timestamp: Long): String {
     val timeToCheck = Calendar.getInstance()
     timeToCheck.timeInMillis = timestampInMillis
 
-    if (now.get(Calendar.YEAR) == timeToCheck.get(Calendar.YEAR)
+    return if (now.get(Calendar.YEAR) == timeToCheck.get(Calendar.YEAR)
         && (now.get(Calendar.DAY_OF_YEAR) == timeToCheck.get(Calendar.DAY_OF_YEAR))) {
         // If today, then display only time
 
         val hours = timeToCheck.get(Calendar.HOUR_OF_DAY)
         val minutes = timeToCheck.get(Calendar.MINUTE)
 
-        return "$hours:$minutes"
+        "$hours:$minutes"
 
     } else {
         // Otherwise display full date
-        return getDateTimeFromTimestamp(timestamp)
+        getDateTimeFromTimestamp(timestamp)
     }
+}
+
+fun getLastSeenText(context: Context?, lastSeen: String): String {
+    // For full date display "last seen", for only time display "last seen at"
+    val lastSeenPrefix = (if (lastSeen.length > 5) context?.getString(R.string.last_seen) else context?.getString(R.string.last_seen_at)) ?: ""
+    return "$lastSeenPrefix $lastSeen"
 }
 
 // === Private ===

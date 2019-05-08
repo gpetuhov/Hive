@@ -12,6 +12,7 @@ import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.getLastSeenText
 import javax.inject.Inject
 
 class OfferDetailsListController(private val presenter: OfferDetailsFragmentPresenter) : BaseController() {
@@ -63,8 +64,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 onlineVisible(isOnline)
 
                 val lastSeen = user?.getLastSeenTime() ?: ""
-                val lastSeenPrefix = if (lastSeen.length > 5) context.getString(R.string.last_seen) else context.getString(R.string.last_seen_at)
-                lastSeen("$lastSeenPrefix $lastSeen")
+                lastSeen(getLastSeenText(context, lastSeen))
                 lastSeenVisible(!isOnline)
             }
 
