@@ -135,6 +135,7 @@
     <string name="online">online</string>
     <string name="offline">offline</string>
     <string name="last_seen">last seen</string>
+    <string name="last_seen_at">last seen at</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>

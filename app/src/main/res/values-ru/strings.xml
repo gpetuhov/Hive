@@ -135,6 +135,7 @@
     <string name="online">в сети</string>
     <string name="offline">не в сети</string>
     <string name="last_seen">был(а)</string>
+    <string name="last_seen_at">был(а) в</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>

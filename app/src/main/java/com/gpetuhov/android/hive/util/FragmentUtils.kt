@@ -54,7 +54,7 @@ fun Fragment.setMainHeaderOnlineAndLastSeen(isOnline: Boolean, lastSeen: String)
     getMainHeaderOnline()?.setVisible(isOnline)
     getMainHeaderLastSeen()?.setVisible(!isOnline)
 
-    val lastSeenPrefix = context?.getString(R.string.last_seen) ?: ""
+    val lastSeenPrefix = (if (lastSeen.length > 5) context?.getString(R.string.last_seen) else context?.getString(R.string.last_seen_at)) ?: ""
     val lastSeenText = "$lastSeenPrefix $lastSeen"
     getMainHeaderLastSeen()?.text = lastSeenText
 }
