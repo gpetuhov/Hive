@@ -1312,7 +1312,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             education = doc.getString(EDUCATION_KEY) ?: "",
             work = doc.getString(WORK_KEY) ?: "",
             interests = doc.getString(INTERESTS_KEY) ?: "",
-            lastSeen = getTimestampFromDocumentSnapshot(doc, LAST_SEEN_KEY)
+            lastSeen = (doc.getLong(LAST_SEEN_KEY) ?: System.currentTimeMillis()) / 1000
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
