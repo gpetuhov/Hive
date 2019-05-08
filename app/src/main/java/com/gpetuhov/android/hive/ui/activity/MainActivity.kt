@@ -14,10 +14,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
 import com.gpetuhov.android.hive.domain.repository.Repo
-import com.gpetuhov.android.hive.managers.LocationManager
-import com.gpetuhov.android.hive.managers.LocationMapManager
-import com.gpetuhov.android.hive.managers.MapManager
-import com.gpetuhov.android.hive.managers.NotificationManager
+import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UnreadMessagesExistViewModel
 import com.gpetuhov.android.hive.util.checkPermissions
@@ -40,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var mapManager: MapManager
     @Inject lateinit var locationMapManager: LocationMapManager
     @Inject lateinit var notificationManager: NotificationManager
+    @Inject lateinit var onlineStatusManager: OnlineStatusManager
 
     private lateinit var navController: NavController
 
@@ -87,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         // Others will see, that this user is online,
         // only when this user's MainActivity is in onResume state.
-        repo.setUserOnline()
+        onlineStatusManager.setUserOnline()
     }
 
     override fun onPause() {
@@ -99,7 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         // As soon, as this user's MainActivity switches in onPause state,
         // others should see that this user goes offline.
-        repo.setUserOffline()
+        onlineStatusManager.setUserOffline()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

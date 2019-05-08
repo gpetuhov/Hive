@@ -55,4 +55,8 @@ class AppModule {
     @Provides
     @Singleton
     fun providesRepo(context: Context, settings: Settings): Repo = Repository(context, settings)
+
+    @Provides
+    @Singleton
+    fun providesOnlineStatusManager(repo: Repo) = OnlineStatusManager(repo)
 }
