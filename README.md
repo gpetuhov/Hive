@@ -5,9 +5,9 @@ Hive - new way of communication. Beta-test link: https://play.google.com/apps/te
 Android
 
 ## Requirements
-* Android Studio 3.5 Canary 13
+* Android Studio 3.5 Beta 1
 * Kotlin 1.3.31
-* Android Gradle Plugin 3.5.0-alpha13
+* Android Gradle Plugin 3.5.0-beta1
 * Gradle wrapper 5.4-rc-1
 * AAPT 2
 
