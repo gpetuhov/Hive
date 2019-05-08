@@ -24,6 +24,7 @@
         your device
     </string>
     <string name="connecting">Connecting to network…</string>
+    <string name="close">Close</string>
 
     <!-- ProfileFragment -->
     <string name="user_picture">User picture</string>

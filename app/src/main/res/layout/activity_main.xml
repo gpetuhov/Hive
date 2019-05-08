@@ -78,17 +78,25 @@
 
     </LinearLayout>
 
-    <fragment
-            android:id="@+id/nav_host"
-            android:name="androidx.navigation.fragment.NavHostFragment"
+    <!-- This is needed for the Connecting to network snackbar -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:defaultNavHost="true"
-            app:layout_constraintBottom_toTopOf="@+id/offline_wrapper"
+            app:layout_constraintBottom_toTopOf="@id/navigation_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:navGraph="@navigation/nav_graph_main"
-            app:layout_constraintTop_toBottomOf="@+id/header"/>
+            app:layout_constraintTop_toBottomOf="@+id/header">
+
+        <fragment
+                android:id="@+id/nav_host"
+                android:name="androidx.navigation.fragment.NavHostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"
+                app:navGraph="@navigation/nav_graph_main"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <LinearLayout
             android:id="@+id/offline_wrapper"
@@ -97,6 +105,7 @@
             android:background="@color/md_white_1000"
             android:gravity="center"
             android:visibility="gone"
+            android:alpha="0.8"
             app:layout_constraintBottom_toTopOf="@id/navigation_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">

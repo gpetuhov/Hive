@@ -3,6 +3,8 @@ package com.gpetuhov.android.hive.ui.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -10,6 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.snackbar.Snackbar
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.auth.Auth
@@ -17,7 +20,6 @@ import com.gpetuhov.android.hive.managers.*
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.UnreadMessagesExistViewModel
 import com.gpetuhov.android.hive.util.checkPermissions
-import com.gpetuhov.android.hive.util.setVisible
 import com.pawegio.kandroid.startActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.longToast
@@ -38,6 +40,8 @@ class MainActivity : AppCompatActivity() {
     @Inject lateinit var onlineStatusManager: OnlineStatusManager
 
     private lateinit var navController: NavController
+
+    private var offlineSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +82,22 @@ class MainActivity : AppCompatActivity() {
         checkPlayServicesAndPermissions()
         auth.startListenAuth()
         notificationManager.onResume()
-        onlineStatusManager.onResume { connected -> offline_wrapper.setVisible(!connected) }
+        onlineStatusManager.onResume { connected ->
+            if (connected) {
+                offlineSnackbar?.dismiss()
+            } else {
+                offlineSnackbar = Snackbar.make(coordinator_layout, R.string.connecting, Snackbar.LENGTH_INDEFINITE)
+                val offlineSnackbarView = offlineSnackbar?.view
+                offlineSnackbarView?.setBackgroundColor(ContextCompat.getColor(this, R.color.md_white_1000))
+                offlineSnackbarView?.layoutParams?.width = ViewGroup.LayoutParams.MATCH_PARENT
+                val offlineSnackbarTextView = offlineSnackbarView?.findViewById<TextView>(com.google.android.material.R.id.snackbar_text)
+                offlineSnackbarTextView?.setTextColor(ContextCompat.getColor(this, R.color.md_grey_600))
+                offlineSnackbar?.setAction(R.string.close) {offlineSnackbar?.dismiss() }
+                offlineSnackbar?.show()
+            }
+
+//            offline_wrapper.setVisible(!connected)
+        }
     }
 
     override fun onPause() {
