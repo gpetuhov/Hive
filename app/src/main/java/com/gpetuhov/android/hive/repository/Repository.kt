@@ -1089,13 +1089,18 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Firebase Realtime Database provides a special location at /.info/connected
         // which is updated every time the Firebase Realtime Database client's connection state changes.
         // There is no such feature in Firestore.
-        // Note that we use it only to notify CURRENT user, that the app is not connected to the backend.
-        // This is not used to show user's online status for other users.
         connectedRef = firebase.getReference(".info/connected")
 
         connectedRefValueListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val connected = snapshot.getValue(Boolean::class.java) ?: false
+
+                // This is needed to show other users that the user is online,
+                // if the network goes off and back on,
+                // while the user is in MainActivity
+                // (MainActivity onResume state does not change).
+                if (connected) setUserOnline()
+
                 onChange(connected)
             }
 
