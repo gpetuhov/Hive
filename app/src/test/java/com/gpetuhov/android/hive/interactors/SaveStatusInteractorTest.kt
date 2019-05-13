@@ -1,4 +1,4 @@
-package com.gpetuhov.android.hive
+package com.gpetuhov.android.hive.interactors
 
 import com.gpetuhov.android.hive.domain.interactor.SaveStatusInteractor
 import com.gpetuhov.android.hive.interactors.base.SaveUserPropertyInteractorTest

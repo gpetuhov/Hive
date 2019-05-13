@@ -32,6 +32,7 @@ class TestRepository : Repo {
     var work = ""
     var interests = ""
     var status = ""
+    var activity = Constants.DEFAULT_ACTIVITY
 
     override fun isForeground() = false
 
@@ -434,6 +435,12 @@ class TestRepository : Repo {
             status = newStatus
         } else {
             onError()
+        }
+    }
+
+    override fun saveUserActivity(newActivity: Int) {
+        if (isSuccess) {
+            activity = newActivity
         }
     }
 }
