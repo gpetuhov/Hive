@@ -50,29 +50,25 @@ class ActivityRecognitionManager(private val context: Context) {
     // === Private methods ===
 
     private fun getActivityRecognitionRequest() : ActivityTransitionRequest {
+        // We detect these activities
         val activities = listOf(
             DetectedActivity.IN_VEHICLE,
             DetectedActivity.ON_BICYCLE,
+            DetectedActivity.STILL,
             DetectedActivity.WALKING,
-            DetectedActivity.RUNNING,
-            DetectedActivity.STILL
+            DetectedActivity.RUNNING
         )
 
         val transitions = mutableListOf<ActivityTransition>()
 
         activities.forEach { activity ->
+            // We detect only when user starts doing something (enters transition)
             val enterTransition = ActivityTransition.Builder()
                 .setActivityType(activity)
                 .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_ENTER)
                 .build()
 
-            val exitTransition = ActivityTransition.Builder()
-                .setActivityType(activity)
-                .setActivityTransition(ActivityTransition.ACTIVITY_TRANSITION_EXIT)
-                .build()
-
             transitions.add(enterTransition)
-            transitions.add(exitTransition)
         }
 
         return ActivityTransitionRequest(transitions)

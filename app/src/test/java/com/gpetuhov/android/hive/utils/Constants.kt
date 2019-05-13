@@ -93,6 +93,9 @@ class Constants {
         const val DUMMY_STATUS = "Working on a project"
         const val SAVE_STATUS_ERROR = "Save status error"
 
+        const val DUMMY_ACTIVITY = 3
+        const val SAVE_ACTIVITY_ERROR = "Save activity error"
+
         val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 
         private fun getDummyOffer(): Offer {

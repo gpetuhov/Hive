@@ -32,7 +32,8 @@ data class User(
     var work: String = "",
     var interests: String = "",
     var lastSeen: Long = System.currentTimeMillis() / 1000,
-    var status: String = ""
+    var status: String = "",
+    var activity: Int = 100
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
@@ -52,6 +53,7 @@ data class User(
     val hasWork get() = work != ""
     val hasInterests get() = interests != ""
     val hasStatus get() = status != ""
+    val hasActivity get() = activity != 100
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 
