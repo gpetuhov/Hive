@@ -45,6 +45,7 @@ class ProfileFragmentPresenter :
     private val saveEducationInteractor = SaveEducationInteractor(this)
     private val saveWorkInteractor = SaveWorkInteractor(this)
     private val saveInterestsInteractor = SaveInterestsInteractor(this)
+    private val saveStatusInteractor = SaveStatusInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -93,6 +94,9 @@ class ProfileFragmentPresenter :
 
     // Keeps current text entered in interests dialog
     private var tempInterests = ""
+
+    // Keeps current text entered in status dialog
+    private var tempStatus = ""
 
     init {
         HiveApp.appComponent.inject(this)
@@ -511,8 +515,23 @@ class ProfileFragmentPresenter :
 
     // --- Change status ---
 
-    fun showStatusDialog() {
-        // TODO: implement
+    fun showStatusDialog() = viewState.showStatusDialog()
+
+    // Prefill status dialog with currently entered text or current value
+    fun getStatusPrefill() = if (tempStatus != "") tempStatus else repo.currentUserStatus()
+
+    fun updateTempStatus(newStatus: String) {
+        tempStatus = newStatus
+    }
+
+    fun saveStatus() {
+        saveStatusInteractor.save(tempStatus)
+        dismissStatusDialog()
+    }
+
+    fun dismissStatusDialog() {
+        tempStatus = ""
+        viewState.dismissStatusDialog()
     }
 
     // --- Open photos ---
