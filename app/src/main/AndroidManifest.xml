@@ -24,6 +24,9 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyDvvwYjIUfP7si-5gclnuNFO5WreCkiJXQ"/>
 
+        <!-- This is required to prevent Google Maps from crashing in Android Pie -->
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
         <activity
                 android:name=".ui.activity.SplashActivity"
                 android:theme="@style/AppTheme.Launcher"
