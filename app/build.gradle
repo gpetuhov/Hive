@@ -117,34 +117,34 @@ dependencies {
     kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
 
     // Firebase core
-    implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.google.firebase:firebase-core:16.0.9'
 
     // Firestore
-    implementation 'com.google.firebase:firebase-firestore:18.2.0'
+    implementation 'com.google.firebase:firebase-firestore:19.0.0'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-database:16.1.0'
+    implementation 'com.google.firebase:firebase-database:17.0.0'
 
     // Firebase Cloud Storage
-    implementation 'com.google.firebase:firebase-storage:16.1.0'
+    implementation 'com.google.firebase:firebase-storage:17.0.0'
 
     // This must be explicitly set, otherwise the app will crash (used by FirebaseUI)
-    implementation 'com.google.firebase:firebase-auth:16.2.1'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
 
     // FirebaseUI for Firebase Auth
     implementation 'com.firebaseui:firebase-ui-auth:4.2.0'
 
     // Firebase Crashlytics
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.0'
 
     // Firebase Cloud Messaging
-    implementation 'com.google.firebase:firebase-messaging:17.6.0'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
 
     // Firebase Performance
-    implementation 'com.google.firebase:firebase-perf:16.2.5'
+    implementation 'com.google.firebase:firebase-perf:17.0.0'
 
     // Facebook (required for FirebaseUI)
-    implementation 'com.facebook.android:facebook-android-sdk:4.41.0'
+    implementation 'com.facebook.android:facebook-android-sdk:5.0.0'
 
     // Twitter (required for FirebaseUI)
     implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
