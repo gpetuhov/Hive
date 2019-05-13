@@ -56,6 +56,7 @@ class Constants {
             const val MAX_VISIBLE_PHOTO_COUNT = 5
             const val VISIBLE_RATING_REVIEW_COUNT = 10
             const val USER_STATUS_LATENCY = 1000L
+            const val NO_ACTIVITY = 100L
         }
     }
 

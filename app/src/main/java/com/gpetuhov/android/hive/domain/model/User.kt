@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.domain.model
 
 import com.google.android.gms.maps.model.LatLng
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.getLastSeenTimeFromTimestamp
 
 // Represents data both for the current user and search results.
@@ -33,7 +34,7 @@ data class User(
     var interests: String = "",
     var lastSeen: Long = System.currentTimeMillis() / 1000,
     var status: String = "",
-    var activity: Int = 100
+    var activity: Long = Constants.User.NO_ACTIVITY
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
@@ -53,7 +54,7 @@ data class User(
     val hasWork get() = work != ""
     val hasInterests get() = interests != ""
     val hasStatus get() = status != ""
-    val hasActivity get() = activity != 100
+    val hasActivity get() = activity != Constants.User.NO_ACTIVITY
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 

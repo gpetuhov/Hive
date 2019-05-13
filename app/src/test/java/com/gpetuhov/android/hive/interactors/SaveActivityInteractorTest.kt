@@ -23,8 +23,8 @@ class SaveActivityInteractorTest : SaveUserPropertyInteractorTest() {
         (repo as TestRepository).isSuccess = isSuccess
 
         val interactor = SaveActivityInteractor()
-        interactor.saveActivity(Constants.DUMMY_ACTIVITY)
+        interactor.saveActivity(Constants.DUMMY_ACTIVITY.toInt())
 
-        Assert.assertEquals(if (isSuccess) Constants.DUMMY_ACTIVITY else Constants.DEFAULT_ACTIVITY, (repo as TestRepository).activity)
+        Assert.assertEquals(if (isSuccess) Constants.DUMMY_ACTIVITY.toInt() else Constants.DEFAULT_ACTIVITY, (repo as TestRepository).activity)
     }
 }

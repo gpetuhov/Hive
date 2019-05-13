@@ -3,13 +3,15 @@ package com.gpetuhov.android.hive.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.google.android.gms.location.ActivityTransitionEvent
 import com.google.android.gms.location.ActivityTransitionResult
 import com.google.android.gms.location.DetectedActivity
+import com.gpetuhov.android.hive.domain.interactor.SaveActivityInteractor
 import timber.log.Timber
 
 // Receives intents with recognized user activity
 class ActivityRecognitionReceiver : BroadcastReceiver() {
+
+    private val saveActivityInteractor = SaveActivityInteractor()
 
     companion object {
         private const val TAG = "ActivityRecognition"
@@ -25,22 +27,22 @@ class ActivityRecognitionReceiver : BroadcastReceiver() {
     // === Private methods ===
 
     private fun processTransitionResult(result: ActivityTransitionResult) {
-        for (event in result.transitionEvents) {
-            onDetectedTransitionEvent(event)
-        }
-    }
+        // We need only the latest event
+        val event = result.transitionEvents.firstOrNull()
 
-    private fun onDetectedTransitionEvent(activity: ActivityTransitionEvent) {
-        when (activity.activityType) {
-            DetectedActivity.IN_VEHICLE,
-            DetectedActivity.ON_BICYCLE,
-            DetectedActivity.STILL,
-            DetectedActivity.WALKING,
-            DetectedActivity.RUNNING -> {
-                Timber.tag(TAG).d("Activity = ${activity.activityType}")
-            }
-            else -> {
-                // Do nothing
+        if (event != null) {
+            when (val activityType = event.activityType) {
+                DetectedActivity.IN_VEHICLE,
+                DetectedActivity.ON_BICYCLE,
+                DetectedActivity.STILL,
+                DetectedActivity.WALKING,
+                DetectedActivity.RUNNING -> {
+                    Timber.tag(TAG).d("Activity = $activityType")
+                    saveActivityInteractor.saveActivity(activityType)
+                }
+                else -> {
+                    // Do nothing
+                }
             }
         }
     }
