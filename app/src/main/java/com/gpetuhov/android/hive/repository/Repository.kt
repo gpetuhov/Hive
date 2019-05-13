@@ -79,6 +79,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val WORK_KEY = "work"
         private const val INTERESTS_KEY = "interests"
         private const val LAST_SEEN_KEY = "last_seen"
+        private const val STATUS_KEY = "status"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1305,7 +1306,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             education = doc.getString(EDUCATION_KEY) ?: "",
             work = doc.getString(WORK_KEY) ?: "",
             interests = doc.getString(INTERESTS_KEY) ?: "",
-            lastSeen = (doc.getLong(LAST_SEEN_KEY) ?: System.currentTimeMillis()) / 1000
+            lastSeen = (doc.getLong(LAST_SEEN_KEY) ?: System.currentTimeMillis()) / 1000,
+            status = doc.getString(STATUS_KEY) ?: ""
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
