@@ -8,6 +8,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.*
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.status
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
@@ -56,11 +57,12 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             email(user?.email ?: "")
         }
 
-        profileStatus {
+        status {
             id("profile_status")
 
             val hasStatus = user?.hasStatus ?: false
             status(if (hasStatus) user?.status ?: "" else context.getString(R.string.enter_status))
+            statusVisible(true)
             onStatusClick { presenter.showStatusDialog() }
 
             val hasActivity = user?.hasActivity ?: false
@@ -71,6 +73,8 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             runVisible(activity == DetectedActivity.RUNNING)
             bicycleVisible(activity == DetectedActivity.ON_BICYCLE)
             vehicleVisible(activity == DetectedActivity.IN_VEHICLE)
+
+            lineVisible(true)
         }
 
         summary(context, true) { presenter.openAllReviews() }
