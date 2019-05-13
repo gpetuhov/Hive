@@ -1,12 +1,14 @@
 package com.gpetuhov.android.hive.ui.epoxy.user.details.controller
 
 import android.content.Context
+import com.google.android.gms.location.DetectedActivity
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getLastSeenText
 import org.jetbrains.anko.collections.forEachWithIndex
@@ -47,13 +49,22 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         }
 
         val hasStatus = user?.hasStatus ?: false
-        if (hasStatus) {
+        val hasActivity = user?.hasActivity ?: false
+        val activity = (user?.activity ?: Constants.User.NO_ACTIVITY).toInt()
+        if (hasStatus || hasActivity) {
             userDetailsStatus {
                 id("user_details_status")
 
                 val status = user?.status ?: ""
                 status(status)
                 statusVisible(hasStatus)
+
+                activitySeparatorVisible(hasActivity && hasStatus)
+                stillVisible(activity == DetectedActivity.STILL)
+                walkVisible(activity == DetectedActivity.WALKING)
+                runVisible(activity == DetectedActivity.RUNNING)
+                bicycleVisible(activity == DetectedActivity.ON_BICYCLE)
+                vehicleVisible(activity == DetectedActivity.IN_VEHICLE)
             }
         }
 

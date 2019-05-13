@@ -140,6 +140,11 @@
     <string name="offline">offline</string>
     <string name="last_seen">last seen</string>
     <string name="last_seen_at">last seen at</string>
+    <string name="still">Still</string>
+    <string name="walking">Walking</string>
+    <string name="running">Running</string>
+    <string name="bicycle">On bicycle</string>
+    <string name="vehicle">In vehicle</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>

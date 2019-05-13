@@ -141,6 +141,11 @@
     <string name="offline">не в сети</string>
     <string name="last_seen">был(а)</string>
     <string name="last_seen_at">был(а) в</string>
+    <string name="still">Стоит на месте</string>
+    <string name="walking">Идет пешком</string>
+    <string name="running">Бежит</string>
+    <string name="bicycle">На велосипеде</string>
+    <string name="vehicle">В транспорте</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>

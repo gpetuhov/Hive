@@ -24,4 +24,124 @@
             style="@style/basicTextStyle"
             tools:text="Working on a project"/>
 
+    <View
+            android:id="@+id/user_details_activity_separator"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"/>
+
+    <LinearLayout
+            android:id="@+id/user_details_activity_still_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_still"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/still"
+                style="@style/basicTextStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/user_details_activity_walk_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_walk"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/walking"
+                style="@style/basicTextStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/user_details_activity_run_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_run"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/running"
+                style="@style/basicTextStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/user_details_activity_bicycle_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bike"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/bicycle"
+                style="@style/basicTextStyle"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/user_details_activity_vehicle_wrapper"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_car"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/vehicle"
+                style="@style/basicTextStyle"/>
+
+    </LinearLayout>
+
 </LinearLayout>
