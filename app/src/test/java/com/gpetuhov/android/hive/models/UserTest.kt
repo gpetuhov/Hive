@@ -162,4 +162,11 @@ class UserTest {
         user.interests = com.gpetuhov.android.hive.utils.Constants.DUMMY_INTERESTS
         assertEquals(true, user.hasInterests)
     }
+
+    @Test
+    fun emptyStatus() {
+        assertEquals(false, user.hasStatus)
+        user.status = com.gpetuhov.android.hive.utils.Constants.DUMMY_STATUS
+        assertEquals(true, user.hasStatus)
+    }
 }
