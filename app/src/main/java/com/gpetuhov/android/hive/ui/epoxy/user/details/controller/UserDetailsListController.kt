@@ -52,12 +52,13 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         val hasActivity = user?.hasActivity ?: false
         val activity = (user?.activity ?: Constants.User.NO_ACTIVITY).toInt()
         if (hasStatus || hasActivity) {
-            userDetailsStatus {
+            status {
                 id("user_details_status")
 
                 val status = user?.status ?: ""
                 status(status)
                 statusVisible(hasStatus)
+                onStatusClick { /* Do nothing */ }
 
                 activitySeparatorVisible(hasActivity && hasStatus)
                 stillVisible(activity == DetectedActivity.STILL)
@@ -65,6 +66,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                 runVisible(activity == DetectedActivity.RUNNING)
                 bicycleVisible(activity == DetectedActivity.ON_BICYCLE)
                 vehicleVisible(activity == DetectedActivity.IN_VEHICLE)
+
+                lineVisible(false)
             }
         }
 

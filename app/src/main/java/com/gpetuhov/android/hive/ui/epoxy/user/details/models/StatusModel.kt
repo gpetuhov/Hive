@@ -10,10 +10,11 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 import com.gpetuhov.android.hive.util.setVisible
 
 @EpoxyModelClass(layout = R.layout.user_details_status_view)
-abstract class UserDetailsStatusModel : EpoxyModelWithHolder<UserDetailsStatusHolder>() {
+abstract class StatusModel : EpoxyModelWithHolder<UserDetailsStatusHolder>() {
 
     @EpoxyAttribute lateinit var status: String
     @EpoxyAttribute var statusVisible = true
+    @EpoxyAttribute lateinit var onStatusClick: () -> Unit
 
     @EpoxyAttribute var activitySeparatorVisible = false
     @EpoxyAttribute var stillVisible = false
@@ -22,9 +23,12 @@ abstract class UserDetailsStatusModel : EpoxyModelWithHolder<UserDetailsStatusHo
     @EpoxyAttribute var bicycleVisible = false
     @EpoxyAttribute var vehicleVisible = false
 
+    @EpoxyAttribute var lineVisible = false
+
     override fun bind(holder: UserDetailsStatusHolder) {
         holder.status.text = status
         holder.status.setVisible(statusVisible)
+        holder.status.setOnClickListener { onStatusClick() }
 
         holder.activitySeparator.setVisible(activitySeparatorVisible)
         holder.still.setVisible(stillVisible)
@@ -32,6 +36,8 @@ abstract class UserDetailsStatusModel : EpoxyModelWithHolder<UserDetailsStatusHo
         holder.run.setVisible(runVisible)
         holder.bicycle.setVisible(bicycleVisible)
         holder.vehicle.setVisible(vehicleVisible)
+
+        holder.line.setVisible(lineVisible)
     }
 }
 
@@ -44,4 +50,6 @@ class UserDetailsStatusHolder : KotlinHolder() {
     val run by bind<View>(R.id.user_details_activity_run_wrapper)
     val bicycle by bind<View>(R.id.user_details_activity_bicycle_wrapper)
     val vehicle by bind<View>(R.id.user_details_activity_vehicle_wrapper)
+
+    val line by bind<View>(R.id.user_details_status_line)
 }
