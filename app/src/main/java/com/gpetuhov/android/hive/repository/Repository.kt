@@ -351,6 +351,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun currentUserInterests() = currentUser.value?.interests ?: ""
 
+    override fun currentUserStatus() = currentUser.value?.status ?: ""
+
     // Save user name
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) =
         saveUserSingleDataRemote(USERNAME_KEY, newUsername, { updateUserNameAndPicCollection() }, onError)
@@ -416,6 +418,10 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Save user interests
     override fun saveUserInterests(newInterests: String, onError: () -> Unit) =
         saveUserSingleDataRemote(INTERESTS_KEY, newInterests, { /* Do nothing */ }, onError)
+
+    // Save user status
+    override fun saveUserStatus(newStatus: String, onError: () -> Unit) =
+        saveUserSingleDataRemote(STATUS_KEY, newStatus, { /* Do nothing */ }, onError)
 
     // Set user online status on the backend for the other users to know, that this user is online
     override fun setUserOnline() {

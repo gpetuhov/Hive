@@ -39,4 +39,5 @@ interface ResultMessages {
     fun getSaveEducationErrorMessage(): String
     fun getSaveWorkErrorMessage(): String
     fun getSaveInterestsErrorMessage(): String
+    fun getSaveStatusErrorMessage(): String
 }

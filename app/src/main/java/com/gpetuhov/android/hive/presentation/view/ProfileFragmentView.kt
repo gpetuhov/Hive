@@ -186,6 +186,14 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun dismissInterestsDialog()
 
+    // === Change status ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showStatusDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissStatusDialog()
+
     // === Open privacy policy ===
 
     @StateStrategyType(SkipStrategy::class)

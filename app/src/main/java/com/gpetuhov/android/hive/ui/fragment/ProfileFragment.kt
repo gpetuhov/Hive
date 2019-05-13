@@ -212,6 +212,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun dismissInterestsDialog() = interestsDialog?.dismiss() ?: Unit
 
+    override fun showStatusDialog() {
+        // TODO
+    }
+
+    override fun dismissStatusDialog() {
+        // TODO
+    }
+
     override fun openPrivacyPolicy() {
         val action = ProfileFragmentDirections.actionNavigationProfileToPrivacyPolicyFragment()
         findNavController().navigate(action)

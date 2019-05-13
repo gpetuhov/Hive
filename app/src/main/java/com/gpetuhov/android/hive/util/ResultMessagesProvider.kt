@@ -90,5 +90,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveInterestsErrorMessage(): String = getString(R.string.interests_save_error)
 
+    override fun getSaveStatusErrorMessage(): String = getString(R.string.status_save_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }
