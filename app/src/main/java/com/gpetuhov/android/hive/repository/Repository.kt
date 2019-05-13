@@ -80,6 +80,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val INTERESTS_KEY = "interests"
         private const val LAST_SEEN_KEY = "last_seen"
         private const val STATUS_KEY = "status"
+        private const val ACTIVITY_KEY = "activity"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -422,6 +423,10 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Save user status
     override fun saveUserStatus(newStatus: String, onError: () -> Unit) =
         saveUserSingleDataRemote(STATUS_KEY, newStatus, { /* Do nothing */ }, onError)
+
+    // Save user activity
+    override fun saveUserActivity(newActivity: Int) =
+        saveUserSingleDataRemote(ACTIVITY_KEY, newActivity, { /* Do nothing */ }, { /* Do nothing */ })
 
     // Set user online status on the backend for the other users to know, that this user is online
     override fun setUserOnline() {

@@ -60,6 +60,7 @@ interface Repo {
     fun saveUserWork(newWork: String, onError: () -> Unit)
     fun saveUserInterests(newInterests: String, onError: () -> Unit)
     fun saveUserStatus(newStatus: String, onError: () -> Unit)
+    fun saveUserActivity(newActivity: Int)
     fun setUserOnline()
     fun setUserOffline()
     fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)

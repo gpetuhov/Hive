@@ -93,6 +93,7 @@ interface AppComponent {
     fun inject(saveWorkInteractor: SaveWorkInteractor)
     fun inject(saveInterestsInteractor: SaveInterestsInteractor)
     fun inject(saveStatusInteractor: SaveStatusInteractor)
+    fun inject(saveActivityInteractor: SaveActivityInteractor)
 
     fun inject(resultMessagesProvider: ResultMessagesProvider)
 
