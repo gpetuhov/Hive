@@ -5,6 +5,7 @@ import android.os.IBinder
 import timber.log.Timber
 import android.app.Service
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.managers.ActivityRecognitionManager
 import com.gpetuhov.android.hive.managers.LocationManager
 import javax.inject.Inject
 import com.gpetuhov.android.hive.managers.NotificationManager
@@ -21,12 +22,14 @@ class LocationService : Service() {
 
     @Inject lateinit var locationManager: LocationManager
     @Inject lateinit var notificationManager: NotificationManager
+    @Inject lateinit var activityRecognitionManager: ActivityRecognitionManager
 
     override fun onCreate() {
         Timber.tag(TAG).d("onCreate")
         super.onCreate()
         HiveApp.appComponent.inject(this)
         locationManager.startLocationUpdates()
+        activityRecognitionManager.startActivityRecognition()
 
         startForegroundService()
     }
@@ -42,6 +45,7 @@ class LocationService : Service() {
         Timber.tag(TAG).d("onDestroy")
         super.onDestroy()
         locationManager.stopLocationUpdates()
+        activityRecognitionManager.stopActivityRecognition()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null

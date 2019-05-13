@@ -59,4 +59,8 @@ class AppModule {
     @Provides
     @Singleton
     fun providesOnlineStatusManager(repo: Repo) = OnlineStatusManager(repo)
+
+    @Provides
+    @Singleton
+    fun providesActivityRecognitionManager(context: Context) = ActivityRecognitionManager(context)
 }
