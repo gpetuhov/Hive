@@ -538,6 +538,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             titleId = R.string.status,
             hintId = R.string.enter_status,
             errorMessageId = R.string.username_not_valid,
+            maxLength = Constants.User.MAX_STATUS_LENGTH,
             onInputChange = { inputText -> presenter.updateTempStatus(inputText) },
             isInputValid = { true },
             onPositive = { presenter.saveStatus() },
