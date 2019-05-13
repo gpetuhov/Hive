@@ -2,10 +2,11 @@ package com.gpetuhov.android.hive.domain.interactor
 
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteractor
+import com.gpetuhov.android.hive.util.Constants
 
 class SaveActivityInteractor() : SaveUserPropertyInteractor() {
 
-    private var newActivity = 100
+    private var newActivity = Constants.User.NO_ACTIVITY
 
     init {
         HiveApp.appComponent.inject(this)
@@ -16,7 +17,7 @@ class SaveActivityInteractor() : SaveUserPropertyInteractor() {
         repo.saveUserActivity(newActivity)
     }
 
-    fun saveActivity(newActivity: Int) {
+    fun saveActivity(newActivity: Long) {
         this.newActivity = newActivity
         execute()
     }

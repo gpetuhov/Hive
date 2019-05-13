@@ -438,7 +438,7 @@ class TestRepository : Repo {
         }
     }
 
-    override fun saveUserActivity(newActivity: Int) {
+    override fun saveUserActivity(newActivity: Long) {
         if (isSuccess) {
             activity = newActivity
         }

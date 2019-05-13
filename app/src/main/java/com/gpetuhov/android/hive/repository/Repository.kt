@@ -425,7 +425,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveUserSingleDataRemote(STATUS_KEY, newStatus, { /* Do nothing */ }, onError)
 
     // Save user activity
-    override fun saveUserActivity(newActivity: Int) =
+    override fun saveUserActivity(newActivity: Long) =
         saveUserSingleDataRemote(ACTIVITY_KEY, newActivity, { /* Do nothing */ }, { /* Do nothing */ })
 
     // Set user online status on the backend for the other users to know, that this user is online

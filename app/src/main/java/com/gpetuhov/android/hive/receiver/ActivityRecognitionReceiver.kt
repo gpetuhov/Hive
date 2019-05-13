@@ -38,7 +38,7 @@ class ActivityRecognitionReceiver : BroadcastReceiver() {
                 DetectedActivity.WALKING,
                 DetectedActivity.RUNNING -> {
                     Timber.tag(TAG).d("Activity = $activityType")
-                    saveActivityInteractor.saveActivity(activityType)
+                    saveActivityInteractor.saveActivity(activityType.toLong())
                 }
                 else -> {
                     // Do nothing
