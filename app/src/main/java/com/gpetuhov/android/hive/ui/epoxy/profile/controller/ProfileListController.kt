@@ -55,6 +55,14 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             email(user?.email ?: "")
         }
 
+        profileStatus {
+            id("profile_status")
+
+            val hasStatus = user?.hasStatus ?: false
+            status(if (hasStatus) user?.status ?: "" else context.getString(R.string.enter_status))
+            onStatusClick { presenter.showStatusDialog() }
+        }
+
         summary(context, true) { presenter.openAllReviews() }
 
         profileContacts {

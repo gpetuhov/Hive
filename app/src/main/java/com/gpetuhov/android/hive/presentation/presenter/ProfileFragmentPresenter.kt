@@ -509,6 +509,12 @@ class ProfileFragmentPresenter :
         viewState.dismissInterestsDialog()
     }
 
+    // --- Change status ---
+
+    fun showStatusDialog() {
+        // TODO: implement
+    }
+
     // --- Open photos ---
 
     fun openPhotos(photoUrlList: MutableList<String>) = viewState.openPhotos(photoUrlList)
