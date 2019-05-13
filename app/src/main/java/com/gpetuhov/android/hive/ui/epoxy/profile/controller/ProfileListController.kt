@@ -1,14 +1,12 @@
 package com.gpetuhov.android.hive.ui.epoxy.profile.controller
 
 import android.content.Context
-import com.google.android.gms.location.DetectedActivity
 import com.gpetuhov.android.hive.BuildConfig
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.*
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.status
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
@@ -57,25 +55,10 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             email(user?.email ?: "")
         }
 
-        status {
-            id("profile_status")
-
-            val hasStatus = user?.hasStatus ?: false
-            status(if (hasStatus) user?.status ?: "" else context.getString(R.string.enter_status))
-            statusVisible(true)
-            onStatusClick { presenter.showStatusDialog() }
-
-            val hasActivity = user?.hasActivity ?: false
-            val activity = (user?.activity ?: Constants.User.NO_ACTIVITY).toInt()
-            activitySeparatorVisible(hasActivity)
-            stillVisible(activity == DetectedActivity.STILL)
-            walkVisible(activity == DetectedActivity.WALKING)
-            runVisible(activity == DetectedActivity.RUNNING)
-            bicycleVisible(activity == DetectedActivity.ON_BICYCLE)
-            vehicleVisible(activity == DetectedActivity.IN_VEHICLE)
-
-            lineVisible(true)
-        }
+        val hasStatus = user?.hasStatus ?: false
+        val hasActivity = user?.hasActivity ?: false
+        val status = if (hasStatus) user?.status ?: "" else context.getString(R.string.enter_status)
+        status(status, true, hasActivity, true) { presenter.showStatusDialog() }
 
         summary(context, true) { presenter.openAllReviews() }
 

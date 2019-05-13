@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.ui.epoxy.base.controller
 import android.content.Context
 import android.os.Bundle
 import com.airbnb.epoxy.Carousel
+import com.google.android.gms.location.DetectedActivity
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
@@ -12,6 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.status
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.summary
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
@@ -63,6 +65,26 @@ abstract class UserBaseController : BaseController() {
 
         offerItemPhotoCarousel(settings, offer, !isProfile, onClick)
         offerItemDetails(context, settings, offer, isProfile, favoriteButtonVisible, onFavoriteButtonClick, onClick)
+    }
+
+    protected fun status(status: String, statusVisible: Boolean, activitySeparatorVisible: Boolean, lineVisible: Boolean, onStatusClick: () -> Unit) {
+        status {
+            id("status")
+
+            status(status)
+            statusVisible(statusVisible)
+            onStatusClick { onStatusClick() }
+
+            val activity = (user?.activity ?: Constants.User.NO_ACTIVITY).toInt()
+            activitySeparatorVisible(activitySeparatorVisible)
+            stillVisible(activity == DetectedActivity.STILL)
+            walkVisible(activity == DetectedActivity.WALKING)
+            runVisible(activity == DetectedActivity.RUNNING)
+            bicycleVisible(activity == DetectedActivity.ON_BICYCLE)
+            vehicleVisible(activity == DetectedActivity.IN_VEHICLE)
+
+            lineVisible(lineVisible)
+        }
     }
 
     protected fun summary(context: Context, forceShowRating: Boolean, onReviewsClick: () -> Unit) {
