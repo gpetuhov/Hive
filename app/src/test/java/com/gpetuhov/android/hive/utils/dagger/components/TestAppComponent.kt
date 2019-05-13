@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.utils.dagger.components
 
+import com.gpetuhov.android.hive.SaveStatusInteractorTest
 import com.gpetuhov.android.hive.application.dagger.components.AppComponent
 import com.gpetuhov.android.hive.interactors.*
 import com.gpetuhov.android.hive.utils.dagger.modules.TestAppModule
@@ -38,4 +39,5 @@ interface TestAppComponent : AppComponent {
     fun inject(saveEducationInteractorTest: SaveEducationInteractorTest)
     fun inject(saveWorkInteractorTest: SaveWorkInteractorTest)
     fun inject(saveInterestsInteractorTest: SaveInterestsInteractorTest)
+    fun inject(saveStatusInteractorTest: SaveStatusInteractorTest)
 }

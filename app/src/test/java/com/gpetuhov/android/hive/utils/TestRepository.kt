@@ -31,6 +31,7 @@ class TestRepository : Repo {
     var education = ""
     var work = ""
     var interests = ""
+    var status = ""
 
     override fun isForeground() = false
 
@@ -424,5 +425,15 @@ class TestRepository : Repo {
     }
 
     override fun setUserOffline() {
+    }
+
+    override fun currentUserStatus(): String = status
+
+    override fun saveUserStatus(newStatus: String, onError: () -> Unit) {
+        if (isSuccess) {
+            status = newStatus
+        } else {
+            onError()
+        }
     }
 }

@@ -78,4 +78,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveWorkErrorMessage(): String = Constants.SAVE_WORK_ERROR
 
     override fun getSaveInterestsErrorMessage(): String = Constants.SAVE_INTERESTS_ERROR
+
+    override fun getSaveStatusErrorMessage(): String = Constants.SAVE_STATUS_ERROR
 }
