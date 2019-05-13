@@ -1,6 +1,7 @@
 package com.gpetuhov.android.hive.ui.epoxy.profile.controller
 
 import android.content.Context
+import com.google.android.gms.location.DetectedActivity
 import com.gpetuhov.android.hive.BuildConfig
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
@@ -61,6 +62,15 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             val hasStatus = user?.hasStatus ?: false
             status(if (hasStatus) user?.status ?: "" else context.getString(R.string.enter_status))
             onStatusClick { presenter.showStatusDialog() }
+
+            val hasActivity = user?.hasActivity ?: false
+            val activity = (user?.activity ?: Constants.User.NO_ACTIVITY).toInt()
+            activitySeparatorVisible(hasActivity)
+            stillVisible(activity == DetectedActivity.STILL)
+            walkVisible(activity == DetectedActivity.WALKING)
+            runVisible(activity == DetectedActivity.RUNNING)
+            bicycleVisible(activity == DetectedActivity.ON_BICYCLE)
+            vehicleVisible(activity == DetectedActivity.IN_VEHICLE)
         }
 
         summary(context, true) { presenter.openAllReviews() }
