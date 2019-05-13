@@ -46,6 +46,17 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             lastSeenVisible(!isOnline)
         }
 
+        val hasStatus = user?.hasStatus ?: false
+        if (hasStatus) {
+            userDetailsStatus {
+                id("user_details_status")
+
+                val status = user?.status ?: ""
+                status(status)
+                statusVisible(hasStatus)
+            }
+        }
+
         summary(context, false) { presenter.openAllReviews() }
 
         val hasPhone = user?.hasPhone ?: false
