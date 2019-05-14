@@ -94,6 +94,7 @@ interface AppComponent {
     fun inject(saveInterestsInteractor: SaveInterestsInteractor)
     fun inject(saveStatusInteractor: SaveStatusInteractor)
     fun inject(saveActivityInteractor: SaveActivityInteractor)
+    fun inject(saveLocationInteractor: SaveLocationInteractor)
 
     fun inject(resultMessagesProvider: ResultMessagesProvider)
 

@@ -107,7 +107,7 @@
     <string name="enter_interests">What interests do you have?</string>
     <string name="interests_save_error">Error updating interests</string>
     <string name="status">Status</string>
-    <string name="enter_status">What are you doing?</string>
+    <string name="enter_status">Tell us what are you doing?</string>
     <string name="status_save_error">Error updating status</string>
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>

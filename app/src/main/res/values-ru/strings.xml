@@ -105,7 +105,7 @@
     <string name="work_save_error">Ошибка обновления места работы</string>
     <string name="interests">Интересы</string>
     <string name="status">Статус</string>
-    <string name="enter_status">Чем вы заняты?</string>
+    <string name="enter_status">Расскажите, чем вы заняты?</string>
     <string name="status_save_error">Ошибка обновления статуса</string>
     <string name="enter_interests">Какие у вас интересы?</string>
     <string name="interests_save_error">Ошибка обновления интересов</string>
