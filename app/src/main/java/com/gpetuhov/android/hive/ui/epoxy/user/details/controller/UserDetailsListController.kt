@@ -202,6 +202,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             // MapModel will be bind here only once (after fragment creation),
             // because location is not annotated as epoxy attribute.
             mapModel.addTo(this)
+
+        } else {
+            // If user account deleted show user deleted message
+            userDetailsDeleted { id("user_details_deleted") }
         }
     }
 
