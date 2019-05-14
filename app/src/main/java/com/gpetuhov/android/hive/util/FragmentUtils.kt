@@ -52,7 +52,7 @@ fun Fragment.setMainHeaderTitle(title: String) {
 
 fun Fragment.setMainHeaderOnlineAndLastSeen(isOnline: Boolean, lastSeen: String, isUserDeleted: Boolean) {
     getMainHeaderOnline()?.setVisible(isOnline && !isUserDeleted)
-    getMainHeaderLastSeen()?.setVisible(!isOnline && !isUserDeleted)
+    getMainHeaderLastSeen()?.setVisible(!isOnline && !isUserDeleted && lastSeen != "")
     getMainHeaderLastSeen()?.text = getLastSeenText(context, lastSeen)
 }
 

@@ -60,12 +60,13 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                 val username = user?.getUsernameOrName() ?: ""
                 username("$providedBy $username")
 
+                val isUserDeleted = user?.isDeleted ?: false
                 val isOnline = user?.isOnline ?: false
-                onlineVisible(isOnline)
+                onlineVisible(isOnline && !isUserDeleted)
 
                 val lastSeen = user?.getLastSeenTime() ?: ""
                 lastSeen(getLastSeenText(context, lastSeen))
-                lastSeenVisible(!isOnline)
+                lastSeenVisible(!isOnline && !isUserDeleted && lastSeen != "")
             }
 
             offerDetailsDetails {

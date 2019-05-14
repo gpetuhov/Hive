@@ -32,7 +32,7 @@ data class User(
     var education: String = "",
     var work: String = "",
     var interests: String = "",
-    var lastSeen: Long = System.currentTimeMillis() / 1000,
+    var lastSeen: Long = 0L,
     var status: String = "",
     var activity: Long = Constants.User.NO_ACTIVITY,
     var isDeleted: Boolean = false

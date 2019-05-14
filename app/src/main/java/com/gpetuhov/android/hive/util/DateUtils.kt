@@ -39,7 +39,9 @@ fun getLastSeenTimeFromTimestamp(timestamp: Long): String {
     val timeToCheck = Calendar.getInstance()
     timeToCheck.timeInMillis = timestampInMillis
 
-    return if (now.get(Calendar.YEAR) == timeToCheck.get(Calendar.YEAR)
+    return if (timestamp == 0L) {
+        return ""
+    } else if (now.get(Calendar.YEAR) == timeToCheck.get(Calendar.YEAR)
         && (now.get(Calendar.DAY_OF_YEAR) == timeToCheck.get(Calendar.DAY_OF_YEAR))) {
         // If today, then display only time
 

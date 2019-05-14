@@ -45,7 +45,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
             val lastSeen = user?.getLastSeenTime() ?: ""
             lastSeen(getLastSeenText(context, lastSeen))
-            lastSeenVisible(!isOnline && !isUserDeleted)
+            lastSeenVisible(!isOnline && !isUserDeleted && lastSeen != "")
         }
 
         if (!isUserDeleted) {
