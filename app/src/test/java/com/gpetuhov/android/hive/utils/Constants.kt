@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.utils
 
+import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.*
 
 class Constants {
@@ -95,6 +96,8 @@ class Constants {
 
         const val DUMMY_ACTIVITY = 3L
         const val DEFAULT_ACTIVITY = 100L
+
+        val DUMMY_LOCATION = LatLng(40.7128, 74.0060)
 
         val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 

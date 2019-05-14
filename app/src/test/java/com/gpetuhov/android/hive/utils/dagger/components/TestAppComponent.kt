@@ -41,4 +41,5 @@ interface TestAppComponent : AppComponent {
     fun inject(saveInterestsInteractorTest: SaveInterestsInteractorTest)
     fun inject(saveStatusInteractorTest: SaveStatusInteractorTest)
     fun inject(saveActivityInteractorTest: SaveActivityInteractorTest)
+    fun inject(saveLocationInteractorTest: SaveLocationInteractorTest)
 }

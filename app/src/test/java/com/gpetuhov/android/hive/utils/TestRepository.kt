@@ -33,6 +33,7 @@ class TestRepository : Repo {
     var interests = ""
     var status = ""
     var activity = Constants.DEFAULT_ACTIVITY
+    var location = com.gpetuhov.android.hive.util.Constants.Map.DEFAULT_LOCATION
 
     override fun isForeground() = false
 
@@ -82,6 +83,9 @@ class TestRepository : Repo {
     }
 
     override fun saveUserLocation(newLocation: LatLng) {
+        if (isSuccess) {
+            location = newLocation
+        }
     }
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
