@@ -96,6 +96,9 @@ open class AuthManager : Auth {
     override fun dismissDialogs() = dismissNoNetworkDialog() ?: Unit
 
     override fun signOut(onSuccess: () -> Unit, onError: () -> Unit) {
+        // Set user offline status before logout
+        repo.setUserOffline()
+
         AuthUI.getInstance()
             .signOut(context)
             .addOnSuccessListener {
