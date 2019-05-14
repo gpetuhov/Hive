@@ -34,7 +34,8 @@ data class User(
     var interests: String = "",
     var lastSeen: Long = System.currentTimeMillis() / 1000,
     var status: String = "",
-    var activity: Long = Constants.User.NO_ACTIVITY
+    var activity: Long = Constants.User.NO_ACTIVITY,
+    var isDeleted: Boolean = false
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()

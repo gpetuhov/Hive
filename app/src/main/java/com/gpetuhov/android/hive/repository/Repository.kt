@@ -1251,18 +1251,22 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private fun startGettingCurrentUserUpdates() {
         stopGettingCurrentUserUpdates()
-        currentUserListenerRegistration = startGettingUserUpdates(currentUserUid()) { user ->
-            // If current user has active offer, start sharing location,
-            // otherwise stop sharing.
-            LocationManager.shareLocation(user.hasActiveOffer())
+        currentUserListenerRegistration = startGettingUserUpdates(
+            currentUserUid(),
+            { user ->
+                // If current user has active offer, start sharing location,
+                // otherwise stop sharing.
+                LocationManager.shareLocation(user.hasActiveOffer())
 
-            currentUser.value = user
-        }
+                currentUser.value = user
+            },
+            { /* Do nothing */ }
+        )
     }
 
     private fun stopGettingCurrentUserUpdates() = currentUserListenerRegistration?.remove()
 
-    private fun startGettingUserUpdates(uid: String, onSuccess: (User) -> Unit): ListenerRegistration? {
+    private fun startGettingUserUpdates(uid: String, onSuccess: (User) -> Unit, onEmptyResult: () -> Unit): ListenerRegistration? {
         var listenerRegistration: ListenerRegistration? = null
 
         if (isAuthorized && uid != "") {
@@ -1275,6 +1279,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
                         } else {
                             Timber.tag(TAG).d("Listen failed")
+                            onEmptyResult()
                         }
 
                     } else {
@@ -1286,10 +1291,20 @@ class Repository(private val context: Context, private val settings: Settings) :
         return listenerRegistration
     }
 
-    private fun startSecondUserUpdates(uid: String) = startGettingUserUpdates(uid) { user -> updateSecondUser(user) }
+    private fun startSecondUserUpdates(uid: String): ListenerRegistration? {
+        return startGettingUserUpdates(
+            uid,
+            { user -> updateSecondUser(user) },
+            { setSecondUserDeleted() }
+        )
+    }
 
     private fun updateSecondUser(user: User) {
         secondUser.value = user
+    }
+
+    private fun setSecondUserDeleted() {
+        secondUser.value?.isDeleted = true
     }
 
     private fun removeListener(listenerRegistration: ListenerRegistration?) = listenerRegistration?.remove() ?: Unit

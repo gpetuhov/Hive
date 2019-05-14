@@ -23,6 +23,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
     }
 
     override fun buildModels() {
+        val isUserDeleted = user?.isDeleted ?: false
+
         val photoList = user?.photoList ?: mutableListOf()
         photoCarousel(
             settings,
@@ -39,166 +41,168 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             username(user?.getUsernameOrName() ?: "")
 
             val isOnline = user?.isOnline ?: false
-            onlineVisible(isOnline)
+            onlineVisible(isOnline && !isUserDeleted)
 
             val lastSeen = user?.getLastSeenTime() ?: ""
             lastSeen(getLastSeenText(context, lastSeen))
-            lastSeenVisible(!isOnline)
+            lastSeenVisible(!isOnline && !isUserDeleted)
         }
 
-        val hasStatus = user?.hasStatus ?: false
-        val hasActivity = user?.hasActivity ?: false
-        val status = user?.status ?: ""
-        if (hasStatus || hasActivity) {
-            status(status, hasStatus, hasActivity && hasStatus, false) { /* Do nothing */ }
-        }
-
-        summary(context, false) { presenter.openAllReviews() }
-
-        val hasPhone = user?.hasPhone ?: false
-        val hasVisibleEmail = user?.hasVisibleEmail ?: false
-        val hasSkype = user?.hasSkype ?: false
-        val hasFacebook = user?.hasFacebook ?: false
-        val hasTwitter = user?.hasTwitter ?: false
-        val hasInstagram = user?.hasInstagram ?: false
-        val hasYouTube = user?.hasYouTube ?: false
-        val hasWebsite = user?.hasWebsite ?: false
-        val hasContacts = hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram || hasYouTube || hasWebsite
-        if (hasContacts) {
-            userDetailsContacts {
-                id("user_details_contacts")
-
-                val phone = user?.phone ?: ""
-                phone(phone)
-                phoneVisible(hasPhone)
-                onPhoneClick { presenter.dialPhone(phone) }
-
-                val email = user?.visibleEmail ?: ""
-                email(email)
-                emailVisible(hasVisibleEmail)
-                emailSeparatorVisible(hasVisibleEmail && hasPhone)
-                onEmailClick { presenter.sendEmail(email) }
-
-                val skype = user?.skype ?: ""
-                skype(skype)
-                skypeVisible(hasSkype)
-                skypeSeparatorVisible(hasSkype && (hasPhone || hasVisibleEmail))
-                onSkypeClick { presenter.callSkype(skype) }
-
-                val facebook = user?.facebook ?: ""
-                facebook(facebook)
-                facebookVisible(hasFacebook)
-                facebookSeparatorVisible(hasFacebook && (hasPhone || hasVisibleEmail || hasSkype))
-                onFacebookClick { presenter.openFacebook(facebook) }
-
-                val twitter = user?.twitter ?: ""
-                twitter(twitter)
-                twitterVisible(hasTwitter)
-                twitterSeparatorVisible(hasTwitter && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook))
-                onTwitterClick { presenter.openTwitter(twitter) }
-
-                val instagram = user?.instagram ?: ""
-                instagram(instagram)
-                instagramVisible(hasInstagram)
-                instagramSeparatorVisible(hasInstagram && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter))
-                onInstagramClick { presenter.openInstagram(instagram) }
-
-                val youTube = user?.youTube ?: ""
-                youTube(youTube)
-                youTubeVisible(hasYouTube)
-                youTubeSeparatorVisible(hasYouTube && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram))
-                onYouTubeClick { presenter.openYouTube(youTube) }
-
-                val website = user?.website ?: ""
-                website(website)
-                websiteVisible(hasWebsite)
-                websiteSeparatorVisible(hasWebsite && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram || hasYouTube))
-                onWebsiteClick { presenter.openWebsite(website) }
+        if (!isUserDeleted) {
+            val hasStatus = user?.hasStatus ?: false
+            val hasActivity = user?.hasActivity ?: false
+            val status = user?.status ?: ""
+            if (hasStatus || hasActivity) {
+                status(status, hasStatus, hasActivity && hasStatus, false) { /* Do nothing */ }
             }
-        }
 
-        val hasDescription = user?.hasDescription ?: false
-        if (hasDescription) {
-            userDetailsDescription {
-                id("user_details_description")
-                description(user?.description ?: "")
+            summary(context, false) { presenter.openAllReviews() }
+
+            val hasPhone = user?.hasPhone ?: false
+            val hasVisibleEmail = user?.hasVisibleEmail ?: false
+            val hasSkype = user?.hasSkype ?: false
+            val hasFacebook = user?.hasFacebook ?: false
+            val hasTwitter = user?.hasTwitter ?: false
+            val hasInstagram = user?.hasInstagram ?: false
+            val hasYouTube = user?.hasYouTube ?: false
+            val hasWebsite = user?.hasWebsite ?: false
+            val hasContacts = hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram || hasYouTube || hasWebsite
+            if (hasContacts) {
+                userDetailsContacts {
+                    id("user_details_contacts")
+
+                    val phone = user?.phone ?: ""
+                    phone(phone)
+                    phoneVisible(hasPhone)
+                    onPhoneClick { presenter.dialPhone(phone) }
+
+                    val email = user?.visibleEmail ?: ""
+                    email(email)
+                    emailVisible(hasVisibleEmail)
+                    emailSeparatorVisible(hasVisibleEmail && hasPhone)
+                    onEmailClick { presenter.sendEmail(email) }
+
+                    val skype = user?.skype ?: ""
+                    skype(skype)
+                    skypeVisible(hasSkype)
+                    skypeSeparatorVisible(hasSkype && (hasPhone || hasVisibleEmail))
+                    onSkypeClick { presenter.callSkype(skype) }
+
+                    val facebook = user?.facebook ?: ""
+                    facebook(facebook)
+                    facebookVisible(hasFacebook)
+                    facebookSeparatorVisible(hasFacebook && (hasPhone || hasVisibleEmail || hasSkype))
+                    onFacebookClick { presenter.openFacebook(facebook) }
+
+                    val twitter = user?.twitter ?: ""
+                    twitter(twitter)
+                    twitterVisible(hasTwitter)
+                    twitterSeparatorVisible(hasTwitter && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook))
+                    onTwitterClick { presenter.openTwitter(twitter) }
+
+                    val instagram = user?.instagram ?: ""
+                    instagram(instagram)
+                    instagramVisible(hasInstagram)
+                    instagramSeparatorVisible(hasInstagram && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter))
+                    onInstagramClick { presenter.openInstagram(instagram) }
+
+                    val youTube = user?.youTube ?: ""
+                    youTube(youTube)
+                    youTubeVisible(hasYouTube)
+                    youTubeSeparatorVisible(hasYouTube && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram))
+                    onYouTubeClick { presenter.openYouTube(youTube) }
+
+                    val website = user?.website ?: ""
+                    website(website)
+                    websiteVisible(hasWebsite)
+                    websiteSeparatorVisible(hasWebsite && (hasPhone || hasVisibleEmail || hasSkype || hasFacebook || hasTwitter || hasInstagram || hasYouTube))
+                    onWebsiteClick { presenter.openWebsite(website) }
+                }
             }
-        }
 
-        val hasResidence = user?.hasResidence ?: false
-        val hasLanguage = user?.hasLanguage ?: false
-        val hasEducation = user?.hasEducation ?: false
-        val hasWork = user?.hasWork ?: false
-        val hasInterests = user?.hasInterests ?: false
-        val hasInformation = hasResidence || hasLanguage || hasEducation || hasWork || hasInterests
-        if (hasInformation) {
-            userDetailsInformation {
-                id("user_details_information")
-
-                val residencePrefix = context.getString(R.string.residence)
-                val residence = "$residencePrefix: ${user?.residence ?: ""}"
-                residence(residence)
-                residenceVisible(hasResidence)
-
-                val languagePrefix = context.getString(R.string.language)
-                val language = "$languagePrefix: ${user?.language ?: ""}"
-                language(language)
-                languageVisible(hasLanguage)
-                languageSeparatorVisible(hasLanguage && hasResidence)
-
-                val educationPrefix = context.getString(R.string.education)
-                val education = "$educationPrefix: ${user?.education ?: ""}"
-                education(education)
-                educationVisible(hasEducation)
-                educationSeparatorVisible(hasEducation && (hasLanguage || hasResidence))
-
-                val workPrefix = context.getString(R.string.work)
-                val work = "$workPrefix: ${user?.work ?: ""}"
-                work(work)
-                workVisible(hasWork)
-                workSeparatorVisible(hasWork && (hasLanguage || hasResidence || hasEducation))
-
-                val interestsPrefix = context.getString(R.string.interests)
-                val interests = "$interestsPrefix: ${user?.interests ?: ""}"
-                interests(interests)
-                interestsVisible(hasInterests)
-                interestsSeparatorVisible(hasInterests && (hasLanguage || hasResidence || hasEducation || hasWork))
+            val hasDescription = user?.hasDescription ?: false
+            if (hasDescription) {
+                userDetailsDescription {
+                    id("user_details_description")
+                    description(user?.description ?: "")
+                }
             }
-        }
 
-        userDetailsOfferHeader {
-            id("user_details_offer_header")
+            val hasResidence = user?.hasResidence ?: false
+            val hasLanguage = user?.hasLanguage ?: false
+            val hasEducation = user?.hasEducation ?: false
+            val hasWork = user?.hasWork ?: false
+            val hasInterests = user?.hasInterests ?: false
+            val hasInformation = hasResidence || hasLanguage || hasEducation || hasWork || hasInterests
+            if (hasInformation) {
+                userDetailsInformation {
+                    id("user_details_information")
 
-            val hasActiveOffer = user?.hasActiveOffer() ?: false
-            offerHeader(if (hasActiveOffer) context.getString(R.string.offers) else context.getString(R.string.no_active_offer))
-        }
+                    val residencePrefix = context.getString(R.string.residence)
+                    val residence = "$residencePrefix: ${user?.residence ?: ""}"
+                    residence(residence)
+                    residenceVisible(hasResidence)
 
-        user?.offerList?.forEach { offer ->
-            // In user details show only active offers
-            if (offer.isActive) {
-                userOfferItem(
-                    context,
-                    settings,
-                    offer,
-                    false,
-                    true,
-                    { presenter.favoriteOffer(offer.isFavorite, offer.uid) },
-                    { presenter.openOffer(offer.uid) }
-                )
+                    val languagePrefix = context.getString(R.string.language)
+                    val language = "$languagePrefix: ${user?.language ?: ""}"
+                    language(language)
+                    languageVisible(hasLanguage)
+                    languageSeparatorVisible(hasLanguage && hasResidence)
+
+                    val educationPrefix = context.getString(R.string.education)
+                    val education = "$educationPrefix: ${user?.education ?: ""}"
+                    education(education)
+                    educationVisible(hasEducation)
+                    educationSeparatorVisible(hasEducation && (hasLanguage || hasResidence))
+
+                    val workPrefix = context.getString(R.string.work)
+                    val work = "$workPrefix: ${user?.work ?: ""}"
+                    work(work)
+                    workVisible(hasWork)
+                    workSeparatorVisible(hasWork && (hasLanguage || hasResidence || hasEducation))
+
+                    val interestsPrefix = context.getString(R.string.interests)
+                    val interests = "$interestsPrefix: ${user?.interests ?: ""}"
+                    interests(interests)
+                    interestsVisible(hasInterests)
+                    interestsSeparatorVisible(hasInterests && (hasLanguage || hasResidence || hasEducation || hasWork))
+                }
             }
+
+            userDetailsOfferHeader {
+                id("user_details_offer_header")
+
+                val hasActiveOffer = user?.hasActiveOffer() ?: false
+                offerHeader(if (hasActiveOffer) context.getString(R.string.offers) else context.getString(R.string.no_active_offer))
+            }
+
+            user?.offerList?.forEach { offer ->
+                // In user details show only active offers
+                if (offer.isActive) {
+                    userOfferItem(
+                        context,
+                        settings,
+                        offer,
+                        false,
+                        true,
+                        { presenter.favoriteOffer(offer.isFavorite, offer.uid) },
+                        { presenter.openOffer(offer.uid) }
+                    )
+                }
+            }
+
+            reviewsHeader()
+
+            user?.offerList?.sortedByDescending { it.lastReviewTimestamp }?.forEachWithIndex { index, offer ->
+                if (offer.isActive) lastOfferReview(offer, index)
+            }
+
+            reviewsSummary(context, false) { presenter.openAllReviews() }
+
+            // MapModel will be bind here only once (after fragment creation),
+            // because location is not annotated as epoxy attribute.
+            mapModel.addTo(this)
         }
-
-        reviewsHeader()
-
-        user?.offerList?.sortedByDescending { it.lastReviewTimestamp }?.forEachWithIndex { index, offer ->
-            if (offer.isActive) lastOfferReview(offer, index)
-        }
-
-        reviewsSummary(context, false) { presenter.openAllReviews() }
-
-        // MapModel will be bind here only once (after fragment creation),
-        // because location is not annotated as epoxy attribute.
-        mapModel.addTo(this)
     }
 
     override fun changeUser(user: User) {
