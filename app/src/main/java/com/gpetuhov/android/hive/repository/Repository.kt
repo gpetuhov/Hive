@@ -437,39 +437,43 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // Set user online status on the backend for the other users to know, that this user is online
     override fun setUserOnline() {
-        // Set user online status BOTH in Firebase Database and Firestore
-        // (in Firestore - for others to see,
-        // in Firebase Database - to change from offline,
-        // so that corresponding Cloud Function is triggered,
-        // when the user goes offline again)
-        saveUserSingleDataRemote(IS_ONLINE_KEY, true, { /* Do nothing */ }, { /* Do nothing */ })
+        if (isAuthorized && currentUserUid() != "") {
+            // Set user online status BOTH in Firebase Database and Firestore
+            // (in Firestore - for others to see,
+            // in Firebase Database - to change from offline,
+            // so that corresponding Cloud Function is triggered,
+            // when the user goes offline again)
+            saveUserSingleDataRemote(IS_ONLINE_KEY, true, { /* Do nothing */ }, { /* Do nothing */ })
 
-        val onlineStatusRef = firebase.getReference("online/" + currentUserUid())
-        onlineStatusRef.setValue(true)
+            val onlineStatusRef = firebase.getReference("online/" + currentUserUid())
+            onlineStatusRef.setValue(true)
 
-        // This will be executed on the BACKEND, when the client disconnects.
-        // This is needed to set user's offline status on the backend for others to see,
-        // when the user terminates the app or the network on user's device shuts down unexpectedly.
-        // Realtime Database will monitor client's connection state and change online value to false,
-        // when there is no connection with the client.
-        // This feature is present ONLY in Firebase Realtime Database. There is no such feature in Firestore.
-        // That's why we have to use Realtime Database here.
-        // Note that here we set online value to false ONLY in Realtime Database.
-        // To set online value to false in Firestore we use corresponding Cloud Function,
-        // which is triggered on every Realtime Database update.
-        onlineStatusRef.onDisconnect().setValue(false)
+            // This will be executed on the BACKEND, when the client disconnects.
+            // This is needed to set user's offline status on the backend for others to see,
+            // when the user terminates the app or the network on user's device shuts down unexpectedly.
+            // Realtime Database will monitor client's connection state and change online value to false,
+            // when there is no connection with the client.
+            // This feature is present ONLY in Firebase Realtime Database. There is no such feature in Firestore.
+            // That's why we have to use Realtime Database here.
+            // Note that here we set online value to false ONLY in Realtime Database.
+            // To set online value to false in Firestore we use corresponding Cloud Function,
+            // which is triggered on every Realtime Database update.
+            onlineStatusRef.onDisconnect().setValue(false)
+        }
     }
 
     // Set user offline status on the backend for the other users to know, that this user goes offline
     override fun setUserOffline() {
-        // Set user offline status ONLY in Firebase Database.
-        // This will trigger the corresponding Cloud Function,
-        // which will change user online status to false in Firestore
-        // and update last seen timestamp.
-        // We do not update online status in Firestore directly,
-        // because we have the Cloud Function, that listens to Realtime Database updates,
-        // and will update online status in Firestore for us anyway.
-        firebase.getReference("online/" + currentUserUid()).setValue(false)
+        if (isAuthorized && currentUserUid() != "") {
+            // Set user offline status ONLY in Firebase Database.
+            // This will trigger the corresponding Cloud Function,
+            // which will change user online status to false in Firestore
+            // and update last seen timestamp.
+            // We do not update online status in Firestore directly,
+            // because we have the Cloud Function, that listens to Realtime Database updates,
+            // and will update online status in Firestore for us anyway.
+            firebase.getReference("online/" + currentUserUid()).setValue(false)
+        }
     }
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
