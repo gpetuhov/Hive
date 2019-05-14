@@ -478,6 +478,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized && currentUserUid() != "") {
+            firebase.getReference("online/" + currentUserUid()).removeValue()
+
             firestore.collection(USERS_COLLECTION).document(currentUserUid())
                 .delete()
                 .addOnSuccessListener {
