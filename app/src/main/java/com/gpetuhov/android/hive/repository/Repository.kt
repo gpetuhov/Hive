@@ -20,6 +20,7 @@ import android.graphics.Bitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
@@ -28,6 +29,8 @@ import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.*
 import com.gpetuhov.android.hive.util.Settings
@@ -214,6 +217,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Cloud Storage
     private var storage = FirebaseStorage.getInstance()
 
+    // Firebase Functions
+    private var functions = FirebaseFunctions.getInstance()
+
     // Keeps Storage upload tasks for cancellation if needed
     private var uploadTasks = mutableListOf<UploadTask>()
 
@@ -356,7 +362,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     // Save user name
     override fun saveUserUsername(newUsername: String, onError: () -> Unit) =
-        saveUserSingleDataRemote(USERNAME_KEY, newUsername, { updateUserNameAndPicCollection() }, onError)
+        saveUserSingleDataRemote(USERNAME_KEY, newUsername, { updateUsernameAndPicInChatrooms() }, onError)
 
     // Save user description
     override fun saveUserDescription(newDescription: String, onError: () -> Unit) =
@@ -1211,11 +1217,11 @@ class Repository(private val context: Context, private val settings: Settings) :
         // update it with user pic from Firebase Auth
         if (existingUser.userPicUrl == "") data[USER_PIC_URL_KEY] = userPicUrl
 
-        saveUserDataRemote(data, { updateUserNameAndPicCollection() }, { /* Do nothing */ })
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
     private fun saveUserDataWithoutUserPic(data: HashMap<String, Any>) =
-        saveUserDataRemote(data, { updateUserNameAndPicCollection() }, { /* Do nothing */ })
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
 
     private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized && currentUserUid() != "") {
@@ -1483,7 +1489,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun currentUserPicUrl() = currentUser.value?.userPicUrl ?: ""
 
     private fun saveUserPicUrl(newUserPicUrl: String) =
-        saveUserSingleDataRemote(USER_PIC_URL_KEY, newUserPicUrl, { updateUserNameAndPicCollection() }, { /* Do nothing */ })
+        saveUserSingleDataRemote(USER_PIC_URL_KEY, newUserPicUrl, { updateUsernameAndPicInChatrooms() }, { /* Do nothing */ })
 
     private fun saveUserPhotoUrl(photoUid: String, photoDownloadUrl: String) {
         val photoList = mutableListOf<Photo>()
@@ -1631,23 +1637,31 @@ class Repository(private val context: Context, private val settings: Settings) :
         )
     }
 
-    // Calling this will write data to a special collection,
-    // which in turn will trigger Cloud Function that updates chatrooms
-    // (this is needed to update chatrooms on username and userpic change).
-    private fun updateUserNameAndPicCollection() {
+    // Call this to update chatrooms on username and userpic change.
+    // This directly triggers corresponding callable Cloud Function.
+    private fun updateUsernameAndPicInChatrooms() {
         if (isAuthorized && currentUserUid() != "") {
-            val data = HashMap<String, Any>()
-            data[NAME_KEY] = currentUser.value?.name ?: ""
-            data[USERNAME_KEY] = currentUser.value?.username ?: ""
-            data[USER_PIC_URL_KEY] = currentUserPicUrl()
+            // Create the arguments to the callable function.
+            val data = hashMapOf(
+                "userUid" to currentUserUid(),
+                "newUsername" to currentUserUsername(),
+                "newUserPicUrl" to currentUserPicUrl()
+            )
 
-            firestore.collection(USER_NAME_AND_PIC_COLLECTION).document(currentUserUid())
-                .set(data, SetOptions.merge())
-                .addOnSuccessListener {
-                    Timber.tag(TAG).d("userNameAndPic successfully written")
-                }
-                .addOnFailureListener { error ->
-                    Timber.tag(TAG).d("Error writing userNameAndPic")
+            functions
+                .getHttpsCallable("updateUserNameAndPicInChatrooms")
+                .call(data)
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        val e = task.exception
+                        if (e is FirebaseFunctionsException) {
+                            val code = e.code
+                            val details = e.details
+                            Timber.tag(TAG).d("Error updating username and pic in chatrooms: $code, $details")
+                        }
+                    } else {
+                        Timber.tag(TAG).d("Username and pic updated in chatrooms")
+                    }
                 }
         }
     }

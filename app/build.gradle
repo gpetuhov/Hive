@@ -143,6 +143,9 @@ dependencies {
     // Firebase Performance
     implementation 'com.google.firebase:firebase-perf:17.0.0'
 
+    // Firebase Functions
+    implementation 'com.google.firebase:firebase-functions:17.0.0'
+
     // Facebook (required for FirebaseUI)
     implementation 'com.facebook.android:facebook-android-sdk:5.0.0'
 
