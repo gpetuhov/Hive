@@ -34,7 +34,6 @@ interface AppComponent {
     fun inject(messageService: MessageService)
 
     fun inject(authManager: AuthManager)
-    fun inject(locationManager: LocationManager)
     fun inject(mapManager: MapManager)
     fun inject(networkManager: NetworkManager)
     fun inject(notificationManager: NotificationManager)

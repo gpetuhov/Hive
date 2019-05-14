@@ -19,9 +19,8 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.repository.Repo
+import com.gpetuhov.android.hive.domain.interactor.SaveLocationInteractor
 import com.gpetuhov.android.hive.service.LocationService
-import javax.inject.Inject
 
 
 // Get current user location updates from the device
@@ -51,14 +50,12 @@ class LocationManager(context: Context) {
         private fun getLocationServiceIntent() = Intent(HiveApp.application, LocationService::class.java)
     }
 
-    @Inject lateinit var repo: Repo
-
     private var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
+    private var saveLocationInteractor = SaveLocationInteractor()
 
     init {
-        HiveApp.appComponent.inject(this)
         createLocationCallback()
         createLocationRequest()
     }
@@ -143,7 +140,7 @@ class LocationManager(context: Context) {
     private fun saveLocation(location: Location?) {
         if (location != null) {
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
-            repo.saveUserLocation(getCoordinatesFromLocation(location))
+            saveLocationInteractor.saveLocation(getCoordinatesFromLocation(location))
         }
     }
 
