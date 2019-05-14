@@ -20,7 +20,6 @@ import android.graphics.Bitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
@@ -45,7 +44,6 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Collections
         private const val USERS_COLLECTION = "users"
         private const val CHATROOMS_COLLECTION = "chatrooms"
-        private const val USER_NAME_AND_PIC_COLLECTION = "userNameAndPic"
         private const val MESSAGES_COLLECTION = "messages"
         private const val USER_CHATROOMS_COLLECTION = "userChatrooms"
         private const val CHATROOMS_OF_USER_COLLECTION = "chatroomsOfUser"
@@ -361,8 +359,11 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun currentUserStatus() = currentUser.value?.status ?: ""
 
     // Save user name
-    override fun saveUserUsername(newUsername: String, onError: () -> Unit) =
-        saveUserSingleDataRemote(USERNAME_KEY, newUsername, { updateUsernameAndPicInChatrooms() }, onError)
+    override fun saveUserUsername(newUsername: String, onError: () -> Unit) {
+        if (newUsername != currentUserUsername()) {
+            saveUserSingleDataRemote(USERNAME_KEY, newUsername, { updateUsernameAndPicInChatrooms() }, onError)
+        }
+    }
 
     // Save user description
     override fun saveUserDescription(newDescription: String, onError: () -> Unit) =
