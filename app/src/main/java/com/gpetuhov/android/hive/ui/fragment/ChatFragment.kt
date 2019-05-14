@@ -72,7 +72,7 @@ class ChatFragment : BaseFragment(), ChatFragmentView {
             presenter.secondUserUid = secondUser.uid
             setMainHeaderUserPic(secondUser)
             setMainHeaderTitle(secondUser.getUsernameOrName())
-            setMainHeaderOnlineAndLastSeen(secondUser.isOnline, secondUser.getLastSeenTime())
+            setMainHeaderOnlineAndLastSeen(secondUser.isOnline, secondUser.getLastSeenTime(), secondUser.isDeleted)
         })
     }
 

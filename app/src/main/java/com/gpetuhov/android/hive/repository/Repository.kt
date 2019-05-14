@@ -1304,7 +1304,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun setSecondUserDeleted() {
-        secondUser.value?.isDeleted = true
+        val user = secondUser.value
+        user?.isDeleted = true
+        secondUser.value = user
     }
 
     private fun removeListener(listenerRegistration: ListenerRegistration?) = listenerRegistration?.remove() ?: Unit
