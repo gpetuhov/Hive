@@ -45,8 +45,10 @@ fun getLastSeenTimeFromTimestamp(timestamp: Long): String {
 
         val hours = timeToCheck.get(Calendar.HOUR_OF_DAY)
         val minutes = timeToCheck.get(Calendar.MINUTE)
+        // For minutes less than 10 show 00, 01, 02, 03 etc.
+        val minutesText = if (minutes < 10) "0$minutes" else "$minutes"
 
-        "$hours:$minutes"
+        "$hours:$minutesText"
 
     } else {
         // Otherwise display full date
