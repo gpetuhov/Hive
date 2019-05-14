@@ -1645,7 +1645,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             // Create the arguments to the callable function.
             val data = hashMapOf(
                 "userUid" to currentUserUid(),
-                "newUsername" to currentUserUsername(),
+                "newUsername" to currentUserNameOrUsername(),
                 "newUserPicUrl" to currentUserPicUrl()
             )
 
