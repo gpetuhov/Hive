@@ -72,8 +72,8 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         controller?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     // === UserDetailsFragmentView ===

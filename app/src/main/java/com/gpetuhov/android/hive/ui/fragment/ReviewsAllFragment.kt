@@ -54,8 +54,8 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         controller?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     // === ReviewsAllFragmentView ===

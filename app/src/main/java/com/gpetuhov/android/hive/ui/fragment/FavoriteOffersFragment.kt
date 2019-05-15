@@ -47,8 +47,8 @@ class FavoriteOffersFragment : BaseFragment(), FavoriteOffersFragmentView {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         controller?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     // === FavoriteOffersFragmentView ===

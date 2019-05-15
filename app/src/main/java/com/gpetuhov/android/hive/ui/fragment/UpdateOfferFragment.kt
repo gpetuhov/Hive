@@ -104,8 +104,8 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         controller?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     // === UpdateOfferFragmentView ===

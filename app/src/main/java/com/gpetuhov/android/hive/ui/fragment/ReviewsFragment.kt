@@ -82,8 +82,8 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
         controller?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
