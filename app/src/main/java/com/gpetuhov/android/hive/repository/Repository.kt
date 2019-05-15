@@ -33,6 +33,7 @@ import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.*
 import com.gpetuhov.android.hive.util.Settings
+import kotlinx.coroutines.Dispatchers
 import kotlin.collections.HashMap
 
 // Read and write data to remote storage (Firestore)
@@ -1738,7 +1739,8 @@ class Repository(private val context: Context, private val settings: Settings) :
                         }
 
                 } else {
-                    onError()
+                    // Run onError() on main thread
+                    launch(Dispatchers.Main) { onError() }
                 }
             }
 
