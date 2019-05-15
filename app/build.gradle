@@ -70,7 +70,10 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha05'
+
+    // Do NOT upgrade this due to issue https://github.com/gpetuhov/Hive/issues/4
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha5'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
@@ -82,8 +85,9 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0-alpha05"
 
     // Jetpack Navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
-    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    // Do NOT upgrade this due to issue https://github.com/gpetuhov/Hive/issues/4
+    implementation "android.arch.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "android.arch.navigation:navigation-ui-ktx:$navigationVersion"
 
     // Anko
     implementation "org.jetbrains.anko:anko-commons:$ankoVersion"
@@ -177,7 +181,8 @@ dependencies {
 
     // Android Lifecycle
     // Without this there will be "Unresolved reference: ViewModelProviders"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+    // Do NOT upgrade this due to issue https://github.com/gpetuhov/Hive/issues/4
+    implementation "android.arch.lifecycle:extensions:1.1.1"
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:2.2.8"
