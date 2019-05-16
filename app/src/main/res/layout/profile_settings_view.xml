@@ -29,6 +29,20 @@
             style="@style/basicTextStyle"/>
 
     <TextView
+            android:id="@+id/privacy_policy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/privacy_policy"
+            style="@style/basicTextStyle"/>
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/md_grey_300"/>
+
+    <TextView
             android:id="@+id/delete_user_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,13 +51,11 @@
             android:textColor="@color/md_red_600"
             style="@style/basicTextStyle"/>
 
-    <TextView
-            android:id="@+id/privacy_policy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
             android:layout_marginTop="16dp"
-            android:text="@string/privacy_policy"
-            style="@style/basicTextStyle"/>
+            android:background="@color/md_grey_300"/>
 
     <TextView
             android:id="@+id/app_version"
