@@ -477,26 +477,6 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
-    override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
-        if (isAuthorized && currentUserUid() != "") {
-            firebase.getReference("online/" + currentUserUid()).removeValue()
-
-            firestore.collection(USERS_COLLECTION).document(currentUserUid())
-                .delete()
-                .addOnSuccessListener {
-                    Timber.tag(TAG).d("User data successfully deleted")
-                    onSuccess()
-                }
-                .addOnFailureListener {
-                    Timber.tag(TAG).d("Error deleting user data")
-                    onError()
-                }
-
-        } else {
-            onError()
-        }
-    }
-
     override fun startGettingSecondUserUpdates(uid: String) {
         stopGettingSecondUserUpdates()
         secondUserListenerRegistration = startSecondUserUpdates(uid)

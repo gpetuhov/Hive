@@ -63,7 +63,6 @@ interface Repo {
     fun saveUserActivity(newActivity: Long)
     fun setUserOnline()
     fun setUserOffline()
-    fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit)
     fun startGettingSecondUserUpdates(uid: String)
     fun stopGettingSecondUserUpdates()
     fun startGettingSecondUserOfferUpdates(uid: String)
