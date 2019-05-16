@@ -50,7 +50,7 @@
     <string name="sign_out_error">Sign out failed. Please, try again</string>
     <string name="delete_account_success">User account successfully deleted</string>
     <string name="delete_account_no_network">No Internet connection. Cannot delete account</string>
-    <string name="delete_account_error">Error deleting user account. Please, try again</string>
+    <string name="delete_account_error">Error deleting user account. Please, sign out, then sign in and try again</string>
     <string name="add_photo">Add photo</string>
     <string name="add_photo_error">Error uploading photo</string>
     <string name="max_visible_photos">You have reached maximum number of visible photos.

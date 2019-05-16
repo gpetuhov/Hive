@@ -50,7 +50,7 @@
     <string name="sign_out_error">Ошибка выхода. Пожалуйста, попробуйте еще раз</string>
     <string name="delete_account_success">Пользовательский аккаунт успешно удален</string>
     <string name="delete_account_no_network">Отсутствует интернет соединение. Удаление аккаунта невозможно</string>
-    <string name="delete_account_error">Ошибка удаления пользовательского аккаунта. Пожалуйста, попробуйте еще раз</string>
+    <string name="delete_account_error">Ошибка удаления пользовательского аккаунта. Пожалуйста, выйдите, затем войдите и попробуйте еще раз</string>
     <string name="add_photo">Добавить фото</string>
     <string name="add_photo_error">Ошибка загрузки фото</string>
     <string name="max_visible_photos">Вы достигли максимального количества видимых фотографий.
