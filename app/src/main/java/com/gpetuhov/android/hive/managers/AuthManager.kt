@@ -121,25 +121,18 @@ open class AuthManager : Auth {
     }
 
     override fun deleteAccount(onSuccess: () -> Unit, onError: () -> Unit) {
-        // When deleting account, delete user data from backend first
-        // (because after deleting account, the user will be unauthorized,
-        // and updating backend will be impossible)
-
-        repo.deleteUserDataRemote({
-            // Proceed with account deletion, only if user data has been successfully deleted
-            AuthUI.getInstance()
-                .delete(context)
-                .addOnSuccessListener {
-                    Timber.tag(TAG).d("User deleted successfully")
-                    onSuccess()
-                }
-                .addOnFailureListener {
-                    Timber.tag(TAG).d("Error deleting user")
-                    onError()
-                }
-        },
-            onError
-        )
+        // Here we delete user from FirebaseAuth.
+        // All user related data in Firestore will be deleted by the corresponding Cloud Function.
+        AuthUI.getInstance()
+            .delete(context)
+            .addOnSuccessListener {
+                Timber.tag(TAG).d("User deleted successfully")
+                onSuccess()
+            }
+            .addOnFailureListener {
+                Timber.tag(TAG).d("Error deleting user")
+                onError()
+            }
     }
 
     // === Private methods ===
