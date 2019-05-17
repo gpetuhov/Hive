@@ -20,6 +20,7 @@ class SaveReviewInteractor(private val callback: Callback) : Interactor {
     private var offerUid = ""
     private var reviewText = ""
     private var rating = 0.0F
+    private var ratingChanged = false
 
     init {
         HiveApp.appComponent.inject(this)
@@ -35,6 +36,7 @@ class SaveReviewInteractor(private val callback: Callback) : Interactor {
                 offerUid,
                 reviewText,
                 rating,
+                ratingChanged,
                 { callback.onSaveReviewSuccess() },
                 { callback.onSaveReviewError(resultMessages.getSaveReviewErrorMessage()) }
             )
@@ -42,11 +44,12 @@ class SaveReviewInteractor(private val callback: Callback) : Interactor {
     }
 
     // Call this method to save review
-    fun saveReview(reviewUid: String, offerUid: String, reviewText: String, rating: Float) {
+    fun saveReview(reviewUid: String, offerUid: String, reviewText: String, rating: Float, ratingChanged: Boolean) {
         this.reviewUid = reviewUid
         this.offerUid = offerUid
         this.reviewText = reviewText
         this.rating = rating
+        this.ratingChanged = ratingChanged
         execute()
     }
 }

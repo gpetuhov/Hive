@@ -1016,7 +1016,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun stopGettingReviewsUpdates() = reviewsListenerRegistration?.remove() ?: Unit
 
-    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, ratingChanged: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
 
         data[REVIEW_PROVIDER_USER_UID_KEY] = secondUserUid()
@@ -1030,7 +1030,17 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         val reviewUidToSave = if (reviewUid != "") reviewUid else UUID.randomUUID().toString()
 
-        saveReviewData(secondUserUid(), offerUid, reviewUidToSave, data, onSuccess, onError)
+        saveReviewData(
+            secondUserUid(),
+            offerUid,
+            reviewUidToSave,
+            data,
+            {
+                if (ratingChanged) recalculateRating(offerUid)
+                onSuccess()
+            },
+            onError
+        )
     }
 
     override fun clearReviews() {
@@ -1044,6 +1054,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Review successfully deleted")
+                    recalculateRating(offerUid)
                     onSuccess()
                 }
                 .addOnFailureListener {
@@ -2109,6 +2120,38 @@ class Repository(private val context: Context, private val settings: Settings) :
                 }
                 .addOnFailureListener { exception ->
                     onComplete(mutableListOf())
+                }
+        }
+    }
+
+    // Call this to recalculate rating on review update and delete.
+    // This directly triggers corresponding callable Cloud Function.
+    private fun recalculateRating(offerUid: String) {
+        if (isAuthorized && currentUserUid() != "") {
+            val providerUserUid = secondUserUid()
+            val offerReviewsDocumentUid = "${providerUserUid}_$offerUid"
+
+            // Create the arguments to the callable function.
+            val data = hashMapOf(
+                "providerUserUid" to secondUserUid(),
+                "offerUid" to offerUid,
+                "offerReviewsDocumentUid" to offerReviewsDocumentUid
+            )
+
+            functions
+                .getHttpsCallable("recalculateRating")
+                .call(data)
+                .addOnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        val e = task.exception
+                        if (e is FirebaseFunctionsException) {
+                            val code = e.code
+                            val details = e.details
+                            Timber.tag(TAG).d("Error recalculating rating: $code, $details")
+                        }
+                    } else {
+                        Timber.tag(TAG).d("Rating recalculated successfully")
+                    }
                 }
         }
     }

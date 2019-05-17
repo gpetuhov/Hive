@@ -77,7 +77,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
             // (if review text is empty or rating is zero, show error in interactor's callback).
             viewState.disableButtons()
             viewState.showProgress()
-            saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating)
+            saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating, ratingChanged())
         }
     }
 
@@ -112,5 +112,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
         viewState.hideProgress()
     }
 
-    private fun editStarted() = reviewText != initialReviewText || rating != initialRating
+    private fun editStarted() = reviewText != initialReviewText || ratingChanged()
+
+    private fun ratingChanged() = rating != initialRating
 }
