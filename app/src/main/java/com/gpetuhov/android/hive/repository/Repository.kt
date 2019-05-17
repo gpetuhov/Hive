@@ -1656,16 +1656,21 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Call this to update chatrooms on username and userpic change.
     // This directly triggers corresponding callable Cloud Function.
     private fun updateUsernameAndPicInChatrooms() {
-        if (isAuthorized && currentUserUid() != "") {
-            // Create the arguments to the callable function.
-            val data = hashMapOf(
-                "userUid" to currentUserUid(),
-                "newUsername" to currentUserNameOrUsername(),
-                "newUserPicUrl" to currentUserPicUrl()
-            )
+        // Create the arguments to the callable function.
+        val data = hashMapOf(
+            "userUid" to currentUserUid(),
+            "newUsername" to currentUserNameOrUsername(),
+            "newUserPicUrl" to currentUserPicUrl()
+        )
 
+        callCloudFunction("updateUserNameAndPicInChatrooms", data)
+    }
+
+    // Call callable cloud function
+    private fun callCloudFunction(functionName: String, data: HashMap<String, String>) {
+        if (isAuthorized) {
             functions
-                .getHttpsCallable("updateUserNameAndPicInChatrooms")
+                .getHttpsCallable(functionName)
                 .call(data)
                 .addOnCompleteListener { task ->
                     if (!task.isSuccessful) {
@@ -1673,10 +1678,10 @@ class Repository(private val context: Context, private val settings: Settings) :
                         if (e is FirebaseFunctionsException) {
                             val code = e.code
                             val details = e.details
-                            Timber.tag(TAG).d("Error updating username and pic in chatrooms: $code, $details")
+                            Timber.tag(TAG).d("Error calling cloud function: $code, $details")
                         }
                     } else {
-                        Timber.tag(TAG).d("Username and pic updated in chatrooms")
+                        Timber.tag(TAG).d("Successfully called cloud function")
                     }
                 }
         }
@@ -2127,33 +2132,17 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Call this to recalculate rating on review update and delete.
     // This directly triggers corresponding callable Cloud Function.
     private fun recalculateRating(offerUid: String) {
-        if (isAuthorized && currentUserUid() != "") {
-            val providerUserUid = secondUserUid()
-            val offerReviewsDocumentUid = "${providerUserUid}_$offerUid"
+        val providerUserUid = secondUserUid()
+        val offerReviewsDocumentUid = "${providerUserUid}_$offerUid"
 
-            // Create the arguments to the callable function.
-            val data = hashMapOf(
-                "providerUserUid" to secondUserUid(),
-                "offerUid" to offerUid,
-                "offerReviewsDocumentUid" to offerReviewsDocumentUid
-            )
+        // Create the arguments to the callable function.
+        val data = hashMapOf(
+            "providerUserUid" to secondUserUid(),
+            "offerUid" to offerUid,
+            "offerReviewsDocumentUid" to offerReviewsDocumentUid
+        )
 
-            functions
-                .getHttpsCallable("recalculateRating")
-                .call(data)
-                .addOnCompleteListener { task ->
-                    if (!task.isSuccessful) {
-                        val e = task.exception
-                        if (e is FirebaseFunctionsException) {
-                            val code = e.code
-                            val details = e.details
-                            Timber.tag(TAG).d("Error recalculating rating: $code, $details")
-                        }
-                    } else {
-                        Timber.tag(TAG).d("Rating recalculated successfully")
-                    }
-                }
-        }
+        callCloudFunction("recalculateRating", data)
     }
 
     // --- Connection state ---
