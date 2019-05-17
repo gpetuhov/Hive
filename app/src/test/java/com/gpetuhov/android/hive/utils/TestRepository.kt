@@ -88,9 +88,6 @@ class TestRepository : Repo {
         }
     }
 
-    override fun deleteUserDataRemote(onSuccess: () -> Unit, onError: () -> Unit) {
-    }
-
     override fun currentUserPhone() = phone
 
     override fun currentUserVisibleEmail() = email
