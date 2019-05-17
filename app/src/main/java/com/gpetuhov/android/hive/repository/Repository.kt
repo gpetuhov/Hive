@@ -862,6 +862,9 @@ class Repository(private val context: Context, private val settings: Settings) :
                     // If offer list successfully updated in Firestore,
                     // remove photos of the deleted offer from Cloud Storage.
                     removeOfferPhotosFromStorage(photoUidsToDeleteFromStorage)
+
+                    // And delete offer related data
+                    deleteOfferData(offerUid)
                 },
                 onError
             )
@@ -1874,6 +1877,16 @@ class Repository(private val context: Context, private val settings: Settings) :
         for (photoUid in photoUidsToDeleteFromStorage) {
             deleteImage(photoUid, false)
         }
+    }
+
+    private fun deleteOfferData(offerUid: String) {
+        // Create the arguments to the callable function.
+        val data = hashMapOf(
+            "userUid" to currentUserUid(),
+            "offerUid" to offerUid
+        )
+
+        callCloudFunction("deleteOfferData", data)
     }
 
     // --- Favorites ---
