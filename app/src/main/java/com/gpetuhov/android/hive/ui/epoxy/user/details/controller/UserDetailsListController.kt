@@ -205,7 +205,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         } else {
             // If user account deleted show user deleted message
-            userDetailsDeleted { id("user_details_deleted") }
+            userDeleted { id("user_details_deleted") }
         }
     }
 

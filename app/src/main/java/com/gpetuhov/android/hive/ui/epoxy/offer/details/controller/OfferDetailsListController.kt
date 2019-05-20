@@ -10,7 +10,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.*
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsDeleted
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDeleted
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getLastSeenText
@@ -108,7 +108,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
 
         } else {
             // If user account deleted show user deleted message
-            userDetailsDeleted { id("user_account_deleted") }
+            userDeleted { id("user_account_deleted") }
         }
     }
 

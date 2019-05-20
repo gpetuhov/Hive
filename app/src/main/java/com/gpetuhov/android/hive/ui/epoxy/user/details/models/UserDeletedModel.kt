@@ -6,6 +6,6 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 
 @EpoxyModelClass(layout = R.layout.user_details_deleted_view)
-abstract class UserDetailsDeletedModel : EpoxyModelWithHolder<UserDetailsDeletedHolder>()
+abstract class UserDeletedModel : EpoxyModelWithHolder<UserDeletedHolder>()
 
-class UserDetailsDeletedHolder : KotlinHolder()
+class UserDeletedHolder : KotlinHolder()
