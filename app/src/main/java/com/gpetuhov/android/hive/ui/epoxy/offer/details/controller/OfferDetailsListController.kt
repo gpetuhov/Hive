@@ -10,6 +10,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.controller.BaseController
 import com.gpetuhov.android.hive.ui.epoxy.offer.details.models.*
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.userDetailsDeleted
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getLastSeenText
@@ -29,78 +30,85 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
     }
 
     override fun buildModels() {
-        if (offer != null && offer?.isActive == true) {
-            val photoList = offer?.photoList ?: mutableListOf()
-            photoCarousel(
-                settings,
-                photoList,
-                true,
-                false,
-                { photoUrlList -> presenter.openPhotos(photoUrlList) },
-                { /* Do nothing */ }
-            )
-        }
+        val isUserDeleted = user?.isDeleted ?: false
 
-        offerDetailsTitle {
-            id("offer_details_title")
-            val offerDeleted = context.getString(R.string.offer_deleted)
-            val offerTitle = if (offer != null && offer?.isActive == true) offer?.title ?: offerDeleted else offerDeleted
-            title(offerTitle)
-        }
-
-        // Offer can become null if deleted by offer provider,
-        // when we are inside offer details.
-        if (offer != null && offer?.isActive == true) {
-            offerDetailsUser {
-                id("offer_details_user")
-                onClick { presenter.openUserDetails() }
-                userPicUrl(user?.userPicUrl ?: "")
-
-                val providedBy = context.getString(R.string.provided_by)
-                val username = user?.getUsernameOrName() ?: ""
-                username("$providedBy $username")
-
-                val isUserDeleted = user?.isDeleted ?: false
-                val isOnline = user?.isOnline ?: false
-                onlineVisible(isOnline && !isUserDeleted)
-
-                val lastSeen = user?.getLastSeenTime() ?: ""
-                lastSeen(getLastSeenText(context, lastSeen))
-                lastSeenVisible(!isOnline && !isUserDeleted && lastSeen != "")
+        if (!isUserDeleted) {
+            if (offer != null && offer?.isActive == true) {
+                val photoList = offer?.photoList ?: mutableListOf()
+                photoCarousel(
+                    settings,
+                    photoList,
+                    true,
+                    false,
+                    { photoUrlList -> presenter.openPhotos(photoUrlList) },
+                    { /* Do nothing */ }
+                )
             }
 
-            offerDetailsDetails {
-                id("offer_details_details")
-                description(offer?.description ?: "")
-
-                val isFree = offer?.isFree ?: true
-                val price = offer?.price ?: Constants.Offer.DEFAULT_PRICE
-                free(isFree)
-                price(if (isFree) context.getString(R.string.free_caps) else "$price USD")
+            offerDetailsTitle {
+                id("offer_details_title")
+                val offerDeleted = context.getString(R.string.offer_deleted)
+                val offerTitle = if (offer != null && offer?.isActive == true) offer?.title ?: offerDeleted else offerDeleted
+                title(offerTitle)
             }
 
-            reviewsHeader {
-                id("offer_details_reviews_header")
+            // Offer can become null if deleted by offer provider,
+            // when we are inside offer details.
+            if (offer != null && offer?.isActive == true) {
+                offerDetailsUser {
+                    id("offer_details_user")
+                    onClick { presenter.openUserDetails() }
+                    userPicUrl(user?.userPicUrl ?: "")
+
+                    val providedBy = context.getString(R.string.provided_by)
+                    val username = user?.getUsernameOrName() ?: ""
+                    username("$providedBy $username")
+
+                    val isOnline = user?.isOnline ?: false
+                    onlineVisible(isOnline && !isUserDeleted)
+
+                    val lastSeen = user?.getLastSeenTime() ?: ""
+                    lastSeen(getLastSeenText(context, lastSeen))
+                    lastSeenVisible(!isOnline && !isUserDeleted && lastSeen != "")
+                }
+
+                offerDetailsDetails {
+                    id("offer_details_details")
+                    description(offer?.description ?: "")
+
+                    val isFree = offer?.isFree ?: true
+                    val price = offer?.price ?: Constants.Offer.DEFAULT_PRICE
+                    free(isFree)
+                    price(if (isFree) context.getString(R.string.free_caps) else "$price USD")
+                }
+
+                reviewsHeader {
+                    id("offer_details_reviews_header")
+                }
+
+                lastOfferReview(offer, 0)
+
+                reviewsSummary {
+                    id("offer_details_reviews_summary")
+
+                    val reviewCount = offer?.reviewCount ?: 0
+                    val noReviews = reviewCount == 0
+                    val allReviews = context.getString(R.string.all_reviews)
+                    reviewsActionText(if (noReviews) context.getString(R.string.no_reviews) else "$allReviews ($reviewCount)")
+
+                    val offerRating = offer?.rating ?: 0.0F
+                    rating(offerRating)
+                    ratingVisible(offerRating != 0.0F)
+
+                    onClick { presenter.openReviews() }
+                }
+
+                mapModel.addTo(this)
             }
 
-            lastOfferReview(offer, 0)
-
-            reviewsSummary {
-                id("offer_details_reviews_summary")
-
-                val reviewCount = offer?.reviewCount ?: 0
-                val noReviews = reviewCount == 0
-                val allReviews = context.getString(R.string.all_reviews)
-                reviewsActionText(if (noReviews) context.getString(R.string.no_reviews) else "$allReviews ($reviewCount)")
-
-                val offerRating = offer?.rating ?: 0.0F
-                rating(offerRating)
-                ratingVisible(offerRating != 0.0F)
-
-                onClick { presenter.openReviews() }
-            }
-
-            mapModel.addTo(this)
+        } else {
+            // If user account deleted show user deleted message
+            userDetailsDeleted { id("user_account_deleted") }
         }
     }
 
