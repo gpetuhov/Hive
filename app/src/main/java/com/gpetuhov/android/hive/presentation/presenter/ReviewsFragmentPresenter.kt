@@ -28,6 +28,7 @@ class ReviewsFragmentPresenter :
     var postReviewEnabled = true
     var secondUser: User? = null
     var isSecondUserDeleted = false
+    var isOfferDeleted = false
 
     private var deleteReviewUid = ""
     private var deleteCommentReviewUid = ""
@@ -85,16 +86,15 @@ class ReviewsFragmentPresenter :
         }
 
         isSecondUserDeleted = secondUser?.isDeleted ?: false
+        isOfferDeleted = (secondUser?.offerList?.firstOrNull { it.uid == offerUid }) == null
 
         // Hide post review button if current offer belongs to current user
         // or if current user has already posted review on the current offer
-        // or we are in second user and second user is deleted.
-        postReviewEnabled = !(isCurrentUser || reviewFromCurrentUserExist || isSecondUserDeleted)
+        // or we are in second user and second user is deleted or offer is deleted.
+        postReviewEnabled = !(isCurrentUser || reviewFromCurrentUserExist || isSecondUserDeleted || isOfferDeleted)
 
         viewState.updateUI()
     }
-
-    fun isOfferDeleted() = (secondUser?.offerList?.firstOrNull { it.uid == offerUid }) == null
 
     // --- Edit review ---
 

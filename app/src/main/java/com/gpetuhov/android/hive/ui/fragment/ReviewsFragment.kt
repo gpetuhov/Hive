@@ -77,8 +77,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
                 binding?.userIsDeleted = secondUser.isDeleted
                 presenter.secondUser = secondUser
                 presenter.updateReviews()
-                val isOfferDeleted = presenter.isOfferDeleted()
-                binding?.offerIsDeleted = isOfferDeleted
+                binding?.offerIsDeleted = presenter.isOfferDeleted
             })
         }
 
