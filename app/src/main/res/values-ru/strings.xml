@@ -43,7 +43,7 @@
     <string name="sign_out">Выход</string>
     <string name="delete_account">Удалить аккаунт</string>
     <string name="prompt_sign_out">Вы действительно хотите выйти?</string>
-    <string name="prompt_delete_account">Вы действительно хотите удалить свой аккаунт?
+    <string name="prompt_delete_account">Вы действительно хотите удалить свой аккаунт и все связанные данные?
         Эта операция не может быть отменена!
     </string>
     <string name="sign_out_no_network">Отсутствует интернет соединение. Выход невозможен</string>
@@ -170,7 +170,9 @@
     <string name="title_empty_error">Пожалуйста, добавьте название оффера</string>
     <string name="description_empty_error">Пожалуйста, добавьте описание оффера</string>
     <string name="photo_list_empty_error">Пожалуйста, добавьте хотя бы одно фото</string>
-    <string name="prompt_delete_offer">Вы действительно хотите удалить этот оффер?</string>
+    <string name="prompt_delete_offer">Вы действительно хотите удалить этот оффер и все связанные отзывы, что повлияет на ваш рейтинг?
+        Эта операция не может быть отменена!
+    </string>
     <string name="delete_offer_error">Ошибка удаления оффера</string>
     <string name="quit">Сохранение изменений</string>
     <string name="quit_offer_update_prompt">Вы хотите сохранить изменения?</string>

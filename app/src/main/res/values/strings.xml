@@ -43,8 +43,8 @@
     <string name="sign_out">Sign out</string>
     <string name="delete_account">Delete account</string>
     <string name="prompt_sign_out">Do you really want to sign out?</string>
-    <string name="prompt_delete_account">Do you really want to delete your user account? This operation cannot
-        be undone!
+    <string name="prompt_delete_account">Do you really want to delete your user account and all related data?
+        This operation cannot be undone!
     </string>
     <string name="sign_out_no_network">No Internet connection. Cannot sign out</string>
     <string name="sign_out_error">Sign out failed. Please, try again</string>
@@ -169,7 +169,9 @@
     <string name="title_empty_error">Please, add offer title</string>
     <string name="description_empty_error">Please, add offer description</string>
     <string name="photo_list_empty_error">Please, add at least one photo</string>
-    <string name="prompt_delete_offer">Do you really want to delete this offer?</string>
+    <string name="prompt_delete_offer">Do you really want to delete this offer and all related reviews, which will affect your user rating?
+        This operation cannot be undone!
+    </string>
     <string name="delete_offer_error">Error deleting offer</string>
     <string name="quit">Save changes</string>
     <string name="quit_offer_update_prompt">Do you want to save changes?</string>
