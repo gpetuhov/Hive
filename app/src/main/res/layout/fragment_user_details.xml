@@ -5,6 +5,7 @@
         tools:context=".ui.fragment.UserDetailsFragment">
 
     <data>
+        <import type="android.view.View"/>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.UserDetailsFragmentPresenter"/>
         <variable name="user" type="com.gpetuhov.android.hive.domain.model.User"/>
     </data>
@@ -79,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_chat"
                 android:onClick="@{view -> presenter.openChat()}"
+                android:visibility="@{user.isDeleted ? View.GONE : View.VISIBLE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
