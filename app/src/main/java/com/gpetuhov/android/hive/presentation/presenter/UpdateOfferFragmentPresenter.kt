@@ -302,7 +302,7 @@ class UpdateOfferFragmentPresenter :
     fun openReviews() {
         if (uid != "") {
             repo.clearReviews()
-            viewState.openReviews(uid)
+            viewState.openReviews(userUid, uid)
         }
     }
 

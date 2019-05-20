@@ -6,6 +6,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.DeleteCommentInteractor
 import com.gpetuhov.android.hive.domain.interactor.DeleteReviewInteractor
 import com.gpetuhov.android.hive.domain.model.Review
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
 import javax.inject.Inject
@@ -18,12 +19,15 @@ class ReviewsFragmentPresenter :
 
     @Inject lateinit var repo: Repo
 
+    var userUid = ""
     var offerUid = ""
     var isCurrentUser = false
     var reviewsList = mutableListOf<Review>()
     var reviewCount = 0
     var rating = 0.0F
     var postReviewEnabled = true
+    var secondUser: User? = null
+    var isSecondUserDeleted = false
 
     private var deleteReviewUid = ""
     private var deleteCommentReviewUid = ""
@@ -58,7 +62,9 @@ class ReviewsFragmentPresenter :
     fun changeReviewsList(reviewsList: MutableList<Review>) {
         this.reviewsList = reviewsList
         this.reviewCount = reviewsList.size
+    }
 
+    fun updateReviews() {
         postReviewEnabled = true
         var reviewFromCurrentUserExist = false
 
@@ -78,9 +84,12 @@ class ReviewsFragmentPresenter :
             rating = ratingSum / reviewCount
         }
 
+        isSecondUserDeleted = secondUser?.isDeleted ?: false
+
         // Hide post review button if current offer belongs to current user
-        // or if current user has already posted review on the current offer.
-        postReviewEnabled = !(isCurrentUser || reviewFromCurrentUserExist)
+        // or if current user has already posted review on the current offer
+        // or we are in second user and second user is deleted.
+        postReviewEnabled = !(isCurrentUser || reviewFromCurrentUserExist || isSecondUserDeleted)
 
         viewState.updateUI()
     }
@@ -132,7 +141,13 @@ class ReviewsFragmentPresenter :
 
     // --- Lifecycle ---
 
-    fun onResume() = repo.startGettingReviewsUpdates(offerUid, isCurrentUser)
+    fun onResume() {
+        repo.startGettingReviewsUpdates(offerUid, isCurrentUser)
+        if (!isCurrentUser) repo.startGettingSecondUserReviewsUpdates(userUid)
+    }
 
-    fun onPause() = repo.stopGettingReviewsUpdates()
+    fun onPause() {
+        repo.stopGettingReviewsUpdates()
+        if (!isCurrentUser) repo.stopGettingSecondUserReviewsUpdates()
+    }
 }

@@ -47,7 +47,7 @@ class OfferDetailsFragmentPresenter : MvpPresenter<OfferDetailsFragmentView>(), 
         viewState.openLocation(userUid)
     }
 
-    fun openReviews() = viewState.openReviews(offerUid)
+    fun openReviews() = viewState.openReviews(userUid, offerUid)
 
     fun favorite() = favoritesInteractor.favorite(offerIsFavorite, userUid, offerUid)
 

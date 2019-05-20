@@ -82,7 +82,7 @@ interface UpdateOfferFragmentView : MvpView {
     // === Open reviews ===
 
     @StateStrategyType(SkipStrategy::class)
-    fun openReviews(offerUid: String)
+    fun openReviews(userUid: String, offerUid: String)
 
     // === Common ===
 

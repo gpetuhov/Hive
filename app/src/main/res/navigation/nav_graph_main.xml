@@ -228,6 +228,9 @@
             android:label="ReviewsFragment"
             tools:layout="@layout/fragment_reviews">
         <argument
+                android:name="userUid"
+                app:argType="string"/>
+        <argument
                 android:name="offerUid"
                 app:argType="string"/>
         <argument

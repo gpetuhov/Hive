@@ -14,6 +14,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentReviewsBinding
 import com.gpetuhov.android.hive.domain.model.Review
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ReviewsFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ReviewsFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsListController
@@ -46,8 +47,10 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         binding?.presenter = presenter
 
         val args = ReviewsFragmentArgs.fromBundle(arguments!!)
+        val userUid = args.userUid
         val offerUid = args.offerUid
         val isCurrentUser = args.isCurrentUser
+        presenter.userUid = userUid
         presenter.offerUid = offerUid
         presenter.isCurrentUser = isCurrentUser
 
@@ -66,7 +69,15 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         viewModel.reviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
             binding?.reviewsListEmpty = reviewsList.isEmpty()
             presenter.changeReviewsList(reviewsList)
+            presenter.updateReviews()
         })
+
+        if (!isCurrentUser) {
+            viewModel.secondUser.observe(this, Observer<User> { secondUser ->
+                presenter.secondUser = secondUser
+                presenter.updateReviews()
+            })
+        }
 
         return binding?.root
     }

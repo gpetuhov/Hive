@@ -22,7 +22,7 @@ interface OfferDetailsFragmentView : MvpView {
     fun openLocation(userUid: String)
 
     @StateStrategyType(SkipStrategy::class)
-    fun openReviews(offerUid: String)
+    fun openReviews(userUid: String, offerUid: String)
 
     @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)

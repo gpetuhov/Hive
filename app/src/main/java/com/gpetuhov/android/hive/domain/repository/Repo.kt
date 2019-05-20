@@ -71,6 +71,8 @@ interface Repo {
     fun stopGettingSecondUserLocationUpdates()
     fun startGettingSecondUserChatUpdates(uid: String)
     fun stopGettingSecondUserChatUpdates()
+    fun startGettingSecondUserReviewsUpdates(uid: String)
+    fun stopGettingSecondUserReviewsUpdates()
     fun initSecondUser(uid: String, name: String, userPicUrl: String)
     fun saveFcmToken(token: String)
 
