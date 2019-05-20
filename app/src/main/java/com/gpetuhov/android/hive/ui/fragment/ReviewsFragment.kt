@@ -74,6 +74,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
         if (!isCurrentUser) {
             viewModel.secondUser.observe(this, Observer<User> { secondUser ->
+                binding?.userIsDeleted = secondUser.isDeleted
                 presenter.secondUser = secondUser
                 presenter.updateReviews()
             })
