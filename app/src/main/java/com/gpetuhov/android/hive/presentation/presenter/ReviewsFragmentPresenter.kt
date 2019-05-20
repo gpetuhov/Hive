@@ -94,6 +94,8 @@ class ReviewsFragmentPresenter :
         viewState.updateUI()
     }
 
+    fun isOfferDeleted() = (secondUser?.offerList?.firstOrNull { it.uid == offerUid }) == null
+
     // --- Edit review ---
 
     fun editReview(reviewUid: String, reviewText: String, rating: Float) =
