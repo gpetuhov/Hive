@@ -8,7 +8,8 @@
         <import type="android.view.View"/>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.OfferDetailsFragmentPresenter"/>
         <variable name="offerIsFavorite" type="boolean"/>
-        <variable name="userIsDeleted" type="boolean"/>
+        <variable name="chatButtonVisible" type="boolean"/>
+        <variable name="favoriteButtonVisible" type="boolean"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,7 +61,7 @@
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/add_to_favorites"
                     android:onClick="@{view -> presenter.favorite()}"
-                    android:visibility="@{userIsDeleted ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{favoriteButtonVisible ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -83,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_chat"
                 android:onClick="@{view -> presenter.openChat()}"
-                android:visibility="@{userIsDeleted ? View.GONE : View.VISIBLE}"
+                android:visibility="@{chatButtonVisible ? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"

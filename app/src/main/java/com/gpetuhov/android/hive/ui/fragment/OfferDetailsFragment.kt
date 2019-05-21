@@ -52,10 +52,13 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
         val viewModel = ViewModelProviders.of(this).get(UserDetailsViewModel::class.java)
         viewModel.userDetails.observe(this, Observer<User> { user ->
             presenter.userUid = user.uid
+            val userIsDeleted = user.isDeleted
             val offer = user.getOffer(offerUid)
+            val offerIsDeleted = offer == null || !offer.isActive
             presenter.offerIsFavorite = offer?.isFavorite ?: false
             binding?.offerIsFavorite = presenter.offerIsFavorite
-            binding?.userIsDeleted = user.isDeleted
+            binding?.chatButtonVisible = !userIsDeleted
+            binding?.favoriteButtonVisible = !userIsDeleted && !offerIsDeleted
             controller?.changeOffer(user, offer)
         })
 
