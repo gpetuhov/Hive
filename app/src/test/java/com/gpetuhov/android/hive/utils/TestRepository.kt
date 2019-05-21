@@ -444,4 +444,10 @@ class TestRepository : Repo {
             activity = newActivity
         }
     }
+
+    override fun startGettingSecondUserReviewsUpdates(uid: String) {
+    }
+
+    override fun stopGettingSecondUserReviewsUpdates() {
+    }
 }
