@@ -58,6 +58,21 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
             summary(context, false) { presenter.openAllReviews() }
 
+            val hasFieldFillerAward = user?.hasFieldFillerAward ?: false
+            val hasAwards = hasFieldFillerAward
+            if (hasAwards) {
+                awards {
+                    id("user_details_awards")
+
+                    fieldFillerVisible(hasFieldFillerAward)
+                    onFieldFillerClick {
+                        // TODO: implement
+                    }
+
+                    lineVisible(false)
+                }
+            }
+
             val hasPhone = user?.hasPhone ?: false
             val hasVisibleEmail = user?.hasVisibleEmail ?: false
             val hasSkype = user?.hasSkype ?: false

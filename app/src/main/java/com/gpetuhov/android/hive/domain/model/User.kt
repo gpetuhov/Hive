@@ -57,6 +57,11 @@ data class User(
     val hasStatus get() = status != ""
     val hasActivity get() = activity != Constants.User.NO_ACTIVITY
 
+    val hasFieldFillerAward get() = photoList.isNotEmpty() && (userPicUrl != "") && hasUsername && hasDescription
+            && hasPhone && hasVisibleEmail && hasSkype && hasFacebook && hasTwitter && hasInstagram
+            && hasYouTube && hasWebsite && hasResidence && hasLanguage && hasEducation && hasWork
+            && hasInterests && hasStatus
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name

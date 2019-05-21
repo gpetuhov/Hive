@@ -146,6 +146,8 @@
     <string name="bicycle">On bicycle</string>
     <string name="vehicle">In vehicle</string>
     <string name="account_deleted">User account deleted</string>
+    <string name="awards">Awards</string>
+    <string name="field_filler">FieldFiller</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
