@@ -60,6 +60,7 @@
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/add_to_favorites"
                     android:onClick="@{view -> presenter.favorite()}"
+                    android:visibility="@{userIsDeleted ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
