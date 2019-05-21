@@ -67,17 +67,14 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(ReviewsViewModel::class.java)
         viewModel.reviews.observe(this, Observer<MutableList<Review>> { reviewsList ->
-            binding?.reviewsListEmpty = reviewsList.isEmpty()
             presenter.changeReviewsList(reviewsList)
             presenter.updateReviews()
         })
 
         if (!isCurrentUser) {
             viewModel.secondUser.observe(this, Observer<User> { secondUser ->
-                binding?.userIsDeleted = secondUser.isDeleted
                 presenter.secondUser = secondUser
                 presenter.updateReviews()
-                binding?.offerIsDeleted = presenter.isOfferDeleted
             })
         }
 
@@ -116,6 +113,10 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     override fun updateUI() {
         binding?.postReviewButtonVisible = presenter.postReviewEnabled
+        binding?.reviewsListVisible = presenter.isReviewListVisible
+        binding?.noReviewsVisible = presenter.isNoReviewsVisible
+        binding?.userDeletedVisible = presenter.isUserDeletedVisible
+        binding?.offerDeletedVisible = presenter.isOfferDeletedVisible
         controller?.requestModelBuild() ?: Unit
     }
 

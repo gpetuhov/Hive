@@ -25,13 +25,16 @@ class ReviewsFragmentPresenter :
     var reviewsList = mutableListOf<Review>()
     var reviewCount = 0
     var rating = 0.0F
-    var postReviewEnabled = true
     var secondUser: User? = null
-    var isSecondUserDeleted = false
-    var isOfferDeleted = false
+    var postReviewEnabled = true
+    var isReviewListVisible = false
+    var isNoReviewsVisible = false
+    var isOfferDeletedVisible = false
+    var isUserDeletedVisible = false
 
     private var deleteReviewUid = ""
     private var deleteCommentReviewUid = ""
+    private var isReviewListEmpty = false
 
     private val deleteReviewInteractor = DeleteReviewInteractor(this)
     private var deleteCommentInteractor = DeleteCommentInteractor(this)
@@ -63,6 +66,8 @@ class ReviewsFragmentPresenter :
     fun changeReviewsList(reviewsList: MutableList<Review>) {
         this.reviewsList = reviewsList
         this.reviewCount = reviewsList.size
+        this.isReviewListEmpty = reviewsList.isEmpty()
+        this.isReviewListVisible = !isReviewListEmpty
     }
 
     fun updateReviews() {
@@ -85,13 +90,18 @@ class ReviewsFragmentPresenter :
             rating = ratingSum / reviewCount
         }
 
-        isSecondUserDeleted = secondUser?.isDeleted ?: false
-        isOfferDeleted = (secondUser?.offerList?.firstOrNull { it.uid == offerUid }) == null
+        // Show user and offer deleted messages for not current user only
+        val isUserDeleted = !isCurrentUser && (secondUser?.isDeleted == true)
+        val isOfferDeleted = !isCurrentUser && ((secondUser?.offerList?.firstOrNull { it.uid == offerUid }) == null)
 
         // Hide post review button if current offer belongs to current user
         // or if current user has already posted review on the current offer
         // or we are in second user and second user is deleted or offer is deleted.
-        postReviewEnabled = !(isCurrentUser || reviewFromCurrentUserExist || isSecondUserDeleted || isOfferDeleted)
+        postReviewEnabled = !(isCurrentUser || reviewFromCurrentUserExist || isUserDeleted || isOfferDeleted)
+
+        isNoReviewsVisible = isReviewListEmpty && !isUserDeleted && !isOfferDeleted
+        isUserDeletedVisible = isReviewListEmpty && isUserDeleted
+        isOfferDeletedVisible = isReviewListEmpty && !isUserDeleted && isOfferDeleted
 
         viewState.updateUI()
     }
