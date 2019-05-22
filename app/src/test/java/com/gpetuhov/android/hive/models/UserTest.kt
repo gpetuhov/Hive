@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.models
 
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_ACTIVITY
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_DESCRIPTION
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_EDUCATION
@@ -195,7 +196,22 @@ class UserTest {
     @Test
     fun hasTextMasterAward() {
         assertEquals(false, user.hasTextMasterAward)
+        fillAllFields(user)
+        assertEquals(true, user.hasTextMasterAward)
+    }
 
+    @Test
+    fun getNewAwards() {
+        assertEquals(true, user.getNewAwards().isEmpty())
+        fillAllFields(user)
+        assertEquals(false, user.getNewAwards().isEmpty())
+        user.awardCongratulationShownList.add(Constants.Award.TEXT_MASTER)
+        assertEquals(true, user.getNewAwards().isEmpty())
+    }
+
+    // === Private methods ===
+
+    private fun fillAllFields(user: User) {
         user.userPicUrl = DUMMY_URL
         user.photoList.add(DUMMY_PHOTO)
         user.username = DUMMY_USERNAME
@@ -214,7 +230,5 @@ class UserTest {
         user.work = DUMMY_WORK
         user.interests = DUMMY_INTERESTS
         user.status = DUMMY_STATUS
-
-        assertEquals(true, user.hasTextMasterAward)
     }
 }

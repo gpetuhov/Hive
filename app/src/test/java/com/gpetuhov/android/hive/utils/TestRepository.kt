@@ -450,4 +450,7 @@ class TestRepository : Repo {
 
     override fun stopGettingSecondUserReviewsUpdates() {
     }
+
+    override fun saveAwardCongratulationShown(newAwardCongratulationShownList: MutableList<Int>) {
+    }
 }
