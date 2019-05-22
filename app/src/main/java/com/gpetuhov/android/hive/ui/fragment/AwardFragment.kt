@@ -36,19 +36,7 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
         val args = AwardFragmentArgs.fromBundle(arguments!!)
         val awardType = args.awardType
 
-        val awardNameId: Int
-
-        when (awardType) {
-            Constants.Award.TEXT_MASTER -> {
-                awardNameId = R.string.text_master
-                binding?.textMasterVisible = true
-            }
-            else -> {
-                awardNameId = R.string.info
-            }
-        }
-
-        binding?.awardName = getString(awardNameId)
+        updateUI(awardType)
 
         return binding?.root
     }
@@ -57,5 +45,21 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
+    }
+
+    // === Private methods ===
+
+    private fun updateUI(awardType: Int) {
+        val awardNameId: Int
+
+        when (awardType) {
+            Constants.Award.TEXT_MASTER -> {
+                awardNameId = R.string.text_master
+                binding?.textMasterVisible = true
+            }
+            else -> awardNameId = R.string.info
+        }
+
+        binding?.awardName = getString(awardNameId)
     }
 }
