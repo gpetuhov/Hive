@@ -83,6 +83,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val LAST_SEEN_KEY = "last_seen"
         private const val STATUS_KEY = "status"
         private const val ACTIVITY_KEY = "activity"
+        private const val AWARD_CONGRATULATION_SHOWN_LIST_KEY = "awardCongratulationShownList"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1357,6 +1358,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
         user.photoList = getPhotoListFromDocumentSnapshot(doc)
+        user.awardCongratulationShownList = getAwardCongratulationShownListFromDocumentSnapshot(doc)
 
         // Offer ratings are stored in a separate list in user, not inside offer list.
         // This is needed to prevent overwriting offer ratings when updating offers.
@@ -1507,6 +1509,22 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
 
         return offerRatingList
+    }
+
+    private fun getAwardCongratulationShownListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Int> =
+        getAwardCongratulationShownListFromSnapshotList(doc.get(AWARD_CONGRATULATION_SHOWN_LIST_KEY) as List<*>?)
+
+    private fun getAwardCongratulationShownListFromSnapshotList(awardCongratulationShownSnapshotList: List<*>?): MutableList<Int> {
+        val awardCongratulationShownList = mutableListOf<Int>()
+
+        if (awardCongratulationShownSnapshotList != null) {
+            for (awardCongratulationShownSnapshot in awardCongratulationShownSnapshotList) {
+                val awardCongratulationShown = awardCongratulationShownSnapshot as Int?
+                if (awardCongratulationShown != null) awardCongratulationShownList.add(awardCongratulationShown)
+            }
+        }
+
+        return awardCongratulationShownList
     }
 
     private fun currentUserNameOrUsername() = currentUser.value?.getUsernameOrName() ?: ""

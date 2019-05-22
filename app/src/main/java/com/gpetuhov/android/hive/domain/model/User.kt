@@ -35,11 +35,11 @@ data class User(
     var lastSeen: Long = 0L,
     var status: String = "",
     var activity: Long = Constants.User.NO_ACTIVITY,
-    var isDeleted: Boolean = false,
-    var isTextMasterCongratulationShown: Boolean = false
+    var isDeleted: Boolean = false
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
+    var awardCongratulationShownList = mutableListOf<Int>()
     val hasUsername get() = username != ""
     val hasDescription get() = description != ""
     val hasPhone get() = phone != ""
@@ -73,7 +73,11 @@ data class User(
 
     fun getNewAwards(): MutableList<Int> {
         val newAwardsList = mutableListOf<Int>()
-        if (hasTextMasterAward && !isTextMasterCongratulationShown) newAwardsList.add(Constants.Award.TEXT_MASTER)
+        if (hasTextMasterAward && !isTextMasterCongratulationShown()) newAwardsList.add(Constants.Award.TEXT_MASTER)
         return newAwardsList
     }
+
+    // === Private methods ===
+
+    private fun isTextMasterCongratulationShown() = awardCongratulationShownList.contains(Constants.Award.TEXT_MASTER)
 }
