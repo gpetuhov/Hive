@@ -31,8 +31,6 @@ interface AppComponent {
     fun inject(authActivity: AuthActivity)
     fun inject(mainActivity: MainActivity)
 
-    fun inject(profileFragment: ProfileFragment)
-
     fun inject(locationService: LocationService)
     fun inject(messageService: MessageService)
 
@@ -97,6 +95,7 @@ interface AppComponent {
     fun inject(saveStatusInteractor: SaveStatusInteractor)
     fun inject(saveActivityInteractor: SaveActivityInteractor)
     fun inject(saveLocationInteractor: SaveLocationInteractor)
+    fun inject(saveAwardCongratulationShownInteractor: SaveAwardCongratulationShownInteractor)
 
     fun inject(resultMessagesProvider: ResultMessagesProvider)
 

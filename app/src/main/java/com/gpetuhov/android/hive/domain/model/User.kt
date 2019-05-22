@@ -39,7 +39,10 @@ data class User(
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
+
+    // This list contains awards, for which congratulations have been already SHOWN to the user
     var awardCongratulationShownList = mutableListOf<Int>()
+
     val hasUsername get() = username != ""
     val hasDescription get() = description != ""
     val hasPhone get() = phone != ""
