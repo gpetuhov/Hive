@@ -7,6 +7,7 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.*
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.awards
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
@@ -61,6 +62,21 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
         status(status, true, hasActivity, true) { presenter.showStatusDialog() }
 
         summary(context, true) { presenter.openAllReviews() }
+
+        val hasTextMasterAward = user?.hasTextMasterAward ?: false
+        val hasAwards = hasTextMasterAward
+        if (hasAwards) {
+            awards {
+                id("profile_awards")
+
+                textMasterVisible(hasTextMasterAward)
+                onTextMasterClick {
+                    // TODO: implement
+                }
+
+                lineVisible(true)
+            }
+        }
 
         profileContacts {
             id("profile_contacts")
