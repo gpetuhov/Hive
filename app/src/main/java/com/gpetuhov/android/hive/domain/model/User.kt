@@ -35,7 +35,8 @@ data class User(
     var lastSeen: Long = 0L,
     var status: String = "",
     var activity: Long = Constants.User.NO_ACTIVITY,
-    var isDeleted: Boolean = false
+    var isDeleted: Boolean = false,
+    var isTextMasterCongratulationShown: Boolean = false
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
@@ -69,4 +70,10 @@ data class User(
     fun getOffer(offerUid: String) = offerList.firstOrNull { it.uid == offerUid }
 
     fun getLastSeenTime() = getLastSeenTimeFromTimestamp(lastSeen)
+
+    fun getNewAwards(): MutableList<Int> {
+        val newAwardsList = mutableListOf<Int>()
+        if (hasTextMasterAward && !isTextMasterCongratulationShown) newAwardsList.add(Constants.Award.TEXT_MASTER)
+        return newAwardsList
+    }
 }

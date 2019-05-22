@@ -81,6 +81,10 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
         viewModel.currentUser.observe(this, Observer<User> { user ->
             controller?.changeUser(user)
+            val newAwardsList = user.getNewAwards()
+
+            // TODO: change this
+            if (newAwardsList.isNotEmpty()) showToast("Congratulations!!!")
         })
 
         return view
