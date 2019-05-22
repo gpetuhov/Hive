@@ -14,11 +14,16 @@ abstract class AwardsModel : EpoxyModelWithHolder<AwardsHolder>() {
     @EpoxyAttribute var textMasterVisible = false
     @EpoxyAttribute lateinit var onTextMasterClick: () -> Unit
 
+    @EpoxyAttribute var textMasterTipVisible = false
+
     @EpoxyAttribute var lineVisible = false
 
     override fun bind(holder: AwardsHolder) {
         holder.textMaster.setVisible(textMasterVisible)
         holder.textMaster.setOnClickListener { onTextMasterClick() }
+
+        holder.textMasterTip.setVisible(textMasterTipVisible)
+        holder.textMasterTip.setOnClickListener { onTextMasterClick() }
 
         holder.line.setVisible(lineVisible)
     }
@@ -26,6 +31,7 @@ abstract class AwardsModel : EpoxyModelWithHolder<AwardsHolder>() {
 
 class AwardsHolder : KotlinHolder() {
     val textMaster by bind<View>(R.id.user_details_awards_textmaster)
+    val textMasterTip by bind<View>(R.id.user_details_awards_textmaster_tip)
 
     val line by bind<View>(R.id.user_details_awards_line)
 }

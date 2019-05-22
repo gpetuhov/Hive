@@ -48,4 +48,27 @@
 
     </LinearLayout>
 
+    <LinearLayout
+            android:id="@+id/user_details_awards_textmaster_tip"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_idea"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/text_master_tip"
+                style="@style/mediumTextStyle"/>
+
+    </LinearLayout>
+
 </LinearLayout>

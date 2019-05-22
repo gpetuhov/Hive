@@ -109,9 +109,9 @@
     <string name="status_save_error">Ошибка обновления статуса</string>
     <string name="enter_interests">Какие у вас интересы?</string>
     <string name="interests_save_error">Ошибка обновления интересов</string>
-
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="text_master_tip">Заполните все поля профиля, добавьте аватар и фотографии, чтобы получить награду ТекстМастер</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Отменить поиск</string>
