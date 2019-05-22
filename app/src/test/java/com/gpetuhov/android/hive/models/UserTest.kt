@@ -1,18 +1,33 @@
 package com.gpetuhov.android.hive.models
 
-import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
-import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_ACTIVITY
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_DESCRIPTION
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_EDUCATION
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_EMAIL
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_FACEBOOK
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_INSTAGRAM
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_INTERESTS
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_LANGUAGE
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_LOCATION
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_OFFER
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_PHONE
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_RESIDENCE
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_SKYPE
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_STATUS
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_TWITTER
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_URL
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_USERNAME
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_WEBSITE
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_WORK
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_YOUTUBE
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_PHOTO
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
 class UserTest {
-
-    companion object {
-        const val DUMMY_USERNAME = "dummy_username"
-    }
 
     private lateinit var user: User
 
@@ -26,7 +41,7 @@ class UserTest {
             userPicUrl = "",
             description = "",
             isOnline = false,
-            location = LatLng(Constants.Map.DEFAULT_LATITUDE, Constants.Map.DEFAULT_LONGITUDE)
+            location = DUMMY_LOCATION
         )
     }
 
@@ -47,7 +62,7 @@ class UserTest {
     @Test
     fun emptyDescription() {
         assertEquals(false, user.hasDescription)
-        user.description = "Dummy description"
+        user.description = DUMMY_DESCRIPTION
         assertEquals(true, user.hasDescription)
     }
 
@@ -64,7 +79,7 @@ class UserTest {
 
     @Test
     fun getOffer() {
-        val dummyOffer = com.gpetuhov.android.hive.utils.Constants.DUMMY_OFFER
+        val dummyOffer = DUMMY_OFFER
         assertEquals(null, user.getOffer(dummyOffer.uid))
 
         user.offerList.add(dummyOffer)
@@ -75,105 +90,131 @@ class UserTest {
     @Test
     fun emptyPhone() {
         assertEquals(false, user.hasPhone)
-        user.phone = com.gpetuhov.android.hive.utils.Constants.DUMMY_PHONE
+        user.phone = DUMMY_PHONE
         assertEquals(true, user.hasPhone)
     }
 
     @Test
     fun emptyVisibleEmail() {
         assertEquals(false, user.hasVisibleEmail)
-        user.visibleEmail = com.gpetuhov.android.hive.utils.Constants.DUMMY_EMAIL
+        user.visibleEmail = DUMMY_EMAIL
         assertEquals(true, user.hasVisibleEmail)
     }
 
     @Test
     fun emptySkype() {
         assertEquals(false, user.hasSkype)
-        user.skype = com.gpetuhov.android.hive.utils.Constants.DUMMY_SKYPE
+        user.skype = DUMMY_SKYPE
         assertEquals(true, user.hasSkype)
     }
 
     @Test
     fun emptyFacebook() {
         assertEquals(false, user.hasFacebook)
-        user.facebook = com.gpetuhov.android.hive.utils.Constants.DUMMY_FACEBOOK
+        user.facebook = DUMMY_FACEBOOK
         assertEquals(true, user.hasFacebook)
     }
 
     @Test
     fun emptyTwitter() {
         assertEquals(false, user.hasTwitter)
-        user.twitter = com.gpetuhov.android.hive.utils.Constants.DUMMY_TWITTER
+        user.twitter = DUMMY_TWITTER
         assertEquals(true, user.hasTwitter)
     }
 
     @Test
     fun emptyInstagram() {
         assertEquals(false, user.hasInstagram)
-        user.instagram = com.gpetuhov.android.hive.utils.Constants.DUMMY_INSTAGRAM
+        user.instagram = DUMMY_INSTAGRAM
         assertEquals(true, user.hasInstagram)
     }
 
     @Test
     fun emptyYouTube() {
         assertEquals(false, user.hasYouTube)
-        user.youTube = com.gpetuhov.android.hive.utils.Constants.DUMMY_YOUTUBE
+        user.youTube = DUMMY_YOUTUBE
         assertEquals(true, user.hasYouTube)
     }
 
     @Test
     fun emptyWebsite() {
         assertEquals(false, user.hasWebsite)
-        user.website = com.gpetuhov.android.hive.utils.Constants.DUMMY_WEBSITE
+        user.website = DUMMY_WEBSITE
         assertEquals(true, user.hasWebsite)
     }
 
     @Test
     fun emptyResidence() {
         assertEquals(false, user.hasResidence)
-        user.residence = com.gpetuhov.android.hive.utils.Constants.DUMMY_RESIDENCE
+        user.residence = DUMMY_RESIDENCE
         assertEquals(true, user.hasResidence)
     }
 
     @Test
     fun emptyLanguage() {
         assertEquals(false, user.hasLanguage)
-        user.language = com.gpetuhov.android.hive.utils.Constants.DUMMY_LANGUAGE
+        user.language = DUMMY_LANGUAGE
         assertEquals(true, user.hasLanguage)
     }
 
     @Test
     fun emptyEducation() {
         assertEquals(false, user.hasEducation)
-        user.education = com.gpetuhov.android.hive.utils.Constants.DUMMY_EDUCATION
+        user.education = DUMMY_EDUCATION
         assertEquals(true, user.hasEducation)
     }
 
     @Test
     fun emptyWork() {
         assertEquals(false, user.hasWork)
-        user.work = com.gpetuhov.android.hive.utils.Constants.DUMMY_WORK
+        user.work = DUMMY_WORK
         assertEquals(true, user.hasWork)
     }
 
     @Test
     fun emptyInterests() {
         assertEquals(false, user.hasInterests)
-        user.interests = com.gpetuhov.android.hive.utils.Constants.DUMMY_INTERESTS
+        user.interests = DUMMY_INTERESTS
         assertEquals(true, user.hasInterests)
     }
 
     @Test
     fun emptyStatus() {
         assertEquals(false, user.hasStatus)
-        user.status = com.gpetuhov.android.hive.utils.Constants.DUMMY_STATUS
+        user.status = DUMMY_STATUS
         assertEquals(true, user.hasStatus)
     }
 
     @Test
     fun emptyActivity() {
         assertEquals(false, user.hasActivity)
-        user.activity = com.gpetuhov.android.hive.utils.Constants.DUMMY_ACTIVITY
+        user.activity = DUMMY_ACTIVITY
         assertEquals(true, user.hasActivity)
+    }
+
+    @Test
+    fun hasTextMasterAward() {
+        assertEquals(false, user.hasTextMasterAward)
+
+        user.userPicUrl = DUMMY_URL
+        user.photoList.add(DUMMY_PHOTO)
+        user.username = DUMMY_USERNAME
+        user.description = DUMMY_DESCRIPTION
+        user.phone = DUMMY_PHONE
+        user.visibleEmail = DUMMY_EMAIL
+        user.skype = DUMMY_SKYPE
+        user.facebook = DUMMY_FACEBOOK
+        user.twitter = DUMMY_TWITTER
+        user.instagram = DUMMY_INSTAGRAM
+        user.youTube = DUMMY_YOUTUBE
+        user.website = DUMMY_WEBSITE
+        user.residence = DUMMY_RESIDENCE
+        user.language = DUMMY_LANGUAGE
+        user.education = DUMMY_EDUCATION
+        user.work = DUMMY_WORK
+        user.interests = DUMMY_INTERESTS
+        user.status = DUMMY_STATUS
+
+        assertEquals(true, user.hasTextMasterAward)
     }
 }
