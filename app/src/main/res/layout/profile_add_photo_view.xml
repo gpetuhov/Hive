@@ -34,13 +34,27 @@
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
             android:id="@+id/profile_add_photo_warning"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="@string/max_visible_photos"
-            style="@style/mediumTextStyle"
-            android:visibility="gone"/>
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_warning"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/max_visible_photos"
+                style="@style/mediumTextStyle"/>
+
+    </LinearLayout>
 
 </LinearLayout>
