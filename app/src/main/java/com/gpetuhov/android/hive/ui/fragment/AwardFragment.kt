@@ -16,6 +16,7 @@ import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import kotlinx.android.synthetic.main.fragment_award.*
 
 class AwardFragment : BaseFragment(), AwardFragmentView {
 
@@ -33,12 +34,16 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_award, container, false)
         binding?.presenter = presenter
 
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val args = AwardFragmentArgs.fromBundle(arguments!!)
         val awardType = args.awardType
 
         updateUI(awardType)
-
-        return binding?.root
     }
 
     // === AwardFragmentView ===
@@ -50,16 +55,20 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
     // === Private methods ===
 
     private fun updateUI(awardType: Int) {
-        val awardNameId: Int
+        var awardAnimationId = R.raw.textmaster
+        var awardNameId = R.string.text_master
+        var awardDescriptionId = R.string.text_master_info
 
         when (awardType) {
             Constants.Award.TEXT_MASTER -> {
+                awardAnimationId = R.raw.textmaster
                 awardNameId = R.string.text_master
-                binding?.textMasterVisible = true
+                awardDescriptionId = R.string.text_master_info
             }
-            else -> awardNameId = R.string.info
         }
 
-        binding?.awardName = getString(awardNameId)
+        award_animation.setAnimation(awardAnimationId)
+        binding?.awardNameText = getString(awardNameId)
+        binding?.awardDescriptionText = getString(awardDescriptionId)
     }
 }
