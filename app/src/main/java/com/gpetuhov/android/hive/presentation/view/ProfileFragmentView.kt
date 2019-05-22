@@ -204,6 +204,11 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun openAllReviews()
 
+    // === Open award ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openAward()
+
     // === Common ===
 
     // We don't need to keep this command in the queue,

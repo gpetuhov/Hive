@@ -227,6 +227,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun openAward() {
+        val action = ProfileFragmentDirections.actionNavigationProfileToAwardFragment()
+        findNavController().navigate(action)
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }

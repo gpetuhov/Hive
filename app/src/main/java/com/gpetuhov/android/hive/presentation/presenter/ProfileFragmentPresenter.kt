@@ -546,6 +546,10 @@ class ProfileFragmentPresenter :
 
     fun openAllReviews() = viewState.openAllReviews()
 
+    // --- Open award ---
+
+    fun openAward() = viewState.openAward()
+
     // === Private methods ===
 
     private fun showToast(message: String) {

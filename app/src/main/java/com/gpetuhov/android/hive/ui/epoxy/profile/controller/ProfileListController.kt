@@ -7,7 +7,6 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.*
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.awards
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
@@ -63,9 +62,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
         summary(context, true) { presenter.openAllReviews() }
 
-        awards(true) {
-            // TODO: implement
-        }
+        awards(true) { presenter.openAward() }
 
         profileContacts {
             id("profile_contacts")
