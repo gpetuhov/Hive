@@ -11,9 +11,10 @@
         <variable name="textMasterVisible" type="Boolean"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
         <LinearLayout
                 android:id="@+id/award_header"
@@ -22,10 +23,7 @@
                 android:background="@color/md_white_1000"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:elevation="2dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:elevation="2dp">
 
             <ImageButton
                     android:id="@+id/award_back_button"
@@ -49,26 +47,78 @@
 
         </LinearLayout>
 
-        <LinearLayout
-                android:id="@+id/award_textmaster"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="@{textMasterVisible ? View.VISIBLE : View.GONE}"
-                app:layout_constraintTop_toBottomOf="@+id/award_header"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
 
-            <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/textmaster"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/award_textmaster"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:visibility="@{textMasterVisible ? View.VISIBLE : View.GONE}">
 
-        </LinearLayout>
+                <com.airbnb.lottie.LottieAnimationView
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/textmaster"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:id="@+id/lottieAnimationView"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintBottom_toTopOf="@+id/textView4"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_master"
+                        android:gravity="center"
+                        style="@style/titleTextStyle"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/lottieAnimationView"
+                        android:id="@+id/textView4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintBottom_toTopOf="@+id/textView3"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_master_info"
+                        android:gravity="center"
+                        style="@style/basicTextStyle"
+                        android:id="@+id/textView3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView4"
+                        android:layout_marginTop="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
 
 </layout>
