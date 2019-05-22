@@ -6,4 +6,8 @@ import com.gpetuhov.android.hive.presentation.view.AwardFragmentView
 
 @InjectViewState
 class AwardFragmentPresenter : MvpPresenter<AwardFragmentView>() {
+
+    // === Public methods ===
+
+    fun navigateUp() = viewState.navigateUp()
 }
