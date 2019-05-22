@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.offer.update.models
 
+import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
@@ -41,7 +42,7 @@ abstract class UpdateOfferDetailsModel : EpoxyModelWithHolder<UpdateOfferDetails
 
 class UpdateOfferDetailsHolder : KotlinHolder() {
     val active by bind<CheckBox>(R.id.update_offer_active)
-    val maxActiveWarning by bind<TextView>(R.id.update_offer_active_max_warning)
+    val maxActiveWarning by bind<View>(R.id.update_offer_active_max_warning)
     val title by bind<TextView>(R.id.update_offer_title)
     val description by bind<TextView>(R.id.update_offer_description)
 }
