@@ -259,7 +259,6 @@
     <string name="info">Info</string>
 
     <!-- AwardFragment -->
-    <string name="award">Award</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>

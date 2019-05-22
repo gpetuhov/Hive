@@ -9,10 +9,10 @@ import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentAwardBinding
-import com.gpetuhov.android.hive.databinding.FragmentPrivacyPolicyBinding
 import com.gpetuhov.android.hive.presentation.presenter.AwardFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.AwardFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -32,6 +32,22 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_award, container, false)
         binding?.presenter = presenter
+
+        val args = AwardFragmentArgs.fromBundle(arguments!!)
+        val awardType = args.awardType
+
+        val awardNameId: Int
+
+        when (awardType) {
+            Constants.Award.TEXT_MASTER -> {
+                awardNameId = R.string.text_master
+            }
+            else -> {
+                awardNameId = R.string.info
+            }
+        }
+
+        binding?.awardName = getString(awardNameId)
 
         return binding?.root
     }

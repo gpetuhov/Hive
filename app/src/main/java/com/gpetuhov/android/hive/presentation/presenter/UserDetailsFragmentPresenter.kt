@@ -75,7 +75,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openWebsite(website: String) = viewState.openWebsite(website)
 
-    fun openAward() = viewState.openAward()
+    fun openAward(awardType: Int) = viewState.openAward(awardType)
 
     // --- Lifecycle ---
 

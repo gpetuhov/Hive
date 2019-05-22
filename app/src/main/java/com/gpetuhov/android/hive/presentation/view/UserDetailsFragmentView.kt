@@ -49,7 +49,7 @@ interface UserDetailsFragmentView : MvpView {
     fun openWebsite(website: String)
 
     @StateStrategyType(SkipStrategy::class)
-    fun openAward()
+    fun openAward(awardType: Int)
 
     @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)

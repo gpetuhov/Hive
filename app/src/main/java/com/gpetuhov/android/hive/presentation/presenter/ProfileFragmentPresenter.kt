@@ -548,7 +548,7 @@ class ProfileFragmentPresenter :
 
     // --- Open award ---
 
-    fun openAward() = viewState.openAward()
+    fun openAward(awardType: Int) = viewState.openAward(awardType)
 
     // === Private methods ===
 

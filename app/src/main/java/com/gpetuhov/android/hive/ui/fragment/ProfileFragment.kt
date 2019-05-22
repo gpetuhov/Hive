@@ -227,8 +227,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun openAward() {
-        val action = ProfileFragmentDirections.actionNavigationProfileToAwardFragment()
+    override fun openAward(awardType: Int) {
+        val action = ProfileFragmentDirections.actionNavigationProfileToAwardFragment(awardType)
         findNavController().navigate(action)
     }
 

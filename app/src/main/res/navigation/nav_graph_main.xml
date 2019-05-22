@@ -325,6 +325,9 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.AwardFragment"
             android:label="AwardFragment"
             tools:layout="@layout/fragment_award">
+        <argument
+                android:name="awardType"
+                app:argType="integer"/>
     </fragment>
 
 </navigation>

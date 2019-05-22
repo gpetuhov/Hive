@@ -78,4 +78,10 @@ class Constants {
             const val JPEG_QUALITY = 70
         }
     }
+
+    class Award {
+        companion object {
+            const val TEXT_MASTER = 0
+        }
+    }
 }

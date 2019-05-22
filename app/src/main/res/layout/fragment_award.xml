@@ -6,6 +6,7 @@
 
     <data>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.AwardFragmentPresenter"/>
+        <variable name="awardName" type="String"/>
     </data>
 
     <LinearLayout
@@ -37,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/award"
+                    android:text="@{awardName}"
                     style="@style/titleTextStyle"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"/>

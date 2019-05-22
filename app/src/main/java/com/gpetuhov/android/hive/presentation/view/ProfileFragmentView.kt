@@ -207,7 +207,7 @@ interface ProfileFragmentView : MvpView {
     // === Open award ===
 
     @StateStrategyType(SkipStrategy::class)
-    fun openAward()
+    fun openAward(awardType: Int)
 
     // === Common ===
 
