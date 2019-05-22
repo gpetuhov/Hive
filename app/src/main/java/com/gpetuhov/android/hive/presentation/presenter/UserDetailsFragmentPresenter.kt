@@ -75,6 +75,8 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openWebsite(website: String) = viewState.openWebsite(website)
 
+    fun openAward() = viewState.openAward()
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend

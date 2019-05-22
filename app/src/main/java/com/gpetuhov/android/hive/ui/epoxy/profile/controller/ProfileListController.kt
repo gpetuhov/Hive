@@ -63,7 +63,9 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
         summary(context, true) { presenter.openAllReviews() }
 
-        awards(true)
+        awards(true) {
+            // TODO: implement
+        }
 
         profileContacts {
             id("profile_contacts")

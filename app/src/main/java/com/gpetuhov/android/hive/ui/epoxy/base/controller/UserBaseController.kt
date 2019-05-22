@@ -150,7 +150,7 @@ abstract class UserBaseController : BaseController() {
         }
     }
 
-    protected fun awards(isProfile: Boolean) {
+    protected fun awards(isProfile: Boolean, onTextMasterClick: () -> Unit) {
         val hasTextMasterAward = user?.hasTextMasterAward ?: false
         val hasAwards = hasTextMasterAward
         if (isProfile || hasAwards) {
@@ -158,9 +158,7 @@ abstract class UserBaseController : BaseController() {
                 id("user_awards")
 
                 textMasterVisible(hasTextMasterAward)
-                onTextMasterClick {
-                    // TODO: implement
-                }
+                onTextMasterClick { onTextMasterClick() }
 
                 textMasterTipVisible(isProfile && !hasTextMasterAward)
 

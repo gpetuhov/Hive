@@ -196,4 +196,9 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
             startActivity(intent)
         }
     }
+
+    override fun openAward() {
+        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToAwardFragment()
+        findNavController().navigate(action)
+    }
 }

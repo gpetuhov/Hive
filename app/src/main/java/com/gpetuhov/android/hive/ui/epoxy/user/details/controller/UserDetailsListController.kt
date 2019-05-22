@@ -58,7 +58,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
             summary(context, false) { presenter.openAllReviews() }
 
-            awards(false)
+            awards(false) { presenter.openAward() }
 
             val hasPhone = user?.hasPhone ?: false
             val hasVisibleEmail = user?.hasVisibleEmail ?: false

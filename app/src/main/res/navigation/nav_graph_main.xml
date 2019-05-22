@@ -62,6 +62,11 @@
                 app:destination="@id/reviewsAllFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_navigation_profile_to_awardFragment"
+                app:destination="@id/awardFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <!-- Secondary fragments -->
@@ -94,6 +99,11 @@
         <action
                 android:id="@+id/action_user_details_fragment_to_reviewsAllFragment"
                 app:destination="@id/reviewsAllFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_user_details_fragment_to_awardFragment"
+                app:destination="@id/awardFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
@@ -308,6 +318,13 @@
                 app:destination="@id/update_offer_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/awardFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.AwardFragment"
+            android:label="AwardFragment"
+            tools:layout="@layout/fragment_award">
     </fragment>
 
 </navigation>
