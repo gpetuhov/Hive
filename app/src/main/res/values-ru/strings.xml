@@ -148,7 +148,7 @@
     <string name="vehicle">В транспорте</string>
     <string name="account_deleted">Пользовательский аккаунт удален</string>
     <string name="awards">Награды</string>
-    <string name="field_filler">Заполнитель полей</string>
+    <string name="text_master">ТекстМастер</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>

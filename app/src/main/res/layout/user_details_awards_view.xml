@@ -18,7 +18,7 @@
             style="@style/titleTextStyle"/>
 
     <LinearLayout
-            android:id="@+id/user_details_awards_fieldfiller"
+            android:id="@+id/user_details_awards_textmaster"
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,14 +28,14 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_field_filler"/>
+                android:src="@drawable/ic_text_master"/>
 
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:text="@string/field_filler"
+                android:text="@string/text_master"
                 style="@style/basicTextStyle"/>
 
     </LinearLayout>

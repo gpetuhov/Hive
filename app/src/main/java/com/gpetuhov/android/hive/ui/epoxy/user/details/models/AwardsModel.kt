@@ -11,21 +11,21 @@ import com.gpetuhov.android.hive.util.setVisible
 @EpoxyModelClass(layout = R.layout.user_details_awards_view)
 abstract class AwardsModel : EpoxyModelWithHolder<AwardsHolder>() {
 
-    @EpoxyAttribute var fieldFillerVisible = false
-    @EpoxyAttribute lateinit var onFieldFillerClick: () -> Unit
+    @EpoxyAttribute var textMasterVisible = false
+    @EpoxyAttribute lateinit var onTextMasterClick: () -> Unit
 
     @EpoxyAttribute var lineVisible = false
 
     override fun bind(holder: AwardsHolder) {
-        holder.fieldFiller.setVisible(fieldFillerVisible)
-        holder.fieldFiller.setOnClickListener { onFieldFillerClick() }
+        holder.textMaster.setVisible(textMasterVisible)
+        holder.textMaster.setOnClickListener { onTextMasterClick() }
 
         holder.line.setVisible(lineVisible)
     }
 }
 
 class AwardsHolder : KotlinHolder() {
-    val fieldFiller by bind<View>(R.id.user_details_awards_fieldfiller)
+    val textMaster by bind<View>(R.id.user_details_awards_textmaster)
 
     val line by bind<View>(R.id.user_details_awards_line)
 }

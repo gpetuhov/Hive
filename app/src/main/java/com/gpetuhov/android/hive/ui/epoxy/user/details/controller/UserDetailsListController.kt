@@ -58,14 +58,14 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
             summary(context, false) { presenter.openAllReviews() }
 
-            val hasFieldFillerAward = user?.hasFieldFillerAward ?: false
-            val hasAwards = hasFieldFillerAward
+            val hasTextMasterAward = user?.hasTextMasterAward ?: false
+            val hasAwards = hasTextMasterAward
             if (hasAwards) {
                 awards {
                     id("user_details_awards")
 
-                    fieldFillerVisible(hasFieldFillerAward)
-                    onFieldFillerClick {
+                    textMasterVisible(hasTextMasterAward)
+                    onTextMasterClick {
                         // TODO: implement
                     }
 
