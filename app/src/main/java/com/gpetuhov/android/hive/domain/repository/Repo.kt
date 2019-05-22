@@ -134,4 +134,7 @@ interface Repo {
     // Connection State
     fun startGettingConnectionStateUpdates(onChange: (Boolean) -> Unit)
     fun stopGettingConnectionStateUpdates()
+
+    // Awards
+    fun saveAwardCongratulationShown(newAwardCongratulationShownList: MutableList<Int>)
 }

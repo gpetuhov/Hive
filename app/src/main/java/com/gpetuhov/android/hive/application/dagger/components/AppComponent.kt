@@ -18,6 +18,7 @@ import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsAllListContro
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsListController
 import com.gpetuhov.android.hive.ui.epoxy.user.details.controller.UserDetailsListController
 import com.gpetuhov.android.hive.ui.epoxy.user.favorite.controller.UserFavoriteListController
+import com.gpetuhov.android.hive.ui.fragment.ProfileFragment
 import com.gpetuhov.android.hive.ui.viewmodel.*
 import com.gpetuhov.android.hive.util.ResultMessagesProvider
 import dagger.Component
@@ -29,6 +30,8 @@ interface AppComponent {
     fun inject(splashActivity: SplashActivity)
     fun inject(authActivity: AuthActivity)
     fun inject(mainActivity: MainActivity)
+
+    fun inject(profileFragment: ProfileFragment)
 
     fun inject(locationService: LocationService)
     fun inject(messageService: MessageService)

@@ -21,14 +21,17 @@ import com.afollestad.materialdialogs.input.input
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.domain.model.User
+import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.*
 import com.pawegio.kandroid.toast
+import javax.inject.Inject
 
 class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
@@ -38,6 +41,9 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     @InjectPresenter lateinit var presenter: ProfileFragmentPresenter
+
+    // TODO: move this into interactor
+    @Inject lateinit var repo: Repo
 
     private var controller: ProfileListController? = null
 
@@ -60,6 +66,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var workDialog: MaterialDialog? = null
     private var interestsDialog: MaterialDialog? = null
     private var statusDialog: MaterialDialog? = null
+
+    // TODO: remove this
+    init {
+        HiveApp.appComponent.inject(this)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -84,7 +95,10 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             val newAwardsList = user.getNewAwards()
 
             // TODO: change this
-            if (newAwardsList.isNotEmpty()) showToast("Congratulations!!!")
+            if (newAwardsList.isNotEmpty()) {
+                showToast("Congratulations!!!")
+                repo.saveAwardCongratulationShown(newAwardsList)
+            }
         })
 
         return view

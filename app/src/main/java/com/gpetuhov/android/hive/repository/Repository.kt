@@ -1143,6 +1143,18 @@ class Repository(private val context: Context, private val settings: Settings) :
         removeKeepAliveListener()
     }
 
+    // --- Awards ---
+
+    override fun saveAwardCongratulationShown(newAwardCongratulationShownList: MutableList<Int>) {
+        // We have to save both new and existing items
+        val saveAwardCongratulationShownList = mutableListOf<Int>()
+        saveAwardCongratulationShownList.addAll(currentUser.value?.awardCongratulationShownList ?: mutableListOf())
+
+        newAwardCongratulationShownList.forEach { if (!saveAwardCongratulationShownList.contains(it)) saveAwardCongratulationShownList.add(it) }
+
+        saveUserSingleDataRemote(AWARD_CONGRATULATION_SHOWN_LIST_KEY, saveAwardCongratulationShownList, { /* Do nothing */ }, { /* Do nothing */})
+    }
+
     // === Private methods ===
     // --- User ---
 
@@ -1519,8 +1531,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         if (awardCongratulationShownSnapshotList != null) {
             for (awardCongratulationShownSnapshot in awardCongratulationShownSnapshotList) {
-                val awardCongratulationShown = awardCongratulationShownSnapshot as Int?
-                if (awardCongratulationShown != null) awardCongratulationShownList.add(awardCongratulationShown)
+                val awardCongratulationShown = awardCongratulationShownSnapshot as Long?
+                if (awardCongratulationShown != null) awardCongratulationShownList.add(awardCongratulationShown.toInt())
             }
         }
 
