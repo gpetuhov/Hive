@@ -1,6 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.profile.models
 
-import android.widget.TextView
+import android.view.View
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -19,5 +19,5 @@ abstract class ProfileOffersHeaderModel : EpoxyModelWithHolder<ProfileOffersHead
 }
 
 class ProfileOffersHeaderHolder : KotlinHolder() {
-    val noActiveOffersWarning by bind<TextView>(R.id.user_no_active_offers_warning)
+    val noActiveOffersWarning by bind<View>(R.id.user_no_active_offers_warning)
 }

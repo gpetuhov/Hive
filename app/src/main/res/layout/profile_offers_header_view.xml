@@ -23,13 +23,28 @@
             android:text="@string/offers"
             style="@style/titleTextStyle"/>
 
-    <TextView
+    <LinearLayout
             android:id="@+id/user_no_active_offers_warning"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/no_active_offers_warning"
             android:visibility="gone"
-            style="@style/mediumTextStyle"/>
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_warning"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/no_active_offers_warning"
+                style="@style/mediumTextStyle"/>
+
+    </LinearLayout>
 
 </LinearLayout>
