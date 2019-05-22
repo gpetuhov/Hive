@@ -5,14 +5,15 @@
         tools:context=".ui.fragment.OfferDetailsFragment">
 
     <data>
+        <import type="android.view.View"/>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.AwardFragmentPresenter"/>
         <variable name="awardName" type="String"/>
+        <variable name="textMasterVisible" type="Boolean"/>
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
         <LinearLayout
                 android:id="@+id/award_header"
@@ -21,7 +22,10 @@
                 android:background="@color/md_white_1000"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:elevation="2dp">
+                android:elevation="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                     android:id="@+id/award_back_button"
@@ -45,6 +49,26 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+                android:id="@+id/award_textmaster"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{textMasterVisible ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@+id/award_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/textmaster"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -41,6 +41,7 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
         when (awardType) {
             Constants.Award.TEXT_MASTER -> {
                 awardNameId = R.string.text_master
+                binding?.textMasterVisible = true
             }
             else -> {
                 awardNameId = R.string.info
