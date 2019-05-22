@@ -63,20 +63,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
         summary(context, true) { presenter.openAllReviews() }
 
-        val hasTextMasterAward = user?.hasTextMasterAward ?: false
-        val hasAwards = hasTextMasterAward
-        if (hasAwards) {
-            awards {
-                id("profile_awards")
-
-                textMasterVisible(hasTextMasterAward)
-                onTextMasterClick {
-                    // TODO: implement
-                }
-
-                lineVisible(true)
-            }
-        }
+        awards(true)
 
         profileContacts {
             id("profile_contacts")

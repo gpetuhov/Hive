@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.awards
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.status
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.summary
 import com.gpetuhov.android.hive.util.Constants
@@ -146,6 +147,23 @@ abstract class UserBaseController : BaseController() {
             ratingVisible(isRatingVisible || forceShowRating)
 
             onClick { if (totalReviewsCount > 0) onClick() }
+        }
+    }
+
+    protected fun awards(isProfile: Boolean) {
+        val hasTextMasterAward = user?.hasTextMasterAward ?: false
+        val hasAwards = hasTextMasterAward
+        if (hasAwards) {
+            awards {
+                id("user_awards")
+
+                textMasterVisible(hasTextMasterAward)
+                onTextMasterClick {
+                    // TODO: implement
+                }
+
+                lineVisible(isProfile)
+            }
         }
     }
 

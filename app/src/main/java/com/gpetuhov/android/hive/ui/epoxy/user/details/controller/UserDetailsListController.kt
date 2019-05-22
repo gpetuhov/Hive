@@ -58,20 +58,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
             summary(context, false) { presenter.openAllReviews() }
 
-            val hasTextMasterAward = user?.hasTextMasterAward ?: false
-            val hasAwards = hasTextMasterAward
-            if (hasAwards) {
-                awards {
-                    id("user_details_awards")
-
-                    textMasterVisible(hasTextMasterAward)
-                    onTextMasterClick {
-                        // TODO: implement
-                    }
-
-                    lineVisible(false)
-                }
-            }
+            awards(false)
 
             val hasPhone = user?.hasPhone ?: false
             val hasVisibleEmail = user?.hasVisibleEmail ?: false
