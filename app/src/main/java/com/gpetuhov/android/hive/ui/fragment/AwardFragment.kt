@@ -55,15 +55,20 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
     // === Private methods ===
 
     private fun updateUI(awardType: Int) {
-        var awardAnimationId = R.raw.textmaster
-        var awardNameId = R.string.text_master
-        var awardDescriptionId = R.string.text_master_info
+        val awardAnimationId: Int
+        val awardNameId: Int
+        val awardDescriptionId: Int
 
         when (awardType) {
             Constants.Award.TEXT_MASTER -> {
                 awardAnimationId = R.raw.textmaster
                 awardNameId = R.string.text_master
                 awardDescriptionId = R.string.text_master_info
+            }
+            else -> {
+                awardAnimationId = R.raw.gears
+                awardNameId = R.string.info
+                awardDescriptionId = R.string.info
             }
         }
 
