@@ -56,23 +56,27 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
 
     private fun updateUI(awardType: Int) {
         val awardAnimationId: Int
+        val awardImageId: Int
         val awardNameId: Int
         val awardDescriptionId: Int
 
         when (awardType) {
             Constants.Award.TEXT_MASTER -> {
                 awardAnimationId = R.raw.textmaster
+                awardImageId = R.drawable.ic_text_master_big
                 awardNameId = R.string.text_master
                 awardDescriptionId = R.string.text_master_info
             }
             else -> {
                 awardAnimationId = R.raw.gears
+                awardImageId = R.drawable.ic_text_master_big
                 awardNameId = R.string.info
                 awardDescriptionId = R.string.info
             }
         }
 
         award_animation.setAnimation(awardAnimationId)
+        award_image.setImageResource(awardImageId)
         binding?.awardNameText = getString(awardNameId)
         binding?.awardDescriptionText = getString(awardDescriptionId)
     }

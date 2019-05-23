@@ -67,7 +67,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toTopOf="@+id/award_title"
+                        app:layout_constraintBottom_toTopOf="@+id/award_image_title"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintVertical_chainStyle="packed"
                         android:layout_marginTop="16dp"
@@ -76,13 +76,12 @@
                         android:layout_marginRight="16dp"
                         android:layout_marginEnd="16dp"/>
 
-                <TextView
-                        android:id="@+id/award_title"
+                <LinearLayout
+                        android:id="@+id/award_image_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{awardNameText}"
+                        android:orientation="horizontal"
                         android:gravity="center"
-                        style="@style/titleTextStyle"
                         app:layout_constraintTop_toBottomOf="@+id/award_animation"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -92,7 +91,26 @@
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginRight="16dp"
-                        android:layout_marginEnd="16dp"/>
+                        android:layout_marginEnd="16dp">
+
+                    <ImageButton
+                            android:id="@+id/award_image"
+                            android:layout_width="@dimen/basic_view_size"
+                            android:layout_height="@dimen/basic_view_size"
+                            android:background="@android:color/transparent"/>
+
+                    <TextView
+                            android:id="@+id/award_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginLeft="16dp"
+                            android:text="@{awardNameText}"
+                            android:gravity="center"
+                            style="@style/titleTextStyle"
+                            tools:text="AwardTitle"/>
+
+                </LinearLayout>
 
                 <TextView
                         android:id="@+id/award_description"
@@ -101,9 +119,10 @@
                         android:text="@{awardDescriptionText}"
                         android:gravity="center"
                         style="@style/basicTextStyle"
+                        tools:text="Award description"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/award_title"
+                        app:layout_constraintTop_toBottomOf="@+id/award_image_title"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         android:layout_marginTop="16dp"
