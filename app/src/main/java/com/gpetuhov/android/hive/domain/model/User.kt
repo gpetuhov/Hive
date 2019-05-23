@@ -86,19 +86,13 @@ data class User(
         if (hasTextMasterAward) {
             val textMasterId = Constants.Awards.TEXT_MASTER_ID
             awardsList.add(textMasterId)
-            if (!isTextMasterCongratulationShown()) newAwardsList.add(textMasterId)
+            if (!(awardCongratulationShownList.contains(textMasterId))) newAwardsList.add(textMasterId)
         }
 
         if (hasOfferProviderAward) {
             val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID
             awardsList.add(offerProviderId)
-            if (!isOfferProviderCongratulationShown()) newAwardsList.add(offerProviderId)
+            if (!(awardCongratulationShownList.contains(offerProviderId))) newAwardsList.add(offerProviderId)
         }
     }
-
-    // === Private methods ===
-
-    private fun isTextMasterCongratulationShown() = awardCongratulationShownList.contains(Constants.Awards.TEXT_MASTER_ID)
-
-    private fun isOfferProviderCongratulationShown() = awardCongratulationShownList.contains(Constants.Awards.OFFER_PROVIDER_ID)
 }
