@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.carousel
 import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
 import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
+import com.gpetuhov.android.hive.ui.epoxy.profile.models.awardTip
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
@@ -152,6 +153,7 @@ abstract class UserBaseController : BaseController() {
         val hasTextMasterAward = user?.hasTextMasterAward ?: false
         val hasOfferProviderAward = user?.hasOfferProviderAward ?: false
         val awardsList = user?.awardsList ?: mutableListOf()
+        val awardTipsList = user?.awardTipsList ?: mutableListOf()
         val hasAwards = awardsList.isNotEmpty()
         if (isProfile || hasAwards) {
             awards {
@@ -173,6 +175,17 @@ abstract class UserBaseController : BaseController() {
             awardHeader {
                 id("user_awards_header")
                 lineVisible(isProfile)
+            }
+
+            // Show award tips in profile only
+            if (isProfile) {
+                awardTipsList.forEach {
+                    awardTip {
+                        id("user_award_tip_$it")
+                        award(Constants.Awards.getAward(it))
+                        onAwardTipClick { onAwardClick(it) }
+                    }
+                }
             }
 
             awardsList.forEach {
