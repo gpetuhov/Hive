@@ -261,6 +261,7 @@
 
     <!-- AwardFragment -->
     <string name="text_master_info">All user information has been provided: user pic, photos, description, contacts etc.</string>
+    <string name="offer_provider_info">At least one offer has ever been provided by user</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>
