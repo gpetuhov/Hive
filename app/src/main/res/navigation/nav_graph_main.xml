@@ -341,7 +341,7 @@
             android:label="CongratulationFragment"
             tools:layout="@layout/fragment_congratulation">
         <argument
-                android:name="newAwardBundle"
+                android:name="newAwardsBundle"
                 app:argType="android.os.Bundle"/>
     </fragment>
 

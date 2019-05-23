@@ -36,6 +36,11 @@ class CongratulationFragment : BaseFragment(), CongratulationFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_congratulation, container, false)
         binding?.presenter = presenter
 
+        val args = CongratulationFragmentArgs.fromBundle(arguments!!)
+        val newAwardsBundle = args.newAwardsBundle
+        val newAwardsList = newAwardsBundle.getIntegerArrayList(NEW_AWARD_LIST_KEY)?.toMutableList() ?: mutableListOf()
+        presenter.saveAwardCongratulationShown(newAwardsList)
+
         return binding?.root
     }
 

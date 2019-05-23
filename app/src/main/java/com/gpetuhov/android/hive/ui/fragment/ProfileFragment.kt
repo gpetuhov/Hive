@@ -21,7 +21,6 @@ import com.afollestad.materialdialogs.input.input
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
-import com.gpetuhov.android.hive.domain.interactor.SaveAwardCongratulationShownInteractor
 import com.gpetuhov.android.hive.ui.viewmodel.CurrentUserViewModel
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ProfileFragmentPresenter
@@ -62,9 +61,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var interestsDialog: MaterialDialog? = null
     private var statusDialog: MaterialDialog? = null
 
-    // TODO: move this to CongratulationFragment
-    private var saveAwardCongratulationShownInteractor = SaveAwardCongratulationShownInteractor()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -89,12 +85,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             // If there are new awards (for which congratulation have not been shown yet),
             // open CongratulationFragment.
             val newAwardsList = user.getNewAwards()
-            if (newAwardsList.isNotEmpty()) {
-                presenter.openCongratulation(newAwardsList)
-
-                // TODO: move this into CongratulationFragment
-                saveAwardCongratulationShownInteractor.saveAwardCongratulationShown(newAwardsList)
-            }
+            if (newAwardsList.isNotEmpty()) presenter.openCongratulation(newAwardsList)
         })
 
         return view
