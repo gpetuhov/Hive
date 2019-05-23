@@ -61,6 +61,9 @@ data class User(
     val hasStatus get() = status != ""
     val hasActivity get() = activity != Constants.User.NO_ACTIVITY
 
+    val awardsList = mutableListOf<Int>()
+    val newAwardsList = mutableListOf<Int>()
+
     val hasTextMasterAward get() = photoList.isNotEmpty() && (userPicUrl != "") && hasUsername && hasDescription
             && hasPhone && hasVisibleEmail && hasSkype && hasFacebook && hasTwitter && hasInstagram
             && hasYouTube && hasWebsite && hasResidence && hasLanguage && hasEducation && hasWork
@@ -76,11 +79,21 @@ data class User(
 
     fun getLastSeenTime() = getLastSeenTimeFromTimestamp(lastSeen)
 
-    fun getNewAwards(): MutableList<Int> {
-        val newAwardsList = mutableListOf<Int>()
-        if (hasTextMasterAward && !isTextMasterCongratulationShown()) newAwardsList.add(Constants.Awards.TEXT_MASTER_ID)
-        if (hasOfferProviderAward && !isOfferProviderCongratulationShown()) newAwardsList.add(Constants.Awards.OFFER_PROVIDER_ID)
-        return newAwardsList
+    fun updateAwards() {
+        awardsList.clear()
+        newAwardsList.clear()
+
+        if (hasTextMasterAward) {
+            val textMasterId = Constants.Awards.TEXT_MASTER_ID
+            awardsList.add(textMasterId)
+            if (!isTextMasterCongratulationShown()) newAwardsList.add(textMasterId)
+        }
+
+        if (hasOfferProviderAward) {
+            val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID
+            awardsList.add(offerProviderId)
+            if (!isOfferProviderCongratulationShown()) newAwardsList.add(offerProviderId)
+        }
     }
 
     // === Private methods ===

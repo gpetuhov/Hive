@@ -1378,6 +1378,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         // for convenient use.
         updateOfferRatings(user, doc)
 
+        user.updateAwards()
+
         return user
     }
 

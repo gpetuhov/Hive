@@ -84,7 +84,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
             // If there are new awards (for which congratulation have not been shown yet),
             // open CongratulationFragment.
-            val newAwardsList = user.getNewAwards()
+            val newAwardsList = user.newAwardsList
             if (newAwardsList.isNotEmpty()) presenter.openCongratulation(newAwardsList)
         })
 

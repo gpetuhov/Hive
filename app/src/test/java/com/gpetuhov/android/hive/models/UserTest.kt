@@ -202,11 +202,14 @@ class UserTest {
 
     @Test
     fun getNewAwards() {
-        assertEquals(true, user.getNewAwards().isEmpty())
+        user.updateAwards()
+        assertEquals(true, user.newAwardsList.isEmpty())
         fillAllFields(user)
-        assertEquals(false, user.getNewAwards().isEmpty())
+        user.updateAwards()
+        assertEquals(false, user.newAwardsList.isEmpty())
         user.awardCongratulationShownList.add(Constants.Awards.TEXT_MASTER_ID)
-        assertEquals(true, user.getNewAwards().isEmpty())
+        user.updateAwards()
+        assertEquals(true, user.newAwardsList.isEmpty())
     }
 
     @Test
