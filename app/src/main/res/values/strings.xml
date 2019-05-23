@@ -149,6 +149,7 @@
     <string name="account_deleted">User account deleted</string>
     <string name="awards">Awards</string>
     <string name="text_master">TextMaster</string>
+    <string name="offer_provider">OfferProvider</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>

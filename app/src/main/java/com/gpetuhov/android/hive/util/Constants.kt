@@ -82,6 +82,7 @@ class Constants {
     class Award {
         companion object {
             const val TEXT_MASTER = 0
+            const val OFFER_PROVIDER = 1
         }
     }
 }

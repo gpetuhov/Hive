@@ -71,4 +71,28 @@
 
     </LinearLayout>
 
+    <LinearLayout
+            android:id="@+id/user_details_awards_offerprovider"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            android:gravity="center_vertical">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_offer_provider"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:text="@string/offer_provider"
+                style="@style/basicTextStyle"/>
+
+    </LinearLayout>
+
 </LinearLayout>

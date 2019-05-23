@@ -16,6 +16,9 @@ abstract class AwardsModel : EpoxyModelWithHolder<AwardsHolder>() {
 
     @EpoxyAttribute var textMasterTipVisible = false
 
+    @EpoxyAttribute var offerProviderVisible = false
+    @EpoxyAttribute lateinit var onOfferProviderClick: () -> Unit
+
     @EpoxyAttribute var lineVisible = false
 
     override fun bind(holder: AwardsHolder) {
@@ -25,6 +28,9 @@ abstract class AwardsModel : EpoxyModelWithHolder<AwardsHolder>() {
         holder.textMasterTip.setVisible(textMasterTipVisible)
         holder.textMasterTip.setOnClickListener { onTextMasterClick() }
 
+        holder.offerProvider.setVisible(offerProviderVisible)
+        holder.offerProvider.setOnClickListener { onOfferProviderClick() }
+
         holder.line.setVisible(lineVisible)
     }
 }
@@ -32,6 +38,8 @@ abstract class AwardsModel : EpoxyModelWithHolder<AwardsHolder>() {
 class AwardsHolder : KotlinHolder() {
     val textMaster by bind<View>(R.id.user_details_awards_textmaster)
     val textMasterTip by bind<View>(R.id.user_details_awards_textmaster_tip)
+
+    val offerProvider by bind<View>(R.id.user_details_awards_offerprovider)
 
     val line by bind<View>(R.id.user_details_awards_line)
 }

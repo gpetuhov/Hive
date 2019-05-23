@@ -149,6 +149,7 @@
     <string name="account_deleted">Пользовательский аккаунт удален</string>
     <string name="awards">Награды</string>
     <string name="text_master">ТекстМастер</string>
+    <string name="offer_provider">ОфферПровайдер</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>

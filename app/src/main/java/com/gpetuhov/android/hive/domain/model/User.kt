@@ -66,6 +66,8 @@ data class User(
             && hasYouTube && hasWebsite && hasResidence && hasLanguage && hasEducation && hasWork
             && hasInterests && hasStatus
 
+    val hasOfferProviderAward get() = firstOfferPublishedTimestamp != 0L
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
