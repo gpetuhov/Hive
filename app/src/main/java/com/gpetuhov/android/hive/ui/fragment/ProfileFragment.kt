@@ -247,8 +247,13 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     override fun openCongratulation() {
-        val action = ProfileFragmentDirections.actionNavigationProfileToCongratulationFragment()
-        findNavController().navigate(action)
+        val navController = findNavController()
+        // This check is required to prevent navigation destination is unknown crash
+        // when user returns back from CongratulationFragment and there is another new award.
+        if (navController.currentDestination?.id == R.id.navigation_profile) {
+            val action = ProfileFragmentDirections.actionNavigationProfileToCongratulationFragment()
+            navController.navigate(action)
+        }
     }
 
     override fun showToast(message: String) {

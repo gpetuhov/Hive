@@ -261,4 +261,7 @@
     <!-- AwardFragment -->
     <string name="text_master_info">Предоставлена вся информация о пользователе: аватар, фотографии, описание, контакты и т.д.</string>
 
+    <!-- CongratulationFragment -->
+    <string name="congratulations">Поздравляем</string>
+
 </resources>
