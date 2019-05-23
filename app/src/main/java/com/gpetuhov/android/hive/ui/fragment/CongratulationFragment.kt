@@ -15,6 +15,7 @@ import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import kotlinx.android.synthetic.main.fragment_congratulation.*
 
 class CongratulationFragment : BaseFragment(), CongratulationFragmentView {
 
@@ -42,6 +43,13 @@ class CongratulationFragment : BaseFragment(), CongratulationFragmentView {
         presenter.saveAwardCongratulationShown(newAwardsList)
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // This is needed to disable award list scrolling, because it is inside ScrollView
+        congratulation_award_list.isNestedScrollingEnabled = false
     }
 
     // === CongratulationFragmentView ===
