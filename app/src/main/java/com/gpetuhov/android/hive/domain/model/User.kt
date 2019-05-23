@@ -63,6 +63,7 @@ data class User(
 
     val awardsList = mutableListOf<Int>()
     val newAwardsList = mutableListOf<Int>()
+    val awardTipsList = mutableListOf<Int>()
 
     val hasTextMasterAward get() = photoList.isNotEmpty() && (userPicUrl != "") && hasUsername && hasDescription
             && hasPhone && hasVisibleEmail && hasSkype && hasFacebook && hasTwitter && hasInstagram
@@ -82,17 +83,22 @@ data class User(
     fun updateAwards() {
         awardsList.clear()
         newAwardsList.clear()
+        awardTipsList.clear()
 
+        val textMasterId = Constants.Awards.TEXT_MASTER_ID
         if (hasTextMasterAward) {
-            val textMasterId = Constants.Awards.TEXT_MASTER_ID
             awardsList.add(textMasterId)
             if (!(awardCongratulationShownList.contains(textMasterId))) newAwardsList.add(textMasterId)
+        } else {
+            awardTipsList.add(textMasterId)
         }
 
+        val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID
         if (hasOfferProviderAward) {
-            val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID
             awardsList.add(offerProviderId)
             if (!(awardCongratulationShownList.contains(offerProviderId))) newAwardsList.add(offerProviderId)
+        } else {
+            awardTipsList.add(offerProviderId)
         }
     }
 }

@@ -215,8 +215,26 @@ class UserTest {
     @Test
     fun hasOfferProviderAward() {
         assertEquals(false, user.hasOfferProviderAward)
-        user.firstOfferPublishedTimestamp = 100
+        initRirstOfferPublishedTimestamp(user)
         assertEquals(true, user.hasOfferProviderAward)
+    }
+
+    @Test
+    fun hasTextMasterAwardTip() {
+        user.updateAwards()
+        assertEquals(true, user.awardTipsList.contains(Constants.Awards.TEXT_MASTER_ID))
+        fillAllFields(user)
+        user.updateAwards()
+        assertEquals(false, user.awardTipsList.contains(Constants.Awards.TEXT_MASTER_ID))
+    }
+
+    @Test
+    fun hasOfferProviderAwardTip() {
+        user.updateAwards()
+        assertEquals(true, user.awardTipsList.contains(Constants.Awards.OFFER_PROVIDER_ID))
+        initRirstOfferPublishedTimestamp(user)
+        user.updateAwards()
+        assertEquals(false, user.awardTipsList.contains(Constants.Awards.OFFER_PROVIDER_ID))
     }
 
     // === Private methods ===
@@ -240,5 +258,9 @@ class UserTest {
         user.work = DUMMY_WORK
         user.interests = DUMMY_INTERESTS
         user.status = DUMMY_STATUS
+    }
+
+    private fun initRirstOfferPublishedTimestamp(user: User) {
+        user.firstOfferPublishedTimestamp = 100
     }
 }
