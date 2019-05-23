@@ -67,6 +67,11 @@
                 app:destination="@id/awardFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_navigation_profile_to_congratulationFragment"
+                app:destination="@id/congratulationFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <!-- Secondary fragments -->
@@ -328,6 +333,13 @@
         <argument
                 android:name="awardType"
                 app:argType="integer"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/congratulationFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.CongratulationFragment"
+            android:label="CongratulationFragment"
+            tools:layout="@layout/fragment_congratulation">
     </fragment>
 
 </navigation>

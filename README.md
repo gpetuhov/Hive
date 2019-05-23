@@ -28,6 +28,8 @@ Android
 ## Credits
 Award Icons made by [Vectors Market](https://www.flaticon.com/authors/vectors-market) from [www.flaticon.com](https://www.flaticon.com/)
 
-TextMaster award animation made by [Hyebin Park](https://lottiefiles.com/smoothy.co)
+TextMaster award animation made by [Hyebin Park](https://lottiefiles.com/smoothy.co) from [LottieFiles](https://lottiefiles.com/)
 
-Gears Animation mady by [LottieFiles](https://lottiefiles.com/lottiefiles)
+Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
+
+Gears Animation mady by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)

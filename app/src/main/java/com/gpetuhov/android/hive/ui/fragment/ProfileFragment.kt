@@ -85,11 +85,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
         viewModel.currentUser.observe(this, Observer<User> { user ->
             controller?.changeUser(user)
-            val newAwardsList = user.getNewAwards()
 
-            // TODO: change this
+            // If there are new awards (for which congratulation have not been shown yet),
+            // open CongratulationFragment.
+            val newAwardsList = user.getNewAwards()
             if (newAwardsList.isNotEmpty()) {
-                showToast("Congratulations!!!")
+                presenter.openCongratulation()
+
+                // TODO: move this into CongratulationFragment
                 saveAwardCongratulationShownInteractor.saveAwardCongratulationShown(newAwardsList)
             }
         })
@@ -240,6 +243,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun openAward(awardType: Int) {
         val action = ProfileFragmentDirections.actionNavigationProfileToAwardFragment(awardType)
+        findNavController().navigate(action)
+    }
+
+    override fun openCongratulation() {
+        val action = ProfileFragmentDirections.actionNavigationProfileToCongratulationFragment()
         findNavController().navigate(action)
     }
 

@@ -550,6 +550,10 @@ class ProfileFragmentPresenter :
 
     fun openAward(awardType: Int) = viewState.openAward(awardType)
 
+    // --- Open congratulation ---
+
+    fun openCongratulation() = viewState.openCongratulation()
+
     // === Private methods ===
 
     private fun showToast(message: String) {
