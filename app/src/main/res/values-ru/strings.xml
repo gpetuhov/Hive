@@ -262,7 +262,7 @@
 
     <!-- AwardFragment -->
     <string name="text_master_info">Предоставлена вся информация о пользователе: аватар, фотографии, описание, контакты и т.д.</string>
-    <string name="offer_provider_info">Хотя бы один оффер был когда-либо предоставлен пользователем</string>
+    <string name="offer_provider_info">Пользователь хотя бы один раз публиковал офферы</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Поздравляем!</string>
