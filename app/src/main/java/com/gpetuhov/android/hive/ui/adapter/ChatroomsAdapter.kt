@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.ItemChatroomBinding
 import com.gpetuhov.android.hive.domain.model.Chatroom
-import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.util.updateUserPic
 
 class ChatroomsAdapter(private val callback: Callback) : RecyclerView.Adapter<ChatroomsAdapter.ChatroomViewHolder>() {

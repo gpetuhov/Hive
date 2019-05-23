@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentCongratulationBinding
 import com.gpetuhov.android.hive.presentation.presenter.CongratulationFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.CongratulationFragmentView
+import com.gpetuhov.android.hive.ui.adapter.AwardsAdapter
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
@@ -50,6 +53,11 @@ class CongratulationFragment : BaseFragment(), CongratulationFragmentView {
 
         // This is needed to disable award list scrolling, because it is inside ScrollView
         congratulation_award_list.isNestedScrollingEnabled = false
+
+        congratulation_award_list.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        val awardsAdapter = AwardsAdapter()
+        awardsAdapter.setAwards(presenter.newAwardsList)
+        congratulation_award_list.adapter = awardsAdapter
     }
 
     // === CongratulationFragmentView ===
