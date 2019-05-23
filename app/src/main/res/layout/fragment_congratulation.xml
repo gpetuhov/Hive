@@ -37,20 +37,84 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/congratulations"
+                    android:text="@string/info"
                     style="@style/titleTextStyle"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"/>
 
         </LinearLayout>
 
-        <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/congratulation_animation"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/congratulation"/>
+        <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/congratulation_wrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/congratulation_animation"
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/congratulation"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/congratulation_title"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"/>
+
+                <TextView
+                        android:id="@+id/congratulation_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/congratulations"
+                        android:gravity="center"
+                        style="@style/titleTextStyle"
+                        app:layout_constraintTop_toBottomOf="@+id/congratulation_animation"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/congratulation_text"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"/>
+
+                <TextView
+                        android:id="@+id/congratulation_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/congratulations_text"
+                        android:gravity="center"
+                        style="@style/basicTextStyle"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/congratulation_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginEnd="16dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 

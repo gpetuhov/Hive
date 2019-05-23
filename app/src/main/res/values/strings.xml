@@ -262,7 +262,8 @@
     <string name="text_master_info">All user information has been provided: user pic, photos, description, contacts etc.</string>
 
     <!-- CongratulationFragment -->
-    <string name="congratulations">Congratulations</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="congratulations_text">You received following awards:</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
