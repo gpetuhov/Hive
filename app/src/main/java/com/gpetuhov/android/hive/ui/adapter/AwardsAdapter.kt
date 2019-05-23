@@ -9,7 +9,7 @@ import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.ItemAwardBinding
 import com.gpetuhov.android.hive.util.Constants
 
-class AwardsAdapter() : RecyclerView.Adapter<AwardsAdapter.AwardViewHolder>() {
+class AwardsAdapter : RecyclerView.Adapter<AwardsAdapter.AwardViewHolder>() {
 
     private var awardsList = mutableListOf<Int>()
 

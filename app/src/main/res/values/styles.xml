@@ -53,6 +53,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- Title text style not bold-->
+    <style name="titleTextStyleUnbold">
+        <item name="android:textColor">@color/md_grey_600</item>
+        <item name="android:textSize">@dimen/title_text_size</item>
+    </style>
+
     <!-- Map marker text style for online users -->
     <style name="greenTextStyle">
         <item name="android:textColor">@color/md_green_600</item>
