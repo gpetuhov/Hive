@@ -13,6 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.award
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.awards
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.status
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.summary
@@ -153,7 +154,8 @@ abstract class UserBaseController : BaseController() {
     protected fun awards(isProfile: Boolean, onAwardClick: (Int) -> Unit) {
         val hasTextMasterAward = user?.hasTextMasterAward ?: false
         val hasOfferProviderAward = user?.hasOfferProviderAward ?: false
-        val hasAwards = hasTextMasterAward || hasOfferProviderAward
+        val awardsList = user?.awardsList ?: mutableListOf()
+        val hasAwards = awardsList.isNotEmpty()
         if (isProfile || hasAwards) {
             awards {
                 id("user_awards")
@@ -169,6 +171,14 @@ abstract class UserBaseController : BaseController() {
                 offerProviderTipVisible(isProfile && !hasOfferProviderAward)
 
                 lineVisible(isProfile)
+            }
+
+            awardsList.forEach {
+                award {
+                    id("user_award_$it")
+                    award(Constants.Awards.getAward(it))
+                    onAwardClick { onAwardClick(it) }
+                }
             }
         }
     }
