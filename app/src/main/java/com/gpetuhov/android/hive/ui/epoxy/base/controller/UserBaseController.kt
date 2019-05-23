@@ -13,10 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.offer.item.models.offerItem
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.award
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.awards
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.status
-import com.gpetuhov.android.hive.ui.epoxy.user.details.models.summary
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getDateFromTimestampInMilliseconds
@@ -170,6 +167,11 @@ abstract class UserBaseController : BaseController() {
 
                 offerProviderTipVisible(isProfile && !hasOfferProviderAward)
 
+                lineVisible(isProfile)
+            }
+
+            awardHeader {
+                id("user_awards_header")
                 lineVisible(isProfile)
             }
 
