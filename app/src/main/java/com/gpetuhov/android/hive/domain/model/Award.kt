@@ -6,5 +6,6 @@ class Award(
     var smallImageId: Int,
     var imageId: Int,
     var nameId: Int,
-    var descriptionId: Int
+    var descriptionId: Int,
+    var tipId: Int
 )
