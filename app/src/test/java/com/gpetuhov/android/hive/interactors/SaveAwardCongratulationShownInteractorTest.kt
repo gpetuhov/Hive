@@ -2,7 +2,7 @@ package com.gpetuhov.android.hive.interactors
 
 import com.gpetuhov.android.hive.domain.interactor.SaveAwardCongratulationShownInteractor
 import com.gpetuhov.android.hive.interactors.base.SaveUserPropertyInteractorTest
-import com.gpetuhov.android.hive.util.Constants.Award.Companion.TEXT_MASTER
+import com.gpetuhov.android.hive.util.Constants.Awards.Companion.TEXT_MASTER_ID
 import com.gpetuhov.android.hive.utils.TestRepository
 import org.junit.Assert
 import org.junit.Before
@@ -24,9 +24,9 @@ class SaveAwardCongratulationShownInteractorTest : SaveUserPropertyInteractorTes
 
         val interactor = SaveAwardCongratulationShownInteractor()
         val newAwardCongratulationShownList = mutableListOf<Int>()
-        newAwardCongratulationShownList.add(TEXT_MASTER)
+        newAwardCongratulationShownList.add(TEXT_MASTER_ID)
         interactor.saveAwardCongratulationShown(newAwardCongratulationShownList)
 
-        Assert.assertEquals(isSuccess, (repo as TestRepository).awardCongratulationShownList.contains(TEXT_MASTER))
+        Assert.assertEquals(isSuccess, (repo as TestRepository).awardCongratulationShownList.contains(TEXT_MASTER_ID))
     }
 }

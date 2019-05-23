@@ -52,10 +52,10 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
     // === Private methods ===
 
     private fun updateUI(awardType: Int) {
-        val awardAnimationId = getAwardAnimationId(awardType)
-        val awardImageId = getAwardImageId(awardType)
-        val awardNameId = getAwardNameId(awardType)
-        val awardDescriptionId = getAwardDescriptionId(awardType)
+        val awardAnimationId = Constants.Awards.getAward(awardType).animationId
+        val awardImageId = Constants.Awards.getAward(awardType).imageId
+        val awardNameId = Constants.Awards.getAward(awardType).nameId
+        val awardDescriptionId = Constants.Awards.getAward(awardType).descriptionId
 
         award_animation.setAnimation(awardAnimationId)
         award_image.setImageResource(awardImageId)

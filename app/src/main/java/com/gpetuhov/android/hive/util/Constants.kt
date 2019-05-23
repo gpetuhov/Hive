@@ -1,6 +1,8 @@
 package com.gpetuhov.android.hive.util
 
 import com.google.android.gms.maps.model.LatLng
+import com.gpetuhov.android.hive.R
+import com.gpetuhov.android.hive.domain.model.Award
 
 class Constants {
     class Map {
@@ -79,10 +81,20 @@ class Constants {
         }
     }
 
-    class Award {
+    class Awards {
         companion object {
-            const val TEXT_MASTER = 0
-            const val OFFER_PROVIDER = 1
+            const val TEXT_MASTER_ID = 0
+            const val OFFER_PROVIDER_ID = 1
+
+            private val TEXT_MASTER = Award(TEXT_MASTER_ID, R.raw.textmaster, R.drawable.ic_text_master_big, R.string.text_master, R.string.text_master_info)
+            private val OFFER_PROVIDER = Award(OFFER_PROVIDER_ID, R.raw.offerprovider, R.drawable.ic_offer_provider_big, R.string.offer_provider, R.string.offer_provider_info)
+
+            private val AWARDS_MAP = hashMapOf(
+                TEXT_MASTER_ID to TEXT_MASTER,
+                OFFER_PROVIDER_ID to OFFER_PROVIDER
+            )
+
+            fun getAward(awardType: Int) = AWARDS_MAP[awardType] ?: TEXT_MASTER
         }
     }
 }

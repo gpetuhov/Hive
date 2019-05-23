@@ -66,9 +66,7 @@ data class User(
             && hasYouTube && hasWebsite && hasResidence && hasLanguage && hasEducation && hasWork
             && hasInterests && hasStatus
 
-    // TODO: restore this
-//    val hasOfferProviderAward get() = firstOfferPublishedTimestamp != 0L
-    val hasOfferProviderAward get() = false
+    val hasOfferProviderAward get() = firstOfferPublishedTimestamp != 0L
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 
@@ -80,14 +78,14 @@ data class User(
 
     fun getNewAwards(): MutableList<Int> {
         val newAwardsList = mutableListOf<Int>()
-        if (hasTextMasterAward && !isTextMasterCongratulationShown()) newAwardsList.add(Constants.Award.TEXT_MASTER)
-        if (hasOfferProviderAward && !isOfferProviderCongratulationShown()) newAwardsList.add(Constants.Award.OFFER_PROVIDER)
+        if (hasTextMasterAward && !isTextMasterCongratulationShown()) newAwardsList.add(Constants.Awards.TEXT_MASTER_ID)
+        if (hasOfferProviderAward && !isOfferProviderCongratulationShown()) newAwardsList.add(Constants.Awards.OFFER_PROVIDER_ID)
         return newAwardsList
     }
 
     // === Private methods ===
 
-    private fun isTextMasterCongratulationShown() = awardCongratulationShownList.contains(Constants.Award.TEXT_MASTER)
+    private fun isTextMasterCongratulationShown() = awardCongratulationShownList.contains(Constants.Awards.TEXT_MASTER_ID)
 
-    private fun isOfferProviderCongratulationShown() = awardCongratulationShownList.contains(Constants.Award.OFFER_PROVIDER)
+    private fun isOfferProviderCongratulationShown() = awardCongratulationShownList.contains(Constants.Awards.OFFER_PROVIDER_ID)
 }

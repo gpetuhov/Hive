@@ -205,7 +205,7 @@ class UserTest {
         assertEquals(true, user.getNewAwards().isEmpty())
         fillAllFields(user)
         assertEquals(false, user.getNewAwards().isEmpty())
-        user.awardCongratulationShownList.add(Constants.Award.TEXT_MASTER)
+        user.awardCongratulationShownList.add(Constants.Awards.TEXT_MASTER_ID)
         assertEquals(true, user.getNewAwards().isEmpty())
     }
 

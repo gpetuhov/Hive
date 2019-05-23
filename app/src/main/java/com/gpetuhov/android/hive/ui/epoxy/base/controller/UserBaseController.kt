@@ -159,12 +159,12 @@ abstract class UserBaseController : BaseController() {
                 id("user_awards")
 
                 textMasterVisible(hasTextMasterAward)
-                onTextMasterClick { onAwardClick(Constants.Award.TEXT_MASTER) }
+                onTextMasterClick { onAwardClick(Constants.Awards.TEXT_MASTER_ID) }
 
                 textMasterTipVisible(isProfile && !hasTextMasterAward)
 
                 offerProviderVisible(hasOfferProviderAward)
-                onOfferProviderClick { onAwardClick(Constants.Award.OFFER_PROVIDER) }
+                onOfferProviderClick { onAwardClick(Constants.Awards.OFFER_PROVIDER_ID) }
 
                 offerProviderTipVisible(isProfile && !hasOfferProviderAward)
 
