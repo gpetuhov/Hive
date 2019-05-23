@@ -79,10 +79,13 @@ data class User(
     fun getNewAwards(): MutableList<Int> {
         val newAwardsList = mutableListOf<Int>()
         if (hasTextMasterAward && !isTextMasterCongratulationShown()) newAwardsList.add(Constants.Award.TEXT_MASTER)
+        if (hasOfferProviderAward && !isOfferProviderCongratulationShown()) newAwardsList.add(Constants.Award.OFFER_PROVIDER)
         return newAwardsList
     }
 
     // === Private methods ===
 
     private fun isTextMasterCongratulationShown() = awardCongratulationShownList.contains(Constants.Award.TEXT_MASTER)
+
+    private fun isOfferProviderCongratulationShown() = awardCongratulationShownList.contains(Constants.Award.OFFER_PROVIDER)
 }
