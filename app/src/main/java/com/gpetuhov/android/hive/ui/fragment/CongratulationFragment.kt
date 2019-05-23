@@ -18,6 +18,10 @@ import com.gpetuhov.android.hive.util.showBottomNavigationView
 
 class CongratulationFragment : BaseFragment(), CongratulationFragmentView {
 
+    companion object {
+        const val NEW_AWARD_LIST_KEY = "newAwardList"
+    }
+
     @InjectPresenter lateinit var presenter: CongratulationFragmentPresenter
 
     private var binding: FragmentCongratulationBinding? = null

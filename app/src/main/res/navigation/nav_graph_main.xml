@@ -340,6 +340,9 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.CongratulationFragment"
             android:label="CongratulationFragment"
             tools:layout="@layout/fragment_congratulation">
+        <argument
+                android:name="newAwardBundle"
+                app:argType="android.os.Bundle"/>
     </fragment>
 
 </navigation>

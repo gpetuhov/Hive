@@ -552,7 +552,7 @@ class ProfileFragmentPresenter :
 
     // --- Open congratulation ---
 
-    fun openCongratulation() = viewState.openCongratulation()
+    fun openCongratulation(newAwardsList: MutableList<Int>) = viewState.openCongratulation(newAwardsList)
 
     // === Private methods ===
 

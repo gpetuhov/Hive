@@ -90,7 +90,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             // open CongratulationFragment.
             val newAwardsList = user.getNewAwards()
             if (newAwardsList.isNotEmpty()) {
-                presenter.openCongratulation()
+                presenter.openCongratulation(newAwardsList)
 
                 // TODO: move this into CongratulationFragment
                 saveAwardCongratulationShownInteractor.saveAwardCongratulationShown(newAwardsList)
@@ -246,12 +246,16 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun openCongratulation() {
+    override fun openCongratulation(newAwardsList: MutableList<Int>) {
         val navController = findNavController()
+
         // This check is required to prevent navigation destination is unknown crash
         // when user returns back from CongratulationFragment and there is another new award.
         if (navController.currentDestination?.id == R.id.navigation_profile) {
-            val action = ProfileFragmentDirections.actionNavigationProfileToCongratulationFragment()
+            val newAwardsBundle = Bundle()
+            newAwardsBundle.putIntegerArrayList(CongratulationFragment.NEW_AWARD_LIST_KEY, ArrayList(newAwardsList))
+
+            val action = ProfileFragmentDirections.actionNavigationProfileToCongratulationFragment(newAwardsBundle)
             navController.navigate(action)
         }
     }

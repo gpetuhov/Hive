@@ -212,7 +212,7 @@ interface ProfileFragmentView : MvpView {
     // === Open congratulation ===
 
     @StateStrategyType(SkipStrategy::class)
-    fun openCongratulation()
+    fun openCongratulation(newAwardsList: MutableList<Int>)
 
     // === Common ===
 
