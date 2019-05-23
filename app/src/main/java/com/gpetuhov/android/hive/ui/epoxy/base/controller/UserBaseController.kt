@@ -150,28 +150,10 @@ abstract class UserBaseController : BaseController() {
     }
 
     protected fun awards(isProfile: Boolean, onAwardClick: (Int) -> Unit) {
-        val hasTextMasterAward = user?.hasTextMasterAward ?: false
-        val hasOfferProviderAward = user?.hasOfferProviderAward ?: false
         val awardsList = user?.awardsList ?: mutableListOf()
         val awardTipsList = user?.awardTipsList ?: mutableListOf()
         val hasAwards = awardsList.isNotEmpty()
         if (isProfile || hasAwards) {
-            awards {
-                id("user_awards")
-
-                textMasterVisible(hasTextMasterAward)
-                onTextMasterClick { onAwardClick(Constants.Awards.TEXT_MASTER_ID) }
-
-                textMasterTipVisible(isProfile && !hasTextMasterAward)
-
-                offerProviderVisible(hasOfferProviderAward)
-                onOfferProviderClick { onAwardClick(Constants.Awards.OFFER_PROVIDER_ID) }
-
-                offerProviderTipVisible(isProfile && !hasOfferProviderAward)
-
-                lineVisible(isProfile)
-            }
-
             awardHeader {
                 id("user_awards_header")
                 lineVisible(isProfile)
