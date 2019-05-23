@@ -166,6 +166,8 @@ abstract class UserBaseController : BaseController() {
                 offerProviderVisible(hasOfferProviderAward)
                 onOfferProviderClick { onAwardClick(Constants.Award.OFFER_PROVIDER) }
 
+                offerProviderTipVisible(isProfile && !hasOfferProviderAward)
+
                 lineVisible(isProfile)
             }
         }

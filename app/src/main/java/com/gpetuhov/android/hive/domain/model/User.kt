@@ -66,7 +66,9 @@ data class User(
             && hasYouTube && hasWebsite && hasResidence && hasLanguage && hasEducation && hasWork
             && hasInterests && hasStatus
 
-    val hasOfferProviderAward get() = firstOfferPublishedTimestamp != 0L
+    // TODO: restore this
+//    val hasOfferProviderAward get() = firstOfferPublishedTimestamp != 0L
+    val hasOfferProviderAward get() = false
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 

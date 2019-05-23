@@ -112,6 +112,7 @@
     <string name="app_version">Версия приложения</string>
     <string name="privacy_policy">Политика конфиденциальности</string>
     <string name="text_master_tip">Заполните все поля профиля, добавьте аватар и фотографии, чтобы получить награду ТекстМастер</string>
+    <string name="offer_provider_tip">Опубликуйте хотя бы один оффер, чтобы получить награду ОфферПровайдер</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Отменить поиск</string>

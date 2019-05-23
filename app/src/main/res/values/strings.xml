@@ -112,6 +112,7 @@
     <string name="app_version">App version</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="text_master_tip">Fill in all profile fields, add user pic and user photos to receive TextMaster award</string>
+    <string name="offer_provider_tip">Publish at least one offer to receive OfferProvider award</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
