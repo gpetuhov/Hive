@@ -209,6 +209,13 @@ class UserTest {
         assertEquals(true, user.getNewAwards().isEmpty())
     }
 
+    @Test
+    fun hasOfferProviderAward() {
+        assertEquals(false, user.hasOfferProviderAward)
+        user.firstOfferPublishedTimestamp = 100
+        assertEquals(true, user.hasOfferProviderAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
