@@ -7,7 +7,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.ItemAwardBinding
-import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.getAwardImageId
+import com.gpetuhov.android.hive.util.getAwardNameId
 
 class AwardsAdapter : RecyclerView.Adapter<AwardsAdapter.AwardViewHolder>() {
 
@@ -25,20 +26,8 @@ class AwardsAdapter : RecyclerView.Adapter<AwardsAdapter.AwardViewHolder>() {
     override fun onBindViewHolder(holder: AwardViewHolder, position: Int) {
         val awardType = awardsList[position]
 
-        val awardImageId: Int
-        val awardNameId: Int
-
-        // TODO: refactor this out of here
-        when (awardType) {
-            Constants.Award.TEXT_MASTER -> {
-                awardImageId = R.drawable.ic_text_master_big
-                awardNameId = R.string.text_master
-            }
-            else -> {
-                awardImageId = R.drawable.ic_text_master_big
-                awardNameId = R.string.info
-            }
-        }
+        val awardImageId = getAwardImageId(awardType)
+        val awardNameId = getAwardNameId(awardType)
 
         holder.bindAwardImage(awardImageId)
         holder.binding.awardName = holder.binding.root.context.getString(awardNameId)

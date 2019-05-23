@@ -12,10 +12,7 @@ import com.gpetuhov.android.hive.databinding.FragmentAwardBinding
 import com.gpetuhov.android.hive.presentation.presenter.AwardFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.AwardFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
-import com.gpetuhov.android.hive.util.Constants
-import com.gpetuhov.android.hive.util.hideMainHeader
-import com.gpetuhov.android.hive.util.setActivitySoftInputPan
-import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.gpetuhov.android.hive.util.*
 import kotlinx.android.synthetic.main.fragment_award.*
 
 class AwardFragment : BaseFragment(), AwardFragmentView {
@@ -55,25 +52,10 @@ class AwardFragment : BaseFragment(), AwardFragmentView {
     // === Private methods ===
 
     private fun updateUI(awardType: Int) {
-        val awardAnimationId: Int
-        val awardImageId: Int
-        val awardNameId: Int
-        val awardDescriptionId: Int
-
-        when (awardType) {
-            Constants.Award.TEXT_MASTER -> {
-                awardAnimationId = R.raw.textmaster
-                awardImageId = R.drawable.ic_text_master_big
-                awardNameId = R.string.text_master
-                awardDescriptionId = R.string.text_master_info
-            }
-            else -> {
-                awardAnimationId = R.raw.gears
-                awardImageId = R.drawable.ic_text_master_big
-                awardNameId = R.string.info
-                awardDescriptionId = R.string.info
-            }
-        }
+        val awardAnimationId = getAwardAnimationId(awardType)
+        val awardImageId = getAwardImageId(awardType)
+        val awardNameId = getAwardNameId(awardType)
+        val awardDescriptionId = getAwardDescriptionId(awardType)
 
         award_animation.setAnimation(awardAnimationId)
         award_image.setImageResource(awardImageId)
