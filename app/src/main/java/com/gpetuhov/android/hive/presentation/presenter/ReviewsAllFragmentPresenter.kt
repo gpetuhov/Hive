@@ -56,21 +56,7 @@ class ReviewsAllFragmentPresenter : MvpPresenter<ReviewsAllFragmentView>() {
     // because the result is slightly different,
     // and we need it to be the same as in user details.
     private fun calculateRating(user: User?) {
-        allRating = 0.0F
-        allReviewCount = 0
-
-        if (user != null) {
-            val offerList = user.offerList
-            val activeOfferList = offerList.filter { it.isActive }
-            val activeOfferWithReviewsList = activeOfferList.filter { it.reviewCount > 0 }
-
-            activeOfferWithReviewsList.forEach {
-                allRating += it.rating
-                allReviewCount += it.reviewCount
-            }
-
-            val activeOfferWithReviewsCount = activeOfferWithReviewsList.size
-            if (activeOfferWithReviewsCount > 0) allRating /= activeOfferWithReviewsCount
-        }
+        allRating = user?.averageRating ?: 0.0F
+        allReviewCount = user?.totalReviewsCount ?: 0
     }
 }
