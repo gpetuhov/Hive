@@ -79,7 +79,8 @@ data class User(
     var hasAltruistAward = false
 
     val hasGoodProviderAward get() = totalReviewsCount >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_REVIEW_COUNT
-                && averageRating >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_RATING
+            && totalReviewsCount < Constants.Awards.SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT
+            && averageRating >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_RATING
 
     val hasSuperProviderAward get() = totalReviewsCount >= Constants.Awards.SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT
             && averageRating >= Constants.Awards.SUPER_PROVIDER_AWARD_MIN_RATING
