@@ -103,19 +103,14 @@ abstract class UserBaseController : BaseController() {
             firstOfferCreationDate("${context.getString(R.string.user_first_offer_creation_date)} $firstOfferPublishedDate")
             firstOfferCreationDateVisible(firstOfferPublishedTimestamp != 0L)
 
-            val activeOfferList = user?.offerList?.filter { it.isActive }
-            val activeOffersCount = activeOfferList?.size ?: 0
+            val activeOfferList = user?.activeOfferList ?: mutableListOf()
+            val activeOffersCount = activeOfferList.size
             activeOffersCount("${context.getString(R.string.user_active_offers_count)}: $activeOffersCount")
 
-            totalReviewsCount = 0
-            activeOfferList?.forEach { totalReviewsCount += it.reviewCount }
+            totalReviewsCount = user?.totalReviewsCount ?: 0
             totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: $totalReviewsCount")
 
-            averageRating = 0.0F
-            val activeOfferWithReviewsList = activeOfferList?.filter { it.reviewCount > 0 }
-            activeOfferWithReviewsList?.forEach { averageRating += it.rating }
-            val activeOfferWithReviewsCount = activeOfferWithReviewsList?.size ?: 0
-            if (activeOfferWithReviewsCount > 0) averageRating /= activeOfferWithReviewsCount
+            averageRating = user?.averageRating ?: 0.0F
             isRatingVisible = totalReviewsCount >= Constants.User.VISIBLE_RATING_REVIEW_COUNT && averageRating > 0.0F
             ratingVisible(isRatingVisible || forceShowRating)
             val ratingText = "%.2f".format(averageRating)

@@ -65,6 +65,10 @@ data class User(
     val newAwardsList = mutableListOf<Int>()
     val awardTipsList = mutableListOf<Int>()
 
+    var activeOfferList = mutableListOf<Offer>()
+    var totalReviewsCount = 0
+    var averageRating = 0F
+
     val hasTextMasterAward get() = photoList.isNotEmpty() && (userPicUrl != "") && hasUsername && hasDescription
             && hasPhone && hasVisibleEmail && hasSkype && hasFacebook && hasTwitter && hasInstagram
             && hasYouTube && hasWebsite && hasResidence && hasLanguage && hasEducation && hasWork
@@ -87,11 +91,12 @@ data class User(
         newAwardsList.clear()
         awardTipsList.clear()
 
+        calculateRatings()
+
         // Awards in awardsList and newAwardsList will be sorted from difficult to easy.
         // Awards in awardTipsList will be sorted from easy to difficult.
 
         // Has Altruist award if 3 or more active offers and all active offers are free.
-        val activeOfferList = offerList.filter { it.isActive }
         val freeActiveOfferList = activeOfferList.filter { it.isFree }
         hasAltruistAward = (activeOfferList.size >= Constants.Offer.MAX_ACTIVE_OFFER_COUNT) && (activeOfferList.size == freeActiveOfferList.size)
         val altruistId = Constants.Awards.ALTRUIST_ID
@@ -117,5 +122,20 @@ data class User(
         } else {
             awardTipsList.add(0, textMasterId)
         }
+    }
+
+    // === Private methods ===
+
+    private fun calculateRatings() {
+        activeOfferList = offerList.filter { it.isActive }.toMutableList()
+
+        totalReviewsCount = 0
+        activeOfferList.forEach { totalReviewsCount += it.reviewCount }
+
+        averageRating = 0.0F
+        val activeOfferWithReviewsList = activeOfferList.filter { it.reviewCount > 0 }
+        activeOfferWithReviewsList.forEach { averageRating += it.rating }
+        val activeOfferWithReviewsCount = activeOfferWithReviewsList.size
+        if (activeOfferWithReviewsCount > 0) averageRating /= activeOfferWithReviewsCount
     }
 }
