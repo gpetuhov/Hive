@@ -78,6 +78,9 @@ data class User(
 
     var hasAltruistAward = false
 
+    val hasGoodProviderAward get() = totalReviewsCount >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_REVIEW_COUNT
+                && averageRating > Constants.Awards.GOOD_PROVIDER_AWARD_MIN_RATING
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -95,6 +98,13 @@ data class User(
 
         // Awards in awardsList and newAwardsList will be sorted from difficult to easy.
         // Awards in awardTipsList will be sorted from easy to difficult.
+
+        // GoodProvider Award has no tip
+        val goodProviderId = Constants.Awards.GOOD_PROVIDER_ID
+        if (hasGoodProviderAward) {
+            awardsList.add(goodProviderId)
+            if (!(awardCongratulationShownList.contains(goodProviderId))) newAwardsList.add(goodProviderId)
+        }
 
         // Has Altruist award if 3 or more active offers and all active offers are free.
         val freeActiveOfferList = activeOfferList.filter { it.isFree }
