@@ -85,20 +85,23 @@ data class User(
         newAwardsList.clear()
         awardTipsList.clear()
 
-        val textMasterId = Constants.Awards.TEXT_MASTER_ID
-        if (hasTextMasterAward) {
-            awardsList.add(textMasterId)
-            if (!(awardCongratulationShownList.contains(textMasterId))) newAwardsList.add(textMasterId)
-        } else {
-            awardTipsList.add(textMasterId)
-        }
+        // Awards in awardsList and newAwardsList will be sorted from difficult to easy.
+        // Awards in awardTipsList will be sorted from easy to difficult.
 
         val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID
         if (hasOfferProviderAward) {
             awardsList.add(offerProviderId)
             if (!(awardCongratulationShownList.contains(offerProviderId))) newAwardsList.add(offerProviderId)
         } else {
-            awardTipsList.add(offerProviderId)
+            awardTipsList.add(0, offerProviderId)
+        }
+
+        val textMasterId = Constants.Awards.TEXT_MASTER_ID
+        if (hasTextMasterAward) {
+            awardsList.add(textMasterId)
+            if (!(awardCongratulationShownList.contains(textMasterId))) newAwardsList.add(textMasterId)
+        } else {
+            awardTipsList.add(0, textMasterId)
         }
     }
 }
