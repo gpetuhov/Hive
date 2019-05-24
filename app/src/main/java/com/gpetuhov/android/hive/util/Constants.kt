@@ -93,12 +93,14 @@ class Constants {
             private val OFFER_PROVIDER = Award(OFFER_PROVIDER_ID, R.raw.offerprovider, R.drawable.ic_offer_provider, R.drawable.ic_offer_provider_big, R.string.offer_provider, R.string.offer_provider_info, R.string.offer_provider_tip)
             private val ALTRUIST = Award(ALTRUIST_ID, R.raw.altruist, R.drawable.ic_altruist, R.drawable.ic_altruist_big, R.string.altruist, R.string.altruist_info, R.string.altruist_tip)
             private val GOOD_PROVIDER = Award(GOOD_PROVIDER_ID, R.raw.goodprovider, R.drawable.ic_good_provider, R.drawable.ic_good_provider_big, R.string.good_provider, R.string.good_provider_info, R.string.text_master_tip)
+            private val SUPER_PROVIDER = Award(SUPER_PROVIDER_ID, R.raw.superprovider, R.drawable.ic_super_provider, R.drawable.ic_super_provider_big, R.string.super_provider, R.string.super_provider_info, R.string.text_master_tip)
 
             private val AWARDS_MAP = hashMapOf(
                 TEXT_MASTER_ID to TEXT_MASTER,
                 OFFER_PROVIDER_ID to OFFER_PROVIDER,
                 ALTRUIST_ID to ALTRUIST,
-                GOOD_PROVIDER_ID to GOOD_PROVIDER
+                GOOD_PROVIDER_ID to GOOD_PROVIDER,
+                SUPER_PROVIDER_ID to SUPER_PROVIDER
             )
 
             fun getAward(awardType: Int) = AWARDS_MAP[awardType] ?: TEXT_MASTER

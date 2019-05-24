@@ -28,12 +28,14 @@ Android
 ## Credits
 Award Icons made by [Vectors Market](https://www.flaticon.com/authors/vectors-market) from [www.flaticon.com](https://www.flaticon.com/)
 
-Altruist award Icon made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
+Altruist and SuperProvider award Icon made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
 
-TextMaster award animation made by [Hyebin Park](https://lottiefiles.com/smoothy.co) from [LottieFiles](https://lottiefiles.com/)
+TextMaster, Altruist and GoodProvider award animation made by [Hyebin Park](https://lottiefiles.com/smoothy.co) from [LottieFiles](https://lottiefiles.com/)
+
+OfferProvider award animation made by [Jan Semler](https://lottiefiles.com/user/141) from [LottieFiles](https://lottiefiles.com/)
+
+SuperProvider award animation made by [Lucas Nemo](https://lottiefiles.com/LucasNemo) from [LottieFiles](https://lottiefiles.com/)
 
 Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
-
-Altruist award animation made by [Hyebin Park](https://lottiefiles.com/smoothy.co) from [LottieFiles](https://lottiefiles.com/)
 
 Gears Animation mady by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)
