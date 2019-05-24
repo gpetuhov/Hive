@@ -79,7 +79,7 @@ data class User(
     var hasAltruistAward = false
 
     val hasGoodProviderAward get() = totalReviewsCount >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_REVIEW_COUNT
-                && averageRating > Constants.Awards.GOOD_PROVIDER_AWARD_MIN_RATING
+                && averageRating >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_RATING
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 

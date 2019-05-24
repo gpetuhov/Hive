@@ -255,6 +255,14 @@ class UserTest {
         assertEquals(false, user.awardTipsList.contains(Constants.Awards.ALTRUIST_ID))
     }
 
+    @Test
+    fun hasGoodProviderAward() {
+        assertEquals(false, user.hasGoodProviderAward)
+        user.totalReviewsCount = Constants.Awards.GOOD_PROVIDER_AWARD_MIN_REVIEW_COUNT
+        user.averageRating = Constants.Awards.GOOD_PROVIDER_AWARD_MIN_RATING
+        assertEquals(true, user.hasGoodProviderAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
