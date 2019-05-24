@@ -263,6 +263,14 @@ class UserTest {
         assertEquals(true, user.hasGoodProviderAward)
     }
 
+    @Test
+    fun hasSuperProviderAward() {
+        assertEquals(false, user.hasSuperProviderAward)
+        user.totalReviewsCount = Constants.Awards.SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT
+        user.averageRating = Constants.Awards.SUPER_PROVIDER_AWARD_MIN_RATING
+        assertEquals(true, user.hasSuperProviderAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {

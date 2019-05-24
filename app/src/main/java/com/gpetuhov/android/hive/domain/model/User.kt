@@ -81,6 +81,9 @@ data class User(
     val hasGoodProviderAward get() = totalReviewsCount >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_REVIEW_COUNT
                 && averageRating >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_RATING
 
+    val hasSuperProviderAward get() = totalReviewsCount >= Constants.Awards.SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT
+            && averageRating >= Constants.Awards.SUPER_PROVIDER_AWARD_MIN_RATING
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -98,6 +101,13 @@ data class User(
 
         // Awards in awardsList and newAwardsList will be sorted from difficult to easy.
         // Awards in awardTipsList will be sorted from easy to difficult.
+
+        // SuperProvider Award has no tip
+        val superProviderId = Constants.Awards.SUPER_PROVIDER_ID
+        if (hasSuperProviderAward) {
+            awardsList.add(superProviderId)
+            if (!(awardCongratulationShownList.contains(superProviderId))) newAwardsList.add(superProviderId)
+        }
 
         // GoodProvider Award has no tip
         val goodProviderId = Constants.Awards.GOOD_PROVIDER_ID
