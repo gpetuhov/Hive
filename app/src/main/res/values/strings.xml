@@ -113,6 +113,7 @@
     <string name="privacy_policy">Privacy policy</string>
     <string name="text_master_tip">Fill in all profile fields, add user pic and user photos to receive TextMaster award</string>
     <string name="offer_provider_tip">Publish at least one offer to receive OfferProvider award</string>
+    <string name="altruist_tip">Publish 3 or more active offers and make all of them free to receive Altruist award</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
@@ -151,6 +152,7 @@
     <string name="awards">Awards</string>
     <string name="text_master">TextMaster</string>
     <string name="offer_provider">OfferProvider</string>
+    <string name="altruist">Altruist</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -263,6 +265,7 @@
     <!-- AwardFragment -->
     <string name="text_master_info">All user information has been provided: user pic, photos, description, contacts etc.</string>
     <string name="offer_provider_info">User published offers at least once</string>
+    <string name="altruist_info">User has 3 or more active offers and all active offers are free</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>

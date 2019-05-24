@@ -113,6 +113,7 @@
     <string name="privacy_policy">Политика конфиденциальности</string>
     <string name="text_master_tip">Заполните все поля профиля, добавьте аватар и фотографии, чтобы получить награду ТекстМастер</string>
     <string name="offer_provider_tip">Опубликуйте хотя бы один оффер, чтобы получить награду ОфферПровайдер</string>
+    <string name="altruist_tip">Опубликуйте 3 или более активных оффера и сделайте их все бесплатными, чтобы получить награду Альтруист</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Отменить поиск</string>
@@ -151,6 +152,7 @@
     <string name="awards">Награды</string>
     <string name="text_master">ТекстМастер</string>
     <string name="offer_provider">ОфферПровайдер</string>
+    <string name="altruist">Альтруист</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>
@@ -263,6 +265,7 @@
     <!-- AwardFragment -->
     <string name="text_master_info">Предоставлена вся информация о пользователе: аватар, фотографии, описание, контакты и т.д.</string>
     <string name="offer_provider_info">Пользователь хотя бы один раз публиковал офферы</string>
+    <string name="altruist_info">Пользователь опубликовал 3 или больше активных оффера, и все активные офферы бесплатные</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Поздравляем!</string>
