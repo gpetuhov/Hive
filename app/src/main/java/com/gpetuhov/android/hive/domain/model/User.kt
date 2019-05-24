@@ -72,6 +72,8 @@ data class User(
 
     val hasOfferProviderAward get() = firstOfferPublishedTimestamp != 0L
 
+    var hasAltruistAward = false
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -87,6 +89,18 @@ data class User(
 
         // Awards in awardsList and newAwardsList will be sorted from difficult to easy.
         // Awards in awardTipsList will be sorted from easy to difficult.
+
+        // Has Altruist award if 3 or more active offers and all active offers are free.
+        val activeOfferList = offerList.filter { it.isActive }
+        val freeActiveOfferList = activeOfferList.filter { it.isFree }
+        hasAltruistAward = (activeOfferList.size >= Constants.Offer.MAX_ACTIVE_OFFER_COUNT) && (activeOfferList.size == freeActiveOfferList.size)
+        val altruistId = Constants.Awards.ALTRUIST_ID
+        if (hasAltruistAward) {
+            awardsList.add(altruistId)
+            if (!(awardCongratulationShownList.contains(altruistId))) newAwardsList.add(altruistId)
+        } else {
+            awardTipsList.add(0, altruistId)
+        }
 
         val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID
         if (hasOfferProviderAward) {
