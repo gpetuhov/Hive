@@ -237,6 +237,24 @@ class UserTest {
         assertEquals(false, user.awardTipsList.contains(Constants.Awards.OFFER_PROVIDER_ID))
     }
 
+    @Test
+    fun hasAltruistAward() {
+        user.updateAwards()
+        assertEquals(false, user.hasAltruistAward)
+        addAllFreeOffers()
+        user.updateAwards()
+        assertEquals(true, user.hasAltruistAward)
+    }
+
+    @Test
+    fun hasAltruistAwardTip() {
+        user.updateAwards()
+        assertEquals(true, user.awardTipsList.contains(Constants.Awards.ALTRUIST_ID))
+        addAllFreeOffers()
+        user.updateAwards()
+        assertEquals(false, user.awardTipsList.contains(Constants.Awards.ALTRUIST_ID))
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
@@ -262,5 +280,13 @@ class UserTest {
 
     private fun initRirstOfferPublishedTimestamp(user: User) {
         user.firstOfferPublishedTimestamp = 100
+    }
+
+    private fun addAllFreeOffers() {
+        repeat(3) {
+            val offer = DUMMY_OFFER
+            offer.isFree = true
+            user.offerList.add(DUMMY_OFFER)
+        }
     }
 }
