@@ -153,6 +153,7 @@
     <string name="text_master">TextMaster</string>
     <string name="offer_provider">OfferProvider</string>
     <string name="altruist">Altruist</string>
+    <string name="good_provider">GoodProvider</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -266,6 +267,7 @@
     <string name="text_master_info">All user information has been provided: user pic, photos, description, contacts etc.</string>
     <string name="offer_provider_info">User published offers at least once</string>
     <string name="altruist_info">User has 3 or more active offers and all active offers are free</string>
+    <string name="good_provider_info">User has 10 or more reviews and average rating more that 4.5</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>
