@@ -155,6 +155,7 @@
     <string name="altruist">Altruist</string>
     <string name="good_provider">GoodProvider</string>
     <string name="super_provider">SuperProvider</string>
+    <string name="newbie">Newbie</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -270,6 +271,7 @@
     <string name="altruist_info">User has 3 or more active offers and all active offers are free</string>
     <string name="good_provider_info">User has 10 or more reviews and average rating more that 4.5</string>
     <string name="super_provider_info">User has 100 or more reviews and average rating more that 4.5</string>
+    <string name="newbie_info">User registered less than 31 days ago</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>

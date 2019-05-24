@@ -149,6 +149,11 @@ data class User(
         } else {
             awardTipsList.add(0, textMasterId)
         }
+
+        // Newbie Award has no congratulation and tip
+        if (hasNewbieAward()) {
+            awardsList.add(Constants.Awards.NEWBIE_ID)
+        }
     }
 
     // === Private methods ===

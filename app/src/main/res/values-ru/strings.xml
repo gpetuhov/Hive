@@ -155,6 +155,7 @@
     <string name="altruist">Альтруист</string>
     <string name="good_provider">GoodProvider</string>
     <string name="super_provider">SuperProvider</string>
+    <string name="newbie">Новичок</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>
@@ -270,6 +271,7 @@
     <string name="altruist_info">Пользователь опубликовал 3 или больше активных оффера, и все активные офферы бесплатные</string>
     <string name="good_provider_info">Пользователь имеет 10 или более отзывов и средний рейтинг больше 4.5</string>
     <string name="super_provider_info">Пользователь имеет 100 или более отзывов и средний рейтинг больше 4.5</string>
+    <string name="newbie_info">Пользователь зарегистрировался меньше, чем 31 день назад</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Поздравляем!</string>
