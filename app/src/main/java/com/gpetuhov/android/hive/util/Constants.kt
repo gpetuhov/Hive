@@ -110,6 +110,8 @@ class Constants {
 
             const val SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT = 100
             const val SUPER_PROVIDER_AWARD_MIN_RATING = 4.5F
+
+            const val NEWBIE_AWARD_DAYS_LIMIT = 31
         }
     }
 }

@@ -27,6 +27,7 @@ import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_PHOTO
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.util.*
 
 class UserTest {
 
@@ -273,6 +274,13 @@ class UserTest {
         // If user has SuperProvider award, user must NOT have GoodProvider award
         assertEquals(false, user.hasGoodProviderAward)
         assertEquals(true, user.hasSuperProviderAward)
+    }
+
+    @Test
+    fun hasNewbieAward() {
+        assertEquals(false, user.hasNewbieAward())
+        user.creationTimestamp = Date().time
+        assertEquals(true, user.hasNewbieAward())
     }
 
     // === Private methods ===

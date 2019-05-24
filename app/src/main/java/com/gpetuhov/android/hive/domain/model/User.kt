@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.domain.model
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.getLastSeenTimeFromTimestamp
+import java.util.*
 
 // Represents data both for the current user and search results.
 // Models at domain layer are just POJOs for keeping data.
@@ -92,6 +93,11 @@ data class User(
     fun getOffer(offerUid: String) = offerList.firstOrNull { it.uid == offerUid }
 
     fun getLastSeenTime() = getLastSeenTimeFromTimestamp(lastSeen)
+
+    fun hasNewbieAward(): Boolean {
+        val daysInHive = (Date().time - creationTimestamp) / (1000 * 60 * 60 * 24.0)
+        return daysInHive <= Constants.Awards.NEWBIE_AWARD_DAYS_LIMIT
+    }
 
     fun updateAwards() {
         awardsList.clear()
