@@ -29,9 +29,6 @@ abstract class UserBaseController : BaseController() {
     protected var user: User? = null
 
     private var selectedOfferPhotoMap = hashMapOf<String, Int>()
-    private var totalReviewsCount = 0
-    private var averageRating = 0.0F
-    private var isRatingVisible = false
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -107,11 +104,11 @@ abstract class UserBaseController : BaseController() {
             val activeOffersCount = activeOfferList.size
             activeOffersCount("${context.getString(R.string.user_active_offers_count)}: $activeOffersCount")
 
-            totalReviewsCount = user?.totalReviewsCount ?: 0
+            val totalReviewsCount = user?.totalReviewsCount ?: 0
             totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: $totalReviewsCount")
 
-            averageRating = user?.averageRating ?: 0.0F
-            isRatingVisible = totalReviewsCount >= Constants.User.VISIBLE_RATING_REVIEW_COUNT && averageRating > 0.0F
+            val averageRating = user?.averageRating ?: 0.0F
+            val isRatingVisible = isRatingVisible(totalReviewsCount, averageRating)
             ratingVisible(isRatingVisible || forceShowRating)
             val ratingText = "%.2f".format(averageRating)
             ratingText("${context.getString(R.string.average_rating)}: $ratingText")
@@ -127,20 +124,21 @@ abstract class UserBaseController : BaseController() {
         }
     }
 
-    // This should be called after summary() method has been called
     protected fun reviewsSummary(context: Context, forceShowRating: Boolean, onClick: () -> Unit) {
         reviewsSummary {
             id("reviews_summary")
 
-            val reviewCount = totalReviewsCount
-            val noReviews = reviewCount == 0
+            val totalReviewsCount = user?.totalReviewsCount ?: 0
+            val noReviews = totalReviewsCount == 0
             val allReviews = context.getString(R.string.all_reviews)
-            reviewsActionText(if (noReviews) context.getString(R.string.no_reviews2) else "$allReviews ($reviewCount)")
+            reviewsActionText(if (noReviews) context.getString(R.string.no_reviews2) else "$allReviews ($totalReviewsCount)")
 
+            val averageRating = user?.averageRating ?: 0.0F
+            val isRatingVisible = isRatingVisible(totalReviewsCount, averageRating)
             rating(averageRating)
             ratingVisible(isRatingVisible || forceShowRating)
 
-            onClick { if (totalReviewsCount > 0) onClick() }
+            onClick { if (!noReviews) onClick() }
         }
     }
 
@@ -241,4 +239,7 @@ abstract class UserBaseController : BaseController() {
             }
         }
     }
+
+    private fun isRatingVisible(totalReviewsCount: Int, averageRating: Float) =
+        totalReviewsCount >= Constants.User.VISIBLE_RATING_REVIEW_COUNT && averageRating > 0.0F
 }
