@@ -88,6 +88,9 @@ data class User(
 
     val hasReviewedProviderAward get() = totalReviewsCount > 0
 
+    // User can have HiveCore award on paid subscription only (because free subscription has active offer limit)
+    val hasHiveCoreAward get() = activeOfferList.size >= Constants.Awards.HIVECORE_AWARD_MIN_ACTIVE_OFFER_COUNT
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -141,6 +144,14 @@ data class User(
             if (!(awardCongratulationShownList.contains(altruistId))) newAwardsList.add(altruistId)
         } else {
             awardTipsList.add(0, altruistId)
+        }
+
+        // HiveCore Award should have tip when paid subscription implemented only
+        // TODO: add HiveCore Award tip, when paid subscription implemented
+        val hiveCoreId = Constants.Awards.HIVECORE_ID
+        if (hasHiveCoreAward) {
+            awardsList.add(hiveCoreId)
+            if (!(awardCongratulationShownList.contains(hiveCoreId))) newAwardsList.add(hiveCoreId)
         }
 
         val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID

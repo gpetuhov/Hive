@@ -242,7 +242,7 @@ class UserTest {
     fun hasAltruistAward() {
         user.updateAwards()
         assertEquals(false, user.hasAltruistAward)
-        addAllFreeOffers()
+        addAllFreeOffers(Constants.Offer.MAX_ACTIVE_OFFER_COUNT)
         user.updateAwards()
         assertEquals(true, user.hasAltruistAward)
     }
@@ -251,7 +251,7 @@ class UserTest {
     fun hasAltruistAwardTip() {
         user.updateAwards()
         assertEquals(true, user.awardTipsList.contains(Constants.Awards.ALTRUIST_ID))
-        addAllFreeOffers()
+        addAllFreeOffers(Constants.Offer.MAX_ACTIVE_OFFER_COUNT)
         user.updateAwards()
         assertEquals(false, user.awardTipsList.contains(Constants.Awards.ALTRUIST_ID))
     }
@@ -290,6 +290,15 @@ class UserTest {
         assertEquals(true, user.hasReviewedProviderAward)
     }
 
+    @Test
+    fun hasHiveCoreAward() {
+        user.updateAwards()
+        assertEquals(false, user.hasHiveCoreAward)
+        addAllFreeOffers(Constants.Awards.HIVECORE_AWARD_MIN_ACTIVE_OFFER_COUNT)
+        user.updateAwards()
+        assertEquals(true, user.hasHiveCoreAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
@@ -317,8 +326,8 @@ class UserTest {
         user.firstOfferPublishedTimestamp = 100
     }
 
-    private fun addAllFreeOffers() {
-        repeat(3) {
+    private fun addAllFreeOffers(offerCount: Int) {
+        repeat(offerCount) {
             val offer = DUMMY_OFFER
             offer.isFree = true
             user.offerList.add(DUMMY_OFFER)

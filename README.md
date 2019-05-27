@@ -40,6 +40,8 @@ SuperProvider award animation made by [Lucas Nemo](https://lottiefiles.com/Lucas
 
 Newbie award animation made by [Design](https://lottiefiles.com/designSquadRunner) from [LottieFiles](https://lottiefiles.com/)
 
+HiveCore award animation made by [Mikhail Golub](https://lottiefiles.com/mihail) from [LottieFiles](https://lottiefiles.com/)
+
 Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
 
 Gears Animation and ReviewedProvider award made by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)
