@@ -99,6 +99,7 @@ class Constants {
             private val SUPER_PROVIDER = Award(SUPER_PROVIDER_ID, R.raw.superprovider, R.drawable.ic_super_provider, R.drawable.ic_super_provider_big, R.string.super_provider, R.string.super_provider_info, R.string.text_master_tip)
             private val NEWBIE = Award(NEWBIE_ID, R.raw.newbie, R.drawable.ic_newbie, R.drawable.ic_newbie_big, R.string.newbie, R.string.newbie_info, R.string.text_master_tip)
             private val REVIEWED_PROVIDER = Award(REVIEWED_PROVIDER_ID, R.raw.reviewedprovider, R.drawable.ic_reviewed_provider, R.drawable.ic_reviewed_provider_big, R.string.reviewed_provider, R.string.reviewed_provider_info, R.string.text_master_tip)
+            private val HIVECORE = Award(HIVECORE_ID, R.raw.hivecore, R.drawable.ic_hivecore, R.drawable.ic_hivecore_big, R.string.hive_core, R.string.hive_core_info, R.string.hive_core_tip)
 
             private val AWARDS_MAP = hashMapOf(
                 TEXT_MASTER_ID to TEXT_MASTER,
@@ -107,7 +108,8 @@ class Constants {
                 GOOD_PROVIDER_ID to GOOD_PROVIDER,
                 SUPER_PROVIDER_ID to SUPER_PROVIDER,
                 NEWBIE_ID to NEWBIE,
-                REVIEWED_PROVIDER_ID to REVIEWED_PROVIDER
+                REVIEWED_PROVIDER_ID to REVIEWED_PROVIDER,
+                HIVECORE_ID to HIVECORE
             )
 
             fun getAward(awardType: Int) = AWARDS_MAP[awardType] ?: TEXT_MASTER

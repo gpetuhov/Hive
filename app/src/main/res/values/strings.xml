@@ -114,6 +114,7 @@
     <string name="text_master_tip">Fill in all profile fields, add user pic and user photos to receive TextMaster award</string>
     <string name="offer_provider_tip">Publish at least one offer to receive OfferProvider award</string>
     <string name="altruist_tip">Publish 3 or more active offers and make all of them free to receive Altruist award</string>
+    <string name="hive_core_tip">Publish 10 or more active offers to receive HiveCore award (paid subscription required)</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
@@ -157,6 +158,7 @@
     <string name="super_provider">SuperProvider</string>
     <string name="newbie">Newbie</string>
     <string name="reviewed_provider">ReviewedProvider</string>
+    <string name="hive_core">HiveCore</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -274,6 +276,7 @@
     <string name="super_provider_info">User has 100 or more reviews and average rating more that 4.5</string>
     <string name="newbie_info">User registered less than 31 days ago</string>
     <string name="reviewed_provider_info">User\'s active offers have at least 1 review in total</string>
+    <string name="hive_core_info">User has 10 or more active offers</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>
