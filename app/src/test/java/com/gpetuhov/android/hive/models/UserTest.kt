@@ -283,6 +283,13 @@ class UserTest {
         assertEquals(true, user.hasNewbieAward())
     }
 
+    @Test
+    fun hasReviewedProviderAward() {
+        assertEquals(false, user.hasReviewedProviderAward)
+        user.totalReviewsCount = 1
+        assertEquals(true, user.hasReviewedProviderAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
