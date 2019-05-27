@@ -156,6 +156,7 @@
     <string name="good_provider">GoodProvider</string>
     <string name="super_provider">SuperProvider</string>
     <string name="newbie">Newbie</string>
+    <string name="reviewed_provider">ReviewedProvider</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -272,6 +273,7 @@
     <string name="good_provider_info">User has 10 or more reviews and average rating more that 4.5</string>
     <string name="super_provider_info">User has 100 or more reviews and average rating more that 4.5</string>
     <string name="newbie_info">User registered less than 31 days ago</string>
+    <string name="reviewed_provider_info">User\'s active offers have at least 1 review in total</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>

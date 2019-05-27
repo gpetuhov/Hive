@@ -42,4 +42,4 @@ Newbie award animation made by [Design](https://lottiefiles.com/designSquadRunne
 
 Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
 
-Gears Animation mady by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)
+Gears Animation and ReviewedProvider award made by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)

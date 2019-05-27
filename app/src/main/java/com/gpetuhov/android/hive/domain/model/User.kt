@@ -125,12 +125,11 @@ data class User(
             if (!(awardCongratulationShownList.contains(goodProviderId))) newAwardsList.add(goodProviderId)
         }
 
+        // ReviewedProvider Award has no tip
         val reviewedProviderId = Constants.Awards.REVIEWED_PROVIDER_ID
         if (hasReviewedProviderAward) {
             awardsList.add(reviewedProviderId)
             if (!(awardCongratulationShownList.contains(reviewedProviderId))) newAwardsList.add(reviewedProviderId)
-        } else {
-            awardTipsList.add(0, reviewedProviderId)
         }
 
         // Has Altruist award if 3 or more active offers and all active offers are free.
