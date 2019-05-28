@@ -92,6 +92,8 @@ data class User(
     // User can have HiveCore award on paid subscription only (because free subscription has active offer limit)
     val hasHiveCoreAward get() = activeOfferList.size >= Constants.Awards.HIVECORE_AWARD_MIN_ACTIVE_OFFER_COUNT
 
+    val hasReviewPosterAward get() = postedReviewsCount > 0
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -153,6 +155,14 @@ data class User(
         if (hasHiveCoreAward) {
             awardsList.add(hiveCoreId)
             if (!(awardCongratulationShownList.contains(hiveCoreId))) newAwardsList.add(hiveCoreId)
+        }
+
+        val reviewPosterId = Constants.Awards.REVIEW_POSTER_ID
+        if (hasReviewPosterAward) {
+            awardsList.add(reviewPosterId)
+            if (!(awardCongratulationShownList.contains(reviewPosterId))) newAwardsList.add(reviewPosterId)
+        } else {
+            awardTipsList.add(0, reviewPosterId)
         }
 
         val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID
