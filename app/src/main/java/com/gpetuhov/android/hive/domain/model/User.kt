@@ -37,7 +37,8 @@ data class User(
     var status: String = "",
     var activity: Long = Constants.User.NO_ACTIVITY,
     var isDeleted: Boolean = false,
-    var postedReviewsCount: Long = 0L   // This is how many reviews THIS user posted
+    var postedReviewsCount: Long = 0L,   // This is how many reviews THIS user posted
+    var postedFirstReviewsCount: Long = 0L      // This is how many FIRST reviews this user posted
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
