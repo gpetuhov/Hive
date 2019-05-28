@@ -1029,7 +1029,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun stopGettingReviewsUpdates() = reviewsListenerRegistration?.remove() ?: Unit
 
-    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, isNew: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
 
         data[REVIEW_PROVIDER_USER_UID_KEY] = secondUserUid()
@@ -1050,6 +1050,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             data,
             {
                 recalculateRating(offerUid)
+                if (isNew) incrementPostedReviewsCount()
                 onSuccess()
             },
             onError
@@ -2199,6 +2200,13 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         callCloudFunction("recalculateRating", data)
     }
+
+    private fun incrementPostedReviewsCount() = incrementPostedReviewsCount(1)
+
+    private fun decrementPostedReviewsCount() = incrementPostedReviewsCount(-1)
+
+    private fun incrementPostedReviewsCount(value: Long) =
+        saveUserSingleDataRemote(POSTED_REVIEWS_COUNT_KEY, FieldValue.increment(value), { /* Do nothing */ }, { /* Do nothing */ })
 
     // --- Connection state ---
 

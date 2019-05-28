@@ -19,6 +19,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     var reviewUid = ""
     var reviewText = ""
     var rating = 0.0F
+    var isNew = false   // true if review is new
 
     private var initialReviewText= ""
     private var initialRating = 0.0F
@@ -59,6 +60,8 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
 
             this.initialReviewText = reviewText
             this.initialRating = rating
+
+            if (this.initialReviewText == "" && this.initialRating == 0.0F) isNew = true
         }
     }
 
@@ -77,7 +80,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
             // (if review text is empty or rating is zero, show error in interactor's callback).
             viewState.disableButtons()
             viewState.showProgress()
-            saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating)
+            saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating, isNew)
         }
     }
 
