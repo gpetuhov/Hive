@@ -28,13 +28,13 @@ Android
 ## Credits
 Award Icons made by [Vectors Market](https://www.flaticon.com/authors/vectors-market) from [www.flaticon.com](https://www.flaticon.com/)
 
-Altruist and SuperProvider award icon made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
+Altruist, SuperProvider and StoryTeller award icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
 
 Newbie award icon made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) from [www.flaticon.com](https://www.flaticon.com/)
 
 ReviewPoster award icon made by [Roundicons](https://www.flaticon.com/authors/roundicons) from [www.flaticon.com](https://www.flaticon.com/)
 
-TextMaster, Altruist and GoodProvider award animation made by [Hyebin Park](https://lottiefiles.com/smoothy.co) from [LottieFiles](https://lottiefiles.com/)
+TextMaster, Altruist and GoodProvider award animations made by [Hyebin Park](https://lottiefiles.com/smoothy.co) from [LottieFiles](https://lottiefiles.com/)
 
 OfferProvider award animation made by [Jan Semler](https://lottiefiles.com/user/141) from [LottieFiles](https://lottiefiles.com/)
 
@@ -45,6 +45,8 @@ Newbie award animation made by [Design](https://lottiefiles.com/designSquadRunne
 HiveCore award animation made by [Mikhail Golub](https://lottiefiles.com/mihail) from [LottieFiles](https://lottiefiles.com/)
 
 ReviewPoster award animation made by [Addy Martinez](https://lottiefiles.com/addymartinez) from [LottieFiles](https://lottiefiles.com/)
+
+StoryTeller award animation made by [Victor Winnhed](https://lottiefiles.com/victorw) from [LottieFiles](https://lottiefiles.com/)
 
 Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
 

@@ -159,6 +159,14 @@ data class User(
             if (!(awardCongratulationShownList.contains(hiveCoreId))) newAwardsList.add(hiveCoreId)
         }
 
+        val storyTellerId = Constants.Awards.STORY_TELLER_ID
+        if (hasStoryTellerAward) {
+            awardsList.add(storyTellerId)
+            if (!(awardCongratulationShownList.contains(storyTellerId))) newAwardsList.add(storyTellerId)
+        } else {
+            awardTipsList.add(0, storyTellerId)
+        }
+
         val reviewPosterId = Constants.Awards.REVIEW_POSTER_ID
         if (hasReviewPosterAward) {
             awardsList.add(reviewPosterId)

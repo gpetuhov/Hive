@@ -116,6 +116,7 @@
     <string name="altruist_tip">Опубликуйте 3 или более активных оффера и сделайте их все бесплатными, чтобы получить награду Альтруист</string>
     <string name="hive_core_tip">Опубликуйте 10 или более активных оффера, чтобы получить награду HiveCore (требуется платная подписка)</string>
     <string name="review_poster_tip">Опубликуйте 1 отзыв, чтобы получить награду ReviewPoster</string>
+    <string name="story_teller_tip">Опубликуйте 10 отзывов, чтобы получить награду StoryTeller</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Отменить поиск</string>
@@ -162,6 +163,7 @@
     <string name="reviewed_provider">ReviewedProvider</string>
     <string name="hive_core">HiveCore</string>
     <string name="review_poster">ReviewPoster</string>
+    <string name="story_teller">StoryTeller</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>
@@ -281,6 +283,7 @@
     <string name="reviewed_provider_info">Активные офферы пользователя имеют в сумме не меньше 1 отзыва</string>
     <string name="hive_core_info">Пользователь опубликовал 10 или более активных оффера</string>
     <string name="review_poster_info">Пользователь опубликовал 1 отзыв</string>
+    <string name="story_teller_info">Пользователь опубликовал 10 отзывов</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Поздравляем!</string>
