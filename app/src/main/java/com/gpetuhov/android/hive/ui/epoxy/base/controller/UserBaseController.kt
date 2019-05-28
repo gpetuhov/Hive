@@ -104,6 +104,9 @@ abstract class UserBaseController : BaseController() {
             val activeOffersCount = activeOfferList.size
             activeOffersCount("${context.getString(R.string.user_active_offers_count)}: $activeOffersCount")
 
+            val postedReviewsCount = user?.postedReviewsCount ?: 0
+            postedReviewsCount("${context.getString(R.string.user_posted_reviews_count)}: $postedReviewsCount")
+
             val totalReviewsCount = user?.totalReviewsCount ?: 0
             totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: $totalReviewsCount")
 

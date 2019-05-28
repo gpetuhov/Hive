@@ -136,7 +136,8 @@
     <string name="user_creation_date">In Hive since</string>
     <string name="user_first_offer_creation_date">First offer published</string>
     <string name="user_active_offers_count">Active offers</string>
-    <string name="user_total_reviews_count">Total reviews</string>
+    <string name="user_posted_reviews_count">Posted reviews</string>
+    <string name="user_total_reviews_count">Received reviews</string>
     <string name="email_subject">Email from Hive</string>
     <string name="skype_not_installed">Skype not installed</string>
     <string name="information">Information</string>

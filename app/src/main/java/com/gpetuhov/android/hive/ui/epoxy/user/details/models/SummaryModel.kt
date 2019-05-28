@@ -20,6 +20,7 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
     @EpoxyAttribute var firstOfferCreationDateVisible = false
 
     @EpoxyAttribute lateinit var activeOffersCount: String
+    @EpoxyAttribute lateinit var postedReviewsCount: String
     @EpoxyAttribute lateinit var totalReviewsCount: String
 
     @EpoxyAttribute var ratingVisible = false
@@ -36,6 +37,7 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
         holder.firstOfferCreationDate.setVisible(firstOfferCreationDateVisible)
 
         holder.activeOffersCount.text = activeOffersCount
+        holder.postedReviewsCount.text = postedReviewsCount
         holder.totalReviewsCount.text = totalReviewsCount
         holder.totalReviewsCount.setOnClickListener { onReviewsClick() }
 
@@ -50,6 +52,7 @@ class SummaryHolder : KotlinHolder() {
     val creationDate by bind<TextView>(R.id.user_details_creation_date)
     val firstOfferCreationDate by bind<TextView>(R.id.user_details_first_offer_creation_date)
     val activeOffersCount by bind<TextView>(R.id.user_details_active_offers_count)
+    val postedReviewsCount by bind<TextView>(R.id.user_details_posted_reviews_count)
     val totalReviewsCount by bind<TextView>(R.id.user_details_total_reviews_count)
     val ratingWrapper by bind<View>(R.id.user_details_average_rating_wrapper)
     val ratingText by bind<TextView>(R.id.user_details_average_rating_text)
