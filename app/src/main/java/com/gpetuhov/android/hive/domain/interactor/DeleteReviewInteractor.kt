@@ -18,6 +18,7 @@ class DeleteReviewInteractor(private val callback: Callback) : Interactor {
 
     private var offerUid = ""
     private var reviewUid = ""
+    private var isFirst = false
 
     init {
         HiveApp.appComponent.inject(this)
@@ -28,15 +29,17 @@ class DeleteReviewInteractor(private val callback: Callback) : Interactor {
         repo.deleteReview(
             offerUid,
             reviewUid,
+            isFirst,
             { callback.onDeleteReviewSuccess() },
             { callback.onDeleteReviewError(resultMessages.getDeleteReviewErrorMessage()) }
         )
     }
 
     // Call this method to delete review
-    fun deleteReview(offerUid: String, reviewUid: String) {
+    fun deleteReview(offerUid: String, reviewUid: String, isFirst: Boolean) {
         this.offerUid = offerUid
         this.reviewUid = reviewUid
+        this.isFirst = isFirst
         execute()
     }
 }

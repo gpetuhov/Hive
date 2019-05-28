@@ -127,7 +127,7 @@ interface Repo {
     fun stopGettingReviewsUpdates()
     fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, isNew: Boolean, isFirst: Boolean, onSuccess: () -> Unit, onError: () -> Unit)
     fun clearReviews()
-    fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit)
+    fun deleteReview(offerUid: String, reviewUid: String, isFirst: Boolean, onSuccess: () -> Unit, onError: () -> Unit)
     fun saveComment(reviewUid: String, offerUid: String, commentText: String, onSuccess: () -> Unit, onError: () -> Unit)
     fun getAllUserReviews(isCurrentUser: Boolean, onComplete: (MutableList<Review>) -> Unit)
 

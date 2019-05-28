@@ -19,7 +19,9 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
     override fun buildModels() {
         reviewTotals(context, presenter.reviewCount, presenter.rating)
 
-        presenter.reviewsList.forEach { review ->
+        val reviewsListSize = presenter.reviewsList.size
+        presenter.reviewsList.forEachIndexed { index, review ->
+            val isFirstReview = index == reviewsListSize - 1    // this is because reviews list is sorted, so that first posted reviews come last
             reviewItem {
                 id(review.uid)
                 userPicUrl(review.authorUserPicUrl)
@@ -30,7 +32,7 @@ class ReviewsListController(private val presenter: ReviewsFragmentPresenter, onM
                 ratingVisible(true)
                 controlsVisible(review.isFromCurrentUser)
                 onEditClick { presenter.editReview(review.uid, review.text, review.rating) }
-                onDeleteClick { presenter.showDeleteReviewDialog(review.uid) }
+                onDeleteClick { presenter.showDeleteReviewDialog(review.uid, isFirstReview) }
 
                 // TODO: make this a paid feature
 //                commentVisible(presenter.isCurrentUser && !review.hasComment())

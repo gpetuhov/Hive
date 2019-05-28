@@ -56,7 +56,7 @@ class DeleteReviewInteractorTest {
         }
 
         val interactor = DeleteReviewInteractor(callback)
-        interactor.deleteReview(Constants.DUMMY_REVIEW.offerUid, Constants.DUMMY_REVIEW.uid)
+        interactor.deleteReview(Constants.DUMMY_REVIEW.offerUid, Constants.DUMMY_REVIEW.uid, false)
 
         assertEquals(isSuccess, (repo as TestRepository).reviewList.isEmpty())
         assertEquals(if (isSuccess) 1 else 0, successCounter)

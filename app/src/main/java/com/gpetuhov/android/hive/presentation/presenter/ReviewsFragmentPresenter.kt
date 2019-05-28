@@ -35,6 +35,7 @@ class ReviewsFragmentPresenter :
     private var deleteReviewUid = ""
     private var deleteCommentReviewUid = ""
     private var isReviewListEmpty = false
+    private var isFirstReview = false
 
     private val deleteReviewInteractor = DeleteReviewInteractor(this)
     private var deleteCommentInteractor = DeleteCommentInteractor(this)
@@ -113,14 +114,15 @@ class ReviewsFragmentPresenter :
 
     // --- Delete review ---
 
-    fun showDeleteReviewDialog(reviewUid: String) {
+    fun showDeleteReviewDialog(reviewUid: String, isFirstReview: Boolean) {
         deleteReviewUid = reviewUid
+        this.isFirstReview = isFirstReview
         viewState.showDeleteReviewDialog()
     }
 
     fun deleteReview() {
         viewState.dismissDeleteReviewDialog()
-        deleteReviewInteractor.deleteReview(offerUid, deleteReviewUid)
+        deleteReviewInteractor.deleteReview(offerUid, deleteReviewUid, isFirstReview)
     }
 
     fun deleteReviewCancel() = viewState.dismissDeleteReviewDialog()

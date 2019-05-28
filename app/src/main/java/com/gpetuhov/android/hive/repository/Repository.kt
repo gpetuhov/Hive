@@ -1062,7 +1062,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         reviews.value = mutableListOf()
     }
 
-    override fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun deleteReview(offerUid: String, reviewUid: String, isFirst: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isAuthorized && offerUid != "" && reviewUid != "" && secondUserUid() != "") {
             getReviewsCollectionReference(secondUserUid(), offerUid)
                 .document(reviewUid)
@@ -1070,7 +1070,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Review successfully deleted")
                     recalculateRating(offerUid)
-                    decrementPostedReviewsCount()
+                    decrementPostedReviewsCount(isFirst)
                     onSuccess()
                 }
                 .addOnFailureListener {
@@ -2203,13 +2203,6 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         callCloudFunction("recalculateRating", data)
     }
-
-    private fun decrementPostedReviewsCount() = incrementPostedReviewsCount(-1)
-
-    private fun incrementPostedReviewsCount(value: Long) =
-        // FieldValue.increment() updates counter value on the backend.
-        // It can be used instead of transactions.
-        saveUserSingleDataRemote(POSTED_REVIEWS_COUNT_KEY, FieldValue.increment(value), { /* Do nothing */ }, { /* Do nothing */ })
 
     private fun incrementPostedReviewsCount(isFirst: Boolean) = incrementPostedReviewsCount(1, isFirst)
 
