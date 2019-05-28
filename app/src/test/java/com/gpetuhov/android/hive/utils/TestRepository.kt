@@ -274,6 +274,7 @@ class TestRepository : Repo {
         offerUid: String,
         text: String,
         rating: Float,
+        isNew: Boolean,
         onSuccess: () -> Unit,
         onError: () -> Unit
     ) {

@@ -299,6 +299,13 @@ class UserTest {
         assertEquals(true, user.hasHiveCoreAward)
     }
 
+    @Test
+    fun hasReviewPosterAward() {
+        assertEquals(false, user.hasReviewPosterAward)
+        user.postedReviewsCount = 1
+        assertEquals(true, user.hasReviewPosterAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
