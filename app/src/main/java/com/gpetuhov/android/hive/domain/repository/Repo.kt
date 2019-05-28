@@ -125,7 +125,7 @@ interface Repo {
     fun reviews(): MutableLiveData<MutableList<Review>>
     fun startGettingReviewsUpdates(offerUid: String, isCurrentUser: Boolean)
     fun stopGettingReviewsUpdates()
-    fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, isNew: Boolean, onSuccess: () -> Unit, onError: () -> Unit)
+    fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, isNew: Boolean, isFirst: Boolean, onSuccess: () -> Unit, onError: () -> Unit)
     fun clearReviews()
     fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit)
     fun saveComment(reviewUid: String, offerUid: String, commentText: String, onSuccess: () -> Unit, onError: () -> Unit)

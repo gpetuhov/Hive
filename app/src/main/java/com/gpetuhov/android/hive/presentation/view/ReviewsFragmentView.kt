@@ -10,7 +10,7 @@ interface ReviewsFragmentView : MvpView {
     // === Post review ===
 
     @StateStrategyType(SkipStrategy::class)
-    fun postReview(offerUid: String)
+    fun postReview(offerUid: String, isFirst: Boolean)
 
     // === Edit review ===
 

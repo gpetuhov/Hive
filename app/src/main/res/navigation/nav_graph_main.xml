@@ -280,6 +280,9 @@
         <argument
                 android:name="rating"
                 app:argType="float"/>
+        <argument
+                android:name="isFirstReview"
+                app:argType="boolean"/>
     </fragment>
 
     <fragment

@@ -20,6 +20,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     var reviewText = ""
     var rating = 0.0F
     var isNew = false   // true if review is new
+    var isFirst = false     // true if review is first (no other reviews on this offer)
 
     private var initialReviewText= ""
     private var initialRating = 0.0F
@@ -45,7 +46,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
     // === Public methods ===
     // --- Init ---
 
-    fun init(offerUid: String, reviewUid: String, reviewText: String, rating: Float) {
+    fun init(offerUid: String, reviewUid: String, reviewText: String, rating: Float, isFirst: Boolean) {
         // Do not init presenter if already initialized or changed
         if (
             this.reviewText == ""
@@ -57,6 +58,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
             this.reviewUid = reviewUid
             this.reviewText = reviewText
             this.rating = rating
+            this.isFirst = isFirst
 
             this.initialReviewText = reviewText
             this.initialRating = rating
@@ -80,7 +82,7 @@ class UpdateReviewFragmentPresenter : MvpPresenter<UpdateReviewFragmentView>(), 
             // (if review text is empty or rating is zero, show error in interactor's callback).
             viewState.disableButtons()
             viewState.showProgress()
-            saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating, isNew)
+            saveReviewInteractor.saveReview(reviewUid, offerUid, reviewText, rating, isNew, isFirst)
         }
     }
 

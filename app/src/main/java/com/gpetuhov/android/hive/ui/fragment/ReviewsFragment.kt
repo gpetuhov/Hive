@@ -120,13 +120,13 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         controller?.requestModelBuild() ?: Unit
     }
 
-    override fun postReview(offerUid: String) {
-        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid, "", "", 0.0F)
+    override fun postReview(offerUid: String, isFirst: Boolean) {
+        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid, "", "", 0.0F, isFirst)
         findNavController().navigate(action)
     }
 
     override fun editReview(offerUid: String, reviewUid: String, reviewText: String, rating: Float) {
-        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid, reviewUid, reviewText, rating)
+        val action = ReviewsFragmentDirections.actionReviewsFragmentToUpdateReviewFragment(offerUid, reviewUid, reviewText, rating, false)
         findNavController().navigate(action)
     }
 

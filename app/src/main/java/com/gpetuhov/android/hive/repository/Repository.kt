@@ -1030,7 +1030,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun stopGettingReviewsUpdates() = reviewsListenerRegistration?.remove() ?: Unit
 
-    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, isNew: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun saveReview(reviewUid: String, offerUid: String, text: String, rating: Float, isNew: Boolean, isFirst: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
         val data = HashMap<String, Any>()
 
         data[REVIEW_PROVIDER_USER_UID_KEY] = secondUserUid()
@@ -1051,7 +1051,10 @@ class Repository(private val context: Context, private val settings: Settings) :
             data,
             {
                 recalculateRating(offerUid)
-                if (isNew) incrementPostedReviewsCount()
+                if (isNew) {
+                    incrementPostedReviewsCount()
+                    if (isFirst) incrementPostedFirstReviewsCount()
+                }
                 onSuccess()
             },
             onError

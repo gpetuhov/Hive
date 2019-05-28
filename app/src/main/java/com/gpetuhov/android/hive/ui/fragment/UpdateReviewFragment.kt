@@ -38,7 +38,7 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
         binding?.presenter = presenter
 
         val args = UpdateReviewFragmentArgs.fromBundle(arguments!!)
-        presenter.init(args.offerUid, args.reviewUid, args.reviewText, args.rating )
+        presenter.init(args.offerUid, args.reviewUid, args.reviewText, args.rating, args.isFirstReview)
 
         return binding?.root
     }

@@ -127,7 +127,7 @@ class ReviewsFragmentPresenter :
 
     // --- Post review ---
 
-    fun postReview() = viewState.postReview(offerUid)
+    fun postReview() = viewState.postReview(offerUid, isReviewListEmpty)
 
     // --- Edit comment ---
 
