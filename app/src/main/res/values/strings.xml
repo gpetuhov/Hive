@@ -116,7 +116,8 @@
     <string name="altruist_tip">Publish 3 or more active offers and make all of them free to receive Altruist award</string>
     <string name="hive_core_tip">Publish 10 or more active offers to receive HiveCore award (paid subscription required)</string>
     <string name="review_poster_tip">Post 1 review to receive ReviewPoster award</string>
-    <string name="story_teller_tip">Post 10 review to receive StoryTeller award</string>
+    <string name="story_teller_tip">Post 10 reviews to receive StoryTeller award</string>
+    <string name="mega_critic_tip">Post 100 reviews to receive MegaCritic award</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
@@ -164,6 +165,7 @@
     <string name="hive_core">HiveCore</string>
     <string name="review_poster">ReviewPoster</string>
     <string name="story_teller">StoryTeller</string>
+    <string name="mega_critic">MegaCritic</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -284,6 +286,7 @@
     <string name="hive_core_info">User has 10 or more active offers</string>
     <string name="review_poster_info">User has posted 1 review</string>
     <string name="story_teller_info">User has posted 10 review</string>
+    <string name="mega_critic_info">User has posted 100 review</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>

@@ -117,6 +117,7 @@
     <string name="hive_core_tip">Опубликуйте 10 или более активных оффера, чтобы получить награду HiveCore (требуется платная подписка)</string>
     <string name="review_poster_tip">Опубликуйте 1 отзыв, чтобы получить награду ReviewPoster</string>
     <string name="story_teller_tip">Опубликуйте 10 отзывов, чтобы получить награду StoryTeller</string>
+    <string name="mega_critic_tip">Опубликуйте 100 отзывов, чтобы получить награду MegaCritic</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Отменить поиск</string>
@@ -164,6 +165,7 @@
     <string name="hive_core">HiveCore</string>
     <string name="review_poster">ReviewPoster</string>
     <string name="story_teller">StoryTeller</string>
+    <string name="mega_critic">MegaCritic</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>
@@ -284,6 +286,7 @@
     <string name="hive_core_info">Пользователь опубликовал 10 или более активных оффера</string>
     <string name="review_poster_info">Пользователь опубликовал 1 отзыв</string>
     <string name="story_teller_info">Пользователь опубликовал 10 отзывов</string>
+    <string name="mega_critic_info">Пользователь опубликовал 100 отзывов</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Поздравляем!</string>

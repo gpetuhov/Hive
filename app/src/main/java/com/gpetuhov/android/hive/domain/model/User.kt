@@ -162,7 +162,7 @@ data class User(
         }
 
         val megaCriticId = Constants.Awards.MEGA_CRITIC_ID
-        if (hasStoryTellerAward) {
+        if (hasMegaCriticAward) {
             awardsList.add(megaCriticId)
             if (!(awardCongratulationShownList.contains(megaCriticId))) newAwardsList.add(megaCriticId)
         } else {
