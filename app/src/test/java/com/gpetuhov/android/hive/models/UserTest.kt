@@ -320,6 +320,13 @@ class UserTest {
         assertEquals(true, user.hasMegaCriticAward)
     }
 
+    @Test
+    fun hasOfferFinderAward() {
+        assertEquals(false, user.hasOfferFinderAward)
+        user.postedFirstReviewsCount = 1
+        assertEquals(true, user.hasOfferFinderAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {

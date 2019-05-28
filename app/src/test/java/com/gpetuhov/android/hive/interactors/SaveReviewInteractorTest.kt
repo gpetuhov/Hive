@@ -71,7 +71,7 @@ class SaveReviewInteractorTest {
         }
 
         val interactor = SaveReviewInteractor(callback)
-        interactor.saveReview("", "54gh254", reviewText, rating, true)
+        interactor.saveReview("", "54gh254", reviewText, rating, true, false)
 
         val finalSuccess = isSuccess && reviewText != "" && rating != 0.0F
 

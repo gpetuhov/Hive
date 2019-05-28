@@ -275,6 +275,7 @@ class TestRepository : Repo {
         text: String,
         rating: Float,
         isNew: Boolean,
+        isFirst: Boolean,
         onSuccess: () -> Unit,
         onError: () -> Unit
     ) {
@@ -298,7 +299,7 @@ class TestRepository : Repo {
     override fun clearReviews() {
     }
 
-    override fun deleteReview(offerUid: String, reviewUid: String, onSuccess: () -> Unit, onError: () -> Unit) {
+    override fun deleteReview(offerUid: String, reviewUid: String, isFirst: Boolean, onSuccess: () -> Unit, onError: () -> Unit) {
         if (isSuccess) {
             reviewList.clear()
             onSuccess()
