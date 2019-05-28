@@ -1069,6 +1069,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Review successfully deleted")
                     recalculateRating(offerUid)
+                    decrementPostedReviewsCount()
                     onSuccess()
                 }
                 .addOnFailureListener {
@@ -2206,6 +2207,8 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun decrementPostedReviewsCount() = incrementPostedReviewsCount(-1)
 
     private fun incrementPostedReviewsCount(value: Long) =
+        // FieldValue.increment() updates counter value on the backend.
+        // It can be used instead of transactions.
         saveUserSingleDataRemote(POSTED_REVIEWS_COUNT_KEY, FieldValue.increment(value), { /* Do nothing */ }, { /* Do nothing */ })
 
     // --- Connection state ---
