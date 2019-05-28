@@ -36,7 +36,8 @@ data class User(
     var lastSeen: Long = 0L,
     var status: String = "",
     var activity: Long = Constants.User.NO_ACTIVITY,
-    var isDeleted: Boolean = false
+    var isDeleted: Boolean = false,
+    var postedReviewsCount: Long = 0L   // This is how many reviews THIS user posted
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
@@ -67,7 +68,7 @@ data class User(
     val awardTipsList = mutableListOf<Int>()
 
     var activeOfferList = mutableListOf<Offer>()
-    var totalReviewsCount = 0
+    var totalReviewsCount = 0   // This is how many reviews OTHER users posted on this user's offers
     var averageRating = 0F
 
     val hasTextMasterAward get() = photoList.isNotEmpty() && (userPicUrl != "") && hasUsername && hasDescription

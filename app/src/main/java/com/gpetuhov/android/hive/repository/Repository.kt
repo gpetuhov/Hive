@@ -84,6 +84,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val STATUS_KEY = "status"
         private const val ACTIVITY_KEY = "activity"
         private const val AWARD_CONGRATULATION_SHOWN_LIST_KEY = "awardCongratulationShownList"
+        private const val POSTED_REVIEWS_COUNT_KEY = "postedReviewsCount"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1365,7 +1366,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             interests = doc.getString(INTERESTS_KEY) ?: "",
             lastSeen = (doc.getLong(LAST_SEEN_KEY) ?: System.currentTimeMillis()) / 1000,
             status = doc.getString(STATUS_KEY) ?: "",
-            activity = doc.getLong(ACTIVITY_KEY) ?: Constants.User.NO_ACTIVITY
+            activity = doc.getLong(ACTIVITY_KEY) ?: Constants.User.NO_ACTIVITY,
+            postedReviewsCount = doc.getLong(POSTED_REVIEWS_COUNT_KEY) ?: 0L
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
