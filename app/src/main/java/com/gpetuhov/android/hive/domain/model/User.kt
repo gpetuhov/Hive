@@ -94,6 +94,8 @@ data class User(
 
     val hasReviewPosterAward get() = postedReviewsCount > 0
 
+    val hasStoryTellerAward get() = postedReviewsCount >= Constants.Awards.STORY_TELLER_AWARD_MIN_REVIEW_COUNT
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name

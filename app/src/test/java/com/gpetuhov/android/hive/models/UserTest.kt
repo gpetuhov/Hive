@@ -306,6 +306,13 @@ class UserTest {
         assertEquals(true, user.hasReviewPosterAward)
     }
 
+    @Test
+    fun hasStoryTellerAward() {
+        assertEquals(false, user.hasStoryTellerAward)
+        user.postedReviewsCount = Constants.Awards.STORY_TELLER_AWARD_MIN_REVIEW_COUNT
+        assertEquals(true, user.hasStoryTellerAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
