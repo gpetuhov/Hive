@@ -96,6 +96,8 @@ data class User(
 
     val hasStoryTellerAward get() = postedReviewsCount >= Constants.Awards.STORY_TELLER_AWARD_MIN_REVIEW_COUNT
 
+    val hasMegaCriticAward get() = postedReviewsCount >= Constants.Awards.MEGA_CRITIC_AWARD_MIN_REVIEW_COUNT
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -157,6 +159,14 @@ data class User(
         if (hasHiveCoreAward) {
             awardsList.add(hiveCoreId)
             if (!(awardCongratulationShownList.contains(hiveCoreId))) newAwardsList.add(hiveCoreId)
+        }
+
+        val megaCriticId = Constants.Awards.MEGA_CRITIC_ID
+        if (hasStoryTellerAward) {
+            awardsList.add(megaCriticId)
+            if (!(awardCongratulationShownList.contains(megaCriticId))) newAwardsList.add(megaCriticId)
+        } else {
+            awardTipsList.add(0, megaCriticId)
         }
 
         val storyTellerId = Constants.Awards.STORY_TELLER_ID

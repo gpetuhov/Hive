@@ -93,6 +93,7 @@ class Constants {
             const val HIVECORE_ID = 7
             const val REVIEW_POSTER_ID = 8
             const val STORY_TELLER_ID = 9
+            const val MEGA_CRITIC_ID = 10
 
             private val TEXT_MASTER = Award(TEXT_MASTER_ID, R.raw.textmaster, R.drawable.ic_text_master, R.drawable.ic_text_master_big, R.string.text_master, R.string.text_master_info, R.string.text_master_tip)
             private val OFFER_PROVIDER = Award(OFFER_PROVIDER_ID, R.raw.offerprovider, R.drawable.ic_offer_provider, R.drawable.ic_offer_provider_big, R.string.offer_provider, R.string.offer_provider_info, R.string.offer_provider_tip)
@@ -131,6 +132,8 @@ class Constants {
             const val HIVECORE_AWARD_MIN_ACTIVE_OFFER_COUNT = 10
 
             const val STORY_TELLER_AWARD_MIN_REVIEW_COUNT = 10L
+
+            const val MEGA_CRITIC_AWARD_MIN_REVIEW_COUNT = 100L
         }
     }
 }
