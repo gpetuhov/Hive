@@ -115,6 +115,7 @@
     <string name="offer_provider_tip">Publish at least one offer to receive OfferProvider award</string>
     <string name="altruist_tip">Publish 3 or more active offers and make all of them free to receive Altruist award</string>
     <string name="hive_core_tip">Publish 10 or more active offers to receive HiveCore award (paid subscription required)</string>
+    <string name="review_poster_tip">Post 1 review to receive ReviewPoster award</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
@@ -160,6 +161,7 @@
     <string name="newbie">Newbie</string>
     <string name="reviewed_provider">ReviewedProvider</string>
     <string name="hive_core">HiveCore</string>
+    <string name="review_poster">ReviewPoster</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -278,6 +280,7 @@
     <string name="newbie_info">User registered less than 31 days ago</string>
     <string name="reviewed_provider_info">User\'s active offers have at least 1 review in total</string>
     <string name="hive_core_info">User has 10 or more active offers</string>
+    <string name="review_poster_info">User has posted 1 review</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>
