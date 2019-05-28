@@ -101,6 +101,8 @@ data class User(
 
     val hasOfferFinderAward get() = postedFirstReviewsCount > 0
 
+    val hasOflumbusAward get() = postedFirstReviewsCount >= Constants.Awards.OFLUMBUS_AWARD_MIN_REVIEW_COUNT
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -162,6 +164,14 @@ data class User(
         if (hasHiveCoreAward) {
             awardsList.add(hiveCoreId)
             if (!(awardCongratulationShownList.contains(hiveCoreId))) newAwardsList.add(hiveCoreId)
+        }
+
+        val oflumbusId = Constants.Awards.OFLUMBUS_ID
+        if (hasOflumbusAward) {
+            awardsList.add(oflumbusId)
+            if (!(awardCongratulationShownList.contains(oflumbusId))) newAwardsList.add(oflumbusId)
+        } else {
+            awardTipsList.add(0, oflumbusId)
         }
 
         val offerFinderId = Constants.Awards.OFFER_FINDER_ID

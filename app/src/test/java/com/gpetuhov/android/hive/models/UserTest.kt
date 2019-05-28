@@ -327,6 +327,13 @@ class UserTest {
         assertEquals(true, user.hasOfferFinderAward)
     }
 
+    @Test
+    fun hasOflumbusAward() {
+        assertEquals(false, user.hasOflumbusAward)
+        user.postedFirstReviewsCount = Constants.Awards.OFLUMBUS_AWARD_MIN_REVIEW_COUNT
+        assertEquals(true, user.hasOflumbusAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
