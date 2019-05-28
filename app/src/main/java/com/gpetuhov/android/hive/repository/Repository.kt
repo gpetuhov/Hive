@@ -1051,10 +1051,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             data,
             {
                 recalculateRating(offerUid)
-                if (isNew) {
-                    incrementPostedReviewsCount()
-                    if (isFirst) incrementPostedFirstReviewsCount()
-                }
+                if (isNew) incrementPostedReviewsCount(isFirst)
                 onSuccess()
             },
             onError
@@ -2207,8 +2204,6 @@ class Repository(private val context: Context, private val settings: Settings) :
         callCloudFunction("recalculateRating", data)
     }
 
-    private fun incrementPostedReviewsCount() = incrementPostedReviewsCount(1)
-
     private fun decrementPostedReviewsCount() = incrementPostedReviewsCount(-1)
 
     private fun incrementPostedReviewsCount(value: Long) =
@@ -2216,12 +2211,20 @@ class Repository(private val context: Context, private val settings: Settings) :
         // It can be used instead of transactions.
         saveUserSingleDataRemote(POSTED_REVIEWS_COUNT_KEY, FieldValue.increment(value), { /* Do nothing */ }, { /* Do nothing */ })
 
-    private fun incrementPostedFirstReviewsCount() = incrementPostedFirstReviewsCount(1)
+    private fun incrementPostedReviewsCount(isFirst: Boolean) = incrementPostedReviewsCount(1, isFirst)
 
-    private fun decrementPostedFirstReviewsCount() = incrementPostedFirstReviewsCount(-1)
+    private fun decrementPostedReviewsCount(isFirst: Boolean) = incrementPostedReviewsCount(-1, isFirst)
 
-    private fun incrementPostedFirstReviewsCount(value: Long) =
-        saveUserSingleDataRemote(POSTED_FIRST_REVIEWS_COUNT_KEY, FieldValue.increment(value), { /* Do nothing */ }, { /* Do nothing */ })
+    private fun incrementPostedReviewsCount(value: Long, isFirst: Boolean) {
+        val data = HashMap<String, Any>()
+
+        // FieldValue.increment() updates counter value on the backend.
+        // It can be used instead of transactions.
+        data[POSTED_REVIEWS_COUNT_KEY] = FieldValue.increment(value)
+        if (isFirst) data[POSTED_FIRST_REVIEWS_COUNT_KEY] = FieldValue.increment(value)
+
+        saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
+    }
 
     // --- Connection state ---
 
