@@ -118,6 +118,7 @@
     <string name="review_poster_tip">Post 1 review to receive ReviewPoster award</string>
     <string name="story_teller_tip">Post 10 reviews to receive StoryTeller award</string>
     <string name="mega_critic_tip">Post 100 reviews to receive MegaCritic award</string>
+    <string name="offer_finder_tip">Post 1 first review to receive OfferFinder award</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
@@ -167,6 +168,7 @@
     <string name="review_poster">ReviewPoster</string>
     <string name="story_teller">StoryTeller</string>
     <string name="mega_critic">MegaCritic</string>
+    <string name="offer_finder">OfferFinder</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -286,8 +288,9 @@
     <string name="reviewed_provider_info">User\'s active offers have at least 1 review in total</string>
     <string name="hive_core_info">User has 10 or more active offers</string>
     <string name="review_poster_info">User has posted 1 review</string>
-    <string name="story_teller_info">User has posted 10 review</string>
-    <string name="mega_critic_info">User has posted 100 review</string>
+    <string name="story_teller_info">User has posted 10 reviews</string>
+    <string name="mega_critic_info">User has posted 100 reviews</string>
+    <string name="offer_finder_info">User has posted 1 first review</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>

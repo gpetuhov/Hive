@@ -165,7 +165,7 @@ data class User(
         }
 
         val offerFinderId = Constants.Awards.OFFER_FINDER_ID
-        if (hasMegaCriticAward) {
+        if (hasOfferFinderAward) {
             awardsList.add(offerFinderId)
             if (!(awardCongratulationShownList.contains(offerFinderId))) newAwardsList.add(offerFinderId)
         } else {
