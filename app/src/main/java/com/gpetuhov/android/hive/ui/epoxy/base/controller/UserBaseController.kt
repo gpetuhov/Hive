@@ -107,6 +107,9 @@ abstract class UserBaseController : BaseController() {
             val postedReviewsCount = user?.postedReviewsCount ?: 0
             postedReviewsCount("${context.getString(R.string.user_posted_reviews_count)}: $postedReviewsCount")
 
+            val postedFirstReviewsCount = user?.postedFirstReviewsCount ?: 0
+            postedFirstReviewsCount("${context.getString(R.string.user_posted_first_reviews_count)}: $postedFirstReviewsCount")
+
             val totalReviewsCount = user?.totalReviewsCount ?: 0
             totalReviewsCount("${context.getString(R.string.user_total_reviews_count)}: $totalReviewsCount")
 

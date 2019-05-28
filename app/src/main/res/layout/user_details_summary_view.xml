@@ -46,6 +46,13 @@
             tools:text="Posted reviews: 10"/>
 
     <TextView
+            android:id="@+id/user_details_posted_first_reviews_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="Posted first reviews: 7"/>
+
+    <TextView
             android:id="@+id/user_details_total_reviews_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

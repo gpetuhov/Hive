@@ -2213,6 +2213,13 @@ class Repository(private val context: Context, private val settings: Settings) :
         // It can be used instead of transactions.
         saveUserSingleDataRemote(POSTED_REVIEWS_COUNT_KEY, FieldValue.increment(value), { /* Do nothing */ }, { /* Do nothing */ })
 
+    private fun incrementPostedFirstReviewsCount() = incrementPostedFirstReviewsCount(1)
+
+    private fun decrementPostedFirstReviewsCount() = incrementPostedFirstReviewsCount(-1)
+
+    private fun incrementPostedFirstReviewsCount(value: Long) =
+        saveUserSingleDataRemote(POSTED_FIRST_REVIEWS_COUNT_KEY, FieldValue.increment(value), { /* Do nothing */ }, { /* Do nothing */ })
+
     // --- Connection state ---
 
     // Without this listener Realtime Database disconnects from the backend after 60 seconds of inactivity,
