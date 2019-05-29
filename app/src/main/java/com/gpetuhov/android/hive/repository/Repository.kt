@@ -922,6 +922,9 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .set(data, SetOptions.merge())
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully added")
+
+                    // If user is added to favorites, increment user star count of THAT user (NOT current one)
+                    if (offerUid == "") incrementUserStarCount(userUid)
                 }
                 .addOnFailureListener { error ->
                     Timber.tag(TAG).d("Error adding favorite")
@@ -940,6 +943,9 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .delete()
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully removed")
+
+                    // If user is removed from favorites, decrement user star count of THAT user (NOT current one)
+                    if (offerUid == "") decrementUserStarCount(userUid)
                 }
                 .addOnFailureListener {
                     Timber.tag(TAG).d("Error removing favorite")
@@ -1251,9 +1257,12 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun saveUserDataWithoutUserPic(data: HashMap<String, Any>) =
         saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
 
-    private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
-        if (isAuthorized && currentUserUid() != "") {
-            firestore.collection(USERS_COLLECTION).document(currentUserUid())
+    private fun saveUserDataRemote(data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) =
+        saveUserDataRemote(currentUserUid(), data, onSuccess, onError)
+
+    private fun saveUserDataRemote(userUid: String, data: HashMap<String, Any>, onSuccess: () -> Unit, onError: () -> Unit) {
+        if (isAuthorized && userUid != "") {
+            firestore.collection(USERS_COLLECTION).document(userUid)
                 .set(data, SetOptions.merge())  // this is needed to update only the required data if the user exists
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("User data successfully written")
@@ -2091,6 +2100,15 @@ class Repository(private val context: Context, private val settings: Settings) :
         tempFavoriteOffers.sortBy { it.title }
 
         return tempFavoriteOffers
+    }
+
+    private fun incrementUserStarCount(userUid: String) = incrementUserStarCount(userUid, 1)
+
+    private fun decrementUserStarCount(userUid: String) = incrementUserStarCount(userUid, -1)
+
+    private fun incrementUserStarCount(userUid: String, value: Long) {
+        val data = getSingleValueHashMap(USER_STAR_COUNT_KEY, FieldValue.increment(value))
+        saveUserDataRemote(userUid, data, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
     // --- Reviews ---
