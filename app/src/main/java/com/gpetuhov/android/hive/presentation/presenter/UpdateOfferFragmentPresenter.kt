@@ -35,6 +35,7 @@ class UpdateOfferFragmentPresenter :
     var photoList= mutableListOf<Photo>()
     var rating = 0.0F
     var reviewCount = 0
+    var offerStarCount = "0"
 
     var isDeleteButtonVisible = false
 
@@ -92,6 +93,7 @@ class UpdateOfferFragmentPresenter :
                     photoList = copyPhotoList(offer.photoList)
                     rating = offer.rating
                     reviewCount = offer.reviewCount
+                    offerStarCount = offer.starCountString
 
                     // For existing offer enable active switch if active offer count is less than max
                     // or if offer is already active (to be able to turn it off)
@@ -315,6 +317,7 @@ class UpdateOfferFragmentPresenter :
         if (offer != null) {
             rating = offer.rating
             reviewCount = offer.reviewCount
+            offerStarCount = offer.starCountString
             updateUI()
         }
     }

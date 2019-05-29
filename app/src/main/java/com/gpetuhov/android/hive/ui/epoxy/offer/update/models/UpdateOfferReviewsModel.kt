@@ -17,6 +17,8 @@ abstract class UpdateOfferReviewsModel : EpoxyModelWithHolder<UpdateOfferReviews
 
     @EpoxyAttribute var rating = 0.0F
 
+    @EpoxyAttribute lateinit var offerStarCount: String
+
     override fun bind(holder: UpdateOfferReviewsHolder) {
         holder.reviewsActionText.text = reviewsActionText
         holder.reviewsActionText.setOnClickListener { onClick() }
@@ -25,10 +27,13 @@ abstract class UpdateOfferReviewsModel : EpoxyModelWithHolder<UpdateOfferReviews
         holder.ratingBar.setVisible(ratingBarVisible)
         holder.ratingBar.rating = rating
         holder.ratingBar.setOnClickListener { if (ratingBarVisible) onClick() }
+
+        holder.offerStarCount.text = offerStarCount
     }
 }
 
 class UpdateOfferReviewsHolder : KotlinHolder() {
     val reviewsActionText by bind<TextView>(R.id.update_offer_reviews_action_text)
     val ratingBar by bind<AppCompatRatingBar>(R.id.update_offer_rating_bar)
+    val offerStarCount by bind<TextView>(R.id.update_offer_star_count)
 }
