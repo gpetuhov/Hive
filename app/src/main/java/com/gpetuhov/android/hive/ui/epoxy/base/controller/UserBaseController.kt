@@ -237,6 +237,7 @@ abstract class UserBaseController : BaseController() {
             favorite(offer.isFavorite)
             favoriteButtonVisible(favoriteButtonVisible)
             onFavoriteButtonClick { onFavoriteButtonClick() }
+            offerStarCount(offer.starCountString)
             rating(offer.rating)
             reviewCount(offer.reviewCount)
             onClick {

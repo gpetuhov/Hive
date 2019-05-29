@@ -31,6 +31,8 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
     @EpoxyAttribute var favoriteButtonVisible = true
     @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
 
+    @EpoxyAttribute lateinit var offerStarCount: String
+
     @EpoxyAttribute var rating = 0.0F
     @EpoxyAttribute var reviewCount = 0
 
@@ -47,6 +49,9 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
         holder.favoriteButton.setImageResource(getStarResourceId(favorite))
         holder.favoriteButton.setVisible(favoriteButtonVisible)
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
+
+        holder.offerStarCount.text = offerStarCount
+        holder.offerStarCount.setVisible(favoriteButtonVisible)
 
         val ratingVisible = reviewCount != 0
         holder.ratingWrapper.setVisible(ratingVisible)
@@ -66,4 +71,5 @@ class OfferItemHolder : KotlinHolder() {
     val ratingWrapper by bind<View>(R.id.offer_item_rating_wrapper)
     val ratingBar by bind<AppCompatRatingBar>(R.id.offer_item_rating_bar)
     val reviewCount by bind<TextView>(R.id.offer_item_review_count)
+    val offerStarCount by bind<TextView>(R.id.offer_item_star_count)
 }
