@@ -119,6 +119,7 @@
     <string name="story_teller_tip">Опубликуйте 10 отзывов, чтобы получить награду StoryTeller</string>
     <string name="mega_critic_tip">Опубликуйте 100 отзывов, чтобы получить награду MegaCritic</string>
     <string name="offer_finder_tip">Опубликуйте 1 первый отзыв, чтобы получить награду OfferFinder</string>
+    <string name="oflumbus_tip">Опубликуйте 10 первых отзывов, чтобы получить награду Oflumbus</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Отменить поиск</string>
@@ -169,6 +170,7 @@
     <string name="story_teller">StoryTeller</string>
     <string name="mega_critic">MegaCritic</string>
     <string name="offer_finder">OfferFinder</string>
+    <string name="oflumbus">Oflumbus</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>
@@ -291,6 +293,7 @@
     <string name="story_teller_info">Пользователь опубликовал 10 отзывов</string>
     <string name="mega_critic_info">Пользователь опубликовал 100 отзывов</string>
     <string name="offer_finder_info">Пользователь опубликовал 1 первый отзыв</string>
+    <string name="oflumbus_info">Пользователь опубликовал 10 первых отзывов</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Поздравляем!</string>

@@ -28,7 +28,7 @@ Android
 ## Credits
 Award Icons made by [Vectors Market](https://www.flaticon.com/authors/vectors-market) from [www.flaticon.com](https://www.flaticon.com/)
 
-Altruist, SuperProvider, StoryTeller, MegaCritic and OfferFinder award icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
+Altruist, SuperProvider, StoryTeller, MegaCritic, OfferFinder and Oflumbus award icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
 
 Newbie award icon made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) from [www.flaticon.com](https://www.flaticon.com/)
 
@@ -49,6 +49,8 @@ ReviewPoster award animation made by [Addy Martinez](https://lottiefiles.com/add
 StoryTeller award animation made by [Victor Winnhed](https://lottiefiles.com/victorw) from [LottieFiles](https://lottiefiles.com/)
 
 MegaCritic award animation made by [Anthony Tonev](https://lottiefiles.com/Spinne) from [LottieFiles](https://lottiefiles.com/)
+
+Oflumbus award animation made by [Alex Bradt](https://lottiefiles.com/Alexbradt.com) from [LottieFiles](https://lottiefiles.com/)
 
 Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
 
