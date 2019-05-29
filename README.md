@@ -26,7 +26,7 @@ Android
 * Dependency injection with Dagger 2
 
 ## Credits
-Award Icons made by [Vectors Market](https://www.flaticon.com/authors/vectors-market) from [www.flaticon.com](https://www.flaticon.com/)
+TextMaster, OfferProvider, GoodProvider, ReviewedProvider and Hivecore award icons made by [Vectors Market](https://www.flaticon.com/authors/vectors-market) from [www.flaticon.com](https://www.flaticon.com/)
 
 Altruist, SuperProvider, StoryTeller, MegaCritic, OfferFinder and Oflumbus award icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
 
