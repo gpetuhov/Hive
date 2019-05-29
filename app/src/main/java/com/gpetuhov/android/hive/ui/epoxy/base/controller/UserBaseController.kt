@@ -55,13 +55,12 @@ abstract class UserBaseController : BaseController() {
         settings: Settings,
         offer: Offer,
         isProfile: Boolean,
-        favoriteButtonVisible: Boolean,
         onFavoriteButtonClick: () -> Unit,
         onClick: () -> Unit
     ) {
 
         offerItemPhotoCarousel(settings, offer, !isProfile, onClick)
-        offerItemDetails(context, settings, offer, isProfile, favoriteButtonVisible, onFavoriteButtonClick, onClick)
+        offerItemDetails(context, settings, offer, isProfile, onFavoriteButtonClick, onClick)
     }
 
     protected fun status(status: String, statusVisible: Boolean, activitySeparatorVisible: Boolean, lineVisible: Boolean, onStatusClick: () -> Unit) {
@@ -225,7 +224,6 @@ abstract class UserBaseController : BaseController() {
         settings: Settings,
         offer: Offer,
         isProfile: Boolean,
-        favoriteButtonVisible: Boolean,
         onFavoriteButtonClick: () -> Unit,
         onClick: () -> Unit
     ) {
@@ -238,7 +236,6 @@ abstract class UserBaseController : BaseController() {
             free(offer.isFree)
             price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
             favorite(offer.isFavorite || isProfile)
-            favoriteButtonVisible(favoriteButtonVisible)
             onFavoriteButtonClick { onFavoriteButtonClick() }
             offerStarCount(offer.starCountString)
             rating(offer.rating)

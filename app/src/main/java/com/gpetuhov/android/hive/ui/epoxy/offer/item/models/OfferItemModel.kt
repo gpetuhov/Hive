@@ -28,7 +28,6 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
     @EpoxyAttribute lateinit var onClick: () -> Unit
 
     @EpoxyAttribute var favorite = false
-    @EpoxyAttribute var favoriteButtonVisible = true
     @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
 
     @EpoxyAttribute lateinit var offerStarCount: String
@@ -47,11 +46,9 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
         holder.price.setTextColor(ContextCompat.getColor(holder.price.context, getPriceColorId(free)))
 
         holder.favoriteButton.setImageResource(getStarResourceId(favorite))
-        holder.favoriteButton.setVisible(favoriteButtonVisible)
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
 
         holder.offerStarCount.text = offerStarCount
-        holder.offerStarCount.setVisible(favoriteButtonVisible)
 
         val ratingVisible = reviewCount != 0
         holder.ratingWrapper.setVisible(ratingVisible)
