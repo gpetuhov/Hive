@@ -16,12 +16,14 @@ abstract class UserItemModel : EpoxyModelWithHolder<UserItemHolder>() {
     @EpoxyAttribute lateinit var onClick: () -> Unit
     @EpoxyAttribute lateinit var userPicUrl: String
     @EpoxyAttribute lateinit var username: String
+    @EpoxyAttribute lateinit var userStarCount: String
     @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
 
     override fun bind(holder: UserItemHolder) {
         holder.rootView.setOnClickListener { onClick() }
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.username.text = username
+        holder.userStarCount.text = userStarCount
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
     }
 }
@@ -31,4 +33,5 @@ class UserItemHolder : KotlinHolder() {
     val userPic by bind<ImageView>(R.id.user_item_user_pic)
     val username by bind<TextView>(R.id.user_item_username)
     val favoriteButton by bind<ImageView>(R.id.user_item_favorite_button)
+    val userStarCount by bind<TextView>(R.id.user_item_star_count)
 }

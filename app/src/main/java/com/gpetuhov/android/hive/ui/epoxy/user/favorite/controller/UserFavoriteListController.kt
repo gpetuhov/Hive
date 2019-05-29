@@ -31,6 +31,7 @@ class UserFavoriteListController(private val presenter: FavoriteUsersFragmentPre
                 userPicUrl(user.userPicUrl)
                 onClick { presenter.showUserDetails(user.uid) }
                 username(user.getUsernameOrName())
+                userStarCount(user.userStarCountString)
                 onFavoriteButtonClick { presenter.removeUserFromFavorite(user.uid) }
             }
 

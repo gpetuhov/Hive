@@ -31,8 +31,18 @@
             android:id="@+id/user_item_favorite_button"
             android:layout_width="@dimen/basic_view_size"
             android:layout_height="@dimen/basic_view_size"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:src="@drawable/ic_star"
             android:background="@android:color/transparent"
             android:contentDescription="@string/add_to_favorites"/>
+
+    <TextView
+            android:id="@+id/user_item_star_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            style="@style/basicTextStyle"
+            tools:text="150"/>
 
 </LinearLayout>
