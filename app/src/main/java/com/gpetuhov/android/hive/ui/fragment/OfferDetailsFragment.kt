@@ -59,6 +59,7 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
             binding?.offerIsFavorite = presenter.offerIsFavorite
             binding?.chatButtonVisible = !userIsDeleted
             binding?.favoriteButtonVisible = !userIsDeleted && !offerIsDeleted
+            binding?.offerStarCount = offer?.starCountString ?: ""
             controller?.changeOffer(user, offer)
         })
 

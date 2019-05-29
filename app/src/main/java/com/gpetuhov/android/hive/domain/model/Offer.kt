@@ -19,4 +19,5 @@ data class Offer(
     var starCount: Long = 0L
 ) {
     var photoList = mutableListOf<Photo>()
+    val starCountString get() = starCount.toString()
 }
