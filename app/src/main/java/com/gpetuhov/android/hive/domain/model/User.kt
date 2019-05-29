@@ -64,6 +64,7 @@ data class User(
     val hasInterests get() = interests != ""
     val hasStatus get() = status != ""
     val hasActivity get() = activity != Constants.User.NO_ACTIVITY
+    val userStarCountString get() = userStarCount.toString()
 
     val awardsList = mutableListOf<Int>()
     val newAwardsList = mutableListOf<Int>()
