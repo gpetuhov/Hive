@@ -173,6 +173,7 @@
     <string name="mega_critic">MegaCritic</string>
     <string name="offer_finder">OfferFinder</string>
     <string name="oflumbus">Oflumbus</string>
+    <string name="favorite_provider">FavoriteProvider</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -296,6 +297,7 @@
     <string name="mega_critic_info">User has posted 100 reviews</string>
     <string name="offer_finder_info">User has posted 1 first review</string>
     <string name="oflumbus_info">User has posted 10 first reviews</string>
+    <string name="favorite_provider_info">User or user\'s offers have been added to favorites 1 times</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>
