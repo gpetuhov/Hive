@@ -554,9 +554,7 @@ class ProfileFragmentPresenter :
 
     fun openCongratulation(newAwardsList: MutableList<Int>) = viewState.openCongratulation(newAwardsList)
 
-    // === Private methods ===
-
-    private fun showToast(message: String) {
+    fun showToast(message: String) {
         viewState.showToast(message)
     }
 }

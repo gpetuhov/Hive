@@ -120,6 +120,7 @@
     <string name="mega_critic_tip">Post 100 reviews to receive MegaCritic award</string>
     <string name="offer_finder_tip">Post 1 first review to receive OfferFinder award</string>
     <string name="oflumbus_tip">Post 10 first reviews to receive Oflumbus award</string>
+    <string name="add_own_offer_favorite_error">Cannot add your own offer to favorites</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

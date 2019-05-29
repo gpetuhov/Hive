@@ -120,6 +120,7 @@
     <string name="mega_critic_tip">Опубликуйте 100 отзывов, чтобы получить награду MegaCritic</string>
     <string name="offer_finder_tip">Опубликуйте 1 первый отзыв, чтобы получить награду OfferFinder</string>
     <string name="oflumbus_tip">Опубликуйте 10 первых отзывов, чтобы получить награду Oflumbus</string>
+    <string name="add_own_offer_favorite_error">Невозможно добавить свой собственный оффер в избранные</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Отменить поиск</string>

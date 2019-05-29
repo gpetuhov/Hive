@@ -224,7 +224,7 @@ abstract class UserBaseController : BaseController() {
         context: Context,
         settings: Settings,
         offer: Offer,
-        offerActiveVisible: Boolean,
+        isProfile: Boolean,
         favoriteButtonVisible: Boolean,
         onFavoriteButtonClick: () -> Unit,
         onClick: () -> Unit
@@ -233,11 +233,11 @@ abstract class UserBaseController : BaseController() {
         offerItem {
             id(offer.uid)
             active(offer.isActive)
-            activeVisible(offerActiveVisible)
+            activeVisible(isProfile)
             title(offer.title)
             free(offer.isFree)
             price(if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD")
-            favorite(offer.isFavorite)
+            favorite(offer.isFavorite || isProfile)
             favoriteButtonVisible(favoriteButtonVisible)
             onFavoriteButtonClick { onFavoriteButtonClick() }
             offerStarCount(offer.starCountString)
