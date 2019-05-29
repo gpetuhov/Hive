@@ -924,8 +924,13 @@ class Repository(private val context: Context, private val settings: Settings) :
                 .addOnSuccessListener {
                     Timber.tag(TAG).d("Favorite successfully added")
 
-                    // If user is added to favorites, increment user star count of THAT user (NOT current one)
-                    if (offerUid == "") incrementUserStarCount(userUid)
+                    if (offerUid == "") {
+                        // If user is added to favorites, increment user star count of THAT user (NOT current one)
+                        incrementUserStarCount(userUid)
+                    } else {
+                        // If offer is added to favorites, increment offer star count of the offer provider
+                        incrementOfferStarCount(userUid, offerUid)
+                    }
                 }
                 .addOnFailureListener { error ->
                     Timber.tag(TAG).d("Error adding favorite")
@@ -946,7 +951,12 @@ class Repository(private val context: Context, private val settings: Settings) :
                     Timber.tag(TAG).d("Favorite successfully removed")
 
                     // If user is removed from favorites, decrement user star count of THAT user (NOT current one)
-                    if (offerUid == "") decrementUserStarCount(userUid)
+                    if (offerUid == "") {
+                        decrementUserStarCount(userUid)
+                    } else {
+                        // If offer is removed from favorites, decrement offer star count of the offer provider
+                        decrementOfferStarCount(userUid, offerUid)
+                    }
                 }
                 .addOnFailureListener {
                     Timber.tag(TAG).d("Error removing favorite")
@@ -2136,6 +2146,21 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun incrementUserStarCount(userUid: String, value: Long) {
         val data = getSingleValueHashMap(USER_STAR_COUNT_KEY, FieldValue.increment(value))
         saveUserDataRemote(userUid, data, { /* Do nothing */ }, { /* Do nothing */ })
+    }
+
+    private fun incrementOfferStarCount(userUid: String, offerUid: String) = incrementOfferStarCount(userUid, offerUid, 1)
+
+    private fun decrementOfferStarCount(userUid: String, offerUid: String) = incrementOfferStarCount(userUid, offerUid, -1)
+
+    private fun incrementOfferStarCount(userUid: String, offerUid: String, value: Long) {
+        if (offerUid != "") {
+            val offerStarCountKey = "${OFFER_STAR_COUNT_KEY_PREFIX}_$offerUid"
+
+            val data = HashMap<String, Any>()
+            data[offerStarCountKey] = FieldValue.increment(value)
+
+            saveUserDataRemote(userUid, data, { /* Do nothing */ }, { /* Do nothing */ })
+        }
     }
 
     // --- Reviews ---
