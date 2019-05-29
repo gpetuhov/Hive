@@ -353,6 +353,13 @@ class UserTest {
         assertEquals(true, user.hasFavoriteProviderAward)
     }
 
+    @Test
+    fun hasAdorableProviderAward() {
+        assertEquals(false, user.hasAdorableProviderAward)
+        user.totalStarCount = Constants.Awards.ADORABLE_PROVIDER_AWARD_MIN_STAR_COUNT
+        assertEquals(true, user.hasAdorableProviderAward)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {

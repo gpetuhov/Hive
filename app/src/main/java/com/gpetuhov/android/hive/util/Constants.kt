@@ -97,6 +97,7 @@ class Constants {
             const val OFFER_FINDER_ID = 11
             const val OFLUMBUS_ID = 12
             const val FAVORITE_PROVIDER_ID = 13
+            const val ADORABLE_PROVIDER_ID = 14
 
             private val TEXT_MASTER = Award(TEXT_MASTER_ID, R.raw.textmaster, R.drawable.ic_text_master, R.drawable.ic_text_master_big, R.string.text_master, R.string.text_master_info, R.string.text_master_tip)
             private val OFFER_PROVIDER = Award(OFFER_PROVIDER_ID, R.raw.offerprovider, R.drawable.ic_offer_provider, R.drawable.ic_offer_provider_big, R.string.offer_provider, R.string.offer_provider_info, R.string.offer_provider_tip)
@@ -147,6 +148,8 @@ class Constants {
             const val MEGA_CRITIC_AWARD_MIN_REVIEW_COUNT = 100L
 
             const val OFLUMBUS_AWARD_MIN_REVIEW_COUNT = 10L
+
+            const val ADORABLE_PROVIDER_AWARD_MIN_STAR_COUNT = 10L
         }
     }
 }

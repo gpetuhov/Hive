@@ -109,6 +109,8 @@ data class User(
 
     val hasFavoriteProviderAward get() = totalStarCount > 0
 
+    val hasAdorableProviderAward get() = totalStarCount >= Constants.Awards.ADORABLE_PROVIDER_AWARD_MIN_STAR_COUNT
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
