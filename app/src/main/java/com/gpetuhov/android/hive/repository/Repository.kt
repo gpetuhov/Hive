@@ -1352,6 +1352,15 @@ class Repository(private val context: Context, private val settings: Settings) :
             getUserLocationFromDocumentSnapshot(doc)
         }
 
+        var postedReviewsCount = doc.getLong(POSTED_REVIEWS_COUNT_KEY) ?: 0L
+        var postedFirstReviewsCount = doc.getLong(POSTED_FIRST_REVIEWS_COUNT_KEY) ?: 0L
+        var userStarCount = doc.getLong(USER_STAR_COUNT_KEY) ?: 0L
+
+        // Do not show negative counter values (if any)
+        if (postedReviewsCount < 0L) postedReviewsCount = 0L
+        if (postedFirstReviewsCount < 0L) postedFirstReviewsCount = 0L
+        if (userStarCount < 0L) userStarCount = 0L
+
         val user = User(
             uid = doc.id,
             name = doc.getString(NAME_KEY) ?: Constants.Auth.DEFAULT_USER_NAME,
@@ -1380,9 +1389,9 @@ class Repository(private val context: Context, private val settings: Settings) :
             lastSeen = (doc.getLong(LAST_SEEN_KEY) ?: System.currentTimeMillis()) / 1000,
             status = doc.getString(STATUS_KEY) ?: "",
             activity = doc.getLong(ACTIVITY_KEY) ?: Constants.User.NO_ACTIVITY,
-            postedReviewsCount = doc.getLong(POSTED_REVIEWS_COUNT_KEY) ?: 0L,
-            postedFirstReviewsCount = doc.getLong(POSTED_FIRST_REVIEWS_COUNT_KEY) ?: 0L,
-            userStarCount = doc.getLong(USER_STAR_COUNT_KEY) ?: 0L
+            postedReviewsCount = postedReviewsCount,
+            postedFirstReviewsCount = postedFirstReviewsCount,
+            userStarCount = userStarCount
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
