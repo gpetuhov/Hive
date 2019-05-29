@@ -107,6 +107,8 @@ data class User(
 
     val hasOflumbusAward get() = postedFirstReviewsCount >= Constants.Awards.OFLUMBUS_AWARD_MIN_REVIEW_COUNT
 
+    val hasFavoriteProviderAward get() = totalStarCount > 0
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -149,6 +151,13 @@ data class User(
         if (hasReviewedProviderAward) {
             awardsList.add(reviewedProviderId)
             if (!(awardCongratulationShownList.contains(reviewedProviderId))) newAwardsList.add(reviewedProviderId)
+        }
+
+        // FavoriteProvider Award has no tip
+        val favoriteProviderId = Constants.Awards.FAVORITE_PROVIDER_ID
+        if (hasFavoriteProviderAward) {
+            awardsList.add(favoriteProviderId)
+            if (!(awardCongratulationShownList.contains(favoriteProviderId))) newAwardsList.add(favoriteProviderId)
         }
 
         // Has Altruist award if 3 or more active offers and all active offers are free.
