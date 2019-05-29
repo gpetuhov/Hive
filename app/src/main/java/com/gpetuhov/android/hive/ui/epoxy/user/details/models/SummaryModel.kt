@@ -30,6 +30,9 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
 
     @EpoxyAttribute lateinit var onReviewsClick: () -> Unit
 
+    @EpoxyAttribute lateinit var userStarCount: String
+    @EpoxyAttribute var userStarCountVisible = false
+
     override fun bind(holder: SummaryHolder) {
         holder.creationDate.text = creationDate
         holder.creationDate.setVisible(creationDateVisible)
@@ -47,6 +50,9 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
         holder.ratingWrapper.setOnClickListener { onReviewsClick() }
         holder.ratingText.text = ratingText
         holder.ratingBar.rating = rating
+
+        holder.userStarCount.text = userStarCount
+        holder.userStarCountWrapper.setVisible(userStarCountVisible)
     }
 }
 
@@ -60,4 +66,6 @@ class SummaryHolder : KotlinHolder() {
     val ratingWrapper by bind<View>(R.id.user_details_average_rating_wrapper)
     val ratingText by bind<TextView>(R.id.user_details_average_rating_text)
     val ratingBar by bind<AppCompatRatingBar>(R.id.user_details_average_rating_bar)
+    val userStarCount by bind<TextView>(R.id.user_details_user_star_count)
+    val userStarCountWrapper by bind<View>(R.id.user_details_user_star_count_wrapper)
 }

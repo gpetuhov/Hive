@@ -84,7 +84,7 @@ abstract class UserBaseController : BaseController() {
         }
     }
 
-    protected fun summary(context: Context, forceShowRating: Boolean, onReviewsClick: () -> Unit) {
+    protected fun summary(context: Context, isProfile: Boolean, onReviewsClick: () -> Unit) {
         summary {
             id("summary")
 
@@ -115,12 +115,15 @@ abstract class UserBaseController : BaseController() {
 
             val averageRating = user?.averageRating ?: 0.0F
             val isRatingVisible = isRatingVisible(totalReviewsCount, averageRating)
-            ratingVisible(isRatingVisible || forceShowRating)
+            ratingVisible(isRatingVisible || isProfile)
             val ratingText = "%.2f".format(averageRating)
             ratingText("${context.getString(R.string.average_rating)}: $ratingText")
             rating(averageRating)
 
             onReviewsClick { if (totalReviewsCount > 0) onReviewsClick() }
+
+            userStarCount(user?.userStarCountString ?: "0")
+            userStarCountVisible(isProfile)
         }
     }
 
