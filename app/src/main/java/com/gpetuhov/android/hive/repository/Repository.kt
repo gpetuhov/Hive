@@ -87,6 +87,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val POSTED_REVIEWS_COUNT_KEY = "postedReviewsCount"
         private const val POSTED_FIRST_REVIEWS_COUNT_KEY = "postedFirstReviewsCount"
         private const val USER_STAR_COUNT_KEY = "userStarCount"
+        private const val OFFER_STAR_COUNT_KEY_PREFIX = "offerStarCount"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1404,6 +1405,11 @@ class Repository(private val context: Context, private val settings: Settings) :
         // for convenient use.
         updateOfferRatings(user, doc)
 
+        // Each offer's star count is stored directly inside user (NOT in a list).
+        // This is needed, because different offer star counters can be updated separately
+        // by different users at the same time.
+        updateOfferStarCount(user, doc)
+
         user.updateAwards()
 
         return user
@@ -1549,6 +1555,18 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
 
         return offerRatingList
+    }
+
+    private fun updateOfferStarCount(user: User, doc: DocumentSnapshot) {
+        val offerList = user.offerList
+
+        offerList.forEach { offer ->
+            val offerStarCountKey = "${OFFER_STAR_COUNT_KEY_PREFIX}_${offer.uid}"
+            var offerStarCount = doc.getLong(offerStarCountKey) ?: 0L
+            if (offerStarCount < 0) offerStarCount = 0L
+
+            offer.starCount = offerStarCount
+        }
     }
 
     private fun getAwardCongratulationShownListFromDocumentSnapshot(doc: DocumentSnapshot): MutableList<Int> =

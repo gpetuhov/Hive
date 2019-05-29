@@ -15,7 +15,8 @@ data class Offer(
     var lastReviewAuthorName: String = "",
     var lastReviewAuthorUserPicUrl: String = "",
     var lastReviewText: String = "",
-    var lastReviewTimestamp: Long = 0
+    var lastReviewTimestamp: Long = 0L,
+    var starCount: Long = 0L
 ) {
     var photoList = mutableListOf<Photo>()
 }
