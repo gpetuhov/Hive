@@ -27,6 +27,8 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
     @EpoxyAttribute var favorite = false
     @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
 
+    @EpoxyAttribute lateinit var offerStarCount: String
+
     @EpoxyAttribute var rating = 0.0F
     @EpoxyAttribute var reviewCount = 0
 
@@ -42,6 +44,8 @@ abstract class OfferItemOnePhotoModel : EpoxyModelWithHolder<OfferItemOnePhotoHo
 
         holder.favoriteButton.setImageResource(getStarResourceId(favorite))
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
+
+        holder.offerStarCount.text = offerStarCount
 
         val ratingVisible = reviewCount != 0
         holder.ratingWrapper.visibility = if (ratingVisible) View.VISIBLE else View.INVISIBLE   // Use invisible for proper carousel height
@@ -61,4 +65,5 @@ class OfferItemOnePhotoHolder : KotlinHolder() {
     val ratingWrapper by bind<View>(R.id.offer_item_one_photo_rating_wrapper)
     val ratingBar by bind<AppCompatRatingBar>(R.id.offer_item_one_photo_rating_bar)
     val reviewCount by bind<TextView>(R.id.offer_item_one_photo_review_count)
+    val offerStarCount by bind<TextView>(R.id.offer_item_one_photo_star_count)
 }

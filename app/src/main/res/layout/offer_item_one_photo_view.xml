@@ -84,6 +84,17 @@
                 android:src="@drawable/ic_star_border"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/add_to_favorites"
+                app:layout_constraintEnd_toStartOf="@id/offer_item_one_photo_star_count"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+                android:id="@+id/offer_item_one_photo_star_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                style="@style/basicTextStyle"
+                tools:text="150"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
