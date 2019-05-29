@@ -334,6 +334,18 @@ class UserTest {
         assertEquals(true, user.hasOflumbusAward)
     }
 
+    @Test
+    fun totalStarCount() {
+        user.updateAwards()
+        assertEquals(0, user.totalStarCount)
+        user.userStarCount = 1
+        user.updateAwards()
+        assertEquals(1, user.totalStarCount)
+        addAllFreeOffers(9)
+        user.updateAwards()
+        assertEquals(10, user.totalStarCount)
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {

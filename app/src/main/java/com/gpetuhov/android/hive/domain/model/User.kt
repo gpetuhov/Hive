@@ -74,6 +74,8 @@ data class User(
     var totalReviewsCount = 0   // This is how many reviews OTHER users posted on this user's offers
     var averageRating = 0F
 
+    var totalStarCount = 0L // This is total stars that has this user plus all of his active offers
+
     val hasTextMasterAward get() = photoList.isNotEmpty() && (userPicUrl != "") && hasUsername && hasDescription
             && hasPhone && hasVisibleEmail && hasSkype && hasFacebook && hasTwitter && hasInstagram
             && hasYouTube && hasWebsite && hasResidence && hasLanguage && hasEducation && hasWork
@@ -236,7 +238,11 @@ data class User(
         activeOfferList = offerList.filter { it.isActive }.toMutableList()
 
         totalReviewsCount = 0
-        activeOfferList.forEach { totalReviewsCount += it.reviewCount }
+        totalStarCount = userStarCount
+        activeOfferList.forEach {
+            totalReviewsCount += it.reviewCount
+            totalStarCount += it.starCount
+        }
 
         averageRating = 0.0F
         val activeOfferWithReviewsList = activeOfferList.filter { it.reviewCount > 0 }

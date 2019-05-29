@@ -106,6 +106,7 @@ class Constants {
         private fun getDummyOffer(): Offer {
             val offer = Offer("2g5g2g", "5894gh5489","dfgfdg", "ddsfdfs", 0.0, false, true)
             offer.photoList.add(DUMMY_PHOTO)
+            offer.starCount = 1
             return offer
         }
 
