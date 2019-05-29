@@ -145,6 +145,7 @@
     <string name="user_posted_reviews_count">Опубликовано отзывов</string>
     <string name="user_posted_first_reviews_count">Опубликовано первых отзывов</string>
     <string name="user_total_reviews_count">Получено отзывов</string>
+    <string name="user_total_star_count">Суммарно звезд избранных</string>
     <string name="email_subject">Письмо из Hive</string>
     <string name="skype_not_installed">Skype не установлен</string>
     <string name="information">Информация</string>

@@ -145,6 +145,7 @@
     <string name="user_posted_reviews_count">Posted reviews</string>
     <string name="user_posted_first_reviews_count">Posted first reviews</string>
     <string name="user_total_reviews_count">Received reviews</string>
+    <string name="user_total_star_count">Total favorite stars</string>
     <string name="email_subject">Email from Hive</string>
     <string name="skype_not_installed">Skype not installed</string>
     <string name="information">Information</string>

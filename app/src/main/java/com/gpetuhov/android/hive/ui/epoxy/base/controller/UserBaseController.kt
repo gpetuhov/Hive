@@ -123,6 +123,10 @@ abstract class UserBaseController : BaseController() {
 
             userStarCount(user?.userStarCountString ?: "0")
             userStarCountVisible(isProfile)
+
+            val totalStarCount = user?.totalStarCount ?: 0L
+            totalStarCount("${context.getString(R.string.user_total_star_count)}: $totalStarCount")
+            totalStarCountVisible(isProfile)
         }
     }
 

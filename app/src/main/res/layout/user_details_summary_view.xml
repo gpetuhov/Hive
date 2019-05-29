@@ -108,4 +108,11 @@
 
     </LinearLayout>
 
+    <TextView
+            android:id="@+id/user_details_total_star_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/basicTextStyle"
+            tools:text="Total favorite stars: 15"/>
+
 </LinearLayout>

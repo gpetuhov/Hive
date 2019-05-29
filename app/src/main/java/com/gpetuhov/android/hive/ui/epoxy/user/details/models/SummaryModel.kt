@@ -33,6 +33,9 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
     @EpoxyAttribute lateinit var userStarCount: String
     @EpoxyAttribute var userStarCountVisible = false
 
+    @EpoxyAttribute lateinit var totalStarCount: String
+    @EpoxyAttribute var totalStarCountVisible = false
+
     override fun bind(holder: SummaryHolder) {
         holder.creationDate.text = creationDate
         holder.creationDate.setVisible(creationDateVisible)
@@ -53,6 +56,9 @@ abstract class SummaryModel : EpoxyModelWithHolder<SummaryHolder>() {
 
         holder.userStarCount.text = userStarCount
         holder.userStarCountWrapper.setVisible(userStarCountVisible)
+
+        holder.totalStarCount.text = totalStarCount
+        holder.totalStarCount.setVisible(totalStarCountVisible)
     }
 }
 
@@ -68,4 +74,5 @@ class SummaryHolder : KotlinHolder() {
     val ratingBar by bind<AppCompatRatingBar>(R.id.user_details_average_rating_bar)
     val userStarCount by bind<TextView>(R.id.user_details_user_star_count)
     val userStarCountWrapper by bind<View>(R.id.user_details_user_star_count_wrapper)
+    val totalStarCount by bind<TextView>(R.id.user_details_total_star_count)
 }
