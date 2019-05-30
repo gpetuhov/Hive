@@ -120,6 +120,7 @@
     <string name="mega_critic_tip">Post 100 reviews to receive MegaCritic award</string>
     <string name="offer_finder_tip">Post 1 first review to receive OfferFinder award</string>
     <string name="oflumbus_tip">Post 10 first reviews to receive Oflumbus award</string>
+    <string name="favoritizer_tip">Add user or offer to favorites to receive Favoritizer award</string>
     <string name="add_own_offer_favorite_error">Cannot add your own offer to favorites</string>
 
     <!-- MapFragment -->
@@ -176,6 +177,7 @@
     <string name="favorite_provider">FavoriteProvider</string>
     <string name="adorable_provider">AdorableProvider</string>
     <string name="rock_star">RockStar</string>
+    <string name="favoritizer">Favoritizer</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -302,6 +304,7 @@
     <string name="favorite_provider_info">User or user\'s offers have been added to favorites 1 times</string>
     <string name="adorable_provider_info">User or user\'s offers have been added to favorites 10 times</string>
     <string name="rock_star_info">User or user\'s offers have been added to favorites 100 times</string>
+    <string name="favoritizer_info">User has added user or offer to favorites at least once</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>

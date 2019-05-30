@@ -28,7 +28,7 @@ Android
 ## Credits
 TextMaster, OfferProvider, GoodProvider, ReviewedProvider and Hivecore award icons made by [Vectors Market](https://www.flaticon.com/authors/vectors-market) from [www.flaticon.com](https://www.flaticon.com/)
 
-Altruist, SuperProvider, StoryTeller, MegaCritic, OfferFinder, Oflumbus and RockStar award icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
+Altruist, SuperProvider, StoryTeller, MegaCritic, OfferFinder, Oflumbus, RockStar and Favoritizer award icons made by [Freepik](https://www.freepik.com/) from [www.flaticon.com](https://www.flaticon.com/)
 
 Newbie award icon made by [Pixel perfect](https://www.flaticon.com/authors/pixel-perfect) from [www.flaticon.com](https://www.flaticon.com/)
 
@@ -59,6 +59,8 @@ FavoriteProvider award animation made by [Rachmat AG](https://lottiefiles.com/us
 AdorableProvider award animation made by [Jonas Alvarson](https://lottiefiles.com/jalvarson) from [LottieFiles](https://lottiefiles.com/)
 
 RockStar award animation made by [sandeep pyla](https://lottiefiles.com/user/24960) from [LottieFiles](https://lottiefiles.com/)
+
+Favoritizer award animation made by [Erick Daniel Juarez Gil](https://lottiefiles.com/ErickDanielJuarezGil) from [LottieFiles](https://lottiefiles.com/)
 
 Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
 
