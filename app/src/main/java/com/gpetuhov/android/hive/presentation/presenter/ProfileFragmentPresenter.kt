@@ -554,6 +554,12 @@ class ProfileFragmentPresenter :
 
     fun openCongratulation(newAwardsList: MutableList<Int>) = viewState.openCongratulation(newAwardsList)
 
+    // --- Open user activity ---
+
+    fun openUserActivity(userActivityType: Int) = viewState.openUserActivity(userActivityType)
+
+    // --- Show toast ---
+
     fun showToast(message: String) {
         viewState.showToast(message)
     }

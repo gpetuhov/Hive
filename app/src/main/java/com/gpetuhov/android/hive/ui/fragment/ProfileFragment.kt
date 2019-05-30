@@ -251,6 +251,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         }
     }
 
+    override fun openUserActivity(userActivityType: Int) {
+        val action = ProfileFragmentDirections.actionNavigationProfileToUserActivityFragment(userActivityType)
+        findNavController().navigate(action)
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }

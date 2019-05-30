@@ -65,9 +65,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             hasActivity,
             true,
             { presenter.showStatusDialog() },
-            {
-                // TODO: implement
-            }
+            { userActivityType -> presenter.openUserActivity(userActivityType) }
         )
 
         summary(context, true) { presenter.openAllReviews() }

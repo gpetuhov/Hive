@@ -214,6 +214,11 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun openCongratulation(newAwardsList: MutableList<Int>)
 
+    // === Open user activity ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openUserActivity(userActivityType: Int)
+
     // === Common ===
 
     // We don't need to keep this command in the queue,
