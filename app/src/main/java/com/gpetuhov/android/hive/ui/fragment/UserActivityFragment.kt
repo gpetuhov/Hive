@@ -12,9 +12,11 @@ import com.gpetuhov.android.hive.databinding.FragmentUserActivityBinding
 import com.gpetuhov.android.hive.presentation.presenter.UserActivityFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.UserActivityFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import kotlinx.android.synthetic.main.fragment_user_activity.*
 
 class UserActivityFragment : BaseFragment(), UserActivityFragmentView {
 
@@ -35,9 +37,29 @@ class UserActivityFragment : BaseFragment(), UserActivityFragmentView {
         return binding?.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val args = UserActivityFragmentArgs.fromBundle(arguments!!)
+        val userActivityType = args.userActivityType
+
+        updateUI(userActivityType)
+    }
+
     // === UserActivityFragmentView ===
 
     override fun navigateUp() {
         findNavController().navigateUp()
+    }
+
+    // === Private methods ===
+
+    private fun updateUI(userActivityType: Int) {
+        val userActivityAnimationId = Constants.UserActivities.getUserActivity(userActivityType).animationId
+        val userActivityDescriptionId = Constants.UserActivities.getUserActivity(userActivityType).descriptionId
+
+        user_activity_animation.setAnimation(userActivityAnimationId)
+        binding?.userActivityDescriptionText = getString(userActivityDescriptionId)
+
     }
 }

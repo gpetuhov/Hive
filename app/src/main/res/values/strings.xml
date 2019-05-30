@@ -310,6 +310,9 @@
     <string name="congratulations">Congratulations!</string>
     <string name="congratulations_text">You received following awards:</string>
 
+    <!-- UserActivityFragment -->
+    <string name="still_description">User is standing still</string>
+
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb1023250447868170</string>

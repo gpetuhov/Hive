@@ -64,4 +64,6 @@ Favoritizer award animation made by [Erick Daniel Juarez Gil](https://lottiefile
 
 Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
 
+Still activity animation made by [Hoai Le](https://lottiefiles.com/koycatdang) from [LottieFiles](https://lottiefiles.com/)
+
 Gears Animation and ReviewedProvider award made by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)

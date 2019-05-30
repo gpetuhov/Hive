@@ -310,4 +310,7 @@
     <string name="congratulations">Поздравляем!</string>
     <string name="congratulations_text">Вы получили следующие награды:</string>
 
+    <!-- UserActivityFragment -->
+    <string name="still_description">Пользователь стоит на месте</string>
+
 </resources>

@@ -1,8 +1,10 @@
 package com.gpetuhov.android.hive.util
 
+import com.google.android.gms.location.DetectedActivity
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Award
+import com.gpetuhov.android.hive.domain.model.UserActivity
 
 class Constants {
     class Map {
@@ -160,6 +162,26 @@ class Constants {
             const val ADORABLE_PROVIDER_AWARD_MIN_STAR_COUNT = 10L
 
             const val ROCK_STAR_AWARD_MIN_STAR_COUNT = 100L
+        }
+    }
+
+    class UserActivities {
+        companion object {
+            private val STILL = UserActivity(R.raw.still, R.string.still_description)
+//            private val WALKING = UserActivity()
+//            private val RUNNING = UserActivity()
+//            private val BICYCLE = UserActivity()
+//            private val VEHICLE = UserActivity()
+
+            private val ACTIVITY_MAP = hashMapOf(
+                DetectedActivity.STILL to STILL
+//                DetectedActivity.WALKING to WALKING,
+//                DetectedActivity.RUNNING to RUNNING,
+//                DetectedActivity.ON_BICYCLE to BICYCLE,
+//                DetectedActivity.IN_VEHICLE to VEHICLE
+            )
+
+            fun getUserActivity(userActivityType: Int) = ACTIVITY_MAP[userActivityType] ?: STILL
         }
     }
 }
