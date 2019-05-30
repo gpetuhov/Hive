@@ -315,6 +315,7 @@
     <string name="walk_description">User is walking</string>
     <string name="running_description">User is running</string>
     <string name="bicycle_description">User is on bicycle</string>
+    <string name="vehicle_description">User is in the car or public transport</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
