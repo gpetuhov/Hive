@@ -17,11 +17,21 @@ abstract class StatusModel : EpoxyModelWithHolder<UserDetailsStatusHolder>() {
     @EpoxyAttribute lateinit var onStatusClick: () -> Unit
 
     @EpoxyAttribute var activitySeparatorVisible = false
+
     @EpoxyAttribute var stillVisible = false
+    @EpoxyAttribute lateinit var onStillClick: () -> Unit
+
     @EpoxyAttribute var walkVisible = false
+    @EpoxyAttribute lateinit var onWalkClick: () -> Unit
+
     @EpoxyAttribute var runVisible = false
+    @EpoxyAttribute lateinit var onRunClick: () -> Unit
+
     @EpoxyAttribute var bicycleVisible = false
+    @EpoxyAttribute lateinit var onBicycleClick: () -> Unit
+
     @EpoxyAttribute var vehicleVisible = false
+    @EpoxyAttribute lateinit var onVehicleClick: () -> Unit
 
     @EpoxyAttribute var lineVisible = false
 
@@ -31,11 +41,21 @@ abstract class StatusModel : EpoxyModelWithHolder<UserDetailsStatusHolder>() {
         holder.status.setOnClickListener { onStatusClick() }
 
         holder.activitySeparator.setVisible(activitySeparatorVisible)
+
         holder.still.setVisible(stillVisible)
+        holder.still.setOnClickListener { onStillClick() }
+
         holder.walk.setVisible(walkVisible)
+        holder.walk.setOnClickListener { onWalkClick() }
+
         holder.run.setVisible(runVisible)
+        holder.run.setOnClickListener { onRunClick() }
+
         holder.bicycle.setVisible(bicycleVisible)
+        holder.bicycle.setOnClickListener { onBicycleClick() }
+
         holder.vehicle.setVisible(vehicleVisible)
+        holder.vehicle.setOnClickListener { onVehicleClick() }
 
         holder.line.setVisible(lineVisible)
     }

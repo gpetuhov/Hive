@@ -58,7 +58,17 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
         val hasStatus = user?.hasStatus ?: false
         val hasActivity = user?.hasActivity ?: false
         val status = if (hasStatus) user?.status ?: "" else context.getString(R.string.enter_status)
-        status(status, true, hasActivity, true) { presenter.showStatusDialog() }
+
+        status(
+            status,
+            true,
+            hasActivity,
+            true,
+            { presenter.showStatusDialog() },
+            {
+                // TODO: implement
+            }
+        )
 
         summary(context, true) { presenter.openAllReviews() }
 

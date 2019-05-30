@@ -53,7 +53,14 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             val hasActivity = user?.hasActivity ?: false
             val status = user?.status ?: ""
             if (hasStatus || hasActivity) {
-                status(status, hasStatus, hasActivity && hasStatus, false) { /* Do nothing */ }
+                status(
+                    status,
+                    hasStatus,
+                    hasActivity && hasStatus,
+                    false,
+                    { /* Do nothing */ },
+                    { userActivityType -> presenter.openUserActivity(userActivityType) }
+                )
             }
 
             summary(context, false) { presenter.openAllReviews() }

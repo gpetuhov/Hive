@@ -52,5 +52,8 @@ interface UserDetailsFragmentView : MvpView {
     fun openAward(awardType: Int)
 
     @StateStrategyType(SkipStrategy::class)
+    fun openUserActivity(userActivityType: Int)
+
+    @StateStrategyType(SkipStrategy::class)
     fun showToast(message: String)
 }

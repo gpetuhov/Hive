@@ -111,6 +111,11 @@
                 app:destination="@id/awardFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_user_details_fragment_to_userActivityFragment"
+                app:destination="@id/userActivityFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
@@ -346,6 +351,16 @@
         <argument
                 android:name="newAwardsBundle"
                 app:argType="android.os.Bundle"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/userActivityFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.UserActivityFragment"
+            android:label="UserActivityFragment"
+            tools:layout="@layout/fragment_user_activity">
+        <argument
+                android:name="userActivityType"
+                app:argType="integer"/>
     </fragment>
 
 </navigation>

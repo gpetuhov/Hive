@@ -77,6 +77,8 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openAward(awardType: Int) = viewState.openAward(awardType)
 
+    fun openUserActivity(userActivityType: Int) = viewState.openUserActivity(userActivityType)
+
     // --- Lifecycle ---
 
     // This is needed to change user details in the UI if changed on the backend

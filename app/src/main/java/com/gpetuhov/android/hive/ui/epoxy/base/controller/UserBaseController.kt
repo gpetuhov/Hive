@@ -63,7 +63,7 @@ abstract class UserBaseController : BaseController() {
         offerItemDetails(context, settings, offer, isProfile, onFavoriteButtonClick, onClick)
     }
 
-    protected fun status(status: String, statusVisible: Boolean, activitySeparatorVisible: Boolean, lineVisible: Boolean, onStatusClick: () -> Unit) {
+    protected fun status(status: String, statusVisible: Boolean, activitySeparatorVisible: Boolean, lineVisible: Boolean, onStatusClick: () -> Unit, onUserActivityClick: (Int) -> Unit) {
         status {
             id("status")
 
@@ -73,11 +73,21 @@ abstract class UserBaseController : BaseController() {
 
             val activity = (user?.activity ?: Constants.User.NO_ACTIVITY).toInt()
             activitySeparatorVisible(activitySeparatorVisible)
+
             stillVisible(activity == DetectedActivity.STILL)
+            onStillClick { onUserActivityClick(DetectedActivity.STILL) }
+
             walkVisible(activity == DetectedActivity.WALKING)
+            onWalkClick { onUserActivityClick(DetectedActivity.WALKING) }
+
             runVisible(activity == DetectedActivity.RUNNING)
+            onRunClick { onUserActivityClick(DetectedActivity.RUNNING) }
+
             bicycleVisible(activity == DetectedActivity.ON_BICYCLE)
+            onBicycleClick { onUserActivityClick(DetectedActivity.ON_BICYCLE) }
+
             vehicleVisible(activity == DetectedActivity.IN_VEHICLE)
+            onVehicleClick { onUserActivityClick(DetectedActivity.IN_VEHICLE) }
 
             lineVisible(lineVisible)
         }
