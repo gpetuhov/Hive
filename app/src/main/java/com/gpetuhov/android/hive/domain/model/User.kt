@@ -111,6 +111,8 @@ data class User(
 
     val hasAdorableProviderAward get() = totalStarCount >= Constants.Awards.ADORABLE_PROVIDER_AWARD_MIN_STAR_COUNT
 
+    val hasRockStarAward get() = totalStarCount >= Constants.Awards.ROCK_STAR_AWARD_MIN_STAR_COUNT
+
     fun hasActiveOffer() = offerList.any { it.isActive }
 
     fun getUsernameOrName() = if (hasUsername) username else name
@@ -153,6 +155,13 @@ data class User(
         if (hasReviewedProviderAward) {
             awardsList.add(reviewedProviderId)
             if (!(awardCongratulationShownList.contains(reviewedProviderId))) newAwardsList.add(reviewedProviderId)
+        }
+
+        // RockStar Award has no tip
+        val rockStarId = Constants.Awards.ROCK_STAR_ID
+        if (hasRockStarAward) {
+            awardsList.add(rockStarId)
+            if (!(awardCongratulationShownList.contains(rockStarId))) newAwardsList.add(rockStarId)
         }
 
         // AdorableProvider Award has no tip
