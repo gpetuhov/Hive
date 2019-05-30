@@ -175,6 +175,7 @@
     <string name="oflumbus">Oflumbus</string>
     <string name="favorite_provider">FavoriteProvider</string>
     <string name="adorable_provider">AdorableProvider</string>
+    <string name="rock_star">RockStar</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>
@@ -300,6 +301,7 @@
     <string name="oflumbus_info">Пользователь опубликовал 10 первых отзывов</string>
     <string name="favorite_provider_info">Пользователь или офферы пользователя были добавлены в избранное 1 раз</string>
     <string name="adorable_provider_info">Пользователь или офферы пользователя были добавлены в избранное 10 раз</string>
+    <string name="rock_star_info">Пользователь или офферы пользователя были добавлены в избранное 100 раз</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Поздравляем!</string>

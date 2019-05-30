@@ -175,6 +175,7 @@
     <string name="oflumbus">Oflumbus</string>
     <string name="favorite_provider">FavoriteProvider</string>
     <string name="adorable_provider">AdorableProvider</string>
+    <string name="rock_star">RockStar</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>
@@ -300,6 +301,7 @@
     <string name="oflumbus_info">User has posted 10 first reviews</string>
     <string name="favorite_provider_info">User or user\'s offers have been added to favorites 1 times</string>
     <string name="adorable_provider_info">User or user\'s offers have been added to favorites 10 times</string>
+    <string name="rock_star_info">User or user\'s offers have been added to favorites 100 times</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>

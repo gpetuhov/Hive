@@ -115,6 +115,7 @@ class Constants {
             private val OFLUMBUS = Award(OFLUMBUS_ID, R.raw.oflumbus, R.drawable.ic_oflumbus, R.drawable.ic_oflumbus_big, R.string.oflumbus, R.string.oflumbus_info, R.string.oflumbus_tip)
             private val FAVORITE_PROVIDER = Award(FAVORITE_PROVIDER_ID, R.raw.favoriteprovider, R.drawable.ic_favorite_provider, R.drawable.ic_favorite_provider_big, R.string.favorite_provider, R.string.favorite_provider_info, R.string.text_master_tip)
             private val ADORABLE_PROVIDER = Award(ADORABLE_PROVIDER_ID, R.raw.adorableprovider, R.drawable.ic_adorable_provider, R.drawable.ic_adorable_provider_big, R.string.adorable_provider, R.string.adorable_provider_info, R.string.text_master_tip)
+            private val ROCK_STAR = Award(ROCK_STAR_ID, R.raw.rockstar, R.drawable.ic_rock_star, R.drawable.ic_rock_star_big, R.string.rock_star, R.string.rock_star_info, R.string.text_master_tip)
 
             private val AWARDS_MAP = hashMapOf(
                 TEXT_MASTER_ID to TEXT_MASTER,
@@ -131,7 +132,8 @@ class Constants {
                 OFFER_FINDER_ID to OFFER_FINDER,
                 OFLUMBUS_ID to OFLUMBUS,
                 FAVORITE_PROVIDER_ID to FAVORITE_PROVIDER,
-                ADORABLE_PROVIDER_ID to ADORABLE_PROVIDER
+                ADORABLE_PROVIDER_ID to ADORABLE_PROVIDER,
+                ROCK_STAR_ID to ROCK_STAR
             )
 
             fun getAward(awardType: Int) = AWARDS_MAP[awardType] ?: TEXT_MASTER
