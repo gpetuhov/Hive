@@ -155,6 +155,13 @@ data class User(
             if (!(awardCongratulationShownList.contains(reviewedProviderId))) newAwardsList.add(reviewedProviderId)
         }
 
+        // AdorableProvider Award has no tip
+        val adorableProviderId = Constants.Awards.ADORABLE_PROVIDER_ID
+        if (hasAdorableProviderAward) {
+            awardsList.add(adorableProviderId)
+            if (!(awardCongratulationShownList.contains(adorableProviderId))) newAwardsList.add(adorableProviderId)
+        }
+
         // FavoriteProvider Award has no tip
         val favoriteProviderId = Constants.Awards.FAVORITE_PROVIDER_ID
         if (hasFavoriteProviderAward) {

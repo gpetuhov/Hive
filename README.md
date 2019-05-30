@@ -34,7 +34,7 @@ Newbie award icon made by [Pixel perfect](https://www.flaticon.com/authors/pixel
 
 ReviewPoster award icon made by [Roundicons](https://www.flaticon.com/authors/roundicons) from [www.flaticon.com](https://www.flaticon.com/)
 
-FavoriteProvider award icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com/)
+FavoriteProvider and AdorableProvider award icon made by [Smashicons](https://www.flaticon.com/authors/smashicons) from [www.flaticon.com](https://www.flaticon.com/)
 
 TextMaster, Altruist, GoodProvider and OfferFinder award animations made by [Hyebin Park](https://lottiefiles.com/smoothy.co) from [LottieFiles](https://lottiefiles.com/)
 
@@ -55,6 +55,8 @@ MegaCritic award animation made by [Anthony Tonev](https://lottiefiles.com/Spinn
 Oflumbus award animation made by [Alex Bradt](https://lottiefiles.com/Alexbradt.com) from [LottieFiles](https://lottiefiles.com/)
 
 FavoriteProvider award animation made by [Rachmat AG](https://lottiefiles.com/user/57803) from [LottieFiles](https://lottiefiles.com/)
+
+AdorableProvider award animation made by [Jonas Alvarson](https://lottiefiles.com/jalvarson) from [LottieFiles](https://lottiefiles.com/)
 
 Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
 
