@@ -70,4 +70,6 @@ Walking activity animation made by [Anastasiia Vlasenko](https://lottiefiles.com
 
 Running activity animation made by [Artem Kazak](https://lottiefiles.com/kazzzak) from [LottieFiles](https://lottiefiles.com/)
 
+Bicycle activity animation made by [Yue XI](https://lottiefiles.com/user/1724) from [LottieFiles](https://lottiefiles.com/)
+
 Gears Animation and ReviewedProvider award made by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)

@@ -314,5 +314,6 @@
     <string name="still_description">Пользователь стоит на месте</string>
     <string name="walk_description">Пользователь идет пешком</string>
     <string name="running_description">Пользователь бежит</string>
+    <string name="bicycle_description">Пользователь едет на велосипеде</string>
 
 </resources>

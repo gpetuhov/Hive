@@ -170,14 +170,14 @@ class Constants {
             private val STILL = UserActivity(R.raw.still, R.string.still_description)
             private val WALKING = UserActivity(R.raw.walking, R.string.walk_description)
             private val RUNNING = UserActivity(R.raw.running, R.string.running_description)
-//            private val BICYCLE = UserActivity()
+            private val BICYCLE = UserActivity(R.raw.bicycle, R.string.bicycle_description)
 //            private val VEHICLE = UserActivity()
 
             private val ACTIVITY_MAP = hashMapOf(
                 DetectedActivity.STILL to STILL,
                 DetectedActivity.WALKING to WALKING,
-                DetectedActivity.RUNNING to RUNNING
-//                DetectedActivity.ON_BICYCLE to BICYCLE,
+                DetectedActivity.RUNNING to RUNNING,
+                DetectedActivity.ON_BICYCLE to BICYCLE
 //                DetectedActivity.IN_VEHICLE to VEHICLE
             )
 
