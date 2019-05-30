@@ -168,14 +168,14 @@ class Constants {
     class UserActivities {
         companion object {
             private val STILL = UserActivity(R.raw.still, R.string.still_description)
-//            private val WALKING = UserActivity()
+            private val WALKING = UserActivity(R.raw.walking, R.string.walk_description)
 //            private val RUNNING = UserActivity()
 //            private val BICYCLE = UserActivity()
 //            private val VEHICLE = UserActivity()
 
             private val ACTIVITY_MAP = hashMapOf(
-                DetectedActivity.STILL to STILL
-//                DetectedActivity.WALKING to WALKING,
+                DetectedActivity.STILL to STILL,
+                DetectedActivity.WALKING to WALKING
 //                DetectedActivity.RUNNING to RUNNING,
 //                DetectedActivity.ON_BICYCLE to BICYCLE,
 //                DetectedActivity.IN_VEHICLE to VEHICLE

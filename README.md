@@ -62,8 +62,10 @@ RockStar award animation made by [sandeep pyla](https://lottiefiles.com/user/249
 
 Favoritizer award animation made by [Erick Daniel Juarez Gil](https://lottiefiles.com/ErickDanielJuarezGil) from [LottieFiles](https://lottiefiles.com/)
 
-Congratulation Animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
+Congratulation animation made by [Jojo Lafrite](https://lottiefiles.com/jojolafrite) from [LottieFiles](https://lottiefiles.com/)
 
 Still activity animation made by [Hoai Le](https://lottiefiles.com/koycatdang) from [LottieFiles](https://lottiefiles.com/)
+
+Walking activity animation made by [Anastasiia Vlasenko](https://lottiefiles.com/libertyink) from [LottieFiles](https://lottiefiles.com/)
 
 Gears Animation and ReviewedProvider award made by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)

@@ -60,6 +60,5 @@ class UserActivityFragment : BaseFragment(), UserActivityFragmentView {
 
         user_activity_animation.setAnimation(userActivityAnimationId)
         binding?.userActivityDescriptionText = getString(userActivityDescriptionId)
-
     }
 }

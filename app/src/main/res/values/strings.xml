@@ -312,6 +312,7 @@
 
     <!-- UserActivityFragment -->
     <string name="still_description">User is standing still</string>
+    <string name="walk_description">User is walking</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
