@@ -932,6 +932,8 @@ class Repository(private val context: Context, private val settings: Settings) :
                         // If offer is added to favorites, increment offer star count of the offer provider
                         incrementOfferStarCount(userUid, offerUid)
                     }
+
+                    setHasFavoritizerAward()
                 }
                 .addOnFailureListener { error ->
                     Timber.tag(TAG).d("Error adding favorite")
@@ -2163,6 +2165,11 @@ class Repository(private val context: Context, private val settings: Settings) :
 
             saveUserDataRemote(userUid, data, { /* Do nothing */ }, { /* Do nothing */ })
         }
+    }
+
+    private fun setHasFavoritizerAward() {
+        val hasFavoritizerAward = currentUser.value?.hasFavoritizerAward ?: false
+        if (!hasFavoritizerAward) saveUserSingleDataRemote(HAS_FAVORITIZER_AWARD_KEY, true, { /* Do nothing */ }, { /* Do nothing */ })
     }
 
     // --- Reviews ---
