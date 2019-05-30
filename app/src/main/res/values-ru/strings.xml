@@ -313,5 +313,6 @@
     <!-- UserActivityFragment -->
     <string name="still_description">Пользователь стоит на месте</string>
     <string name="walk_description">Пользователь идет пешком</string>
+    <string name="running_description">Пользователь бежит</string>
 
 </resources>

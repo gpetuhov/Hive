@@ -68,4 +68,6 @@ Still activity animation made by [Hoai Le](https://lottiefiles.com/koycatdang) f
 
 Walking activity animation made by [Anastasiia Vlasenko](https://lottiefiles.com/libertyink) from [LottieFiles](https://lottiefiles.com/)
 
+Running activity animation made by [Artem Kazak](https://lottiefiles.com/kazzzak) from [LottieFiles](https://lottiefiles.com/)
+
 Gears Animation and ReviewedProvider award made by [LottieFiles](https://lottiefiles.com/lottiefiles) from [LottieFiles](https://lottiefiles.com/)
