@@ -39,7 +39,8 @@ data class User(
     var isDeleted: Boolean = false,
     var postedReviewsCount: Long = 0L,   // This is how many reviews THIS user posted
     var postedFirstReviewsCount: Long = 0L,      // This is how many FIRST reviews this user posted
-    var userStarCount: Long = 0L    // This is how many stars the user has (how many times user has been added to favorites)
+    var userStarCount: Long = 0L,    // This is how many stars the user has (how many times user has been added to favorites)
+    var hasFavoritizerAward: Boolean = false
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()
@@ -235,6 +236,14 @@ data class User(
             if (!(awardCongratulationShownList.contains(reviewPosterId))) newAwardsList.add(reviewPosterId)
         } else {
             awardTipsList.add(0, reviewPosterId)
+        }
+
+        val favoritizerId = Constants.Awards.FAVORITIZER_ID
+        if (hasFavoritizerAward) {
+            awardsList.add(favoritizerId)
+            if (!(awardCongratulationShownList.contains(favoritizerId))) newAwardsList.add(favoritizerId)
+        } else {
+            awardTipsList.add(0, favoritizerId)
         }
 
         val offerProviderId = Constants.Awards.OFFER_PROVIDER_ID

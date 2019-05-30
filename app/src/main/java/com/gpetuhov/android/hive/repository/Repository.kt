@@ -88,6 +88,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val POSTED_FIRST_REVIEWS_COUNT_KEY = "postedFirstReviewsCount"
         private const val USER_STAR_COUNT_KEY = "userStarCount"
         private const val OFFER_STAR_COUNT_KEY_PREFIX = "offerStarCount"
+        private const val HAS_FAVORITIZER_AWARD_KEY = "hasFavoritizerAward"
 
         // Photo
         private const val PHOTO_UID_KEY = "photoUid"
@@ -1402,7 +1403,8 @@ class Repository(private val context: Context, private val settings: Settings) :
             activity = doc.getLong(ACTIVITY_KEY) ?: Constants.User.NO_ACTIVITY,
             postedReviewsCount = postedReviewsCount,
             postedFirstReviewsCount = postedFirstReviewsCount,
-            userStarCount = userStarCount
+            userStarCount = userStarCount,
+            hasFavoritizerAward = doc.getBoolean(HAS_FAVORITIZER_AWARD_KEY) ?: false
         )
 
         user.offerList = getOfferListFromDocumentSnapshot(doc.id, doc)
