@@ -18,7 +18,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.base.BaseMapManager
 import com.gpetuhov.android.hive.util.Constants
-import com.gpetuhov.android.hive.util.getStringMapFromGeneric
+import com.gpetuhov.android.hive.util.getStringKeyMapFromGeneric
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -81,11 +81,11 @@ class MapManager : BaseMapManager() {
 
         googleMap.setOnMarkerClickListener { marker ->
             val markerTag = marker.tag as MutableMap<*, *>
-            val markerInfo = getStringMapFromGeneric(markerTag)
+            val markerInfo = getStringKeyMapFromGeneric(markerTag)
             Timber.tag(TAG).d("Clicked on marker = $markerInfo")
 
-            val userUid = markerInfo[USER_UID_KEY]
-            val offerUid = markerInfo[OFFER_UID_KEY]
+            val userUid = markerInfo[USER_UID_KEY] as String?
+            val offerUid = markerInfo[OFFER_UID_KEY] as String?
 
             if (userUid != null && userUid.isNotEmpty()) {
                 callback.showDetails(userUid, offerUid ?: "")

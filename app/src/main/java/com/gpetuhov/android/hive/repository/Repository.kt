@@ -33,6 +33,7 @@ import com.google.firebase.functions.FirebaseFunctionsException
 import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.*
 import com.gpetuhov.android.hive.util.Settings
+import com.gpetuhov.android.hive.util.getStringKeyMapFromGeneric
 import kotlinx.coroutines.Dispatchers
 import kotlin.collections.HashMap
 
@@ -1448,7 +1449,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         if (offerSnapshotList != null) {
             for (offerSnapshot in offerSnapshotList) {
-                val offerMap = offerSnapshot as HashMap<*, *>
+                val offerMap = getStringKeyMapFromGeneric(offerSnapshot as HashMap<*, *>)
 
                 val offerUid = offerMap[OFFER_UID_KEY] as String?
                 val offerTitle = offerMap[OFFER_TITLE_KEY] as String?
@@ -1497,7 +1498,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         if (photoSnapshotList != null) {
             for (photoSnapshot in photoSnapshotList) {
-                val photoMap = photoSnapshot as HashMap<*, *>
+                val photoMap = getStringKeyMapFromGeneric(photoSnapshot as HashMap<*, *>)
 
                 val photoUid = photoMap[PHOTO_UID_KEY] as String?
                 val photoDownloadUrl = photoMap[PHOTO_DOWNLOAD_URL_KEY] as String?
@@ -1542,7 +1543,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         if (offerRatingSnapshotList != null) {
             for (offerRatingSnapshot in offerRatingSnapshotList) {
-                val offerRatingMap = offerRatingSnapshot as HashMap<*, *>
+                val offerRatingMap = getStringKeyMapFromGeneric(offerRatingSnapshot as HashMap<*, *>)
 
                 val offerUid = offerRatingMap[OFFER_UID_KEY] as String?
                 val offerRating = longOrDoubleToFloat(offerRatingMap[OFFER_RATING_KEY])

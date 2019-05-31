@@ -1,11 +1,11 @@
 package com.gpetuhov.android.hive.util
 
-fun getStringMapFromGeneric(genericMap: MutableMap<*, *>): MutableMap<String, String> {
-    val stringMap = mutableMapOf<String, String>()
+fun getStringKeyMapFromGeneric(genericMap: MutableMap<*, *>): MutableMap<String, Any?> {
+    val stringMap = mutableMapOf<String, Any?>()
 
     for (key in genericMap.keys) {
         val value = genericMap[key]
-        if (key is String && value is String) {
+        if (key is String) {
             stringMap[key] = value
         }
     }
