@@ -166,6 +166,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     private val searchResult = MutableLiveData<MutableMap<String, User>>()
     private val tempSearchResult = mutableMapOf<String, User>()
 
+    // This flag prevents multiple map markers updates while search is not complete yet
+    private var searchComplete = false
+
     // Messages of the current chatroom
     // (chatroom is the chat between current user and second user)
     private val messages = MutableLiveData<MutableList<Message>>()
@@ -542,6 +545,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
             clearTempResult()
             stopGettingSearchResultUpdates()
+            searchComplete = false
 
             Timber.tag(TAG).d("Start search: lat = $queryLatitude, lon = $queryLongitude, radius = $queryRadius")
 
@@ -552,6 +556,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             geoQuery?.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
                 override fun onGeoQueryReady() {
                     Timber.tag(TAG).d("onGeoQueryReady")
+                    searchComplete = true
                     updateSearchResult()
                     onComplete()
                 }
@@ -582,6 +587,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
                 override fun onGeoQueryError(exception: Exception?) {
                     Timber.tag(TAG).d(exception)
+                    searchComplete = true
                     updateSearchResult()
                     onComplete()
                 }
@@ -1684,9 +1690,11 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     private fun updateSearchResult() {
-        val tempResult = mutableMapOf<String, User>()
-        tempResult.putAll(tempSearchResult)
-        searchResult.value = tempResult
+        if (searchComplete) {
+            val tempResult = mutableMapOf<String, User>()
+            tempResult.putAll(tempSearchResult)
+            searchResult.value = tempResult
+        }
     }
 
     // --- Message ---
