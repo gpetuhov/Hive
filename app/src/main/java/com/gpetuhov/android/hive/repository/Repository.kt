@@ -1648,8 +1648,13 @@ class Repository(private val context: Context, private val settings: Settings) :
             val user = getUserFromDocumentSnapshot(doc, geoPoint)
 
             if (checkConditions(user)) {
-                tempSearchResult[user.uid] = user
-                updateSearchResult()
+                val oldUser = tempSearchResult[user.uid]
+                // Change user in search results only if visible info changed
+                if (oldUser == null || oldUser.isVisibleInfoChanged(user)) {
+                    tempSearchResult[user.uid] = user
+                    updateSearchResult()
+                }
+
             } else {
                 removeUserFromSearchResults(user.uid)
             }

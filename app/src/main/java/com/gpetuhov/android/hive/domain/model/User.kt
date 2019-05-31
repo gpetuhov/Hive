@@ -268,6 +268,34 @@ data class User(
         }
     }
 
+    // This is needed to decide, whether user marker should be updated on map or not
+    fun isVisibleInfoChanged(user: User): Boolean {
+        if (
+            this.getUsernameOrName() != user.getUsernameOrName()
+            || this.isOnline != user.isOnline
+            || this.offerSearchResultIndex != user.offerSearchResultIndex
+            || this.location.latitude != user.location.latitude
+            || this.location.longitude != user.location.longitude
+        ) {
+            return true
+        }
+
+        val offer1 = this.getOfferByIndex(this.offerSearchResultIndex)
+        val offer2 = user.getOfferByIndex(user.offerSearchResultIndex)
+
+        if (offer1 != null && offer2 != null) {
+            if (
+                offer1.title != offer2.title
+                || offer1.isFree != offer2.isFree
+                || offer1.price != offer2.price
+            ) {
+                return true
+            }
+        }
+
+        return false
+    }
+
     // === Private methods ===
 
     private fun calculateRatings() {
@@ -286,4 +314,6 @@ data class User(
         val activeOfferWithReviewsCount = activeOfferWithReviewsList.size
         if (activeOfferWithReviewsCount > 0) averageRating /= activeOfferWithReviewsCount
     }
+
+    private fun getOfferByIndex(index: Int) = if (index >= 0 && index < offerList.size) offerList[index] else null
 }
