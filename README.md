@@ -6,7 +6,7 @@ Android
 
 ## Requirements
 * Android Studio 3.6 Canary 2
-* Kotlin 1.3.40-eap-32
+* Kotlin 1.3.40-eap-67
 * Android Gradle Plugin 3.6.0-alpha02
 * Gradle wrapper 5.4.1
 * AAPT 2
