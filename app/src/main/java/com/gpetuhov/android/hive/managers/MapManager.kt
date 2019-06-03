@@ -146,6 +146,11 @@ class MapManager : BaseMapManager() {
         if (zoom > Constants.Map.MIN_ZOOM) zoom(zoom - 1)
     }
 
+    fun clearMarkers() {
+        markersMap.clear()
+        oldSearchResult.clear()
+    }
+
     // === Private methods ===
 
     private fun checkZoom() {

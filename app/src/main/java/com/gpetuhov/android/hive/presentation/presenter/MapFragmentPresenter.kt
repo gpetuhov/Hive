@@ -95,6 +95,7 @@ class MapFragmentPresenter :
     fun onPause() {
         // Save map state here, because onPause() is guaranteed to be called
         mapManager.saveMapState(queryText)
+        mapManager.clearMarkers()
         repo.stopGettingSearchResultUpdates()
     }
 
