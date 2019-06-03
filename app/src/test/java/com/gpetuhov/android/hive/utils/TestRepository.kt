@@ -35,6 +35,7 @@ class TestRepository : Repo {
     var activity = Constants.DEFAULT_ACTIVITY
     var location = com.gpetuhov.android.hive.util.Constants.Map.DEFAULT_LOCATION
     var awardCongratulationShownList = mutableListOf<Int>()
+    var isHiveRunning = false
 
     override fun isForeground() = false
 
@@ -456,5 +457,11 @@ class TestRepository : Repo {
 
     override fun saveAwardCongratulationShown(newAwardCongratulationShownList: MutableList<Int>) {
         if (isSuccess) awardCongratulationShownList.addAll(newAwardCongratulationShownList)
+    }
+
+    override fun saveHiveRunning(isHiveRunning: Boolean) {
+        if (isSuccess) {
+            this.isHiveRunning = isHiveRunning
+        }
     }
 }
