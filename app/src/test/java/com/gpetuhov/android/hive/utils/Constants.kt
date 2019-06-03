@@ -100,6 +100,7 @@ class Constants {
         const val DUMMY_URL = "http://some.url"
 
         val DUMMY_LOCATION = LatLng(40.7128, 74.0060)
+        val DUMMY_LOCATION2 = LatLng(51.5074, 0.1278)
 
         val DUMMY_CHATROOM get() = Chatroom("42g4g254g", "John", "", "42t24gh5424", 0, 1)
 

@@ -12,6 +12,7 @@ import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_INSTAGRAM
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_INTERESTS
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_LANGUAGE
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_LOCATION
+import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_LOCATION2
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_OFFER
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_PHONE
 import com.gpetuhov.android.hive.utils.Constants.Companion.DUMMY_RESIDENCE
@@ -365,6 +366,62 @@ class UserTest {
         assertEquals(false, user.hasRockStarAward)
         user.totalStarCount = Constants.Awards.ROCK_STAR_AWARD_MIN_STAR_COUNT
         assertEquals(true, user.hasRockStarAward)
+    }
+
+    @Test
+    fun isVisibleInfoChanged() {
+        var userOld = user.copy()
+        var userNew = user.copy()
+        assertEquals(false, userOld.isVisibleInfoChanged(userNew))
+        userNew.username = "username"
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
+        userNew = user.copy()
+        userNew.offerSearchResultIndex = 0
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
+        userNew = user.copy()
+        userNew.location = DUMMY_LOCATION2
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
+        userOld.offerList.add(DUMMY_OFFER)
+        userOld.offerSearchResultIndex = 0
+        userNew = userOld.copy()
+        userNew.offerList.add(DUMMY_OFFER.copy())
+        assertEquals(false, userOld.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
+        userOld.offerList.add(DUMMY_OFFER)
+        userOld.offerSearchResultIndex = 0
+        userNew = user.copy()
+        var offerNew = DUMMY_OFFER.copy()
+        offerNew.title = "title"
+        userNew.offerList.add(offerNew)
+        userNew.offerSearchResultIndex = 0
+        assertEquals(true, user.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
+        userOld.offerList.add(DUMMY_OFFER)
+        userOld.offerSearchResultIndex = 0
+        userNew = user.copy()
+        offerNew = DUMMY_OFFER.copy()
+        offerNew.isFree = true
+        userNew.offerList.add(offerNew)
+        userNew.offerSearchResultIndex = 0
+        assertEquals(true, user.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
+        userOld.offerList.add(DUMMY_OFFER)
+        userOld.offerSearchResultIndex = 0
+        userNew = user.copy()
+        offerNew = DUMMY_OFFER.copy()
+        offerNew.price = 5.0
+        userNew.offerList.add(offerNew)
+        userNew.offerSearchResultIndex = 0
+        assertEquals(true, user.isVisibleInfoChanged(userNew))
     }
 
     // === Private methods ===
