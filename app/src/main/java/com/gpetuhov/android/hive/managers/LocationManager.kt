@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.tasks.Task
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.SaveHiveRunningInteractor
 import com.gpetuhov.android.hive.domain.interactor.SaveLocationInteractor
 import com.gpetuhov.android.hive.service.LocationService
 
@@ -54,6 +55,7 @@ class LocationManager(context: Context) {
     private lateinit var locationCallback: LocationCallback
     private lateinit var locationRequest: LocationRequest
     private var saveLocationInteractor = SaveLocationInteractor()
+    private var saveHiveRunningInteractor = SaveHiveRunningInteractor()
 
     init {
         createLocationCallback()
@@ -120,6 +122,7 @@ class LocationManager(context: Context) {
 
     fun stopLocationUpdates() {
         fusedLocationClient.removeLocationUpdates(locationCallback)
+        saveHiveRunningInteractor.saveHiveRunning(false)
     }
 
     fun getLastLocation(onSuccess: (LatLng) -> Unit) {
@@ -141,6 +144,7 @@ class LocationManager(context: Context) {
         if (location != null) {
             Timber.tag(TAG).d("${location.latitude}, ${location.longitude}")
             saveLocationInteractor.saveLocation(getCoordinatesFromLocation(location))
+            saveHiveRunningInteractor.saveHiveRunning(true)
         }
     }
 
