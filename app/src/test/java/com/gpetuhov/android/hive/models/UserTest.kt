@@ -378,6 +378,11 @@ class UserTest {
 
         userOld = user.copy()
         userNew = user.copy()
+        userNew.isHiveRunning = true
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
+        userNew = user.copy()
         userNew.offerSearchResultIndex = 0
         assertEquals(true, userOld.isVisibleInfoChanged(userNew))
 
