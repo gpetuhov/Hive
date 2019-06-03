@@ -40,7 +40,8 @@ data class User(
     var postedReviewsCount: Long = 0L,   // This is how many reviews THIS user posted
     var postedFirstReviewsCount: Long = 0L,      // This is how many FIRST reviews this user posted
     var userStarCount: Long = 0L,    // This is how many stars the user has (how many times user has been added to favorites)
-    var hasFavoritizerAward: Boolean = false
+    var hasFavoritizerAward: Boolean = false,
+    var isHiveRunning: Boolean = false  // true if Hive app is running
 ) {
     var offerList = mutableListOf<Offer>()
     var photoList = mutableListOf<Photo>()

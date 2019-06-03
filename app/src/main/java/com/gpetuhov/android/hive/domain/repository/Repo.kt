@@ -61,6 +61,7 @@ interface Repo {
     fun saveUserInterests(newInterests: String, onError: () -> Unit)
     fun saveUserStatus(newStatus: String, onError: () -> Unit)
     fun saveUserActivity(newActivity: Long)
+    fun saveHiveRunning(isHiveRunning: Boolean)
     fun setUserOnline()
     fun setUserOffline()
     fun startGettingSecondUserUpdates(uid: String)
