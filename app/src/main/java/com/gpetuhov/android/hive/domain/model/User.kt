@@ -272,7 +272,6 @@ data class User(
     fun isVisibleInfoChanged(user: User): Boolean {
         if (
             this.getUsernameOrName() != user.getUsernameOrName()
-            || this.isOnline != user.isOnline
             || this.offerSearchResultIndex != user.offerSearchResultIndex
             || this.location.latitude != user.location.latitude
             || this.location.longitude != user.location.longitude
