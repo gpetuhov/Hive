@@ -149,6 +149,7 @@ class MapManager : BaseMapManager() {
     fun clearMarkers() {
         markersMap.clear()
         oldSearchResult.clear()
+        googleMap.clear()
     }
 
     // === Private methods ===
