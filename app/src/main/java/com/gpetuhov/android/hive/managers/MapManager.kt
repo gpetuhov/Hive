@@ -8,6 +8,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.maps.android.SphericalUtil
 import com.google.maps.android.ui.IconGenerator
@@ -45,6 +46,8 @@ class MapManager : BaseMapManager() {
     @Inject lateinit var repo: Repo
 
     private lateinit var callback: Callback
+
+    private var markersMap = mutableMapOf<String, Marker>()
 
     init {
         HiveApp.appComponent.inject(this)
@@ -98,46 +101,66 @@ class MapManager : BaseMapManager() {
     fun updateMarkers(searchResult: MutableMap<String, User>) {
         Timber.tag(TAG).d("Updating markers")
 
-        googleMap.clear()
+        // Remove markers for users, that are no longer in search result
+        val markerUserUidsToRemove = mutableListOf<String>()
+        markerUserUidsToRemove.addAll(markersMap.keys)
+        markerUserUidsToRemove.removeAll(searchResult.keys)
+        markerUserUidsToRemove.forEach { userUid ->
+            Timber.tag(TAG).d("Removing marker for user uid $userUid")
+            // Remove marker from Google Map
+            markersMap[userUid]?.remove()
+            // Remove marker from markers HashMap
+            markersMap.remove(userUid)
+        }
 
-        searchResult.forEach { entry ->
-            val user = entry.value
-            val name = user.getUsernameOrName()
-            val offerList = user.offerList
-            val offerSearchResultIndex = user.offerSearchResultIndex
+        // Add markers for users, that are new in search result
+        val searchResultUserUidsToAdd = mutableListOf<String>()
+        searchResultUserUidsToAdd.addAll(searchResult.keys)
+        searchResultUserUidsToAdd.removeAll(markersMap.keys)
+        searchResultUserUidsToAdd.forEach { userUid ->
+            val user = searchResult[userUid]
+            if (user != null) {
+                Timber.tag(TAG).d("Adding marker for user uid $userUid")
 
-            val iconGenerator = IconGenerator(context)
+                val name = user.getUsernameOrName()
+                val offerList = user.offerList
+                val offerSearchResultIndex = user.offerSearchResultIndex
 
-            // Contains user and offer uid of the corresponding marker
-            // (this is needed to open user or offer details on marker click)
-            val markerInfo = mutableMapOf<String, String>()
-            markerInfo[USER_UID_KEY] = user.uid
+                val iconGenerator = IconGenerator(context)
 
-            val markerText = if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
-                // User contains offer that corresponds to search query text
-                // Show this offer on map and include in marker info
-                val offer = offerList[offerSearchResultIndex]
-                markerInfo[OFFER_UID_KEY] = offer.uid
+                // Contains user and offer uid of the corresponding marker
+                // (this is needed to open user or offer details on marker click)
+                val markerInfo = mutableMapOf<String, String>()
+                markerInfo[USER_UID_KEY] = user.uid
 
-                val offerTitle = getOfferTitle(offer)
-                val offerPrice = getOfferPrice(offer)
-                "$offerTitle \n$offerPrice"
+                val markerText = if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
+                    // User contains offer that corresponds to search query text
+                    // Show this offer on map and include in marker info
+                    val offer = offerList[offerSearchResultIndex]
+                    markerInfo[OFFER_UID_KEY] = offer.uid
 
-            } else {
-                // User does not contain offer that corresponds to search query,
-                // just show user name.
-                name
+                    val offerTitle = getOfferTitle(offer)
+                    val offerPrice = getOfferPrice(offer)
+                    "$offerTitle \n$offerPrice"
+
+                } else {
+                    // User does not contain offer that corresponds to search query,
+                    // just show user name.
+                    name
+                }
+
+                val iconBitmap = iconGenerator.makeIcon(markerText)
+
+                val marker = googleMap.addMarker(
+                    MarkerOptions()
+                        .position(user.location)
+                        .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
+                )
+
+                marker.tag = markerInfo
+
+                markersMap[user.uid] = marker
             }
-
-            val iconBitmap = iconGenerator.makeIcon(markerText)
-
-            val marker = googleMap.addMarker(
-                MarkerOptions()
-                    .position(user.location)
-                    .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
-            )
-
-            marker.tag = markerInfo
         }
     }
 
