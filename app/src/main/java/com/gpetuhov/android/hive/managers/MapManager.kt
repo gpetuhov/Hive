@@ -187,8 +187,9 @@ class MapManager : BaseMapManager() {
         if (user != null) {
             Timber.tag(TAG).d("Adding marker for user uid $userUid")
 
-            val iconBitmap = getMarkerBitmap(user)
-            val markerInfo = getMarkerInfo(user)
+            val markerData = getMarkerData(user)
+            val markerInfo = markerData.first
+            val iconBitmap = markerData.second
 
             val marker = googleMap.addMarker(
                 MarkerOptions()
@@ -202,16 +203,23 @@ class MapManager : BaseMapManager() {
         }
     }
 
-    private fun getMarkerBitmap(user: User): Bitmap {
+    private fun getMarkerData(user: User): Pair<MutableMap<String, String>, Bitmap> {
         val name = user.getUsernameOrName()
         val offerList = user.offerList
         val offerSearchResultIndex = user.offerSearchResultIndex
+
+        // Contains user and offer uid of the corresponding marker
+        // (this is needed to open user or offer details on marker click)
+        val markerInfo = mutableMapOf<String, String>()
+        markerInfo[USER_UID_KEY] = user.uid
 
         val iconGenerator = IconGenerator(context)
 
         val markerText = if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
             // User contains offer that corresponds to search query text
+            // Show this offer on map and include in marker info
             val offer = offerList[offerSearchResultIndex]
+            markerInfo[OFFER_UID_KEY] = offer.uid
 
             val offerTitle = getOfferTitle(offer)
             val offerPrice = getOfferPrice(offer)
@@ -223,26 +231,9 @@ class MapManager : BaseMapManager() {
             name
         }
 
-        return iconGenerator.makeIcon(markerText)
-    }
+        val iconBitmap = iconGenerator.makeIcon(markerText)
 
-    private fun  getMarkerInfo(user: User): MutableMap<String, String> {
-        val offerList = user.offerList
-        val offerSearchResultIndex = user.offerSearchResultIndex
-
-        // Contains user and offer uid of the corresponding marker
-        // (this is needed to open user or offer details on marker click)
-        val markerInfo = mutableMapOf<String, String>()
-        markerInfo[USER_UID_KEY] = user.uid
-
-        if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
-            // User contains offer that corresponds to search query text
-            // Show this offer on map and include in marker info
-            val offer = offerList[offerSearchResultIndex]
-            markerInfo[OFFER_UID_KEY] = offer.uid
-        }
-
-        return markerInfo
+        return Pair(markerInfo, iconBitmap)
     }
 
     private fun updateMarker(userUid: String, searchResult: MutableMap<String, User>) {
@@ -251,8 +242,9 @@ class MapManager : BaseMapManager() {
         if (oldUser != null && newUser != null && oldUser.isVisibleInfoChanged(newUser)) {
             Timber.tag(TAG).d("Updating marker for user uid $userUid")
 
-            val iconBitmap = getMarkerBitmap(newUser)
-            val markerInfo = getMarkerInfo(newUser)
+            val markerData = getMarkerData(newUser)
+            val markerInfo = markerData.first
+            val iconBitmap = markerData.second
 
             val marker = markersMap[userUid]
             marker?.position = newUser.location
