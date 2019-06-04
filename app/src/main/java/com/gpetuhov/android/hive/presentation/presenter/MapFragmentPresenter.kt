@@ -11,10 +11,6 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.presentation.view.MapFragmentView
 import com.gpetuhov.android.hive.util.Constants
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.subjects.PublishSubject
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @InjectViewState
@@ -36,12 +32,8 @@ class MapFragmentPresenter :
 
     private val searchInteractor = SearchInteractor(this)
 
-    private var searchSub = PublishSubject.create<Boolean>()
-    private var searchDisposable: Disposable? = null
-
     init {
         HiveApp.appComponent.inject(this)
-        startSearchSub()
     }
 
     // === MapManager.Callback ===
@@ -76,7 +68,11 @@ class MapFragmentPresenter :
 
     fun updateMarkers(searchResult: MutableMap<String, User>) = mapManager.updateMarkers(searchResult)
 
-    fun search() = searchSub.onNext(true)
+    fun search() {
+        viewState.onSearchStart()
+        viewState.hideKeyboard()
+        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
+    }
 
     fun cancelSearch() {
         viewState.clearSearch()
@@ -104,23 +100,4 @@ class MapFragmentPresenter :
     }
 
     fun onSaveInstanceState(outState: Bundle) = mapManager.saveOutState(outState)
-
-    // === Private methods ===
-
-    private fun startSearchSub() {
-        // This is needed to prevent search start on every map update
-        searchDisposable = searchSub
-            .debounce(Constants.Map.SEARCH_START_LATENCY, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { start ->
-                // Views must be updated on UI thread
-                startSearch()
-            }
-    }
-
-    private fun startSearch() {
-        viewState.onSearchStart()
-        viewState.hideKeyboard()
-        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
-    }
 }

@@ -18,7 +18,7 @@ class Constants {
             const val DEFAULT_RADIUS = 1.0
             const val MAX_OFFER_TITLE_LENGTH = 30
             const val UPDATE_MARKERS_LATENCY = 500L
-            const val SEARCH_START_LATENCY = 500L
+            const val SEARCH_START_LATENCY = 2000L
 
             val DEFAULT_LOCATION = LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
 

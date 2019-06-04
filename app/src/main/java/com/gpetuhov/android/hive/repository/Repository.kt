@@ -34,7 +34,10 @@ import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.*
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getStringKeyMapFromGeneric
+import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.Dispatchers
+import java.util.concurrent.TimeUnit
 import kotlin.collections.HashMap
 
 // Read and write data to remote storage (Firestore)
@@ -258,6 +261,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     private var keepAliveRef: DatabaseReference? = null
     private lateinit var keepAliveRefValueListener: ValueEventListener
 
+    private var searchSub = PublishSubject.create<SearchQuery>()
+    private var searchDisposable: Disposable? = null
+
     init {
         // Offline data caching is enabled by default in Android.
         // But we enable it explicitly to be sure.
@@ -274,6 +280,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         clearResult()
         resetChatrooms()
         initUnreadMessagesFlag()
+
+        startSearchSub()
     }
 
     // === Repo ===
@@ -540,68 +548,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun searchResult() = searchResult
 
-    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) {
-        this.queryText = queryText
-
-        if (isAuthorized
-            && queryLatitude != Constants.Map.DEFAULT_LATITUDE
-            && queryLongitude != Constants.Map.DEFAULT_LONGITUDE
-            && queryRadius != Constants.Map.DEFAULT_RADIUS) {
-
-            clearTempResult()
-            stopGettingSearchResultUpdates()
-            searchComplete = false
-
-            Timber.tag(TAG).d("Start search: lat = $queryLatitude, lon = $queryLongitude, radius = $queryRadius")
-
-            val queryLocation = GeoPoint(queryLatitude, queryLongitude)
-
-            geoQuery = geoFirestore.queryAtLocation(queryLocation, queryRadius)
-
-            geoQuery?.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
-                override fun onGeoQueryReady() {
-                    Timber.tag(TAG).d("onGeoQueryReady")
-                    searchComplete = true
-                    updateSearchResult()
-                    onComplete()
-                }
-
-                override fun onDocumentExited(doc: DocumentSnapshot?) {
-                    Timber.tag(TAG).d("onDocumentExited")
-                    Timber.tag(TAG).d(doc.toString())
-                    removeUserFromSearchResults(doc?.id)
-                }
-
-                override fun onDocumentChanged(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
-                    Timber.tag(TAG).d("onDocumentChanged")
-                    Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc, geoPoint)
-                }
-
-                override fun onDocumentEntered(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
-                    Timber.tag(TAG).d("onDocumentEntered")
-                    Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc, geoPoint)
-                }
-
-                override fun onDocumentMoved(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
-                    Timber.tag(TAG).d("onDocumentMoved")
-                    Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc, geoPoint)
-                }
-
-                override fun onGeoQueryError(exception: Exception?) {
-                    Timber.tag(TAG).d(exception)
-                    searchComplete = true
-                    updateSearchResult()
-                    onComplete()
-                }
-            })
-
-        } else {
-            onComplete()
-        }
-    }
+    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) =
+        searchSub.onNext(SearchQuery(queryLatitude, queryLongitude, queryRadius, queryText, onComplete))
 
     override fun stopGettingSearchResultUpdates() = geoQuery?.removeAllListeners() ?: Unit
 
@@ -1710,6 +1658,84 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
+    private fun startSearchSub() {
+        // This is needed to prevent start search on every map update
+        searchDisposable = searchSub
+            .debounce(Constants.Map.SEARCH_START_LATENCY, TimeUnit.MILLISECONDS)
+            .subscribe { searchQuery ->
+                startSearch(
+                    searchQuery.queryLatitude,
+                    searchQuery.queryLongitude,
+                    searchQuery.queryRadius,
+                    searchQuery.queryText,
+                    searchQuery.onComplete
+                )
+            }
+    }
+
+    private fun startSearch(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) {
+        this.queryText = queryText
+
+        if (isAuthorized
+            && queryLatitude != Constants.Map.DEFAULT_LATITUDE
+            && queryLongitude != Constants.Map.DEFAULT_LONGITUDE
+            && queryRadius != Constants.Map.DEFAULT_RADIUS) {
+
+            clearTempResult()
+            stopGettingSearchResultUpdates()
+            searchComplete = false
+
+            Timber.tag(TAG).d("Start search: lat = $queryLatitude, lon = $queryLongitude, radius = $queryRadius")
+
+            val queryLocation = GeoPoint(queryLatitude, queryLongitude)
+
+            geoQuery = geoFirestore.queryAtLocation(queryLocation, queryRadius)
+
+            geoQuery?.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
+                override fun onGeoQueryReady() {
+                    Timber.tag(TAG).d("onGeoQueryReady")
+                    searchComplete = true
+                    updateSearchResult()
+                    onComplete()
+                }
+
+                override fun onDocumentExited(doc: DocumentSnapshot?) {
+                    Timber.tag(TAG).d("onDocumentExited")
+                    Timber.tag(TAG).d(doc.toString())
+                    removeUserFromSearchResults(doc?.id)
+                }
+
+                override fun onDocumentChanged(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentChanged")
+                    Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc, geoPoint)
+                }
+
+                override fun onDocumentEntered(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentEntered")
+                    Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc, geoPoint)
+                }
+
+                override fun onDocumentMoved(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                    Timber.tag(TAG).d("onDocumentMoved")
+                    Timber.tag(TAG).d(doc.toString())
+                    updateUserInSearchResult(doc, geoPoint)
+                }
+
+                override fun onGeoQueryError(exception: Exception?) {
+                    Timber.tag(TAG).d(exception)
+                    searchComplete = true
+                    updateSearchResult()
+                    onComplete()
+                }
+            })
+
+        } else {
+            onComplete()
+        }
+    }
+
     // --- Message ---
 
     private fun getMessageFromDocumentSnapshot(doc: DocumentSnapshot): Message {
@@ -2348,4 +2374,14 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun removeKeepAliveListener() {
         keepAliveRef?.removeEventListener(keepAliveRefValueListener)
     }
+
+    // === Inner classes ===
+
+    class SearchQuery(
+        var queryLatitude: Double,
+        var queryLongitude: Double,
+        var queryRadius: Double,
+        var queryText: String,
+        var onComplete: () -> Unit
+    )
 }
