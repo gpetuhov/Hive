@@ -11,25 +11,20 @@ class Constants {
         companion object {
             const val DEFAULT_LATITUDE = 0.0
             const val DEFAULT_LONGITUDE = 0.0
-            const val DEFAULT_ZOOM = 16.0F
             const val MIN_ZOOM = 10.0F
             const val MAX_ZOOM = 21.0F
             const val DEFAULT_BEARING = 0.0F
             const val DEFAULT_TILT = 0.0F
             const val DEFAULT_RADIUS = 1.0
-            val DEFAULT_LOCATION = LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
             const val MAX_OFFER_TITLE_LENGTH = 30
             const val SEARCH_START_LATENCY = 500L
 
+            val DEFAULT_LOCATION = LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
+
+            private const val DEFAULT_ZOOM = 16.0F
+
             fun getZoomForLocation(location: LatLng): Float =
-                if (
-                    location.latitude == DEFAULT_LATITUDE
-                    && location.longitude == DEFAULT_LONGITUDE
-                ) {
-                    Constants.Map.MIN_ZOOM
-                } else {
-                    Constants.Map.DEFAULT_ZOOM
-                }
+                if (location.latitude == DEFAULT_LATITUDE && location.longitude == DEFAULT_LONGITUDE) MIN_ZOOM else DEFAULT_ZOOM
         }
     }
 
@@ -104,6 +99,26 @@ class Constants {
             const val ROCK_STAR_ID = 15
             const val FAVORITIZER_ID = 16
 
+            const val GOOD_PROVIDER_AWARD_MIN_REVIEW_COUNT = 10
+            const val GOOD_PROVIDER_AWARD_MIN_RATING = 4.5F
+
+            const val SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT = 100
+            const val SUPER_PROVIDER_AWARD_MIN_RATING = 4.5F
+
+            const val NEWBIE_AWARD_DAYS_LIMIT = 31
+
+            const val HIVECORE_AWARD_MIN_ACTIVE_OFFER_COUNT = 10
+
+            const val STORY_TELLER_AWARD_MIN_REVIEW_COUNT = 10L
+
+            const val MEGA_CRITIC_AWARD_MIN_REVIEW_COUNT = 100L
+
+            const val OFLUMBUS_AWARD_MIN_REVIEW_COUNT = 10L
+
+            const val ADORABLE_PROVIDER_AWARD_MIN_STAR_COUNT = 10L
+
+            const val ROCK_STAR_AWARD_MIN_STAR_COUNT = 100L
+
             private val TEXT_MASTER = Award(TEXT_MASTER_ID, R.raw.textmaster, R.drawable.ic_text_master, R.drawable.ic_text_master_big, R.string.text_master, R.string.text_master_info, R.string.text_master_tip)
             private val OFFER_PROVIDER = Award(OFFER_PROVIDER_ID, R.raw.offerprovider, R.drawable.ic_offer_provider, R.drawable.ic_offer_provider_big, R.string.offer_provider, R.string.offer_provider_info, R.string.offer_provider_tip)
             private val ALTRUIST = Award(ALTRUIST_ID, R.raw.altruist, R.drawable.ic_altruist, R.drawable.ic_altruist_big, R.string.altruist, R.string.altruist_info, R.string.altruist_tip)
@@ -143,26 +158,6 @@ class Constants {
             )
 
             fun getAward(awardType: Int) = AWARDS_MAP[awardType] ?: TEXT_MASTER
-
-            const val GOOD_PROVIDER_AWARD_MIN_REVIEW_COUNT = 10
-            const val GOOD_PROVIDER_AWARD_MIN_RATING = 4.5F
-
-            const val SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT = 100
-            const val SUPER_PROVIDER_AWARD_MIN_RATING = 4.5F
-
-            const val NEWBIE_AWARD_DAYS_LIMIT = 31
-
-            const val HIVECORE_AWARD_MIN_ACTIVE_OFFER_COUNT = 10
-
-            const val STORY_TELLER_AWARD_MIN_REVIEW_COUNT = 10L
-
-            const val MEGA_CRITIC_AWARD_MIN_REVIEW_COUNT = 100L
-
-            const val OFLUMBUS_AWARD_MIN_REVIEW_COUNT = 10L
-
-            const val ADORABLE_PROVIDER_AWARD_MIN_STAR_COUNT = 10L
-
-            const val ROCK_STAR_AWARD_MIN_STAR_COUNT = 100L
         }
     }
 
