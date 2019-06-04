@@ -21,10 +21,13 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.base.BaseMapManager
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.getStringKeyMapFromGeneric
+import io.reactivex.disposables.Disposable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -53,6 +56,13 @@ class MapManager : BaseMapManager() {
 
     private var markersMap = mutableMapOf<String, Marker>()
     private var oldSearchResult = mutableMapOf<String, User>()
+
+    private var updateMarkersSub = PublishSubject.create<MutableMap<String, User>>()
+    private var updateMarkersDisposable: Disposable? = null
+
+    init {
+        startUpdateMarkerSub()
+    }
 
     init {
         HiveApp.appComponent.inject(this)
@@ -103,31 +113,7 @@ class MapManager : BaseMapManager() {
         }
     }
 
-    fun updateMarkers(searchResult: MutableMap<String, User>) {
-        GlobalScope.launch {
-            Timber.tag(TAG).d("Updating markers")
-
-            // Remove markers for users, that are no longer in search result
-            val markerUserUidsToRemove = mutableListOf<String>()
-            markerUserUidsToRemove.addAll(markersMap.keys)
-            markerUserUidsToRemove.removeAll(searchResult.keys)
-            markerUserUidsToRemove.forEach { userUid -> removeMarker(userUid) }
-
-            // Add markers for users, that are new in search result
-            val searchResultUserUidsToAdd = mutableListOf<String>()
-            searchResultUserUidsToAdd.addAll(searchResult.keys)
-            searchResultUserUidsToAdd.removeAll(markersMap.keys)
-            searchResultUserUidsToAdd.forEach { userUid -> addMarker(userUid, searchResult) }
-
-            // Update markers for users, that were in old search result and visible info changed
-            val userUidsWithMarkersOnMap = mutableListOf<String>()
-            userUidsWithMarkersOnMap.addAll(markersMap.keys)
-            userUidsWithMarkersOnMap.forEach { userUid -> updateMarker(userUid, searchResult) }
-
-            oldSearchResult.clear()
-            oldSearchResult.putAll(searchResult)
-        }
-    }
+    fun updateMarkers(searchResult: MutableMap<String, User>) = updateMarkersSub.onNext(searchResult)
 
     fun moveToCurrentLocation() {
         val location = repo.currentUser().value?.location
@@ -183,7 +169,45 @@ class MapManager : BaseMapManager() {
     private fun getOfferPrice(offer: Offer): String =
         if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD"
 
+    private fun startUpdateMarkerSub() {
+        // This is needed to prevent updating markers on every search result update
+        updateMarkersDisposable = updateMarkersSub
+            .debounce(Constants.Map.SEARCH_START_LATENCY, TimeUnit.MILLISECONDS)
+            .subscribe { searchResult ->
+                startUpdateMarkers(searchResult)
+            }
+    }
+
+    private fun startUpdateMarkers(searchResult: MutableMap<String, User>) {
+        // This is needed to prevent blocking UI thread,
+        // when search result contains many items.
+        GlobalScope.launch {
+            Timber.tag(TAG).d("Updating markers")
+
+            // Remove markers for users, that are no longer in search result
+            val markerUserUidsToRemove = mutableListOf<String>()
+            markerUserUidsToRemove.addAll(markersMap.keys)
+            markerUserUidsToRemove.removeAll(searchResult.keys)
+            markerUserUidsToRemove.forEach { userUid -> removeMarker(userUid) }
+
+            // Add markers for users, that are new in search result
+            val searchResultUserUidsToAdd = mutableListOf<String>()
+            searchResultUserUidsToAdd.addAll(searchResult.keys)
+            searchResultUserUidsToAdd.removeAll(markersMap.keys)
+            searchResultUserUidsToAdd.forEach { userUid -> addMarker(userUid, searchResult) }
+
+            // Update markers for users, that were in old search result and visible info changed
+            val userUidsWithMarkersOnMap = mutableListOf<String>()
+            userUidsWithMarkersOnMap.addAll(markersMap.keys)
+            userUidsWithMarkersOnMap.forEach { userUid -> updateMarker(userUid, searchResult) }
+
+            oldSearchResult.clear()
+            oldSearchResult.putAll(searchResult)
+        }
+    }
+
     private fun removeMarker(userUid: String) {
+        // Update Google Map on UI thread
         GlobalScope.launch(Dispatchers.Main) {
             Timber.tag(TAG).d("Removing marker for user uid $userUid")
 
@@ -204,6 +228,7 @@ class MapManager : BaseMapManager() {
             val markerInfo = markerData.first
             val iconBitmap = markerData.second
 
+            // Update Google Map on UI thread
             GlobalScope.launch(Dispatchers.Main) {
                 val marker = googleMap.addMarker(
                     MarkerOptions()
@@ -261,6 +286,7 @@ class MapManager : BaseMapManager() {
             val markerInfo = markerData.first
             val iconBitmap = markerData.second
 
+            // Update Google Map on UI thread
             GlobalScope.launch(Dispatchers.Main) {
                 val marker = markersMap[userUid]
                 marker?.position = newUser.location

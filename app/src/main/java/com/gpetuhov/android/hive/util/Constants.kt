@@ -19,6 +19,7 @@ class Constants {
             const val DEFAULT_RADIUS = 1.0
             val DEFAULT_LOCATION = LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)
             const val MAX_OFFER_TITLE_LENGTH = 30
+            const val SEARCH_START_LATENCY = 500L
 
             fun getZoomForLocation(location: LatLng): Float =
                 if (
