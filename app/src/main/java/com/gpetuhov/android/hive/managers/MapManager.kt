@@ -172,7 +172,7 @@ class MapManager : BaseMapManager() {
     private fun startUpdateMarkerSub() {
         // This is needed to prevent updating markers on every search result update
         updateMarkersDisposable = updateMarkersSub
-            .debounce(Constants.Map.SEARCH_START_LATENCY, TimeUnit.MILLISECONDS)
+            .debounce(Constants.Map.UPDATE_MARKERS_LATENCY, TimeUnit.MILLISECONDS)
             .subscribe { searchResult ->
                 startUpdateMarkers(searchResult)
             }
