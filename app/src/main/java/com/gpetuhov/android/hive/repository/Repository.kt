@@ -1651,18 +1651,20 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private fun updateUserInSearchResult(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
         if (doc != null && doc.id != currentUser.value?.uid) {
-            val user = getUserFromDocumentSnapshot(doc, geoPoint)
+            GlobalScope.launch {
+                val user = getUserFromDocumentSnapshot(doc, geoPoint)
 
-            if (checkConditions(user)) {
-                val oldUser = tempSearchResult[user.uid]
-                // Change user in search results only if visible info changed
-                if (oldUser == null || oldUser.isVisibleInfoChanged(user)) {
-                    tempSearchResult[user.uid] = user
-                    updateSearchResult()
+                if (checkConditions(user)) {
+                    val oldUser = tempSearchResult[user.uid]
+                    // Change user in search results only if visible info changed
+                    if (oldUser == null || oldUser.isVisibleInfoChanged(user)) {
+                        tempSearchResult[user.uid] = user
+                        launch(Dispatchers.Main) { updateSearchResult() }
+                    }
+
+                } else {
+                    launch(Dispatchers.Main) { removeUserFromSearchResults(user.uid) }
                 }
-
-            } else {
-                removeUserFromSearchResults(user.uid)
             }
         }
     }
