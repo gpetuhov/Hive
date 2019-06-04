@@ -21,6 +21,9 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.base.BaseMapManager
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.getStringKeyMapFromGeneric
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -101,27 +104,29 @@ class MapManager : BaseMapManager() {
     }
 
     fun updateMarkers(searchResult: MutableMap<String, User>) {
-        Timber.tag(TAG).d("Updating markers")
+        GlobalScope.launch {
+            Timber.tag(TAG).d("Updating markers")
 
-        // Remove markers for users, that are no longer in search result
-        val markerUserUidsToRemove = mutableListOf<String>()
-        markerUserUidsToRemove.addAll(markersMap.keys)
-        markerUserUidsToRemove.removeAll(searchResult.keys)
-        markerUserUidsToRemove.forEach { userUid -> removeMarker(userUid) }
+            // Remove markers for users, that are no longer in search result
+            val markerUserUidsToRemove = mutableListOf<String>()
+            markerUserUidsToRemove.addAll(markersMap.keys)
+            markerUserUidsToRemove.removeAll(searchResult.keys)
+            markerUserUidsToRemove.forEach { userUid -> removeMarker(userUid) }
 
-        // Add markers for users, that are new in search result
-        val searchResultUserUidsToAdd = mutableListOf<String>()
-        searchResultUserUidsToAdd.addAll(searchResult.keys)
-        searchResultUserUidsToAdd.removeAll(markersMap.keys)
-        searchResultUserUidsToAdd.forEach { userUid -> addMarker(userUid, searchResult) }
+            // Add markers for users, that are new in search result
+            val searchResultUserUidsToAdd = mutableListOf<String>()
+            searchResultUserUidsToAdd.addAll(searchResult.keys)
+            searchResultUserUidsToAdd.removeAll(markersMap.keys)
+            searchResultUserUidsToAdd.forEach { userUid -> addMarker(userUid, searchResult) }
 
-        // Update markers for users, that were in old search result and visible info changed
-        val userUidsWithMarkersOnMap = mutableListOf<String>()
-        userUidsWithMarkersOnMap.addAll(markersMap.keys)
-        userUidsWithMarkersOnMap.forEach { userUid -> updateMarker(userUid, searchResult) }
+            // Update markers for users, that were in old search result and visible info changed
+            val userUidsWithMarkersOnMap = mutableListOf<String>()
+            userUidsWithMarkersOnMap.addAll(markersMap.keys)
+            userUidsWithMarkersOnMap.forEach { userUid -> updateMarker(userUid, searchResult) }
 
-        oldSearchResult.clear()
-        oldSearchResult.putAll(searchResult)
+            oldSearchResult.clear()
+            oldSearchResult.putAll(searchResult)
+        }
     }
 
     fun moveToCurrentLocation() {
@@ -179,13 +184,15 @@ class MapManager : BaseMapManager() {
         if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD"
 
     private fun removeMarker(userUid: String) {
-        Timber.tag(TAG).d("Removing marker for user uid $userUid")
+        GlobalScope.launch(Dispatchers.Main) {
+            Timber.tag(TAG).d("Removing marker for user uid $userUid")
 
-        // Remove marker from Google Map
-        markersMap[userUid]?.remove()
+            // Remove marker from Google Map
+            markersMap[userUid]?.remove()
 
-        // Remove marker from markers HashMap
-        markersMap.remove(userUid)
+            // Remove marker from markers HashMap
+            markersMap.remove(userUid)
+        }
     }
 
     private fun addMarker(userUid: String, searchResult: MutableMap<String, User>) {
@@ -197,15 +204,17 @@ class MapManager : BaseMapManager() {
             val markerInfo = markerData.first
             val iconBitmap = markerData.second
 
-            val marker = googleMap.addMarker(
-                MarkerOptions()
-                    .position(user.location)
-                    .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
-            )
+            GlobalScope.launch(Dispatchers.Main) {
+                val marker = googleMap.addMarker(
+                    MarkerOptions()
+                        .position(user.location)
+                        .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
+                )
 
-            marker.tag = markerInfo
+                marker.tag = markerInfo
 
-            markersMap[user.uid] = marker
+                markersMap[user.uid] = marker
+            }
         }
     }
 
@@ -252,10 +261,12 @@ class MapManager : BaseMapManager() {
             val markerInfo = markerData.first
             val iconBitmap = markerData.second
 
-            val marker = markersMap[userUid]
-            marker?.position = newUser.location
-            marker?.setIcon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
-            marker?.tag = markerInfo
+            GlobalScope.launch(Dispatchers.Main) {
+                val marker = markersMap[userUid]
+                marker?.position = newUser.location
+                marker?.setIcon(BitmapDescriptorFactory.fromBitmap(iconBitmap))
+                marker?.tag = markerInfo
+            }
         }
     }
 }
