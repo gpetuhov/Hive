@@ -61,10 +61,6 @@ class MapManager : BaseMapManager() {
     private var updateMarkersDisposable: Disposable? = null
 
     init {
-        startUpdateMarkerSub()
-    }
-
-    init {
         HiveApp.appComponent.inject(this)
     }
 
@@ -113,7 +109,12 @@ class MapManager : BaseMapManager() {
         }
     }
 
-    fun updateMarkers(searchResult: MutableMap<String, User>) = updateMarkersSub.onNext(searchResult)
+    fun updateMarkers(searchResult: MutableMap<String, User>) {
+        startUpdateMarkerSub()
+
+        Timber.tag(TAG).d("Update markers onNext")
+        updateMarkersSub.onNext(searchResult)
+    }
 
     fun moveToCurrentLocation() {
         val location = repo.currentUser().value?.location
@@ -138,6 +139,12 @@ class MapManager : BaseMapManager() {
     }
 
     fun clearMarkers() {
+        Timber.tag(TAG).d("Clear markers")
+
+        // This is needed to prevent updating HashMaps
+        // by debounced search results after HashMaps have been cleared.
+        stopUpdateMarkerSub()
+
         markersMap.clear()
         oldSearchResult.clear()
         googleMap.clear()
@@ -170,12 +177,21 @@ class MapManager : BaseMapManager() {
         if (offer.isFree) context.getString(R.string.free_caps) else "${offer.price} USD"
 
     private fun startUpdateMarkerSub() {
-        // This is needed to prevent updating markers on every search result update
-        updateMarkersDisposable = updateMarkersSub
-            .debounce(Constants.Map.UPDATE_MARKERS_LATENCY, TimeUnit.MILLISECONDS)
-            .subscribe { searchResult ->
-                startUpdateMarkers(searchResult)
-            }
+        if (updateMarkersDisposable == null) {
+            Timber.tag(TAG).d("Start update marker sub")
+
+            // This PublishSubject is needed to prevent updating markers on every search result update
+            updateMarkersDisposable = updateMarkersSub
+                .debounce(Constants.Map.UPDATE_MARKERS_LATENCY, TimeUnit.MILLISECONDS)
+                .subscribe { searchResult ->
+                    startUpdateMarkers(searchResult)
+                }
+        }
+    }
+
+    private fun stopUpdateMarkerSub() {
+        updateMarkersDisposable?.dispose()
+        updateMarkersDisposable = null
     }
 
     private fun startUpdateMarkers(searchResult: MutableMap<String, User>) {
