@@ -456,10 +456,6 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun saveUserActivity(newActivity: Long) =
         saveUserSingleDataRemote(ACTIVITY_KEY, newActivity, { /* Do nothing */ }, { /* Do nothing */ })
 
-    // Save Hive running flag
-    override fun saveHiveRunning(isHiveRunning: Boolean) =
-        saveUserSingleDataRemote(IS_HIVE_RUNNING_KEY, isHiveRunning, { /* Do nothing */ }, { /* Do nothing */ })
-
     // Set user online status on the backend for the other users to know, that this user is online
     override fun setUserOnline() {
         if (isAuthorized && currentUserUid() != "") {
@@ -498,6 +494,25 @@ class Repository(private val context: Context, private val settings: Settings) :
             // because we have the Cloud Function, that listens to Realtime Database updates,
             // and will update online status in Firestore for us anyway.
             firebase.getReference("online/" + currentUserUid()).setValue(false)
+        }
+    }
+
+    // Save Hive running flag
+    override fun saveHiveRunning(isHiveRunning: Boolean) {
+        val isHiveRunningFirebaseKey = "isHiveRunning/"
+
+        if (isHiveRunning) {
+            // Set isHiveRunning true both in Firestore and Firebase
+            saveUserSingleDataRemote(IS_HIVE_RUNNING_KEY, isHiveRunning, { /* Do nothing */ }, { /* Do nothing */ })
+
+            val onlineStatusRef = firebase.getReference(isHiveRunningFirebaseKey + currentUserUid())
+            onlineStatusRef.setValue(true)
+
+            onlineStatusRef.onDisconnect().setValue(false)
+
+        } else {
+            // Set isHiveRunning false only in Firebase
+            firebase.getReference(isHiveRunningFirebaseKey + currentUserUid()).setValue(false)
         }
     }
 
