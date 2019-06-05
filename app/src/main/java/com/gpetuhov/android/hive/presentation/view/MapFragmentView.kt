@@ -33,4 +33,7 @@ interface MapFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun showDetails(userUid: String, offerUid: String)
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showList()
 }
