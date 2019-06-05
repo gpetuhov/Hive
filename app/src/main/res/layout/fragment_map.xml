@@ -74,9 +74,23 @@
                 android:background="@drawable/search_background"
                 android:contentDescription="@string/cancel_search"
                 android:onClick="@{view -> presenter.cancelSearch()}"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/show_search_list_button"
                 app:layout_constraintTop_toTopOf="@+id/search_users_button"
                 app:layout_constraintBottom_toBottomOf="@+id/search_users_button"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"/>
+
+        <ImageButton
+                android:id="@+id/show_search_list_button"
+                android:layout_width="@dimen/basic_view_size"
+                android:layout_height="@dimen/basic_view_size"
+                android:src="@drawable/ic_list"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:background="@drawable/search_background"
+                android:contentDescription="@string/cancel_search"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/cancel_search_users_button"
+                app:layout_constraintBottom_toBottomOf="@+id/cancel_search_users_button"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"/>
 
