@@ -85,7 +85,7 @@ class MapFragmentPresenter :
 
     fun zoomOut() = mapManager.zoomOut()
 
-    fun showList() = viewState.showList()
+    fun showList() = viewState.showList(queryLatitude, queryLongitude, queryRadius, queryText)
 
     // === Lifecycle calls ===
 

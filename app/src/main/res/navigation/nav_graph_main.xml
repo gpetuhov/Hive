@@ -378,6 +378,18 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.SearchListFragment"
             android:label="SearchListFragment"
             tools:layout="@layout/fragment_search_list">
+        <argument
+                android:name="queryLatitude"
+                app:argType="float"/>
+        <argument
+                android:name="queryLongitude"
+                app:argType="float"/>
+        <argument
+                android:name="queryRadius"
+                app:argType="float"/>
+        <argument
+                android:name="queryText"
+                app:argType="string"/>
     </fragment>
 
 </navigation>

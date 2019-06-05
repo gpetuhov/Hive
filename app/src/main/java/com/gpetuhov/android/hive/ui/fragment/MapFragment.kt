@@ -140,8 +140,8 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun showList() {
-        val action = MapFragmentDirections.actionNavigationSearchToSearchListFragment()
+    override fun showList(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String) {
+        val action = MapFragmentDirections.actionNavigationSearchToSearchListFragment(queryLatitude.toFloat(), queryLongitude.toFloat(), queryRadius.toFloat(), queryText)
         findNavController().navigate(action)
     }
 

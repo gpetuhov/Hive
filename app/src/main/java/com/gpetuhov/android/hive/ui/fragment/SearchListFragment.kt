@@ -15,6 +15,7 @@ import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.pawegio.kandroid.toast
 
 class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
@@ -31,6 +32,12 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_list, container, false)
         binding?.presenter = presenter
+
+        val args = SearchListFragmentArgs.fromBundle(arguments!!)
+        val queryLatitude = args.queryLatitude.toDouble()
+        val queryLongitude = args.queryLongitude.toDouble()
+        val queryRadius = args.queryRadius.toDouble()
+        val queryText = args.queryText
 
         return binding?.root
     }
