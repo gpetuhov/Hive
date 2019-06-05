@@ -145,6 +145,7 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
     private fun buttonsEnabled(isEnabled: Boolean) {
         search_users_button.isEnabled = isEnabled
         cancel_search_users_button.isEnabled = isEnabled
+        show_search_list_button.isEnabled = isEnabled
     }
 
     private fun progressVisible(isVisible: Boolean) = search_progress.setVisible(isVisible)

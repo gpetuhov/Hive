@@ -85,6 +85,10 @@ class MapFragmentPresenter :
 
     fun zoomOut() = mapManager.zoomOut()
 
+    fun showList() {
+        // TODO: implement
+    }
+
     // === Lifecycle calls ===
 
     fun onCreateView(savedInstanceState: Bundle?) {
