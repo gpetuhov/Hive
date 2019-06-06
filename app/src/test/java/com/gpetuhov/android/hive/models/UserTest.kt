@@ -392,6 +392,16 @@ class UserTest {
         assertEquals(true, userOld.isVisibleInfoChanged(userNew))
 
         userOld = user.copy()
+        userNew = user.copy()
+        userNew.isFavorite = true
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
+        userNew = user.copy()
+        userNew.userStarCount = 5
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
         userOld.offerList.add(DUMMY_OFFER)
         userOld.offerSearchResultIndex = 0
         userNew = userOld.copy()

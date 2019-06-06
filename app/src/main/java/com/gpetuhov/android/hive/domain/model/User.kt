@@ -277,6 +277,8 @@ data class User(
             || this.offerSearchResultIndex != user.offerSearchResultIndex
             || this.location.latitude != user.location.latitude
             || this.location.longitude != user.location.longitude
+            || this.isFavorite != user.isFavorite
+            || this.userStarCount != user.userStarCount
         ) {
             return true
         }
