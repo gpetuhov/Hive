@@ -261,8 +261,7 @@ class MapManager : BaseMapManager() {
 
     private fun getMarkerData(user: User): Pair<MutableMap<String, String>, Bitmap> {
         val name = user.getUsernameOrName()
-        val offerList = user.offerList
-        val offerSearchResultIndex = user.offerSearchResultIndex
+        val offer = user.getSearchedOffer()
 
         // Contains user and offer uid of the corresponding marker
         // (this is needed to open user or offer details on marker click)
@@ -271,10 +270,9 @@ class MapManager : BaseMapManager() {
 
         val iconGenerator = IconGenerator(context)
 
-        val markerText = if (offerSearchResultIndex >= 0 && offerSearchResultIndex < offerList.size) {
+        val markerText = if (offer != null) {
             // User contains offer that corresponds to search query text
             // Show this offer on map and include in marker info
-            val offer = offerList[offerSearchResultIndex]
             markerInfo[OFFER_UID_KEY] = offer.uid
 
             val offerTitle = getOfferTitle(offer)
