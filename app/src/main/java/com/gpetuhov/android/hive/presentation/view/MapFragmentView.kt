@@ -32,7 +32,7 @@ interface MapFragmentView : MvpView {
     fun onNormalZoom()
 
     @StateStrategyType(SkipStrategy::class)
-    fun showDetails(userUid: String, offerUid: String)
+    fun showDetails(offerUid: String)
 
     @StateStrategyType(SkipStrategy::class)
     fun showList(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String)
