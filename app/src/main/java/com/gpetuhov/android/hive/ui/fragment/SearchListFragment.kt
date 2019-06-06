@@ -64,7 +64,7 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
     override fun onResume() {
         super.onResume()
-        presenter.search()
+        presenter.onResume()
     }
 
     override fun onPause() {

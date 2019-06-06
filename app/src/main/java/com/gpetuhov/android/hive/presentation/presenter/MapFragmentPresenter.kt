@@ -70,7 +70,7 @@ class MapFragmentPresenter :
     fun search() {
         viewState.onSearchStart()
         viewState.hideKeyboard()
-        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText, false)
+        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
     }
 
     fun cancelSearch() {

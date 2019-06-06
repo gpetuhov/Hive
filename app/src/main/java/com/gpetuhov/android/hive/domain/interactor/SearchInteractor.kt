@@ -18,22 +18,20 @@ class SearchInteractor(private val callback: Callback) : Interactor {
     private var queryLongitude = Constants.Map.DEFAULT_LONGITUDE
     private var queryRadius = Constants.Map.DEFAULT_RADIUS
     private var queryText = ""
-    private var isSearchList = false
 
     init {
         HiveApp.appComponent.inject(this)
     }
 
     // Do not call this directly!
-    override fun execute() = repo.search(queryLatitude, queryLongitude, queryRadius, queryText, isSearchList) { callback.onSearchComplete() }
+    override fun execute() = repo.search(queryLatitude, queryLongitude, queryRadius, queryText) { callback.onSearchComplete() }
 
     // Call this method to perform search
-    fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, isSearchList: Boolean) {
+    fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String) {
         this.queryLatitude = queryLatitude
         this.queryLongitude = queryLongitude
         this.queryRadius = queryRadius
         this.queryText = queryText
-        this.isSearchList = isSearchList
         execute()
     }
 }

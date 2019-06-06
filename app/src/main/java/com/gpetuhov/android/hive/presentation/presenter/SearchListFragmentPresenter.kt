@@ -45,12 +45,15 @@ class SearchListFragmentPresenter :
 
     fun navigateUp() = viewState.navigateUp()
 
-    fun search() {
-        viewState.onSearchStart()
-        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText, true)
+    fun onResume() {
+        repo.setSearchListActive(true)
+        search()
     }
 
-    fun onPause() = repo.stopGettingSearchResultUpdates()
+    fun onPause() {
+        repo.stopGettingSearchResultUpdates()
+        repo.setSearchListActive(false)
+    }
 
     fun updateSearchResult(searchResult: MutableMap<String, User>) {
         searchResultList.clear()
@@ -70,4 +73,11 @@ class SearchListFragmentPresenter :
 
     fun favoriteOffer(offerIsFavorite: Boolean, userUid: String, offerUid: String) =
         favoritesInteractor.favorite(offerIsFavorite, userUid, offerUid)
+
+    // === Private methods ===
+
+    private fun search() {
+        viewState.onSearchStart()
+        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
+    }
 }

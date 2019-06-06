@@ -564,10 +564,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun searchResult() = searchResult
 
-    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, isSearchList: Boolean, onComplete: () -> Unit) {
-        isSearchListActive = isSearchList
+    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) =
         searchSub.onNext(SearchQuery(queryLatitude, queryLongitude, queryRadius, queryText, onComplete))
-    }
 
     override fun stopGettingSearchResultUpdates() = geoQuery?.removeAllListeners() ?: Unit
 
@@ -588,6 +586,10 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun saveFcmToken(token: String) =
         saveUserSingleDataRemote(FCM_TOKEN_KEY, token, { /* Do nothing */ }, { /* Do nothing */ })
+
+    override fun setSearchListActive(value: Boolean) {
+        isSearchListActive = value
+    }
 
     // --- Message ---
 
