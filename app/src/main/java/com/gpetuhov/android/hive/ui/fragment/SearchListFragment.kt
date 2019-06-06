@@ -18,8 +18,10 @@ import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
+import com.gpetuhov.android.hive.util.setVisible
 import com.gpetuhov.android.hive.util.showBottomNavigationView
 import com.pawegio.kandroid.toast
+import kotlinx.android.synthetic.main.fragment_search_list.*
 
 class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
@@ -49,14 +51,30 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
             toast("${searchResult.size}")
         })
 
-        // TODO: Start search in onResume
-
         return binding?.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.search()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
     }
 
     // === SearchListFragmentView ===
 
+    override fun onSearchStart() = progressVisible(true)
+
+    override fun onSearchComplete() = progressVisible(false)
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }
+
+    // === Private methods ===
+
+    private fun progressVisible(isVisible: Boolean) = search_list_progress.setVisible(isVisible)
 }
