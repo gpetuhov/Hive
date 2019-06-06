@@ -6,7 +6,6 @@ import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.presentation.presenter.SearchListFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.search.models.searchTotals
-import com.gpetuhov.android.hive.ui.epoxy.search.models.userItemNoOffer
 import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
 
@@ -43,20 +42,14 @@ class SearchListController(private val presenter: SearchListFragmentPresenter) :
                 )
 
             } else {
-                userItemPhotoCarousel(settings, user, true) {
-                    // TODO: implement
-                }
-
-                userItemNoOffer {
-                    id(user.uid)
-                    userPicUrl(user.userPicUrl)
-                    onClick { presenter.showDetails(user.uid, "") }
-                    username(user.getUsernameOrName())
-                    userStarCount(user.userStarCountString)
-                    onFavoriteButtonClick {
+                userItemNoOffer(
+                    settings,
+                    user,
+                    {
                         // TODO: implement
-                    }
-                }
+                    },
+                    { presenter.showDetails(user.uid, "") }
+                )
             }
         }
     }

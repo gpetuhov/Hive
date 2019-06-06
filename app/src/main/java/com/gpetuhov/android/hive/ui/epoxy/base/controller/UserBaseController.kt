@@ -14,6 +14,7 @@ import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoOfferItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.profile.models.awardTip
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsHeader
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewsSummary
+import com.gpetuhov.android.hive.ui.epoxy.search.models.userItemNoOffer
 import com.gpetuhov.android.hive.ui.epoxy.user.details.models.*
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
@@ -61,6 +62,16 @@ abstract class UserBaseController : BaseController() {
 
         offerItemPhotoCarousel(settings, offer, !isProfile, onClick)
         offerItemDetails(context, settings, offer, isProfile, onFavoriteButtonClick, onClick)
+    }
+
+    protected fun userItemNoOffer(
+        settings: Settings,
+        user: User,
+        onFavoriteButtonClick: () -> Unit,
+        onClick: () -> Unit
+    ) {
+        userItemPhotoCarousel(settings, user, true, onClick)
+        userItemNoOfferDetails(settings, user, onFavoriteButtonClick, onClick)
     }
 
     protected fun status(status: String, statusVisible: Boolean, activitySeparatorVisible: Boolean, lineVisible: Boolean, onStatusClick: () -> Unit, onUserActivityClick: (Int) -> Unit) {
@@ -195,42 +206,6 @@ abstract class UserBaseController : BaseController() {
         }
     }
 
-    protected fun userItemPhotoCarousel(settings: Settings, user: User, limitVisible: Boolean, onClick: () -> Unit) {
-        var offerPhotoList = user.photoList
-
-        if (limitVisible) {
-            offerPhotoList = offerPhotoList
-                .filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }
-                .toMutableList()
-        }
-
-        if (!offerPhotoList.isEmpty()) {
-            carousel {
-                id("${user.uid}_photo_carousel")
-
-                val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
-                padding(padding)
-
-                onBind { model, view, position ->
-                    view.clipToPadding = true
-                    view.addOnScrollListener(
-                        buildScrollListener { lastScrollPosition -> selectedPhotoMap[user.uid] = lastScrollPosition }
-                    )
-                }
-
-                withModelsFrom(offerPhotoList) { index, photo ->
-                    PhotoOfferItemModel_()
-                        .id(photo.uid)
-                        .photoUrl(photo.downloadUrl)
-                        .onClick {
-                            settings.setSelectedPhotoPosition(index)
-                            onClick()
-                        }
-                }
-            }
-        }
-    }
-
     // === Private methods ===
 
     private fun offerItemPhotoCarousel(settings: Settings, offer: Offer, limitVisible: Boolean, onClick: () -> Unit) {
@@ -269,6 +244,42 @@ abstract class UserBaseController : BaseController() {
         }
     }
 
+    private fun userItemPhotoCarousel(settings: Settings, user: User, limitVisible: Boolean, onClick: () -> Unit) {
+        var offerPhotoList = user.photoList
+
+        if (limitVisible) {
+            offerPhotoList = offerPhotoList
+                .filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }
+                .toMutableList()
+        }
+
+        if (!offerPhotoList.isEmpty()) {
+            carousel {
+                id("${user.uid}_photo_carousel")
+
+                val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
+                padding(padding)
+
+                onBind { model, view, position ->
+                    view.clipToPadding = true
+                    view.addOnScrollListener(
+                        buildScrollListener { lastScrollPosition -> selectedPhotoMap[user.uid] = lastScrollPosition }
+                    )
+                }
+
+                withModelsFrom(offerPhotoList) { index, photo ->
+                    PhotoOfferItemModel_()
+                        .id(photo.uid)
+                        .photoUrl(photo.downloadUrl)
+                        .onClick {
+                            settings.setSelectedPhotoPosition(index)
+                            onClick()
+                        }
+                }
+            }
+        }
+    }
+
     private fun offerItemDetails(
         context: Context,
         settings: Settings,
@@ -291,11 +302,33 @@ abstract class UserBaseController : BaseController() {
             rating(offer.rating)
             reviewCount(offer.reviewCount)
             onClick {
-                settings.setSelectedPhotoPosition(selectedPhotoMap[offer.uid] ?: 0)
+                saveSelectedPhotoPosition(settings, offer.uid)
                 onClick()
             }
         }
     }
+
+    private fun userItemNoOfferDetails(
+        settings: Settings,
+        user: User,
+        onFavoriteButtonClick: () -> Unit,
+        onClick: () -> Unit
+    ) {
+        userItemNoOffer {
+            id(user.uid)
+            userPicUrl(user.userPicUrl)
+            username(user.getUsernameOrName())
+            userStarCount(user.userStarCountString)
+            onFavoriteButtonClick { onFavoriteButtonClick() }
+            onClick {
+                saveSelectedPhotoPosition(settings, user.uid)
+                onClick()
+            }
+        }
+    }
+
+    private fun saveSelectedPhotoPosition(settings: Settings, uid: String) =
+        settings.setSelectedPhotoPosition(selectedPhotoMap[uid] ?: 0)
 
     private fun isRatingVisible(totalReviewsCount: Int, averageRating: Float) =
         totalReviewsCount >= Constants.User.VISIBLE_RATING_REVIEW_COUNT && averageRating > 0.0F
