@@ -291,6 +291,8 @@ data class User(
                 offer1.title != offer2.title
                 || offer1.isFree != offer2.isFree
                 || offer1.price != offer2.price
+                || offer1.isFavorite != offer2.isFavorite
+                || offer1.starCount != offer2.starCount
             ) {
                 return true
             }
