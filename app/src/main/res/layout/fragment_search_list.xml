@@ -5,9 +5,7 @@
         tools:context=".ui.fragment.OfferDetailsFragment">
 
     <data>
-        <import type="android.view.View"/>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.SearchListFragmentPresenter"/>
-        <variable name="searchResultListEmpty" type="boolean"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,30 +51,11 @@
                 android:id="@+id/search_list_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:visibility="@{searchResultListEmpty ? View.GONE : View.VISIBLE}"
                 android:paddingTop="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_list_header"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <TextView
-                android:id="@+id/search_list_empty_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/search_list_empty"
-                android:visibility="@{searchResultListEmpty ? View.VISIBLE : View.GONE}"
-                style="@style/basicTextStyle"
-                app:layout_constraintTop_toBottomOf="@+id/search_list_header"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"/>
 
         <ProgressBar
                 android:id="@+id/search_list_progress"
