@@ -195,6 +195,42 @@ abstract class UserBaseController : BaseController() {
         }
     }
 
+    protected fun userItemPhotoCarousel(settings: Settings, user: User, limitVisible: Boolean, onClick: () -> Unit) {
+        var offerPhotoList = user.photoList
+
+        if (limitVisible) {
+            offerPhotoList = offerPhotoList
+                .filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }
+                .toMutableList()
+        }
+
+        if (!offerPhotoList.isEmpty()) {
+            carousel {
+                id("${user.uid}_photo_carousel")
+
+                val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
+                padding(padding)
+
+                onBind { model, view, position ->
+                    view.clipToPadding = true
+                    view.addOnScrollListener(
+                        buildScrollListener { lastScrollPosition -> selectedOfferPhotoMap[user.uid] = lastScrollPosition }
+                    )
+                }
+
+                withModelsFrom(offerPhotoList) { index, photo ->
+                    PhotoOfferItemModel_()
+                        .id(photo.uid)
+                        .photoUrl(photo.downloadUrl)
+                        .onClick {
+                            settings.setSelectedPhotoPosition(index)
+                            onClick()
+                        }
+                }
+            }
+        }
+    }
+
     // === Private methods ===
 
     private fun offerItemPhotoCarousel(settings: Settings, offer: Offer, limitVisible: Boolean, onClick: () -> Unit) {
