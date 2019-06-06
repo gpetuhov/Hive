@@ -238,6 +238,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private var isUserDetailsActive = false
     private var isOfferDetailsActive = false
+    private var isSearchListActive = false
 
     // Firestore listeners
     private var currentUserListenerRegistration: ListenerRegistration? = null
@@ -563,8 +564,10 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun searchResult() = searchResult
 
-    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit) =
+    override fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, isSearchList: Boolean, onComplete: () -> Unit) {
+        isSearchListActive = isSearchList
         searchSub.onNext(SearchQuery(queryLatitude, queryLongitude, queryRadius, queryText, onComplete))
+    }
 
     override fun stopGettingSearchResultUpdates() = geoQuery?.removeAllListeners() ?: Unit
 
@@ -2080,6 +2083,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
                         loadFavorites { /* Do nothing */ }
                         reloadSecondUser()
+                        updateFavoritesInSearchResult()
 
                     } else {
                         Timber.tag(TAG).d(firebaseFirestoreException)
@@ -2235,6 +2239,23 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun setHasFavoritizerAward() {
         val hasFavoritizerAward = currentUser.value?.hasFavoritizerAward ?: false
         if (!hasFavoritizerAward) saveUserSingleDataRemote(HAS_FAVORITIZER_AWARD_KEY, true, { /* Do nothing */ }, { /* Do nothing */ })
+    }
+
+    // On favorites list change, update favorites in search result
+    // (this is needed to update favorite status if search result list is open).
+    private fun updateFavoritesInSearchResult() {
+        if (searchComplete && isSearchListActive) {
+            val tempResult = mutableMapOf<String, User>()
+            tempResult.putAll(tempSearchResult)
+
+            tempResult.values.forEach { user ->
+                user.isFavorite = isFavorite(user.uid, "")
+                val offer = user.getSearchedOffer()
+                if (offer != null) offer.isFavorite = isFavorite(user.uid, offer.uid)
+            }
+
+            searchResult.value = tempResult
+        }
     }
 
     // --- Reviews ---

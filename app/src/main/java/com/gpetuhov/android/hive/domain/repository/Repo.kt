@@ -79,7 +79,7 @@ interface Repo {
 
     // Search
     fun searchResult(): MutableLiveData<MutableMap<String, User>>
-    fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, onComplete: () -> Unit)
+    fun search(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String, isSearchList: Boolean, onComplete: () -> Unit)
     fun stopGettingSearchResultUpdates()
     fun initSearchUserDetails(uid: String)
 

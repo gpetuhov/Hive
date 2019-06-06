@@ -47,7 +47,7 @@ class SearchListFragmentPresenter :
 
     fun search() {
         viewState.onSearchStart()
-        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
+        searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText, true)
     }
 
     fun onPause() = repo.stopGettingSearchResultUpdates()
