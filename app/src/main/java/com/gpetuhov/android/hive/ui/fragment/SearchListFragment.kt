@@ -20,7 +20,6 @@ import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.setVisible
 import com.gpetuhov.android.hive.util.showBottomNavigationView
-import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
 class SearchListFragment : BaseFragment(), SearchListFragmentView {
@@ -28,6 +27,8 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     @InjectPresenter lateinit var presenter: SearchListFragmentPresenter
 
     private var binding: FragmentSearchListBinding? = null
+
+    private var isSearchListEmpty = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -47,8 +48,9 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
         viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
-            // TODO: update UI
-            toast("${searchResult.size}")
+            isSearchListEmpty = searchResult.isEmpty()
+
+            // TODO: update controller here
         })
 
         return binding?.root
@@ -68,7 +70,10 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
     override fun onSearchStart() = progressVisible(true)
 
-    override fun onSearchComplete() = progressVisible(false)
+    override fun onSearchComplete() {
+        progressVisible(false)
+        binding?.searchResultListEmpty = isSearchListEmpty
+    }
 
     override fun navigateUp() {
         findNavController().navigateUp()

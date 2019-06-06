@@ -318,4 +318,7 @@
     <string name="bicycle_description">Пользователь едет на велосипеде</string>
     <string name="vehicle_description">Пользователь едет в машине или в общественном транспорте</string>
 
+    <!-- SearchListFragment -->
+    <string name="search_list_empty">Ничего не найдено</string>
+
 </resources>
