@@ -23,22 +23,22 @@ import com.gpetuhov.android.hive.util.getDateFromTimestampInMilliseconds
 abstract class UserBaseController : BaseController() {
 
     companion object {
-        private const val SELECTED_OFFER_PHOTO_MAP_KEY = "selectedOfferPhotoMap"
+        private const val SELECTED_PHOTO_MAP_KEY = "selectedPhotoMap"
     }
 
     protected var user: User? = null
 
-    private var selectedOfferPhotoMap = hashMapOf<String, Int>()
+    private var selectedPhotoMap = hashMapOf<String, Int>()
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(SELECTED_OFFER_PHOTO_MAP_KEY, selectedOfferPhotoMap)
+        outState.putSerializable(SELECTED_PHOTO_MAP_KEY, selectedPhotoMap)
     }
 
     override fun onRestoreInstanceState(inState: Bundle?) {
         super.onRestoreInstanceState(inState)
-        val restored = inState?.getSerializable(SELECTED_OFFER_PHOTO_MAP_KEY)
-        if (restored != null) selectedOfferPhotoMap = restored as HashMap<String, Int>
+        val restored = inState?.getSerializable(SELECTED_PHOTO_MAP_KEY)
+        if (restored != null) selectedPhotoMap = restored as HashMap<String, Int>
     }
 
     // === Public methods ===
@@ -214,7 +214,7 @@ abstract class UserBaseController : BaseController() {
                 onBind { model, view, position ->
                     view.clipToPadding = true
                     view.addOnScrollListener(
-                        buildScrollListener { lastScrollPosition -> selectedOfferPhotoMap[user.uid] = lastScrollPosition }
+                        buildScrollListener { lastScrollPosition -> selectedPhotoMap[user.uid] = lastScrollPosition }
                     )
                 }
 
@@ -252,7 +252,7 @@ abstract class UserBaseController : BaseController() {
                 onBind { model, view, position ->
                     view.clipToPadding = true
                     view.addOnScrollListener(
-                        buildScrollListener { lastScrollPosition -> selectedOfferPhotoMap[offer.uid] = lastScrollPosition}
+                        buildScrollListener { lastScrollPosition -> selectedPhotoMap[offer.uid] = lastScrollPosition}
                     )
                 }
 
@@ -291,7 +291,7 @@ abstract class UserBaseController : BaseController() {
             rating(offer.rating)
             reviewCount(offer.reviewCount)
             onClick {
-                settings.setSelectedPhotoPosition(selectedOfferPhotoMap[offer.uid] ?: 0)
+                settings.setSelectedPhotoPosition(selectedPhotoMap[offer.uid] ?: 0)
                 onClick()
             }
         }
