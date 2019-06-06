@@ -429,6 +429,14 @@ class UserTest {
         assertEquals(true, user.isVisibleInfoChanged(userNew))
     }
 
+    @Test
+    fun getSearchedOffer() {
+        assertEquals(null, user.getSearchedOffer())
+        user.offerList.add(DUMMY_OFFER)
+        user.offerSearchResultIndex = 0
+        assertEquals(DUMMY_OFFER, user.getSearchedOffer())
+    }
+
     // === Private methods ===
 
     private fun fillAllFields(user: User) {
