@@ -2247,16 +2247,18 @@ class Repository(private val context: Context, private val settings: Settings) :
     // (this is needed to update favorite status if search result list is open).
     private fun updateFavoritesInSearchResult() {
         if (searchComplete && isSearchListActive) {
-            val tempResult = mutableMapOf<String, User>()
-            tempResult.putAll(tempSearchResult)
+            GlobalScope.launch {
+                val tempResult = mutableMapOf<String, User>()
+                tempResult.putAll(tempSearchResult)
 
-            tempResult.values.forEach { user ->
-                user.isFavorite = isFavorite(user.uid, "")
-                val offer = user.getSearchedOffer()
-                if (offer != null) offer.isFavorite = isFavorite(user.uid, offer.uid)
+                tempResult.values.forEach { user ->
+                    user.isFavorite = isFavorite(user.uid, "")
+                    val offer = user.getSearchedOffer()
+                    if (offer != null) offer.isFavorite = isFavorite(user.uid, offer.uid)
+                }
+
+                launch(Dispatchers.Main) { searchResult.value = tempResult }
             }
-
-            searchResult.value = tempResult
         }
     }
 
