@@ -8,6 +8,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.util.getStarResourceId
 import com.gpetuhov.android.hive.util.updateUserPic
 
 @EpoxyModelClass(layout = R.layout.user_item_no_offers_view)
@@ -16,15 +17,21 @@ abstract class UserItemNoOfferModel : EpoxyModelWithHolder<UserItemNoOfferHolder
     @EpoxyAttribute lateinit var onClick: () -> Unit
     @EpoxyAttribute lateinit var userPicUrl: String
     @EpoxyAttribute lateinit var username: String
-    @EpoxyAttribute lateinit var userStarCount: String
+
+    @EpoxyAttribute var favorite = false
     @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
+
+    @EpoxyAttribute lateinit var userStarCount: String
 
     override fun bind(holder: UserItemNoOfferHolder) {
         holder.rootView.setOnClickListener { onClick() }
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.username.text = username
-        holder.userStarCount.text = userStarCount
+
+        holder.favoriteButton.setImageResource(getStarResourceId(favorite))
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
+
+        holder.userStarCount.text = userStarCount
     }
 }
 

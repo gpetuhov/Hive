@@ -289,8 +289,9 @@ abstract class UserBaseController : BaseController() {
             id(user.uid)
             userPicUrl(user.userPicUrl)
             username(user.getUsernameOrName())
-            userStarCount(user.userStarCountString)
+            favorite(user.isFavorite)
             onFavoriteButtonClick { onFavoriteButtonClick() }
+            userStarCount(user.userStarCountString)
             onClick {
                 saveSelectedPhotoPosition(settings, user.uid)
                 onClick()
