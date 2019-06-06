@@ -14,5 +14,8 @@ interface SearchListFragmentView : MvpView {
     fun onSearchComplete()
 
     @StateStrategyType(SkipStrategy::class)
+    fun showDetails(offerUid: String)
+
+    @StateStrategyType(SkipStrategy::class)
     fun navigateUp()
 }

@@ -30,7 +30,7 @@ class SearchListController(private val presenter: SearchListFragmentPresenter) :
                     offer,
                     false,
                     { presenter.removeOfferFromFavorite(offer.userUid, offer.uid) },
-                    { presenter.showOfferDetails(offer.userUid, offer.uid) }
+                    { presenter.showDetails(offer.userUid, offer.uid) }
                 )
 
             } else {

@@ -390,6 +390,16 @@
         <argument
                 android:name="queryText"
                 app:argType="string"/>
+        <action
+                android:id="@+id/action_searchListFragment_to_user_details_fragment"
+                app:destination="@id/user_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_searchListFragment_to_offer_details_fragment"
+                app:destination="@id/offer_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
 </navigation>

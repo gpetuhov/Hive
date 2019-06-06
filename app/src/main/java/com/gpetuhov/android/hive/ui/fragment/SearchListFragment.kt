@@ -90,6 +90,13 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         binding?.searchResultListEmpty = isSearchListEmpty
     }
 
+    override fun showDetails(offerUid: String) {
+        val action = if(offerUid != "") SearchListFragmentDirections.actionSearchListFragmentToOfferDetailsFragment(offerUid)
+        else SearchListFragmentDirections.actionSearchListFragmentToUserDetailsFragment()
+
+        findNavController().navigate(action)
+    }
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }
