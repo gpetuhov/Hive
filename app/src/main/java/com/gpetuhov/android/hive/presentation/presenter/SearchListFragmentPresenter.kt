@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.SearchInteractor
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.SearchListFragmentView
 import com.gpetuhov.android.hive.util.Constants
@@ -18,6 +19,8 @@ class SearchListFragmentPresenter : MvpPresenter<SearchListFragmentView>(), Sear
     var queryLongitude = Constants.Map.DEFAULT_LONGITUDE
     var queryRadius = Constants.Map.DEFAULT_RADIUS
     var queryText = ""
+
+    var searchResultList = mutableListOf<User>()
 
     private val searchInteractor = SearchInteractor(this)
 
@@ -39,6 +42,16 @@ class SearchListFragmentPresenter : MvpPresenter<SearchListFragmentView>(), Sear
     }
 
     fun onPause() = repo.stopGettingSearchResultUpdates()
+
+    fun updateSearchResult(searchResult: MutableMap<String, User>) {
+        searchResultList.clear()
+
+        // TODO: sort search results according to selected criteria
+
+        searchResultList.addAll(searchResult.values)
+
+        viewState.updateUI()
+    }
 
     fun showDetails(userUid: String, offerUid: String) {
         // This is needed to get user details immediately from the already available search results

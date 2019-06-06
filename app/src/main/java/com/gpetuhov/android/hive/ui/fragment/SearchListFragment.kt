@@ -55,8 +55,7 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
         viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
-            // TODO: sort list by title (inside presenter)
-            controller?.changeSearchResultList(searchResult.values.toMutableList())
+            presenter.updateSearchResult(searchResult)
         })
 
         return binding?.root
@@ -82,6 +81,8 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     override fun onSearchStart() = progressVisible(true)
 
     override fun onSearchComplete() = progressVisible(false)
+
+    override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     override fun showDetails(offerUid: String) {
         val action = if(offerUid != "") SearchListFragmentDirections.actionSearchListFragmentToOfferDetailsFragment(offerUid)

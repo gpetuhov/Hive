@@ -15,13 +15,12 @@ class SearchListController(private val presenter: SearchListFragmentPresenter) :
     @Inject lateinit var context: Context
     @Inject lateinit var settings: Settings
 
-    private var searchResultList = mutableListOf<User>()
-
     init {
         HiveApp.appComponent.inject(this)
     }
 
     override fun buildModels() {
+        val searchResultList = presenter.searchResultList
         val searchResultCount = searchResultList.size
 
         searchTotals {
@@ -48,10 +47,5 @@ class SearchListController(private val presenter: SearchListFragmentPresenter) :
             }
 
         }
-    }
-
-    fun changeSearchResultList(searchResultList: MutableList<User>) {
-        this.searchResultList = searchResultList
-        requestModelBuild()
     }
 }
