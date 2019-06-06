@@ -464,4 +464,7 @@ class TestRepository : Repo {
             this.isHiveRunning = isHiveRunning
         }
     }
+
+    override fun setSearchListActive(value: Boolean) {
+    }
 }
