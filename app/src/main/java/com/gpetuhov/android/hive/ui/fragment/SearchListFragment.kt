@@ -22,6 +22,7 @@ import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.setVisible
 import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
 class SearchListFragment : BaseFragment(), SearchListFragmentView {
@@ -93,6 +94,10 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
+    }
+
+    override fun showToast(message: String) {
+        toast(message)
     }
 
     // === Private methods ===

@@ -21,4 +21,7 @@ interface SearchListFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun navigateUp()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun showToast(message: String)
 }

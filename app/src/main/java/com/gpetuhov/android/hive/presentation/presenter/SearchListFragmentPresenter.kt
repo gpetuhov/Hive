@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
+import com.gpetuhov.android.hive.domain.interactor.FavoritesInteractor
 import com.gpetuhov.android.hive.domain.interactor.SearchInteractor
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
@@ -11,7 +12,10 @@ import com.gpetuhov.android.hive.util.Constants
 import javax.inject.Inject
 
 @InjectViewState
-class SearchListFragmentPresenter : MvpPresenter<SearchListFragmentView>(), SearchInteractor.Callback {
+class SearchListFragmentPresenter :
+    MvpPresenter<SearchListFragmentView>(),
+    SearchInteractor.Callback,
+    FavoritesInteractor.Callback {
 
     @Inject lateinit var repo: Repo
 
@@ -23,6 +27,7 @@ class SearchListFragmentPresenter : MvpPresenter<SearchListFragmentView>(), Sear
     var searchResultList = mutableListOf<User>()
 
     private val searchInteractor = SearchInteractor(this)
+    private var favoritesInteractor = FavoritesInteractor(this)
 
     init {
         HiveApp.appComponent.inject(this)
@@ -31,6 +36,10 @@ class SearchListFragmentPresenter : MvpPresenter<SearchListFragmentView>(), Sear
     // === SearchInteractor.Callback ===
 
     override fun onSearchComplete() = viewState.onSearchComplete()
+
+    // === FavoritesInteractor.Callback ===
+
+    override fun onFavoritesError(errorMessage: String) = viewState.showToast(errorMessage)
 
     // === Public methods ===
 
@@ -59,7 +68,6 @@ class SearchListFragmentPresenter : MvpPresenter<SearchListFragmentView>(), Sear
         viewState.showDetails(offerUid)
     }
 
-    fun removeOfferFromFavorite(userUid: String, offerUid: String) {
-        // TODO: implement
-    }
+    fun favoriteOffer(offerIsFavorite: Boolean, userUid: String, offerUid: String) =
+        favoritesInteractor.favorite(offerIsFavorite, userUid, offerUid)
 }

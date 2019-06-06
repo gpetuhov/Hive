@@ -3,7 +3,6 @@ package com.gpetuhov.android.hive.ui.epoxy.search.controller
 import android.content.Context
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.application.HiveApp
-import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.SearchListFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.base.controller.UserBaseController
 import com.gpetuhov.android.hive.ui.epoxy.search.models.searchTotals
@@ -38,7 +37,7 @@ class SearchListController(private val presenter: SearchListFragmentPresenter) :
                     settings,
                     offer,
                     false,
-                    { presenter.removeOfferFromFavorite(offer.userUid, offer.uid) },
+                    { presenter.favoriteOffer(offer.isFavorite, offer.userUid, offer.uid) },
                     { presenter.showDetails(offer.userUid, offer.uid) }
                 )
 
