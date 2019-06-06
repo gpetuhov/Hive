@@ -572,6 +572,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Get first update of user details from the search results, which are already available
         val user = searchResult.value?.get(uid)
         if (user != null) secondUser.value = user
+        clearReviews()
     }
 
     override fun initSecondUser(uid: String, name: String, userPicUrl: String) {
@@ -987,6 +988,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         // Get first update of user details from the loaded users list, which is already available
         val user = loadedUsersList.firstOrNull { it.uid == uid }
         if (user != null) secondUser.value = user
+        clearReviews()
     }
 
     // --- Reviews ---
