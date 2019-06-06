@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentSearchListBinding
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.SearchListFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.SearchListFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.util.hideMainHeader
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
 import com.gpetuhov.android.hive.util.showBottomNavigationView
@@ -34,10 +38,18 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         binding?.presenter = presenter
 
         val args = SearchListFragmentArgs.fromBundle(arguments!!)
-        val queryLatitude = args.queryLatitude.toDouble()
-        val queryLongitude = args.queryLongitude.toDouble()
-        val queryRadius = args.queryRadius.toDouble()
-        val queryText = args.queryText
+        presenter.queryLatitude = args.queryLatitude.toDouble()
+        presenter.queryLongitude = args.queryLongitude.toDouble()
+        presenter.queryRadius = args.queryRadius.toDouble()
+        presenter.queryText = args.queryText
+
+        val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
+        viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
+            // TODO: update UI
+            toast("${searchResult.size}")
+        })
+
+        // TODO: Start search in onResume
 
         return binding?.root
     }
