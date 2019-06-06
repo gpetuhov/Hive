@@ -320,6 +320,7 @@
 
     <!-- SearchListFragment -->
     <string name="search_list_empty">Nothing found</string>
+    <string name="search_results">Search results</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>

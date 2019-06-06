@@ -320,5 +320,6 @@
 
     <!-- SearchListFragment -->
     <string name="search_list_empty">Ничего не найдено</string>
+    <string name="search_results">Результатов поиска</string>
 
 </resources>
