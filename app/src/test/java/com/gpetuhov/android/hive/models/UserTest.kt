@@ -373,33 +373,13 @@ class UserTest {
         var userOld = user.copy()
         var userNew = user.copy()
         assertEquals(false, userOld.isVisibleInfoChanged(userNew))
-        userNew.username = "username"
-        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
 
-        userOld = user.copy()
-        userNew = user.copy()
-        userNew.isHiveRunning = true
-        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
-
-        userOld = user.copy()
-        userNew = user.copy()
-        userNew.offerSearchResultIndex = 0
-        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
-
-        userOld = user.copy()
-        userNew = user.copy()
-        userNew.location = DUMMY_LOCATION2
-        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
-
-        userOld = user.copy()
-        userNew = user.copy()
-        userNew.isFavorite = true
-        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
-
-        userOld = user.copy()
-        userNew = user.copy()
-        userNew.userStarCount = 5
-        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+        checkUserVisibleInfoChanged { it.username = "username" }
+        checkUserVisibleInfoChanged { it.isHiveRunning = true }
+        checkUserVisibleInfoChanged { it.offerSearchResultIndex = 0 }
+        checkUserVisibleInfoChanged { it.location = DUMMY_LOCATION2 }
+        checkUserVisibleInfoChanged { it.isFavorite = true }
+        checkUserVisibleInfoChanged { it.userStarCount = 5 }
 
         userOld = user.copy()
         userOld.offerList.add(DUMMY_OFFER)
@@ -408,55 +388,11 @@ class UserTest {
         userNew.offerList.add(DUMMY_OFFER.copy())
         assertEquals(false, userOld.isVisibleInfoChanged(userNew))
 
-        userOld = user.copy()
-        userOld.offerList.add(DUMMY_OFFER)
-        userOld.offerSearchResultIndex = 0
-        userNew = user.copy()
-        var offerNew = DUMMY_OFFER.copy()
-        offerNew.title = "title"
-        userNew.offerList.add(offerNew)
-        userNew.offerSearchResultIndex = 0
-        assertEquals(true, user.isVisibleInfoChanged(userNew))
-
-        userOld = user.copy()
-        userOld.offerList.add(DUMMY_OFFER)
-        userOld.offerSearchResultIndex = 0
-        userNew = user.copy()
-        offerNew = DUMMY_OFFER.copy()
-        offerNew.isFree = true
-        userNew.offerList.add(offerNew)
-        userNew.offerSearchResultIndex = 0
-        assertEquals(true, user.isVisibleInfoChanged(userNew))
-
-        userOld = user.copy()
-        userOld.offerList.add(DUMMY_OFFER)
-        userOld.offerSearchResultIndex = 0
-        userNew = user.copy()
-        offerNew = DUMMY_OFFER.copy()
-        offerNew.price = 5.0
-        userNew.offerList.add(offerNew)
-        userNew.offerSearchResultIndex = 0
-        assertEquals(true, user.isVisibleInfoChanged(userNew))
-
-        userOld = user.copy()
-        userOld.offerList.add(DUMMY_OFFER)
-        userOld.offerSearchResultIndex = 0
-        userNew = user.copy()
-        offerNew = DUMMY_OFFER.copy()
-        offerNew.isFavorite = true
-        userNew.offerList.add(offerNew)
-        userNew.offerSearchResultIndex = 0
-        assertEquals(true, user.isVisibleInfoChanged(userNew))
-
-        userOld = user.copy()
-        userOld.offerList.add(DUMMY_OFFER)
-        userOld.offerSearchResultIndex = 0
-        userNew = user.copy()
-        offerNew = DUMMY_OFFER.copy()
-        offerNew.starCount = 5
-        userNew.offerList.add(offerNew)
-        userNew.offerSearchResultIndex = 0
-        assertEquals(true, user.isVisibleInfoChanged(userNew))
+        checkOfferVisibleInfoChanged { it.title = "title" }
+        checkOfferVisibleInfoChanged { it.isFree = true }
+        checkOfferVisibleInfoChanged { it.price = 5.0 }
+        checkOfferVisibleInfoChanged { it.isFavorite = true }
+        checkOfferVisibleInfoChanged { it.starCount = 5 }
     }
 
     @Test
@@ -500,5 +436,24 @@ class UserTest {
             offer.isFree = true
             user.offerList.add(DUMMY_OFFER)
         }
+    }
+
+    private fun checkUserVisibleInfoChanged(change: (User) -> Unit) {
+        val userOld = user.copy()
+        val userNew = user.copy()
+        change(userNew)
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+    }
+
+    private fun checkOfferVisibleInfoChanged(change: (Offer) -> Unit) {
+        val userOld = user.copy()
+        userOld.offerList.add(DUMMY_OFFER)
+        userOld.offerSearchResultIndex = 0
+        val userNew = user.copy()
+        val offerNew = DUMMY_OFFER.copy()
+        change(offerNew)
+        userNew.offerList.add(offerNew)
+        userNew.offerSearchResultIndex = 0
+        assertEquals(true, user.isVisibleInfoChanged(userNew))
     }
 }
