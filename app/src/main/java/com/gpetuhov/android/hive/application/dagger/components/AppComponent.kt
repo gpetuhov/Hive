@@ -16,6 +16,7 @@ import com.gpetuhov.android.hive.ui.epoxy.photo.fullscreen.controller.PhotoFulls
 import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListController
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsAllListController
 import com.gpetuhov.android.hive.ui.epoxy.review.controller.ReviewsListController
+import com.gpetuhov.android.hive.ui.epoxy.search.controller.SearchListController
 import com.gpetuhov.android.hive.ui.epoxy.user.details.controller.UserDetailsListController
 import com.gpetuhov.android.hive.ui.epoxy.user.favorite.controller.UserFavoriteListController
 import com.gpetuhov.android.hive.ui.fragment.ProfileFragment
@@ -110,4 +111,5 @@ interface AppComponent {
     fun inject(userFavoriteListController: UserFavoriteListController)
     fun inject(reviewsListController: ReviewsListController)
     fun inject(reviewsAllListController: ReviewsAllListController)
+    fun inject(searchListController: SearchListController)
 }

@@ -8,12 +8,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentSearchListBinding
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.SearchListFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.SearchListFragmentView
+import com.gpetuhov.android.hive.ui.epoxy.search.controller.SearchListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
 import com.gpetuhov.android.hive.util.hideMainHeader
@@ -27,6 +29,7 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     @InjectPresenter lateinit var presenter: SearchListFragmentPresenter
 
     private var binding: FragmentSearchListBinding? = null
+    private var controller: SearchListController? = null
 
     private var isSearchListEmpty = false
 
@@ -37,8 +40,14 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         hideMainHeader()
         showBottomNavigationView()
 
+        controller = SearchListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_list, container, false)
         binding?.presenter = presenter
+
+        val searchListRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.search_list_recycler_view)
+        searchListRecyclerView?.adapter = controller?.adapter
 
         val args = SearchListFragmentArgs.fromBundle(arguments!!)
         presenter.queryLatitude = args.queryLatitude.toDouble()
@@ -50,7 +59,8 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
             isSearchListEmpty = searchResult.isEmpty()
 
-            // TODO: update controller here
+            // TODO: sort list by title (inside presenter)
+            controller?.changeSearchResultList(searchResult.values.toMutableList())
         })
 
         return binding?.root
@@ -64,6 +74,11 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     override fun onPause() {
         super.onPause()
         presenter.onPause()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        controller?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     // === SearchListFragmentView ===

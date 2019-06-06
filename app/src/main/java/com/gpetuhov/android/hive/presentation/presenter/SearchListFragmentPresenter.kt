@@ -39,4 +39,12 @@ class SearchListFragmentPresenter : MvpPresenter<SearchListFragmentView>(), Sear
     }
 
     fun onPause() = repo.stopGettingSearchResultUpdates()
+
+    fun showOfferDetails(userUid: String, offerUid: String) {
+        // TODO: implement
+    }
+
+    fun removeOfferFromFavorite(userUid: String, offerUid: String) {
+        // TODO: implement
+    }
 }

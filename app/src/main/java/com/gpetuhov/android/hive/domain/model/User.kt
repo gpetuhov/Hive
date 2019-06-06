@@ -297,6 +297,8 @@ data class User(
         return false
     }
 
+    fun getSearchedOffer() = getOfferByIndex(offerSearchResultIndex)
+
     // === Private methods ===
 
     private fun calculateRatings() {
