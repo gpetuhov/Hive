@@ -6,6 +6,7 @@ import com.airbnb.epoxy.Carousel
 import com.google.android.gms.location.DetectedActivity
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
+import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.ui.epoxy.base.carousel
 import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
@@ -208,18 +209,24 @@ abstract class UserBaseController : BaseController() {
 
     // === Private methods ===
 
-    private fun offerItemPhotoCarousel(settings: Settings, offer: Offer, limitVisible: Boolean, onClick: () -> Unit) {
-        var offerPhotoList = offer.photoList
+    private fun offerItemPhotoCarousel(settings: Settings, offer: Offer, limitVisible: Boolean, onClick: () -> Unit) =
+        itemPhotoCarousel(settings, offer.uid, offer.photoList, limitVisible, Constants.Offer.MAX_VISIBLE_PHOTO_COUNT, onClick)
+
+    private fun userItemPhotoCarousel(settings: Settings, user: User, limitVisible: Boolean, onClick: () -> Unit) =
+        itemPhotoCarousel(settings, user.uid, user.photoList, limitVisible, Constants.User.MAX_VISIBLE_PHOTO_COUNT, onClick)
+
+    private fun itemPhotoCarousel(settings: Settings, uid: String, itemPhotoList: MutableList<Photo>, limitVisible: Boolean, maxPhotoCount: Int, onClick: () -> Unit) {
+        var photoList = itemPhotoList
 
         if (limitVisible) {
-            offerPhotoList = offerPhotoList
-                .filterIndexed { index, item -> index < Constants.Offer.MAX_VISIBLE_PHOTO_COUNT }
+            photoList = photoList
+                .filterIndexed { index, item -> index < maxPhotoCount }
                 .toMutableList()
         }
 
-        if (!offerPhotoList.isEmpty()) {
+        if (!photoList.isEmpty()) {
             carousel {
-                id("${offer.uid}_photo_carousel")
+                id("${uid}_photo_carousel")
 
                 val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
                 padding(padding)
@@ -227,47 +234,11 @@ abstract class UserBaseController : BaseController() {
                 onBind { model, view, position ->
                     view.clipToPadding = true
                     view.addOnScrollListener(
-                        buildScrollListener { lastScrollPosition -> selectedPhotoMap[offer.uid] = lastScrollPosition}
+                        buildScrollListener { lastScrollPosition -> selectedPhotoMap[uid] = lastScrollPosition}
                     )
                 }
 
-                withModelsFrom(offerPhotoList) { index, photo ->
-                    PhotoOfferItemModel_()
-                        .id(photo.uid)
-                        .photoUrl(photo.downloadUrl)
-                        .onClick {
-                            settings.setSelectedPhotoPosition(index)
-                            onClick()
-                        }
-                }
-            }
-        }
-    }
-
-    private fun userItemPhotoCarousel(settings: Settings, user: User, limitVisible: Boolean, onClick: () -> Unit) {
-        var offerPhotoList = user.photoList
-
-        if (limitVisible) {
-            offerPhotoList = offerPhotoList
-                .filterIndexed { index, item -> index < Constants.User.MAX_VISIBLE_PHOTO_COUNT }
-                .toMutableList()
-        }
-
-        if (!offerPhotoList.isEmpty()) {
-            carousel {
-                id("${user.uid}_photo_carousel")
-
-                val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
-                padding(padding)
-
-                onBind { model, view, position ->
-                    view.clipToPadding = true
-                    view.addOnScrollListener(
-                        buildScrollListener { lastScrollPosition -> selectedPhotoMap[user.uid] = lastScrollPosition }
-                    )
-                }
-
-                withModelsFrom(offerPhotoList) { index, photo ->
+                withModelsFrom(photoList) { index, photo ->
                     PhotoOfferItemModel_()
                         .id(photo.uid)
                         .photoUrl(photo.downloadUrl)
