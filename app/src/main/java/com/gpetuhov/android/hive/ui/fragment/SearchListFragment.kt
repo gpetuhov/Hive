@@ -32,6 +32,7 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     private var controller: SearchListController? = null
 
     private var isSearchListEmpty = false
+    private var isSearchComplete = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -58,6 +59,7 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
         viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
             isSearchListEmpty = searchResult.isEmpty()
+            updateSearchListEmpty()
 
             // TODO: sort list by title (inside presenter)
             controller?.changeSearchResultList(searchResult.values.toMutableList())
@@ -83,11 +85,15 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
     // === SearchListFragmentView ===
 
-    override fun onSearchStart() = progressVisible(true)
+    override fun onSearchStart() {
+        isSearchComplete = false
+        progressVisible(true)
+    }
 
     override fun onSearchComplete() {
+        isSearchComplete = true
         progressVisible(false)
-        binding?.searchResultListEmpty = isSearchListEmpty
+        updateSearchListEmpty()
     }
 
     override fun showDetails(offerUid: String) {
@@ -104,4 +110,8 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     // === Private methods ===
 
     private fun progressVisible(isVisible: Boolean) = search_list_progress.setVisible(isVisible)
+
+    private fun updateSearchListEmpty() {
+        if (isSearchComplete) binding?.searchResultListEmpty = isSearchListEmpty
+    }
 }
