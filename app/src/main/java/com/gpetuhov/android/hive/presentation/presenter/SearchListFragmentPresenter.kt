@@ -71,8 +71,8 @@ class SearchListFragmentPresenter :
         viewState.showDetails(offerUid)
     }
 
-    fun favoriteOffer(offerIsFavorite: Boolean, userUid: String, offerUid: String) =
-        favoritesInteractor.favorite(offerIsFavorite, userUid, offerUid)
+    fun favorite(isFavorite: Boolean, userUid: String, offerUid: String) =
+        favoritesInteractor.favorite(isFavorite, userUid, offerUid)
 
     // === Private methods ===
 
