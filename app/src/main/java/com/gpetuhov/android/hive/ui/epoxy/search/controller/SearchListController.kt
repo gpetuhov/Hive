@@ -25,6 +25,8 @@ class SearchListController(private val presenter: SearchListFragmentPresenter) :
         searchTotals {
             id("search_totals")
 
+            val queryText = if (presenter.queryText != "") presenter.queryText else context.getString(R.string.query_text_empty)
+            queryText("${context.getString(R.string.query_text)}: $queryText")
             searchTotals("${context.getString(R.string.search_results)}: $searchResultCount")
         }
 
