@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.SearchListFragmentView
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.Settings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -21,6 +22,7 @@ class SearchListFragmentPresenter :
     FavoritesInteractor.Callback {
 
     @Inject lateinit var repo: Repo
+    @Inject lateinit var settings: Settings
 
     var queryLatitude = Constants.Map.DEFAULT_LATITUDE
     var queryLongitude = Constants.Map.DEFAULT_LONGITUDE
@@ -45,6 +47,10 @@ class SearchListFragmentPresenter :
     override fun onFavoritesError(errorMessage: String) = viewState.showToast(errorMessage)
 
     // === Public methods ===
+
+    fun initSearchQueryText() {
+        queryText = settings.getSearchQueryText() ?: ""
+    }
 
     fun navigateUp() = viewState.navigateUp()
 

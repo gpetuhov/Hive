@@ -52,7 +52,8 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         presenter.queryLatitude = args.queryLatitude.toDouble()
         presenter.queryLongitude = args.queryLongitude.toDouble()
         presenter.queryRadius = args.queryRadius.toDouble()
-        presenter.queryText = args.queryText
+
+        presenter.initSearchQueryText()
 
         val viewModel = ViewModelProviders.of(this).get(SearchResultViewModel::class.java)
         viewModel.searchResult.observe(this, Observer<MutableMap<String, User>> { searchResult ->
