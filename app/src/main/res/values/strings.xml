@@ -322,6 +322,7 @@
     <string name="search_list_empty">Nothing found</string>
     <string name="query_text">Query text</string>
     <string name="query_text_empty">not specified (showing all users and offers)</string>
+    <string name="query_text_hint">Show all users and offers</string>
     <string name="search_results">Search results</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->

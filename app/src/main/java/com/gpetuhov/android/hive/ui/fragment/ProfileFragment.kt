@@ -14,10 +14,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.WhichButton
-import com.afollestad.materialdialogs.actions.setActionButtonEnabled
-import com.afollestad.materialdialogs.input.getInputField
-import com.afollestad.materialdialogs.input.input
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -284,51 +280,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         initStatusDialog()
     }
 
-    private fun getInputDialog(
-        titleId: Int,
-        hintId: Int,
-        errorMessageId: Int = R.string.username_not_valid,
-        maxLength: Int? = null,
-        inputType: Int = InputType.TYPE_CLASS_TEXT,
-        onInputChange: (String) -> Unit,
-        isInputValid: (String) -> Boolean,
-        onPositive: () -> Unit,
-        onNegative: () -> Unit
-    ): MaterialDialog? {
-
-        if (context != null) {
-            val errorMessage = context?.getString(errorMessageId)
-
-            return MaterialDialog(context!!)
-                .title(titleId)
-                .noAutoDismiss()
-                .cancelable(false)
-                .input(
-                    maxLength = maxLength,
-                    inputType = inputType,
-                    hintRes = hintId,
-                    waitForPositiveButton = false
-                ) { dialog, text ->
-                    val inputText = text.toString()
-                    onInputChange(inputText)
-
-                    val inputValid = isInputValid(inputText)
-                    dialog.getInputField()?.error = if (!inputValid) errorMessage else null
-
-                    val lengthValid = if (maxLength != null) inputText.length <= maxLength else true
-
-                    // Enable positive button if input text and length is valid
-                    // (for invalid length we do not show any error message).
-                    dialog.setActionButtonEnabled(WhichButton.POSITIVE, inputValid && lengthValid)
-                }
-                .positiveButton { onPositive() }
-                .negativeButton { onNegative() }
-
-        } else {
-            return null
-        }
-    }
-
     private fun initUsernameDialog() {
         usernameDialog = getInputDialog(
             titleId = R.string.username,
@@ -573,14 +524,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
             onPositive = { presenter.saveStatus() },
             onNegative = { presenter.dismissStatusDialog() }
         )
-    }
-
-    private fun showDialog(dialog: MaterialDialog?, prefill: String) {
-        // Prefill dialog corresponding prefill text (provided by presenter)
-        val editText = dialog?.getInputField()
-        editText?.setText(prefill)
-        editText?.setSelection(editText.text.length)
-        dialog?.show()
     }
 
     private fun dismissDialogs() {

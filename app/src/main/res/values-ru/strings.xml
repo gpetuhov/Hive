@@ -322,6 +322,7 @@
     <string name="search_list_empty">Ничего не найдено</string>
     <string name="query_text">Текст запроса</string>
     <string name="query_text_empty">не задан (отображаются все пользователи и офферы)</string>
+    <string name="query_text_hint">Отобразить всех пользователей и все офферы</string>
     <string name="search_results">Результатов поиска</string>
 
 </resources>

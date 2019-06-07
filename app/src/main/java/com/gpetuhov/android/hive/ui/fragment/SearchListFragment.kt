@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -29,12 +30,16 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     private var binding: FragmentSearchListBinding? = null
     private var controller: SearchListController? = null
 
+    private var searchDialog: MaterialDialog? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
         hideMainHeader()
         showBottomNavigationView()
+
+        initDialogs()
 
         controller = SearchListController(presenter)
         controller?.onRestoreInstanceState(savedInstanceState)
@@ -76,6 +81,15 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         super.onSaveInstanceState(outState)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // This is needed to prevent memory leaks.
+        // Here we intentially dismiss dialogs directly, not via the presenter,
+        // so that Moxy command queue doesn't change.
+        dismissDialogs()
+    }
+
     // === SearchListFragmentView ===
 
     override fun onSearchStart() = progressVisible(true)
@@ -91,13 +105,9 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun showSearchDialog() {
-        // TODO
-    }
+    override fun showSearchDialog() = showDialog(searchDialog, presenter.getSearchPrefill())
 
-    override fun dismissSearchDialog() {
-        // TODO
-    }
+    override fun dismissSearchDialog() = searchDialog?.dismiss() ?: Unit
 
     override fun navigateUp() {
         findNavController().navigateUp()
@@ -110,4 +120,24 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     // === Private methods ===
 
     private fun progressVisible(isVisible: Boolean) = search_list_progress.setVisible(isVisible)
+
+    private fun initDialogs() {
+        initSearchDialog()
+    }
+
+    private fun dismissDialogs() {
+        dismissSearchDialog()
+    }
+
+    private fun initSearchDialog() {
+        searchDialog = getInputDialog(
+            titleId = R.string.search,
+            hintId = R.string.query_text_hint,
+            errorMessageId = R.string.username_not_valid,
+            onInputChange = { inputText -> presenter.updateTempQueryText(inputText) },
+            isInputValid = { true },
+            onPositive = { presenter.startSearch() },
+            onNegative = { presenter.dismissSearchDialog() }
+        )
+    }
 }
