@@ -18,10 +18,7 @@ import com.gpetuhov.android.hive.presentation.view.SearchListFragmentView
 import com.gpetuhov.android.hive.ui.epoxy.search.controller.SearchListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.SearchResultViewModel
-import com.gpetuhov.android.hive.util.hideMainHeader
-import com.gpetuhov.android.hive.util.setActivitySoftInputPan
-import com.gpetuhov.android.hive.util.setVisible
-import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.gpetuhov.android.hive.util.*
 import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_search_list.*
 
@@ -66,6 +63,7 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     override fun onResume() {
         super.onResume()
         presenter.onResume()
+        hideSoftKeyboard()
     }
 
     override fun onPause() {
