@@ -294,6 +294,8 @@ data class User(
                 || offer1.price != offer2.price
                 || offer1.isFavorite != offer2.isFavorite
                 || offer1.starCount != offer2.starCount
+                || offer1.rating != offer2.rating
+                || offer1.reviewCount != offer2.reviewCount
                 || photoListChanged(offer1.photoList, offer2.photoList)
             ) {
                 return true

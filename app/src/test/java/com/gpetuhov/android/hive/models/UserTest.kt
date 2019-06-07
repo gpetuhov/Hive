@@ -82,7 +82,7 @@ class UserTest {
 
     @Test
     fun getOffer() {
-        val dummyOffer = DUMMY_OFFER
+        val dummyOffer = DUMMY_OFFER.copy()
         assertEquals(null, user.getOffer(dummyOffer.uid))
 
         user.offerList.add(dummyOffer)
@@ -371,7 +371,7 @@ class UserTest {
     @Test
     fun isVisibleInfoChanged() {
         var userOld = user.copy()
-        userOld.photoList.add(DUMMY_PHOTO)
+        userOld.photoList.add(DUMMY_PHOTO.copy())
         var userNew = user.copy()
         userNew.photoList.add(DUMMY_PHOTO.copy())
         assertEquals(false, userOld.isVisibleInfoChanged(userNew))
@@ -385,7 +385,7 @@ class UserTest {
         checkUserVisibleInfoChanged { it.photoList.add(DUMMY_PHOTO) }
 
         userOld = user.copy()
-        userOld.photoList.add(DUMMY_PHOTO)
+        userOld.photoList.add(DUMMY_PHOTO.copy())
         userNew = user.copy()
         var photoNew = DUMMY_PHOTO.copy()
         photoNew.uid = "dsklfjdklsfj"
@@ -393,7 +393,9 @@ class UserTest {
         assertEquals(true, userOld.isVisibleInfoChanged(userNew))
 
         userOld = user.copy()
-        userOld.offerList.add(DUMMY_OFFER)
+        var offerOld = DUMMY_OFFER.copy()
+        offerOld.photoList.add(DUMMY_PHOTO.copy())
+        userOld.offerList.add(offerOld)
         userOld.offerSearchResultIndex = 0
         userNew = userOld.copy()
         var offerNew = DUMMY_OFFER.copy()
@@ -407,10 +409,14 @@ class UserTest {
         checkOfferVisibleInfoChanged { it.price = 5.0 }
         checkOfferVisibleInfoChanged { it.isFavorite = true }
         checkOfferVisibleInfoChanged { it.starCount = 5 }
+        checkOfferVisibleInfoChanged { it.rating = 4.5F }
+        checkOfferVisibleInfoChanged { it.reviewCount = 5 }
         checkOfferVisibleInfoChanged { it.photoList.add(DUMMY_PHOTO.copy()) }
 
         userOld = user.copy()
-        userOld.offerList.add(DUMMY_OFFER)
+        offerOld = DUMMY_OFFER.copy()
+        offerOld.photoList.add(DUMMY_PHOTO.copy())
+        userOld.offerList.add(offerOld)
         userOld.offerSearchResultIndex = 0
         userNew = userOld.copy()
         offerNew = DUMMY_OFFER.copy()
@@ -425,9 +431,10 @@ class UserTest {
     @Test
     fun getSearchedOffer() {
         assertEquals(null, user.getSearchedOffer())
-        user.offerList.add(DUMMY_OFFER)
+        val offer = DUMMY_OFFER.copy()
+        user.offerList.add(offer)
         user.offerSearchResultIndex = 0
-        assertEquals(DUMMY_OFFER, user.getSearchedOffer())
+        assertEquals(offer, user.getSearchedOffer())
     }
 
     // === Private methods ===
@@ -459,9 +466,9 @@ class UserTest {
 
     private fun addAllFreeOffers(offerCount: Int) {
         repeat(offerCount) {
-            val offer = DUMMY_OFFER
+            val offer = DUMMY_OFFER.copy()
             offer.isFree = true
-            user.offerList.add(DUMMY_OFFER)
+            user.offerList.add(offer)
         }
     }
 
@@ -474,7 +481,9 @@ class UserTest {
 
     private fun checkOfferVisibleInfoChanged(change: (Offer) -> Unit) {
         val userOld = user.copy()
-        userOld.offerList.add(DUMMY_OFFER)
+        val offerOld = DUMMY_OFFER.copy()
+        offerOld.photoList.add(DUMMY_PHOTO.copy())
+        userOld.offerList.add(offerOld)
         userOld.offerSearchResultIndex = 0
         val userNew = user.copy()
         val offerNew = DUMMY_OFFER.copy()
@@ -482,6 +491,6 @@ class UserTest {
         change(offerNew)
         userNew.offerList.add(offerNew)
         userNew.offerSearchResultIndex = 0
-        assertEquals(true, user.isVisibleInfoChanged(userNew))
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
     }
 }
