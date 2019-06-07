@@ -279,6 +279,7 @@ data class User(
             || this.location.longitude != user.location.longitude
             || this.isFavorite != user.isFavorite
             || this.userStarCount != user.userStarCount
+            || photoListChanged(this.photoList, user.photoList)
         ) {
             return true
         }
@@ -323,4 +324,26 @@ data class User(
     }
 
     private fun getOfferByIndex(index: Int) = if (index >= 0 && index < offerList.size) offerList[index] else null
+
+    private fun photoListChanged(photoList1: MutableList<Photo>, photoList2: MutableList<Photo>): Boolean {
+        var result = false
+
+        // Photo list changed if size is not the same
+        if (photoList1.size != photoList2.size) {
+            result = true
+
+        } else {
+            // Or photos at the same position are not the same
+            for (index in photoList1.indices) {
+                val photo1 = photoList1[index]
+                val photo2 = photoList2[index]
+                if (photo1.uid != photo2.uid) {
+                    result = true
+                    break
+                }
+            }
+        }
+
+        return result
+    }
 }

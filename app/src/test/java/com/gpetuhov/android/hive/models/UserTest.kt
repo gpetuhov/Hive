@@ -380,6 +380,7 @@ class UserTest {
         checkUserVisibleInfoChanged { it.location = DUMMY_LOCATION2 }
         checkUserVisibleInfoChanged { it.isFavorite = true }
         checkUserVisibleInfoChanged { it.userStarCount = 5 }
+        checkUserVisibleInfoChanged { it.photoList.add(DUMMY_PHOTO) }
 
         userOld = user.copy()
         userOld.offerList.add(DUMMY_OFFER)
