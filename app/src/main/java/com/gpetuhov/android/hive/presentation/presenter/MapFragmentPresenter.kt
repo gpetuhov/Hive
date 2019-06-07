@@ -66,7 +66,9 @@ class MapFragmentPresenter :
     // === Public methods ===
 
     fun initSearchQueryText() {
-        queryText = settings.getSearchQueryText() ?: ""
+        if (queryText == "") {
+            queryText = settings.getSearchQueryText() ?: ""
+        }
     }
 
     fun initMap(map: GoogleMap) = mapManager.initMap(this, map)
@@ -91,7 +93,10 @@ class MapFragmentPresenter :
 
     fun zoomOut() = mapManager.zoomOut()
 
-    fun showList() = viewState.showList(queryLatitude, queryLongitude, queryRadius)
+    fun showList() {
+        viewState.showList(queryLatitude, queryLongitude, queryRadius)
+        viewState.clearSearch()
+    }
 
     // === Lifecycle calls ===
 
