@@ -129,6 +129,7 @@
     <string name="zoom_in">Приблизить</string>
     <string name="zoom_out">Отдалить</string>
     <string name="show_list">Показать список</string>
+    <string name="search_filter">Фильтр поиска</string>
 
     <!-- UserDetailsFragment -->
     <string name="user_details">Пользователь</string>
