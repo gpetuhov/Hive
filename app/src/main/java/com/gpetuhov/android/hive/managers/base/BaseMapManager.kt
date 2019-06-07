@@ -116,6 +116,10 @@ open class BaseMapManager {
         initCameraPosition(locationManager, moveToCurrentLocation)
     }
 
+    protected fun clearGoogleMap() {
+        if (::googleMap.isInitialized) googleMap.clear()
+    }
+
     // === Private methods ===
 
     private fun initCameraPosition(locationManager: LocationManager?, moveToCurrentLocation: Boolean) {

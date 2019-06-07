@@ -147,7 +147,7 @@ class MapManager : BaseMapManager() {
 
         markersMap.clear()
         oldSearchResult.clear()
-        googleMap.clear()
+        clearGoogleMap()
     }
 
     // === Private methods ===
