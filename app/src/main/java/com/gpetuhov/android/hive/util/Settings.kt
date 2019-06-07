@@ -9,6 +9,7 @@ class Settings(context: Context) {
     companion object {
         private const val UNREAD_MESSAGES_EXIST_KEY = "unreadMessagesExist"
         private const val SELECTED_PHOTO_POSITION_KEY = "selectedPhotoPosition"
+        private const val SEARCH_QUERY_TEXT_KEY = "searchQueryText"
     }
 
     private val prefs = context.defaultSharedPreferences
@@ -20,4 +21,8 @@ class Settings(context: Context) {
     fun getSelectedPhotoPosition() = prefs.getInt(SELECTED_PHOTO_POSITION_KEY, 0)
 
     fun setSelectedPhotoPosition(value: Int) = prefs.edit { putInt(SELECTED_PHOTO_POSITION_KEY, value) }
+
+    fun getSearchQueryText() = prefs.getString(SEARCH_QUERY_TEXT_KEY, "")
+
+    fun setSearchQueryText(value: String) = prefs.edit { putString(SEARCH_QUERY_TEXT_KEY, value) }
 }

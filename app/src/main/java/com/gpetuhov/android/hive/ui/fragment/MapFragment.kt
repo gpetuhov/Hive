@@ -36,6 +36,8 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
         hideMainHeader()
         showBottomNavigationView()
 
+        presenter.initSearchQueryText()
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_map, container, false)
         binding?.presenter = presenter
 

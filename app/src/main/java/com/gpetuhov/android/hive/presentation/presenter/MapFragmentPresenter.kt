@@ -11,6 +11,7 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.MapManager
 import com.gpetuhov.android.hive.presentation.view.MapFragmentView
 import com.gpetuhov.android.hive.util.Constants
+import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
 
 @InjectViewState
@@ -21,6 +22,7 @@ class MapFragmentPresenter :
 
     @Inject lateinit var mapManager: MapManager
     @Inject lateinit var repo: Repo
+    @Inject lateinit var settings: Settings
 
     // Current query text from search EditText
     // (binded to view with two-way data binding).
@@ -63,6 +65,10 @@ class MapFragmentPresenter :
 
     // === Public methods ===
 
+    fun initSearchQueryText() {
+        queryText = settings.getSearchQueryText() ?: ""
+    }
+
     fun initMap(map: GoogleMap) = mapManager.initMap(this, map)
 
     fun updateMarkers(searchResult: MutableMap<String, User>) = mapManager.updateMarkers(searchResult)
@@ -70,6 +76,7 @@ class MapFragmentPresenter :
     fun search() {
         viewState.onSearchStart()
         viewState.hideKeyboard()
+        settings.setSearchQueryText(queryText)
         searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
     }
 
