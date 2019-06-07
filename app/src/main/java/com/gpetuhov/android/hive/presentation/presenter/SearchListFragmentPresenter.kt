@@ -91,7 +91,10 @@ class SearchListFragmentPresenter :
             // Separate users and offers into different lists
             unsortedList.forEach { if (it.offerSearchResultIndex == -1) userList.add(it) else offerList.add(it) }
 
-            // TODO: sort users and offers by name
+            // TODO: sort users and offers according to selected criteria
+            // By default sort users by name and offers by title
+            offerList.sortBy { it.getSearchedOffer()?.title }
+            userList.sortBy { it.getUsernameOrName() }
 
             // TODO: this should change according to user selected options
             sortedList.addAll(offerList)
