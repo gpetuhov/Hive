@@ -91,6 +91,14 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun showSearchDialog() {
+        // TODO
+    }
+
+    override fun dismissSearchDialog() {
+        // TODO
+    }
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }

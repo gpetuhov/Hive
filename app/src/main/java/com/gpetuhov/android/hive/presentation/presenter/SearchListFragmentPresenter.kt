@@ -31,6 +31,9 @@ class SearchListFragmentPresenter :
 
     var searchResultList = mutableListOf<User>()
 
+    // Keeps current text entered in search dialog
+    private var tempQueryText = ""
+
     private val searchInteractor = SearchInteractor(this)
     private var favoritesInteractor = FavoritesInteractor(this)
 
@@ -81,14 +84,33 @@ class SearchListFragmentPresenter :
     fun favorite(isFavorite: Boolean, userUid: String, offerUid: String) =
         favoritesInteractor.favorite(isFavorite, userUid, offerUid)
 
-    fun showSearchDialog() {
-        // TODO: implement
+    // --- Search dialog ---
+
+    fun showSearchDialog() = viewState.showSearchDialog()
+
+    // Prefill search dialog with currently entered text or current value
+    fun getSearchPrefill() = if (tempQueryText != "") tempQueryText else queryText
+
+    fun updateTempQueryText(newQueryText: String) {
+        tempQueryText = newQueryText
+    }
+
+    fun startSearch() {
+        queryText = tempQueryText
+        dismissSearchDialog()
+        search()
+    }
+
+    fun dismissSearchDialog() {
+        tempQueryText = ""
+        viewState.dismissSearchDialog()
     }
 
     // === Private methods ===
 
     private fun search() {
         viewState.onSearchStart()
+        settings.setSearchQueryText(queryText)
         searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
     }
 
