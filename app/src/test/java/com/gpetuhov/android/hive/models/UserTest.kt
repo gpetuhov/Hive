@@ -371,7 +371,9 @@ class UserTest {
     @Test
     fun isVisibleInfoChanged() {
         var userOld = user.copy()
+        userOld.photoList.add(DUMMY_PHOTO)
         var userNew = user.copy()
+        userNew.photoList.add(DUMMY_PHOTO.copy())
         assertEquals(false, userOld.isVisibleInfoChanged(userNew))
 
         checkUserVisibleInfoChanged { it.username = "username" }
@@ -383,10 +385,21 @@ class UserTest {
         checkUserVisibleInfoChanged { it.photoList.add(DUMMY_PHOTO) }
 
         userOld = user.copy()
+        userOld.photoList.add(DUMMY_PHOTO)
+        userNew = user.copy()
+        var photoNew = DUMMY_PHOTO.copy()
+        photoNew.uid = "dsklfjdklsfj"
+        userNew.photoList.add(photoNew)
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
+
+        userOld = user.copy()
         userOld.offerList.add(DUMMY_OFFER)
         userOld.offerSearchResultIndex = 0
         userNew = userOld.copy()
-        userNew.offerList.add(DUMMY_OFFER.copy())
+        var offerNew = DUMMY_OFFER.copy()
+        offerNew.photoList.add(DUMMY_PHOTO.copy())
+        userNew.offerList.add(offerNew)
+        userNew.offerSearchResultIndex = 0
         assertEquals(false, userOld.isVisibleInfoChanged(userNew))
 
         checkOfferVisibleInfoChanged { it.title = "title" }
@@ -394,6 +407,19 @@ class UserTest {
         checkOfferVisibleInfoChanged { it.price = 5.0 }
         checkOfferVisibleInfoChanged { it.isFavorite = true }
         checkOfferVisibleInfoChanged { it.starCount = 5 }
+        checkOfferVisibleInfoChanged { it.photoList.add(DUMMY_PHOTO.copy()) }
+
+        userOld = user.copy()
+        userOld.offerList.add(DUMMY_OFFER)
+        userOld.offerSearchResultIndex = 0
+        userNew = userOld.copy()
+        offerNew = DUMMY_OFFER.copy()
+        photoNew = DUMMY_PHOTO.copy()
+        photoNew.uid = "342hgf34"
+        offerNew.photoList.add(photoNew)
+        userNew.offerList.add(offerNew)
+        userNew.offerSearchResultIndex = 0
+        assertEquals(true, userOld.isVisibleInfoChanged(userNew))
     }
 
     @Test
@@ -452,6 +478,7 @@ class UserTest {
         userOld.offerSearchResultIndex = 0
         val userNew = user.copy()
         val offerNew = DUMMY_OFFER.copy()
+        offerNew.photoList.add(DUMMY_PHOTO.copy())
         change(offerNew)
         userNew.offerList.add(offerNew)
         userNew.offerSearchResultIndex = 0
