@@ -35,5 +35,5 @@ interface MapFragmentView : MvpView {
     fun showDetails(offerUid: String)
 
     @StateStrategyType(SkipStrategy::class)
-    fun showList(queryLatitude: Double, queryLongitude: Double, queryRadius: Double, queryText: String)
+    fun showList(queryLatitude: Double, queryLongitude: Double, queryRadius: Double)
 }

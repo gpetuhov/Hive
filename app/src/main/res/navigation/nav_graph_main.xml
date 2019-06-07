@@ -387,9 +387,6 @@
         <argument
                 android:name="queryRadius"
                 app:argType="float"/>
-        <argument
-                android:name="queryText"
-                app:argType="string"/>
         <action
                 android:id="@+id/action_searchListFragment_to_user_details_fragment"
                 app:destination="@id/user_details_fragment"
