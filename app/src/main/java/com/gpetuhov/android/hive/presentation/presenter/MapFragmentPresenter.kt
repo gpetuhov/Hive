@@ -97,12 +97,12 @@ class MapFragmentPresenter :
 
     fun onCreateView(savedInstanceState: Bundle?) {
         // Restore map state and restore saved query text
-        queryText = mapManager.restoreMapState(savedInstanceState)
+        mapManager.restoreMapState(savedInstanceState)
     }
 
     fun onPause() {
         // Save map state here, because onPause() is guaranteed to be called
-        mapManager.saveMapState(queryText)
+        mapManager.saveMapState()
         mapManager.clearMarkers()
         repo.stopGettingSearchResultUpdates()
     }

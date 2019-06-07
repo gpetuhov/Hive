@@ -19,7 +19,6 @@ open class BaseMapManager {
         private const val TILT = "tilt"
         private const val BEARING = "bearing"
         private const val MAPTYPE = "maptype"
-        private const val QUERY_TEXT = "queryText"
     }
 
     protected open lateinit var googleMap: GoogleMap
@@ -29,9 +28,9 @@ open class BaseMapManager {
 
     // Save map state into MapManager
     // (MapManager is alive during the whole app lifecycle)
-    fun saveMapState(queryText: String) {
+    fun saveMapState() {
         if (::googleMap.isInitialized) {
-            mapState = MapState(googleMap.cameraPosition, googleMap.mapType, queryText)
+            mapState = MapState(googleMap.cameraPosition, googleMap.mapType)
         }
     }
 
@@ -47,12 +46,11 @@ open class BaseMapManager {
         outState.putFloat(TILT, mapState?.cameraPosition?.tilt ?: Constants.Map.DEFAULT_TILT)
         outState.putFloat(BEARING, mapState?.cameraPosition?.bearing ?: Constants.Map.DEFAULT_BEARING)
         outState.putInt(MAPTYPE, mapState?.mapType ?: GoogleMap.MAP_TYPE_NORMAL)
-        outState.putString(QUERY_TEXT, mapState?.queryText ?: "")
     }
 
     // Restore map state from savedInstanceState, if exists and contains saved map state.
     // Return saved query text or empty string.
-    fun restoreMapState(savedInstanceState: Bundle?): String {
+    fun restoreMapState(savedInstanceState: Bundle?) {
         if (savedInstanceState != null) {
             val latitude = savedInstanceState.getDouble(LAT, Constants.Map.DEFAULT_LATITUDE)
             val longitude = savedInstanceState.getDouble(LON, Constants.Map.DEFAULT_LONGITUDE)
@@ -70,13 +68,9 @@ open class BaseMapManager {
 
                 val mapType = savedInstanceState.getInt(MAPTYPE, GoogleMap.MAP_TYPE_NORMAL)
 
-                val queryText = savedInstanceState.getString(QUERY_TEXT, "")
-
-                mapState = MapState(position, mapType, queryText)
+                mapState = MapState(position, mapType)
             }
         }
-
-        return mapState?.queryText ?: ""
     }
 
     fun resetMapState() {
@@ -142,7 +136,6 @@ open class BaseMapManager {
 
     data class MapState(
         var cameraPosition: CameraPosition,
-        var mapType: Int,
-        var queryText: String
+        var mapType: Int
     )
 }

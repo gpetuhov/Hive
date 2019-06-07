@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.managers.MapManager
+import com.gpetuhov.android.hive.util.Settings
 import com.pawegio.kandroid.startActivity
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ import javax.inject.Inject
 class SplashActivity : AppCompatActivity() {
 
     @Inject lateinit var mapManager: MapManager
+    @Inject lateinit var settings: Settings
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +38,9 @@ class SplashActivity : AppCompatActivity() {
         // This is needed to initialize Google Maps during splash screen,
         // so that there is no blank screen while starting main activity.
         mapManager.initGoogleMaps(this, savedInstanceState)
+
+        // Reset query text from previous searches
+        settings.setSearchQueryText("")
 
         startActivity<PermissionsActivity>()
         finish()

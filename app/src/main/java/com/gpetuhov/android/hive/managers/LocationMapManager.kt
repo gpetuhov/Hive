@@ -16,7 +16,7 @@ class LocationMapManager : BaseMapManager() {
         // Move camera to location only if there is no saved state
         if (mapState == null) {
             googleMap.moveCamera(location)
-            saveMapState("")
+            saveMapState()
         }
     }
 }

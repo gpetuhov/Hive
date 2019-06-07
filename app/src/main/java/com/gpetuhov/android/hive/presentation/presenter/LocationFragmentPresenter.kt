@@ -40,7 +40,7 @@ class LocationFragmentPresenter : MvpPresenter<LocationFragmentView>() {
     fun onResume() = repo.startGettingSecondUserLocationUpdates(userUid)
 
     fun onPause() {
-        locationMapManager.saveMapState("")
+        locationMapManager.saveMapState()
         repo.stopGettingSecondUserLocationUpdates()
     }
 
