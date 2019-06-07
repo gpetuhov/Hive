@@ -9,6 +9,9 @@ import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.SearchListFragmentView
 import com.gpetuhov.android.hive.util.Constants
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @InjectViewState
@@ -56,13 +59,11 @@ class SearchListFragmentPresenter :
     }
 
     fun updateSearchResult(searchResult: MutableMap<String, User>) {
-        searchResultList.clear()
-
-        // TODO: sort search results according to selected criteria
-
-        searchResultList.addAll(searchResult.values)
-
-        viewState.updateUI()
+        sortSearchResultList(searchResult.values.toMutableList()) { sortedList ->
+            searchResultList.clear()
+            searchResultList.addAll(sortedList)
+            viewState.updateUI()
+        }
     }
 
     fun showDetails(userUid: String, offerUid: String) {
@@ -79,5 +80,24 @@ class SearchListFragmentPresenter :
     private fun search() {
         viewState.onSearchStart()
         searchInteractor.search(queryLatitude, queryLongitude, queryRadius, queryText)
+    }
+
+    private fun sortSearchResultList(unsortedList: MutableList<User>, onComplete: (MutableList<User>) -> Unit) {
+        GlobalScope.launch {
+            val sortedList = mutableListOf<User>()
+            val userList = mutableListOf<User>()
+            val offerList = mutableListOf<User>()
+
+            // Separate users and offers into different lists
+            unsortedList.forEach { if (it.offerSearchResultIndex == -1) userList.add(it) else offerList.add(it) }
+
+            // TODO: sort users and offers by name
+
+            // TODO: this should change according to user selected options
+            sortedList.addAll(offerList)
+            sortedList.addAll(userList)
+
+            launch(Dispatchers.Main) { onComplete(sortedList) }
+        }
     }
 }
