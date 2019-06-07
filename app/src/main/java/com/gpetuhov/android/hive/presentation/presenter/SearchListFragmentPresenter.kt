@@ -81,6 +81,10 @@ class SearchListFragmentPresenter :
     fun favorite(isFavorite: Boolean, userUid: String, offerUid: String) =
         favoritesInteractor.favorite(isFavorite, userUid, offerUid)
 
+    fun showSearchDialog() {
+        // TODO: implement
+    }
+
     // === Private methods ===
 
     private fun search() {
