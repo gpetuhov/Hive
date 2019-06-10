@@ -329,5 +329,6 @@
     <!-- FilterFragment -->
     <string name="filter">Фильтр</string>
     <string name="clear">Сбросить</string>
+    <string name="show_result">Показать результаты</string>
 
 </resources>
