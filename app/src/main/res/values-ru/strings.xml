@@ -328,5 +328,6 @@
 
     <!-- FilterFragment -->
     <string name="filter">Фильтр</string>
+    <string name="clear">Сбросить</string>
 
 </resources>

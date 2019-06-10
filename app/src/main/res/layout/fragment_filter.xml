@@ -13,7 +13,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/filter_header"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
@@ -31,7 +31,10 @@
                     android:contentDescription="@string/close_offer_details"
                     android:onClick="@{view -> presenter.navigateUp()}"
                     android:layout_marginLeft="16dp"
-                    android:layout_marginStart="16dp"/>
+                    android:layout_marginStart="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -39,10 +42,25 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/filter"
                     style="@style/titleTextStyle"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/filter_back_button"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"/>
 
-        </LinearLayout>
+            <Button
+                    android:id="@+id/filter_clear_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clear"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginEnd="16dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

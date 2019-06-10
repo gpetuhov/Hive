@@ -328,6 +328,7 @@
 
     <!-- FilterFragment -->
     <string name="filter">Filter</string>
+    <string name="clear">Clear</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
