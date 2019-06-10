@@ -333,5 +333,7 @@
     <string name="show_users_offers">Пользователи и офферы</string>
     <string name="show_users">Только пользователи</string>
     <string name="show_offers">Только офферы</string>
+    <string name="clear_filter">Сбросить фильтр</string>
+    <string name="clear_filter_prompt">Вы действительно хотите сбросить фильтр?</string>
 
 </resources>
