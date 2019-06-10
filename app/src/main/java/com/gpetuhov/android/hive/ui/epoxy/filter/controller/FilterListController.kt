@@ -13,19 +13,13 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
             // TODO: get initial values from the presenter
 
             showUsersOffersAll(true)
-            onShowUsersOffersAllClick {
-                // TODO
-            }
+            onShowUsersOffersAllClick { presenter.showUsersOffersAll() }
 
             showUsersOnly(false)
-            onShowUsersOnlyClick {
-                // TODO
-            }
+            onShowUsersOnlyClick { presenter.showUsersOnly() }
 
             showOffersOnly(false)
-            onShowOffersOnlyClick {
-                // TODO
-            }
+            onShowOffersOnlyClick { presenter.showOffersOnly() }
         }
     }
 }

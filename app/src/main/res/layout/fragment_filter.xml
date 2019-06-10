@@ -92,6 +92,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/show_result"
                     android:background="@android:color/transparent"
+                    android:onClick="@{view -> presenter.showResult()}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
