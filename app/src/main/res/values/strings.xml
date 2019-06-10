@@ -326,6 +326,9 @@
     <string name="query_text_hint">Show all users and offers</string>
     <string name="search_results">Search results</string>
 
+    <!-- FilterFragment -->
+    <string name="filter">Filter</string>
+
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb1023250447868170</string>

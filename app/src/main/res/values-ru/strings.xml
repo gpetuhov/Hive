@@ -326,4 +326,7 @@
     <string name="query_text_hint">Отобразить всех пользователей и все офферы</string>
     <string name="search_results">Результатов поиска</string>
 
+    <!-- FilterFragment -->
+    <string name="filter">Фильтр</string>
+
 </resources>
