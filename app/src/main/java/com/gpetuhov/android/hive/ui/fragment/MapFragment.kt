@@ -147,6 +147,11 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun showFilter() {
+        val action = MapFragmentDirections.actionNavigationSearchToFilterFragment()
+        findNavController().navigate(action)
+    }
+
     // === Private methods ===
 
     private fun buttonsEnabled(isEnabled: Boolean) {

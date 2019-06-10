@@ -98,6 +98,8 @@ class MapFragmentPresenter :
         viewState.clearSearch()
     }
 
+    fun showFilter() = viewState.showFilter()
+
     // === Lifecycle calls ===
 
     fun onCreateView(savedInstanceState: Bundle?) {

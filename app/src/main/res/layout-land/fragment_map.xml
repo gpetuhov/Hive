@@ -88,6 +88,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:background="@drawable/search_background"
                 android:contentDescription="@string/search_filter"
+                android:onClick="@{view -> presenter.showFilter()}"
                 app:layout_constraintEnd_toStartOf="@+id/show_search_list_button"
                 app:layout_constraintTop_toTopOf="@+id/cancel_search_users_button"
                 app:layout_constraintBottom_toBottomOf="@+id/cancel_search_users_button"

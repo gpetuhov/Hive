@@ -28,6 +28,11 @@
                 app:destination="@id/searchListFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_navigation_search_to_filterFragment"
+                app:destination="@id/filterFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
@@ -397,6 +402,13 @@
                 app:destination="@id/offer_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/filterFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.FilterFragment"
+            android:label="FilterFragment"
+            tools:layout="@layout/fragment_filter">
     </fragment>
 
 </navigation>
