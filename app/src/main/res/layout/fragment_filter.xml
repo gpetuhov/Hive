@@ -62,24 +62,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <ScrollView
+        <com.airbnb.epoxy.EpoxyRecyclerView
+                android:id="@+id/filter_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:fillViewport="true"
                 app:layout_constraintTop_toBottomOf="@+id/filter_header"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/filter_show_result_wrapper">
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-            </LinearLayout>
-
-        </ScrollView>
-
+                app:layout_constraintBottom_toTopOf="@+id/filter_show_result_wrapper"/>
 
         <LinearLayout
                 android:id="@+id/filter_show_result_wrapper"
