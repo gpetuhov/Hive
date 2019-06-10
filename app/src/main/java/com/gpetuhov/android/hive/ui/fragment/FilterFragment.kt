@@ -56,6 +56,14 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
 
     // === PrivacyPolicyFragmentView ===
 
+    override fun showClearFilterDialog() {
+        // TODO
+    }
+
+    override fun dismissClearFilterDialog() {
+        // TODO
+    }
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }
