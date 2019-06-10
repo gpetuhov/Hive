@@ -26,7 +26,7 @@
                     android:id="@+id/filter_back_button"
                     android:layout_width="@dimen/basic_view_size"
                     android:layout_height="@dimen/basic_view_size"
-                    android:src="@drawable/ic_arrow_back"
+                    android:src="@drawable/ic_clear"
                     android:background="@android:color/transparent"
                     android:contentDescription="@string/close_offer_details"
                     android:onClick="@{view -> presenter.navigateUp()}"

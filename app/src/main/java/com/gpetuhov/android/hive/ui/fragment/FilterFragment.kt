@@ -12,9 +12,7 @@ import com.gpetuhov.android.hive.databinding.FragmentFilterBinding
 import com.gpetuhov.android.hive.presentation.presenter.FilterFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.FilterFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
-import com.gpetuhov.android.hive.util.hideMainHeader
-import com.gpetuhov.android.hive.util.setActivitySoftInputPan
-import com.gpetuhov.android.hive.util.showBottomNavigationView
+import com.gpetuhov.android.hive.util.*
 
 class FilterFragment : BaseFragment(), FilterFragmentView {
 
@@ -27,12 +25,17 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
         setActivitySoftInputPan()
 
         hideMainHeader()
-        showBottomNavigationView()
+        hideBottomNavigationView()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_filter, container, false)
         binding?.presenter = presenter
 
         return binding?.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        hideSoftKeyboard()
     }
 
     // === PrivacyPolicyFragmentView ===
