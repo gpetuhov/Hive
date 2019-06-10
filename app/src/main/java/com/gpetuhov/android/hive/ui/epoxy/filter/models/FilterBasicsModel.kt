@@ -1,6 +1,6 @@
 package com.gpetuhov.android.hive.ui.epoxy.filter.models
 
-import android.widget.CheckBox
+import android.widget.RadioButton
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -10,29 +10,29 @@ import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
 @EpoxyModelClass(layout = R.layout.filter_basics_view)
 abstract class FilterBasicsModel : EpoxyModelWithHolder<FilterBasicsHolder>() {
 
-    @EpoxyAttribute var showUsers = false
-    @EpoxyAttribute lateinit var onShowUsersClick: (Boolean) -> Unit
+    @EpoxyAttribute var showUsersOffersAll = false
+    @EpoxyAttribute lateinit var onShowUsersOffersAllClick: () -> Unit
 
-    @EpoxyAttribute var showOffers = false
-    @EpoxyAttribute lateinit var onShowOffersClick: (Boolean) -> Unit
+    @EpoxyAttribute var showUsersOnly = false
+    @EpoxyAttribute lateinit var onShowUsersOnlyClick: () -> Unit
 
-    @EpoxyAttribute var showOnline = false
-    @EpoxyAttribute lateinit var onShowOnlineClick: (Boolean) -> Unit
+    @EpoxyAttribute var showOffersOnly = false
+    @EpoxyAttribute lateinit var onShowOffersOnlyClick: () -> Unit
 
     override fun bind(holder: FilterBasicsHolder) {
-        holder.showUsers.isChecked = showUsers
-        holder.showUsers.setOnClickListener { view -> onShowUsersClick((view as CheckBox).isChecked) }
+        holder.showUsersOffersAll.isChecked = showUsersOffersAll
+        holder.showUsersOffersAll.setOnClickListener { onShowUsersOffersAllClick() }
 
-        holder.showOffers.isChecked = showOffers
-        holder.showOffers.setOnClickListener { view -> onShowOffersClick((view as CheckBox).isChecked) }
+        holder.showUsersOnly.isChecked = showUsersOnly
+        holder.showUsersOnly.setOnClickListener { onShowUsersOnlyClick() }
 
-        holder.showOnline.isChecked = showOnline
-        holder.showOnline.setOnClickListener { view -> onShowOnlineClick((view as CheckBox).isChecked) }
+        holder.showOffersOnly.isChecked = showOffersOnly
+        holder.showOffersOnly.setOnClickListener { onShowOffersOnlyClick() }
     }
 }
 
 class FilterBasicsHolder : KotlinHolder() {
-    val showUsers by bind<CheckBox>(R.id.filter_show_users)
-    val showOffers by bind<CheckBox>(R.id.filter_show_offers)
-    val showOnline by bind<CheckBox>(R.id.filter_show_online)
+    val showUsersOffersAll by bind<RadioButton>(R.id.filter_show_users_offers_all)
+    val showUsersOnly by bind<RadioButton>(R.id.filter_show_users)
+    val showOffersOnly by bind<RadioButton>(R.id.filter_show_offers)
 }

@@ -330,8 +330,8 @@
     <string name="filter">Фильтр</string>
     <string name="clear">Сбросить</string>
     <string name="show_result">Показать результаты</string>
-    <string name="show_users">Отображать пользователей</string>
-    <string name="show_offers">Отображать офферы</string>
-    <string name="show_online">Отображать только в сети</string>
+    <string name="show_users_offers">Пользователи и офферы</string>
+    <string name="show_users">Только пользователи</string>
+    <string name="show_offers">Только офферы</string>
 
 </resources>

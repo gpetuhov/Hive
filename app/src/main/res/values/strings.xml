@@ -330,9 +330,9 @@
     <string name="filter">Filter</string>
     <string name="clear">Clear</string>
     <string name="show_result">Show result</string>
-    <string name="show_users">Show users</string>
-    <string name="show_offers">Show offers</string>
-    <string name="show_online">Show only online</string>
+    <string name="show_users_offers">Users and offers</string>
+    <string name="show_users">Only users</string>
+    <string name="show_offers">Only offers</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
