@@ -2,20 +2,17 @@ package com.gpetuhov.android.hive.models
 
 import com.gpetuhov.android.hive.domain.model.Filter
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 
 class FilterTest {
 
-    private lateinit var filter: Filter
-
-    @Before
-    fun initFilter() {
-        filter = Filter()
+    companion object {
+        private const val SHOW_USERS_OFFERS_KEY = "showUsersOffers"
     }
 
     @Test
     fun showUsersOffersAll() {
+        val filter = Filter()
         assertEquals(true, filter.isShowUsersOffersAll)
         filter.setShowUsersOnly()
         assertEquals(false, filter.isShowUsersOffersAll)
@@ -25,6 +22,7 @@ class FilterTest {
 
     @Test
     fun showUsersOnly() {
+        val filter = Filter()
         assertEquals(false, filter.isShowUsersOnly)
         filter.setShowUsersOnly()
         assertEquals(true, filter.isShowUsersOnly)
@@ -32,6 +30,7 @@ class FilterTest {
 
     @Test
     fun showOffersOnly() {
+        val filter = Filter()
         assertEquals(false, filter.isShowOffersOnly)
         filter.setShowOffersOnly()
         assertEquals(true, filter.isShowOffersOnly)
@@ -39,19 +38,18 @@ class FilterTest {
 
     @Test
     fun toJson() {
-        val showUsersOffersKey = "\"showUsersOffers\""
-        var json = Filter.toJson(filter)
-        var expectedJsonValue = "$showUsersOffersKey:${Filter.SHOW_USERS_OFFERS_ALL}"
-        assertEquals(true, json.contains(expectedJsonValue))
+        val filter = Filter()
+        checkToJson(filter, SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_OFFERS_ALL) { filter.setShowUsersOffersAll() }
+        checkToJson(filter, SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_ONLY) { filter.setShowUsersOnly() }
+        checkToJson(filter, SHOW_USERS_OFFERS_KEY, Filter.SHOW_OFFERS_ONLY) { filter.setShowOffersOnly() }
+    }
 
-        filter.setShowUsersOnly()
-        json = Filter.toJson(filter)
-        expectedJsonValue = "$showUsersOffersKey:${Filter.SHOW_USERS_ONLY}"
-        assertEquals(true, json.contains(expectedJsonValue))
+    // === Private methods ===
 
-        filter.setShowOffersOnly()
-        json = Filter.toJson(filter)
-        expectedJsonValue = "$showUsersOffersKey:${Filter.SHOW_OFFERS_ONLY}"
-        assertEquals(true, json.contains(expectedJsonValue))
+    private fun checkToJson(filter: Filter, expectedJsonKey: String, expectedJsonValue: Any, action: () -> Unit) {
+        action()
+        val json = Filter.toJson(filter)
+        val expectedJsonString = "\"$expectedJsonKey\":$expectedJsonValue}"
+        assertEquals(true, json.contains(expectedJsonString))
     }
 }
