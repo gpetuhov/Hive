@@ -1646,8 +1646,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         val filter = settings.getSearchFilter()
 
         // Show users if not isShowOffersOnly only
-        val userFitsQuery = !filter.isShowOffersOnly &&
-                (user.getUsernameOrName().contains(queryText, true) || user.description.contains(queryText, true))
+        val userFitsQuery = !filter.isShowOffersOnly && user.getUsernameOrName().contains(queryText, true)
 
         // Show offers if not isShowUsersOnly only
         return userFitsQuery || !filter.isShowUsersOnly && offersContainQueryText(user)
