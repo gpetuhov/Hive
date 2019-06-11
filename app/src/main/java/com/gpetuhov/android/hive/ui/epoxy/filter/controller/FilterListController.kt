@@ -24,16 +24,11 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
         filterOffers {
             id("filter_offers")
 
-            // TODO: get params from presenter
-            freeOffersOnly(false)
-            onFreeOffersOnlyClick {
-                // TODO
-            }
+            freeOffersOnly(presenter.isFreeOffersOnly())
+            onFreeOffersOnlyClick { freeOffersOnly -> presenter.freeOffersOnly(freeOffersOnly) }
 
-            offersWithReviewsOnly(false)
-            onOffersWithReviewsClick {
-                // TODO
-            }
+            offersWithReviewsOnly(presenter.isOffersWithReviewsOnly())
+            onOffersWithReviewsClick { offersWithReviewsOnly -> presenter.offersWithReviewsOnly(offersWithReviewsOnly) }
         }
     }
 }

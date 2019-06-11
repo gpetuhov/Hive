@@ -53,6 +53,22 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
     fun isShowOffersOnly() = filter.isShowOffersOnly
 
+    // --- Offer filter params ---
+
+    fun freeOffersOnly(value: Boolean) {
+        setFilterChanged()
+        filter.isFreeOffersOnly = value
+    }
+
+    fun isFreeOffersOnly() = filter.isFreeOffersOnly
+
+    fun offersWithReviewsOnly(value: Boolean) {
+        setFilterChanged()
+        filter.isOffersWithReviewsOnly = value
+    }
+
+    fun isOffersWithReviewsOnly() = filter.isOffersWithReviewsOnly
+
     // --- Clear filter ---
 
     fun showClearFilterDialog() = viewState.showClearFilterDialog()
