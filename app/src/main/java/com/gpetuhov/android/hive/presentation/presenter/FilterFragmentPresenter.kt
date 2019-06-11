@@ -2,14 +2,24 @@ package com.gpetuhov.android.hive.presentation.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.model.Filter
 import com.gpetuhov.android.hive.presentation.view.FilterFragmentView
-import timber.log.Timber
+import com.gpetuhov.android.hive.util.Settings
+import javax.inject.Inject
 
 @InjectViewState
 class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
+    @Inject lateinit var settings: Settings
+
     private var filter = Filter()
+
+    init {
+        HiveApp.appComponent.inject(this)
+    }
+
+    // TODO: init presenter with filter from settings and update UI
 
     // === Public methods ===
 
@@ -26,7 +36,7 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
     fun showClearFilterDialog() = viewState.showClearFilterDialog()
 
     fun clearFilter() {
-        // TODO: clear filter
+        // TODO: clear filter and update UI here
 
         dismissClearFilterDialog()
     }
@@ -36,10 +46,8 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
     // --- Show results ---
 
     fun showResult() {
-        // TODO
-
-        val filterJson = Filter.toJson(filter)
-        Timber.tag("FilterPresenter").d(filterJson)
+        settings.setSearchFilter(filter)
+        navigateUp()
     }
 
     // --- Navigation ---
