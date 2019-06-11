@@ -84,6 +84,12 @@ class SearchListFragmentPresenter :
     fun favorite(isFavorite: Boolean, userUid: String, offerUid: String) =
         favoritesInteractor.favorite(isFavorite, userUid, offerUid)
 
+    fun filterIsDefault() = settings.getSearchFilter().isDefault
+
+    fun showFilter() {
+        // TODO
+    }
+
     // --- Search dialog ---
 
     fun showSearchDialog() = viewState.showSearchDialog()

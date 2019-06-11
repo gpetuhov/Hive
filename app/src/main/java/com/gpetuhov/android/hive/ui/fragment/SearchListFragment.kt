@@ -67,6 +67,7 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
     override fun onResume() {
         super.onResume()
+        binding?.filterIsDefault = presenter.filterIsDefault()
         presenter.onResume()
         hideSoftKeyboard()
     }
