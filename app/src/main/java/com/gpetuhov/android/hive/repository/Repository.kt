@@ -1643,9 +1643,14 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun checkConditions(user: User): Boolean = user.hasActiveOffer() && user.isHiveRunning && checkQueryText(user)
 
     private fun checkQueryText(user: User): Boolean {
-        return user.name.contains(queryText, true)
-                || user.username.contains(queryText, true)
-                || offersContainQueryText(user)
+        val filter = settings.getSearchFilter()
+
+        // Show users if not isShowOffersOnly only
+        val userFitsQuery = !filter.isShowOffersOnly &&
+                (user.getUsernameOrName().contains(queryText, true) || user.description.contains(queryText, true))
+
+        // Show offers if not isShowUsersOnly only
+        return userFitsQuery || !filter.isShowUsersOnly && offersContainQueryText(user)
     }
 
     private fun offersContainQueryText(user: User): Boolean {
