@@ -84,6 +84,7 @@ class MapFragmentPresenter :
 
     fun cancelSearch() {
         viewState.clearSearch()
+        settings.resetSearchFilter()
         search()
     }
 
