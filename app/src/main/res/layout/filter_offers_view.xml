@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp">
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/md_grey_300"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/offer_settings"
+            style="@style/titleTextStyle"/>
+
+    <CheckBox
+            android:id="@+id/filter_free_offers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/free_offers"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"/>
+
+    <CheckBox
+            android:id="@+id/filter_offers_with_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/offers_with_reviews"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"/>
+
+</LinearLayout>

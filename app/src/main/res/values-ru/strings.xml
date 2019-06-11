@@ -325,6 +325,9 @@
     <string name="query_text_empty">не задан (отображаются все пользователи и офферы)</string>
     <string name="query_text_hint">Отобразить всех пользователей и все офферы</string>
     <string name="search_results">Результатов поиска</string>
+    <string name="offer_settings">Настройки офферов</string>
+    <string name="free_offers">Только бесплатные офферы</string>
+    <string name="offers_with_reviews">Только офферы с отзывами</string>
 
     <!-- FilterFragment -->
     <string name="filter">Фильтр</string>
