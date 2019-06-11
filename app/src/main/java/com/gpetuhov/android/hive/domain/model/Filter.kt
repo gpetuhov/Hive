@@ -7,9 +7,9 @@ class Filter(
     @Json(name = "showUsersOffers") private var showUsersOffers: Int = SHOW_USERS_OFFERS_ALL
 ) {
     companion object {
-        private const val SHOW_USERS_OFFERS_ALL = 0
-        private const val SHOW_USERS_ONLY = 1
-        private const val SHOW_OFFERS_ONLY = 2
+        const val SHOW_USERS_OFFERS_ALL = 0
+        const val SHOW_USERS_ONLY = 1
+        const val SHOW_OFFERS_ONLY = 2
 
         fun toJson(filter: Filter): String {
             val moshi = Moshi.Builder().build()
