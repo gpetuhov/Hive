@@ -13,7 +13,8 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
     @Inject lateinit var settings: Settings
 
-    var filter = Filter()
+    private var filter = Filter()
+    private var isFilterChanged = false
 
     init {
         HiveApp.appComponent.inject(this)
@@ -24,14 +25,40 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
     // --- Init presenter ---
 
     fun init() {
-        filter = settings.getSearchFilter()
+        // This check is needed to prevent overwriting changed filter
+        // with filter from settings on screen rotation.
+        if (!isFilterChanged) filter = settings.getSearchFilter()
     }
+
+    // --- Basic filter params ---
+
+    fun showUsersOffersAll() {
+        setFilterChanged()
+        filter.setShowUsersOffersAll()
+    }
+
+    fun isShowUsersOffersAll() = filter.isShowUsersOffersAll
+
+    fun showUsersOnly() {
+        setFilterChanged()
+        filter.setShowUsersOnly()
+    }
+
+    fun isShowUsersOnly() = filter.isShowUsersOnly
+
+    fun showOffersOnly() {
+        setFilterChanged()
+        filter.setShowOffersOnly()
+    }
+
+    fun isShowOffersOnly() = filter.isShowOffersOnly
 
     // --- Clear filter ---
 
     fun showClearFilterDialog() = viewState.showClearFilterDialog()
 
     fun clearFilter() {
+        setFilterChanged()
         filter = Filter()
         viewState.updateUI()
         dismissClearFilterDialog()
@@ -49,4 +76,10 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
     // --- Navigation ---
 
     fun navigateUp() = viewState.navigateUp()
+
+    // === Private methods ===
+
+    private fun setFilterChanged() {
+        isFilterChanged = true
+    }
 }
