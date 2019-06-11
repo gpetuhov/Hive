@@ -66,7 +66,7 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
 
     override fun onResume() {
         super.onResume()
-        binding?.filterIsDefault = presenter.filterIsDefault()
+        updateFilterButton()
         presenter.search()
     }
 
@@ -151,6 +151,10 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
     override fun showFilter() {
         val action = MapFragmentDirections.actionNavigationSearchToFilterFragment()
         findNavController().navigate(action)
+    }
+
+    override fun updateFilterButton() {
+        binding?.filterIsDefault = presenter.filterIsDefault()
     }
 
     // === Private methods ===

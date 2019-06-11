@@ -39,4 +39,7 @@ interface MapFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun showFilter()
+
+    @StateStrategyType(SkipStrategy::class)
+    fun updateFilterButton()
 }

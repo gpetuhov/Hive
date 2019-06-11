@@ -83,8 +83,9 @@ class MapFragmentPresenter :
     }
 
     fun cancelSearch() {
-        viewState.clearSearch()
         settings.resetSearchFilter()
+        viewState.clearSearch()
+        viewState.updateFilterButton()
         search()
     }
 
