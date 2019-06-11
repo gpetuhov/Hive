@@ -44,6 +44,29 @@ class FilterTest {
         checkToJson(filter, SHOW_USERS_OFFERS_KEY, Filter.SHOW_OFFERS_ONLY) { filter.setShowOffersOnly() }
     }
 
+    @Test
+    fun fromJson() {
+        val filter = Filter()
+
+        checkFromJson(
+            filter,
+            { filter.setShowUsersOffersAll() },
+            { it.isShowUsersOffersAll }
+        )
+
+        checkFromJson(
+            filter,
+            { filter.setShowUsersOnly() },
+            { it.isShowUsersOnly }
+        )
+
+        checkFromJson(
+            filter,
+            { filter.setShowOffersOnly() },
+            { it.isShowOffersOnly }
+        )
+    }
+
     // === Private methods ===
 
     private fun checkToJson(filter: Filter, expectedJsonKey: String, expectedJsonValue: Any, action: () -> Unit) {
@@ -51,5 +74,13 @@ class FilterTest {
         val json = Filter.toJson(filter)
         val expectedJsonString = "\"$expectedJsonKey\":$expectedJsonValue}"
         assertEquals(true, json.contains(expectedJsonString))
+    }
+
+    private fun checkFromJson(sourceFilter: Filter, action: () -> Unit, assertion: (Filter) -> Unit) {
+        action()
+        val json = Filter.toJson(sourceFilter)
+        val resultFilter = Filter.fromJson(json)
+        assertEquals(true, resultFilter != null)
+        if (resultFilter != null) assertion(resultFilter)
     }
 }
