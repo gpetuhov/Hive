@@ -1662,7 +1662,7 @@ class Repository(private val context: Context, private val settings: Settings) :
                 val offer = offerList[i]
 
                 val offerFreeFitsQuery = if (filter.isFreeOffersOnly) offer.isFree else true
-                val offerReviewsFitsQuery = if (filter.isOffersWithReviewsOnly) offer.reviewCount > 0 else true
+                val offerReviewsFitsQuery = if (filter.isOffersWithReviewsOnly) offer.hasReviews else true
 
                 if (
                     offer.isActive

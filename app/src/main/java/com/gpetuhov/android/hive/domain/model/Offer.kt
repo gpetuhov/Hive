@@ -20,4 +20,5 @@ data class Offer(
 ) {
     var photoList = mutableListOf<Photo>()
     val starCountString get() = starCount.toString()
+    val hasReviews get() = reviewCount > 0
 }
