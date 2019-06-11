@@ -1640,26 +1640,36 @@ class Repository(private val context: Context, private val settings: Settings) :
         }
     }
 
-    private fun checkConditions(user: User): Boolean = user.hasActiveOffer() && user.isHiveRunning && checkQueryText(user)
+    private fun checkConditions(user: User): Boolean {
+        // Do not show users with Hive not running or without active offers
+        if (!user.isHiveRunning || !user.hasActiveOffer()) return false
 
-    private fun checkQueryText(user: User): Boolean {
         val filter = settings.getSearchFilter()
 
         // Show users if not isShowOffersOnly only
         val userFitsQuery = !filter.isShowOffersOnly && user.getUsernameOrName().contains(queryText, true)
 
         // Show offers if not isShowUsersOnly only
-        return userFitsQuery || !filter.isShowUsersOnly && offersContainQueryText(user)
+        return userFitsQuery || !filter.isShowUsersOnly && checkOfferConditions(user, filter)
     }
 
-    private fun offersContainQueryText(user: User): Boolean {
+    private fun checkOfferConditions(user: User, filter: Filter): Boolean {
         var result = false
         val offerList = user.offerList
 
         if (offerList.size > 0) {
             for (i in offerList.indices) {
                 val offer = offerList[i]
-                if (offer.isActive && (offer.title.contains(queryText, true) || offer.description.contains(queryText, true))) {
+
+                val offerFreeFitsQuery = if (filter.isFreeOffersOnly) offer.isFree else true
+                val offerReviewsFitsQuery = if (filter.isOffersWithReviewsOnly) offer.reviewCount > 0 else true
+
+                if (
+                    offer.isActive
+                    && offerFreeFitsQuery
+                    && offerReviewsFitsQuery
+                    && (offer.title.contains(queryText, true) || offer.description.contains(queryText, true))
+                ) {
                     result = true
                     user.offerSearchResultIndex = i
                     break
