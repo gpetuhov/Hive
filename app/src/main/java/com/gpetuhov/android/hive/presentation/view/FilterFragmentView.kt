@@ -19,4 +19,9 @@ interface FilterFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun navigateUp()
+
+    // === Update UI ===
+
+    @StateStrategyType(SkipStrategy::class)
+    fun updateUI()
 }

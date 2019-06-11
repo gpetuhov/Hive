@@ -13,7 +13,7 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
     @Inject lateinit var settings: Settings
 
-    private var filter = Filter()
+    var filter = Filter()
 
     init {
         HiveApp.appComponent.inject(this)
@@ -23,21 +23,13 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
     // === Public methods ===
 
-    // --- Basic filter params ---
-
-    fun showUsersOffersAll() = filter.setShowUsersOffersAll()
-
-    fun showUsersOnly() = filter.setShowUsersOnly()
-
-    fun showOffersOnly() = filter.setShowOffersOnly()
-
     // --- Clear filter ---
 
     fun showClearFilterDialog() = viewState.showClearFilterDialog()
 
     fun clearFilter() {
-        // TODO: clear filter and update UI here
-
+        filter = Filter()
+        viewState.updateUI()
         dismissClearFilterDialog()
     }
 

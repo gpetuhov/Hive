@@ -10,16 +10,14 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
         filterBasics {
             id("filter_basics")
 
-            // TODO: get initial values from the presenter
+            showUsersOffersAll(presenter.filter.isShowUsersOffersAll)
+            onShowUsersOffersAllClick { presenter.filter.setShowUsersOffersAll() }
 
-            showUsersOffersAll(true)
-            onShowUsersOffersAllClick { presenter.showUsersOffersAll() }
+            showUsersOnly(presenter.filter.isShowUsersOnly)
+            onShowUsersOnlyClick { presenter.filter.setShowUsersOnly() }
 
-            showUsersOnly(false)
-            onShowUsersOnlyClick { presenter.showUsersOnly() }
-
-            showOffersOnly(false)
-            onShowOffersOnlyClick { presenter.showOffersOnly() }
+            showOffersOnly(presenter.filter.isShowOffersOnly)
+            onShowOffersOnlyClick { presenter.filter.setShowOffersOnly() }
         }
     }
 }

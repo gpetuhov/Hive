@@ -78,9 +78,9 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
         findNavController().navigateUp()
     }
 
-    // === Private methods ===
+    override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
-    private fun updateUI() = controller?.requestModelBuild()
+    // === Private methods ===
 
     private fun initDialogs() = initClearFilterDialog()
 
