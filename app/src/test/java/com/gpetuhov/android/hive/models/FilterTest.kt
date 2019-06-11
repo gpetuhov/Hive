@@ -8,6 +8,8 @@ class FilterTest {
 
     companion object {
         private const val SHOW_USERS_OFFERS_KEY = "showUsersOffers"
+        private const val FREE_OFFERS_ONLY_KEY = "freeOffersOnly"
+        private const val OFFERS_WITH_REVIEWS_ONLY_KEY = "offersWithReviewsOnly"
     }
 
     @Test
@@ -38,18 +40,20 @@ class FilterTest {
 
     @Test
     fun toJson() {
-        val filter = Filter()
-        checkToJson(filter, SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_OFFERS_ALL) { it.setShowUsersOffersAll() }
-        checkToJson(filter, SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_ONLY) { it.setShowUsersOnly() }
-        checkToJson(filter, SHOW_USERS_OFFERS_KEY, Filter.SHOW_OFFERS_ONLY) { it.setShowOffersOnly() }
+        checkToJson(SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_OFFERS_ALL) { it.setShowUsersOffersAll() }
+        checkToJson(SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_ONLY) { it.setShowUsersOnly() }
+        checkToJson(SHOW_USERS_OFFERS_KEY, Filter.SHOW_OFFERS_ONLY) { it.setShowOffersOnly() }
+        checkToJson(FREE_OFFERS_ONLY_KEY, true) { it.isFreeOffersOnly = true }
+        checkToJson(OFFERS_WITH_REVIEWS_ONLY_KEY, true) { it.isOffersWithReviewsOnly = true }
     }
 
     @Test
     fun fromJson() {
-        val filter = Filter()
-        checkFromJson(filter, { it.setShowUsersOffersAll() }, { it.isShowUsersOffersAll })
-        checkFromJson(filter, { it.setShowUsersOnly() }, { it.isShowUsersOnly })
-        checkFromJson(filter, { it.setShowOffersOnly() }, { it.isShowOffersOnly })
+        checkFromJson({ it.setShowUsersOffersAll() }, { it.isShowUsersOffersAll })
+        checkFromJson({ it.setShowUsersOnly() }, { it.isShowUsersOnly })
+        checkFromJson({ it.setShowOffersOnly() }, { it.isShowOffersOnly })
+        checkFromJson({ it.isFreeOffersOnly = true }, { it.isFreeOffersOnly })
+        checkFromJson({ it.isOffersWithReviewsOnly = true }, { it.isOffersWithReviewsOnly })
     }
 
     @Test
@@ -62,14 +66,16 @@ class FilterTest {
 
     // === Private methods ===
 
-    private fun checkToJson(filter: Filter, expectedJsonKey: String, expectedJsonValue: Any, action: (Filter) -> Unit) {
+    private fun checkToJson(expectedJsonKey: String, expectedJsonValue: Any, action: (Filter) -> Unit) {
+        val filter = Filter()
         action(filter)
         val json = Filter.toJson(filter)
-        val expectedJsonString = "\"$expectedJsonKey\":$expectedJsonValue}"
+        val expectedJsonString = "\"$expectedJsonKey\":$expectedJsonValue"
         assertEquals(true, json.contains(expectedJsonString))
     }
 
-    private fun checkFromJson(sourceFilter: Filter, action: (Filter) -> Unit, assertion: (Filter) -> Unit) {
+    private fun checkFromJson(action: (Filter) -> Unit, assertion: (Filter) -> Unit) {
+        val sourceFilter = Filter()
         action(sourceFilter)
         val json = Filter.toJson(sourceFilter)
         val resultFilter = Filter.fromJson(json)

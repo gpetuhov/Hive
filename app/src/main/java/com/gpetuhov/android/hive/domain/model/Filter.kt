@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.Moshi
 
 class Filter(
-    @Json(name = "freeOffersOnly") var isFreeOffersOnly: Boolean = false,
-    @Json(name = "offersWithReviewsOnly") var isOffersWithReviewsOnly: Boolean = false,
-    @Json(name = "showUsersOffers") private var showUsersOffers: Int = SHOW_USERS_OFFERS_ALL
+    @field:Json(name = "freeOffersOnly") var isFreeOffersOnly: Boolean = false,
+    @field:Json(name = "offersWithReviewsOnly") var isOffersWithReviewsOnly: Boolean = false,
+    @field:Json(name = "showUsersOffers") private var showUsersOffers: Int = SHOW_USERS_OFFERS_ALL
 ) {
     companion object {
         const val SHOW_USERS_OFFERS_ALL = 0
