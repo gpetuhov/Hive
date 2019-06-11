@@ -24,9 +24,11 @@ class Settings(context: Context) {
 
     fun setSelectedPhotoPosition(value: Int) = prefs.edit { putInt(SELECTED_PHOTO_POSITION_KEY, value) }
 
-    fun getSearchQueryText() = prefs.getString(SEARCH_QUERY_TEXT_KEY, "")
+    fun getSearchQueryText() = prefs.getString(SEARCH_QUERY_TEXT_KEY, "") ?: ""
 
     fun setSearchQueryText(value: String) = prefs.edit { putString(SEARCH_QUERY_TEXT_KEY, value) }
+
+    fun resetSearchQueryText() = setSearchQueryText("")
 
     fun getSearchFilter(): Filter {
         val filterJson = prefs.getString(SEARCH_FILTER_KEY, "") ?: ""
@@ -38,4 +40,6 @@ class Settings(context: Context) {
         val filterJson = Filter.toJson(filter)
         prefs.edit { putString(SEARCH_FILTER_KEY, filterJson) }
     }
+
+    fun resetSearchFilter() = setSearchFilter(Filter())
 }
