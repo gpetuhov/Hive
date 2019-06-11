@@ -96,15 +96,9 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
 
     // === MapFragmentView ===
 
-    override fun onSearchStart() {
-        progressVisible(true)
-        buttonsEnabled(false)
-    }
+    override fun onSearchStart() = progressVisible(true)
 
-    override fun onSearchComplete() {
-        progressVisible(false)
-        buttonsEnabled(true)
-    }
+    override fun onSearchComplete() = progressVisible(false)
 
     override fun clearSearch() = query_text.setText("")
 
@@ -158,13 +152,6 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
     }
 
     // === Private methods ===
-
-    private fun buttonsEnabled(isEnabled: Boolean) {
-        search_users_button.isEnabled = isEnabled
-        cancel_search_users_button.isEnabled = isEnabled
-        filter_search_button.isEnabled = isEnabled
-        show_search_list_button.isEnabled = isEnabled
-    }
 
     private fun progressVisible(isVisible: Boolean) = search_progress.setVisible(isVisible)
 
