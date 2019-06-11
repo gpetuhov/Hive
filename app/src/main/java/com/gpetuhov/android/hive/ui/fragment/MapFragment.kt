@@ -66,6 +66,7 @@ class MapFragment : BaseMapFragment(), MapFragmentView {
 
     override fun onResume() {
         super.onResume()
+        binding?.filterIsDefault = presenter.filterIsDefault()
         presenter.search()
     }
 

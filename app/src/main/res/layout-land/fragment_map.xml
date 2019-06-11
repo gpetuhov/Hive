@@ -6,6 +6,7 @@
 
     <data>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.MapFragmentPresenter"/>
+        <variable name="filterIsDefault" type="boolean"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,7 +85,7 @@
                 android:id="@+id/filter_search_button"
                 android:layout_width="@dimen/basic_view_size"
                 android:layout_height="@dimen/basic_view_size"
-                android:src="@drawable/ic_filter"
+                android:src="@{filterIsDefault ? @drawable/ic_filter : @drawable/ic_filter_red}"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:background="@drawable/search_background"
                 android:contentDescription="@string/search_filter"

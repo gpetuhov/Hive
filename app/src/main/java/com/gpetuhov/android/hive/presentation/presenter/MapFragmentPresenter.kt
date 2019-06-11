@@ -101,6 +101,8 @@ class MapFragmentPresenter :
 
     fun showFilter() = viewState.showFilter()
 
+    fun filterIsDefault() = settings.getSearchFilter().isDefault
+
     // === Lifecycle calls ===
 
     fun onCreateView(savedInstanceState: Bundle?) {
