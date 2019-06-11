@@ -54,10 +54,10 @@ class FilterTest {
 
     @Test
     fun defaultFilter() {
-        val filter = Filter()
-        assertEquals(true, filter.isDefault)
-        filter.setShowUsersOnly()
-        assertEquals(false, filter.isDefault)
+        checkIsDefault()
+        checkIsNotDefault { it.setShowUsersOnly() }
+        checkIsNotDefault { it.isFreeOffersOnly = true }
+        checkIsNotDefault { it.isOffersWithReviewsOnly = true }
     }
 
     // === Private methods ===
@@ -75,5 +75,16 @@ class FilterTest {
         val resultFilter = Filter.fromJson(json)
         assertEquals(true, resultFilter != null)
         if (resultFilter != null) assertion(resultFilter)
+    }
+
+    private fun checkIsDefault() {
+        val filter = Filter()
+        assertEquals(true, filter.isDefault)
+    }
+
+    private fun checkIsNotDefault(action: (Filter) -> Unit) {
+        val filter = Filter()
+        action(filter)
+        assertEquals(false, filter.isDefault)
     }
 }

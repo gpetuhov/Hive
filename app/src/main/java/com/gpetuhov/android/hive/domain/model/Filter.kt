@@ -36,7 +36,9 @@ class Filter(
     val isShowUsersOnly get() = showUsersOffers == SHOW_USERS_ONLY
     val isShowOffersOnly get() = showUsersOffers == SHOW_OFFERS_ONLY
 
-    val isDefault get() = showUsersOffers == SHOW_USERS_OFFERS_ALL
+    val isDefault: Boolean get() {
+        return showUsersOffers == SHOW_USERS_OFFERS_ALL && !isFreeOffersOnly && !isOffersWithReviewsOnly
+    }
 
     // === Public methods ===
 
