@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/offer_settings"
+            android:text="@string/offers"
             style="@style/titleTextStyle"/>
 
     <CheckBox

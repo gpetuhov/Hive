@@ -335,7 +335,7 @@
     <string name="show_offers">Only offers</string>
     <string name="clear_filter">Clear filter</string>
     <string name="clear_filter_prompt">Do you want to clear filter?</string>
-    <string name="offer_settings">Offer settings</string>
+    <string name="general">General</string>
     <string name="free_offers">Only free offers</string>
     <string name="offers_with_reviews">Only offers with reviews</string>
 
