@@ -34,6 +34,7 @@ import com.google.firebase.storage.UploadTask
 import com.gpetuhov.android.hive.domain.model.*
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getStringKeyMapFromGeneric
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.coroutines.Dispatchers
@@ -1684,6 +1685,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         // This is needed to prevent start search on every map update
         searchDisposable = searchSub
             .debounce(Constants.Map.SEARCH_START_LATENCY, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe { searchQuery ->
                 startSearch(
                     searchQuery.queryLatitude,
