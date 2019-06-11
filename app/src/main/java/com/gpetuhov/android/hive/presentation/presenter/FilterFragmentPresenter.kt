@@ -19,9 +19,13 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
         HiveApp.appComponent.inject(this)
     }
 
-    // TODO: init presenter with filter from settings and update UI
-
     // === Public methods ===
+
+    // --- Init presenter ---
+
+    fun init() {
+        filter = settings.getSearchFilter()
+    }
 
     // --- Clear filter ---
 

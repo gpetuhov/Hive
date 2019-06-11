@@ -44,6 +44,8 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
         val filterRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.filter_recycler_view)
         filterRecyclerView?.adapter = controller?.adapter
 
+        presenter.init()
+
         updateUI()
 
         return binding?.root
