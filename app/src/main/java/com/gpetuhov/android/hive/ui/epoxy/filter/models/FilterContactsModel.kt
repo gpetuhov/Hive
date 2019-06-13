@@ -6,6 +6,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.ui.epoxy.base.bind
 
 @EpoxyModelClass(layout = R.layout.filter_contacts_view)
 abstract class FilterContactsModel : EpoxyModelWithHolder<FilterContactsHolder>() {
@@ -35,29 +36,14 @@ abstract class FilterContactsModel : EpoxyModelWithHolder<FilterContactsHolder>(
     @EpoxyAttribute lateinit var onHasWebsiteClick: (Boolean) -> Unit
 
     override fun bind(holder: FilterContactsHolder) {
-        holder.hasPhone.isChecked = hasPhone
-        holder.hasPhone.setOnClickListener { view -> onHasPhoneClick((view as CheckBox).isChecked) }
-
-        holder.hasEmail.isChecked = hasEmail
-        holder.hasEmail.setOnClickListener { view -> onHasEmailClick((view as CheckBox).isChecked) }
-
-        holder.hasSkype.isChecked = hasSkype
-        holder.hasSkype.setOnClickListener { view -> onHasSkypeClick((view as CheckBox).isChecked) }
-
-        holder.hasFacebook.isChecked = hasFacebook
-        holder.hasFacebook.setOnClickListener { view -> onHasFacebookClick((view as CheckBox).isChecked) }
-
-        holder.hasTwitter.isChecked = hasTwitter
-        holder.hasTwitter.setOnClickListener { view -> onHasTwitterClick((view as CheckBox).isChecked) }
-
-        holder.hasInstagram.isChecked = hasInstagram
-        holder.hasInstagram.setOnClickListener { view -> onHasInstagramClick((view as CheckBox).isChecked) }
-
-        holder.hasYoutube.isChecked = hasYoutube
-        holder.hasYoutube.setOnClickListener { view -> onHasYoutubeClick((view as CheckBox).isChecked) }
-
-        holder.hasWebsite.isChecked = hasWebsite
-        holder.hasWebsite.setOnClickListener { view -> onHasWebsiteClick((view as CheckBox).isChecked) }
+        holder.hasPhone.bind(hasPhone) { onHasPhoneClick(it) }
+        holder.hasEmail.bind(hasEmail) { onHasEmailClick(it) }
+        holder.hasSkype.bind(hasSkype) { onHasSkypeClick(it) }
+        holder.hasFacebook.bind(hasFacebook) { onHasFacebookClick(it) }
+        holder.hasTwitter.bind(hasTwitter) { onHasTwitterClick(it) }
+        holder.hasInstagram.bind(hasInstagram) { onHasInstagramClick(it) }
+        holder.hasYoutube.bind(hasYoutube) { onHasYoutubeClick(it) }
+        holder.hasWebsite.bind(hasWebsite) { onHasWebsiteClick(it) }
     }
 }
 
