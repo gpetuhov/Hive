@@ -64,11 +64,8 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
         filterAwards {
             id("filter_awards")
 
-            // TODO: init with values from the presenter
-            hasTextMaster(false)
-            onHasTextMasterClick {
-                // TODO
-            }
+            hasTextMaster(presenter.hasTextMaster())
+            onHasTextMasterClick { hasTextMaster -> presenter.setHasTextMaster(hasTextMaster) }
         }
     }
 }

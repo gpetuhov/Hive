@@ -127,6 +127,15 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
     fun hasWebsite() = filter.hasWebsite
 
+    // --- Filter awards params ---
+
+    fun setHasTextMaster(value: Boolean) {
+        setFilterChanged()
+        filter.hasTextMaster = value
+    }
+
+    fun hasTextMaster() = filter.hasTextMaster
+
     // --- Clear filter ---
 
     fun showClearFilterDialog() = viewState.showClearFilterDialog()
