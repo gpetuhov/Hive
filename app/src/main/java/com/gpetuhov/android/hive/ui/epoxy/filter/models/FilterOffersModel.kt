@@ -6,6 +6,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.ui.epoxy.base.bind
 
 @EpoxyModelClass(layout = R.layout.filter_offers_view)
 abstract class FilterOffersModel : EpoxyModelWithHolder<FilterOffersHolder>() {
@@ -17,11 +18,8 @@ abstract class FilterOffersModel : EpoxyModelWithHolder<FilterOffersHolder>() {
     @EpoxyAttribute lateinit var onOffersWithReviewsClick: (Boolean) -> Unit
 
     override fun bind(holder: FilterOffersHolder) {
-        holder.freeOffers.isChecked = freeOffersOnly
-        holder.freeOffers.setOnClickListener { view -> onFreeOffersOnlyClick((view as CheckBox).isChecked) }
-
-        holder.offersWithReviews.isChecked = offersWithReviewsOnly
-        holder.offersWithReviews.setOnClickListener { view -> onOffersWithReviewsClick((view as CheckBox).isChecked) }
+        holder.freeOffers.bind(freeOffersOnly) { onFreeOffersOnlyClick(it) }
+        holder.offersWithReviews.bind(offersWithReviewsOnly) { onOffersWithReviewsClick(it) }
     }
 }
 
