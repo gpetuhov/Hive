@@ -41,6 +41,8 @@ class SortFragment : BaseFragment(), SortFragmentView {
         val filterRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.sort_recycler_view)
         filterRecyclerView?.adapter = controller?.adapter
 
+        presenter.init()
+
         updateUI()
 
         return binding?.root

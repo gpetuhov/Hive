@@ -21,6 +21,15 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
     }
 
     // === Public methods ===
+
+    // --- Init presenter ---
+
+    fun init() {
+        // This check is needed to prevent overwriting changed sort
+        // with sort from settings on screen rotation.
+        if (!isSortChanged) sort = settings.getSearchSort()
+    }
+
     // --- Sort param ---
 
     // --- Basic filter params ---
