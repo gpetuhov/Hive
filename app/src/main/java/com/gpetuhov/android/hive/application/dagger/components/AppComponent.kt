@@ -67,6 +67,7 @@ interface AppComponent {
     fun inject(reviewsAllFragmentPresenter: ReviewsAllFragmentPresenter)
     fun inject(searchListFragmentPresenter: SearchListFragmentPresenter)
     fun inject(filterFragmentPresenter: FilterFragmentPresenter)
+    fun inject(sortFragmentPresenter: SortFragmentPresenter)
 
     fun inject(deleteUserInteractor: DeleteUserInteractor)
     fun inject(signOutInteractor: SignOutInteractor)
