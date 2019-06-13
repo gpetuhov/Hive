@@ -407,6 +407,11 @@
                 app:destination="@id/filterFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_searchListFragment_to_sortFragment"
+                app:destination="@id/sortFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
@@ -414,6 +419,13 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.FilterFragment"
             android:label="FilterFragment"
             tools:layout="@layout/fragment_filter">
+    </fragment>
+
+    <fragment
+            android:id="@+id/sortFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.SortFragment"
+            android:label="SortFragment"
+            tools:layout="@layout/fragment_sort">
     </fragment>
 
 </navigation>

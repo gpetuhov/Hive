@@ -115,6 +115,11 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun showSort() {
+        val action = SearchListFragmentDirections.actionSearchListFragmentToSortFragment()
+        findNavController().navigate(action)
+    }
+
     override fun showSearchDialog() = showDialog(searchDialog, presenter.getSearchPrefill())
 
     override fun dismissSearchDialog() = searchDialog?.dismiss() ?: Unit

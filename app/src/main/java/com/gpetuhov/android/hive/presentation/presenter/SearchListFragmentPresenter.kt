@@ -87,6 +87,8 @@ class SearchListFragmentPresenter :
     fun filterIsDefault() = settings.getSearchFilter().isDefault
 
     fun showFilter() = viewState.showFilter()
+    
+    fun showSort() = viewState.showSort()
 
     // --- Search dialog ---
 
