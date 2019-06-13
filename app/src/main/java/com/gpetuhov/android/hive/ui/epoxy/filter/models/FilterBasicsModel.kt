@@ -6,6 +6,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.ui.epoxy.base.bind
 
 @EpoxyModelClass(layout = R.layout.filter_basics_view)
 abstract class FilterBasicsModel : EpoxyModelWithHolder<FilterBasicsHolder>() {
@@ -20,14 +21,9 @@ abstract class FilterBasicsModel : EpoxyModelWithHolder<FilterBasicsHolder>() {
     @EpoxyAttribute lateinit var onShowOffersOnlyClick: () -> Unit
 
     override fun bind(holder: FilterBasicsHolder) {
-        holder.showUsersOffersAll.isChecked = showUsersOffersAll
-        holder.showUsersOffersAll.setOnClickListener { onShowUsersOffersAllClick() }
-
-        holder.showUsersOnly.isChecked = showUsersOnly
-        holder.showUsersOnly.setOnClickListener { onShowUsersOnlyClick() }
-
-        holder.showOffersOnly.isChecked = showOffersOnly
-        holder.showOffersOnly.setOnClickListener { onShowOffersOnlyClick() }
+        holder.showUsersOffersAll.bind(showUsersOffersAll) { onShowUsersOffersAllClick() }
+        holder.showUsersOnly.bind(showUsersOnly) { onShowUsersOnlyClick() }
+        holder.showOffersOnly.bind(showOffersOnly) { onShowOffersOnlyClick() }
     }
 }
 
