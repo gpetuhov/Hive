@@ -87,6 +87,11 @@ class UpdateCommentFragmentPresenter : MvpPresenter<UpdateCommentFragmentView>()
 
     fun quitCommentUpdateCancel() = viewState.dismissQuitCommentUpdateDialog()
 
+    fun saveFromQuitDialog() {
+        viewState.dismissQuitCommentUpdateDialog()
+        saveComment()
+    }
+
     // === Private methods ===
 
     private fun navigateUp() = viewState.navigateUp()
