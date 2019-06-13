@@ -1664,9 +1664,21 @@ class Repository(private val context: Context, private val settings: Settings) :
                 && youtubeFitsQuery
                 && websiteFitsQuery
 
+        val superProviderFitsQuery = if (filter.hasSuperProvider) user.hasSuperProviderAward else true
+        val goodProviderFitsQuery = if (filter.hasGoodProvider) user.hasGoodProviderAward else true
+        val rockStarFitsQuery = if (filter.hasRockStar) user.hasRockStarAward else true
+        val adorableProviderFitsQuery = if (filter.hasAdorableProvider) user.hasAdorableProviderAward else true
+        val favoriteProviderFitsQuery = if (filter.hasFavoriteProvider) user.hasFavoriteProviderAward else true
         val textMasterFitsQuery = if (filter.hasTextMaster) user.hasTextMasterAward else true
+        val newbieFitsQuery = if (filter.hasNewbie) user.hasNewbieAward() else true
 
-        val awardsFitQuery = textMasterFitsQuery
+        val awardsFitQuery = superProviderFitsQuery
+                && goodProviderFitsQuery
+                && rockStarFitsQuery
+                && adorableProviderFitsQuery
+                && favoriteProviderFitsQuery
+                && textMasterFitsQuery
+                && newbieFitsQuery
 
         // Show users or offers if contacts fit query and awards fit query
         return contactsFitQuery && awardsFitQuery && (
