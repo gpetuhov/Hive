@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentSortBinding
 import com.gpetuhov.android.hive.presentation.presenter.SortFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.SortFragmentView
+import com.gpetuhov.android.hive.ui.epoxy.sort.controller.SortListController
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideBottomNavigationView
 import com.gpetuhov.android.hive.util.hideMainHeader
@@ -20,6 +22,7 @@ class SortFragment : BaseFragment(), SortFragmentView {
 
     @InjectPresenter lateinit var presenter: SortFragmentPresenter
 
+    private var controller: SortListController? = null
     private var binding: FragmentSortBinding? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -32,7 +35,20 @@ class SortFragment : BaseFragment(), SortFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sort, container, false)
         binding?.presenter = presenter
 
+        controller = SortListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+
+        val filterRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.sort_recycler_view)
+        filterRecyclerView?.adapter = controller?.adapter
+
+        updateUI()
+
         return binding?.root
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        controller?.onSaveInstanceState(outState)
+        super.onSaveInstanceState(outState)
     }
 
     // === SortFragmentView ===
@@ -40,4 +56,8 @@ class SortFragment : BaseFragment(), SortFragmentView {
     override fun navigateUp() {
         findNavController().navigateUp()
     }
+
+    // === Private methods ===
+
+    private fun updateUI() = controller?.requestModelBuild() ?: Unit
 }
