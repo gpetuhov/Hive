@@ -64,40 +64,26 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
         filterAwards {
             id("filter_awards")
 
-            // TODO: init from presenter
+            hasSuperProvider(presenter.hasSuperProvider())
+            onHasSuperProviderClick { hasSuperProvider -> presenter.setHasSuperProvider(hasSuperProvider) }
 
-            hasSuperProvider(false)
-            onHasSuperProviderClick {
-                // TODO
-            }
+            hasGoodProvider(presenter.hasGoodProvider())
+            onHasGoodProviderClick { hasGoodProvider -> presenter.setHasGoodProvider(hasGoodProvider) }
 
-            hasGoodProvider(false)
-            onHasGoodProviderClick {
-                // TODO
-            }
+            hasRockStar(presenter.hasRockStar())
+            onHasRockStarClick { hasRockStar -> presenter.setHasRockStar(hasRockStar) }
 
-            hasRockStar(false)
-            onHasRockStarClick {
-                // TODO
-            }
+            hasAdorableProvider(presenter.hasAdorableProvider())
+            onHasAdorableProviderClick { hasAdorableProvider -> presenter.setHasAdorableProvider(hasAdorableProvider) }
 
-            hasAdorableProvider(false)
-            onHasAdorableProviderClick {
-                // TODO
-            }
-
-            hasFavoriteProvider(false)
-            onHasFavoriteProviderClick {
-                // TODO
-            }
+            hasFavoriteProvider(presenter.hasFavoriteProvider())
+            onHasFavoriteProviderClick { hasFavoriteProvider -> presenter.setHasFavoriteProvider(hasFavoriteProvider) }
 
             hasTextMaster(presenter.hasTextMaster())
             onHasTextMasterClick { hasTextMaster -> presenter.setHasTextMaster(hasTextMaster) }
 
-            hasNewbie(false)
-            onHasNewbieClick {
-                // TODO
-            }
+            hasNewbie(presenter.hasNewbie())
+            onHasNewbieClick { hasNewbie -> presenter.setHasNewbie(hasNewbie) }
         }
     }
 }

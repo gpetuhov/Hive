@@ -129,12 +129,54 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
     // --- Filter awards params ---
 
+    fun setHasSuperProvider(value: Boolean) {
+        setFilterChanged()
+        filter.hasSuperProvider = value
+    }
+
+    fun hasSuperProvider() = filter.hasSuperProvider
+
+    fun setHasGoodProvider(value: Boolean) {
+        setFilterChanged()
+        filter.hasGoodProvider = value
+    }
+
+    fun hasGoodProvider() = filter.hasGoodProvider
+
+    fun setHasRockStar(value: Boolean) {
+        setFilterChanged()
+        filter.hasRockStar = value
+    }
+
+    fun hasRockStar() = filter.hasRockStar
+
+    fun setHasAdorableProvider(value: Boolean) {
+        setFilterChanged()
+        filter.hasAdorableProvider = value
+    }
+
+    fun hasAdorableProvider() = filter.hasAdorableProvider
+
+    fun setHasFavoriteProvider(value: Boolean) {
+        setFilterChanged()
+        filter.hasFavoriteProvider = value
+    }
+
+    fun hasFavoriteProvider() = filter.hasFavoriteProvider
+
     fun setHasTextMaster(value: Boolean) {
         setFilterChanged()
         filter.hasTextMaster = value
     }
 
     fun hasTextMaster() = filter.hasTextMaster
+
+    fun setHasNewbie(value: Boolean) {
+        setFilterChanged()
+        filter.hasNewbie = value
+    }
+
+    fun hasNewbie() = filter.hasNewbie
 
     // --- Clear filter ---
 
