@@ -1664,8 +1664,12 @@ class Repository(private val context: Context, private val settings: Settings) :
                 && youtubeFitsQuery
                 && websiteFitsQuery
 
-        // Show users or offers if contacts fit query
-        return contactsFitQuery && (
+        val textMasterFitsQuery = if (filter.hasTextMaster) user.hasTextMasterAward else true
+
+        val awardsFitQuery = textMasterFitsQuery
+
+        // Show users or offers if contacts fit query and awards fit query
+        return contactsFitQuery && awardsFitQuery && (
                     // Show users if not isShowOffersOnly
                     !filter.isShowOffersOnly && user.getUsernameOrName().contains(queryText, true)
                     // Show offers if not isShowUsersOnly
