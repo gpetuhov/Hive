@@ -70,7 +70,7 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
         dismissDialogs()
     }
 
-    // === PrivacyPolicyFragmentView ===
+    // === SortFragmentView ===
 
     override fun showClearFilterDialog() = clearFilterDialog?.show() ?: Unit
 

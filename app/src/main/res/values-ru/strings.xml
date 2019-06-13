@@ -354,5 +354,10 @@
     <string name="has_favorite_provider">Имеется награда FavoriteProvider</string>
     <string name="has_textmaster">Имеется награда ТекстМастер</string>
     <string name="has_newbie">Имеется награда Новичок</string>
+    <string name="close_filter">Закрыть фильтр</string>
+
+    <!-- SortFragment -->
+    <string name="sort">Сортировка</string>
+    <string name="close_sort">Закрыть сортировку</string>
 
 </resources>

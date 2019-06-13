@@ -354,6 +354,11 @@
     <string name="has_favorite_provider">Has FavoriteProvider award</string>
     <string name="has_textmaster">Has TextMaster award</string>
     <string name="has_newbie">Has Newbie award</string>
+    <string name="close_filter">Close filter</string>
+
+    <!-- SortFragment -->
+    <string name="sort">Sort</string>
+    <string name="close_sort">Close sort</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
