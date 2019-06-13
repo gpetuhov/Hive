@@ -6,6 +6,14 @@ import com.squareup.moshi.Moshi
 class Filter(
     @field:Json(name = "freeOffersOnly") var isFreeOffersOnly: Boolean = false,
     @field:Json(name = "offersWithReviewsOnly") var isOffersWithReviewsOnly: Boolean = false,
+    @field:Json(name = "hasPhone") var hasPhone: Boolean = false,
+    @field:Json(name = "hasEmail") var hasEmail: Boolean = false,
+    @field:Json(name = "hasSkype") var hasSkype: Boolean = false,
+    @field:Json(name = "hasFacebook") var hasFacebook: Boolean = false,
+    @field:Json(name = "hasTwitter") var hasTwitter: Boolean = false,
+    @field:Json(name = "hasInstagram") var hasInstagram: Boolean = false,
+    @field:Json(name = "hasYoutube") var hasYoutube: Boolean = false,
+    @field:Json(name = "hasWebsite") var hasWebsite: Boolean = false,
     @field:Json(name = "showUsersOffers") private var showUsersOffers: Int = SHOW_USERS_OFFERS_ALL
 ) {
     companion object {
@@ -37,7 +45,17 @@ class Filter(
     val isShowOffersOnly get() = showUsersOffers == SHOW_OFFERS_ONLY
 
     val isDefault: Boolean get() {
-        return showUsersOffers == SHOW_USERS_OFFERS_ALL && !isFreeOffersOnly && !isOffersWithReviewsOnly
+        return showUsersOffers == SHOW_USERS_OFFERS_ALL
+                && !isFreeOffersOnly
+                && !isOffersWithReviewsOnly
+                && !hasPhone
+                && !hasEmail
+                && !hasSkype
+                && !hasFacebook
+                && !hasTwitter
+                && !hasInstagram
+                && !hasYoutube
+                && !hasWebsite
     }
 
     // === Public methods ===
