@@ -35,46 +35,29 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
         filterContacts { 
             id("filter_contacts")
             
-            // TODO: init with values from the presenter
-            hasPhone(false)
-            onHasPhoneClick {
-                // TODO
-            }
+            hasPhone(presenter.hasPhone())
+            onHasPhoneClick { hasPhone -> presenter.setHasPhone(hasPhone) }
 
-            hasEmail(false)
-            onHasEmailClick {
-                // TODO
-            }
+            hasEmail(presenter.hasEmail())
+            onHasEmailClick { hasEmail -> presenter.setHasEmail(hasEmail) }
 
-            hasSkype(false)
-            onHasSkypeClick {
-                // TODO
-            }
+            hasSkype(presenter.hasSkype())
+            onHasSkypeClick { hasSkype -> presenter.setHasSkype(hasSkype) }
 
-            hasFacebook(false)
-            onHasFacebookClick {
-                // TODO
-            }
+            hasFacebook(presenter.hasFacebook())
+            onHasFacebookClick { hasFacebook -> presenter.setHasFacebook(hasFacebook) }
 
-            hasTwitter(false)
-            onHasTwitterClick {
-                // TODO
-            }
+            hasTwitter(presenter.hasTwitter())
+            onHasTwitterClick { hasTwitter -> presenter.setHasTwitter(hasTwitter) }
 
-            hasInstagram(false)
-            onHasInstagramClick {
-                // TODO
-            }
+            hasInstagram(presenter.hasInstagram())
+            onHasInstagramClick { hasInstagram -> presenter.setHasInstagram(hasInstagram) }
 
-            hasYoutube(false)
-            onHasYoutubeClick {
-                // TODO
-            }
+            hasYoutube(presenter.hasYoutube())
+            onHasYoutubeClick { hasYoutube -> presenter.setHasYoutube(hasYoutube) }
 
-            hasWebsite(false)
-            onHasWebsiteClick {
-                // TODO
-            }
+            hasWebsite(presenter.hasWebsite())
+            onHasWebsiteClick { hasWebsite -> presenter.setHasWebsite(hasWebsite) }
         }
     }
 }

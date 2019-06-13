@@ -69,6 +69,64 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
     fun isOffersWithReviewsOnly() = filter.isOffersWithReviewsOnly
 
+    // --- Filter contacts params ---
+
+    fun setHasPhone(value: Boolean) {
+        setFilterChanged()
+        filter.hasPhone = value
+    }
+
+    fun hasPhone() = filter.hasPhone
+
+    fun setHasEmail(value: Boolean) {
+        setFilterChanged()
+        filter.hasEmail = value
+    }
+
+    fun hasEmail() = filter.hasEmail
+
+    fun setHasSkype(value: Boolean) {
+        setFilterChanged()
+        filter.hasSkype = value
+    }
+
+    fun hasSkype() = filter.hasSkype
+
+    fun setHasFacebook(value: Boolean) {
+        setFilterChanged()
+        filter.hasFacebook = value
+    }
+
+    fun hasFacebook() = filter.hasFacebook
+
+    fun setHasTwitter(value: Boolean) {
+        setFilterChanged()
+        filter.hasTwitter = value
+    }
+
+    fun hasTwitter() = filter.hasTwitter
+
+    fun setHasInstagram(value: Boolean) {
+        setFilterChanged()
+        filter.hasInstagram = value
+    }
+
+    fun hasInstagram() = filter.hasInstagram
+
+    fun setHasYoutube(value: Boolean) {
+        setFilterChanged()
+        filter.hasYoutube = value
+    }
+
+    fun hasYoutube() = filter.hasYoutube
+
+    fun setHasWebsite(value: Boolean) {
+        setFilterChanged()
+        filter.hasWebsite = value
+    }
+
+    fun hasWebsite() = filter.hasWebsite
+
     // --- Clear filter ---
 
     fun showClearFilterDialog() = viewState.showClearFilterDialog()
