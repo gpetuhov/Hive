@@ -346,6 +346,12 @@
     <string name="has_instagram">Указан Instagram</string>
     <string name="has_youtube">Указан Youtube</string>
     <string name="has_website">Указан сайт</string>
+    <string name="has_super_provider">Имеется награда SuperProvider</string>
+    <string name="has_good_provider">Имеется награда GoodProvider</string>
+    <string name="has_rock_star">Имеется награда RockStar</string>
+    <string name="has_adorable_provider">Имеется награда AdorableProvider</string>
+    <string name="has_favorite_provider">Имеется награда FavoriteProvider</string>
     <string name="has_textmaster">Имеется награда ТекстМастер</string>
+    <string name="has_newbie">Имеется награда Новичок</string>
 
 </resources>

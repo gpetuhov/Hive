@@ -64,8 +64,40 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
         filterAwards {
             id("filter_awards")
 
+            // TODO: init from presenter
+
+            hasSuperProvider(false)
+            onHasSuperProviderClick {
+                // TODO
+            }
+
+            hasGoodProvider(false)
+            onHasGoodProviderClick {
+                // TODO
+            }
+
+            hasRockStar(false)
+            onHasRockStarClick {
+                // TODO
+            }
+
+            hasAdorableProvider(false)
+            onHasAdorableProviderClick {
+                // TODO
+            }
+
+            hasFavoriteProvider(false)
+            onHasFavoriteProviderClick {
+                // TODO
+            }
+
             hasTextMaster(presenter.hasTextMaster())
             onHasTextMasterClick { hasTextMaster -> presenter.setHasTextMaster(hasTextMaster) }
+
+            hasNewbie(false)
+            onHasNewbieClick {
+                // TODO
+            }
         }
     }
 }

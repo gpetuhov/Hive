@@ -346,7 +346,13 @@
     <string name="has_instagram">Instagram specified</string>
     <string name="has_youtube">Youtube specified</string>
     <string name="has_website">Website specified</string>
+    <string name="has_super_provider">Has SuperProvider award</string>
+    <string name="has_good_provider">Has GoodProvider award</string>
+    <string name="has_rock_star">Has RockStar award</string>
+    <string name="has_adorable_provider">Has AdorableProvider award</string>
+    <string name="has_favorite_provider">Has FavoriteProvider award</string>
     <string name="has_textmaster">Has TextMaster award</string>
+    <string name="has_newbie">Has Newbie award</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>

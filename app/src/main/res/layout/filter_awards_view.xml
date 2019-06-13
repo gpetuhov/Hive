@@ -24,6 +24,76 @@
             style="@style/titleTextStyle"/>
 
     <CheckBox
+            android:id="@+id/filter_has_super_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/has_super_provider"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/super_provider_info"
+            style="@style/mediumTextStyle"/>
+
+    <CheckBox
+            android:id="@+id/filter_has_good_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/has_good_provider"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/good_provider_info"
+            style="@style/mediumTextStyle"/>
+
+    <CheckBox
+            android:id="@+id/filter_has_rock_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/has_rock_star"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rock_star_info"
+            style="@style/mediumTextStyle"/>
+
+    <CheckBox
+            android:id="@+id/filter_has_adorable_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/has_adorable_provider"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/adorable_provider_info"
+            style="@style/mediumTextStyle"/>
+
+    <CheckBox
+            android:id="@+id/filter_has_favorite_provider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/has_favorite_provider"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/favorite_provider_info"
+            style="@style/mediumTextStyle"/>
+
+    <CheckBox
             android:id="@+id/filter_has_textmaster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,6 +105,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_master_info"
+            style="@style/mediumTextStyle"/>
+
+    <CheckBox
+            android:id="@+id/filter_has_newbie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/has_newbie"
+            android:layout_marginTop="16dp"
+            style="@style/basicTextStyle"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/newbie_info"
             style="@style/mediumTextStyle"/>
 
 </LinearLayout>
