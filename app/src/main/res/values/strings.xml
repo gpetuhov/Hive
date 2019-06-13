@@ -338,6 +338,14 @@
     <string name="general">General</string>
     <string name="free_offers">Only free offers</string>
     <string name="offers_with_reviews">Only offers with reviews</string>
+    <string name="has_phone">Phone specified</string>
+    <string name="has_email">Email specified</string>
+    <string name="has_skype">Skype specified</string>
+    <string name="has_facebook">Facebook specified</string>
+    <string name="has_twitter">Twitter specified</string>
+    <string name="has_instagram">Instagram specified</string>
+    <string name="has_youtube">Youtube specified</string>
+    <string name="has_website">Website specified</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>

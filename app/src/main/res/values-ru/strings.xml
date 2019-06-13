@@ -338,5 +338,13 @@
     <string name="general">Общее</string>
     <string name="free_offers">Только бесплатные офферы</string>
     <string name="offers_with_reviews">Только офферы с отзывами</string>
+    <string name="has_phone">Указан телефон</string>
+    <string name="has_email">Указан email</string>
+    <string name="has_skype">Указан Skype</string>
+    <string name="has_facebook">Указан Facebook</string>
+    <string name="has_twitter">Указан Twitter</string>
+    <string name="has_instagram">Указан Instagram</string>
+    <string name="has_youtube">Указан Youtube</string>
+    <string name="has_website">Указан сайт</string>
 
 </resources>

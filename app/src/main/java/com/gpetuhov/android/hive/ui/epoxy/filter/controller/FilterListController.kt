@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.ui.epoxy.filter.controller
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.presentation.presenter.FilterFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterBasics
+import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterContacts
 import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterOffers
 
 class FilterListController(private val presenter: FilterFragmentPresenter) : EpoxyController()  {
@@ -29,6 +30,51 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
 
             offersWithReviewsOnly(presenter.isOffersWithReviewsOnly())
             onOffersWithReviewsClick { offersWithReviewsOnly -> presenter.offersWithReviewsOnly(offersWithReviewsOnly) }
+        }
+        
+        filterContacts { 
+            id("filter_contacts")
+            
+            // TODO: init with values from the presenter
+            hasPhone(false)
+            onHasPhoneClick {
+                // TODO
+            }
+
+            hasEmail(false)
+            onHasEmailClick {
+                // TODO
+            }
+
+            hasSkype(false)
+            onHasSkypeClick {
+                // TODO
+            }
+
+            hasFacebook(false)
+            onHasFacebookClick {
+                // TODO
+            }
+
+            hasTwitter(false)
+            onHasTwitterClick {
+                // TODO
+            }
+
+            hasInstagram(false)
+            onHasInstagramClick {
+                // TODO
+            }
+
+            hasYoutube(false)
+            onHasYoutubeClick {
+                // TODO
+            }
+
+            hasWebsite(false)
+            onHasWebsiteClick {
+                // TODO
+            }
         }
     }
 }
