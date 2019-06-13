@@ -39,9 +39,10 @@ class SplashActivity : AppCompatActivity() {
         // so that there is no blank screen while starting main activity.
         mapManager.initGoogleMaps(this, savedInstanceState)
 
-        // Reset query text and filter from previous searches
+        // Reset query text, filter and sort from previous searches
         settings.resetSearchQueryText()
         settings.resetSearchFilter()
+        settings.resetSearchSort()
 
         startActivity<PermissionsActivity>()
         finish()
