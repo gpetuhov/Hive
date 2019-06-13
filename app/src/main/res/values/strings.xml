@@ -325,6 +325,7 @@
     <string name="query_text_empty">not specified (showing all users and offers)</string>
     <string name="query_text_hint">Show all users and offers</string>
     <string name="search_results">Search results</string>
+    <string name="sort_results">Sort results</string>
 
     <!-- FilterFragment -->
     <string name="filter">Filter</string>

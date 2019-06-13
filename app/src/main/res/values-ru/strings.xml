@@ -325,6 +325,7 @@
     <string name="query_text_empty">не задан (отображаются все пользователи и офферы)</string>
     <string name="query_text_hint">Отобразить всех пользователей и все офферы</string>
     <string name="search_results">Результатов поиска</string>
+    <string name="sort_results">Сортировка результатов</string>
 
     <!-- FilterFragment -->
     <string name="filter">Фильтр</string>
