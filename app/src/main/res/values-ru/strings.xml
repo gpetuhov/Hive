@@ -359,5 +359,8 @@
     <!-- SortFragment -->
     <string name="sort">Сортировка</string>
     <string name="close_sort">Закрыть сортировку</string>
+    <string name="sort_by_title">По названию (имени)</string>
+    <string name="sort_by_price">По цене</string>
+    <string name="sort_by_rating">По рейтингу</string>
 
 </resources>
