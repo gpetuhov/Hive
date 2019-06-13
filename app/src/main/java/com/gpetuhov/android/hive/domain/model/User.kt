@@ -88,9 +88,10 @@ data class User(
     var hasAltruistAward = false
 
     val hasGoodProviderAward get() = totalReviewsCount >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_REVIEW_COUNT
-            && totalReviewsCount < Constants.Awards.SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT
             && averageRating >= Constants.Awards.GOOD_PROVIDER_AWARD_MIN_RATING
 
+    // User can have both GoodProvider and SuperProvider awards
+    // (if user has SuperProvider, then also has GoodProvider).
     val hasSuperProviderAward get() = totalReviewsCount >= Constants.Awards.SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT
             && averageRating >= Constants.Awards.SUPER_PROVIDER_AWARD_MIN_RATING
 

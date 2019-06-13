@@ -272,8 +272,8 @@ class UserTest {
         user.totalReviewsCount = Constants.Awards.SUPER_PROVIDER_AWARD_MIN_REVIEW_COUNT
         user.averageRating = Constants.Awards.SUPER_PROVIDER_AWARD_MIN_RATING
 
-        // If user has SuperProvider award, user must NOT have GoodProvider award
-        assertEquals(false, user.hasGoodProviderAward)
+        // If user has SuperProvider award, user must have GoodProvider award also
+        assertEquals(true, user.hasGoodProviderAward)
         assertEquals(true, user.hasSuperProviderAward)
     }
 
