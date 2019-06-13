@@ -1664,15 +1664,13 @@ class Repository(private val context: Context, private val settings: Settings) :
                 && youtubeFitsQuery
                 && websiteFitsQuery
 
-        // Show users if not isShowOffersOnly and contacts fit query
-        val userFitsQuery = !filter.isShowOffersOnly
-                && contactsFitQuery
-                && user.getUsernameOrName().contains(queryText, true)
-
-        // TODO: refactor this
-
-        // Show offers if not isShowUsersOnly and contacts fit query
-        return userFitsQuery || !filter.isShowUsersOnly && contactsFitQuery && checkOfferConditions(user, filter)
+        // Show users or offers if contacts fit query
+        return contactsFitQuery && (
+                    // Show users if not isShowOffersOnly
+                    !filter.isShowOffersOnly && user.getUsernameOrName().contains(queryText, true)
+                    // Show offers if not isShowUsersOnly
+                    || !filter.isShowUsersOnly && checkOfferConditions(user, filter)
+                )
     }
 
     private fun checkOfferConditions(user: User, filter: Filter): Boolean {
