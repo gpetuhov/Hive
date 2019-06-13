@@ -18,6 +18,7 @@ class FilterTest {
         private const val HAS_INSTAGRAM_KEY = "hasInstagram"
         private const val HAS_YOUTUBE_KEY = "hasYoutube"
         private const val HAS_WEBSITE_KEY = "hasWebsite"
+        private const val HAS_TEXTMASTER_KEY = "hasTextMaster"
     }
 
     @Test
@@ -61,6 +62,7 @@ class FilterTest {
         checkToJson(HAS_INSTAGRAM_KEY, true) { it.hasInstagram = true }
         checkToJson(HAS_YOUTUBE_KEY, true) { it.hasYoutube = true }
         checkToJson(HAS_WEBSITE_KEY, true) { it.hasWebsite = true }
+        checkToJson(HAS_TEXTMASTER_KEY, true) { it.hasTextMaster = true }
     }
 
     @Test
@@ -78,6 +80,7 @@ class FilterTest {
         checkFromJson({ it.hasInstagram = true }, { it.hasInstagram })
         checkFromJson({ it.hasYoutube = true }, { it.hasYoutube })
         checkFromJson({ it.hasWebsite = true }, { it.hasWebsite })
+        checkFromJson({ it.hasTextMaster = true }, { it.hasTextMaster })
     }
 
     @Test
@@ -94,6 +97,7 @@ class FilterTest {
         checkIsNotDefault { it.hasInstagram = true }
         checkIsNotDefault { it.hasYoutube = true }
         checkIsNotDefault { it.hasWebsite = true }
+        checkIsNotDefault { it.hasTextMaster = true }
     }
 
     // === Private methods ===

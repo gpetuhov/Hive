@@ -346,6 +346,7 @@
     <string name="has_instagram">Instagram specified</string>
     <string name="has_youtube">Youtube specified</string>
     <string name="has_website">Website specified</string>
+    <string name="has_textmaster">Has TextMaster award</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>

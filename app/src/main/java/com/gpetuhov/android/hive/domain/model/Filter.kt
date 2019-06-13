@@ -14,6 +14,7 @@ class Filter(
     @field:Json(name = "hasInstagram") var hasInstagram: Boolean = false,
     @field:Json(name = "hasYoutube") var hasYoutube: Boolean = false,
     @field:Json(name = "hasWebsite") var hasWebsite: Boolean = false,
+    @field:Json(name = "hasTextMaster") var hasTextMaster: Boolean = false,
     @field:Json(name = "showUsersOffers") private var showUsersOffers: Int = SHOW_USERS_OFFERS_ALL
 ) {
     companion object {
@@ -56,6 +57,7 @@ class Filter(
                 && !hasInstagram
                 && !hasYoutube
                 && !hasWebsite
+                && !hasTextMaster
     }
 
     // === Public methods ===

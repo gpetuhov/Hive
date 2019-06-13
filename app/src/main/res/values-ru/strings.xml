@@ -346,5 +346,6 @@
     <string name="has_instagram">Указан Instagram</string>
     <string name="has_youtube">Указан Youtube</string>
     <string name="has_website">Указан сайт</string>
+    <string name="has_textmaster">Имеется награда ТекстМастер</string>
 
 </resources>

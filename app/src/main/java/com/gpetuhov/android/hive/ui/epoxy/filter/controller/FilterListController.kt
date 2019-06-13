@@ -2,6 +2,7 @@ package com.gpetuhov.android.hive.ui.epoxy.filter.controller
 
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.presentation.presenter.FilterFragmentPresenter
+import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterAwards
 import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterBasics
 import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterContacts
 import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterOffers
@@ -58,6 +59,16 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
 
             hasWebsite(presenter.hasWebsite())
             onHasWebsiteClick { hasWebsite -> presenter.setHasWebsite(hasWebsite) }
+        }
+
+        filterAwards {
+            id("filter_awards")
+
+            // TODO: init with values from the presenter
+            hasTextMaster(false)
+            onHasTextMasterClick {
+                // TODO
+            }
         }
     }
 }
