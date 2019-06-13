@@ -6,6 +6,7 @@ import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.ui.epoxy.base.KotlinHolder
+import com.gpetuhov.android.hive.ui.epoxy.base.bind
 
 @EpoxyModelClass(layout = R.layout.sort_param_view)
 abstract class SortParamModel : EpoxyModelWithHolder<SortParamHolder>() {
@@ -20,14 +21,9 @@ abstract class SortParamModel : EpoxyModelWithHolder<SortParamHolder>() {
     @EpoxyAttribute lateinit var onSortByRatingClick: () -> Unit
 
     override fun bind(holder: SortParamHolder) {
-        holder.sortByTitle.isChecked = sortByTitle
-        holder.sortByTitle.setOnClickListener { onSortByTitleClick() }
-
-        holder.sortByPrice.isChecked = sortByPrice
-        holder.sortByPrice.setOnClickListener { onSortByPriceClick() }
-
-        holder.sortByRating.isChecked = sortByRating
-        holder.sortByRating.setOnClickListener { onSortByRatingClick() }
+        holder.sortByTitle.bind(sortByTitle) { onSortByTitleClick() }
+        holder.sortByPrice.bind(sortByPrice) { onSortByPriceClick() }
+        holder.sortByRating.bind(sortByRating) { onSortByRatingClick() }
     }
 }
 
