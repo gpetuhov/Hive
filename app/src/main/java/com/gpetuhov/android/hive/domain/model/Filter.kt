@@ -14,7 +14,13 @@ class Filter(
     @field:Json(name = "hasInstagram") var hasInstagram: Boolean = false,
     @field:Json(name = "hasYoutube") var hasYoutube: Boolean = false,
     @field:Json(name = "hasWebsite") var hasWebsite: Boolean = false,
+    @field:Json(name = "hasSuperProvider") var hasSuperProvider: Boolean = false,
+    @field:Json(name = "hasGoodProvider") var hasGoodProvider: Boolean = false,
+    @field:Json(name = "hasRockStar") var hasRockStar: Boolean = false,
+    @field:Json(name = "hasAdorableProvider") var hasAdorableProvider: Boolean = false,
+    @field:Json(name = "hasFavoriteProvider") var hasFavoriteProvider: Boolean = false,
     @field:Json(name = "hasTextMaster") var hasTextMaster: Boolean = false,
+    @field:Json(name = "hasNewbie") var hasNewbie: Boolean = false,
     @field:Json(name = "showUsersOffers") private var showUsersOffers: Int = SHOW_USERS_OFFERS_ALL
 ) {
     companion object {
@@ -57,7 +63,13 @@ class Filter(
                 && !hasInstagram
                 && !hasYoutube
                 && !hasWebsite
+                && !hasSuperProvider
+                && !hasGoodProvider
+                && !hasRockStar
+                && !hasAdorableProvider
+                && !hasFavoriteProvider
                 && !hasTextMaster
+                && !hasNewbie
     }
 
     // === Public methods ===

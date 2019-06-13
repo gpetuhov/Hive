@@ -18,7 +18,13 @@ class FilterTest {
         private const val HAS_INSTAGRAM_KEY = "hasInstagram"
         private const val HAS_YOUTUBE_KEY = "hasYoutube"
         private const val HAS_WEBSITE_KEY = "hasWebsite"
+        private const val HAS_SUPER_PROVIDER_KEY = "hasSuperProvider"
+        private const val HAS_GOOD_PROVIDER_KEY = "hasGoodProvider"
+        private const val HAS_ROCK_STAR_KEY = "hasRockStar"
+        private const val HAS_ADORABLE_PROVIDER_KEY = "hasAdorableProvider"
+        private const val HAS_FAVORITE_PROVIDER_KEY = "hasFavoriteProvider"
         private const val HAS_TEXTMASTER_KEY = "hasTextMaster"
+        private const val HAS_NEWBIE_KEY = "hasNewbie"
     }
 
     @Test
@@ -52,8 +58,10 @@ class FilterTest {
         checkToJson(SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_OFFERS_ALL) { it.setShowUsersOffersAll() }
         checkToJson(SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_ONLY) { it.setShowUsersOnly() }
         checkToJson(SHOW_USERS_OFFERS_KEY, Filter.SHOW_OFFERS_ONLY) { it.setShowOffersOnly() }
+
         checkToJson(FREE_OFFERS_ONLY_KEY, true) { it.isFreeOffersOnly = true }
         checkToJson(OFFERS_WITH_REVIEWS_ONLY_KEY, true) { it.isOffersWithReviewsOnly = true }
+
         checkToJson(HAS_PHONE_KEY, true) { it.hasPhone = true }
         checkToJson(HAS_EMAIL_KEY, true) { it.hasEmail = true }
         checkToJson(HAS_SKYPE_KEY, true) { it.hasSkype = true }
@@ -62,7 +70,14 @@ class FilterTest {
         checkToJson(HAS_INSTAGRAM_KEY, true) { it.hasInstagram = true }
         checkToJson(HAS_YOUTUBE_KEY, true) { it.hasYoutube = true }
         checkToJson(HAS_WEBSITE_KEY, true) { it.hasWebsite = true }
+
+        checkToJson(HAS_SUPER_PROVIDER_KEY, true) { it.hasSuperProvider = true }
+        checkToJson(HAS_GOOD_PROVIDER_KEY, true) { it.hasGoodProvider = true }
+        checkToJson(HAS_ROCK_STAR_KEY, true) { it.hasRockStar = true }
+        checkToJson(HAS_ADORABLE_PROVIDER_KEY, true) { it.hasAdorableProvider = true }
+        checkToJson(HAS_FAVORITE_PROVIDER_KEY, true) { it.hasFavoriteProvider = true }
         checkToJson(HAS_TEXTMASTER_KEY, true) { it.hasTextMaster = true }
+        checkToJson(HAS_NEWBIE_KEY, true) { it.hasNewbie = true }
     }
 
     @Test
@@ -70,8 +85,10 @@ class FilterTest {
         checkFromJson({ it.setShowUsersOffersAll() }, { it.isShowUsersOffersAll })
         checkFromJson({ it.setShowUsersOnly() }, { it.isShowUsersOnly })
         checkFromJson({ it.setShowOffersOnly() }, { it.isShowOffersOnly })
+
         checkFromJson({ it.isFreeOffersOnly = true }, { it.isFreeOffersOnly })
         checkFromJson({ it.isOffersWithReviewsOnly = true }, { it.isOffersWithReviewsOnly })
+
         checkFromJson({ it.hasPhone = true }, { it.hasPhone })
         checkFromJson({ it.hasEmail = true }, { it.hasEmail })
         checkFromJson({ it.hasSkype = true }, { it.hasSkype })
@@ -80,15 +97,25 @@ class FilterTest {
         checkFromJson({ it.hasInstagram = true }, { it.hasInstagram })
         checkFromJson({ it.hasYoutube = true }, { it.hasYoutube })
         checkFromJson({ it.hasWebsite = true }, { it.hasWebsite })
+
+        checkFromJson({ it.hasSuperProvider = true }, { it.hasSuperProvider })
+        checkFromJson({ it.hasGoodProvider = true }, { it.hasGoodProvider })
+        checkFromJson({ it.hasRockStar = true }, { it.hasRockStar })
+        checkFromJson({ it.hasAdorableProvider = true }, { it.hasAdorableProvider })
+        checkFromJson({ it.hasFavoriteProvider = true }, { it.hasFavoriteProvider })
         checkFromJson({ it.hasTextMaster = true }, { it.hasTextMaster })
+        checkFromJson({ it.hasNewbie = true }, { it.hasNewbie })
     }
 
     @Test
     fun defaultFilter() {
         checkIsDefault()
+
         checkIsNotDefault { it.setShowUsersOnly() }
+
         checkIsNotDefault { it.isFreeOffersOnly = true }
         checkIsNotDefault { it.isOffersWithReviewsOnly = true }
+
         checkIsNotDefault { it.hasPhone = true }
         checkIsNotDefault { it.hasEmail = true }
         checkIsNotDefault { it.hasSkype = true }
@@ -97,7 +124,14 @@ class FilterTest {
         checkIsNotDefault { it.hasInstagram = true }
         checkIsNotDefault { it.hasYoutube = true }
         checkIsNotDefault { it.hasWebsite = true }
+
+        checkIsNotDefault { it.hasSuperProvider = true }
+        checkIsNotDefault { it.hasGoodProvider = true }
+        checkIsNotDefault { it.hasRockStar = true }
+        checkIsNotDefault { it.hasAdorableProvider = true }
+        checkIsNotDefault { it.hasFavoriteProvider = true }
         checkIsNotDefault { it.hasTextMaster = true }
+        checkIsNotDefault { it.hasNewbie = true }
     }
 
     // === Private methods ===
