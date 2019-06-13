@@ -1646,11 +1646,33 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         val filter = settings.getSearchFilter()
 
-        // Show users if not isShowOffersOnly only
-        val userFitsQuery = !filter.isShowOffersOnly && user.getUsernameOrName().contains(queryText, true)
+        val phoneFitsQuery = if (filter.hasPhone) user.hasPhone else true
+        val emailFitsQuery = if (filter.hasEmail) user.hasVisibleEmail else true
+        val skypeFitsQuery = if (filter.hasSkype) user.hasSkype else true
+        val facebookFitsQuery = if (filter.hasFacebook) user.hasFacebook else true
+        val twitterFitsQuery = if (filter.hasTwitter) user.hasTwitter else true
+        val instagramFitsQuery = if (filter.hasInstagram) user.hasInstagram else true
+        val youtubeFitsQuery = if (filter.hasYoutube) user.hasYouTube else true
+        val websiteFitsQuery = if (filter.hasWebsite) user.hasWebsite else true
 
-        // Show offers if not isShowUsersOnly only
-        return userFitsQuery || !filter.isShowUsersOnly && checkOfferConditions(user, filter)
+        val contactsFitQuery = phoneFitsQuery
+                && emailFitsQuery
+                && skypeFitsQuery
+                && facebookFitsQuery
+                && twitterFitsQuery
+                && instagramFitsQuery
+                && youtubeFitsQuery
+                && websiteFitsQuery
+
+        // Show users if not isShowOffersOnly and contacts fit query
+        val userFitsQuery = !filter.isShowOffersOnly
+                && contactsFitQuery
+                && user.getUsernameOrName().contains(queryText, true)
+
+        // TODO: refactor this
+
+        // Show offers if not isShowUsersOnly and contacts fit query
+        return userFitsQuery || !filter.isShowUsersOnly && contactsFitQuery && checkOfferConditions(user, filter)
     }
 
     private fun checkOfferConditions(user: User, filter: Filter): Boolean {
