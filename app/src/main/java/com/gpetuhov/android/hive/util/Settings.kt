@@ -3,6 +3,7 @@ package com.gpetuhov.android.hive.util
 import android.content.Context
 import androidx.core.content.edit
 import com.gpetuhov.android.hive.domain.model.Filter
+import com.gpetuhov.android.hive.domain.model.Sort
 import org.jetbrains.anko.defaultSharedPreferences
 
 class Settings(context: Context) {
@@ -12,6 +13,7 @@ class Settings(context: Context) {
         private const val SELECTED_PHOTO_POSITION_KEY = "selectedPhotoPosition"
         private const val SEARCH_QUERY_TEXT_KEY = "searchQueryText"
         private const val SEARCH_FILTER_KEY = "searchFilter"
+        private const val SEARCH_SORT_KEY = "searchSort"
     }
 
     private val prefs = context.defaultSharedPreferences
@@ -42,4 +44,17 @@ class Settings(context: Context) {
     }
 
     fun resetSearchFilter() = setSearchFilter(Filter())
+
+    fun getSearchSort(): Sort {
+        val sortJson = prefs.getString(SEARCH_SORT_KEY, "") ?: ""
+        val sort = Sort.fromJson(sortJson)
+        return sort ?: Sort()
+    }
+
+    fun setSearchSort(sort: Sort) {
+        val sortJson = Sort.toJson(sort)
+        prefs.edit { putString(SEARCH_SORT_KEY, sortJson) }
+    }
+
+    fun resetSearchSort() = setSearchSort(Sort())
 }
