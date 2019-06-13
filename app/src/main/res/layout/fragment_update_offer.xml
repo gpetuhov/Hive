@@ -62,8 +62,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/update_offer_save_button"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"/>
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"/>
 
             <ImageButton
                     android:id="@+id/update_offer_save_button"
@@ -76,8 +76,8 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"/>
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
