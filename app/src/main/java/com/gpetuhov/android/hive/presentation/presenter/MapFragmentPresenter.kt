@@ -67,7 +67,7 @@ class MapFragmentPresenter :
 
     fun initSearchQueryText() {
         if (queryText == "") {
-            queryText = settings.getSearchQueryText() ?: ""
+            queryText = settings.getSearchQueryText()
         }
     }
 

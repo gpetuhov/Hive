@@ -52,7 +52,7 @@ class SearchListFragmentPresenter :
     // === Public methods ===
 
     fun initSearchQueryText() {
-        queryText = settings.getSearchQueryText() ?: ""
+        queryText = settings.getSearchQueryText()
     }
 
     fun navigateUp() = viewState.navigateUp()
@@ -133,12 +133,39 @@ class SearchListFragmentPresenter :
 
             val sort = settings.getSearchSort()
 
-            // By default sort users by name and offers by title
-            offerList.sortBy {
-                // TODO: add sort by price and rating
-                if (sort.isSortByTitle) it.getSearchedOffer()?.title
-                else it.getSearchedOffer()?.title
-            }
+            offerList.sortWith(Comparator { user1, user2 ->
+                val offer1 = user1.getSearchedOffer()
+                val offer2 = user2.getSearchedOffer()
+
+                if (offer1 != null && offer2 != null) {
+                    when {
+                        sort.isSortByPrice -> {
+                            // Sort by price
+                            // TODO: implement
+                            0
+                        }
+                        sort.isSortByRating -> {
+                            // Sort by rating
+                            // TODO: implement
+                            0
+                        }
+                        else -> {
+                            // Sort by title by default
+                            val title1 = offer1.title
+                            val title2 = offer2.title
+
+                            when {
+                                title1 > title2 -> 1
+                                title1 == title2 -> 0
+                                else -> -1
+                            }
+                        }
+                    }
+
+                } else {
+                    0
+                }
+            })
 
             userList.sortBy {
                 // TODO: add sort by rating
@@ -146,7 +173,7 @@ class SearchListFragmentPresenter :
                 it.getUsernameOrName()
             }
 
-            // TODO: this should change according to user selected options
+            // TODO: this should change according to user selected options (offers first or users first)
             sortedList.addAll(offerList)
             sortedList.addAll(userList)
 
