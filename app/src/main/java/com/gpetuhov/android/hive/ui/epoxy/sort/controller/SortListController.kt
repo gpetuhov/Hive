@@ -35,17 +35,11 @@ class SortListController(private val presenter: SortFragmentPresenter) : EpoxyCo
         sortType {
             id("sort_type")
 
-            // TODO: init with presenter
+            offersFirst(presenter.isSortOffersFirst())
+            onOffersFirstClick { presenter.sortOffersFirst() }
 
-            offersFirst(true)
-            onOffersFirstClick {
-                // TODO
-            }
-
-            usersFirst(false)
-            onUsersFirstClick {
-                // TODO
-            }
+            usersFirst(presenter.isSortUsersFirst())
+            onUsersFirstClick { presenter.sortUsersFirst() }
         }
     }
 }

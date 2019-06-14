@@ -69,6 +69,22 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
 
     fun isSortOrderDescending() = !sort.isSortOrderAscending
 
+    // --- Sort by type ---
+
+    fun sortOffersFirst() {
+        setSortChanged()
+        sort.isSortOffersFirst = true
+    }
+
+    fun isSortOffersFirst() = sort.isSortOffersFirst
+
+    fun sortUsersFirst() {
+        setSortChanged()
+        sort.isSortOffersFirst = false
+    }
+
+    fun isSortUsersFirst() = !sort.isSortOffersFirst
+
     // --- Clear sort ---
 
     fun showClearSortDialog() = viewState.showClearSortDialog()
