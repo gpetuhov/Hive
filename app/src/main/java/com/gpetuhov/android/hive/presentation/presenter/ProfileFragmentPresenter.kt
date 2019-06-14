@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.domain.interactor.base.SaveUserPropertyInteract
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.domain.util.ResultMessages
 import com.gpetuhov.android.hive.presentation.view.ProfileFragmentView
+import com.gpetuhov.android.hive.util.Settings
 import javax.inject.Inject
 
 // This is the presenter for ProfileFragment
@@ -26,6 +27,7 @@ class ProfileFragmentPresenter :
 
     @Inject lateinit var repo: Repo
     @Inject lateinit var resultMessages: ResultMessages
+    @Inject lateinit var settings: Settings
 
     private val signOutInteractor = SignOutInteractor(this)
     private val deleteUserInteractor = DeleteUserInteractor(this)
@@ -104,7 +106,10 @@ class ProfileFragmentPresenter :
 
     // === SignOutInteractor.Callback ===
 
-    override fun onSignOutSuccess() = viewState.enableSignOutButton()
+    override fun onSignOutSuccess() {
+        viewState.enableSignOutButton()
+        resetSearchParams()
+    }
 
     override fun onSignOutError(errorMessage: String) {
         showToast(errorMessage)
@@ -116,6 +121,7 @@ class ProfileFragmentPresenter :
     override fun onDeleteUserComplete(message: String) {
         showToast(message)
         viewState.enableDeleteUserButton()
+        resetSearchParams()
     }
 
     // === SaveUserPropertyInteractor.Callback ===
@@ -562,5 +568,12 @@ class ProfileFragmentPresenter :
 
     fun showToast(message: String) {
         viewState.showToast(message)
+    }
+
+    // === Private methods ===
+
+    private fun resetSearchParams() {
+        settings.resetSearchFilter()
+        settings.resetSearchSort()
     }
 }
