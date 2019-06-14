@@ -1681,19 +1681,19 @@ class Repository(private val context: Context, private val settings: Settings) :
                 && textMasterFitsQuery
                 && newbieFitsQuery
 
-        val activityAny = filter.isActivityAny
-        val activityStillFitsQuery = if (filter.isActivityStill) user.activity == DetectedActivity.STILL.toLong() else true
-        val activityWalkingFitsQuery = if (filter.isActivityWalking) user.activity == DetectedActivity.WALKING.toLong() else true
-        val activityRunningFitsQuery = if (filter.isActivityRunning) user.activity == DetectedActivity.RUNNING.toLong() else true
-        val activityBicycleFitsQuery = if (filter.isActivityBicycle) user.activity == DetectedActivity.ON_BICYCLE.toLong() else true
-        val activityVehicleFitsQuery = if (filter.isActivityVehicle) user.activity == DetectedActivity.IN_VEHICLE.toLong() else true
+        val activityFitsQuery = if (filter.isActivityAny) {
+            true
+        } else {
+            val expectedActivity = when {
+                filter.isActivityWalking -> DetectedActivity.WALKING
+                filter.isActivityRunning -> DetectedActivity.RUNNING
+                filter.isActivityBicycle -> DetectedActivity.ON_BICYCLE
+                filter.isActivityVehicle -> DetectedActivity.IN_VEHICLE
+                else -> DetectedActivity.STILL
+            }
 
-        val activityFitsQuery = activityAny
-                || activityStillFitsQuery
-                || activityWalkingFitsQuery
-                || activityRunningFitsQuery
-                || activityBicycleFitsQuery
-                || activityVehicleFitsQuery
+            user.activity == expectedActivity.toLong()
+        }
 
         // Show users or offers if contacts, awards and activity fit query
         return contactsFitQuery && awardsFitQuery && activityFitsQuery && (
