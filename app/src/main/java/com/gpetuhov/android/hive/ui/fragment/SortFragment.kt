@@ -55,11 +55,17 @@ class SortFragment : BaseFragment(), SortFragmentView {
 
     // === SortFragmentView ===
 
+    override fun showClearSortDialog() {
+        // TODO
+    }
+
+    override fun dismissClearSortDialog() {
+        // TODO
+    }
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }
 
-    // === Private methods ===
-
-    private fun updateUI() = controller?.requestModelBuild() ?: Unit
+    override fun updateUI() = controller?.requestModelBuild() ?: Unit
 }

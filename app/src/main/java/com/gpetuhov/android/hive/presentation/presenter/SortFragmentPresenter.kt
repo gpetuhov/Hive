@@ -35,25 +35,38 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
     // --- Basic filter params ---
 
     fun sortByTitle() {
-        setFilterChanged()
+        setSortChanged()
         sort.setSortByTitle()
     }
 
     fun isSortByTitle() = sort.isSortByTitle
 
     fun sortByPrice() {
-        setFilterChanged()
+        setSortChanged()
         sort.setSortByPrice()
     }
 
     fun isSortByPrice() = sort.isSortByPrice
 
     fun sortByRating() {
-        setFilterChanged()
+        setSortChanged()
         sort.setSortByRating()
     }
 
     fun isSortByRating() = sort.isSortByRating
+
+    // --- Clear filter ---
+
+    fun showClearSortDialog() = viewState.showClearSortDialog()
+
+    fun clearSort() {
+        setSortChanged()
+        sort = Sort()
+        viewState.updateUI()
+        dismissClearSortDialog()
+    }
+
+    fun dismissClearSortDialog() = viewState.dismissClearSortDialog()
 
     // --- Show results ---
 
@@ -68,7 +81,7 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
 
     // === Private methods ===
 
-    private fun setFilterChanged() {
+    private fun setSortChanged() {
         isSortChanged = true
     }
 }
