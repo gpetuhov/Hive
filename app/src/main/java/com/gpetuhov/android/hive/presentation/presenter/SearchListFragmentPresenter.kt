@@ -139,11 +139,13 @@ class SearchListFragmentPresenter :
                 val offer2 = user2.getSearchedOffer()
 
                 if (offer1 != null && offer2 != null) {
-                    when {
+                    val compareResult = when {
                         sort.isSortByPrice -> sortByPrice(offer1, offer2)
                         sort.isSortByRating -> sortByRating(offer1.rating, offer2.rating)
                         else -> sortByNameOrTitle(offer1.title, offer2.title)
                     }
+
+                    sortOrder(compareResult, sort.isSortOrderDescending)
 
                 } else {
                     0
@@ -152,10 +154,12 @@ class SearchListFragmentPresenter :
 
             userList.sortWith(Comparator { user1, user2 ->
                 // Users can by sorted only by name and rating and cannot be sorted by price
-                when {
+                val compareResult = when {
                     sort.isSortByRating -> sortByRating(user1.averageRating, user2.averageRating)
                     else -> sortByNameOrTitle(user1.getUsernameOrName(), user2.getUsernameOrName())
                 }
+
+                sortOrder(compareResult, sort.isSortOrderDescending)
             })
 
             // TODO: this should change according to user selected options (offers first or users first)
@@ -196,6 +200,20 @@ class SearchListFragmentPresenter :
             rating1 > rating2 -> 1
             rating1 == rating2 -> 0
             else -> -1
+        }
+    }
+
+    private fun sortOrder(compareResult: Int, isDescending: Boolean): Int {
+        return if (isDescending) {
+            // If descending we change compare result to the opposite
+            when(compareResult) {
+                -1 -> 1
+                1 -> -1
+                else -> 0
+            }
+        } else {
+            // Otherwise do not change compare result
+            compareResult
         }
     }
 }
