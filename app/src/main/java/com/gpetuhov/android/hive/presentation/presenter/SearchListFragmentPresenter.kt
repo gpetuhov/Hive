@@ -145,7 +145,7 @@ class SearchListFragmentPresenter :
                         else -> sortByNameOrTitle(offer1.title, offer2.title)
                     }
 
-                    sortOrder(compareResult, sort.isSortOrderDescending)
+                    sortOrder(compareResult, !sort.isSortOrderAscending)
 
                 } else {
                     0
@@ -159,7 +159,7 @@ class SearchListFragmentPresenter :
                     else -> sortByNameOrTitle(user1.getUsernameOrName(), user2.getUsernameOrName())
                 }
 
-                sortOrder(compareResult, sort.isSortOrderDescending)
+                sortOrder(compareResult, !sort.isSortOrderAscending)
             })
 
             // TODO: this should change according to user selected options (offers first or users first)

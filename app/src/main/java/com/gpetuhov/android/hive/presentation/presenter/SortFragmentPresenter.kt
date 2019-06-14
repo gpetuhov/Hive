@@ -57,17 +57,17 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
 
     fun sortOrderAscending() {
         setSortChanged()
-        sort.setSortOrderAscending()
+        sort.isSortOrderAscending = true
     }
 
     fun isSortOrderAscending() = sort.isSortOrderAscending
 
     fun sortOrderDescending() {
         setSortChanged()
-        sort.setSortOrderDescending()
+        sort.isSortOrderAscending = false
     }
 
-    fun isSortOrderDescending() = sort.isSortOrderDescending
+    fun isSortOrderDescending() = !sort.isSortOrderAscending
 
     // --- Clear sort ---
 
