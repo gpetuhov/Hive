@@ -368,5 +368,8 @@
     <string name="order_by">Упорядочить по</string>
     <string name="order_ascending">Возрастанию</string>
     <string name="order_descending">Убыванию</string>
+    <string name="sort_by_type">По типу</string>
+    <string name="offers_first">Сначала офферы</string>
+    <string name="users_first">Сначала пользователи</string>
 
 </resources>

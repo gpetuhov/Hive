@@ -368,6 +368,9 @@
     <string name="order_by">Order by</string>
     <string name="order_ascending">Ascending</string>
     <string name="order_descending">Descending</string>
+    <string name="sort_by_type">By type</string>
+    <string name="offers_first">Offers first</string>
+    <string name="users_first">Users first</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>

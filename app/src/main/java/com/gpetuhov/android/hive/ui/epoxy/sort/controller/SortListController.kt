@@ -4,6 +4,7 @@ import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.presentation.presenter.SortFragmentPresenter
 import com.gpetuhov.android.hive.ui.epoxy.sort.models.sortOrder
 import com.gpetuhov.android.hive.ui.epoxy.sort.models.sortParam
+import com.gpetuhov.android.hive.ui.epoxy.sort.models.sortType
 
 class SortListController(private val presenter: SortFragmentPresenter) : EpoxyController()  {
 
@@ -29,6 +30,22 @@ class SortListController(private val presenter: SortFragmentPresenter) : EpoxyCo
 
             descending(presenter.isSortOrderDescending())
             onDescendingClick { presenter.sortOrderDescending() }
+        }
+
+        sortType {
+            id("sort_type")
+
+            // TODO: init with presenter
+
+            offersFirst(true)
+            onOffersFirstClick {
+                // TODO
+            }
+
+            usersFirst(false)
+            onUsersFirstClick {
+                // TODO
+            }
         }
     }
 }
