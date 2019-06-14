@@ -144,6 +144,7 @@ class SearchListFragmentPresenter :
                         sort.isSortByRating -> sortByRating(offer1.rating, offer2.rating)
                         sort.isSortByReviewCount -> sortByCount(offer1.reviewCount, offer2.reviewCount)
                         sort.isSortByFavoriteStarCount -> sortByCount(offer1.starCount.toInt(), offer2.starCount.toInt())
+                        sort.isSortByPhotoCount -> sortByCount(offer1.photoList.size, offer2.photoList.size)
                         else -> sortByNameOrTitle(offer1.title, offer2.title)
                     }
 
@@ -160,6 +161,7 @@ class SearchListFragmentPresenter :
                     sort.isSortByRating -> sortByRating(user1.averageRating, user2.averageRating)
                     sort.isSortByReviewCount -> sortByCount(user1.totalReviewsCount, user2.totalReviewsCount)
                     sort.isSortByFavoriteStarCount -> sortByCount(user1.totalStarCount.toInt(), user2.totalStarCount.toInt())
+                    sort.isSortByPhotoCount -> sortByCount(user1.photoList.size, user2.photoList.size)
                     else -> sortByNameOrTitle(user1.getUsernameOrName(), user2.getUsernameOrName())
                 }
 
