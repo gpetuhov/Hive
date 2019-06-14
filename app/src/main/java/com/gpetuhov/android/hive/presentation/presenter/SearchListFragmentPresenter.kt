@@ -142,6 +142,8 @@ class SearchListFragmentPresenter :
                     val compareResult = when {
                         sort.isSortByPrice -> sortByPrice(offer1, offer2)
                         sort.isSortByRating -> sortByRating(offer1.rating, offer2.rating)
+                        sort.isSortByReviewCount -> sortByCount(offer1.reviewCount, offer2.reviewCount)
+                        sort.isSortByFavoriteStarCount -> sortByCount(offer1.starCount.toInt(), offer2.starCount.toInt())
                         else -> sortByNameOrTitle(offer1.title, offer2.title)
                     }
 
@@ -156,6 +158,8 @@ class SearchListFragmentPresenter :
                 // Users can by sorted only by name and rating and cannot be sorted by price
                 val compareResult = when {
                     sort.isSortByRating -> sortByRating(user1.averageRating, user2.averageRating)
+                    sort.isSortByReviewCount -> sortByCount(user1.totalReviewsCount, user2.totalReviewsCount)
+                    sort.isSortByFavoriteStarCount -> sortByCount(user1.totalStarCount.toInt(), user2.totalStarCount.toInt())
                     else -> sortByNameOrTitle(user1.getUsernameOrName(), user2.getUsernameOrName())
                 }
 
@@ -203,6 +207,14 @@ class SearchListFragmentPresenter :
         return when {
             rating1 > rating2 -> 1
             rating1 == rating2 -> 0
+            else -> -1
+        }
+    }
+
+    private fun sortByCount(count1: Int, count2: Int): Int {
+        return when {
+            count1 > count2 -> 1
+            count1 == count2 -> 0
             else -> -1
         }
     }
