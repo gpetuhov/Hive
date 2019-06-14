@@ -162,9 +162,13 @@ class SearchListFragmentPresenter :
                 sortOrder(compareResult, !sort.isSortOrderAscending)
             })
 
-            // TODO: this should change according to user selected options (offers first or users first)
-            sortedList.addAll(offerList)
-            sortedList.addAll(userList)
+            if (sort.isSortOffersFirst) {
+                sortedList.addAll(offerList)
+                sortedList.addAll(userList)
+            } else {
+                sortedList.addAll(userList)
+                sortedList.addAll(offerList)
+            }
 
             launch(Dispatchers.Main) { onComplete(sortedList) }
         }
