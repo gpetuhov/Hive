@@ -26,6 +26,13 @@ class SortListController(private val presenter: SortFragmentPresenter) : EpoxyCo
 
             sortByFavoriteStarCount(presenter.isSortByFavoriteStarCount())
             onSortByFavoriteStarCountClick { presenter.sortByFavoriteStarCount() }
+
+            // TODO: init with presenter
+
+            sortByPhotoCount(false)
+            onSortByPhotoCountClick {
+                // TODO
+            }
         }
 
         sortOrder {

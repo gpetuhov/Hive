@@ -54,4 +54,12 @@
             android:text="@string/sort_by_favorite_star_count"
             style="@style/basicTextStyle"/>
 
+    <RadioButton
+            android:id="@+id/sort_by_photo_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/sort_by_photo_count"
+            style="@style/basicTextStyle"/>
+
 </RadioGroup>
