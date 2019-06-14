@@ -138,8 +138,6 @@ class SearchListFragmentPresenter :
                 val offer1 = user1.getSearchedOffer()
                 val offer2 = user2.getSearchedOffer()
 
-                // TODO: refactor this
-
                 if (offer1 != null && offer2 != null) {
                     when {
                         sort.isSortByPrice -> sortByPrice(offer1, offer2)
@@ -157,11 +155,18 @@ class SearchListFragmentPresenter :
                 }
             })
 
-            userList.sortBy {
-                // TODO: add sort by rating
+            userList.sortWith(Comparator { user1, user2 ->
                 // Users can by sorted only by name and rating and cannot be sorted by price
-                it.getUsernameOrName()
-            }
+                when {
+                    sort.isSortByRating -> {
+                        // Sort by rating
+                        // TODO: implement
+                        0
+                    }
+                    // Sort by title by default
+                    else -> sortByNameOrTitle(user1.getUsernameOrName(), user2.getUsernameOrName())
+                }
+            })
 
             // TODO: this should change according to user selected options (offers first or users first)
             sortedList.addAll(offerList)
