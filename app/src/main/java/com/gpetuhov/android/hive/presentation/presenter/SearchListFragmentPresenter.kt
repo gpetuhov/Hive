@@ -148,17 +148,8 @@ class SearchListFragmentPresenter :
                             // TODO: implement
                             0
                         }
-                        else -> {
-                            // Sort by title by default
-                            val title1 = offer1.title
-                            val title2 = offer2.title
-
-                            when {
-                                title1 > title2 -> 1
-                                title1 == title2 -> 0
-                                else -> -1
-                            }
-                        }
+                        // Sort by title by default
+                        else -> sortByNameOrTitle(offer1.title, offer2.title)
                     }
 
                 } else {
@@ -193,6 +184,14 @@ class SearchListFragmentPresenter :
         return when {
             offer1.price > offer2.price -> 1
             offer1.price == offer2.price -> 0
+            else -> -1
+        }
+    }
+
+    private fun sortByNameOrTitle(name1: String, name2: String): Int {
+        return when {
+            name1 > name2 -> 1
+            name1 == name2 -> 0
             else -> -1
         }
     }
