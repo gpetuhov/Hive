@@ -364,5 +364,6 @@
     <string name="sort_by_rating">По рейтингу</string>
     <string name="clear_sort">Сбросить сортировку</string>
     <string name="clear_sort_prompt">Вы действительно хотите сбросить сортировку?</string>
+    <string name="sort_by">Сортировать по</string>
 
 </resources>
