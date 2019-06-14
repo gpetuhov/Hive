@@ -131,10 +131,20 @@ class SearchListFragmentPresenter :
             // Separate users and offers into different lists
             unsortedList.forEach { if (it.offerSearchResultIndex == -1) userList.add(it) else offerList.add(it) }
 
-            // TODO: sort users and offers according to selected criteria
+            val sort = settings.getSearchSort()
+
             // By default sort users by name and offers by title
-            offerList.sortBy { it.getSearchedOffer()?.title }
-            userList.sortBy { it.getUsernameOrName() }
+            offerList.sortBy {
+                // TODO: add sort by price and rating
+                if (sort.isSortByTitle) it.getSearchedOffer()?.title
+                else it.getSearchedOffer()?.title
+            }
+
+            userList.sortBy {
+                // TODO: add sort by rating
+                // Users can by sorted only by name and rating and cannot be sorted by price
+                it.getUsernameOrName()
+            }
 
             // TODO: this should change according to user selected options
             sortedList.addAll(offerList)
