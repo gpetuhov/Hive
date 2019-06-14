@@ -20,6 +20,7 @@ import android.graphics.Bitmap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.location.DetectedActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
@@ -1680,8 +1681,22 @@ class Repository(private val context: Context, private val settings: Settings) :
                 && textMasterFitsQuery
                 && newbieFitsQuery
 
-        // Show users or offers if contacts fit query and awards fit query
-        return contactsFitQuery && awardsFitQuery && (
+        val activityAny = filter.isActivityAny
+        val activityStillFitsQuery = if (filter.isActivityStill) user.activity == DetectedActivity.STILL.toLong() else true
+        val activityWalkingFitsQuery = if (filter.isActivityWalking) user.activity == DetectedActivity.WALKING.toLong() else true
+        val activityRunningFitsQuery = if (filter.isActivityRunning) user.activity == DetectedActivity.RUNNING.toLong() else true
+        val activityBicycleFitsQuery = if (filter.isActivityBicycle) user.activity == DetectedActivity.ON_BICYCLE.toLong() else true
+        val activityVehicleFitsQuery = if (filter.isActivityVehicle) user.activity == DetectedActivity.IN_VEHICLE.toLong() else true
+
+        val activityFitsQuery = activityAny
+                || activityStillFitsQuery
+                || activityWalkingFitsQuery
+                || activityRunningFitsQuery
+                || activityBicycleFitsQuery
+                || activityVehicleFitsQuery
+
+        // Show users or offers if contacts, awards and activity fit query
+        return contactsFitQuery && awardsFitQuery && activityFitsQuery && (
                     // Show users if not isShowOffersOnly
                     !filter.isShowOffersOnly && user.getUsernameOrName().contains(queryText, true)
                     // Show offers if not isShowUsersOnly
