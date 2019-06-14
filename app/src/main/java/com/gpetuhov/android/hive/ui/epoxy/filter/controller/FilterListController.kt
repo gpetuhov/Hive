@@ -2,10 +2,7 @@ package com.gpetuhov.android.hive.ui.epoxy.filter.controller
 
 import com.airbnb.epoxy.EpoxyController
 import com.gpetuhov.android.hive.presentation.presenter.FilterFragmentPresenter
-import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterAwards
-import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterBasics
-import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterContacts
-import com.gpetuhov.android.hive.ui.epoxy.filter.models.filterOffers
+import com.gpetuhov.android.hive.ui.epoxy.filter.models.*
 
 class FilterListController(private val presenter: FilterFragmentPresenter) : EpoxyController()  {
 
@@ -84,6 +81,42 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
 
             hasNewbie(presenter.hasNewbie())
             onHasNewbieClick { hasNewbie -> presenter.setHasNewbie(hasNewbie) }
+        }
+
+        filterActivity {
+            id("filter_activity")
+
+            // TODO: init with presenter
+
+            anyActivity(true)
+            onAnyActivityClick {
+                // TODO
+            }
+
+            still(false)
+            onStillClick {
+                // TODO
+            }
+
+            walking(false)
+            onWalkingClick {
+                // TODO
+            }
+
+            running(false)
+            onRunningClick {
+                // TODO
+            }
+
+            bicycle(false)
+            onBicycleClick {
+                // TODO
+            }
+
+            vehicle(false)
+            onVehicleClick {
+                // TODO
+            }
         }
     }
 }

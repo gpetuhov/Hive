@@ -355,6 +355,8 @@
     <string name="has_textmaster">Has TextMaster award</string>
     <string name="has_newbie">Has Newbie award</string>
     <string name="close_filter">Close filter</string>
+    <string name="activity">Activity</string>
+    <string name="any_activity">Does not matter</string>
 
     <!-- SortFragment -->
     <string name="sort">Sort</string>

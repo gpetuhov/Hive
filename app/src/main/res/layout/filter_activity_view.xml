@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical">
+
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/md_grey_300"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/activity"
+            style="@style/titleTextStyle"/>
+
+    <RadioButton
+            android:id="@+id/filter_activity_any"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/any_activity"
+            style="@style/basicTextStyle"/>
+
+    <RadioButton
+            android:id="@+id/filter_activity_still"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/still"
+            style="@style/basicTextStyle"/>
+
+    <RadioButton
+            android:id="@+id/filter_activity_walking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/walking"
+            style="@style/basicTextStyle"/>
+
+    <RadioButton
+            android:id="@+id/filter_activity_running"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/running"
+            style="@style/basicTextStyle"/>
+
+    <RadioButton
+            android:id="@+id/filter_activity_bicycle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/bicycle"
+            style="@style/basicTextStyle"/>
+
+    <RadioButton
+            android:id="@+id/filter_activity_vehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/vehicle"
+            style="@style/basicTextStyle"/>
+
+</RadioGroup>

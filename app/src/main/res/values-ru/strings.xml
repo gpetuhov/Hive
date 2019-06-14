@@ -355,6 +355,8 @@
     <string name="has_textmaster">Имеется награда ТекстМастер</string>
     <string name="has_newbie">Имеется награда Новичок</string>
     <string name="close_filter">Закрыть фильтр</string>
+    <string name="activity">Активность</string>
+    <string name="any_activity">Не имеет значения</string>
 
     <!-- SortFragment -->
     <string name="sort">Сортировка</string>
