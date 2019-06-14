@@ -359,9 +359,9 @@
     <!-- SortFragment -->
     <string name="sort">Sort</string>
     <string name="close_sort">Close sort</string>
-    <string name="sort_by_title">By title (name)</string>
-    <string name="sort_by_price">By price</string>
-    <string name="sort_by_rating">By rating</string>
+    <string name="sort_by_title">Title (name)</string>
+    <string name="sort_by_price">Price</string>
+    <string name="sort_by_rating">Rating</string>
     <string name="clear_sort">Clear sort</string>
     <string name="clear_sort_prompt">Do you want to clear sort?</string>
     <string name="sort_by">Sort by</string>
