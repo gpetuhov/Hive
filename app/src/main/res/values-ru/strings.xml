@@ -365,5 +365,8 @@
     <string name="clear_sort">Сбросить сортировку</string>
     <string name="clear_sort_prompt">Вы действительно хотите сбросить сортировку?</string>
     <string name="sort_by">Сортировать по</string>
+    <string name="order_by">Упорядочить по</string>
+    <string name="order_ascending">По возрастанию</string>
+    <string name="order_descending">По убыванию</string>
 
 </resources>

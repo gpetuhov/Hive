@@ -365,6 +365,9 @@
     <string name="clear_sort">Clear sort</string>
     <string name="clear_sort_prompt">Do you want to clear sort?</string>
     <string name="sort_by">Sort by</string>
+    <string name="order_by">Order by</string>
+    <string name="order_ascending">Ascending</string>
+    <string name="order_descending">Descending</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
