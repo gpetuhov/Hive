@@ -5,6 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
 import com.gpetuhov.android.hive.domain.interactor.FavoritesInteractor
 import com.gpetuhov.android.hive.domain.interactor.SearchInteractor
+import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.presentation.view.SearchListFragmentView
@@ -141,24 +142,7 @@ class SearchListFragmentPresenter :
 
                 if (offer1 != null && offer2 != null) {
                     when {
-                        sort.isSortByPrice -> {
-                            // Sort by price
-                            when {
-                                offer1.isFree && offer2.isFree -> 0
-                                !offer1.isFree && offer2.isFree -> 1
-                                offer1.isFree && !offer2.isFree -> -1
-                                else -> {
-                                    val price1 = offer1.price
-                                    val price2 = offer2.price
-
-                                    when {
-                                        price1 > price2 -> 1
-                                        price1 == price2 -> 0
-                                        else -> -1
-                                    }
-                                }
-                            }
-                        }
+                        sort.isSortByPrice -> sortByPrice(offer1, offer2)
                         sort.isSortByRating -> {
                             // Sort by rating
                             // TODO: implement
@@ -193,6 +177,23 @@ class SearchListFragmentPresenter :
             sortedList.addAll(userList)
 
             launch(Dispatchers.Main) { onComplete(sortedList) }
+        }
+    }
+
+    private fun sortByPrice(offer1: Offer, offer2: Offer): Int {
+        return when {
+            offer1.isFree && offer2.isFree -> 0
+            !offer1.isFree && offer2.isFree -> 1
+            offer1.isFree && !offer2.isFree -> -1
+            else -> comparePrice(offer1, offer2)
+        }
+    }
+
+    private fun comparePrice(offer1: Offer, offer2: Offer): Int {
+        return when {
+            offer1.price > offer2.price -> 1
+            offer1.price == offer2.price -> 0
+            else -> -1
         }
     }
 }
