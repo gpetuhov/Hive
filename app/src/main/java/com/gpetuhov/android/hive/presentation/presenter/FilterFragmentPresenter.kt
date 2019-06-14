@@ -178,6 +178,50 @@ class FilterFragmentPresenter : MvpPresenter<FilterFragmentView>() {
 
     fun hasNewbie() = filter.hasNewbie
 
+    // --- Filter activity params ---
+
+    fun activityAny() {
+        setFilterChanged()
+        filter.setActivityAny()
+    }
+
+    fun isActivityAny() = filter.isActivityAny
+
+    fun activityStill() {
+        setFilterChanged()
+        filter.setActivityStill()
+    }
+
+    fun isActivityStill() = filter.isActivityStill
+
+    fun activityWalking() {
+        setFilterChanged()
+        filter.setActivityWalking()
+    }
+
+    fun isActivityWalking() = filter.isActivityWalking
+
+    fun activityRunning() {
+        setFilterChanged()
+        filter.setActivityRunning()
+    }
+
+    fun isActivityRunning() = filter.isActivityRunning
+
+    fun activityBicycle() {
+        setFilterChanged()
+        filter.setActivityBicycle()
+    }
+
+    fun isActivityBicycle() = filter.isActivityBicycle
+
+    fun activityVehicle() {
+        setFilterChanged()
+        filter.setActivityVehicle()
+    }
+
+    fun isActivityVehicle() = filter.isActivityVehicle
+
     // --- Clear filter ---
 
     fun showClearFilterDialog() = viewState.showClearFilterDialog()

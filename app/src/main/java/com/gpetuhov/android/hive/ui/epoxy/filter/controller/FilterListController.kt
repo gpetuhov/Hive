@@ -86,37 +86,23 @@ class FilterListController(private val presenter: FilterFragmentPresenter) : Epo
         filterActivity {
             id("filter_activity")
 
-            // TODO: init with presenter
+            anyActivity(presenter.isActivityAny())
+            onAnyActivityClick { presenter.activityAny() }
 
-            anyActivity(true)
-            onAnyActivityClick {
-                // TODO
-            }
+            still(presenter.isActivityStill())
+            onStillClick { presenter.activityStill() }
 
-            still(false)
-            onStillClick {
-                // TODO
-            }
+            walking(presenter.isActivityWalking())
+            onWalkingClick { presenter.activityWalking() }
 
-            walking(false)
-            onWalkingClick {
-                // TODO
-            }
+            running(presenter.isActivityRunning())
+            onRunningClick { presenter.activityRunning() }
 
-            running(false)
-            onRunningClick {
-                // TODO
-            }
+            bicycle(presenter.isActivityBicycle())
+            onBicycleClick { presenter.activityBicycle() }
 
-            bicycle(false)
-            onBicycleClick {
-                // TODO
-            }
-
-            vehicle(false)
-            onVehicleClick {
-                // TODO
-            }
+            vehicle(presenter.isActivityVehicle())
+            onVehicleClick { presenter.activityVehicle() }
         }
     }
 }
