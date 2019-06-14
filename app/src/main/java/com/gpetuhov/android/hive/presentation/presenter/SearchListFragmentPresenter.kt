@@ -137,12 +137,27 @@ class SearchListFragmentPresenter :
                 val offer1 = user1.getSearchedOffer()
                 val offer2 = user2.getSearchedOffer()
 
+                // TODO: refactor this
+
                 if (offer1 != null && offer2 != null) {
                     when {
                         sort.isSortByPrice -> {
                             // Sort by price
-                            // TODO: implement
-                            0
+                            when {
+                                offer1.isFree && offer2.isFree -> 0
+                                !offer1.isFree && offer2.isFree -> 1
+                                offer1.isFree && !offer2.isFree -> -1
+                                else -> {
+                                    val price1 = offer1.price
+                                    val price2 = offer2.price
+
+                                    when {
+                                        price1 > price2 -> 1
+                                        price1 == price2 -> 0
+                                        else -> -1
+                                    }
+                                }
+                            }
                         }
                         sort.isSortByRating -> {
                             // Sort by rating
