@@ -362,6 +362,8 @@
     <string name="sort_by_title">By title (name)</string>
     <string name="sort_by_price">By price</string>
     <string name="sort_by_rating">By rating</string>
+    <string name="clear_sort">Clear sort</string>
+    <string name="clear_sort_prompt">Do you want to clear sort?</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>

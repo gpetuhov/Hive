@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import com.afollestad.materialdialogs.MaterialDialog
 import com.airbnb.epoxy.EpoxyRecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
@@ -25,12 +26,16 @@ class SortFragment : BaseFragment(), SortFragmentView {
     private var controller: SortListController? = null
     private var binding: FragmentSortBinding? = null
 
+    private var clearSortDialog: MaterialDialog? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
         hideMainHeader()
         hideBottomNavigationView()
+
+        initDialogs()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sort, container, false)
         binding?.presenter = presenter
@@ -53,19 +58,42 @@ class SortFragment : BaseFragment(), SortFragmentView {
         super.onSaveInstanceState(outState)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        // This is needed to prevent memory leaks.
+        // Here we intentially dismiss dialogs directly, not via the presenter,
+        // so that Moxy command queue doesn't change.
+        dismissDialogs()
+    }
+
     // === SortFragmentView ===
 
-    override fun showClearSortDialog() {
-        // TODO
-    }
+    override fun showClearSortDialog() = clearSortDialog?.show() ?: Unit
 
-    override fun dismissClearSortDialog() {
-        // TODO
-    }
+    override fun dismissClearSortDialog() = clearSortDialog?.dismiss() ?: Unit
 
     override fun navigateUp() {
         findNavController().navigateUp()
     }
 
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
+
+    // === Private methods ===
+
+    private fun initDialogs() = initClearSortDialog()
+
+    private fun initClearSortDialog() {
+        if (context != null) {
+            clearSortDialog = MaterialDialog(context!!)
+                .title(R.string.clear_sort)
+                .message(R.string.clear_sort_prompt)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton(R.string.yes) { presenter.clearSort() }
+                .negativeButton(R.string.no) { presenter.dismissClearSortDialog() }
+        }
+    }
+
+    private fun dismissDialogs() = dismissClearSortDialog()
 }
