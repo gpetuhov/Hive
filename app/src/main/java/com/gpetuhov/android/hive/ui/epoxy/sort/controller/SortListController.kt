@@ -21,17 +21,11 @@ class SortListController(private val presenter: SortFragmentPresenter) : EpoxyCo
             sortByRating(presenter.isSortByRating())
             onSortByRatingClick { presenter.sortByRating() }
 
-            // TODO: init with presenter
+            sortByReviewCount(presenter.isSortByReviewCount())
+            onSortByReviewCountClick { presenter.sortByReviewCount() }
 
-            sortByReviewCount(false)
-            onSortByReviewCountClick {
-                // TODO
-            }
-
-            sortByFavoriteStarCount(false)
-            onSortByFavoriteStarCountClick {
-                // TODO
-            }
+            sortByFavoriteStarCount(presenter.isSortByFavoriteStarCount())
+            onSortByFavoriteStarCountClick { presenter.sortByFavoriteStarCount() }
         }
 
         sortOrder {

@@ -53,6 +53,20 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
 
     fun isSortByRating() = sort.isSortByRating
 
+    fun sortByReviewCount() {
+        setSortChanged()
+        sort.setSortByReviewCount()
+    }
+
+    fun isSortByReviewCount() = sort.isSortByReviewCount
+
+    fun sortByFavoriteStarCount() {
+        setSortChanged()
+        sort.setSortByFavoriteStarCount()
+    }
+
+    fun isSortByFavoriteStarCount() = sort.isSortByFavoriteStarCount
+
     // --- Sort order ---
 
     fun sortOrderAscending() {
