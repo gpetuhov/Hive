@@ -86,6 +86,8 @@ class SearchListFragmentPresenter :
 
     fun filterIsDefault() = settings.getSearchFilter().isDefault
 
+    fun sortIsDefault() = settings.getSearchSort().isDefault
+
     fun showFilter() = viewState.showFilter()
     
     fun showSort() = viewState.showSort()
