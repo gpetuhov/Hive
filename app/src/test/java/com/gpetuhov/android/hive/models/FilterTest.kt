@@ -25,6 +25,7 @@ class FilterTest {
         private const val HAS_FAVORITE_PROVIDER_KEY = "hasFavoriteProvider"
         private const val HAS_TEXTMASTER_KEY = "hasTextMaster"
         private const val HAS_NEWBIE_KEY = "hasNewbie"
+        private const val ACTIVITY_KEY = "activity"
     }
 
     @Test
@@ -54,6 +55,56 @@ class FilterTest {
     }
 
     @Test
+    fun activityAny() {
+        val filter = Filter()
+        assertEquals(true, filter.isActivityAny)
+        filter.setActivityBicycle()
+        assertEquals(false, filter.isActivityAny)
+        filter.setActivityAny()
+        assertEquals(true, filter.isActivityAny)
+    }
+
+    @Test
+    fun activityStill() {
+        val filter = Filter()
+        assertEquals(false, filter.isActivityStill)
+        filter.setActivityStill()
+        assertEquals(true, filter.isActivityStill)
+    }
+
+    @Test
+    fun activityWalking() {
+        val filter = Filter()
+        assertEquals(false, filter.isActivityWalking)
+        filter.setActivityWalking()
+        assertEquals(true, filter.isActivityWalking)
+    }
+
+    @Test
+    fun activityRunning() {
+        val filter = Filter()
+        assertEquals(false, filter.isActivityRunning)
+        filter.setActivityRunning()
+        assertEquals(true, filter.isActivityRunning)
+    }
+
+    @Test
+    fun activityBicycle() {
+        val filter = Filter()
+        assertEquals(false, filter.isActivityBicycle)
+        filter.setActivityBicycle()
+        assertEquals(true, filter.isActivityBicycle)
+    }
+
+    @Test
+    fun activityVehicle() {
+        val filter = Filter()
+        assertEquals(false, filter.isActivityVehicle)
+        filter.setActivityVehicle()
+        assertEquals(true, filter.isActivityVehicle)
+    }
+
+    @Test
     fun toJson() {
         checkToJson(SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_OFFERS_ALL) { it.setShowUsersOffersAll() }
         checkToJson(SHOW_USERS_OFFERS_KEY, Filter.SHOW_USERS_ONLY) { it.setShowUsersOnly() }
@@ -78,6 +129,13 @@ class FilterTest {
         checkToJson(HAS_FAVORITE_PROVIDER_KEY, true) { it.hasFavoriteProvider = true }
         checkToJson(HAS_TEXTMASTER_KEY, true) { it.hasTextMaster = true }
         checkToJson(HAS_NEWBIE_KEY, true) { it.hasNewbie = true }
+
+        checkToJson(ACTIVITY_KEY, Filter.ACTIVITY_ANY) { it.setActivityAny() }
+        checkToJson(ACTIVITY_KEY, Filter.ACTIVITY_STILL) { it.setActivityStill() }
+        checkToJson(ACTIVITY_KEY, Filter.ACTIVITY_WALKING) { it.setActivityWalking() }
+        checkToJson(ACTIVITY_KEY, Filter.ACTIVITY_RUNNING) { it.setActivityRunning() }
+        checkToJson(ACTIVITY_KEY, Filter.ACTIVITY_BICYCLE) { it.setActivityBicycle() }
+        checkToJson(ACTIVITY_KEY, Filter.ACTIVITY_VEHICLE) { it.setActivityVehicle() }
     }
 
     @Test
@@ -105,6 +163,13 @@ class FilterTest {
         checkFromJson({ it.hasFavoriteProvider = true }, { it.hasFavoriteProvider })
         checkFromJson({ it.hasTextMaster = true }, { it.hasTextMaster })
         checkFromJson({ it.hasNewbie = true }, { it.hasNewbie })
+
+        checkFromJson({ it.setActivityAny() }, { it.isActivityAny })
+        checkFromJson({ it.setActivityStill() }, { it.isActivityStill })
+        checkFromJson({ it.setActivityWalking() }, { it.isActivityWalking })
+        checkFromJson({ it.setActivityRunning() }, { it.isActivityRunning })
+        checkFromJson({ it.setActivityBicycle() }, { it.isActivityBicycle })
+        checkFromJson({ it.setActivityVehicle() }, { it.isActivityVehicle })
     }
 
     @Test
@@ -132,6 +197,8 @@ class FilterTest {
         checkIsNotDefault { it.hasFavoriteProvider = true }
         checkIsNotDefault { it.hasTextMaster = true }
         checkIsNotDefault { it.hasNewbie = true }
+
+        checkIsNotDefault { it.setActivityVehicle() }
     }
 
     // === Private methods ===
