@@ -32,8 +32,6 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
 
     // --- Sort param ---
 
-    // --- Basic filter params ---
-
     fun sortByTitle() {
         setSortChanged()
         sort.setSortByTitle()
@@ -55,7 +53,23 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
 
     fun isSortByRating() = sort.isSortByRating
 
-    // --- Clear filter ---
+    // --- Sort order ---
+
+    fun sortOrderAscending() {
+        setSortChanged()
+        sort.setSortOrderAscending()
+    }
+
+    fun isSortOrderAscending() = sort.isSortOrderAscending
+
+    fun sortOrderDescending() {
+        setSortChanged()
+        sort.setSortOrderDescending()
+    }
+
+    fun isSortOrderDescending() = sort.isSortOrderDescending
+
+    // --- Clear sort ---
 
     fun showClearSortDialog() = viewState.showClearSortDialog()
 

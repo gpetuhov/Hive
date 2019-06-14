@@ -24,17 +24,11 @@ class SortListController(private val presenter: SortFragmentPresenter) : EpoxyCo
         sortOrder {
             id("sort_order")
 
-            // TODO: init this with values from presenter
+            ascending(presenter.isSortOrderAscending())
+            onAscendingClick { presenter.sortOrderAscending() }
 
-            ascending(true)
-            onAscendingClick {
-                // TODO
-            }
-
-            descending(false)
-            onDescendingClick {
-                // TODO
-            }
+            descending(presenter.isSortOrderDescending())
+            onDescendingClick { presenter.sortOrderDescending() }
         }
     }
 }
