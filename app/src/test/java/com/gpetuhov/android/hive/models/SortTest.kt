@@ -55,12 +55,21 @@ class SortTest {
     }
 
     @Test
+    fun sortByPhotoCount() {
+        val sort = Sort()
+        assertEquals(false, sort.isSortByPhotoCount)
+        sort.setSortByPhotoCount()
+        assertEquals(true, sort.isSortByPhotoCount)
+    }
+
+    @Test
     fun toJson() {
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_TITLE) { it.setSortByTitle() }
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_PRICE) { it.setSortByPrice() }
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_RATING) { it.setSortByRating() }
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_REVIEW_COUNT) { it.setSortByReviewCount() }
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_FAVORITE_STAR_COUNT) { it.setSortByFavoriteStarCount() }
+        checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_PHOTO_COUNT) { it.setSortByPhotoCount() }
         checkToJson(SORT_ORDER_ASCENDING_KEY, true) { it.isSortOrderAscending = true }
         checkToJson(SORT_ORDER_ASCENDING_KEY, false) { it.isSortOrderAscending = false }
         checkToJson(SORT_OFFERS_FIRST_KEY, true) { it.isSortOffersFirst = true }
@@ -74,6 +83,7 @@ class SortTest {
         checkFromJson({ it.setSortByRating() }, { it.isSortByRating })
         checkFromJson({ it.setSortByReviewCount() }, { it.isSortByReviewCount })
         checkFromJson({ it.setSortByFavoriteStarCount() }, { it.isSortByFavoriteStarCount })
+        checkFromJson({ it.setSortByPhotoCount() }, { it.isSortByPhotoCount })
         checkFromJson({ it.isSortOrderAscending = true }, { it.isSortOrderAscending })
         checkFromJson({ it.isSortOrderAscending = false }, { !it.isSortOrderAscending })
         checkFromJson({ it.isSortOffersFirst = true }, { it.isSortOffersFirst })

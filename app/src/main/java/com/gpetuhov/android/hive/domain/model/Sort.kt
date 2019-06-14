@@ -14,6 +14,7 @@ class Sort(
         const val SORT_BY_RATING = 2
         const val SORT_BY_REVIEW_COUNT = 3
         const val SORT_BY_FAVORITE_STAR_COUNT = 4
+        const val SORT_BY_PHOTO_COUNT = 5
 
         fun toJson(sort: Sort): String {
             val moshi = Moshi.Builder().build()
@@ -39,6 +40,7 @@ class Sort(
     val isSortByRating get() = sortParam == SORT_BY_RATING
     val isSortByReviewCount get() = sortParam == SORT_BY_REVIEW_COUNT
     val isSortByFavoriteStarCount get() = sortParam == SORT_BY_FAVORITE_STAR_COUNT
+    val isSortByPhotoCount get() = sortParam == SORT_BY_PHOTO_COUNT
 
     val isDefault: Boolean get() {
         return sortParam == SORT_BY_TITLE
@@ -66,5 +68,9 @@ class Sort(
 
     fun setSortByFavoriteStarCount() {
         sortParam = SORT_BY_FAVORITE_STAR_COUNT
+    }
+
+    fun setSortByPhotoCount() {
+        sortParam = SORT_BY_PHOTO_COUNT
     }
 }
