@@ -9,6 +9,7 @@ class SortTest {
     companion object {
         private const val SORT_PARAM_KEY = "sortParam"
         private const val SORT_ORDER_ASCENDING_KEY = "sortOrderAscending"
+        private const val SORT_OFFERS_FIRST_KEY = "sortOffersFirst"
     }
 
     @Test
@@ -44,6 +45,8 @@ class SortTest {
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_RATING) { it.setSortByRating() }
         checkToJson(SORT_ORDER_ASCENDING_KEY, true) { it.isSortOrderAscending = true }
         checkToJson(SORT_ORDER_ASCENDING_KEY, false) { it.isSortOrderAscending = false }
+        checkToJson(SORT_OFFERS_FIRST_KEY, true) { it.isSortOffersFirst = true }
+        checkToJson(SORT_OFFERS_FIRST_KEY, false) { it.isSortOffersFirst = false }
     }
 
     @Test
@@ -53,6 +56,8 @@ class SortTest {
         checkFromJson({ it.setSortByRating() }, { it.isSortByRating })
         checkFromJson({ it.isSortOrderAscending = true }, { it.isSortOrderAscending })
         checkFromJson({ it.isSortOrderAscending = false }, { !it.isSortOrderAscending })
+        checkFromJson({ it.isSortOffersFirst = true }, { it.isSortOffersFirst })
+        checkFromJson({ it.isSortOffersFirst = false }, { !it.isSortOffersFirst })
     }
 
     @Test
@@ -60,6 +65,7 @@ class SortTest {
         checkIsDefault()
         checkIsNotDefault { it.setSortByPrice() }
         checkIsNotDefault { it.isSortOrderAscending = false }
+        checkIsNotDefault { it.isSortOffersFirst = false }
     }
 
     // === Private methods ===

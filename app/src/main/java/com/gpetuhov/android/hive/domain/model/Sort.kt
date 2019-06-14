@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 
 class Sort(
     @field:Json(name = "sortOrderAscending") var isSortOrderAscending: Boolean = true,
+    @field:Json(name = "sortOffersFirst") var isSortOffersFirst: Boolean = true,
     @field:Json(name = "sortParam") private var sortParam: Int = SORT_BY_TITLE
 ) {
     companion object {
@@ -38,6 +39,7 @@ class Sort(
     val isDefault: Boolean get() {
         return sortParam == SORT_BY_TITLE
                 && isSortOrderAscending
+                && isSortOffersFirst
     }
 
     // === Public methods ===
