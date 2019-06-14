@@ -362,6 +362,8 @@
     <string name="sort_by_title">Названию (имени)</string>
     <string name="sort_by_price">Цене</string>
     <string name="sort_by_rating">Рейтингу</string>
+    <string name="sort_by_review_count">Количеству отзывов</string>
+    <string name="sort_by_favorite_star_count">Количеству звезд избранного</string>
     <string name="clear_sort">Сбросить сортировку</string>
     <string name="clear_sort_prompt">Вы действительно хотите сбросить сортировку?</string>
     <string name="sort_by">Сортировать по</string>

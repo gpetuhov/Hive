@@ -362,6 +362,8 @@
     <string name="sort_by_title">Title (name)</string>
     <string name="sort_by_price">Price</string>
     <string name="sort_by_rating">Rating</string>
+    <string name="sort_by_review_count">Review count</string>
+    <string name="sort_by_favorite_star_count">Favorite star count</string>
     <string name="clear_sort">Clear sort</string>
     <string name="clear_sort_prompt">Do you want to clear sort?</string>
     <string name="sort_by">Sort by</string>
