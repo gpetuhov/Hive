@@ -181,6 +181,8 @@
     <string name="rock_star">RockStar</string>
     <string name="favoritizer">Favoritizer</string>
     <string name="distance">Расстояние</string>
+    <string name="kilometers">км</string>
+    <string name="meters">м</string>
 
     <!-- ChatFragment -->
     <string name="send">Отправить</string>

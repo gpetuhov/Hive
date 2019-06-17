@@ -1,9 +1,11 @@
 package com.gpetuhov.android.hive.ui.epoxy.base.controller
 
+import android.content.Context
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.epoxy.Carousel
 import com.airbnb.epoxy.EpoxyController
+import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.domain.model.Offer
 import com.gpetuhov.android.hive.domain.model.Photo
 import com.gpetuhov.android.hive.ui.epoxy.base.carousel
@@ -11,6 +13,7 @@ import com.gpetuhov.android.hive.ui.epoxy.base.withModelsFrom
 import com.gpetuhov.android.hive.ui.epoxy.map.models.MapModel_
 import com.gpetuhov.android.hive.ui.epoxy.photo.item.models.PhotoItemModel_
 import com.gpetuhov.android.hive.ui.epoxy.review.models.reviewItem
+import com.gpetuhov.android.hive.ui.epoxy.user.details.models.location
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
@@ -121,6 +124,29 @@ abstract class BaseController : EpoxyController() {
                 showOfferVisible(false)
                 onShowOfferClick { /* Do nothing */ }
             }
+        }
+    }
+
+    protected fun location(context: Context, distance: Double) {
+        val distancePrefix = context.getString(R.string.distance)
+        val distanceUnits: String
+
+        val distanceResult: Double
+
+        // Show distance in meters if less than 1000 meters, or in kilometers otherwise.
+        if (distance < 1000) {
+            distanceResult = distance
+            distanceUnits = context.getString(R.string.meters)
+        } else {
+            distanceResult = distance / 1000
+            distanceUnits = context.getString(R.string.kilometers)
+        }
+
+        val distanceString = "%.1f".format(distanceResult)
+
+        location {
+            id("user_offer_location")
+            distance("$distancePrefix: $distanceString $distanceUnits")
         }
     }
 

@@ -103,6 +103,8 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
                     onClick { presenter.openReviews() }
                 }
 
+                location(context, user?.distance ?: 0.0)
+
                 mapModel.addTo(this)
             }
 

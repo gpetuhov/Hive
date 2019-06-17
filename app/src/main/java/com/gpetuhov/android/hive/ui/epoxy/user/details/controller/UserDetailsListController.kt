@@ -207,6 +207,8 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
             reviewsSummary(context, false) { presenter.openAllReviews() }
 
+            location(context, user?.distance ?: 0.0)
+
             // MapModel will be bind here only once (after fragment creation),
             // because location is not annotated as epoxy attribute.
             mapModel.addTo(this)
