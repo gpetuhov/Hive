@@ -13,10 +13,18 @@ class SortTest {
     }
 
     @Test
+    fun sortByDistance() {
+        val sort = Sort()
+        assertEquals(true, sort.isSortByDistance)
+        sort.setSortByPrice()
+        assertEquals(false, sort.isSortByDistance)
+        sort.setSortByDistance()
+        assertEquals(true, sort.isSortByDistance)
+    }
+
+    @Test
     fun sortByTitle() {
         val sort = Sort()
-        assertEquals(true, sort.isSortByTitle)
-        sort.setSortByPrice()
         assertEquals(false, sort.isSortByTitle)
         sort.setSortByTitle()
         assertEquals(true, sort.isSortByTitle)
@@ -64,6 +72,7 @@ class SortTest {
 
     @Test
     fun toJson() {
+        checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_DISTANCE) { it.setSortByDistance() }
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_TITLE) { it.setSortByTitle() }
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_PRICE) { it.setSortByPrice() }
         checkToJson(SORT_PARAM_KEY, Sort.SORT_BY_RATING) { it.setSortByRating() }
@@ -78,6 +87,7 @@ class SortTest {
 
     @Test
     fun fromJson() {
+        checkFromJson({ it.setSortByDistance() }, { it.isSortByDistance })
         checkFromJson({ it.setSortByTitle() }, { it.isSortByTitle })
         checkFromJson({ it.setSortByPrice() }, { it.isSortByPrice })
         checkFromJson({ it.setSortByRating() }, { it.isSortByRating })
