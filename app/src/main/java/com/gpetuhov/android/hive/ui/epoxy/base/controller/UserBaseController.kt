@@ -57,11 +57,12 @@ abstract class UserBaseController : BaseController() {
         settings: Settings,
         offer: Offer,
         isProfile: Boolean,
+        distanceVisible: Boolean,
         onFavoriteButtonClick: () -> Unit,
         onClick: () -> Unit
     ) {
         offerItemPhotoCarousel(settings, offer, !isProfile, onClick)
-        offerItemDetails(context, settings, offer, isProfile, onFavoriteButtonClick, onClick)
+        offerItemDetails(context, settings, offer, isProfile, distanceVisible, onFavoriteButtonClick, onClick)
     }
 
     protected fun userItemNoOffer(
@@ -255,6 +256,7 @@ abstract class UserBaseController : BaseController() {
         settings: Settings,
         offer: Offer,
         isProfile: Boolean,
+        distanceVisible: Boolean,
         onFavoriteButtonClick: () -> Unit,
         onClick: () -> Unit
     ) {
@@ -274,7 +276,7 @@ abstract class UserBaseController : BaseController() {
 
             // TODO: format distance
             distance(offer.distance.toString())
-            distanceVisible(!isProfile)
+            distanceVisible(distanceVisible)
 
             onClick {
                 saveSelectedPhotoPosition(settings, offer.uid)

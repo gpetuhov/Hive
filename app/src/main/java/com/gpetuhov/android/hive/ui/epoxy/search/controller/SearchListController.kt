@@ -39,6 +39,7 @@ class SearchListController(private val presenter: SearchListFragmentPresenter) :
                     settings,
                     offer,
                     false,
+                    true,
                     { presenter.favorite(offer.isFavorite, offer.userUid, offer.uid) },
                     { presenter.showDetails(offer.userUid, offer.uid) }
                 )

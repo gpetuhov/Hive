@@ -165,6 +165,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
                 settings,
                 offer,
                 true,
+                false,
                 { presenter.showToast(context.getString(R.string.add_own_offer_favorite_error)) },
                 { presenter.updateOffer(offer.uid) }
             )

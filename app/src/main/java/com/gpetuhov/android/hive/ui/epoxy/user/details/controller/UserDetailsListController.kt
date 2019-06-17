@@ -193,6 +193,7 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
                         settings,
                         offer,
                         false,
+                        false,
                         { presenter.favoriteOffer(offer.isFavorite, offer.uid) },
                         { presenter.openOffer(offer.uid) }
                     )
