@@ -180,6 +180,7 @@
     <string name="adorable_provider">AdorableProvider</string>
     <string name="rock_star">RockStar</string>
     <string name="favoritizer">Favoritizer</string>
+    <string name="distance">Distance</string>
 
     <!-- ChatFragment -->
     <string name="send">Send</string>

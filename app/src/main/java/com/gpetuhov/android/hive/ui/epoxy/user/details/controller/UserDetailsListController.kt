@@ -221,7 +221,9 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         // Manually update MapModel with new location.
         // If the model is already bind, map will be updated.
         // Otherwise map will be updated, when the model is bind.
-        mapModel.updateMap(user.location)
+
+        // TODO: format user distance
+        mapModel.updateMap(user.location, user.distance.toString())
 
         super.changeUser(user)
     }

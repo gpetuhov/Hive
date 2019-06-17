@@ -116,7 +116,7 @@ class OfferDetailsListController(private val presenter: OfferDetailsFragmentPres
         this.user = user
         this.offer = offer
 
-        mapModel.updateMap(user.location)
+        mapModel.updateMap(user.location, user.location.toString())
 
         requestModelBuild()
     }
