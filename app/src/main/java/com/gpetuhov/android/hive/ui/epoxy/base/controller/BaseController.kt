@@ -17,6 +17,7 @@ import com.gpetuhov.android.hive.ui.epoxy.user.details.models.location
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
+import kotlin.math.roundToInt
 
 abstract class BaseController : EpoxyController() {
 
@@ -128,21 +129,22 @@ abstract class BaseController : EpoxyController() {
     }
 
     protected fun location(context: Context, distance: Double) {
-        val distancePrefix = context.getString(R.string.distance)
         val distanceUnits: String
-
         val distanceResult: Double
+        val distanceString: String
 
         // Show distance in meters if less than 1000 meters, or in kilometers otherwise.
         if (distance < 1000) {
             distanceResult = distance
             distanceUnits = context.getString(R.string.meters)
+            distanceString = "${distanceResult.roundToInt()}"
         } else {
             distanceResult = distance / 1000
             distanceUnits = context.getString(R.string.kilometers)
+            distanceString = "%.1f".format(distanceResult)
         }
 
-        val distanceString = "%.1f".format(distanceResult)
+        val distancePrefix = context.getString(R.string.distance)
 
         location {
             id("user_offer_location")
