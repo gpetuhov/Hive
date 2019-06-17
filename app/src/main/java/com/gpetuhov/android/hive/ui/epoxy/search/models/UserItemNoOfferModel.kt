@@ -23,6 +23,8 @@ abstract class UserItemNoOfferModel : EpoxyModelWithHolder<UserItemNoOfferHolder
 
     @EpoxyAttribute lateinit var userStarCount: String
 
+    @EpoxyAttribute lateinit var distance: String
+
     override fun bind(holder: UserItemNoOfferHolder) {
         holder.rootView.setOnClickListener { onClick() }
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
@@ -32,6 +34,8 @@ abstract class UserItemNoOfferModel : EpoxyModelWithHolder<UserItemNoOfferHolder
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
 
         holder.userStarCount.text = userStarCount
+
+        holder.distance.text = distance
     }
 }
 
@@ -41,4 +45,5 @@ class UserItemNoOfferHolder : KotlinHolder() {
     val username by bind<TextView>(R.id.user_item_no_offer_name)
     val favoriteButton by bind<ImageView>(R.id.user_item_no_offer_favorite_button)
     val userStarCount by bind<TextView>(R.id.user_item_no_offer_star_count)
+    val distance by bind<TextView>(R.id.user_item_no_offer_distance)
 }

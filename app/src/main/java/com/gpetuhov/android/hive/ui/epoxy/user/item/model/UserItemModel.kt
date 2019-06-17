@@ -16,6 +16,7 @@ abstract class UserItemModel : EpoxyModelWithHolder<UserItemHolder>() {
     @EpoxyAttribute lateinit var onClick: () -> Unit
     @EpoxyAttribute lateinit var userPicUrl: String
     @EpoxyAttribute lateinit var username: String
+    @EpoxyAttribute lateinit var distance: String
     @EpoxyAttribute lateinit var userStarCount: String
     @EpoxyAttribute lateinit var onFavoriteButtonClick: () -> Unit
 
@@ -23,6 +24,7 @@ abstract class UserItemModel : EpoxyModelWithHolder<UserItemHolder>() {
         holder.rootView.setOnClickListener { onClick() }
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
         holder.username.text = username
+        holder.distance.text = distance
         holder.userStarCount.text = userStarCount
         holder.favoriteButton.setOnClickListener { onFavoriteButtonClick() }
     }
@@ -32,6 +34,7 @@ class UserItemHolder : KotlinHolder() {
     val rootView by bind<View>(R.id.user_item_root)
     val userPic by bind<ImageView>(R.id.user_item_user_pic)
     val username by bind<TextView>(R.id.user_item_username)
+    val distance by bind<TextView>(R.id.user_item_distance)
     val favoriteButton by bind<ImageView>(R.id.user_item_favorite_button)
     val userStarCount by bind<TextView>(R.id.user_item_star_count)
 }

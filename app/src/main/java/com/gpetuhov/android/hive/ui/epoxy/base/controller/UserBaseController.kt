@@ -66,13 +66,14 @@ abstract class UserBaseController : BaseController() {
     }
 
     protected fun userItemNoOffer(
+        context: Context,
         settings: Settings,
         user: User,
         onFavoriteButtonClick: () -> Unit,
         onClick: () -> Unit
     ) {
         userItemPhotoCarousel(settings, user, true, onClick)
-        userItemNoOfferDetails(settings, user, onFavoriteButtonClick, onClick)
+        userItemNoOfferDetails(context, settings, user, onFavoriteButtonClick, onClick)
     }
 
     protected fun status(status: String, statusVisible: Boolean, activitySeparatorVisible: Boolean, lineVisible: Boolean, onStatusClick: () -> Unit, onUserActivityClick: (Int) -> Unit) {
@@ -285,6 +286,7 @@ abstract class UserBaseController : BaseController() {
     }
 
     private fun userItemNoOfferDetails(
+        context: Context,
         settings: Settings,
         user: User,
         onFavoriteButtonClick: () -> Unit,
@@ -297,6 +299,7 @@ abstract class UserBaseController : BaseController() {
             favorite(user.isFavorite)
             onFavoriteButtonClick { onFavoriteButtonClick() }
             userStarCount(user.userStarCountString)
+            distance(getDistanceText(context, user.distance))
             onClick {
                 saveSelectedPhotoPosition(settings, user.uid)
                 onClick()

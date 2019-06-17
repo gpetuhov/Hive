@@ -24,21 +24,39 @@
                 android:contentDescription="@string/user_picture"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/user_item_no_offer_name"
+                app:layout_constraintEnd_toStartOf="@+id/user_item_no_offer_name_distance_wrapper"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
-        <TextView
-                android:id="@+id/user_item_no_offer_name"
+        <LinearLayout
+                android:id="@+id/user_item_no_offer_name_distance_wrapper"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                style="@style/titleTextStyle"
-                tools:text="Username"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical"
                 app:layout_constraintStart_toEndOf="@+id/user_item_no_offer_user_pic"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/user_item_no_offer_favorite_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"/>
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                    android:id="@+id/user_item_no_offer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/titleTextStyle"
+                    tools:text="Username"/>
+
+            <TextView
+                    android:id="@+id/user_item_no_offer_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/basicTextStyle"
+                    tools:text="15 km"
+                    app:layout_constraintTop_toBottomOf="@+id/offer_item_rating_wrapper"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </LinearLayout>
 
         <ImageButton
                 android:id="@+id/user_item_no_offer_favorite_button"

@@ -46,6 +46,7 @@ class SearchListController(private val presenter: SearchListFragmentPresenter) :
 
             } else {
                 userItemNoOffer(
+                    context,
                     settings,
                     user,
                     { presenter.favorite(user.isFavorite, user.uid, "") },

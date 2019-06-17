@@ -1289,6 +1289,8 @@ class Repository(private val context: Context, private val settings: Settings) :
                 LocationManager.shareLocation(user.hasActiveOffer())
 
                 currentUser.value = user
+
+                updateSecondUserDistance(user)
             },
             { /* Do nothing */ }
         )
@@ -2484,6 +2486,20 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private fun removeKeepAliveListener() {
         keepAliveRef?.removeEventListener(keepAliveRefValueListener)
+    }
+
+    // --- User distance ---
+
+    // Update second user distance on CURRENT user location change,
+    // if user or offer details screen is active.
+    private fun updateSecondUserDistance(currentUser: User) {
+        if (isUserDetailsActive || isOfferDetailsActive) {
+            val secondUser = this.secondUser.value
+            if (secondUser != null) {
+                secondUser.calculateDistance(currentUser.location)
+                updateSecondUser(secondUser)
+            }
+        }
     }
 
     // === Inner classes ===
