@@ -140,12 +140,13 @@ class SearchListFragmentPresenter :
 
                 if (offer1 != null && offer2 != null) {
                     val compareResult = when {
+                        sort.isSortByTitle -> sortByNameOrTitle(offer1.title, offer2.title)
                         sort.isSortByPrice -> sortByPrice(offer1, offer2)
                         sort.isSortByRating -> sortByRating(offer1.rating, offer2.rating)
                         sort.isSortByReviewCount -> sortByCount(offer1.reviewCount, offer2.reviewCount)
                         sort.isSortByFavoriteStarCount -> sortByCount(offer1.starCount.toInt(), offer2.starCount.toInt())
                         sort.isSortByPhotoCount -> sortByCount(offer1.photoList.size, offer2.photoList.size)
-                        else -> sortByNameOrTitle(offer1.title, offer2.title)
+                        else -> sortByDistance(offer1.distance, offer2.distance)
                     }
 
                     sortOrder(compareResult, !sort.isSortOrderAscending)
@@ -158,11 +159,12 @@ class SearchListFragmentPresenter :
             userList.sortWith(Comparator { user1, user2 ->
                 // Users can by sorted only by name and rating and cannot be sorted by price
                 val compareResult = when {
+                    sort.isSortByTitle -> sortByNameOrTitle(user1.getUsernameOrName(), user2.getUsernameOrName())
                     sort.isSortByRating -> sortByRating(user1.averageRating, user2.averageRating)
                     sort.isSortByReviewCount -> sortByCount(user1.totalReviewsCount, user2.totalReviewsCount)
                     sort.isSortByFavoriteStarCount -> sortByCount(user1.totalStarCount.toInt(), user2.totalStarCount.toInt())
                     sort.isSortByPhotoCount -> sortByCount(user1.photoList.size, user2.photoList.size)
-                    else -> sortByNameOrTitle(user1.getUsernameOrName(), user2.getUsernameOrName())
+                    else -> sortByDistance(user1.distance, user2.distance)
                 }
 
                 sortOrder(compareResult, !sort.isSortOrderAscending)
@@ -232,6 +234,14 @@ class SearchListFragmentPresenter :
         } else {
             // Otherwise do not change compare result
             compareResult
+        }
+    }
+
+    private fun sortByDistance(distance1: Double, distance2: Double): Int {
+        return when {
+            distance1 > distance2 -> 1
+            distance1 == distance2 -> 0
+            else -> -1
         }
     }
 }
