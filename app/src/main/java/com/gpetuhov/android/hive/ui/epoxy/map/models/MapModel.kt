@@ -1,6 +1,5 @@
 package com.gpetuhov.android.hive.ui.epoxy.map.models
 
-import android.widget.TextView
 import com.airbnb.epoxy.EpoxyAttribute
 import com.airbnb.epoxy.EpoxyModelClass
 import com.airbnb.epoxy.EpoxyModelWithHolder
@@ -24,15 +23,9 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
     // then MapModel will be rebind on every location change.
     private var location = Constants.Map.DEFAULT_LOCATION
 
-    private var distance = ""
-
-    private var holder: MapHolder? = null
-
     // This is called, when the model is bind to view.
     // Here we create map and init it with current location.
     override fun bind(holder: MapHolder) {
-        this.holder = holder
-
         // We need to call this for the map to show up
         holder.mapView.onCreate(null)
 
@@ -40,7 +33,7 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
             map = googleMap
             googleMap.uiSettings.isMapToolbarEnabled = false
             googleMap.setOnMapClickListener { onClick() }
-            updateMap(location, distance)
+            updateMap(location)
         }
     }
 
@@ -48,11 +41,8 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
     // (and so map recreation).
     // If the map is null (model is not bind yet), just update location,
     // otherwise update map.
-    fun updateMap(location: LatLng, distance: String) {
+    fun updateMap(location: LatLng) {
         this.location = location
-        this.distance = distance
-
-        holder?.distance?.text = distance
 
         if (map != null) {
             map?.moveCamera(location)
@@ -63,5 +53,4 @@ abstract class MapModel : EpoxyModelWithHolder<MapHolder>() {
 
 class MapHolder : KotlinHolder() {
     val mapView by bind<MapView>(R.id.user_offer_map_view)
-    val distance by bind<TextView>(R.id.user_offer_distance)
 }
