@@ -314,6 +314,7 @@ data class User(
 
     fun calculateDistance(currentLocation: LatLng?) {
         distance = if (currentLocation != null) SphericalUtil.computeDistanceBetween(location, currentLocation) else 0.0
+        if (distance < 0) distance = 0.0
         offerList.forEach { it.distance = distance }
     }
 
