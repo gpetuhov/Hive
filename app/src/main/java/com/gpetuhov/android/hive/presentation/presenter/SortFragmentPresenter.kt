@@ -32,6 +32,13 @@ class SortFragmentPresenter : MvpPresenter<SortFragmentView>() {
 
     // --- Sort param ---
 
+    fun sortByDistance() {
+        setSortChanged()
+        sort.setSortByDistance()
+    }
+
+    fun isSortByDistance() = sort.isSortByDistance
+
     fun sortByTitle() {
         setSortChanged()
         sort.setSortByTitle()
