@@ -1411,6 +1411,8 @@ class Repository(private val context: Context, private val settings: Settings) :
 
         user.updateAwards()
 
+        user.calculateDistance(currentUser.value?.location)
+
         return user
     }
 

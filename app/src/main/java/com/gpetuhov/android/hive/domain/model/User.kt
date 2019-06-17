@@ -1,9 +1,11 @@
 package com.gpetuhov.android.hive.domain.model
 
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.SphericalUtil
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.getLastSeenTimeFromTimestamp
 import java.util.*
+import kotlin.math.roundToInt
 
 // Represents data both for the current user and search results.
 // Models at domain layer are just POJOs for keeping data.
@@ -115,6 +117,8 @@ data class User(
     val hasAdorableProviderAward get() = totalStarCount >= Constants.Awards.ADORABLE_PROVIDER_AWARD_MIN_STAR_COUNT
 
     val hasRockStarAward get() = totalStarCount >= Constants.Awards.ROCK_STAR_AWARD_MIN_STAR_COUNT
+
+    var distance = 0.0  // Distance from user to current device location (in meters)
 
     fun hasActiveOffer() = offerList.any { it.isActive }
 
@@ -307,6 +311,10 @@ data class User(
     }
 
     fun getSearchedOffer() = getOfferByIndex(offerSearchResultIndex)
+
+    fun calculateDistance(currentLocation: LatLng?) {
+        distance = if (currentLocation != null) SphericalUtil.computeDistanceBetween(location, currentLocation) else 0.0
+    }
 
     // === Private methods ===
 
