@@ -12,6 +12,12 @@ class SortListController(private val presenter: SortFragmentPresenter) : EpoxyCo
         sortParam {
             id("sort_param")
 
+            // TODO: init with presenter
+            sortByDistance(false)
+            onSortByDistanceClick {
+                // TODO
+            }
+
             sortByTitle(presenter.isSortByTitle())
             onSortByTitleClick { presenter.sortByTitle() }
 

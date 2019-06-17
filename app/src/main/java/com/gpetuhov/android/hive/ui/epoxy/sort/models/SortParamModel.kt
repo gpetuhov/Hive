@@ -11,6 +11,9 @@ import com.gpetuhov.android.hive.ui.epoxy.base.bind
 @EpoxyModelClass(layout = R.layout.sort_param_view)
 abstract class SortParamModel : EpoxyModelWithHolder<SortParamHolder>() {
 
+    @EpoxyAttribute var sortByDistance = false
+    @EpoxyAttribute lateinit var onSortByDistanceClick: () -> Unit
+
     @EpoxyAttribute var sortByTitle = false
     @EpoxyAttribute lateinit var onSortByTitleClick: () -> Unit
 
@@ -30,6 +33,7 @@ abstract class SortParamModel : EpoxyModelWithHolder<SortParamHolder>() {
     @EpoxyAttribute lateinit var onSortByPhotoCountClick: () -> Unit
 
     override fun bind(holder: SortParamHolder) {
+        holder.sortByDistance.bind(sortByDistance) { onSortByDistanceClick() }
         holder.sortByTitle.bind(sortByTitle) { onSortByTitleClick() }
         holder.sortByPrice.bind(sortByPrice) { onSortByPriceClick() }
         holder.sortByRating.bind(sortByRating) { onSortByRatingClick() }
@@ -40,6 +44,7 @@ abstract class SortParamModel : EpoxyModelWithHolder<SortParamHolder>() {
 }
 
 class SortParamHolder : KotlinHolder() {
+    val sortByDistance by bind<RadioButton>(R.id.sort_by_distance)
     val sortByTitle by bind<RadioButton>(R.id.sort_by_title)
     val sortByPrice by bind<RadioButton>(R.id.sort_by_price)
     val sortByRating by bind<RadioButton>(R.id.sort_by_rating)

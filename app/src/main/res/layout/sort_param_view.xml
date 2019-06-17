@@ -15,6 +15,14 @@
             style="@style/titleTextStyle"/>
 
     <RadioButton
+            android:id="@+id/sort_by_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/sort_by_distance"
+            style="@style/basicTextStyle"/>
+
+    <RadioButton
             android:id="@+id/sort_by_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

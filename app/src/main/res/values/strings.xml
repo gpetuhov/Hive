@@ -364,6 +364,7 @@
     <!-- SortFragment -->
     <string name="sort">Sort</string>
     <string name="close_sort">Close sort</string>
+    <string name="sort_by_distance">Distance</string>
     <string name="sort_by_title">Title (name)</string>
     <string name="sort_by_price">Price</string>
     <string name="sort_by_rating">Rating</string>
