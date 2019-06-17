@@ -129,14 +129,17 @@ abstract class BaseController : EpoxyController() {
     }
 
     protected fun location(context: Context, distance: Double) {
+        location {
+            id("user_offer_location")
+            distance("${context.getString(R.string.distance)}: ${getDistanceText(context, distance)}")
+        }
+    }
+
+    protected fun getDistanceText(context: Context, distance: Double): String {
         // Show distance in meters without fractions if less than 1000 meters, or in kilometers with fractions otherwise.
         val distanceString = if (distance < 1000) "${distance.roundToInt()}" else "%.1f".format(distance / 1000)
         val distanceUnits = context.getString(if (distance < 1000) R.string.meters else R.string.kilometers)
-
-        location {
-            id("user_offer_location")
-            distance("${context.getString(R.string.distance)}: $distanceString $distanceUnits")
-        }
+        return "$distanceString $distanceUnits"
     }
 
     // === Private methods ===

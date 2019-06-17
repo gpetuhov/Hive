@@ -274,8 +274,7 @@ abstract class UserBaseController : BaseController() {
             rating(offer.rating)
             reviewCount(offer.reviewCount)
 
-            // TODO: format distance
-            distance(offer.distance.toString())
+            distance(getDistanceText(context, offer.distance))
             distanceVisible(distanceVisible)
 
             onClick {
