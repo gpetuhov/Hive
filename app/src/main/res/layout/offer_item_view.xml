@@ -56,8 +56,7 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     app:layout_constraintTop_toBottomOf="@+id/offer_item_price"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintStart_toStartOf="parent">
 
                 <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/offer_item_rating_bar"
@@ -80,6 +79,16 @@
                         tools:text="418"/>
 
             </LinearLayout>
+
+            <TextView
+                    android:id="@+id/offer_item_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/basicTextStyle"
+                    tools:text="15 km"
+                    app:layout_constraintTop_toBottomOf="@+id/offer_item_rating_wrapper"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             <ImageButton
                     android:id="@+id/offer_item_favorite_button"

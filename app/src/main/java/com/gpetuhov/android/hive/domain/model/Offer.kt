@@ -16,7 +16,8 @@ data class Offer(
     var lastReviewAuthorUserPicUrl: String = "",
     var lastReviewText: String = "",
     var lastReviewTimestamp: Long = 0L,
-    var starCount: Long = 0L
+    var starCount: Long = 0L,
+    var distance: Double = 0.0
 ) {
     var photoList = mutableListOf<Photo>()
     val starCountString get() = starCount.toString()

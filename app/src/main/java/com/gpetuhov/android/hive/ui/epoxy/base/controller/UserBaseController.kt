@@ -60,7 +60,6 @@ abstract class UserBaseController : BaseController() {
         onFavoriteButtonClick: () -> Unit,
         onClick: () -> Unit
     ) {
-
         offerItemPhotoCarousel(settings, offer, !isProfile, onClick)
         offerItemDetails(context, settings, offer, isProfile, onFavoriteButtonClick, onClick)
     }
@@ -272,6 +271,11 @@ abstract class UserBaseController : BaseController() {
             offerStarCount(offer.starCountString)
             rating(offer.rating)
             reviewCount(offer.reviewCount)
+
+            // TODO: format distance
+            distance(offer.distance.toString())
+            distanceVisible(!isProfile)
+
             onClick {
                 saveSelectedPhotoPosition(settings, offer.uid)
                 onClick()

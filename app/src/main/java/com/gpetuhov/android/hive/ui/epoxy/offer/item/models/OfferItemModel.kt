@@ -35,6 +35,9 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
     @EpoxyAttribute var rating = 0.0F
     @EpoxyAttribute var reviewCount = 0
 
+    @EpoxyAttribute lateinit var distance: String
+    @EpoxyAttribute var distanceVisible = false
+
     override fun bind(holder: OfferItemHolder) {
         holder.active.setImageResource(if (active) R.drawable.circle_green else R.drawable.circle_red)
         holder.active.setVisible(activeVisible)
@@ -55,6 +58,9 @@ abstract class OfferItemModel : EpoxyModelWithHolder<OfferItemHolder>() {
         holder.ratingBar.rating = rating
         holder.reviewCount.text = reviewCount.toString()
 
+        holder.distance.text = distance
+        holder.distance.setVisible(distanceVisible)
+
         holder.rootView.setOnClickListener { onClick() }
     }
 }
@@ -69,4 +75,5 @@ class OfferItemHolder : KotlinHolder() {
     val ratingBar by bind<AppCompatRatingBar>(R.id.offer_item_rating_bar)
     val reviewCount by bind<TextView>(R.id.offer_item_review_count)
     val offerStarCount by bind<TextView>(R.id.offer_item_star_count)
+    val distance by bind<TextView>(R.id.offer_item_distance)
 }
