@@ -32,8 +32,6 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
         hideMainHeader()
         hideBottomNavigationView()
 
-        initDialogs()
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_review, container, false)
         binding?.presenter = presenter
 
@@ -67,7 +65,10 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
 
     override fun hideProgress() = progressVisible(false)
 
-    override fun showQuitReviewUpdateDialog() = quitDialog?.show() ?: Unit
+    override fun showQuitReviewUpdateDialog() {
+        initQuitDialog()
+        quitDialog?.show() ?: Unit
+    }
 
     override fun dismissQuitReviewUpdateDialog() = quitDialog?.dismiss() ?: Unit
 
@@ -81,10 +82,6 @@ class UpdateReviewFragment : BaseFragment(), UpdateReviewFragmentView {
     }
 
     // === Private methods ===
-
-    private fun initDialogs() {
-        initQuitDialog()
-    }
 
     private fun initQuitDialog() {
         if (context != null) {
