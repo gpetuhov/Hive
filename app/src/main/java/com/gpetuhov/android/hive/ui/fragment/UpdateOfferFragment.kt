@@ -57,8 +57,6 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
         // Hide bottom navigation view, so that user can't quit without quit dialog
         hideBottomNavigationView()
 
-        initDialogs()
-
         presenter.initOffer(UpdateOfferFragmentArgs.fromBundle(arguments!!).offerUid)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_offer, container, false)
@@ -111,12 +109,14 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     // === UpdateOfferFragmentView ===
 
     override fun showTitleDialog() {
+        initTitleDialog()
         showDialog(titleDialog, presenter.getTitlePrefill())
     }
 
     override fun dismissTitleDialog() = titleDialog?.dismiss() ?: Unit
 
     override fun showDescriptionDialog() {
+        initDescriptionDialog()
         showDialog(descriptionDialog, presenter.getDescriptionPrefill())
     }
 
@@ -130,15 +130,22 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
     override fun hideProgress() = progressVisible(false)
 
-    override fun showDeleteOfferDialog() = deleteOfferDialog?.show() ?: Unit
+    override fun showDeleteOfferDialog() {
+        initDeleteOfferDialog()
+        deleteOfferDialog?.show() ?: Unit
+    }
 
     override fun dismissDeleteOfferDialog() = deleteOfferDialog?.dismiss() ?: Unit
 
-    override fun showQuitOfferUpdateDialog() = quitDialog?.show() ?: Unit
+    override fun showQuitOfferUpdateDialog() {
+        initQuitDialog()
+        quitDialog?.show() ?: Unit
+    }
 
     override fun dismissQuitOfferUpdateDialog() = quitDialog?.dismiss() ?: Unit
 
     override fun showPriceDialog() {
+        initPriceDialog()
         showDialog(priceDialog, presenter.getPricePrefill())
     }
 
@@ -146,7 +153,10 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
     override fun choosePhoto() = startPhotoPicker(RC_PHOTO_PICKER)
 
-    override fun showDeletePhotoDialog() = deletePhotoDialog?.show() ?: Unit
+    override fun showDeletePhotoDialog() {
+        initDeletePhotoDialog()
+        deletePhotoDialog?.show() ?: Unit
+    }
 
     override fun dismissDeletePhotoDialog() = deletePhotoDialog?.dismiss() ?: Unit
 
@@ -175,15 +185,6 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     }
 
     // === Private methods ===
-
-    private fun initDialogs() {
-        initTitleDialog()
-        initDescriptionDialog()
-        initDeleteOfferDialog()
-        initQuitDialog()
-        initPriceDialog()
-        initDeletePhotoDialog()
-    }
 
     private fun initTitleDialog() {
         if (context != null) {
