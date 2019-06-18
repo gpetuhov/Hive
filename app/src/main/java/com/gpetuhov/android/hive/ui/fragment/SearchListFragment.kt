@@ -39,8 +39,6 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         hideMainHeader()
         showBottomNavigationView()
 
-        initDialogs()
-
         controller = SearchListController(presenter)
         controller?.onRestoreInstanceState(savedInstanceState)
 
@@ -118,7 +116,10 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun showSearchDialog() = showDialog(searchDialog, presenter.getSearchPrefill())
+    override fun showSearchDialog() {
+        initSearchDialog()
+        showDialog(searchDialog, presenter.getSearchPrefill())
+    }
 
     override fun dismissSearchDialog() = searchDialog?.dismiss() ?: Unit
 
@@ -133,10 +134,6 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
     // === Private methods ===
 
     private fun progressVisible(isVisible: Boolean) = search_list_progress.setVisible(isVisible)
-
-    private fun initDialogs() {
-        initSearchDialog()
-    }
 
     private fun dismissDialogs() {
         dismissSearchDialog()
