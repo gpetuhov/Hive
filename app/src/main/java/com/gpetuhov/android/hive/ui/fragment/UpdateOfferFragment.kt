@@ -111,21 +111,13 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     // === UpdateOfferFragmentView ===
 
     override fun showTitleDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = titleDialog?.getInputField()
-        editText?.setText(presenter.getTitlePrefill())
-        editText?.setSelection(editText.text.length)
-        titleDialog?.show()
+        showDialog(titleDialog, presenter.getTitlePrefill())
     }
 
     override fun dismissTitleDialog() = titleDialog?.dismiss() ?: Unit
 
     override fun showDescriptionDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = descriptionDialog?.getInputField()
-        editText?.setText(presenter.getDescriptionPrefill())
-        editText?.setSelection(editText.text.length)
-        descriptionDialog?.show()
+        showDialog(descriptionDialog, presenter.getDescriptionPrefill())
     }
 
     override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
@@ -147,11 +139,7 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     override fun dismissQuitOfferUpdateDialog() = quitDialog?.dismiss() ?: Unit
 
     override fun showPriceDialog() {
-        // Prefill dialog with text provided by presenter
-        val editText = priceDialog?.getInputField()
-        editText?.setText(presenter.getPricePrefill())
-        editText?.setSelection(editText.text.length)
-        priceDialog?.show()
+        showDialog(priceDialog, presenter.getPricePrefill())
     }
 
     override fun dismissPriceDialog() = priceDialog?.dismiss() ?: Unit
