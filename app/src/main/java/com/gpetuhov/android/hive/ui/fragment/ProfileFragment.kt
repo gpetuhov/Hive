@@ -64,8 +64,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         hideMainHeader()
         showBottomNavigationView()
 
-        initDialogs()
-
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         controller = ProfileListController(presenter)
@@ -117,7 +115,10 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     // === ProfileFragmentView ===
 
-    override fun showSignOutDialog() = signOutDialog?.show() ?: Unit
+    override fun showSignOutDialog() {
+        initSignOutDialog()
+        signOutDialog?.show() ?: Unit
+    }
 
     override fun dismissSignOutDialog() = signOutDialog?.dismiss() ?: Unit
 
@@ -125,7 +126,10 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun disableSignOutButton() = signOutButtonEnabled(false) ?: Unit
 
-    override fun showDeleteUserDialog() = deleteUserDialog?.show() ?: Unit
+    override fun showDeleteUserDialog() {
+        initDeleteUserDialog()
+        deleteUserDialog?.show() ?: Unit
+    }
 
     override fun dismissDeleteUserDialog() = deleteUserDialog?.dismiss() ?: Unit
 
@@ -133,11 +137,17 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun disableDeleteUserButton() = deleteUserButtonEnabled(false) ?: Unit
 
-    override fun showUsernameDialog() = showDialog(usernameDialog, presenter.getUsernamePrefill())
+    override fun showUsernameDialog() {
+        initUsernameDialog()
+        showDialog(usernameDialog, presenter.getUsernamePrefill())
+    }
 
     override fun dismissUsernameDialog() = usernameDialog?.dismiss() ?: Unit
 
-    override fun showDescriptionDialog() = showDialog(descriptionDialog, presenter.getDescriptionPrefill())
+    override fun showDescriptionDialog() {
+        initDescriptionDialog()
+        showDialog(descriptionDialog, presenter.getDescriptionPrefill())
+    }
 
     override fun dismissDescriptionDialog() = descriptionDialog?.dismiss() ?: Unit
 
@@ -150,7 +160,10 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun choosePhoto() = startPhotoPicker(RC_USER_PHOTO_PICKER)
 
-    override fun showDeletePhotoDialog() = deletePhotoDialog?.show() ?: Unit
+    override fun showDeletePhotoDialog() {
+        initDeletePhotoDialog()
+        deletePhotoDialog?.show() ?: Unit
+    }
 
     override fun dismissDeletePhotoDialog() = deletePhotoDialog?.dismiss() ?: Unit
 
@@ -162,59 +175,101 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
-    override fun showPhoneDialog() = showDialog(phoneDialog, presenter.getPhonePrefill())
+    override fun showPhoneDialog() {
+        initPhoneDialog()
+        showDialog(phoneDialog, presenter.getPhonePrefill())
+    }
 
     override fun dismissPhoneDialog() = phoneDialog?.dismiss() ?: Unit
 
-    override fun showEmailDialog() = showDialog(emailDialog, presenter.getEmailPrefill())
+    override fun showEmailDialog() {
+        initEmailDialog()
+        showDialog(emailDialog, presenter.getEmailPrefill())
+    }
 
     override fun dismissEmailDialog() = emailDialog?.dismiss() ?: Unit
 
-    override fun showSkypeDialog() = showDialog(skypeDialog, presenter.getSkypePrefill())
+    override fun showSkypeDialog() {
+        initSkypeDialog()
+        showDialog(skypeDialog, presenter.getSkypePrefill())
+    }
 
     override fun dismissSkypeDialog() = skypeDialog?.dismiss() ?: Unit
 
-    override fun showFacebookDialog() = showDialog(facebookDialog, presenter.getFacebookPrefill())
+    override fun showFacebookDialog() {
+        initFacebookDialog()
+        showDialog(facebookDialog, presenter.getFacebookPrefill())
+    }
 
     override fun dismissFacebookDialog() = facebookDialog?.dismiss() ?: Unit
 
-    override fun showTwitterDialog() = showDialog(twitterDialog, presenter.getTwitterPrefill())
+    override fun showTwitterDialog() {
+        initTwitterDialog()
+        showDialog(twitterDialog, presenter.getTwitterPrefill())
+    }
 
     override fun dismissTwitterDialog() = twitterDialog?.dismiss() ?: Unit
 
-    override fun showInstagramDialog() = showDialog(instagramDialog, presenter.getInstagramPrefill())
+    override fun showInstagramDialog() {
+        initInstagramDialog()
+        showDialog(instagramDialog, presenter.getInstagramPrefill())
+    }
 
     override fun dismissInstagramDialog() = instagramDialog?.dismiss() ?: Unit
 
-    override fun showYouTubeDialog() = showDialog(youTubeDialog, presenter.getYouTubePrefill())
+    override fun showYouTubeDialog() {
+        initYouTubeDialog()
+        showDialog(youTubeDialog, presenter.getYouTubePrefill())
+    }
 
     override fun dismissYouTubeDialog() = youTubeDialog?.dismiss() ?: Unit
 
-    override fun showWebsiteDialog() = showDialog(websiteDialog, presenter.getWebsitePrefill())
+    override fun showWebsiteDialog() {
+        initWebsiteDialog()
+        showDialog(websiteDialog, presenter.getWebsitePrefill())
+    }
 
     override fun dismissWebsiteDialog() = websiteDialog?.dismiss() ?: Unit
 
-    override fun showResidenceDialog() = showDialog(residenceDialog, presenter.getResidencePrefill())
+    override fun showResidenceDialog() {
+        initResidenceDialog()
+        showDialog(residenceDialog, presenter.getResidencePrefill())
+    }
 
     override fun dismissResidenceDialog() = residenceDialog?.dismiss() ?: Unit
 
-    override fun showLanguageDialog() = showDialog(languageDialog, presenter.getLanguagePrefill())
+    override fun showLanguageDialog() {
+        initLanguageDialog()
+        showDialog(languageDialog, presenter.getLanguagePrefill())
+    }
 
     override fun dismissLanguageDialog() = languageDialog?.dismiss() ?: Unit
 
-    override fun showEducationDialog() = showDialog(educationDialog, presenter.getEducationPrefill())
+    override fun showEducationDialog() {
+        initEducationDialog()
+        showDialog(educationDialog, presenter.getEducationPrefill())
+    }
 
     override fun dismissEducationDialog() = educationDialog?.dismiss() ?: Unit
 
-    override fun showWorkDialog() = showDialog(workDialog, presenter.getWorkPrefill())
+    override fun showWorkDialog() {
+        initWorkDialog()
+        showDialog(workDialog, presenter.getWorkPrefill())
+    }
 
     override fun dismissWorkDialog() = workDialog?.dismiss() ?: Unit
 
-    override fun showInterestsDialog() = showDialog(interestsDialog, presenter.getInterestsPrefill())
+    override fun showInterestsDialog() {
+        initInterestsDialog()
+        showDialog(interestsDialog, presenter.getInterestsPrefill())
+    }
 
     override fun dismissInterestsDialog() = interestsDialog?.dismiss() ?: Unit
 
-    override fun showStatusDialog() = showDialog(statusDialog, presenter.getStatusPrefill())
+    override fun showStatusDialog() {
+        initStatusDialog()
+        showDialog(statusDialog, presenter.getStatusPrefill())
+    }
 
     override fun dismissStatusDialog() = statusDialog?.dismiss() ?: Unit
 
@@ -257,28 +312,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     // === Private methods ===
-
-    private fun initDialogs() {
-        initUsernameDialog()
-        initDescriptionDialog()
-        initSignOutDialog()
-        initDeleteUserDialog()
-        initDeletePhotoDialog()
-        initPhoneDialog()
-        initEmailDialog()
-        initSkypeDialog()
-        initFacebookDialog()
-        initTwitterDialog()
-        initInstagramDialog()
-        initYouTubeDialog()
-        initWebsiteDialog()
-        initResidenceDialog()
-        initLanguageDialog()
-        initEducationDialog()
-        initWorkDialog()
-        initInterestsDialog()
-        initStatusDialog()
-    }
 
     private fun initUsernameDialog() {
         usernameDialog = getInputDialog(
