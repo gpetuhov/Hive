@@ -179,6 +179,9 @@ class Repository(private val context: Context, private val settings: Settings) :
     // (chatroom is the chat between current user and second user)
     private val messages = MutableLiveData<MutableList<Message>>()
 
+    // Chat archive messages
+    private val chatArchiveMessages = MutableLiveData<MutableList<Message>>()
+
     // Value is true if unread messages exist
     private val unreadMessagesFlag = MutableLiveData<Boolean>()
 
@@ -679,6 +682,39 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun clearMessages() {
         messages.value = mutableListOf()
     }
+
+    override fun getMessages() {
+        // TODO: refactor this
+        currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
+
+        if (isAuthorized && currentChatRoomUid != "") {
+            getMessagesCollectionReference()
+                .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
+                .limit(Constants.Chat.MAX_REAL_TIME_UPDATE_MESSAGES)
+                .get()
+                .addOnSuccessListener { documents ->
+                    Timber.tag(TAG).d("Messages read success")
+
+                    // TODO: refactor this
+
+                    val messagesList = mutableListOf<Message>()
+
+                    for (doc in documents) {
+                        val message = getMessageFromDocumentSnapshot(doc)
+                        messagesList.add(message)
+
+                        if (!message.isFromCurrentUser && !message.isRead) markMessageAsRead(message.uid)
+                    }
+
+                    chatArchiveMessages.value = messagesList
+                }
+                .addOnFailureListener { exception ->
+                    Timber.tag(TAG).d("Messages read failed")
+                }
+        }
+    }
+
+    // TODO: add getMoreMessages() for chat archive pagination
 
     // --- Chatroom ---
 
@@ -2417,7 +2453,6 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private fun getOfferReviews(offer: Offer, onComplete: (MutableList<Review>) -> Unit) {
         if (isAuthorized ) {
-
             getReviewsCollectionReference(offer.userUid, offer.uid).get()
                 .addOnSuccessListener { documents ->
                     val reviewList = mutableListOf<Review>()

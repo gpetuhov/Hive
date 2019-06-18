@@ -27,10 +27,22 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
         hideMainHeader()
         showBottomNavigationView()
 
+        presenter.getMessages()
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_archive, container, false)
         binding?.presenter = presenter
 
         return binding?.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
     }
 
     // === ChatArchiveFragmentView ===
