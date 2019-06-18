@@ -32,8 +32,6 @@ class UpdateCommentFragment : BaseFragment(), UpdateCommentFragmentView {
         hideMainHeader()
         hideBottomNavigationView()
 
-        initDialogs()
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_comment, container, false)
         binding?.presenter = presenter
 
@@ -63,7 +61,10 @@ class UpdateCommentFragment : BaseFragment(), UpdateCommentFragmentView {
 
     override fun hideProgress() = progressVisible(false)
 
-    override fun showQuitCommentUpdateDialog() = quitDialog?.show() ?: Unit
+    override fun showQuitCommentUpdateDialog() {
+        initQuitDialog()
+        quitDialog?.show() ?: Unit
+    }
 
     override fun dismissQuitCommentUpdateDialog() = quitDialog?.dismiss() ?: Unit
 
@@ -77,10 +78,6 @@ class UpdateCommentFragment : BaseFragment(), UpdateCommentFragmentView {
     }
 
     // === Private methods ===
-
-    private fun initDialogs() {
-        initQuitDialog()
-    }
 
     private fun initQuitDialog() {
         if (context != null) {
