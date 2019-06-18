@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentChatArchiveBinding
+import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.presentation.presenter.ChatArchiveFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatArchiveFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.ui.viewmodel.ChatArchiveViewModel
 import com.gpetuhov.android.hive.util.*
 
 class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
@@ -33,6 +37,16 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
         binding?.presenter = presenter
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val viewModel = ViewModelProviders.of(this).get(ChatArchiveViewModel::class.java)
+
+        viewModel.chatArchiveMessages.observe(this, Observer<MutableList<Message>> { messageList ->
+            // TODO
+        })
     }
 
     override fun onResume() {

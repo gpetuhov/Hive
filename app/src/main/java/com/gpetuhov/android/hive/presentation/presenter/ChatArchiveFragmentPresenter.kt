@@ -20,7 +20,7 @@ class ChatArchiveFragmentPresenter : MvpPresenter<ChatArchiveFragmentView>() {
 
     // --- Lifecycle methods ---
 
-    fun getMessages() = repo.getMessages()
+    fun getMessages() = repo.getChatArchiveMessages()
 
     fun onResume() {
         // TODO

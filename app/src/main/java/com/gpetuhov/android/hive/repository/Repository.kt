@@ -683,7 +683,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         messages.value = mutableListOf()
     }
 
-    override fun getMessages() {
+    override fun getChatArchiveMessages() {
         // TODO: refactor this
         currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
 
@@ -713,6 +713,8 @@ class Repository(private val context: Context, private val settings: Settings) :
                 }
         }
     }
+
+    override fun chatArchiveMessages(): MutableLiveData<MutableList<Message>> = chatArchiveMessages
 
     // TODO: add getMoreMessages() for chat archive pagination
 
