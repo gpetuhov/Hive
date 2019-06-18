@@ -8,8 +8,8 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.MainActivity">
 
-    <!-- This header is used in ChatFragment to prevent toolbar with username hiding on keyboard show -->
-    <LinearLayout
+    <!-- This header is used in ChatFragment to prevent toolbar with username from hiding on keyboard show -->
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
@@ -30,7 +30,10 @@
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/close_offer_update"
                 android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp"/>
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageView
                 android:id="@+id/header_image"
@@ -38,15 +41,24 @@
                 android:layout_height="40dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
-                android:contentDescription="@string/user_picture"/>
+                android:contentDescription="@string/user_picture"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/header_back_button"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
         <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
                 android:layout_marginStart="8dp"
                 android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/header_image"
+                app:layout_constraintEnd_toStartOf="@+id/header_chat_archive_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="8dp"
+                android:layout_marginEnd="8dp">
 
             <TextView
                     android:id="@+id/header_title"
@@ -76,7 +88,19 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <Button
+                android:id="@+id/header_chat_archive_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/chat_archive"
+                android:background="@android:color/transparent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="16dp"
+                android:layout_marginEnd="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- This is needed for the Connecting to network snackbar -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
