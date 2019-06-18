@@ -23,6 +23,9 @@ interface ChatFragmentView : MvpView {
     fun openUserDetails()
 
     @StateStrategyType(SkipStrategy::class)
+    fun openChatArchive()
+
+    @StateStrategyType(SkipStrategy::class)
     fun scrollToPosition(position: Int)
 
     @StateStrategyType(SkipStrategy::class)

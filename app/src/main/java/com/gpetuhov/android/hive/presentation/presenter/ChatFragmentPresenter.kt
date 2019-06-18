@@ -74,6 +74,8 @@ class ChatFragmentPresenter :
         viewState.hideScrollDownButton()
     }
 
+    fun openChatArchive() = viewState.openChatArchive()
+
     fun navigateUp() = viewState.navigateUp()
 
     // === Lifecycle methods ===

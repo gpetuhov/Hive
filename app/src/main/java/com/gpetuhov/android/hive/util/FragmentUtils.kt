@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -34,12 +35,12 @@ fun Fragment.hideBottomNavigationView() {
     getBottomNavigationView()?.visibility = View.GONE
 }
 
-fun Fragment.showMainHeader(onNavigationClick: () -> Unit, onClick: () -> Unit) {
-    initMainHeader(true, onNavigationClick, onClick)
+fun Fragment.showMainHeader(onNavigationClick: () -> Unit, onClick: () -> Unit, onArchiveClick: () -> Unit) {
+    initMainHeader(true, onNavigationClick, onClick, onArchiveClick)
 }
 
 fun Fragment.hideMainHeader() {
-    initMainHeader(false, { /* Do nothing */ }, { /* Do nothing */ })
+    initMainHeader(false, { /* Do nothing */ }, { /* Do nothing */ }, { /* Do nothing */ })
 }
 
 fun Fragment.setMainHeaderUserPic(user: User) {
@@ -85,11 +86,14 @@ private fun Fragment.getMainHeaderOnline() = activity?.findViewById<TextView>(R.
 
 private fun Fragment.getMainHeaderLastSeen() = activity?.findViewById<TextView>(R.id.header_last_seen)
 
-private fun Fragment.initMainHeader(isVisible: Boolean, onNavigationClick: () -> Unit, onClick: () -> Unit) {
+private fun Fragment.initMainHeader(isVisible: Boolean, onNavigationClick: () -> Unit, onClick: () -> Unit, onArchiveClick: () -> Unit) {
     val mainHeader = getMainHeader()
     mainHeader?.setVisible(isVisible)
     mainHeader?.setOnClickListener { onClick() }
 
     val backButton = mainHeader?.findViewById<ImageButton>(R.id.header_back_button)
     backButton?.setOnClickListener { onNavigationClick() }
+
+    val archiveButton = mainHeader?.findViewById<Button>(R.id.header_chat_archive_button)
+    archiveButton?.setOnClickListener { onArchiveClick() }
 }

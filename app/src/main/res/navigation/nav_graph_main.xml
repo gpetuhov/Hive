@@ -143,6 +143,11 @@
                 app:destination="@id/user_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_chat_fragment_to_chatArchiveFragment"
+                app:destination="@id/chatArchiveFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment android:id="@+id/update_offer_fragment"
@@ -426,6 +431,13 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.SortFragment"
             android:label="SortFragment"
             tools:layout="@layout/fragment_sort">
+    </fragment>
+
+    <fragment
+            android:id="@+id/chatArchiveFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.ChatArchiveFragment"
+            android:label="ChatArchiveFragment"
+            tools:layout="@layout/fragment_chat_archive">
     </fragment>
 
 </navigation>

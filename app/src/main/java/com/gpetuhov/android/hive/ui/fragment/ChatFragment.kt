@@ -46,7 +46,8 @@ class ChatFragment : BaseFragment(), ChatFragmentView {
 
         showMainHeader(
             { presenter.navigateUp() },
-            { presenter.openUserDetails() }
+            { presenter.openUserDetails() },
+            { presenter.openChatArchive() }
         )
 
         showBottomNavigationView()
@@ -114,6 +115,13 @@ class ChatFragment : BaseFragment(), ChatFragmentView {
 
     override fun openUserDetails() {
         val action = ChatFragmentDirections.actionChatFragmentToUserDetailsFragment()
+        findNavController().navigate(action)
+
+        hideSoftKeyboard()
+    }
+
+    override fun openChatArchive() {
+        val action = ChatFragmentDirections.actionChatFragmentToChatArchiveFragment()
         findNavController().navigate(action)
 
         hideSoftKeyboard()
