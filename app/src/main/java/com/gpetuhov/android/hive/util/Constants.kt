@@ -31,8 +31,8 @@ class Constants {
 
     class Location {
         companion object {
-            const val UPDATE_INTERVAL = 30000L
-            const val UPDATE_FASTEST_INTERVAL = 30000L
+            const val UPDATE_INTERVAL = 60000L
+            const val UPDATE_FASTEST_INTERVAL = 60000L
         }
     }
 
