@@ -190,7 +190,7 @@
     <string name="send_message">Send message</string>
     <string name="send_message_error">Error sending message</string>
     <string name="message_is_read">Message is read</string>
-    <string name="chat_archive">Archive</string>
+    <string name="archive">Archive</string>
 
     <!-- ChatroomsFragment -->
     <string name="no_messages">You have no messages yet</string>
@@ -381,6 +381,10 @@
     <string name="sort_by_type">By type</string>
     <string name="offers_first">Offers first</string>
     <string name="users_first">Users first</string>
+
+    <!-- ChatArchiveFragment -->
+    <string name="chat_archive">Chat archive</string>
+    <string name="close_chat_archive">Close chat archive</string>
 
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>

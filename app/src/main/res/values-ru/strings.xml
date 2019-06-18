@@ -190,7 +190,7 @@
     <string name="send_message">Отправить сообщение</string>
     <string name="send_message_error">Ошибка отправки сообщения</string>
     <string name="message_is_read">Сообщение прочитано</string>
-    <string name="chat_archive">Архив</string>
+    <string name="archive">Архив</string>
 
     <!-- ChatroomsFragment -->
     <string name="no_messages">У Вас пока нет сообщений</string>
@@ -381,5 +381,9 @@
     <string name="sort_by_type">По типу</string>
     <string name="offers_first">Сначала офферы</string>
     <string name="users_first">Сначала пользователи</string>
+
+    <!-- ChatArchiveFragment -->
+    <string name="chat_archive">Архив сообщений</string>
+    <string name="close_chat_archive">Закрыть архив сообщений</string>
 
 </resources>
