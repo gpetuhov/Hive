@@ -1778,11 +1778,14 @@ class Repository(private val context: Context, private val settings: Settings) :
             stopGettingSearchResultUpdates()
             searchComplete = false
 
-            Timber.tag(TAG).d("Start search: lat = $queryLatitude, lon = $queryLongitude, radius = $queryRadius")
+            // Limit maximum search radius
+            val queryRadiusResult = if (queryRadius > Constants.Map.MAX_RADIUS) Constants.Map.MAX_RADIUS else queryRadius
+
+            Timber.tag(TAG).d("Start search: lat = $queryLatitude, lon = $queryLongitude, radius = $queryRadiusResult")
 
             val queryLocation = GeoPoint(queryLatitude, queryLongitude)
 
-            geoQuery = geoFirestore.queryAtLocation(queryLocation, queryRadius)
+            geoQuery = geoFirestore.queryAtLocation(queryLocation, queryRadiusResult)
 
             geoQuery?.addGeoQueryDataEventListener(object : GeoQueryDataEventListener {
                 override fun onGeoQueryReady() {
