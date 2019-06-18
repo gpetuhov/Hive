@@ -33,8 +33,6 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
         hideMainHeader()
         hideBottomNavigationView()
 
-        initDialogs()
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_filter, container, false)
         binding?.presenter = presenter
 
@@ -72,7 +70,10 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
 
     // === SortFragmentView ===
 
-    override fun showClearFilterDialog() = clearFilterDialog?.show() ?: Unit
+    override fun showClearFilterDialog() {
+        initClearFilterDialog()
+        clearFilterDialog?.show() ?: Unit
+    }
 
     override fun dismissClearFilterDialog() = clearFilterDialog?.dismiss() ?: Unit
 
@@ -83,8 +84,6 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     // === Private methods ===
-
-    private fun initDialogs() = initClearFilterDialog()
 
     private fun initClearFilterDialog() {
         if (context != null) {
