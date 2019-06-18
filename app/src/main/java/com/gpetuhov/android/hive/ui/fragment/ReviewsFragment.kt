@@ -33,6 +33,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     private var controller: ReviewsListController? = null
     private var binding: FragmentReviewsBinding? = null
+
     private var deleteReviewDialog: MaterialDialog? = null
     private var deleteCommentDialog: MaterialDialog? = null
 
@@ -40,8 +41,6 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
         hideMainHeader()
-
-        initDialogs()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_reviews, container, false)
         binding?.presenter = presenter
@@ -103,11 +102,17 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
 
     // === ReviewsFragmentView ===
 
-    override fun showDeleteReviewDialog() = deleteReviewDialog?.show() ?: Unit
+    override fun showDeleteReviewDialog() {
+        initDeleteReviewDialog()
+        deleteReviewDialog?.show() ?: Unit
+    }
 
     override fun dismissDeleteReviewDialog() = deleteReviewDialog?.dismiss() ?: Unit
 
-    override fun showDeleteCommentDialog() = deleteCommentDialog?.show() ?: Unit
+    override fun showDeleteCommentDialog() {
+        initDeleteCommentDialog()
+        deleteCommentDialog?.show() ?: Unit
+    }
 
     override fun dismissDeleteCommentDialog() = deleteCommentDialog?.dismiss() ?: Unit
 
@@ -144,11 +149,6 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     }
 
     // === Private methods ===
-
-    private fun initDialogs() {
-        initDeleteReviewDialog()
-        initDeleteCommentDialog()
-    }
 
     private fun initDeleteReviewDialog() {
         if (context != null) {
