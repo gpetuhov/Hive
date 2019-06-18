@@ -44,6 +44,12 @@
 
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/chat_archive_messages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical"/>
+
     </LinearLayout>
 
 </layout>

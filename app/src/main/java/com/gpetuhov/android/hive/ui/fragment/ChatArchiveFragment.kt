@@ -8,21 +8,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentChatArchiveBinding
 import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.presentation.presenter.ChatArchiveFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatArchiveFragmentView
+import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.ChatArchiveViewModel
 import com.gpetuhov.android.hive.util.*
+import kotlinx.android.synthetic.main.fragment_chat_archive.*
 
 class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
 
     @InjectPresenter lateinit var presenter: ChatArchiveFragmentPresenter
 
     private var binding: FragmentChatArchiveBinding? = null
+    private var messagesAdapter: MessagesAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -44,8 +49,12 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(ChatArchiveViewModel::class.java)
 
+        messagesAdapter = MessagesAdapter(presenter, viewModel.chatArchiveMessages.value)
+
+        initMessagesList()
+
         viewModel.chatArchiveMessages.observe(this, Observer<MutableList<Message>> { messageList ->
-            // TODO
+            messagesAdapter?.setMessages(messageList)
         })
     }
 
@@ -63,5 +72,12 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
 
     override fun navigateUp() {
         findNavController().navigateUp()
+    }
+
+    // === Private methods ===
+
+    private fun initMessagesList() {
+        chat_archive_messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+        chat_archive_messages.adapter = messagesAdapter
     }
 }
