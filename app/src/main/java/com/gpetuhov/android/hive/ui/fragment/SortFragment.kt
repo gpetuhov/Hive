@@ -35,8 +35,6 @@ class SortFragment : BaseFragment(), SortFragmentView {
         hideMainHeader()
         hideBottomNavigationView()
 
-        initDialogs()
-
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sort, container, false)
         binding?.presenter = presenter
 
@@ -69,7 +67,10 @@ class SortFragment : BaseFragment(), SortFragmentView {
 
     // === SortFragmentView ===
 
-    override fun showClearSortDialog() = clearSortDialog?.show() ?: Unit
+    override fun showClearSortDialog() {
+        initClearSortDialog()
+        clearSortDialog?.show() ?: Unit
+    }
 
     override fun dismissClearSortDialog() = clearSortDialog?.dismiss() ?: Unit
 
@@ -80,8 +81,6 @@ class SortFragment : BaseFragment(), SortFragmentView {
     override fun updateUI() = controller?.requestModelBuild() ?: Unit
 
     // === Private methods ===
-
-    private fun initDialogs() = initClearSortDialog()
 
     private fun initClearSortDialog() {
         if (context != null) {
