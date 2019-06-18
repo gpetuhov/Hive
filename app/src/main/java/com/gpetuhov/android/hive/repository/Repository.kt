@@ -611,6 +611,7 @@ class Repository(private val context: Context, private val settings: Settings) :
 
             messagesListenerRegistration = getMessagesCollectionReference()
                 .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
+                .limit(Constants.Chat.MAX_REAL_TIME_UPDATE_MESSAGES)
                 .addSnapshotListener { querySnapshot, firebaseFirestoreException ->
                     if (firebaseFirestoreException == null) {
                         Timber.tag(TAG).d("Messages listen success")

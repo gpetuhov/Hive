@@ -182,4 +182,10 @@ class Constants {
             fun getUserActivity(userActivityType: Int) = ACTIVITY_MAP[userActivityType] ?: STILL
         }
     }
+
+    class Chat {
+        companion object {
+            const val MAX_REAL_TIME_UPDATE_MESSAGES = 50L
+        }
+    }
 }
