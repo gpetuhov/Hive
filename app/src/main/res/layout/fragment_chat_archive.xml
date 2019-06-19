@@ -21,6 +21,7 @@
                 android:background="@color/md_white_1000"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:onClick="@{view -> presenter.openUserDetails()}"
                 android:elevation="2dp">
 
             <ImageButton

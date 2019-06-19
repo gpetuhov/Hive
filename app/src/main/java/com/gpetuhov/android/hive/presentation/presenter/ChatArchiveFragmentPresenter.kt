@@ -25,6 +25,8 @@ class ChatArchiveFragmentPresenter : MvpPresenter<ChatArchiveFragmentView>() {
 
     // --- Navigation ---
 
+    fun openUserDetails() = viewState.openUserDetails()
+
     fun navigateUp() = viewState.navigateUp()
 
     // --- Lifecycle methods ---

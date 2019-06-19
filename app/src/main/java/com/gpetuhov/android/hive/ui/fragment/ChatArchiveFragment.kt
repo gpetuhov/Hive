@@ -72,6 +72,11 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
 
     // === ChatArchiveFragmentView ===
 
+    override fun openUserDetails() {
+        val action = ChatArchiveFragmentDirections.actionChatArchiveFragmentToUserDetailsFragment()
+        findNavController().navigate(action)
+    }
+
     override fun navigateUp() {
         findNavController().navigateUp()
     }

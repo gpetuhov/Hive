@@ -438,6 +438,11 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.ChatArchiveFragment"
             android:label="ChatArchiveFragment"
             tools:layout="@layout/fragment_chat_archive">
+        <action
+                android:id="@+id/action_chatArchiveFragment_to_user_details_fragment"
+                app:destination="@id/user_details_fragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
 </navigation>
