@@ -9,6 +9,8 @@ interface ChatArchiveFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun scrollDown()
 
+    // In ChatArchiveFragment we do not restore ScrollDownButton visibility on screen rotation,
+    // because message list is always reloaded from the very beginning.
     @StateStrategyType(SkipStrategy::class)
     fun showScrollDownButton()
 
