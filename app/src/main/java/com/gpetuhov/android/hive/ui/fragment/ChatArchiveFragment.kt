@@ -75,6 +75,12 @@ class ChatArchiveFragment :
 
     // === ChatArchiveFragmentView ===
 
+    override fun scrollToPositionWithOffset(position: Int) {
+//        chat_archive_messages.post {
+//            (chat_archive_messages.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position, 0)
+//        }
+    }
+
     override fun openUserDetails() {
         val action = ChatArchiveFragmentDirections.actionChatArchiveFragmentToUserDetailsFragment()
         findNavController().navigate(action)
@@ -87,7 +93,7 @@ class ChatArchiveFragment :
     // === MessagesArchiveAdapter.Callback ===
 
     // Scroll to latest message on initial page loaded
-    override fun onInitialLoaded() = chat_archive_messages.scrollToPosition(0)
+    override fun onInitialLoaded() = chat_archive_messages.scrollToPosition(presenter.lastScrollPosition)
 
     // === Private methods ===
 
@@ -98,6 +104,7 @@ class ChatArchiveFragment :
             messagesArchiveAdapter = MessagesArchiveAdapter(this, options)
             chat_archive_messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
             chat_archive_messages.adapter = messagesArchiveAdapter
+            chat_archive_messages.addOnScrollListener(presenter.scrollListener)
         }
     }
 }

@@ -7,6 +7,9 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface ChatArchiveFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
+    fun scrollToPositionWithOffset(position: Int)
+
+    @StateStrategyType(SkipStrategy::class)
     fun openUserDetails()
 
     @StateStrategyType(SkipStrategy::class)
