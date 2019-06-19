@@ -27,6 +27,10 @@ class ChatArchiveFragmentPresenter : MvpPresenter<ChatArchiveFragmentView>() {
 
     fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner) = repo.getChatArchivePagingOptions(lifecycleOwner)
 
+    fun scrollToLastMessage() {
+        // TODO
+    }
+
     // --- Navigation ---
 
     fun openUserDetails() = viewState.openUserDetails()
