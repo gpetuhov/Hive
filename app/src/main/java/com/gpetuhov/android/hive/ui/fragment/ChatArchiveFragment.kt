@@ -86,6 +86,7 @@ class ChatArchiveFragment :
 
     // === MessagesArchiveAdapter.Callback ===
 
+    // Scroll to latest message on initial page loaded
     override fun onInitialLoaded() = chat_archive_messages.scrollToPosition(0)
 
     // === Private methods ===

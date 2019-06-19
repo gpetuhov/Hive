@@ -37,24 +37,15 @@ class MessagesArchiveAdapter(
 
     override fun onLoadingStateChanged(state: LoadingState) {
         when (state) {
-            LoadingState.LOADING_INITIAL -> {
-                isLoadingInitial = true
-            }
-            LoadingState.LOADING_MORE -> {
-                // Do nothing
-            }
+            // This is needed to trigger callback, when initial page is loaded
+            LoadingState.LOADING_INITIAL -> { isLoadingInitial = true }
             LoadingState.LOADED -> {
                 if (isLoadingInitial) {
                     isLoadingInitial = false
                     callback.onInitialLoaded()
                 }
             }
-            LoadingState.ERROR -> {
-                // Do nothing
-            }
-            LoadingState.FINISHED -> {
-                // Do nothing
-            }
+            else -> { /* Do nothing */ }
         }
     }
 }
