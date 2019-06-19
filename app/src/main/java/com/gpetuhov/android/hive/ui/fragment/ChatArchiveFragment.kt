@@ -22,6 +22,11 @@ import com.gpetuhov.android.hive.ui.viewmodel.ChatArchiveViewModel
 import com.gpetuhov.android.hive.util.*
 import kotlinx.android.synthetic.main.fragment_chat_archive.*
 
+// Shows ALL chat messages with pagination but WITHOUT real-time updates.
+// Pagination is required to load messages in portions when needed only (infinite scroll).
+// New messages are NOT delivered here, because Firestore does not allow
+// pagination together with real-time updates.
+
 class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
 
     @InjectPresenter lateinit var presenter: ChatArchiveFragmentPresenter

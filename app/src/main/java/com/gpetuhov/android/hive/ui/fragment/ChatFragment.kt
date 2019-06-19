@@ -25,8 +25,9 @@ import com.pawegio.kandroid.toast
 import kotlinx.android.synthetic.main.fragment_chat.*
 import timber.log.Timber
 
-// Shows limited number of last messages in the chat with real-time updates.
+// Shows LIMITED number of last messages in the chat with real-time updates.
 // User can send new messages here.
+// User can see ALL chat messages in ChatArchiveFragment.
 
 class ChatFragment : BaseFragment(), ChatFragmentView {
 

@@ -9,6 +9,7 @@ import com.gpetuhov.android.hive.databinding.ItemMessageBinding
 import com.gpetuhov.android.hive.domain.model.Message
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
+import com.gpetuhov.android.hive.ui.adapter.viewholder.MessageViewHolder
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
@@ -16,7 +17,7 @@ import java.util.*
 class MessagesAdapter(
     private var callback: Callback,
     initialMessagesList: MutableList<Message>?
-) : RecyclerView.Adapter<MessagesAdapter.MessageViewHolder>() {
+) : RecyclerView.Adapter<MessageViewHolder>() {
 
     interface Callback {
         fun onMessagesUpdated(isChanged: Boolean)
@@ -127,8 +128,6 @@ class MessagesAdapter(
     }
 
     // === Inner classes ===
-
-    class MessageViewHolder(var binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root)
 
     // This class is needed to calculate difference between old and new lists of messages
     // (to minimize RecyclerView updates)
