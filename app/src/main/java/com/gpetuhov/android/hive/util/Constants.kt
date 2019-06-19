@@ -186,7 +186,7 @@ class Constants {
     class Chat {
         companion object {
             const val MAX_REAL_TIME_UPDATE_MESSAGES = 50L
-            const val CHAT_ARCHIVE_PAGE_SIZE = 20
+            const val CHAT_ARCHIVE_PAGE_SIZE = 50
         }
     }
 }
