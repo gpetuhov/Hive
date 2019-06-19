@@ -75,6 +75,16 @@ class ChatArchiveFragment :
 
     // === ChatArchiveFragmentView ===
 
+    override fun scrollDown() = chat_archive_messages.scrollToPosition(0)
+
+    override fun showScrollDownButton() {
+        if (chat_archive_scroll_down_button.visibility != View.VISIBLE) chat_archive_scroll_down_button.show()
+    }
+
+    override fun hideScrollDownButton() {
+        if (chat_archive_scroll_down_button.visibility == View.VISIBLE) chat_archive_scroll_down_button.hide()
+    }
+
     override fun openUserDetails() {
         val action = ChatArchiveFragmentDirections.actionChatArchiveFragmentToUserDetailsFragment()
         findNavController().navigate(action)
@@ -90,7 +100,7 @@ class ChatArchiveFragment :
     // We do not save last scroll position and do not restore it on screen rotation,
     // like in ChatFragment, because with pagination it does not work, if user scrolled several pages.
     // So just scroll to the very beginning.
-    override fun onInitialLoaded() = chat_archive_messages.scrollToPosition(0)
+    override fun onInitialLoaded() = scrollDown()
 
     // === Private methods ===
 
