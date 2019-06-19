@@ -17,9 +17,13 @@ import org.imperiumlabs.geofirestore.GeoQuery
 import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
 import java.lang.Exception
 import android.graphics.Bitmap
+import androidx.lifecycle.LifecycleOwner
+import androidx.paging.PagedList
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.firebase.ui.firestore.SnapshotParser
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.android.gms.location.DetectedActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.database.*
@@ -716,7 +720,35 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     override fun chatArchiveMessages(): MutableLiveData<MutableList<Message>> = chatArchiveMessages
 
-    // TODO: add getMoreMessages() for chat archive pagination
+    override fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner): FirestorePagingOptions<Message>? {
+        // TODO: refactor this
+        currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
+
+        if (isAuthorized && currentChatRoomUid != "") {
+            // The "base query" is a query with no startAt/endAt/limit clauses that the adapter can use
+            // to form smaller queries for each page.  It should only include where() and orderBy() clauses
+            val baseQuery = getMessagesCollectionReference()
+                .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
+
+            // This configuration comes from the Paging Support Library
+            // https://developer.android.com/reference/android/arch/paging/PagedList.Config.html
+            val config = PagedList.Config.Builder()
+                .setEnablePlaceholders(false)
+                .setPrefetchDistance(Constants.Chat.CHAT_ARCHIVE_PAGE_SIZE)
+                .setPageSize(Constants.Chat.CHAT_ARCHIVE_PAGE_SIZE)
+                .build()
+
+            // The options for the adapter combine the paging configuration with query information
+            // and application-specific options for lifecycle, etc.
+            return FirestorePagingOptions.Builder<Message>()
+                .setLifecycleOwner(lifecycleOwner)
+                .setQuery(baseQuery, config) { getMessageFromDocumentSnapshot(it) }
+                .build()
+
+        } else {
+            return null
+        }
+    }
 
     // --- Chatroom ---
 

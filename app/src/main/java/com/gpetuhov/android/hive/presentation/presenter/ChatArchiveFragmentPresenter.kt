@@ -1,5 +1,6 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
+import androidx.lifecycle.LifecycleOwner
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.gpetuhov.android.hive.application.HiveApp
@@ -30,6 +31,8 @@ class ChatArchiveFragmentPresenter :
     // --- Lifecycle methods ---
 
     fun getMessages() = repo.getChatArchiveMessages()
+
+    fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner) = repo.getChatArchivePagingOptions(lifecycleOwner)
 
     fun onResume() {
         // TODO

@@ -1,7 +1,9 @@
 package com.gpetuhov.android.hive.domain.repository
 
 import android.net.Uri
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.*
 
@@ -92,6 +94,7 @@ interface Repo {
     fun clearMessages()
     fun getChatArchiveMessages()
     fun chatArchiveMessages(): MutableLiveData<MutableList<Message>>
+    fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner): FirestorePagingOptions<Message>?
 
     // Chatroom
     fun chatrooms(): MutableLiveData<MutableList<Chatroom>>

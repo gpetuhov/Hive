@@ -17,6 +17,7 @@ import com.gpetuhov.android.hive.domain.model.Message
 import com.gpetuhov.android.hive.presentation.presenter.ChatArchiveFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatArchiveFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesAdapter
+import com.gpetuhov.android.hive.ui.adapter.MessagesArchiveAdapter
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.ui.viewmodel.ChatArchiveViewModel
 import com.gpetuhov.android.hive.util.*
@@ -33,6 +34,7 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
 
     private var binding: FragmentChatArchiveBinding? = null
     private var messagesAdapter: MessagesAdapter? = null
+    private var messagesArchiveAdapter: MessagesArchiveAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -41,7 +43,7 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
         hideMainHeader()
         showBottomNavigationView()
 
-        presenter.getMessages()
+//        presenter.getMessages()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_archive, container, false)
         binding?.presenter = presenter
@@ -52,25 +54,25 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProviders.of(this).get(ChatArchiveViewModel::class.java)
-
-        messagesAdapter = MessagesAdapter(presenter, viewModel.chatArchiveMessages.value)
+//        val viewModel = ViewModelProviders.of(this).get(ChatArchiveViewModel::class.java)
+//
+//        messagesAdapter = MessagesAdapter(presenter, viewModel.chatArchiveMessages.value)
 
         initMessagesList()
 
-        viewModel.chatArchiveMessages.observe(this, Observer<MutableList<Message>> { messageList ->
-            messagesAdapter?.setMessages(messageList)
-        })
+//        viewModel.chatArchiveMessages.observe(this, Observer<MutableList<Message>> { messageList ->
+//            messagesAdapter?.setMessages(messageList)
+//        })
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.onResume()
+//        presenter.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        presenter.onPause()
+//        presenter.onPause()
     }
 
     // === ChatArchiveFragmentView ===
@@ -82,7 +84,12 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
     // === Private methods ===
 
     private fun initMessagesList() {
-        chat_archive_messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
-        chat_archive_messages.adapter = messagesAdapter
+        val options = presenter.getChatArchivePagingOptions(this)
+
+        if (options != null) {
+            messagesArchiveAdapter = MessagesArchiveAdapter(options)
+            chat_archive_messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
+            chat_archive_messages.adapter = messagesArchiveAdapter
+        }
     }
 }
