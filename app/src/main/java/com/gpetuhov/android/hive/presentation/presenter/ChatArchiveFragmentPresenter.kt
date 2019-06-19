@@ -1,8 +1,6 @@
 package com.gpetuhov.android.hive.presentation.presenter
 
-import android.view.View
 import androidx.lifecycle.LifecycleOwner
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
@@ -17,16 +15,12 @@ class ChatArchiveFragmentPresenter : MvpPresenter<ChatArchiveFragmentView>() {
     @Inject lateinit var repo: Repo
 
     var secondUserUid = ""
-    var lastScrollPosition = 0
 
     lateinit var scrollListener: RecyclerView.OnScrollListener
-    lateinit var layoutChangeListener: View.OnLayoutChangeListener
-
 
     init {
         HiveApp.appComponent.inject(this)
         initScrollListener()
-        initLayoutChangeListener()
     }
 
     // === Public methods ===
@@ -52,19 +46,8 @@ class ChatArchiveFragmentPresenter : MvpPresenter<ChatArchiveFragmentView>() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    lastScrollPosition = (recyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                }
+                // TODO
             }
         }
-    }
-
-    private fun initLayoutChangeListener() {
-        layoutChangeListener =
-            View.OnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
-                if (bottom != oldBottom) {
-                    viewState.scrollToPositionWithOffset(lastScrollPosition)
-                }
-            }
     }
 }
