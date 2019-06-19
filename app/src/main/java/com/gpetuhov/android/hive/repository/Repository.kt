@@ -609,9 +609,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun messages(): MutableLiveData<MutableList<Message>> = messages
 
     override fun startGettingMessagesUpdates() {
-        // This is needed for the chat room to have the same name,
-        // despite of the uid of the user, who started the conversation.
-        currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
+        initCurrentChatroomUid()
 
         if (isAuthorized && currentChatRoomUid != "") {
             // Chatroom collection consists of chatroom documents with chatroom uids.
@@ -692,8 +690,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner): FirestorePagingOptions<Message>? {
-        // TODO: refactor this
-        currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
+        initCurrentChatroomUid()
 
         if (isAuthorized && currentChatRoomUid != "") {
             // The "base query" is a query with no startAt/endAt/limit clauses that the adapter can use
@@ -1915,6 +1912,12 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private fun initUnreadMessagesFlag() {
         unreadMessagesFlag.value = settings.isUnreadMessagesExist()
+    }
+
+    private fun initCurrentChatroomUid() {
+        // This is needed for the chat room to have the same name,
+        // despite of the uid of the user, who started the conversation.
+        currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
     }
 
     // --- Chatroom ---
