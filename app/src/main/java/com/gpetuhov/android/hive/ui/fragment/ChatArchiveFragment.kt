@@ -5,16 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.gpetuhov.android.hive.R
 import com.gpetuhov.android.hive.databinding.FragmentChatArchiveBinding
+import com.gpetuhov.android.hive.domain.model.User
 import com.gpetuhov.android.hive.presentation.presenter.ChatArchiveFragmentPresenter
 import com.gpetuhov.android.hive.presentation.view.ChatArchiveFragmentView
 import com.gpetuhov.android.hive.ui.adapter.MessagesArchiveAdapter
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
+import com.gpetuhov.android.hive.ui.viewmodel.ChatArchiveViewModel
 import com.gpetuhov.android.hive.util.*
 import kotlinx.android.synthetic.main.fragment_chat_archive.*
 
@@ -39,6 +43,11 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_archive, container, false)
         binding?.presenter = presenter
+
+        val viewModel = ViewModelProviders.of(this).get(ChatArchiveViewModel::class.java)
+        viewModel.secondUser.observe(this, Observer<User> { secondUser ->
+            binding?.username = secondUser.getUsernameOrName()
+        })
 
         return binding?.root
     }

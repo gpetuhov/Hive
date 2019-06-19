@@ -6,6 +6,7 @@
 
     <data>
         <variable name="presenter" type="com.gpetuhov.android.hive.presentation.presenter.ChatArchiveFragmentPresenter"/>
+        <variable name="username" type="String"/>
     </data>
 
     <LinearLayout
@@ -47,9 +48,9 @@
                         style="@style/basicTextStyleBold"/>
 
                 <TextView
-                        android:id="@+id/chat_archive_header_username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{username}"
                         style="@style/mediumTextStyle"
                         tools:text="username"/>
 

@@ -49,6 +49,7 @@ interface AppComponent {
     fun inject(favoriteUsersViewModel: FavoriteUsersViewModel)
     fun inject(favoriteOffersViewModel: FavoriteOffersViewModel)
     fun inject(reviewsViewModel: ReviewsViewModel)
+    fun inject(chatArchiveViewModel: ChatArchiveViewModel)
 
     fun inject(profileFragmentPresenter: ProfileFragmentPresenter)
     fun inject(mapFragmentPresenter: MapFragmentPresenter)
