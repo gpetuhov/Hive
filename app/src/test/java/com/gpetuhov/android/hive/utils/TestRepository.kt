@@ -1,7 +1,9 @@
 package com.gpetuhov.android.hive.utils
 
 import android.net.Uri
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
+import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.android.gms.maps.model.LatLng
 import com.gpetuhov.android.hive.domain.model.*
 import com.gpetuhov.android.hive.domain.repository.Repo
@@ -466,5 +468,15 @@ class TestRepository : Repo {
     }
 
     override fun setSearchListActive(value: Boolean) {
+    }
+
+    override fun startGettingSecondUserChatArchiveUpdates(uid: String) {
+    }
+
+    override fun stopGettingSecondUserChatArchiveUpdates() {
+    }
+
+    override fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner): FirestorePagingOptions<Message>? {
+        return null
     }
 }
