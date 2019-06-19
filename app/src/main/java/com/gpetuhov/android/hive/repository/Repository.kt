@@ -22,7 +22,6 @@ import androidx.paging.PagedList
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.firebase.ui.firestore.SnapshotParser
 import com.firebase.ui.firestore.paging.FirestorePagingOptions
 import com.google.android.gms.location.DetectedActivity
 import com.google.firebase.Timestamp
@@ -182,9 +181,6 @@ class Repository(private val context: Context, private val settings: Settings) :
     // Messages of the current chatroom
     // (chatroom is the chat between current user and second user)
     private val messages = MutableLiveData<MutableList<Message>>()
-
-    // Chat archive messages
-    private val chatArchiveMessages = MutableLiveData<MutableList<Message>>()
 
     // Value is true if unread messages exist
     private val unreadMessagesFlag = MutableLiveData<Boolean>()
@@ -686,39 +682,6 @@ class Repository(private val context: Context, private val settings: Settings) :
     override fun clearMessages() {
         messages.value = mutableListOf()
     }
-
-    override fun getChatArchiveMessages() {
-        // TODO: refactor this
-        currentChatRoomUid = if (currentUserUid() < secondUserUid()) "${currentUserUid()}_${secondUserUid()}" else "${secondUserUid()}_${currentUserUid()}"
-
-        if (isAuthorized && currentChatRoomUid != "") {
-            getMessagesCollectionReference()
-                .orderBy(TIMESTAMP_KEY, Query.Direction.DESCENDING)
-                .limit(Constants.Chat.MAX_REAL_TIME_UPDATE_MESSAGES)
-                .get()
-                .addOnSuccessListener { documents ->
-                    Timber.tag(TAG).d("Messages read success")
-
-                    // TODO: refactor this
-
-                    val messagesList = mutableListOf<Message>()
-
-                    for (doc in documents) {
-                        val message = getMessageFromDocumentSnapshot(doc)
-                        messagesList.add(message)
-
-                        if (!message.isFromCurrentUser && !message.isRead) markMessageAsRead(message.uid)
-                    }
-
-                    chatArchiveMessages.value = messagesList
-                }
-                .addOnFailureListener { exception ->
-                    Timber.tag(TAG).d("Messages read failed")
-                }
-        }
-    }
-
-    override fun chatArchiveMessages(): MutableLiveData<MutableList<Message>> = chatArchiveMessages
 
     override fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner): FirestorePagingOptions<Message>? {
         // TODO: refactor this

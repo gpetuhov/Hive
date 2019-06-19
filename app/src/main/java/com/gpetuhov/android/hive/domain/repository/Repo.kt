@@ -92,8 +92,6 @@ interface Repo {
     fun stopGettingMessagesUpdates()
     fun sendMessage(messageText: String, onError: () -> Unit)
     fun clearMessages()
-    fun getChatArchiveMessages()
-    fun chatArchiveMessages(): MutableLiveData<MutableList<Message>>
     fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner): FirestorePagingOptions<Message>?
 
     // Chatroom
