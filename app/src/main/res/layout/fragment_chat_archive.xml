@@ -54,12 +54,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/chat_archive"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         style="@style/basicTextStyleBold"/>
 
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{username}"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         style="@style/mediumTextStyle"
                         tools:text="username"/>
 
