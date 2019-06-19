@@ -27,7 +27,10 @@ import kotlinx.android.synthetic.main.fragment_chat_archive.*
 // New messages are NOT delivered here, because Firestore does not allow
 // pagination together with real-time updates.
 
-class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
+class ChatArchiveFragment :
+    BaseFragment(),
+    ChatArchiveFragmentView,
+    MessagesArchiveAdapter.Callback {
 
     @InjectPresenter lateinit var presenter: ChatArchiveFragmentPresenter
 
@@ -81,13 +84,17 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
         findNavController().navigateUp()
     }
 
+    // === MessagesArchiveAdapter.Callback ===
+
+    override fun onInitialLoaded() = chat_archive_messages.scrollToPosition(0)
+
     // === Private methods ===
 
     private fun initMessagesList() {
         val options = presenter.getChatArchivePagingOptions(this)
 
         if (options != null) {
-            messagesArchiveAdapter = MessagesArchiveAdapter(options)
+            messagesArchiveAdapter = MessagesArchiveAdapter(this, options)
             chat_archive_messages.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, true)
             chat_archive_messages.adapter = messagesArchiveAdapter
         }
