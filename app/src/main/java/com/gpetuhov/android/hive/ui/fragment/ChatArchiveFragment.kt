@@ -44,18 +44,20 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_chat_archive, container, false)
         binding?.presenter = presenter
 
-        val viewModel = ViewModelProviders.of(this).get(ChatArchiveViewModel::class.java)
-        viewModel.secondUser.observe(this, Observer<User> { secondUser ->
-            presenter.secondUserUid = secondUser.uid
-            binding?.username = secondUser.getUsernameOrName()
-        })
-
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initMessagesList()
+
+        val viewModel = ViewModelProviders.of(this).get(ChatArchiveViewModel::class.java)
+        viewModel.secondUser.observe(this, Observer<User> { secondUser ->
+            presenter.secondUserUid = secondUser.uid
+            binding?.username = secondUser.getUsernameOrName()
+            updateUserPic(this, secondUser, chat_archive_header_image)
+        })
     }
 
     override fun onResume() {
