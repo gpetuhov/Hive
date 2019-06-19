@@ -255,6 +255,7 @@ class Repository(private val context: Context, private val settings: Settings) :
     private var secondUserOfferListenerRegistration: ListenerRegistration? = null
     private var secondUserLocationListenerRegistration: ListenerRegistration? = null
     private var secondUserChatListenerRegistration: ListenerRegistration? = null
+    private var secondUserChatArchiveListenerRegistration: ListenerRegistration? = null
     private var secondUserReviewsListenerRegistration: ListenerRegistration? = null
 
     private var messagesListenerRegistration: ListenerRegistration? = null
@@ -557,6 +558,13 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun stopGettingSecondUserChatUpdates() = removeListener(secondUserChatListenerRegistration)
+
+    override fun startGettingSecondUserChatArchiveUpdates(uid: String) {
+        stopGettingSecondUserChatUpdates()
+        secondUserChatArchiveListenerRegistration = startSecondUserUpdates(uid)
+    }
+
+    override fun stopGettingSecondUserChatArchiveUpdates() = removeListener(secondUserChatArchiveListenerRegistration)
 
     override fun startGettingSecondUserReviewsUpdates(uid: String) {
         stopGettingSecondUserReviewsUpdates()

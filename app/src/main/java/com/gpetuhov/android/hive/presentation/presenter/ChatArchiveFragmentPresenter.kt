@@ -13,6 +13,8 @@ class ChatArchiveFragmentPresenter : MvpPresenter<ChatArchiveFragmentView>() {
 
     @Inject lateinit var repo: Repo
 
+    var secondUserUid = ""
+
     init {
         HiveApp.appComponent.inject(this)
     }
@@ -21,5 +23,13 @@ class ChatArchiveFragmentPresenter : MvpPresenter<ChatArchiveFragmentView>() {
 
     fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner) = repo.getChatArchivePagingOptions(lifecycleOwner)
 
+    // --- Navigation ---
+
     fun navigateUp() = viewState.navigateUp()
+
+    // --- Lifecycle methods ---
+
+    fun onResume() = repo.startGettingSecondUserChatArchiveUpdates(secondUserUid)
+
+    fun onPause() = repo.stopGettingSecondUserChatArchiveUpdates()
 }

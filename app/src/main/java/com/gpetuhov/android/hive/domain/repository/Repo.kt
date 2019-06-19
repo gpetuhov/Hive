@@ -74,6 +74,8 @@ interface Repo {
     fun stopGettingSecondUserLocationUpdates()
     fun startGettingSecondUserChatUpdates(uid: String)
     fun stopGettingSecondUserChatUpdates()
+    fun startGettingSecondUserChatArchiveUpdates(uid: String)
+    fun stopGettingSecondUserChatArchiveUpdates()
     fun startGettingSecondUserReviewsUpdates(uid: String)
     fun stopGettingSecondUserReviewsUpdates()
     fun initSecondUser(uid: String, name: String, userPicUrl: String)

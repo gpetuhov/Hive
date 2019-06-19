@@ -46,6 +46,7 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(ChatArchiveViewModel::class.java)
         viewModel.secondUser.observe(this, Observer<User> { secondUser ->
+            presenter.secondUserUid = secondUser.uid
             binding?.username = secondUser.getUsernameOrName()
         })
 
@@ -55,6 +56,16 @@ class ChatArchiveFragment : BaseFragment(), ChatArchiveFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMessagesList()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        presenter.onPause()
     }
 
     // === ChatArchiveFragmentView ===
