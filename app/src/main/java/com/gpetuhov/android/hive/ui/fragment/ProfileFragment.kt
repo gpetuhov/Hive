@@ -57,6 +57,23 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var interestsDialog: MaterialDialog? = null
     private var statusDialog: MaterialDialog? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        controller = ProfileListController(presenter)
+        // This MUST be inside onCreate(), NOT in onCreateView().
+        // Otherwise the app crashes if navigate, for example, to Privacy Policy,
+        // rotate screen, rotate screen again and push back button.
+        // See issue for details: https://github.com/gpetuhov/Hive/issues/4
+        // This issue was introduced after updating the following libraries:
+        // implementation "androidx.appcompat:appcompat:1.1.0-alpha0"
+        // classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:1.0.0"
+        // implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0"
+        // implementation "android.arch.navigation:navigation-ui-ktx:1.0.0"
+        // implementation "android.arch.lifecycle:extensions:1.1.1"
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -65,9 +82,6 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         showBottomNavigationView()
 
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        controller = ProfileListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
 
         val profileRecyclerView = view.findViewById<EpoxyRecyclerView>(R.id.profile_recycler_view)
         profileRecyclerView.adapter = controller?.adapter
