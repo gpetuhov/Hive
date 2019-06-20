@@ -70,18 +70,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
-
     implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
-
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    androidTestImplementation 'androidx.test:rules:1.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 
     // RecyclerView
-    implementation "androidx.recyclerview:recyclerview:1.1.0-alpha05"
+    implementation "androidx.recyclerview:recyclerview:1.1.0-alpha06"
 
     // Jetpack Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
@@ -101,17 +99,17 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
 
     // Bottom Navigation View
-    implementation "com.google.android.material:material:1.1.0-alpha06"
+    implementation "com.google.android.material:material:1.1.0-alpha07"
 
     // Google Play Services
-    implementation "com.google.android.gms:play-services-maps:16.1.0"
-    implementation "com.google.android.gms:play-services-location:16.0.0"
+    implementation "com.google.android.gms:play-services-maps:17.0.0"
+    implementation "com.google.android.gms:play-services-location:17.0.0"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Lottie
-    implementation "com.airbnb.android:lottie:3.0.1"
+    implementation "com.airbnb.android:lottie:3.0.6"
 
     // Dagger
     implementation "com.google.dagger:dagger:$daggerVersion"
@@ -174,18 +172,18 @@ dependencies {
     kapt "com.arello-mobile:moxy-compiler:$moxyVersion"
 
     // Mockito
-    testImplementation "org.mockito:mockito-core:2.27.0"
+    testImplementation "org.mockito:mockito-core:2.28.2"
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
 
     // GeoFirestore
-    implementation 'com.github.imperiumlabs:GeoFirestore-Android:v1.2.1'
+    implementation 'com.github.imperiumlabs:GeoFirestore-Android:v1.4.0'
 
     // Android Lifecycle
     // Without this there will be "Unresolved reference: ViewModelProviders"
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
     // RxJava
-    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.9"
     implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 

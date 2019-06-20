@@ -14,7 +14,7 @@ import com.gpetuhov.android.hive.domain.repository.Repo
 import com.gpetuhov.android.hive.managers.LocationManager
 import org.imperiumlabs.geofirestore.GeoFirestore
 import org.imperiumlabs.geofirestore.GeoQuery
-import org.imperiumlabs.geofirestore.GeoQueryDataEventListener
+import org.imperiumlabs.geofirestore.callbacks.GeoQueryDataEventListener
 import java.lang.Exception
 import android.graphics.Bitmap
 import androidx.lifecycle.LifecycleOwner
@@ -1834,31 +1834,31 @@ class Repository(private val context: Context, private val settings: Settings) :
                     onComplete()
                 }
 
-                override fun onDocumentExited(doc: DocumentSnapshot?) {
+                override fun onDocumentExited(documentSnapshot: DocumentSnapshot) {
                     Timber.tag(TAG).d("onDocumentExited")
-                    Timber.tag(TAG).d(doc.toString())
-                    removeUserFromSearchResults(doc?.id)
+                    Timber.tag(TAG).d(documentSnapshot.toString())
+                    removeUserFromSearchResults(documentSnapshot.id)
                 }
 
-                override fun onDocumentChanged(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                override fun onDocumentChanged(documentSnapshot: DocumentSnapshot, location: GeoPoint) {
                     Timber.tag(TAG).d("onDocumentChanged")
-                    Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc, geoPoint)
+                    Timber.tag(TAG).d(documentSnapshot.toString())
+                    updateUserInSearchResult(documentSnapshot, location)
                 }
 
-                override fun onDocumentEntered(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                override fun onDocumentEntered(documentSnapshot: DocumentSnapshot, location: GeoPoint) {
                     Timber.tag(TAG).d("onDocumentEntered")
-                    Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc, geoPoint)
+                    Timber.tag(TAG).d(documentSnapshot.toString())
+                    updateUserInSearchResult(documentSnapshot, location)
                 }
 
-                override fun onDocumentMoved(doc: DocumentSnapshot?, geoPoint: GeoPoint?) {
+                override fun onDocumentMoved(documentSnapshot: DocumentSnapshot, location: GeoPoint) {
                     Timber.tag(TAG).d("onDocumentMoved")
-                    Timber.tag(TAG).d(doc.toString())
-                    updateUserInSearchResult(doc, geoPoint)
+                    Timber.tag(TAG).d(documentSnapshot.toString())
+                    updateUserInSearchResult(documentSnapshot, location)
                 }
 
-                override fun onGeoQueryError(exception: Exception?) {
+                override fun onGeoQueryError(exception: Exception) {
                     Timber.tag(TAG).d(exception)
                     searchComplete = true
                     updateSearchResult()
