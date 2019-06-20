@@ -37,6 +37,15 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
     private var deleteReviewDialog: MaterialDialog? = null
     private var deleteCommentDialog: MaterialDialog? = null
 
+    private var reviewsRecyclerView: EpoxyRecyclerView? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        // Scroll to top on every reviews list update
+        controller = ReviewsListController(presenter) { reviewsRecyclerView?.scrollToPosition(0) }
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -56,12 +65,7 @@ class ReviewsFragment : BaseFragment(), ReviewsFragmentView {
         // Hide bottom nav view for current user
         if (isCurrentUser) hideBottomNavigationView() else showBottomNavigationView()
 
-        val reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
-
-        // Scroll to top on every reviews list update
-        controller = ReviewsListController(presenter) { reviewsRecyclerView?.scrollToPosition(0) }
-        controller?.onRestoreInstanceState(savedInstanceState)
-
+        reviewsRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_recycler_view)
         reviewsRecyclerView?.adapter = controller?.adapter
 
         val viewModel = ViewModelProviders.of(this).get(ReviewsViewModel::class.java)

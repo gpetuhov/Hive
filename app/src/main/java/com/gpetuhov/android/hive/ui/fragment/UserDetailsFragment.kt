@@ -34,15 +34,18 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
     private var controller: UserDetailsListController? = null
     private var binding: FragmentUserDetailsBinding? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        controller = UserDetailsListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
         hideMainHeader()
         showBottomNavigationView()
-
-        controller = UserDetailsListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_details, container, false)
         binding?.presenter = presenter

@@ -48,6 +48,12 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
     private var priceDialog: MaterialDialog? = null
     private var deletePhotoDialog: MaterialDialog? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        controller = UpdateOfferListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -61,9 +67,6 @@ class UpdateOfferFragment : BaseFragment(), UpdateOfferFragmentView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_update_offer, container, false)
         binding?.presenter = presenter
-
-        controller = UpdateOfferListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
 
         val updateOfferRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.update_offer_recycler_view)
         updateOfferRecyclerView?.adapter = controller?.adapter

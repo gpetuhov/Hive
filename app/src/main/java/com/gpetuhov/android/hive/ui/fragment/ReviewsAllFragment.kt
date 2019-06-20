@@ -25,6 +25,12 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
     private var controller: ReviewsAllListController? = null
     private var binding: FragmentReviewsAllBinding? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        controller = ReviewsAllListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -41,8 +47,6 @@ class ReviewsAllFragment : BaseFragment(), ReviewsAllFragmentView {
         if (isCurrentUser) hideBottomNavigationView() else showBottomNavigationView()
 
         val reviewsAllRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.reviews_all_recycler_view)
-        controller = ReviewsAllListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
         reviewsAllRecyclerView?.adapter = controller?.adapter
 
         presenter.getAllReviews()

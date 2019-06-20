@@ -28,6 +28,12 @@ class SortFragment : BaseFragment(), SortFragmentView {
 
     private var clearSortDialog: MaterialDialog? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        controller = SortListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -37,9 +43,6 @@ class SortFragment : BaseFragment(), SortFragmentView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sort, container, false)
         binding?.presenter = presenter
-
-        controller = SortListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
 
         val filterRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.sort_recycler_view)
         filterRecyclerView?.adapter = controller?.adapter

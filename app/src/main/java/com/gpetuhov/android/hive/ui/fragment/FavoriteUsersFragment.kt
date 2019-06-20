@@ -27,10 +27,13 @@ class FavoriteUsersFragment : BaseFragment(), FavoriteUsersFragmentView {
     private var controller: UserFavoriteListController? = null
     private var binding: FragmentFavoriteUsersBinding? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         controller = UserFavoriteListController(presenter)
         controller?.onRestoreInstanceState(savedInstanceState)
+    }
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_favorite_users, container, false)
 
         val favoriteUsersRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.favorite_users_recycler_view)

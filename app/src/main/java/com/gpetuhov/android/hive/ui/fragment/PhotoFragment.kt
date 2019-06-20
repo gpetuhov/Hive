@@ -29,15 +29,18 @@ class PhotoFragment : BaseFragment(), PhotoFragmentView {
     private var controller: PhotoFullscreenListController? = null
     private var binding: FragmentPhotoBinding? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        controller = PhotoFullscreenListController()
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
         hideMainHeader()
         hideBottomNavigationView()
-
-        controller = PhotoFullscreenListController()
-        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_photo, container, false)
         binding?.presenter = presenter

@@ -30,15 +30,18 @@ class OfferDetailsFragment : BaseFragment(), OfferDetailsFragmentView {
     private var controller: OfferDetailsListController? = null
     private var binding: FragmentOfferDetailsBinding? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        controller = OfferDetailsListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
         hideMainHeader()
         showBottomNavigationView()
-
-        controller = OfferDetailsListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_offer_details, container, false)
         binding?.presenter = presenter

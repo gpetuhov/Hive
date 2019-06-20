@@ -32,15 +32,18 @@ class SearchListFragment : BaseFragment(), SearchListFragmentView {
 
     private var searchDialog: MaterialDialog? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        controller = SearchListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
         hideMainHeader()
         showBottomNavigationView()
-
-        controller = SearchListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search_list, container, false)
         binding?.presenter = presenter

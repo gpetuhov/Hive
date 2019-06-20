@@ -26,6 +26,12 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
 
     private var clearFilterDialog: MaterialDialog? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        controller = FilterListController(presenter)
+        controller?.onRestoreInstanceState(savedInstanceState)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
@@ -35,9 +41,6 @@ class FilterFragment : BaseFragment(), FilterFragmentView {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_filter, container, false)
         binding?.presenter = presenter
-
-        controller = FilterListController(presenter)
-        controller?.onRestoreInstanceState(savedInstanceState)
 
         val filterRecyclerView = binding?.root?.findViewById<EpoxyRecyclerView>(R.id.filter_recycler_view)
         filterRecyclerView?.adapter = controller?.adapter
