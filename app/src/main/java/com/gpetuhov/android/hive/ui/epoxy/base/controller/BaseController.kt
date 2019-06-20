@@ -17,6 +17,7 @@ import com.gpetuhov.android.hive.ui.epoxy.user.details.models.location
 import com.gpetuhov.android.hive.util.Constants
 import com.gpetuhov.android.hive.util.Settings
 import com.gpetuhov.android.hive.util.getDateTimeFromTimestamp
+import timber.log.Timber
 import kotlin.math.roundToInt
 
 abstract class BaseController : EpoxyController() {
@@ -30,6 +31,7 @@ abstract class BaseController : EpoxyController() {
         var selectedPhotoPosition = settings.getSelectedPhotoPosition()
         if (selectedPhotoPosition < 0 || selectedPhotoPosition >= photoListSize) selectedPhotoPosition = 0
 
+        Timber.tag("PhotoCarousel").d("Scroll to position $selectedPhotoPosition")
         carousel.scrollToPosition(selectedPhotoPosition)
 
         if (resetSavedPosition) settings.setSelectedPhotoPosition(0)
@@ -71,6 +73,9 @@ abstract class BaseController : EpoxyController() {
                 paddingDp(0)
 
                 onBind { model, view, position ->
+                    Timber.tag("PhotoCarousel").d("onBind")
+                    Timber.tag("PhotoCarousel").d("scrollToSelectedPhoto = $scrollToSelectedPhoto")
+
                     if (scrollToSelectedPhoto) {
                         scrollToSelectedPhoto = false
                         scrollToSavedSelectedPhotoPosition(settings, view, photoList.size, true)
@@ -82,6 +87,7 @@ abstract class BaseController : EpoxyController() {
                         .id(item.uid)
                         .photoUrl(item.downloadUrl)
                         .onClick {
+                            Timber.tag("PhotoCarousel").d("Click on $index")
                             settings.setSelectedPhotoPosition(index)
                             onClick(getPhotoUrlList(photoList))
                         }

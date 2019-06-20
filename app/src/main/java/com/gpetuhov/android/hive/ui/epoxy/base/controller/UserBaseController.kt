@@ -232,12 +232,14 @@ abstract class UserBaseController : BaseController() {
                 val padding = Carousel.Padding.dp(16, 0, 16, 0, 0)
                 padding(padding)
 
+                val scrollListener = buildScrollListener { lastScrollPosition -> selectedPhotoMap[uid] = lastScrollPosition }
+
                 onBind { model, view, position ->
                     view.clipToPadding = true
-                    view.addOnScrollListener(
-                        buildScrollListener { lastScrollPosition -> selectedPhotoMap[uid] = lastScrollPosition}
-                    )
+                    view.addOnScrollListener(scrollListener)
                 }
+
+                onUnbind { model, view -> view.removeOnScrollListener(scrollListener) }
 
                 withModelsFrom(photoList) { index, photo ->
                     PhotoOfferItemModel_()

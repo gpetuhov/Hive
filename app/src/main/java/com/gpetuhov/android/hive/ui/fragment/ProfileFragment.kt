@@ -25,6 +25,7 @@ import com.gpetuhov.android.hive.ui.epoxy.profile.controller.ProfileListControll
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.*
 import com.pawegio.kandroid.toast
+import timber.log.Timber
 
 class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
@@ -58,6 +59,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var statusDialog: MaterialDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.tag("PhotoCarousel").d("onCreate")
+
         super.onCreate(savedInstanceState)
 
         controller = ProfileListController(presenter)
@@ -75,6 +78,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Timber.tag("PhotoCarousel").d("onCreateView")
+
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
         setActivitySoftInputPan()
 
@@ -88,6 +93,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
         val viewModel = ViewModelProviders.of(this).get(CurrentUserViewModel::class.java)
         viewModel.currentUser.observe(this, Observer<User> { user ->
+            Timber.tag("PhotoCarousel").d("change user")
+
             controller?.changeUser(user)
 
             // If there are new awards (for which congratulation have not been shown yet),
@@ -123,6 +130,8 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        Timber.tag("Profile").d("onSaveInstanceState")
+
         controller?.onSaveInstanceState(outState)
         super.onSaveInstanceState(outState)
     }
