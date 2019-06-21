@@ -206,4 +206,9 @@ class UserDetailsFragment : BaseFragment(), UserDetailsFragmentView {
         val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToUserActivityFragment(userActivityType)
         findNavController().navigate(action)
     }
+
+    override fun openUserPic() {
+        val action = UserDetailsFragmentDirections.actionUserDetailsFragmentToUserPicFragment()
+        findNavController().navigate(action)
+    }
 }

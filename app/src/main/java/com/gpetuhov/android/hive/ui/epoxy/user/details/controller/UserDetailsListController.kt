@@ -37,7 +37,10 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
 
         userDetailsName {
             id("user_details_name")
+
             userPicUrl(user?.userPicUrl ?: "")
+            onUserPicClick { presenter.openUserPic() }
+
             username(user?.getUsernameOrName() ?: "")
 
             val isOnline = user?.isOnline ?: false

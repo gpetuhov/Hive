@@ -131,6 +131,11 @@
                 app:destination="@id/userActivityFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_user_details_fragment_to_userPicFragment"
+                app:destination="@id/userPicFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <fragment
@@ -443,6 +448,13 @@
                 app:destination="@id/user_details_fragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+    </fragment>
+
+    <fragment
+            android:id="@+id/userPicFragment"
+            android:name="com.gpetuhov.android.hive.ui.fragment.UserPicFragment"
+            android:label="UserPicFragment"
+            tools:layout="@layout/fragment_user_pic">
     </fragment>
 
 </navigation>

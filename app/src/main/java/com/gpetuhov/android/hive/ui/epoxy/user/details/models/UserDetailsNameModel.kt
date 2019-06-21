@@ -14,6 +14,8 @@ import com.gpetuhov.android.hive.util.updateUserPic
 abstract class UserDetailsNameModel : EpoxyModelWithHolder<UserDetailsNameHolder>() {
 
     @EpoxyAttribute lateinit var userPicUrl: String
+    @EpoxyAttribute lateinit var onUserPicClick: () -> Unit
+
     @EpoxyAttribute lateinit var username: String
 
     @EpoxyAttribute var onlineVisible = false
@@ -23,6 +25,8 @@ abstract class UserDetailsNameModel : EpoxyModelWithHolder<UserDetailsNameHolder
 
     override fun bind(holder: UserDetailsNameHolder) {
         updateUserPic(holder.userPic.context, userPicUrl, holder.userPic)
+        holder.userPic.setOnClickListener { onUserPicClick() }
+
         holder.username.text = username
 
         holder.online.setVisible(onlineVisible)
