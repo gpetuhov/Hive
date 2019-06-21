@@ -62,7 +62,7 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
 
             onUserPicChangeClick { presenter.chooseUserPic() }
 
-            onUserPicDeleteClick { presenter.showDeleteUserPicDialog() }
+            onUserPicDeleteClick { if (userPicUrl != "") presenter.showDeleteUserPicDialog() }
 
             name(user?.name ?: "")
             email(user?.email ?: "")
