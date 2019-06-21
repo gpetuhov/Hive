@@ -123,6 +123,9 @@
     <string name="favoritizer_tip">Add user or offer to favorites to receive Favoritizer award</string>
     <string name="add_own_offer_favorite_error">Cannot add your own offer to favorites</string>
     <string name="change">Change</string>
+    <string name="delete_user_pic">Delete user pic</string>
+    <string name="delete_user_pic_error">Error deleting user pic</string>
+    <string name="prompt_delete_user_pic">Do you really want to delete user pic?</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

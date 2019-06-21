@@ -56,6 +56,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     private var workDialog: MaterialDialog? = null
     private var interestsDialog: MaterialDialog? = null
     private var statusDialog: MaterialDialog? = null
+    private var deleteUserPicDialog: MaterialDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -117,7 +118,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun showSignOutDialog() {
         initSignOutDialog()
-        signOutDialog?.show() ?: Unit
+        signOutDialog?.show()
     }
 
     override fun dismissSignOutDialog() = signOutDialog?.dismiss() ?: Unit
@@ -128,7 +129,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun showDeleteUserDialog() {
         initDeleteUserDialog()
-        deleteUserDialog?.show() ?: Unit
+        deleteUserDialog?.show()
     }
 
     override fun dismissDeleteUserDialog() = deleteUserDialog?.dismiss() ?: Unit
@@ -162,7 +163,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
 
     override fun showDeletePhotoDialog() {
         initDeletePhotoDialog()
-        deletePhotoDialog?.show() ?: Unit
+        deletePhotoDialog?.show()
     }
 
     override fun dismissDeletePhotoDialog() = deletePhotoDialog?.dismiss() ?: Unit
@@ -313,12 +314,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
     }
 
     override fun showDeleteUserPicDialog() {
-        // TODO
+        initDeleteUserPicDialog()
+        deleteUserPicDialog?.show()
     }
 
-    override fun dismissDeleteUserPicDialog() {
-        // TODO
-    }
+    override fun dismissDeleteUserPicDialog() = deleteUserPicDialog?.dismiss() ?: Unit
 
     override fun showToast(message: String) {
         toast(message)
@@ -572,6 +572,18 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         )
     }
 
+    private fun initDeleteUserPicDialog() {
+        if (context != null) {
+            deleteUserPicDialog = MaterialDialog(context!!)
+                .title(R.string.delete_user_pic)
+                .message(R.string.prompt_delete_user_pic)
+                .noAutoDismiss()
+                .cancelable(false)
+                .positiveButton { presenter.deleteUserPic() }
+                .negativeButton { presenter.deleteUserPicCancel() }
+        }
+    }
+
     private fun dismissDialogs() {
         dismissUsernameDialog()
         dismissDescriptionDialog()
@@ -592,6 +604,7 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         dismissWorkDialog()
         dismissInterestsDialog()
         dismissStatusDialog()
+        dismissDeleteUserPicDialog()
     }
 
     private fun signOutButtonEnabled(isEnabled: Boolean) = controller?.signOutEnabled(isEnabled)
