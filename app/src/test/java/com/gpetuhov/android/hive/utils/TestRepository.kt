@@ -38,6 +38,7 @@ class TestRepository : Repo {
     var location = com.gpetuhov.android.hive.util.Constants.Map.DEFAULT_LOCATION
     var awardCongratulationShownList = mutableListOf<Int>()
     var isHiveRunning = false
+    var userPicUrl = ""
 
     override fun isForeground() = false
 
@@ -478,5 +479,13 @@ class TestRepository : Repo {
 
     override fun getChatArchivePagingOptions(lifecycleOwner: LifecycleOwner): FirestorePagingOptions<Message>? {
         return null
+    }
+
+    override fun deleteUserPic(onError: () -> Unit) {
+        if (isSuccess) {
+            userPicUrl = ""
+        } else {
+            onError()
+        }
     }
 }

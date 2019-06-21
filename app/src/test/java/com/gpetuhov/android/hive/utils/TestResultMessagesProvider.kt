@@ -80,4 +80,6 @@ class TestResultMessagesProvider : ResultMessages {
     override fun getSaveInterestsErrorMessage(): String = Constants.SAVE_INTERESTS_ERROR
 
     override fun getSaveStatusErrorMessage(): String = Constants.SAVE_STATUS_ERROR
+
+    override fun getDeleteUserPicErrorMessage(): String = Constants.DELETE_USER_PIC_ERROR
 }

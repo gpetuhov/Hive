@@ -99,6 +99,8 @@ class Constants {
 
         const val DUMMY_URL = "http://some.url"
 
+        const val DELETE_USER_PIC_ERROR = "Delete user pic error"
+
         val DUMMY_LOCATION = LatLng(40.7128, 74.0060)
         val DUMMY_LOCATION2 = LatLng(51.5074, 0.1278)
 
