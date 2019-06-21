@@ -386,6 +386,9 @@
     <string name="chat_archive">Chat archive</string>
     <string name="close_chat_archive">Close chat archive</string>
 
+    <!-- UserPicFragment -->
+    <string name="close_user_pic">Close user pic</string>
+
     <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
     <string name="facebook_application_id" translatable="false">1023250447868170</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb1023250447868170</string>

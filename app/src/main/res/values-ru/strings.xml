@@ -386,4 +386,7 @@
     <string name="chat_archive">Архив сообщений</string>
     <string name="close_chat_archive">Закрыть архив сообщений</string>
 
+    <!-- UserPicFragment -->
+    <string name="close_user_pic">Закрыть фото пользователя</string>
+
 </resources>
