@@ -79,10 +79,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openUserActivity(userActivityType: Int) = viewState.openUserActivity(userActivityType)
 
-    fun openUserPic(userPicUrl: String) {
-        // Do not open user pic if it is not set by user
-        if (userPicUrl != "") viewState.openUserPic(userPicUrl)
-    }
+    fun openUserPic(userPicUrl: String) = viewState.openUserPic(userPicUrl)
 
     // --- Lifecycle ---
 

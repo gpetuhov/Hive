@@ -39,8 +39,19 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
             id("user_details_name")
 
             val userPicUrl = user?.userPicUrl ?: ""
+            val userPicBigUrl = user?.userPicBigUrl ?: ""
+
+            // Show small user pic in avatar
             userPicUrl(userPicUrl)
-            onUserPicClick { presenter.openUserPic(userPicUrl) }
+
+            onUserPicClick {
+                // Do not open user pic if it is not set by user
+                if (userPicUrl != "") {
+                    // If there is no big user pic, show small
+                    val resultUrl = if (userPicBigUrl != "") userPicBigUrl else userPicUrl
+                    presenter.openUserPic(resultUrl)
+                }
+            }
 
             username(user?.getUsernameOrName() ?: "")
 
