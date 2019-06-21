@@ -20,6 +20,8 @@ abstract class ProfileUsernameModel : EpoxyModelWithHolder<ProfileUsernameHolder
 
     @EpoxyAttribute lateinit var onUserPicChangeClick: () -> Unit
 
+    @EpoxyAttribute lateinit var onUserPicDeleteClick: () -> Unit
+
     @EpoxyAttribute lateinit var name: String
     @EpoxyAttribute lateinit var email: String
 
@@ -32,6 +34,8 @@ abstract class ProfileUsernameModel : EpoxyModelWithHolder<ProfileUsernameHolder
 
         holder.userPicChange.setOnClickListener { onUserPicChangeClick() }
 
+        holder.userPicDelete.setOnClickListener { onUserPicDeleteClick() }
+
         holder.name.text = name
         holder.email.text = email
     }
@@ -41,6 +45,7 @@ class ProfileUsernameHolder : KotlinHolder() {
     val username by bind<TextView>(R.id.username_textview)
     val userPic by bind<ImageView>(R.id.user_pic)
     val userPicChange by bind<TextView>(R.id.user_pic_change)
+    val userPicDelete by bind<TextView>(R.id.user_pic_delete)
     val name by bind<TextView>(R.id.user_name_textview)
     val email by bind<TextView>(R.id.user_email_textview)
 }

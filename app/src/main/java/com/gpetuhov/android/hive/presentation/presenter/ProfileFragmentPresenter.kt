@@ -568,6 +568,12 @@ class ProfileFragmentPresenter :
 
     fun openUserPic(userPicUrl: String) = viewState.openUserPic(userPicUrl)
 
+    // --- Delete user pic ---
+
+    fun showDeleteUserPicDialog() {
+        // TODO
+    }
+
     // --- Show toast ---
 
     fun showToast(message: String) {

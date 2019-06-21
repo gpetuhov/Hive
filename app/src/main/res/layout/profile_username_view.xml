@@ -71,6 +71,14 @@
             android:text="@string/change"
             style="@style/basicTextStyle"/>
 
+    <TextView
+            android:id="@+id/user_pic_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/delete"
+            style="@style/basicTextStyle"/>
+
     <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
