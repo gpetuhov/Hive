@@ -69,7 +69,7 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun choosePhoto()
 
-    // === Delete user ===
+    // === Delete photo ===
 
     @StateStrategyType(AddToEndSingleStrategy::class)
     fun showDeletePhotoDialog()
@@ -223,6 +223,14 @@ interface ProfileFragmentView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun openUserPic(userPicUrl: String)
+
+    // === Delete user pic ===
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun showDeleteUserPicDialog()
+
+    @StateStrategyType(AddToEndSingleStrategy::class)
+    fun dismissDeleteUserPicDialog()
 
     // === Common ===
 

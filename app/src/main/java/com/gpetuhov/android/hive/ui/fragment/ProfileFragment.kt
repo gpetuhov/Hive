@@ -312,6 +312,14 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun showDeleteUserPicDialog() {
+        // TODO
+    }
+
+    override fun dismissDeleteUserPicDialog() {
+        // TODO
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }
