@@ -79,7 +79,7 @@ class UserDetailsFragmentPresenter : MvpPresenter<UserDetailsFragmentView>(), Fa
 
     fun openUserActivity(userActivityType: Int) = viewState.openUserActivity(userActivityType)
 
-    fun openUserPic() = viewState.openUserPic()
+    fun openUserPic(userPicUrl: String) = viewState.openUserPic(userPicUrl)
 
     // --- Lifecycle ---
 

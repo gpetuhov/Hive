@@ -38,8 +38,9 @@ class UserDetailsListController(private val presenter: UserDetailsFragmentPresen
         userDetailsName {
             id("user_details_name")
 
-            userPicUrl(user?.userPicUrl ?: "")
-            onUserPicClick { presenter.openUserPic() }
+            val userPicUrl = user?.userPicUrl ?: ""
+            userPicUrl(userPicUrl)
+            onUserPicClick { presenter.openUserPic(userPicUrl) }
 
             username(user?.getUsernameOrName() ?: "")
 

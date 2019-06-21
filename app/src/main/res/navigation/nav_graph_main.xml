@@ -455,6 +455,9 @@
             android:name="com.gpetuhov.android.hive.ui.fragment.UserPicFragment"
             android:label="UserPicFragment"
             tools:layout="@layout/fragment_user_pic">
+        <argument
+                android:name="userPicUrl"
+                app:argType="string"/>
     </fragment>
 
 </navigation>

@@ -29,6 +29,9 @@ class UserPicFragment : BaseFragment(), UserPicFragmentView {
         hideMainHeader()
         hideBottomNavigationView()
 
+        val args = UserPicFragmentArgs.fromBundle(arguments!!)
+        val userPicUrl = args.userPicUrl
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_pic, container, false)
         binding?.presenter = presenter
 
