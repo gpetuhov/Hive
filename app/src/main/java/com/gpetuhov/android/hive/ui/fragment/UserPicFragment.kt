@@ -14,13 +14,16 @@ import com.gpetuhov.android.hive.presentation.view.UserPicFragmentView
 import com.gpetuhov.android.hive.ui.fragment.base.BaseFragment
 import com.gpetuhov.android.hive.util.hideBottomNavigationView
 import com.gpetuhov.android.hive.util.hideMainHeader
+import com.gpetuhov.android.hive.util.load
 import com.gpetuhov.android.hive.util.setActivitySoftInputPan
+import kotlinx.android.synthetic.main.fragment_user_pic.*
 
 class UserPicFragment : BaseFragment(), UserPicFragmentView {
 
     @InjectPresenter lateinit var presenter: UserPicFragmentPresenter
 
     private var binding: FragmentUserPicBinding? = null
+    private var userPicUrl = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Adjust_pan is needed to prevent activity from being pushed up by the keyboard
@@ -30,12 +33,17 @@ class UserPicFragment : BaseFragment(), UserPicFragmentView {
         hideBottomNavigationView()
 
         val args = UserPicFragmentArgs.fromBundle(arguments!!)
-        val userPicUrl = args.userPicUrl
+        userPicUrl = args.userPicUrl
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user_pic, container, false)
         binding?.presenter = presenter
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        user_pic_fullscreen.load(userPicUrl, false)
     }
 
     // === UserPicFragmentView ===

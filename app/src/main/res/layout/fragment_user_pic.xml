@@ -26,6 +26,16 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"/>
 
+        <ImageView
+                android:id="@+id/user_pic_fullscreen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/photo_fullscreen"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
