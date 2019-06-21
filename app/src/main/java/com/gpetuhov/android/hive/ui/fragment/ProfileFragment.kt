@@ -307,6 +307,11 @@ class ProfileFragment : BaseFragment(), ProfileFragmentView {
         findNavController().navigate(action)
     }
 
+    override fun openUserPic(userPicUrl: String) {
+        val action = ProfileFragmentDirections.actionNavigationProfileToUserPicFragment(userPicUrl)
+        findNavController().navigate(action)
+    }
+
     override fun showToast(message: String) {
         toast(message)
     }

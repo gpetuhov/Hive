@@ -48,10 +48,16 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             username(if (hasUsername) user?.username ?: "" else context.getString(R.string.enter_username))
             onUsernameClick { presenter.showUsernameDialog() }
 
-            userPicUrl(user?.userPicUrl ?: "")
+            val userPicUrl = user?.userPicUrl ?: ""
+            val userPicBigUrl = user?.userPicBigUrl ?: ""
+
+            userPicUrl(userPicUrl)
+
             onUserPicClick {
-                // TODO: open user pic full screen here
-                presenter.chooseUserPic()
+                if (userPicUrl != "") {
+                    val resultUrl = if (userPicBigUrl != "") userPicBigUrl else userPicUrl
+                    presenter.openUserPic(resultUrl)
+                }
             }
 
             onUserPicChangeClick { presenter.chooseUserPic() }

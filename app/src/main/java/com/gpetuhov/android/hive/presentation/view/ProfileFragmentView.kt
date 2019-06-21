@@ -219,6 +219,11 @@ interface ProfileFragmentView : MvpView {
     @StateStrategyType(SkipStrategy::class)
     fun openUserActivity(userActivityType: Int)
 
+    // === Open user pic
+
+    @StateStrategyType(SkipStrategy::class)
+    fun openUserPic(userPicUrl: String)
+
     // === Common ===
 
     // We don't need to keep this command in the queue,

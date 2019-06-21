@@ -87,6 +87,11 @@
                 app:destination="@id/userActivityFragment"
                 app:enterAnim="@anim/nav_default_enter_anim"
                 app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
+        <action
+                android:id="@+id/action_navigation_profile_to_userPicFragment"
+                app:destination="@id/userPicFragment"
+                app:enterAnim="@anim/nav_default_enter_anim"
+                app:popEnterAnim="@anim/nav_default_pop_enter_anim"/>
     </fragment>
 
     <!-- Secondary fragments -->

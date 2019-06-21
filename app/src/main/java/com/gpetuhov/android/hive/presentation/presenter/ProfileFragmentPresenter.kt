@@ -564,6 +564,10 @@ class ProfileFragmentPresenter :
 
     fun openUserActivity(userActivityType: Int) = viewState.openUserActivity(userActivityType)
 
+    // --- Open user pic ---
+
+    fun openUserPic(userPicUrl: String) = viewState.openUserPic(userPicUrl)
+
     // --- Show toast ---
 
     fun showToast(message: String) {
