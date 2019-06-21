@@ -122,6 +122,7 @@
     <string name="oflumbus_tip">Post 10 first reviews to receive Oflumbus award</string>
     <string name="favoritizer_tip">Add user or offer to favorites to receive Favoritizer award</string>
     <string name="add_own_offer_favorite_error">Cannot add your own offer to favorites</string>
+    <string name="change">Change</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>

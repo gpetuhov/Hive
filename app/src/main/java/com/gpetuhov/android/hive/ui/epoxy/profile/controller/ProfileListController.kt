@@ -49,7 +49,12 @@ class ProfileListController(private val presenter: ProfileFragmentPresenter) : U
             onUsernameClick { presenter.showUsernameDialog() }
 
             userPicUrl(user?.userPicUrl ?: "")
-            onUserPicClick { presenter.chooseUserPic() }
+            onUserPicClick {
+                // TODO: open user pic full screen here
+                presenter.chooseUserPic()
+            }
+
+            onUserPicChangeClick { presenter.chooseUserPic() }
 
             name(user?.name ?: "")
             email(user?.email ?: "")
