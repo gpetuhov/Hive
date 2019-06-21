@@ -801,7 +801,11 @@ class Repository(private val context: Context, private val settings: Settings) :
     }
 
     override fun deleteUserPic(onError: () -> Unit) {
-        // TODO
+        val data = HashMap<String, Any>()
+        data[USER_PIC_URL_KEY] = ""
+        data[USER_PIC_BIG_URL_KEY] = ""
+
+        saveUserDataRemote(data, { deleteUserPicFiles() }, onError)
     }
 
     // === User photo ===
@@ -2568,21 +2572,37 @@ class Repository(private val context: Context, private val settings: Settings) :
     // --- User pic ---
 
     private fun saveUserPic(selectedImageUri: Uri, isSmall: Boolean, onError: () -> Unit) {
-        // Get path to current user's pic in Cloud Storage
-        // (every user has his own folder with the same name as user's uid).
-        // File in the cloud will be recreated on every new upload, so there
-        // will be no unused old files.
-        val fileName = if (isSmall) "userpic.jpg" else "userpic_big.jpg"
-        val storagePath = "${currentUserUid()}/$fileName"
-
         uploadImage(
             selectedImageUri,
-            storagePath,
+            getUserPicStoragePath(isSmall),
             if (isSmall) Constants.Image.USER_PIC_SIZE else Constants.Image.USER_PHOTO_SIZE,
             true,
             false,
             { downloadUrl -> if (isSmall) saveUserPicUrl(downloadUrl) else saveUserPicBigUrl(downloadUrl) },
             onError
         )
+    }
+
+    private fun getUserPicStoragePath(isSmall: Boolean): String {
+        // Get path to current user's pic in Cloud Storage
+        // (every user has his own folder with the same name as user's uid).
+        // File in the cloud will be recreated on every new upload, so there
+        // will be no unused old files.
+        val fileName = if (isSmall) "userpic.jpg" else "userpic_big.jpg"
+        return "${currentUserUid()}/$fileName"
+    }
+
+    private fun deleteUserPicFiles() {
+        deleteUserPicFile(true)
+        deleteUserPicFile(false)
+    }
+
+    private fun deleteUserPicFile(isSmall: Boolean) {
+        val storagePath = getUserPicStoragePath(isSmall)
+        val storageRef = storage.reference.child(storagePath)
+
+        storageRef.delete()
+            .addOnSuccessListener { /* Do nothing */ }
+            .addOnFailureListener { /* Do nothing */ }
     }
 }
