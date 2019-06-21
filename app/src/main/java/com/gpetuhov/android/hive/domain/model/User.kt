@@ -14,7 +14,8 @@ data class User(
     var name: String,
     var username: String,
     var email: String,
-    var userPicUrl: String,
+    var userPicUrl: String,     // This is the url for small user pic to show as avatar in user details and chat
+    var userPicBigUrl: String = "",  // This is the url for big user pic to show in fullscreen
     var description: String,
     var isOnline: Boolean,
     var location: LatLng,

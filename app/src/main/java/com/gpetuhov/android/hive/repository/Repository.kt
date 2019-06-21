@@ -68,6 +68,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         private const val EMAIL_KEY = "email"
         private const val DESCRIPTION_KEY = "description"
         private const val USER_PIC_URL_KEY = "userPicUrl"
+        private const val USER_PIC_BIG_URL_KEY = "userPicBigUrl"
         private const val OFFER_LIST_KEY = "offerList"
         private const val OFFER_RATING_LIST_KEY = "offerRatingList"
         private const val PHOTO_LIST_KEY = "photoList"
@@ -789,21 +790,14 @@ class Repository(private val context: Context, private val settings: Settings) :
     // === User pic ===
 
     override fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit) {
-        // Get path to current user's pic in Cloud Storage
-        // (every user has his own folder with the same name as user's uid).
-        // File in the cloud will be recreated on every new upload, so there
-        // will be no unused old files.
-        val storagePath = "${currentUserUid()}/userpic.jpg"
+        // We save user pic in 2 variants:
+        // - small - for the avatar (to load faster)
+        // - big - to show user pic in fullscreen
 
-        uploadImage(
-            selectedImageUri,
-            storagePath,
-            Constants.Image.USER_PIC_SIZE,
-            true,
-            false,
-            { downloadUrl -> saveUserPicUrl(downloadUrl) },
-            onError
-        )
+        // Save small user pic
+        saveUserPic(selectedImageUri, true, onError)
+        // Save big user pic
+        saveUserPic(selectedImageUri, false) { /* Do nothing */ }
     }
 
     // === User photo ===
@@ -1286,7 +1280,11 @@ class Repository(private val context: Context, private val settings: Settings) :
     private fun saveUserDataWithUserPicIfNeeded(data: HashMap<String, Any>, userPicUrl: String, existingUser: User) {
         // If existing user data has no user pic,
         // update it with user pic from Firebase Auth
-        if (existingUser.userPicUrl == "") data[USER_PIC_URL_KEY] = userPicUrl
+        if (existingUser.userPicUrl == "") {
+            data[USER_PIC_URL_KEY] = userPicUrl
+            // User pic url from Firebase Auth is the same for small and big pictures
+            data[USER_PIC_BIG_URL_KEY] = userPicUrl
+        }
 
         saveUserDataRemote(data, { /* Do nothing */ }, { /* Do nothing */ })
     }
@@ -1406,6 +1404,7 @@ class Repository(private val context: Context, private val settings: Settings) :
             username = doc.getString(USERNAME_KEY) ?: "",
             email = doc.getString(EMAIL_KEY) ?: Constants.Auth.DEFAULT_USER_MAIL,
             userPicUrl = doc.getString(USER_PIC_URL_KEY) ?: "",
+            userPicBigUrl = doc.getString(USER_PIC_BIG_URL_KEY) ?: "",
             description = doc.getString(DESCRIPTION_KEY) ?: "",
             isOnline = doc.getBoolean(IS_ONLINE_KEY) ?: false,
             location = location,
@@ -1635,6 +1634,9 @@ class Repository(private val context: Context, private val settings: Settings) :
 
     private fun saveUserPicUrl(newUserPicUrl: String) =
         saveUserSingleDataRemote(USER_PIC_URL_KEY, newUserPicUrl, { updateUsernameAndPicInChatrooms() }, { /* Do nothing */ })
+
+    private fun saveUserPicBigUrl(newUserPicBigUrl: String) =
+        saveUserSingleDataRemote(USER_PIC_BIG_URL_KEY, newUserPicBigUrl, { /* Do nothing */ }, { /* Do nothing */ })
 
     private fun saveUserPhotoUrl(photoUid: String, photoDownloadUrl: String) {
         val photoList = mutableListOf<Photo>()
@@ -2558,4 +2560,25 @@ class Repository(private val context: Context, private val settings: Settings) :
         var queryText: String,
         var onComplete: () -> Unit
     )
+
+    // --- User pic ---
+
+    private fun saveUserPic(selectedImageUri: Uri, isSmall: Boolean, onError: () -> Unit) {
+        // Get path to current user's pic in Cloud Storage
+        // (every user has his own folder with the same name as user's uid).
+        // File in the cloud will be recreated on every new upload, so there
+        // will be no unused old files.
+        val fileName = if (isSmall) "userpic.jpg" else "userpic_big.jpg"
+        val storagePath = "${currentUserUid()}/$fileName"
+
+        uploadImage(
+            selectedImageUri,
+            storagePath,
+            if (isSmall) Constants.Image.USER_PIC_SIZE else Constants.Image.USER_PHOTO_SIZE,
+            true,
+            false,
+            { downloadUrl -> if (isSmall) saveUserPicUrl(downloadUrl) else saveUserPicBigUrl(downloadUrl) },
+            onError
+        )
+    }
 }
