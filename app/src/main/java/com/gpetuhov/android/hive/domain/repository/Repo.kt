@@ -107,6 +107,7 @@ interface Repo {
 
     // User pic
     fun changeUserPic(selectedImageUri: Uri, onError: () -> Unit)
+    fun deleteUserPic(onError: () -> Unit)
 
     // User photo
     fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit)

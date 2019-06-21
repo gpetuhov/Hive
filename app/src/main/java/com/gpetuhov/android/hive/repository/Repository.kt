@@ -800,6 +800,10 @@ class Repository(private val context: Context, private val settings: Settings) :
         saveUserPic(selectedImageUri, false) { /* Do nothing */ }
     }
 
+    override fun deleteUserPic(onError: () -> Unit) {
+        // TODO
+    }
+
     // === User photo ===
 
     override fun addUserPhoto(selectedImageUri: Uri, onError: () -> Unit) {

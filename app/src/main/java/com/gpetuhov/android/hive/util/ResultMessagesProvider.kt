@@ -92,5 +92,7 @@ class ResultMessagesProvider : ResultMessages {
 
     override fun getSaveStatusErrorMessage(): String = getString(R.string.status_save_error)
 
+    override fun getDeleteUserPicErrorMessage(): String = getString(R.string.delete_user_pic_error)
+
     private fun getString(stringId: Int) = context.getString(stringId)
 }

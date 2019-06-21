@@ -40,4 +40,5 @@ interface ResultMessages {
     fun getSaveWorkErrorMessage(): String
     fun getSaveInterestsErrorMessage(): String
     fun getSaveStatusErrorMessage(): String
+    fun getDeleteUserPicErrorMessage(): String
 }

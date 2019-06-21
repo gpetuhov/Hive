@@ -48,6 +48,7 @@ class ProfileFragmentPresenter :
     private val saveWorkInteractor = SaveWorkInteractor(this)
     private val saveInterestsInteractor = SaveInterestsInteractor(this)
     private val saveStatusInteractor = SaveStatusInteractor(this)
+    private val deleteUserPicInteractor = DeleteUserPicInteractor(this)
 
     // Keeps current text entered in username dialog
     private var tempUsername = ""
@@ -574,8 +575,7 @@ class ProfileFragmentPresenter :
 
     fun deleteUserPic() {
         viewState.dismissDeleteUserPicDialog()
-
-        // TODO: delete user pic
+        deleteUserPicInteractor.execute()
     }
 
     fun deleteUserPicCancel() = viewState.dismissDeleteUserPicDialog()
