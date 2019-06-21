@@ -805,7 +805,7 @@ class Repository(private val context: Context, private val settings: Settings) :
         data[USER_PIC_URL_KEY] = ""
         data[USER_PIC_BIG_URL_KEY] = ""
 
-        saveUserDataRemote(data, { deleteUserPicFiles() }, onError)
+        saveUserDataRemote(data, { onClearUserPicUrl() }, onError)
     }
 
     // === User photo ===
@@ -2592,7 +2592,8 @@ class Repository(private val context: Context, private val settings: Settings) :
         return "${currentUserUid()}/$fileName"
     }
 
-    private fun deleteUserPicFiles() {
+    private fun onClearUserPicUrl() {
+        updateUsernameAndPicInChatrooms()
         deleteUserPicFile(true)
         deleteUserPicFile(false)
     }
