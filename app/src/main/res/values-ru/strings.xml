@@ -126,6 +126,8 @@
     <string name="delete_user_pic">Удалить фото пользователя</string>
     <string name="delete_user_pic_error">Ошибка удаления фото пользователя</string>
     <string name="prompt_delete_user_pic">Вы действительно хотите удалить фото пользователя?</string>
+    <string name="warning">Предупреждение</string>
+    <string name="rating">Рейтинг</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Отменить поиск</string>
@@ -228,6 +230,7 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
     <string name="cancel">Отмена</string>
+    <string name="favorite_count">Счетчик избранных</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Предоставлен</string>
@@ -315,6 +318,7 @@
     <string name="adorable_provider_info">Пользователь или офферы пользователя были добавлены в избранное 10 раз</string>
     <string name="rock_star_info">Пользователь или офферы пользователя были добавлены в избранное 100 раз</string>
     <string name="favoritizer_info">Пользователь хотя бы раз добавил пользователя или оффер в избранные</string>
+    <string name="award">Награда</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Поздравляем!</string>

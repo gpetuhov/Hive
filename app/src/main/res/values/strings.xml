@@ -126,6 +126,8 @@
     <string name="delete_user_pic">Delete user pic</string>
     <string name="delete_user_pic_error">Error deleting user pic</string>
     <string name="prompt_delete_user_pic">Do you really want to delete user pic?</string>
+    <string name="warning">Warning</string>
+    <string name="rating">Rating</string>
 
     <!-- MapFragment -->
     <string name="cancel_search">Cancel search</string>
@@ -228,6 +230,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="cancel">Cancel</string>
+    <string name="favorite_count">Favorite count</string>
 
     <!-- OfferDetailsFragment -->
     <string name="provided_by">Provided by</string>
@@ -315,6 +318,7 @@
     <string name="adorable_provider_info">User or user\'s offers have been added to favorites 10 times</string>
     <string name="rock_star_info">User or user\'s offers have been added to favorites 100 times</string>
     <string name="favoritizer_info">User has added user or offer to favorites at least once</string>
+    <string name="award">Award</string>
 
     <!-- CongratulationFragment -->
     <string name="congratulations">Congratulations!</string>

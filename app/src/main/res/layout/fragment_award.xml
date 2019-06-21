@@ -30,7 +30,7 @@
                     android:layout_height="@dimen/basic_view_size"
                     android:src="@drawable/ic_arrow_back"
                     android:background="@android:color/transparent"
-                    android:contentDescription="@string/close_offer_details"
+                    android:contentDescription="@string/close"
                     android:onClick="@{view -> presenter.navigateUp()}"
                     android:layout_marginLeft="16dp"
                     android:layout_marginStart="16dp"/>
@@ -97,7 +97,8 @@
                             android:id="@+id/award_image"
                             android:layout_width="@dimen/basic_view_size"
                             android:layout_height="@dimen/basic_view_size"
-                            android:background="@android:color/transparent"/>
+                            android:background="@android:color/transparent"
+                            android:contentDescription="@string/award"/>
 
                     <TextView
                             android:id="@+id/award_title"

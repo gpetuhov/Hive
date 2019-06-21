@@ -23,7 +23,8 @@
                 android:paddingEnd="8dp"
                 android:paddingLeft="0dp"
                 android:paddingRight="8dp"
-                android:src="@drawable/ic_add_a_photo"/>
+                android:src="@drawable/ic_add_a_photo"
+                android:contentDescription="@string/add_photo"/>
 
         <TextView
                 android:id="@+id/profile_add_photo_textview"
@@ -46,7 +47,8 @@
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_warning"/>
+                android:src="@drawable/ic_warning"
+                android:contentDescription="@string/warning"/>
 
         <TextView
                 android:layout_width="wrap_content"
