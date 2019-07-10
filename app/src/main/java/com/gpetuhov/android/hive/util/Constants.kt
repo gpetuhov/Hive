@@ -16,7 +16,7 @@ class Constants {
             const val DEFAULT_BEARING = 0.0F
             const val DEFAULT_TILT = 0.0F
             const val DEFAULT_RADIUS = 1.0
-            const val MAX_RADIUS = 20.0     // TODO: limit this to 2.0 km
+            const val MAX_RADIUS = 2.0
             const val MAX_OFFER_TITLE_LENGTH = 30
             const val UPDATE_MARKERS_LATENCY = 500L
             const val SEARCH_START_LATENCY = 2000L
