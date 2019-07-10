@@ -11,7 +11,7 @@ class Constants {
         companion object {
             const val DEFAULT_LATITUDE = 0.0
             const val DEFAULT_LONGITUDE = 0.0
-            const val MIN_ZOOM = 10.0F
+            const val MIN_ZOOM = 0.0F
             const val MAX_ZOOM = 21.0F
             const val DEFAULT_BEARING = 0.0F
             const val DEFAULT_TILT = 0.0F
