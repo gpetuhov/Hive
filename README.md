@@ -89,13 +89,19 @@ Android
     * MVP (Moxy library) for screen rotations
     * MVVM (Google ViewModel) for updating views on data changes
 * Firebase Firestore for storing and sharing data
+* Firebase Real-time Database for user presence system
 * Firebase Cloud Storage for storing media
-* Firebase Cloud Functions (code in HiveCloud repo) for backend data handling
+* Firebase Cloud Functions for backend data handling
 * Data Binding (in some views)
 * Jetpack Navigation
 * AndroidX
 * AirBnb Epoxy for complex screens (with carousels)
 * Dependency injection with Dagger 2
+
+## Backend
+Hive uses Firebase Cloud Functions for backend data handling. Source code can be found in a separate repository:
+
+https://github.com/gpetuhov/HiveCloud
 
 ## Credits
 These free icons and animations are used in Hive.
