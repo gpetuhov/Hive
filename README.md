@@ -1,4 +1,7 @@
 # Hive: find what you need, offer anything to anyone
+
+![Hive screenshots](/img/screens.jpg?raw=true "Hive screenshots")
+
 Create offers with your current location updated in real-time for people nearby.
 
 https://play.google.com/store/apps/details?id=com.gpetuhov.android.hive
