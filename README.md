@@ -1,12 +1,10 @@
 # Hive: find what you need, offer anything to anyone
-
-![Hive screenshots](/img/screens.jpg?raw=true "Hive screenshots")
-
 Create offers with your current location updated in real-time for people nearby.
 
 https://play.google.com/store/apps/details?id=com.gpetuhov.android.hive
 
 ## Description
+![Hive screenshots](/img/screens.jpg?raw=true "Hive screenshots")
 
 Hive is the perfect way for people nearby to cooperate and help each other instantly. If you have something to share with others right away, Hive allows you to create offers with your current location tracking, so that your offers are displayed on map exactly where you are in real-time. You can offer anything from food and drinks to taxi rides. Everyone looking for immediate goods and services, can easily search for offers provided by Hive users that are already close to them, instead of shopping and waiting for delivery.
 
