@@ -14,64 +14,50 @@ Ever found yourself in the street craving for a sip of water and no shop around?
 
 There are more than 7 billion people on our planet. Start sharing things and help each other. Let's make the world a more friendly place together!
 
-OFFER ANYTHING TO ANYONE
-
+OFFER ANYTHING TO ANYONE\
 Easily create offers for people nearby: just tap Add offer in your Profile and fill in offer title and description and upload offer photos. You can offer anything. Your offers are limited only by your imagination.
 
-FIND OFFERS CLOSE TO YOU
-
+FIND OFFERS CLOSE TO YOU\
 Find what you need exactly where you need it. See offers displayed on map at their location updated in real-time or arranged in a list. Filter and sort your search results by different criteria.
 
-SEND MESSAGES
-
+SEND MESSAGES\
 Contact other users by sending messages directly in the app. Browse old messages history in chat archive.
 
-DETAILED CONTACTS
-
+DETAILED CONTACTS\
 Publish detailed information about your contacts in profile, so that other users can reach you outside the app as soon as possible.
 
-FAVORITES
-
+FAVORITES\
 Save your favorite users and offers for future reference.
 
-REVIEWS AND COMMENTS
-
+REVIEWS AND COMMENTS\
 Leave reviews on offers provided by other users. Comment on reviews left on your own offers. Build user trust by providing best offers with high average rating.
 
-BADGES FOR ACHIEVEMENTS
-
+BADGES FOR ACHIEVEMENTS\
 Win badges for different achievements. All your badges are visible to other Hive users. Can you collect them all?
 
-UP AND RUNNING QUICKLY
-
+UP AND RUNNING QUICKLY\
 Just register with your email, Google or Facebook account and you are ready to go. You can fill all your profile info later.
 
-NO ADS
-
+NO ADS\
 Only offers provided by people like you.
 
 Please note that if you have active (visible) offers, Hive constantly tracks your location, which can decrease battery life.
 
-Install the app: 
-
+Install the app:\
 https://play.google.com/store/apps/details?id=com.gpetuhov.android.hive
 
 Problems using the app? Have a feature request? Willing to share, how exactly you use Hive? Your information will help us improve Hive and make it better!
 
-Feel free to post your user experience, reviews and bug reports on Hive's Facebook page:
-
+Feel free to post your user experience, reviews and bug reports on Hive's Facebook page:\
 https://www.facebook.com/YouHive
 
-Or send your feedback to email:
-
+Or send your feedback to email:\
 hive.app.feedback@gmail.com
 
-Hive is open source, so you can always explore, what's under the hood, and create issues on Hive's GitHub page:
-
+Hive is open source, so you can always explore, what's under the hood, and create issues on Hive's GitHub page:\
 https://github.com/gpetuhov/Hive
 
-Want to get early access to the latest features? Join the beta-testing program:
-
+Want to get early access to the latest features? Join the beta-testing program:\
 https://play.google.com/apps/testing/com.gpetuhov.android.hive
 
 ## Platform
@@ -100,8 +86,7 @@ Android
 * Dependency injection with Dagger 2
 
 ## Backend
-Hive uses Firebase Cloud Functions for backend data handling. Source code can be found in a separate repository:
-
+Hive uses Firebase Cloud Functions for backend data handling. Source code can be found in a separate repository:\
 https://github.com/gpetuhov/HiveCloud
 
 ## FAQ
