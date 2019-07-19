@@ -21,12 +21,12 @@ kapt {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.gpetuhov.android.hive"
         minSdkVersion 16
-        targetSdkVersion 28
+        targetSdkVersion 29
         multiDexEnabled true
         versionCode appVersionCode
         versionName appVersionName
@@ -74,7 +74,10 @@ dependencies {
     // Do NOT upgrade this due to issue https://github.com/gpetuhov/Hive/issues/4
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta1'
+    // Do NOT upgrade this due to this issue: https://issuetracker.google.com/issues/136103084
+    // (the issue appeared after updating Android Studio 3.6 from Canary 3 to Canary 4 and Canary 5)
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

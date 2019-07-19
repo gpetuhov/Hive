@@ -64,10 +64,10 @@ https://play.google.com/apps/testing/com.gpetuhov.android.hive
 Android
 
 ## Requirements
-* Android Studio 3.6 Canary 3
+* Android Studio 3.6 Canary 5
 * Kotlin 1.3.40
-* Android Gradle Plugin 3.6.0-alpha03
-* Gradle wrapper 5.4.1
+* Android Gradle Plugin 3.6.0-alpha05
+* Gradle wrapper 5.5
 * AAPT 2
 
 ## Architecture
